@@ -1,0 +1,662 @@
+ <body>
+
+ 
+
+  
+    �  Notes 
+   
+  
+   
+  
+    
+  
+  
+  
+  
+    
+  
+  
+   
+  
+    
+  
+   
+  
+    
+  
+  
+  
+
+ 
+
+  
+  Outline 
+   
+  
+   
+  
+    
+  
+  
+  
+
+ 
+
+   
+     ICS 156: Networking Lab   
+   
+      
+      
+       
+      Magda El Zarki  
+       
+      Professor, ICS  
+       
+      UC, Irvine  
+      
+   
+    
+     Course Outline   
+   
+      
+      
+       
+      Ch 1: Introduction  
+       
+      Ch 2:Bridges  
+       
+      Ch 3:Routers  
+       
+      Ch 4: Transport Protocols  
+      
+   
+    
+     Ch. 3 Routers   
+   
+      
+      
+       
+      The role of Routers  
+       
+      Routing  
+       
+      The Role of ICMP in Routing  
+       
+      RIP  
+       
+      OSPF  
+      
+   
+    
+     3.1 What are Routers   
+   
+      
+      
+       
+      Routers are network devices that operate at
+    layer 3.  
+       
+      They route (�forward�) IP datagrams hop-by-hop
+    through a network from source to destination over different subnets and
+    autonomous systems.  
+      
+   
+    
+     Router in Operation   
+   
+    
+     3.2 Routers and Routing   
+   
+    
+     3.2.1 Functions of Routers   
+   
+      
+      
+       
+      Routers have an IP address per network
+    connection  
+       
+      Routers are used to create subnets or
+    interconnect two or more different networks  
+       
+      Subnet masks are used for routing purposes. A
+    mask will indicate whether the host is on the same subnet or needs to be
+    forwarded to another subnet.  
+      
+   
+    
+     3.2.2 Operation of Routers (1/2)   
+   
+      
+      
+       
+      Each network connection has associated with it
+    an ARP module if it is connected to a broadcast network such as Ethernet  
+       
+      ARP: Address Resolution Protocol. Used to find
+    the physical address. Creates a cache in which it stores all its IP to
+    physical address mappings.  
+       
+      IP routing tables identify what to do with each
+    packet (i.e., what interface to use for transmitting the datagram).  
+      
+   
+    
+     3.2.2 Operation of Routers (2/2)   
+   
+      
+      
+       
+      Routing mechanism: the action of looking an
+    address up in a table and deciding what to do with the IP datagram -&gt;
+    Performed by IP  
+       
+      Routing policy: the actual algorithms that are
+    use to make routing calculations and fill the routing table with forwarding
+    entries -&gt; Performed by a routing daemon  
+      
+   
+    
+     Ch 3. Routers   
+   
+      
+      
+       
+      The role of Routers  
+       
+      Routing  
+       
+      The Role of ICMP in Routing  
+       
+      RIP  
+       
+      OSPF  
+      
+   
+    
+     3.3 IP Routing Mechanism   
+   
+      
+      
+       
+      Search for a matching host address  
+       
+      Search for a matching network address  
+       
+      Search for a default entry (default is specified
+    by a net_address of �0�)  
+      
+   
+    
+     3.4 A Routing Table   
+   
+      
+      
+       
+      For Host 62.100:  
+      
+   
+    
+     3.4.1 Flags   
+   
+      
+      
+       
+      U: The route is up  
+       
+      G: The router is to a gateway (router). If this
+    flag is not set the destination is directly connected  
+       
+      H: The route is to a host, that is the
+    destination is a complete host address. If this flag is not set, the route
+    is to a network, and the destination is a network address (net ID or net ID
+    and subnet ID)  
+      
+   
+    
+     3.4.1 Flags contd.   
+   
+      
+      
+       
+      D: The route was created by a redirect  
+       
+      M: The route was modified by a redirect.  
+      
+   
+    
+     Routers   
+   
+      
+      
+       
+      The role of Routers  
+       
+      Routing  
+       
+      The Role of ICMP in Routing  
+       
+      RIP  
+       
+      OSPF  
+       
+      
+      
+   
+    
+     3.5 ICMP and Routing   
+   
+      
+      
+       
+      ICMP is used to indicate an error condition
+    related to routing.  
+       
+      If a solution is feasible, i.e., a route is
+    available, then ICMP is used to indicate the new route to the source, redirect
+    message.  
+       
+      If a solution is not feasible, i.e., a route is
+    not available, then it is used to indicate that the destination host is
+    unreachable.  
+      
+   
+    
+     3.5.1 ICMP Redirects   
+   
+      
+      
+       
+      When a source sends a packet to a gateway for
+    forwarding, and that gateway is not the default next hop, then the gateway
+    will forward the packet to the appropriate gateway. It then uses ICMP to
+    send a message to the source giving it the gateway IP address that should
+    be used next time in conjunction with that destination.  
+       
+      If one examines the routing table after an ICMP
+    redirect, we see that a new entry has been added and the flag �D� inserted
+    to indicate its source.  
+      
+   
+    
+     3.5.2 ICMP Discovery Messages   
+   
+      
+      
+       
+      To initialize a routing table, one can use
+    manually entered routes or the host can use what is called a router
+    solicitation message.  
+       
+      The locally connected routers will respond with
+    a router advertisement message.  
+       
+      Usually routers periodically broadcast their
+    router advertisements so that hosts can update their tables.  
+       
+      Each advertisement can carry several addresses
+    and a lifetime that indicates how long an address will be valid for.  
+      
+   
+    
+     3. Routers   
+   
+      
+      
+       
+      The role of routers  
+       
+      Routing  
+       
+      ICMP and Routing  
+       
+      Types of routers  
+       
+      RIP  
+       
+      OSPF  
+      
+   
+    
+     3.6 Types of Routers (1/5)   
+   
+    
+     3.6 Types of Routers (2/5)   
+   
+      
+      
+       
+      Customer, regional and backbone networks are all
+    called autonomous systems (AS).  
+       
+      An AS consists of a collection of interconnected
+    networks run by a single organization.  
+       
+      ASs are interconnected via gateways.  
+       
+      Several regional networks can exist in an area.  
+       
+      Several backbone networks make up the core
+    backbone.  
+      
+   
+    
+     3.6 Types of Routers (3/5)   
+   
+      
+      
+       
+      Gateways (routers) interconnect the different
+    parts of the internet  
+       
+      Border gateways (BG) are used to connect to the
+    backbone.  
+       
+      Interior gateways (IG) are used within a single
+    AS.  
+      
+   
+    
+     3.6 Types of Routers (4/5)   
+   
+      
+      
+       
+      Note that they are all routers, but, because
+    they have different responsibilities, they are given different names.  
+       
+      BGs use the BG protocol (BGP) for routing.  
+       
+      IGs use IG protocol (IGP) for routing.  
+      
+   
+    
+     3.6 Types of Routers (5/5)   
+   
+      
+      
+       
+      If two routers are attached over a point to
+    point link, this is still considered as a network to the routers, it just
+    does not have any other network devices on it except for the router at the
+    other end.  
+       
+      Because of the way the internet has grown, most
+    ASs don�t have a single network ID. They generally have several. This means
+    that the gateways have to have many subnet masks, each one associated with
+    every net ID in its AS. E.g., 158.32 &amp; 131.90 are 2 class B addresses
+    that maybe used by an AS.  
+      
+   
+    
+     3.7 RIP Protocol Stack   
+   
+    
+     3.8 IGP   
+   
+      
+      
+      
+       
+      There are two routing protocols associated with
+    IGP:  
+       
+      Routing information protocol (RIP): vector
+    distance  
+       
+      Open shortest path first (OSPF): link state  
+       
+      RIP is the oldest and is still being used. OSPF
+    was introduced later because it was felt that RIP would not able to handle
+    the needs of the growing internet (not scalable).  
+      
+   
+    
+     3. Routers   
+   
+      
+      
+       
+      The role of routers  
+       
+      Routing  
+       
+      ICMP and Routing  
+       
+      Types of routers  
+       
+      RIP  
+       
+      OSPF  
+      
+   
+    
+     3.9 RIP (1/4)   
+   
+      
+      
+       
+      It uses distance vectors. The distance is
+    measured in terms of hops, independent of link speed, or physical distance.
+    Max. is 15 hops.  
+       
+      Each gateway sends its routing table to its neighbors
+    every 30 secs.  
+       
+      Based on this local information it calculates
+    routes. (Bellman-Ford Algorithm)  
+      
+   
+    
+     3.9 RIP (2/4)   
+   
+      
+      
+       
+      Upon receipt of a neighbor�s routing table, the
+    gateway checks to see if distances are shorter than what it has in its
+    table. If a shorter distance is found, the entry is updated to reflect the
+    new distance and corresponding gateway address.  
+       
+      Only one route to each destination. No alternate
+    routes.  
+      
+   
+    
+     3.9 RIP (3/4)   
+   
+      
+      
+       
+      The RIP protocol (routed daemon) is used to
+    create/maintain the RIP routing table.  
+       
+      Then the IP routing table is constructed based
+    upon the shortest hop path to each destination, i.e., the RIP routing
+    tables.  
+       
+      The IP table entries consist of: Dest. IP
+    address with appropriate mask (i.e net ID), Gateway IP address and
+    interface identifier (i.e. which NIC).  
+      
+   
+    
+     3.9 RIP (4/4)   
+   
+      
+      
+       
+      The IP routing table is used by the router when
+    forwarding a packet. This constitutes the actual routing function within a
+    router.  
+       
+      The IP address is then looked up in the NIC ARP
+    table for the physical address.  
+      
+   
+    
+     3.9.1 Disadvantages of RIP (1/2)   
+   
+      
+      
+       
+      Only one route - no load balancing  
+       
+      Only one measure for distance - hop count  
+       
+      Table changes only occur for major failures not
+    net status  
+       
+      Formation of loops - slow convergence  
+      
+   
+    
+     3.9.1 Disadvantages of RIP (2/2)   
+   
+      
+      
+       
+      Limited in its scope, cannot handle large
+    internets (cannot take advantage of hierarchies)  
+       
+      No routing based on service type  
+      
+   
+    
+     3. Routers   
+   
+      
+      
+       
+      The role of routers  
+       
+      Routing  
+       
+      ICMP and Routing  
+       
+      Types of routers  
+       
+      RIP  
+       
+      OSPF  
+      
+   
+    
+     3.10 OSPF (1/2)   
+   
+      
+      
+      
+       
+      This protocol solves many of the problems facing
+    RIP, particularly scalability. It detects changes quicker and converges
+    faster.  
+       
+      It is able to handle QoS:  
+       
+      Uses the service type field in IP packet to
+    route different classes of traffic over different paths.  
+       
+      It was designed to allow for dynamic routing:  
+       
+      different types of metrics can be used to define
+    the �shortest� path, e.g., delay, link utilization, physical distance, link
+    bit rate, etc.  
+      
+   
+    
+     3.10 OSPF (2/2)   
+   
+      
+      
+       
+      It allows for multiple routes per destination
+    -&gt; load balancing  
+       
+      Supports hierarchical structures  
+       
+      It was adopted as the IGP default routing
+    protocol in 1990 and most routers now implement it. (RFC 1247)  
+      
+   
+    
+     3.10 Operation of OSPF (1/4)   
+   
+      
+      
+       
+      Runs directly on top of IP.  
+       
+      Every AS has a backbone area �0.0.0.0� and is
+    organized in a star fashion.  
+       
+      Any router connecting to two or more areas is
+    called an area border router (ABR).  
+       
+      Routers that have an interface to the backbone
+    are called backbone routers.  
+      
+   
+    
+     3.10 Operation of OSPF (2/4)   
+   
+      
+      
+       
+      Routers within an area are called internal
+    routers.  
+       
+      A router connected to the outside world, i.e.,
+    other AS, is called a boundary router.  
+       
+      Within an area, each router knows its route to
+    every other router in the area including the backbone router(s) connecting
+    the area to the backbone. All routers in an area have identical linkstate
+    databases.  
+       
+      Routers connecting several areas must have the
+    link status database of each area it is connected too.  
+      
+   
+    
+     3.10 Operation of OSPF (3/4)   
+   
+      
+      
+       
+      As OSPF allows for type of service routing, each
+    router maintains 3 link status databases: one for delay, one for throughput
+    and one for reliability.  
+       
+      A packet may require an intraarea path, or an intraarea-interarea
+    path or an intraarea-interarea-interAS path dpending on where the host is.  
+       
+      Routers in areas exchange link status packets
+    (LSP) periodically. Each packet contains the following information: ID of
+    node that created LSP, list of directly connected routers with the link
+    cost, a sequence number and a time to live.  
+      
+   
+    
+     3.10 Operation of OSPF (4/4   
+   
+      
+      
+       
+      The routers use controlled flooding to reach
+    every other router in the area. Note that only newer (higher sequence
+    number) LSP are sent and they are not sent over the link that they were
+    received from.  
+       
+      Given that each router has the LSP of all the
+    other routers in the area, it can calculate independently what the shortest
+    path to each router is. The LSP describe the network topology. (Dijkstra�s
+    algorithm)  
+      
+   
+    
+     Slide 41   
+   
+    
+
+</body> 

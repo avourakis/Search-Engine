@@ -1,0 +1,37 @@
+ #ifndef ICS46GOODY_HPP_
+#define ICS46GOODY_HPP_
+
+#include 
+#include 
+#include 
+#include 
+#include 
+#include 
+
+namespace ics {
+
+template 
+std::string to_string(T item) {
+  std::stringstream stream;
+  stream  split(const std::string&amp; s, const std::string&amp; pat);
+
+std::string join(const std::vector&amp; s, const std::string&amp; pat = "");
+
+std::string prompt_string(std::string prompt,
+                          std::string default_value = "",
+                          std::string allowable[] = NULL);
+
+bool prompt_bool(std::string prompt,
+                 int default_value = 2/*not 0 or 1*/);
+
+int prompt_int(std::string prompt,
+               int         default_value = std::numeric_limits::max());
+
+void safe_open(std::ifstream&amp; f, const std::string&amp; prompt, const std::string&amp; default_name);
+
+int rand_range(int low, int high);
+
+}
+
+#endif /* ICS46GOODY_HPP_ */
+ 

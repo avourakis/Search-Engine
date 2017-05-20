@@ -1,0 +1,190 @@
+ ICS 33 Summer 2013, Code Example: Implementing Containers (Part 1)<body>
+
+ 
+
+ 
+ICS 33 Summer 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 33 Summer 2013 
+   Code Example: Implementing Containers (Part 1) 
+
+ 
+
+ 
+
+  Background 
+
+ Python provides a number of built-in  containers  in its standard library.  A container in Python is an object that acts as though it contains other objects.  You've no doubt interacted with some of the containers built into Python's standard library, such as these. 
+
+   Lists , which represent a sequence of items, where each item in the sequence has an  index ; the indices increase sequentially starting from zero.  Items can be added and removed during a list's lifetime. 
+    Tuples , which, like lists, represent a sequence of items, but the sequence cannot be modified once it's been created. 
+    Sets , which represent a collection of unique items — the same item is not permitted to appear twice.  Order is irrelevant and the items have no indices. 
+    Dictionaries , which represent a  mapping  of keys to values, where each value has a unique key that identifies it.  Keys can be any of a wide variety of types.  By far, the cheapest way to find a value is to look it up by its key. 
+  None of these containers is "better" than any of the others.  Each solves a different kind of problem; the goal is to understand the "shape" of the problem you're trying to solve, and to pick a container that's appropriate for solving it.  In this course and prerequisite work, we've seen examples where each is the best choice. 
+
+ But what do you do when none of the built-in options is really the right choice?  There are at least a couple of reasons why you might want to use containers other than the ones built into Python: 
+
+  You need abilities or performance characteristics that are not provided by Python's built-in containers.  For example, what if you have a "dictionary-shaped" problem (i.e., you need to do the same kinds of lookups based on keys that you do in a dictionary), but your collection of data is too large to reasonably fit in memory?  Rather than spread this problem throughout your program, it would be nice if you could build a container that "felt" like using a dictionary, but that automatically shuttled data to and from a file on a hard disk when it was too large to fit in memory.  Once you built and tested this container once, you could reuse it in any similar scenario.  (And, in reality, there's a reasonably good chance you might be able to find something in open source that does much or all of what you need.) 
+   You need a container that's less flexible than the ones that are built in.  Lists are very useful, but not very restrictive; you can add items, remove items, sort the items, or perform any number of other transformations on a list during its lifetime.  But if the problem you're solving is narrower than that — say, for example, that you know you need to remember a sequence of items, but that you'll only ever need to access the most-recently-added item and no other — to allow anything other than narrow needs of your own problem is to allow your program to have bugs.  Rather than allow those bugs, we can simply make them impossible by building a container that allows only the things we know we need.  (We'll see examples of this in the second half of the course.) 
+  One of the recurring themes in this course is that there's very little "magic" in Python.  Built-in types do few things that your types can't also do.  The trick is to know what rules your code needs to follow if you want to behave like the built-in types do.  For example, when we wanted to add objects of our own types together using the + operator, we needed to look no further than the special methods  __add__  and  __radd__ .  Once we knew what Python expected us to do, the solution was straightforward. 
+
+ Containers, like everything else, aren't as special as they seem.  If you want to write a new class whose objects feel similar to the built-in containers like lists, tuples, sets, or dictionaries, you can do it, as long as you know the rules you need to follow: what special methods and other things you need to provide in order to "hook into" Python's model of how these things should work.  If you want to be able to index your containers using the  [ ]  notation, iterate over your containers using a  for  loop, remove items from your containers using  del , and so on, there are only a few rules you need to follow. 
+
+ This code example is our first foray into building a custom container, an object that feels in some ways like a list, but whose items are predictable (i.e., given a particular index, a formula can be used to calculate what the item is).  So, rather than storing the items in memory, our container will determine on the fly what they must be.  If this sounds obtuse, it's not; it, too, shows up in Python's standard library.  This is exactly what  range   objects do!   range  isn't a function; it's a class, and its objects are containers!  But they don't actually store their items in memory — a  range(0, 99999999)  doesn't require any memory than a  range(0, 9)  does.  Because the items in the range are predictable, a  range  object figures out what they are on the fly as you ask for them, knowing that the first item is whatever "start" value you specify, the second item is the "start" value plus the "step" value, and so on. 
+
+ 
+
+ 
+
+  An infinite sequence of zeroes 
+
+ As a first example, imagine that we want an object that acts as though it's an infinitely-large container of zeroes.  You can index it by any non-negative integer index and you'll always get back zero; if you index it by anything else, an  IndexError  will be raised instead. 
+
+  
+&gt;&gt;&gt; zeroes = InfiniteZeroes()
+&gt;&gt;&gt; zeroes[0]
+0
+&gt;&gt;&gt; zeroes[1]
+0
+&gt;&gt;&gt; zeroes[10000000]
+0
+&gt;&gt;&gt; zeroes[-500000]
+ Traceback (most recent call last)
+   ...
+IndexError: index must be non-negative integer 
+&gt;&gt;&gt; zeroes['Boo']
+ Traceback (most recent call last)
+   ...
+IndexError: index must be non-negative integer 
+  
+
+ While this particular example isn't of a lot of practical use, it serves to illustrate some important concepts that we'll need later. 
+
+ The special method __getitem__ 
+
+ The ability to index an object using the  [ ]  notation is provided in Python by the special method  __getitem__ : 
+
+  
+ def  __getitem__(self, index)
+  
+
+ where  self  is the object being indexed (i.e., the object that appears before the brackets) and  index  is the index (i.e., the objects that appears in the brackets).  So the expression  a[b]  would be translated, in Python, into a call to  a.__getitem__(b)  instead. 
+
+ Using __getitem__ to implement our InfiniteZeroes container 
+
+ Our InfiniteZeroes container can be implemented very simply, then.  All we need is a  __getitem__  method that checks that the index it's given is a non-negative integer.  If so, it returns 0; if not, it raises an IndexError.  So our entire InfiniteZeroes class looks like this: 
+
+  
+ class  InfiniteZeroes:
+     def  __getitem__(self, index):
+         if  type(index) != int  or  index raise IndexError('index must be non-negative integer')
+         else :
+             return  0
+  
+
+ An interesting consequence of including a __getitem__ method 
+
+ The  __getitem__  method provides more than just indexing ability.  It also forms part of the implementation of a  for  loop in Python.  It's not the  for  loop's first choice — we'll see that in a later example — but if all it can find is a  __getitem__  method, that's enough to allow a  for  loop to attempt to iterate through a container. 
+
+ Here's what  for x in z  does if  __getitem__  is all that's available in  z : 
+
+  It attempts to call  z.__getitem__(0) .  If successful,  x  is set to the result and the loop iterates once. 
+   It then attempts to call  z.__getitem__(1) .  Again, if successful,  x  is set to the result and the loop iterates again. 
+   This continues — with the index increasing by 1 each time — until  __getitem__  raises an IndexError, in which case the  for  loop ends quietly. 
+  That means our InfiniteZeroes container works correctly with a  for  loop.  For example, the following  for  loop will run infinitely, printing a never-ending column of zeroes. 
+
+  
+ for  x  in  InfiniteZeroes():
+    print(x)
+  
+
+ That may sound like a bug, but it's actually the expected behavior.  Given an infinitely-large container, I would expect a  for  loop that iterates over it to run infinitely; if the collection never ends, neither should the loop. 
+
+ Slicing 
+
+ When we think about lists, there's one other bit of functionality that lists support, but that we're not supporting. 
+
+  
+&gt;&gt;&gt; x = InfiniteZeroes()
+&gt;&gt;&gt; x[3:9]
+ Traceback (most recent call last)
+   ...
+IndexError: index must be non-negative integer 
+  
+
+ In a list, when we use the notation  [i : j] , we're asking for a  slice  of that list, a list of all the elements from index  i  to index  j  (but not including the item at index  j ).  We might expect the same thing to work with our InfiniteZeroes container, but it failed.  But, as always, it's instructive to pay attention to  how  it failed.  Notice that the error message is ours —  index must be non-negative integer  — the one we just wrote in our  __getitem__  method.  That tells us that our  __getitem__  method was called. 
+
+ But what was it passed as an index?  The answer is an object of the built-in type  slice .  A slice object has three attributes: 
+
+   start , which indicates the starting index of the slice (or  None  if no start was specified, as in the slice  [:3] ). 
+    stop , which indicates the ending index of the slice (or  None  if no stop was specified, as in the slice  [8:] ). 
+    step , which indicates the step size (or  None  if no step was specified). 
+  So, for example, in the slice  [3:8:2] , its  start  attribute would be 3, its  stop  attribute would be 8, and its  step  attribute would be 2. 
+
+ Negative indices, if specified, are passed as-is to  __getitem__ ; it's up to a particular  __getitem__  method to handle them as appropriate. 
+
+ Integrating slicing into our InfiniteZeroes collection 
+
+ If we want to integrate slicing into our InfiniteZeroes collection, we first need to decide how we think it should work when it's used.  Below is an example of what we might expect, with some notes included to explain the behavior. 
+
+  
+&gt;&gt;&gt; x = InfiniteZeroes()
+&gt;&gt;&gt; x[5:10]
+[0,0,0,0,0]     (Note: indices 5, 6, 7, 8, and 9) 
+&gt;&gt;&gt; x[3:11:2]
+[0,0,0,0]       (Note: indices 3, 5, 7, and 9) 
+&gt;&gt;&gt; x[8:0:-3]
+[0,0,0]         (Note: indices 8, 5, and 2) 
+&gt;&gt;&gt; x[10:8]
+[]              (No indices lie between 10 and 8 if the step is positive) 
+&gt;&gt;&gt; x[8:12:-1]
+[]              (No indices lie between 8 and 12 if the step is negative) 
+  
+
+ Putting all of these examples together, we can derive a formula for figuring out the length of the resulting list.  But we can solve the problem more easily.   range  objects have a length, which tells you how many numbers are in the range.  So we can take the  slice  we've been given, construct a  range  from it, and ask the  range  for its length.  The only tricky part is working around issues with start, stop, or step being missing, and with negative indices in the slice (which would not make sense in an infinitely-long sequence, because an infinitely-long sequence doesn't have a "last" item). 
+
+  
+ class  InfiniteZeroes:
+     def  __getitem__(self, index):
+         if  type(index) == slice:
+             if  index.stop == None:
+                 raise  IndexError('stop must be specified in a slice')
+
+             if  (index.start != None and index.start raise IndexError('index must be non-negative integer')
+
+            range_start = 0  if  index.start == None  else  index.start
+            range_stop = index.stop
+            range_step = 1  if  index.step == None  else  index.step
+
+             return  [0] * len(range(range_start, range_stop, range_step))
+         elif  type(index) != int  or  index raise IndexError('index must be non-negative integer')
+         else :
+             return  0
+  
+
+ 
+
+ 
+
+  The complete code example 
+
+ In lecture, we wrote the example above somewhat more quickly, then concentrated our efforts on a somewhat more complex problem called  SquaresList , which acted as a finite-length list of items where each item is the square of its index.  So, for example, a  SquaresList(5)  is similar to the list [0, 1, 4, 9, 16].  However, since it's possible to calculate an item's value given only its index, we opted to calculate these values on the fly when  __getitem__  was called, rather than storing them in a list in memory. 
+
+ Below are links to the completed InfiniteZeroes and a commented and completed version of SquaresList from lecture. 
+
+   zeroes.py  
+    squareslist.py  
+  
+
+</body> 

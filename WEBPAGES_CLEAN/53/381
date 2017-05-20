@@ -1,0 +1,65 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ David J. Fiander  (  davidf@worf.mks.com  )  Mon, 10 Jun 1996 10:29:31 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Dennis E. Hamilton: "RE: DMA (Document Management Alliance) Technical Meeting" 
+    Previous message:   David J. Fiander: "Re: version management and relative links" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+
+    
+&gt; 6)  http://host/path/resource/x 
+&gt; also proposed by Kenji Takahashi, never really discussed but used by
+&gt; Christopher Seiwal for several examples.
+
+My last message on this may have seemed a little rabid about my
+dislike for this option.  I wanted to assure you that I'm not
+rabid; the suggestion has merit.  I do, however, see some
+problems.
+
+There are two scenarios possible in a "hierarchical version
+space":
+
+         http://host/prefix/VERSION/suffix 
+
+and
+
+         http://host/prefix/suffix/VERSION 
+
+The former has the advantage that, in the general case, we can
+specify a version for a subtree, which lets us "surf into the
+past" for free.  The latter has the advantage that, in a sense,
+different versions of a particular node in the heirarchy are
+subordinate to it.
+
+Unfortunately, neither option addresses the practical concern
+that the server has to have some way of determining
+&lt;strong&gt;when&lt;/&gt; a URL contains a version.  I mean, the path
+
+         http://host/foo/1.5/bar.html 
+
+could easily reference a page discussing the history of the "bar"
+facility in Lisp 1.5.
+
+This implies that there must be a node in the hierarchy that
+informs the server that we're going elsewhen.  For example:
+
+         http://host/foo/bar.html 
+
+is the "current" or "default" page and
+
+         http://host/waybackmachine/foo/bar.html/1.5 
+
+is rev. 1.5 of the same node.
+
+- David
+ 
+
+  
+     Next message:   Dennis E. Hamilton: "RE: DMA (Document Management Alliance) Technical Meeting" 
+    Previous message:   David J. Fiander: "Re: version management and relative links" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+
+  </body> 

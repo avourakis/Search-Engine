@@ -1,0 +1,54 @@
+ 23.7.1 OEReadFASTAFile<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.7 FASTA Sequence File 
+ Up:   23.7 FASTA Sequence File 
+ Next:   23.7.2 OEWriteFASTAFile 
+   
+
+
+  
+23.7.1 OEReadFASTAFile 
+ 
+
+ 
+    bool MyReadFASTAMolecule(oemolistream &amp;ifs, OEMolBase &amp;mol)
+{
+  mol.Clear();
+  if (OEReadFASTAFile(ifs,mol))
+  {
+    OEFindRingAtomsAndBonds(mol);
+    OEAssignAromaticFlags(mol);
+    return true;
+  }
+  mol.Clear();
+  return false;
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.7 FASTA Sequence File 
+ Up:   23.7 FASTA Sequence File 
+ Next:   23.7.2 OEWriteFASTAFile 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

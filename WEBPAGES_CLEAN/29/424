@@ -1,0 +1,70 @@
+ user.websites.chimera2.concepts.anchors<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Anchors  
+
+ Anchors are the logical end-points of  links .
+ Viewers  must map these conceptual entities into
+concrete elements within their  views . Anchors are
+thus  regions of interest  within a view which are, typically, selectable
+or active in some fashion. Anchors are important since they are the "raw
+matieral" for creating links. Users author links by grouping related
+anchors together. 
+
+     
+
+ As shown above, anchors can be either  view-specific  or  view-independent .
+The former implies that only the viewer which created the anchor can successfully
+reproduce the intended display of the anchor. The latter are assumed to
+follow a standardized format such that any viewer which supports the relevant
+MIME type can easily display the anchor as intended. As such, a viewer must
+be sure to follow the convention of storing the anchors they create in the
+appropriate place; view-specific anchors are associated with a view, while
+view-independent anchors are associated with the view's object. 
+
+ Developer Information 
+
+ The available operations on anchors are listed below. For more information
+see the  on-line documentation . 
+
+       anchorExists(anchor)  
+ Checks to see if the specified anchor exists in the active hyperweb.     deleteAnchor(anchor)  
+ Deletes the specified anchor in the active hyperweb. Chimera's proactive
+approach to hyperweb consistency ensures that the anchor is removed from
+any links which contain it before it is deleted.     getAnchors()  
+ Returns all of the viewers for the active hyperweb.     getObject(anchor)  
+ Retrieves the object associated with this view-independent anchor. If this
+anchor is view-specific, then this routine returns null.     getView(anchor)  
+ Retrieves the view associated with this view-specific anchor. If this anchor
+is view-independent, then this routine returns null.     numberOfAnchors()  
+ Returns the number of anchors contained in the active hyperweb.     traverseLinks(anchor)  
+ Initiates a link traversal on all links which contain the specified anchor.     traverseTo(anchor)  
+ Initiates a traversal  to  the specified anchor. This operation can
+be used when a viewer wants to travel to some pre-defined location in the
+hyperweb.     viewSpecific(anchor)  
+ Returns  TRUE  if the specified anchor is view-specific.    
+
+      Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

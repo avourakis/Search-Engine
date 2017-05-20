@@ -1,0 +1,272 @@
+ CHEM.ML.features.TreeExtractor.TreeExtractor<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package ML  ::
+         Package features  ::
+         Module TreeExtractor  ::
+        Class TreeExtractor
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class TreeExtractor    
+BaseFeatureExtractor.BaseFeatureExtractor --+
+                                            |
+                                            TreeExtractor</strong>
+ 
+
+ 
+Feature extractor that interprets molecule inputs as a graph of atoms 
+  and bonds.  Treats each tree of depth d as a feature and records the 
+  count of how many times each one appears.    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Default constructor, modify a few attributes to interpret as 
+      molecule feature extractor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           loadOptions ( self ,
+         options )  
+      Given an options object derived from an optparse.OptionParser, 
+      load any options of interest into the state of this object. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __call__ ( self ,
+         obj )  
+      Primary abstract method. 
+           
+            
+            
+           
+           
+     
+         
+      
+             makeSubtree ( self ,
+         mol ,
+         rootAtom ,
+         treeDepth )  
+      Return a copy of the molecule object, but only containing atoms 
+      starting from the indicated rootAtom up to a depth of treeDepth 
+      away. 
+           
+            
+            
+           
+           
+     
+         
+      
+             labelSubtree ( self ,
+         mol ,
+         rootAtom ,
+         depth ,
+         visitedAtomIndexes )  
+           
+            
+            
+           
+           
+     
+         
+      
+           objectDescription ( self ,
+         obj )  
+      Input is a molecule object, just return the canonical SMILES 
+      representation 
+           
+            
+            
+           
+           
+     
+         
+      
+           getNameID ( self ,
+         obj )  
+      Input is a molecule object, return the molecule's Title 
+      property 
+           
+            
+            
+           
+           
+     
+      Inherited from  BaseFeatureExtractor.BaseFeatureExtractor  :
+       loadArgs ,
+       main ,
+       outputFeatures 
+       
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+           depth  =  0 
+     
+     
+      Inherited from  BaseFeatureExtractor.BaseFeatureExtractor  :
+       inputFunction ,
+       inputIter ,
+       outFile ,
+       parser 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Default constructor, modify a few attributes to interpret as molecule 
+  feature extractor.
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.__init__ 
+     
+       
+  
+ 
+   
+     
+     loadOptions ( self ,
+         options ) 
+   
+     
+     
+    
+  
+  Given an options object derived from an optparse.OptionParser, load 
+  any options of interest into the state of this object.  Sub-classes 
+  should have this handle any of the options it added to the command-line 
+  parser via the constructor.
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.loadOptions 
+     
+       
+  
+ 
+   
+     
+     __call__ ( self ,
+         obj ) 
+      (Call operator) 
+   
+     
+     
+     Primary abstract method.  Build a dictionary of an input object's 
+  important features. 
+   Should be such that it is easy to compare any two objects' feature 
+  dictionaries. 
+  This uses the "callable" interface, which means the object 
+  is a functor which should be used like a function call.  For example: 
+  &gt;&gt;&gt; from SpectrumExtractor import SpectrumExtractor; 
+  &gt;&gt;&gt; featureExtractor = SpectrumExtractor(); &gt;&gt;&gt; 
+  featureExtractor.k = 1; &gt;&gt;&gt; featureDict = 
+  featureExtractor("teststring");     # Note that the extractor 
+  object looks like a function call &gt;&gt;&gt; features = 
+  featureDict.keys(); &gt;&gt;&gt; features.sort(); &gt;&gt;&gt; for 
+  feature in features: ...     print feature, featureDict[feature] e 1 g 1 
+  i 1 n 1 r 1 s 2 t 3
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.__call__ 
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     objectDescription ( self ,
+         obj ) 
+   
+     
+     
+    
+  
+  Input is a molecule object, just return the canonical SMILES 
+  representation
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.objectDescription 
+     
+       
+  
+ 
+   
+     
+     getNameID ( self ,
+         obj ) 
+   
+     
+     
+    
+  
+  Input is a molecule object, return the molecule's Title property
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.getNameID 
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:32 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

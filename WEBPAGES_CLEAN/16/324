@@ -1,0 +1,98 @@
+ // Paterson BSP counterexample: interpenetrating cuboids
+
+#include "colors.inc"	// Standard Color definitions
+#include "textures.inc"	// Standard Texture definitions
+
+camera
+{
+  location  
+  look_at   
+  right x
+}
+
+// create a regular point light source
+light_source
+{
+  0*x // light's position (translated below)
+  color red 1.5  green 1.0  blue 1.0  // light's color
+  translate 
+}
+light_source
+{
+  0*x // light's position (translated below)
+  color red 1.0  green 1.5  blue 1.0  // light's color
+  translate 
+}
+light_source
+{
+  0*x // light's position (translated below)
+  color red 1.0  green 1.0  blue 1.5  // light's color
+  translate 
+}
+
+// Light gray ground plane
+plane
+{
+  y, -1.0
+  texture {
+    pigment { color rgb  }
+    finish { reflection 0.2 }
+  }
+}
+
+// Create an infinite sphere around scene and allow any texture on it
+sky_sphere
+{
+  pigment
+  {
+    gradient y
+    color_map { [0.0 color blue 0.6] [1.0 color rgb 1] }
+  }
+}
+
+#declare eps=0.03
+#declare rr=6*clock*y
+
+#declare xbeam = box
+{
+  
+  
+  texture { pigment { color red 1 } }
+  translate .4*y
+}
+
+#declare ybeam = box
+{
+  
+  
+  texture { pigment { color green 1 } }
+  translate .4*y
+}
+
+#declare zbeam = box
+{
+  
+  
+  texture { pigment { color blue 1 } }
+  translate .4*y
+}
+
+object { xbeam translate  rotate rr }
+object { xbeam translate  rotate rr }
+object { xbeam translate  rotate rr }
+object { xbeam translate  rotate rr }
+object { xbeam translate  rotate rr }
+object { xbeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { ybeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+object { zbeam translate  rotate rr }
+ 

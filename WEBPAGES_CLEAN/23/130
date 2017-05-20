@@ -1,0 +1,813 @@
+ Min_ellipse_2&lt;Traits&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Min_ellipse_2&lt;Traits&gt;  
+ 
+
+   
+
+   
+
+
+   
+   
+     
+     
+   
+
+   
+
+   
+
+
+   
+     
+     
+   
+
+   
+
+
+   
+     
+     
+  
+  
+
+  Definition 
+ 
+
+An object of the class   Min_ellipse_2 &lt;Traits&gt;  is the unique ellipse of smallest  area 
+enclosing a finite (multi)set of points in two-dimensional euclidean
+space     2  .  For a point set  P  we denote by  me(P)  the smallest
+ellipse that contains all points of  P . Note that  me(P)  can be
+degenerate,
+i.e.  me(P)= Ø   if
+ P= Ø  ,  me(P)={p}  if  P={p} ,
+and  me(P) = {  (1-l)p + l q | 0   }  if  P={p,q} .
+  
+
+An inclusion-minimal subset  S  of  P  with  me(S)=me(P)  is called a
+ support set ,
+the points in  S  are the  support points .  A support set has size at
+most five, and all its points lie on the boundary of  me(P) . In general,
+neither the support set nor its size are necessarily unique.
+  
+
+The underlying algorithm can cope with all kinds of input, e.g.  P  may be
+empty or points may occur more than once. The algorithm computes a support
+set  S  which remains fixed until the next insert or clear operation.
+  
+
+ #include &lt; CGAL/Min_ellipse_2.h &gt; 
+  
+
+  Requirements    
+     
+     
+  
+ 
+
+The template parameter  Traits  is a model for   MinEllipse2Traits  .
+  
+
+We provide the model   CGAL::Min_ellipse_2_traits_2 &lt;K&gt;  using the 
+two-dimensional C GAL  kernel.
+  
+
+  Types    
+     
+     
+  
+ 
+
+    
+          Min_ellipse_2 &lt;Traits&gt;::Point
+         
+              
+    Typedef to  Traits::Point   .
+ 
+
+          
+          Min_ellipse_2 &lt;Traits&gt;::Ellipse
+         
+              
+    Typedef to  Traits::Ellipse . If you 
+        are using the predefined traits class 
+          CGAL::Min_ellipse_2_traits_2 &lt;K&gt; ,
+        you can access the coefficients of the ellipse, see the 
+        documentation of   CGAL::Min_ellipse_2_traits_2 &lt;K&gt;  and 
+        the example below.
+ 
+
+          
+          Min_ellipse_2 &lt;Traits&gt;::Point_iterator
+         
+              
+    Non-mutable model of the STL concept  BidirectionalIterator 
+        with value type  Point . Used to access the points
+        of the smallest enclosing ellipse.
+ 
+
+          
+          Min_ellipse_2 &lt;Traits&gt;::Support_point_iterator
+         
+              
+    Non-mutable model of the STL concept  RandomAccessIterator 
+        with value type  Point . Used to access the support points
+        of the smallest enclosing ellipse.
+ 
+
+     
+
+  Creation    
+     
+     
+  
+ 
+
+A   Min_ellipse_2 &lt;Traits&gt;  object can be created from an arbitrary point set  P  and by
+specialized construction methods expecting no, one, two, three, four or
+five points as arguments. The latter methods can be useful for
+reconstructing  me(P)  from a given support set  S  of  P .
+  
+
+    
+         
+    template &lt; class InputIterator &gt;
+         
+            
+             
+     Min_ellipse_2 &lt;Traits&gt; min_ellipse (     
+    InputIterator first, 
+
+InputIterator last, 
+
+bool randomize, 
+
+Random&amp; random = default_random, 
+
+Traits traits = Traits());     
+              
+    initializes  min_ellipse  to  me(P)  with  P  being the set of points
+        in the range [ first , last ). If  randomize  is
+         true , a random permutation of  P  is computed in
+        advance, using the random numbers generator  random .
+        Usually, this will not be necessary, however, the algorithm's
+        efficiency depends on the order in which the points are
+        processed, and a bad order might lead to extremely poor
+        performance (see example below).  Requirement:  The value type of  first  and  last 
+        is  Point .
+ 
+
+          
+          Min_ellipse_2 &lt;Traits&gt; min_ellipse (  Traits traits = Traits());
+         
+              
+    creates a variable  min_ellipse  of type   Min_ellipse_2 &lt;Traits&gt; .
+        It is initialized to
+         me( Ø ) , the empty set.  Postcondition:   min_ellipse  .is_empty()  =  true .
+ 
+
+          
+          Min_ellipse_2 &lt;Traits&gt; min_ellipse (  Point p,  Traits traits = Traits());
+         
+              
+    initializes  min_ellipse  to  me({p}) , the set  {p} .  Postcondition:   min_ellipse  .is_degenerate()  =  true .
+ 
+
+          
+             
+     Min_ellipse_2 &lt;Traits&gt; min_ellipse (     
+     Point p, 
+
+Point q, 
+
+Traits traits = Traits());     
+              
+    initializes  min_ellipse  to  me({p,q}) ,
+the set
+         {  (1-l)p + l q | 0   } .  Postcondition:   min_ellipse  .is_degenerate()  =  true .
+ 
+
+          
+             
+     Min_ellipse_2 &lt;Traits&gt; min_ellipse (     
+     Point p1, 
+
+Point p2, 
+
+Point p3, 
+
+Traits traits = Traits());     
+              
+    initializes  min_ellipse  to  me({p1,p2,p3}) .
+ 
+
+          
+             
+     Min_ellipse_2 &lt;Traits&gt; min_ellipse (     
+     Point p1, 
+
+Point p2, 
+
+Point p3, 
+
+Point p4, 
+
+Traits traits = Traits());     
+              
+    initializes  min_ellipse  to  me({p1,p2,p3,p4}) .
+ 
+
+          
+             
+     Min_ellipse_2 &lt;Traits&gt; min_ellipse (     
+     Point p1, 
+
+Point p2, 
+
+Point p3, 
+
+Point p4, 
+
+Point p5, 
+
+Traits traits = Traits());     
+              
+    initializes  min_ellipse  to  me({p1,p2,p3,p4,p5}) .
+ 
+
+     
+
+  Access Functions    
+     
+     
+   
+
+   
+
+
+   
+     
+     
+     
+   
+
+   
+   
+     
+     
+  
+ 
+
+    
+           
+int
+         
+          
+         
+    min_ellipse.number_of_points ()
+         
+                
+    returns the number of points of  min_ellipse , i.e.  |P| .
+                 
+           
+int
+         
+          
+         
+    min_ellipse.number_of_support_points ()
+         
+                
+    returns the number of support points of  min_ellipse , i.e.  |S| .
+                 
+           
+Point_iterator
+         
+          
+         
+    min_ellipse.points_begin ()
+         
+                
+    returns an iterator referring to the first point of  min_ellipse .
+            
+           
+Point_iterator
+         
+          
+         
+    min_ellipse.points_end ()
+         
+                
+    returns the corresponding past-the-end iterator.
+                 
+           
+Support_point_iterator
+         
+              
+         
+    min_ellipse.support_points_begin ()
+         
+                
+    returns an iterator referring to the first support point of  min_ellipse .
+            
+           
+Support_point_iterator
+         
+              
+         
+    min_ellipse.support_points_end ()
+         
+                
+    returns the corresponding past-the-end iterator.
+                 
+           
+ Point
+         
+          
+         
+    min_ellipse.support_point ( int i)
+         
+                
+    returns the  i -th support point of  min_ellipse . Between two
+        modifying operations (see below) any call to
+         min_ellipse  .support_point(i)  with the same  i  returns
+        the same point.  Precondition:   0    i&lt;   min_ellipse  .number_of_support_points()   .
+                 
+           
+ Ellipse
+         
+          
+         
+    min_ellipse.ellipse ()
+         
+                
+    returns the current ellipse of  min_ellipse .
+            
+
+  Predicates    
+     
+     
+     
+   
+
+   
+   
+     
+     
+  
+ 
+
+By definition, an empty   Min_ellipse_2 &lt;Traits&gt;  has no boundary and no bounded side,
+i.e. its unbounded side equals the whole space     2  .
+  
+
+    
+           
+ CGAL::Bounded_side 
+         
+          
+         
+    min_ellipse.bounded_side (  Point p)
+         
+                
+    returns  CGAL::   ON_BOUNDED_SIDE  ,
+         CGAL::   ON_BOUNDARY  , or
+         CGAL::   ON_UNBOUNDED_SIDE   iff  p  lies properly
+        inside, on the boundary of, or properly outside of  min_ellipse , resp.
+                 
+           
+bool
+         
+          
+         
+    min_ellipse.has_on_bounded_side (  Point p)
+         
+                
+    returns  true , iff  p  lies properly inside  min_ellipse .
+                 
+           
+bool
+         
+          
+         
+    min_ellipse.has_on_boundary (  Point p)
+         
+                
+    returns  true , iff  p  lies on the boundary
+        of  min_ellipse .
+                 
+           
+bool
+         
+          
+         
+    min_ellipse.has_on_unbounded_side (  Point p)
+         
+                
+    returns  true , iff  p  lies properly outside of  min_ellipse .
+                 
+           
+bool
+         
+          
+         
+    min_ellipse.is_empty ()
+         
+                
+    returns  true , iff  min_ellipse  is empty (this implies
+        degeneracy).
+                 
+           
+bool
+         
+          
+         
+    min_ellipse.is_degenerate ()
+         
+                
+    returns  true , iff  min_ellipse  is degenerate,
+        i.e. if  min_ellipse  is empty, equal to a single point or equal to a
+        segment, equivalently if the number of support points is less
+        than 3.
+            
+
+  Modifiers    
+     
+     
+     
+   
+
+   
+   
+     
+     
+  
+ 
+
+New points can be added to an existing  min_ellipse , allowing to build  me(P) 
+incrementally, e.g. if  P  is not known in advance. Compared to the direct
+creation of  me(P) , this is not much slower, because the construction
+method is incremental itself.
+  
+
+    
+           
+void
+         
+          
+         
+    min_ellipse.insert (  Point p)
+         
+                
+    inserts  p  into  min_ellipse  and recomputes the smallest
+        enclosing ellipse.
+                 
+         
+    template &lt; class InputIterator &gt;
+         
+            
+           
+void
+         
+          
+             
+    min_ellipse.insert (     
+    InputIterator first, 
+
+InputIterator last)     
+                
+    inserts the points in the range [ first , last )
+        into  min_ellipse  and recomputes the smallest enclosing ellipse by
+        calling  insert(p)  for each point  p  in
+        [ first , last ).  Requirement:  The value type of  first  and  last  is
+         Point .
+                 
+           
+void
+         
+          
+         
+    min_ellipse.clear ()
+         
+                
+    deletes all points in  min_ellipse  and sets  min_ellipse  to the empty set.  Postcondition:   min_ellipse  .is_empty()  =  true .
+            
+
+  Validity Check 
+   
+     
+     
+     
+   
+
+   
+   
+     
+     
+  
+ 
+
+An object  min_ellipse  is valid, iff
+    min_ellipse  contains all points of its defining set  P ,
+     min_ellipse  is the smallest ellipse spanned by its support set  S , and
+     S  is minimal, i.e. no support point is redundant.
+   Note:  In this release only the first item is considered by the
+validity check.
+ 
+
+    
+           
+bool
+         
+          
+             
+    min_ellipse.is_valid (     
+    bool verbose = false, 
+
+int level = 0)     
+                
+    returns  true , iff  min_ellipse  contains all points of its
+      defining set  P . If  verbose  is  true , some
+      messages concerning the performed checks are written to
+      standard error stream. The second parameter  level  is not
+      used, we provide it only for consistency with interfaces of
+      other classes.
+            
+
+  Miscellaneous 
+   
+     
+     
+     
+   
+
+   
+   
+     
+     
+  
+ 
+
+    
+           
+const Traits&amp;
+         
+          
+         
+    min_ellipse.traits ()
+         
+                
+    returns a const reference to the traits class object.
+            
+
+  I/O 
+   
+     
+     
+  
+ 
+
+   
+
+   
+   
+     
+     
+   
+
+   
+  
+      
+
+
+            
+         
+    std::ostream&amp;
+         
+          
+         
+     std::ostream&amp; os &lt;&lt;  min_ellipse  
+
+         
+                
+    writes  min_ellipse  to output stream  os .  Requirement:  The output operator is defined for  Point 
+        (and for  Ellipse , if pretty printing is used).
+            
+
+   
+
+   
+   
+     
+     
+   
+
+   
+  
+      
+
+
+            
+         
+    std::istream&amp;
+         
+          
+         
+     std::istream&amp; is &gt;&gt;  min_ellipse&amp;  
+
+         
+                
+    reads  min_ellipse  from input stream  is .  Requirement:  The input operator is defined for  Point .
+            
+
+ #include &lt; CGAL/IO/Window_stream.h &gt; 
+  
+
+   
+
+   
+   
+     
+     
+   
+
+   
+  
+      
+
+
+            
+          CGAL::Window_stream &amp;
+         
+              
+          CGAL::Window_stream &amp; ws &lt;&lt;  min_ellipse  
+
+         
+                
+    writes  min_ellipse  to window stream  ws .  Requirement:  The window stream output operator is defined for
+         Point  and  Ellipse .
+            
+
+  See Also 
+ 
+
+  CGAL::Min_circle_2 &lt;Traits&gt;    CGAL::Min_ellipse_2_traits_2 &lt;K&gt;    MinEllipse2Traits  
+  
+
+  Implementation    
+     
+     
+  
+ 
+
+We implement the incremental algorithm of Welzl, with move-to-front
+heuristic [ Wel91 ], using the primitives as described
+in [ GS97a ,  GS97b ]. The whole implementation is described
+in [ GS98b ].
+  
+
+If randomization is
+chosen, the creation time is almost always linear in the number of points.
+Access functions and predicates take constant time, inserting a point might
+take up to linear time, but substantially less than computing the new
+smallest enclosing ellipse from scratch. The clear operation and the check
+for validity each takes linear time.
+  
+
+  Example 
+   
+     
+     
+  
+ 
+
+To illustrate the usage of   Min_ellipse_2 &lt;Traits&gt;  and to show that randomization
+can be useful in certain cases, we give an example. The example also
+shows how the coefficents of the constructed ellipse can be accessed.
+  
+
+  // file: examples/ Min_ellipse_2 /example_Min_ellipse_2.C
+
+// includes
+#include &lt;cassert&gt;
+#include &lt;CGAL/ Cartesian .h&gt;
+#include &lt;CGAL/ Point_2 .h&gt;
+#include &lt;CGAL/ Min_ellipse_2 .h&gt;
+#include &lt;CGAL/ Min_ellipse_2_traits_2 .h&gt;
+#include &lt;CGAL/ Gmpq .h&gt;
+
+// typedefs
+typedef   CGAL::Gmpq                        NT;
+typedef   CGAL::Cartesian &lt;NT&gt;              K;
+typedef   CGAL::Point_2 &lt;K&gt;                 Point;
+typedef   CGAL::Min_ellipse_2_traits_2 &lt;K&gt;  Traits;
+typedef   CGAL::Min_ellipse_2 &lt;Traits&gt;      Min_ellipse;
+
+// main
+int
+main( int, char**)
+{
+    int     n = 200;
+    Point*  P = new Point[ n];
+
+    for ( int i = 0; i &lt; n; ++i)
+	P[ i] = Point( i % 2 ? i : -i , 0);
+    // (0,0), (-1,0), (2,0), (-3,0)
+
+    std::cout &lt;&lt; "Computing ellipse (without randomization)...";
+    std::cout.flush();
+    Min_ellipse  me1( P, P+n, false);    // very slow
+    std::cout &lt;&lt; "done." &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; "Computing ellipse (with randomization)..."; 
+    std::cout.flush();
+    Min_ellipse  me2( P, P+n, true);     // fast  
+    std::cout &lt;&lt; "done." &lt;&lt; std::endl;
+
+    // because all input points are  collinear , the ellipse is 
+    // degenerate and equals a line segment; the ellipse has 
+    // two support points
+    assert(me2.is_degenerate());
+    assert(me2.number_of_support_points()==2); 
+
+    // prettyprinting 
+     CGAL::set_pretty_mode ( std::cout);
+    std::cout &lt;&lt; me2;
+
+    // in general, the ellipse is not explicitly representable 
+    // over the input number type NT; when you use the default
+    // traits class  CGAL::Min_ellipse_2_traits_2 &lt;K&gt;, you can 
+    // get double approximations for the coefficients of the 
+    // underlying conic curve. NOTE: this curve only exists 
+    // in the nondegenerate case!
+
+    me2.insert(Point(0,1)); // resolves the degeneracy
+    assert(!me2.is_degenerate());
+
+    // get the coefficients
+    double r,s,t,u,v,w;
+    me2.ellipse().double_coefficients( r, s, t, u, v, w);    
+    std::cout &lt;&lt; "ellipse has the equation " &lt;&lt; 
+      r &lt;&lt; " x^2 + " &lt;&lt; 
+      s &lt;&lt; " y^2 + " &lt;&lt; 
+      t &lt;&lt; " xy + " &lt;&lt;
+      u &lt;&lt; " x + " &lt;&lt;
+      v &lt;&lt; " y + " &lt;&lt;
+      w &lt;&lt; " = 0." &lt;&lt; std::endl;
+
+    delete[] P;
+
+    return( 0);
+}
+
+// ===== EOF ==================================================================
+ 
+ 
+
+    Next:    Min_ellipse_2_traits_2&lt;K&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

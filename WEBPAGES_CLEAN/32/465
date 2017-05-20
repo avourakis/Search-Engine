@@ -1,0 +1,306 @@
+ /* 
+$Id$
+
+Copyright (C) 2007 by The Regents of the University of California
+
+Redistribution of this file is permitted under
+the terms of the *GNU* Public License (*GPL*) 	
+
+Date: 04/08/2007
+Author: Yiming Lu 
+*/
+
+#include 
+#include 
+
+#include "gram.h"
+
+using namespace std;
+
+//------------------------------------------------------------
+// Constructor
+//------------------------------------------------------------
+StringPosition::StringPosition():position(0),
+                                 actualCnt(0),
+                                 sizeOfStringIDs(1)
+{
+    this-&gt;stringIDs = new unsigned[sizeOfStringIDs];	
+}
+
+StringPosition::StringPosition(unsigned stringID, unsigned short position):
+                               position(position),
+                               actualCnt(1),
+                               sizeOfStringIDs(1)
+{
+    this-&gt;stringIDs = new unsigned[sizeOfStringIDs];
+    this-&gt;stringIDs[0] = stringID;
+}
+
+void StringPosition::addStringID(unsigned stringID)
+{
+    actualCnt++;
+    /* if the array is full, then we need to allocate new 
+     * space for the new stringID
+     */
+     if(actualCnt &gt; sizeOfStringIDs)
+     {
+     	unsigned newSizeOfStringIDs = sizeOfStringIDs+1;
+        unsigned *newStringIDs = new unsigned[newSizeOfStringIDs];
+        for(unsigned i = 0; i &gt; (istream &amp;input, StringPosition &amp; stringPos)
+{
+    //position
+    input &gt;&gt; stringPos.position;
+    //num of stringIDs
+    unsigned size;
+    input &gt;&gt; size;
+    //string IDs
+    for(unsigned i = 0; i &gt; stringID;
+    	stringPos.addStringID(stringID);
+    }
+    return input;
+}
+
+//------------------------------------------------------------
+// Destructor
+//------------------------------------------------------------
+StringPosition::~StringPosition()
+{
+    delete[]  this-&gt;stringIDs;
+}
+
+//------------------------------------------------------------
+// Constructor
+//------------------------------------------------------------
+GroupStringPosition::GroupStringPosition():
+                     length(0),
+                     actualCnt(0),
+                     sizeOfPositions(1)
+{
+    this-&gt;positions = new StringPosition*[sizeOfPositions];
+}
+
+GroupStringPosition::GroupStringPosition(unsigned short length,
+                                         unsigned stringID,
+                                         unsigned short position):
+                                         length(length),
+                                         actualCnt(1),
+                                         sizeOfPositions(1)
+{
+    this-&gt;positions = new StringPosition*[sizeOfPositions];
+    
+    StringPosition *strPos = new StringPosition(stringID, position);
+    this-&gt;positions[0] = strPos;
+}
+
+GroupStringPosition::GroupStringPosition(unsigned short length,
+                                         StringPosition *strPos):
+                                         length(length),
+                                         actualCnt(1),
+                                         sizeOfPositions(1)
+{
+	this-&gt;positions = new StringPosition*[sizeOfPositions];
+    
+    this-&gt;positions[0] = strPos;
+}
+
+
+void GroupStringPosition::insertIntoPositions( unsigned strID,
+                                               unsigned short pos )
+{
+    //Use binary search to find the location to insert the new stringID
+    signed left = 0;
+    signed right = (signed)actualCnt - 1;
+    signed mid = 0;
+    while(left  (positions[mid])-&gt;getPosition() )
+        {
+            left = mid + 1;
+        }
+        else if( pos getPosition() )
+        {
+            right = mid - 1;
+        }
+        else
+	    {
+	        (positions[mid])-&gt;addStringID(strID);
+	        return;
+	    }
+    }
+    
+    //Check whether it is necessary to allocate new space
+    actualCnt++;
+    if(actualCnt &gt; sizeOfPositions)
+    {
+        unsigned newSizeOfPositions = sizeOfPositions+1;
+        StringPosition **newPositions = new StringPosition*[newSizeOfPositions];
+        for(unsigned i = 0; i  (right+1); i--)
+    {
+        positions[i] = positions[i-1];
+    }
+    positions[right+1] = position;
+    return;	
+}
+
+void GroupStringPosition::appendToPositions(StringPosition *strPos)
+{
+    //Check whether it is necessary to allocate new space
+    actualCnt++;
+    if(actualCnt &gt; sizeOfPositions)
+    {
+        unsigned newSizeOfPositions = sizeOfPositions+1;
+        StringPosition ** newPositions = new StringPosition*[newSizeOfPositions];
+        for(unsigned i = 0; i &gt; (istream &amp;input, GroupStringPosition &amp; group)
+{
+    //length
+    input &gt;&gt; group.length;
+    //num of positions
+    unsigned size;
+    input &gt;&gt; size;
+    //positions
+    for(unsigned i = 0; i &gt; (*strPosPtr);
+        group.appendToPositions(strPosPtr);
+    }
+    return input;	
+}
+
+GroupStringPosition::~GroupStringPosition()
+{
+    for(unsigned i = 0; i groups = new GroupStringPosition*[sizeOfGroups];
+}
+
+LengthBucket::LengthBucket(unsigned stringID,
+                           unsigned short position,
+                           unsigned short length):
+                           actualCnt(1),
+                           sizeOfGroups(1)
+{
+    GroupStringPosition *groupStrPos = new GroupStringPosition(length, 
+                                                                stringID, 
+                                                                position);
+    
+    this-&gt;groups = new GroupStringPosition*[sizeOfGroups];
+    this-&gt;groups[0] = groupStrPos;
+}
+
+//------------------------------------------------------------
+// Destructor
+//------------------------------------------------------------
+LengthBucket::~LengthBucket()
+{
+    for(unsigned i = 0; i  (groups[mid])-&gt;getLength() )
+        {
+            left = mid + 1;
+        }
+        else if( length getLength() )
+        {
+            right = mid - 1;
+        }
+        else
+        {
+            (groups[mid])-&gt;insertIntoPositions(stringID, position);
+            return;
+        }
+    }
+    
+    //Check whether it is necessary to allocate new space
+    actualCnt++;
+    if( actualCnt &gt; sizeOfGroups )
+    {
+        unsigned newSizeOfGroups = sizeOfGroups+1;
+        GroupStringPosition ** newGroups = 
+        new GroupStringPosition*[newSizeOfGroups];
+        for(unsigned i = 0; i  (right+1); i--)
+    {
+        groups[i] = groups[i-1];
+    }
+    groups[right+1] = groupStrPos;
+    return;									
+}
+
+void LengthBucket::appendToGroups(GroupStringPosition *groupStrPos)
+{
+    actualCnt++;
+    if( actualCnt &gt; sizeOfGroups )
+    {
+        unsigned newSizeOfGroups = sizeOfGroups+1;
+        GroupStringPosition ** newGrops = 
+        new GroupStringPosition*[newSizeOfGroups];
+        for(unsigned i = 0; i &gt; (istream &amp;input, LengthBucket &amp; bucket)
+{
+    //num of groups
+    unsigned size;
+    input &gt;&gt; size;
+    //GroupStringPosition
+    for(unsigned i = 0; i &gt; (*groupPosPtr);
+        bucket.appendToGroups(groupPosPtr);
+    }
+    return input;		
+}
+
+CountTable::CountTable():MAXCOUNT( 100000 )
+{
+    patternId = -1;
+    stringCount = 0;
+}
+
+CountTable::CountTable(const CountTable &amp; countTable): MAXCOUNT( 100000 )
+{
+    this-&gt;patternId = countTable.patternId;
+    this-&gt;stringCount = countTable.stringCount;
+}
+
+CountTable::CountTable(const unsigned patternId, 
+                       const unsigned count):  MAXCOUNT( 100000 )
+{
+    this-&gt;patternId = patternId;
+    this-&gt;stringCount = count;
+}
+
+CountTable::~CountTable()
+{
+}
+
+unsigned CountTable::addCount(unsigned patternId) 
+{
+    //If the patternId is the previous one, just increase the count.
+    if ( this-&gt;patternId == patternId )
+    {
+        ++stringCount;
+    }
+	//Otherwise reset the count to 0
+	else 
+	{
+	    this-&gt;patternId = patternId;
+	    stringCount =1;
+    }
+    return stringCount;
+}
+
+unsigned CountTable::getCount(unsigned patternId) 
+{
+    //If the patternId is the previous one, just increase the count.
+    if ( this-&gt;patternId == patternId )
+    {
+        return stringCount;
+    } 
+    //Otherwise reset the count	to 0
+	else  
+    {
+        this-&gt;patternId = patternId;
+        stringCount = 0;
+        return 0;
+    }
+}
+
+void CountTable::resetCount(unsigned patternId)
+{
+    if ( this-&gt;patternId == patternId )
+    {
+        stringCount = MAXCOUNT;
+    }
+    else
+    {
+	    this-&gt;patternId = patternId;
+	    stringCount = MAXCOUNT;
+    }
+}
+ 

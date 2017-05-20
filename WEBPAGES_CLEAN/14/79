@@ -1,0 +1,89 @@
+ process Proposal_Submit {<body>
+      
+   process    Proposal_Submit {
+  
+      
+   action  submit_proposal {   
+      
+   agent  { Principal_Investigator }   
+     
+   requires  { proposal }   
+     
+   provides  { proposal.contents == file }   
+     
+   script  {"&lt;p&gt;Submit proposal contents.\   
+    &lt;p&gt;BAA to which this proposal responds: \   
+ 
+  &lt;input name='baa' type='string' size=16&gt;\   
+ 
+  &lt;p&gt;CBD source for this BAA: \  
+ 
+  &lt;input name='cbd' type='string' size=50&gt;\  
+ 
+  &lt;br&gt;Proposal title: &lt;input name='title' type='string'
+size=50&gt;\   
+ 
+  &lt;br&gt;Submitting Institution: &lt;input name='institution'
+type='string' size=25&gt;\   
+ 
+  &lt;br&gt;Principal Investigator: &lt;input name='PI' type='string'
+size=20&gt;\   
+ 
+  Email: &lt;input name='PIemail' type='string' size=20&gt;\
+  
+ 
+  &lt;br&gt;Contact: &lt;input name='contact' type='string'
+size=20&gt;\   
+ 
+  Email: &lt;input name='contactEmail' type='string' size=12&gt;\
+  
+ 
+  &lt;br&gt;Proposal contents file: &lt;INPUT NAME='file'
+TYPE='file'&gt;"   
+     }   
+      ��� ��� ��� ��� }   
+      
+   action  submit_budget {   
+      
+   agent  { Principal_Investigator }   
+     
+   requires  { proposal }   
+     
+   provides  { proposal.budget == file }   
+     
+   script  {"&lt;p&gt;Submit budget.\   
+    &lt;br&gt;Proposal title: &lt;input name='title' type='string'
+size=50&gt;\   
+ 
+  &lt;br&gt;Budget file: &lt;INPUT NAME='file' TYPE='file'&gt;\
+  
+ 
+  &lt;br&gt;Email address of contact: &lt;input name='user_id'
+type='string'&gt;"   
+    }   
+    }   
+     
+   action  submit_certs {   
+      
+   agent  { Principal_Investigator }   
+     
+   requires  { proposal }   
+     
+   provides  { proposal.certs == file &amp;&amp; proposal.certifier
+== user_id }   
+     
+   script  {"&lt;p&gt;Submit electronically signed certifications.\
+  
+    &lt;br&gt;File containing signed certifications: &lt;INPUT
+NAME='file' TYPE='file'&gt;\   
+ 
+  &lt;p&gt;User ID of signature: &lt;input name='user_id'
+type='string'&gt;"   
+        ��� ��� ��� ��� ��� ��� ��� ��� }   
+ 
+  ��� ��� ��� ��� }  
+ 
+  �  
+ 
+  }  
+</body> 

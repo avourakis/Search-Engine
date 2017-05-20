@@ -1,0 +1,213 @@
+ ICS 46 Spring 2016, Notes and Examples: Graphs: Shortest Paths<body>
+
+ 
+
+ 
+ICS 46 Spring 2016 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 46 Spring 2016 
+   Notes and Examples: Graphs: Shortest Paths 
+
+ 
+
+ 
+
+  Finding shortest paths 
+
+ Another common use of graphs is to represent the costs involved in traveling from one vertex to another.  These might be the costs to fly from one airport to another, the number of miles connecting to points on a map, the amount of traffic on a roadway, or the monetary cost of sending data over a link on a computer network.  In a scenario like this, one thing that would be quite valuable is the ability to automatically minimize that cost: What's the cheapest way to fly from Los Angeles, California to Lexington, Kentucky?  What's the shortest driving distance from UCI to the Luxor in Las Vegas?  Solving a problem means that we're interested in finding the  shortest path  connecting two vertices, where the length of a path is determined not just by the number of edges, but by the aggregate cost of those edges. 
+
+ First of all, it's important that we narrow down the problem a bit, because it can be a difficult one to solve if you don't define it carefully.  For example, consider the directed graph below, with the cost of each edge listed.  What's the shortest path from  a  to  f , i.e., the path that minimizes the sum of the costs of the edges in the path? 
+
+   
+
+ Your first inclination might be to say  acdef , which has cost 14 + -8 + 2 + 9 = 17.  But look more carefully.  Notice that this graph has a cycle involving the vertices  c ,  d , and  e , and notice that the total cost of the cycle is -8 + 2 + 5 = -1.  In other words, following the cycle is profitable; every time we do it, it reduces the overall cost! 
+
+ So what's the shortest path from  a  to  f ?  The answer is an infinitely long path; for any finite-length path you propose, I can propose a shorter one by simply following the cycle around one more time than you did. 
+
+ Negative-weight cycles are one example of difficulty in solving shortest-path problems, but there are simplifications of these problems that ignore negative-weight cycles and nonetheless have a lot of practical value.  Let's carefully define the problem we're solving as follows: the  positive-weighted single-source shortest-path problem . 
+
+  The  positive-weighted  part indicates that the weight of every edge (i.e., how much it costs) will be positive. 
+   The  single-source  part says we know where we want to start from, with the ultimately goal of finding the shortest paths from that single vertex to  all  other vertices in the graph. 
+  There is a very well-known algorithm known as  Dijkstra's Algorithm  for solving precisely this problem. 
+
+ 
+
+ 
+
+  Dijkstra's Algorithm 
+
+ Dijkstra's Algorithm for solving the single-source positive-weighted shortest-path problem works by calculating three values for each vertex: 
+
+   k v   is a boolean flag that indicates whether the shortest path to vertex  v  is known.  Initially,  k v   is  false  for all vertices. 
+    d v   is the length of the shortest path found thusfar from the start vertex to  v .  When the algorithm begins, no paths have been considered, so  d v   is initially set to ∞ for all vertices, except the start vertex, for which  d v   = 0. 
+    p v   is the predecessor of the vertex  v  on the shortest path found thusfar from the start vertex to  v .  Initially,  p v   is  unknown  for all vertices, except for the start vertex, for which  p v   is  none . 
+  Dijkstra's Algorithm proceeds in multiple passes, with the shortest path to one vertex in the graph determined in each pass.  The following steps are performed in each pass: 
+
+  From the set of vertices for which  k  v    is  false , select the vertex  v  having the smallest  d  v   .  In other words, of the shortest paths to each vertex that we've found that we're not yet sure about, pick the one that is the shortest. 
+   Set  k  v    to  true  for the vertex you picked in step 1.  The shortest of the "unknown" paths is now considered to be known. 
+   For each vertex  w  such that the edge  v  →  w  exists and for which  k  w    is  false , test whether  d  w    is greater than  d  v    +  C ( v ,  w ), where  C ( v ,  w ) being the cost of the edge  v  →  w .  If it is, set  d  w    to  d  v    +  C ( v ,  w ) and set  p  w    to  v .  In other words, if the path through  v  to  w  is better than the shortest path we'd found to  w  so far, the shortest path to  w  (so far) is the path we've just found through  v  to  w . 
+  In each pass, one vertex has its  k   v   set to  true , which means that we've discovered one known shortest path per pass. 
+
+ How it works 
+
+ Consider this directed graph, with a positive weight on every edge. 
+
+   
+
+ Suppose we wanted to find the shortest path from the vertex  a  to the vertex  g , not in terms of the number of edges followed, but in terms of the combined  cost  of those edges.  This problem could be solved by Dijkstra's Algorithm, because the cost of every edge is positive and we have a single source vertex from which we want to find a shortest path. 
+
+ We'd first initialize the  k ,  d , and  p  values for each vertex, with the start vertex  a  treated a bit differently from the others. 
+
+   Vertex  k  d  p 
+     a  false  0  none 
+     b  false  ∞  unknown 
+     c  false  ∞  unknown 
+     d  false  ∞  unknown 
+     e  false  ∞  unknown 
+     f  false  ∞  unknown 
+     g  false  ∞  unknown 
+     In the first pass, we'd choose the vertex with the smallest  d  value from among those whose  k  values are  false .  All of the vertices have a  k  value of  false , and  a  has the smallest  d  value, so we'll choose that one.  We'll mark  a 's  k  value as  true ; we've found the shortest path to  a .  Now we'll look at  a 's outgoing edges to see if we've found paths to any vertices that are improvements on the ones we've seen so far. 
+
+  The edge  a  →  b  has weight 8.  Adding this to the end of the best-known path to  a  (of total weight 0), we've found a path to  b  of weight 0 + 8 = 8.  This is an improvement, since we hadn't previously found any path to  b  at all. 
+   The edge  a  →  c  has weight 6.  Adding this to the end of the best-known path to  a  (of total weight 0), we've found a path to  b  of weight 0 + 6 = 6.  This is an improvement, since we hadn't previously found any path to  c  at all. 
+  Updating our table of  k ,  d , and  p  values, we now have: 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  false  8  a 
+     c  false  6  a 
+     d  false  ∞  unknown 
+     e  false  ∞  unknown 
+     f  false  ∞  unknown 
+     g  false  ∞  unknown 
+     In the next step, we choose  c , which has the smallest  d  value (6) of any vertex for which  k  is  false .  We mark its  k  value  true  and then consider its outgoing edges, with both being improvements on the shortest paths we've found to those vertices so far.  Updating our table, we now have: 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  false  8  a 
+     c  true  6  a 
+     d  false  21  c 
+     e  false  15  c 
+     f  false  ∞  unknown 
+     g  false  ∞  unknown 
+     Next, we choose the vertex  b .  Considering its outgoing edges, we find that its only edge is  b  →  d .  Adding this edge of weight 10 to the best known path to  b  (which has total weight 8), we've found a path of weight 18 to  d , which is an improvement over the path of total weight 21 that we'd found before.  Updating our table, we now have: 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  true  8  a 
+     c  true  6  a 
+     d  false  18  b 
+     e  false  15  c 
+     f  false  ∞  unknown 
+     g  false  ∞  unknown 
+     Next, we choose the vertex  e .  Considering its outgoing edges, we find two new shortest paths, to both  f  and  g . 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  true  8  a 
+     c  true  6  a 
+     d  false  18  b 
+     e  true  15  c 
+     f  false  28  e 
+     g  false  32  e 
+     We now have candidate shortest paths to every vertex — every vertex has been reached by the algorithm by now — but we may yet find improvements on them.  The next vertex we choose is  d .  Considering its outgoing edges, we've found two new paths.  Adding the edge  d  →  e  to the shortest path to  d  is not an improvement over the path we already found to  e , but adding the edge  d  →  f  does improve out shortest path to  f .  Updating the table, we now have: 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  true  8  a 
+     c  true  6  a 
+     d  true  18  b 
+     e  true  15  c 
+     f  false  22  d 
+     g  false  32  e 
+     Next, we choose the vertex  f , whose outgoing edge  f  →  g  improves our shortest path to  g . 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  true  8  a 
+     c  true  6  a 
+     d  true  18  b 
+     e  true  15  c 
+     f  true  22  d 
+     g  false  29  f 
+     And, finally, we choose the vertex  g , which has no outgoing edges at all.  Our final table is: 
+
+   Vertex  k  d  p 
+     a  true  0  none 
+     b  true  8  a 
+     c  true  6  a 
+     d  true  18  b 
+     e  true  15  c 
+     f  true  22  d 
+     g  true  29  f 
+     The  k  and  d  values are ultimately temporary; the important result here is the collection of  p  values, which, together, constitute the shortest path from  a  to every vertex in the graph.  The  p  value for each vertex specifies the  predecessor  on the shortest path to that vertex (i.e., which vertex comes before this one).  This is a very powerful piece of knowledge, encoded in an efficient form.  Together, the precedessor relationships represent the shortest paths from  a  to every vertex in the graph.  The darker-colored edges in the graph below are these predecessor edges; the lighter-colored edges are the others. 
+
+   
+
+ We can read the  p  values "backward" to get our result.  Since we ultimately wanted to know the shortest path from the vertex  a  to the vertex  g : 
+
+  The predecessor of  g  on the shortest path to  g  is  f  
+   The predecessor of  f  is  d  
+   The predecessor of  d  is  b  
+   The predecessor of  b  is  a  
+    a  has no predecessor 
+  Considering that in reverse, our shortest path from  a  to  g  is { a ,  b ,  d ,  f ,  g }.  One small but important thing to notice is that the edge weights are what makes a path shorter, rather than the number of edges.  The path { a ,  c ,  e ,  g } has fewer edges, but the path we found has a shorter total weight. 
+
+ Why it works 
+
+ Generally, Dijkstra's Algorithm discovers shortest paths in ascending order of their total length, which forms the key insight why we can be sure we can mark the  k  value of a vertex as  true  when we do: Since every choice we make finds paths that are longer than the  d  value of the vertex we chose, we can be sure we'll never be able to extend other (larger)  d  values in a way that will find a shorter path to the vertex whose  d  value is smallest. 
+
+ Note that this key insight wouldn't hold true if there were negative-weight edges, which is why Dijkstra's Algorithm only solves the positive-weighted version of the shortest-path problem. 
+
+ Implementing the algorithm efficiently 
+
+ To implement this efficiently, though, the key requirement is the ability to cheaply find the vertex for which  k   v   is  false  and  d   v   is minimized.  A convenient solution to this problem is to use a priority queue, enqueuing vertices as we discover paths to a vertex, with their priority being the overall cost of those paths.  This leads to the following pseudocode for the algorithm: 
+
+ 
+    for each vertex v
+    {
+        set k v  to false
+        set p v  to unknown (or none, if v is the start vertex)
+        set d v  to ∞ (or 0, if v is the start vertex)
+    }
+
+    let pq be an empty priority queue
+    enqueue the start vertex into pq with priority 0
+    
+    while (pq is not empty)
+    {
+        vertex v = the vertex in pq with the smallest priority
+        
+        if (k v  is false)
+        {
+            k v  = true
+
+            for each vertex w such that edge v → w exists
+            {
+                if (d w  &gt; d v  + C(v, w))
+                {
+                    d w  = d v  + C(v, w)
+                    p w  = v
+                    enqueue w into pq with priority d w 
+                }
+            }
+        }
+    }
+ 
+
+ When the algorithm is finished, the  d   v   corresponding to each vertex will be the shortest distance to each vertex.  You can find the actual shortest path to some vertex by working your way backward from the end vertex to the start vertex, using the  p   v   values at each step. 
+
+ 
+
+</body> 

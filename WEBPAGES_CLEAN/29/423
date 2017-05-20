@@ -1,0 +1,347 @@
+ Command Line Cygwin Tools<body>
+
+ 
+ Command Line Cygwin Tools 
+ 
+  
+  
+This document shows how to create and download project files for use with the
+  Cygwin tools from the command line.
+  
+   
+
+  Section 1) Testing the Cygwin Toolset and Clang 
+ 
+In this section you will create and run a trivial C++ project/program
+   (including editing it, and seeing how syntax errors are reported).
+  
+   Click the   (Cygwin64 Terminal
+      icon).
+    Perform the following actions in your come directory
+      (mine is  pattis@pattishome12 ).
+     
+       Make an empty directory for all ICS-46 Projects ( ics46projects )
+          using the  mkdir  command.
+      Connect to the  ics46projects  directory
+          using the  cd  command.
+      Make an empty directory for the Trivial Test Project
+         ( trivialtest )
+          using the  mkdir  command.
+      Connect to the  trivialtest  project directory
+          using the  cd  command.
+      Use any editor ( vi  is automatically available in Cygwin;
+          other editors can be downloaded; Windows editors can be used)
+          to create a  main.cpp  file that contains the following code
+          (e.g., copy/paste it):
+      #include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+    cout   
+ 
+       Create a  CMakeLists.txt  file that contains the following code
+          (e.g., copy/paste it):
+      cmake_minimum_required(VERSION 3.3.2)
+
+project(trivialtest)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES main.cpp)
+
+add_executable(trivialtest ${SOURCE_FILES})  
+ 
+       List the contents of the  ics46project/trivialtest  directory
+          storing these two files,
+          by using the  ls  command.
+      Create the  make  files needed for this project,
+          by using the  cmake .  command (reemember, you will
+          do this just the first time you use a project).
+      List the contents of the  ics46project/trivialtest  directory
+          storing the new files it creates (and the new  CMakeFiles 
+          directory),
+          by using the  ls  command.
+      Build the  trivialtest.exe  file needed to execute this program,
+          by using the  make  command (you will do this each time
+          that you modify a  .cpp  file in a project).
+      List the contents of the  ics46project/trivialtest  directory
+          storing the new file it creates,
+          by using the  ls  command.
+     Run the  trivialtest.exe  executable file,
+          by using the  ./trivialtest.exe  command.
+      
+    The following  ~/ics46projects/trivialtest 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+    If you do not see the  clang  and  clang++  compilers listed here,
+      you might have multiple C/C++ compilers on your computer, and Cygwin
+      is using the wrong one.
+    In such a case, edit the  MakeLists.txt  file (specified above) to
+      contain the following two  set  commands between the
+       cmake_mininum_required  and  project  commands.
+    cmake_minimum_required(VERSION 3.3.2)
+
+  set(CMAKE_CXX_COMPILER "/cygdrive/c/cygwin64/bin/clang++")
+  set(CMAKE_C_COMPILER "/cygdrive/c/cygwin64/bin/clang")
+
+  project(trivialtest)  
+    Then execute the 2 commands  rm -f -r CMakeFiles  and
+       rm CMakeCache.txt  and repeat the commands above, starting at
+       cmake . 
+      
+
+   Open a Windows file Explorer Window and navigate to the 
+       C:\cygwin\home\yourname\ics46projects\trivialtest  
+      directory, which is the same as the one manipulated using Cygwin.
+     
+    The following 
+      Explorer window should appear on your screen.
+      
+       
+    You can use any combination of Windows and Cygwin commands to manipulate
+      the files in this directory: whichever is simplest.
+  
+
+   Edit, rebuild, and rerun the  main.cpp  program,
+     
+     Use an editor to change the  cout  to print
+          "Goodbye, World!" .
+     Show the  main.cpp  program file, by using the  more  command.
+     Rebuild the  trivialtest.exe  file using the same  make 
+         command.
+       There is no reason to use the  cmake  command here: it must be used
+       only if we  change  the  CMakeLists.txt  file.
+     Rerun the edited  trivialtest.exe  file,
+          by using the  ./trivialtest.exe  command.
+      
+    The following  ~/ics46projects/trivialtest 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+
+   Create a syntax error (remove the  ;  at the end of the  cout 
+      line), and then follow the rebuilding/rerunning steps above
+    The following  ~/ics46projects/trivialtest 
+      Cygwin64 Terminal window shows all these actions.
+     
+       
+    The failed results of attempting to rebuild the program appear after the
+       make  command.
+    In this case, the Clang compiler accurately indicates the source of the
+      error.
+    I have lengthened the window so as not cause lines to wrap.
+   
+We will now continue by learning how to download a project and run it.
+During the quarter, you will be asked to do this for all programming
+  assignments and many quizzes.
+ 
+
+   Section 2) Testing Downloadable Projects with the Course Libraries 
+ 
+In this section you will download the course libraries and then
+  download/build/run a project that contains various programs that use these
+  libraries.
+  
+   Create a shortcut named  ics46projects  to the directory
+       C:\cygwin\home\yourname\ics46projects  and place it on your desktop
+      near the 
+        (Cygwin64 Terminal icon).
+ 
+
+   Download and unzip the file  template ;
+    Copy its three directories ( courselib ,  googletestlib , and
+       test_all_data_types ) into the directory that
+       ics46projects  shortcuts; it should already contain the
+       trivialtest   directory,  created by the operations above.
+     
+    Generally, whenever you download projects, you will unzip them and 
+      then copy their directories into the directory that  ics46projects 
+      shortcuts.
+      
+    The following  ~/ics46projects 
+      Cygwin64 Terminal window lists these four directories.
+      
+       
+
+   Connect to the  test_all_data_types  directory,
+      by using the  cd  command.
+    Hint: type only  cd te  and then press the  tab  key and Cygwin
+      should complete the name of this directory; generally using  tab  for
+      directory/file name completion can drastically reduce your typing in
+      Cygwin.
+     
+    List the contents of the  ics46project/test_all_data_types  directory,
+          by using the  ls  command.
+    Notice that this project folder contiains various  .cpp  files
+      and a  CMakeLists.txt  file
+      
+    The following  ~/ics46projects/test_all_data_types 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+
+   Edit the  driver.cpp  file by uncommenting lines 30-35, so they
+      appear as follows
+      #include "driver_set.hpp"
+
+int main() {
+  ics::DriverSet d;
+  return 0;
+}  
+ 
+
+   Build and run the  main.cpp  program,
+     
+     Create the  make  files needed for this project,
+         by using the  cmake .  command (recall you will
+         do this just the first time you use a project).
+     Build the  test_all_data_types.exe  file needed to execute this
+         program, by using the  make  command (you will do this each time
+         that you modify a  .cpp  file in a project).
+     Run the  test_all_data_types.exe  executable file,
+          by using the  ./test_all_data_types.exe  command
+          (remember to use command-completion to reduce your typing:
+          but since many file names start with  test_  you will
+          have to type  test_d  (a unique prefix for the  exe  file)
+          before pressing  tab .
+      
+    The following  ~/ics46projects/test_all_data_types 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+    If you do not see the  clang  and  clang++  compilers listed here,
+      you might have multiple C/C++ compilers on your computer, and Cygwin
+      is using the wrong one.
+    In such a case, edit the  MakeLists.txt  file (see part 3 above) to
+      contain the following two  set  commands between the
+       cmake_mininum_required  and  project  commands.
+    cmake_minimum_required(VERSION 3.3.2)
+
+  set(CMAKE_CXX_COMPILER "/cygdrive/c/cygwin64/bin/clang++")
+  set(CMAKE_C_COMPILER "/cygdrive/c/cygwin64/bin/clang")
+
+  project(test_all_data_types)  
+    Then execute the 2 commands  rm -f -r CMakeFiles  and
+       rm CMakeCache.txt  and repeat the commands above, starting at
+       cmake . 
+      
+    Experiment with this driver by entering commands (and their arguments, when
+      prompted) to better understand the  set  data type.
+    You can enter the  q  command to terminate the driver, or you can
+      type  ctrl-c  to terminate the driver.
+      
+    I suggest that you try terminating the driver with a  q  command; then,
+      rerun the program and terminate it with  ctrl-c .
+  
+
+   Recall in  Item 1  (at the top of this section) you created a shortcut
+      named  ics46projects  to the directory
+       C:\cygwin\home\yourname\ics46projects ; we will now
+      briefly explore the contents of this folder.
+    Explore (double-click) the short-cut and double-click on the
+       test_all_data_types  folder.
+     
+    The following explorer window should appear on your screen.
+      
+       
+
+   Double-click the  test_all_data_types.exe  file to run this program
+      in Windows, outside of Cygwin.
+    The following MS-DOS window should appear on your screen.
+     
+       
+      
+    If the error pop-window
+     
+       
+    appears, you must also add  C:\cygwin64\bin  to the
+      user variable  PATH , briefly illustrated below
+      (also see step 15 in the  Cygwin  handout).
+      
+       
+      
+    Experiment with this driver by entering commands (and their arguments, when
+      prompted); it runs as it did in Cygwin.
+    Note that when you enter the  q  command or  ctrl-c , the program
+      terminates and the MS-DOS window disappears.
+     
+    So, when a program we run under Cygwin terminates, the screen retains the
+      information printed (by  cout ) after the run terminates, but when we
+      run it directly in an MS-DOS window, the window disappears after the run
+      terminates.
+    For example, if you find the  trivialtest.exe  file and run it by
+      double-clicking this file, its MS-DOS windo will run and then immediately
+      disappear.
+  
+
+   Find the  'input files'  directory in the  test_all_data_types 
+      folder and copy all of its  .txt  data files up one level in the
+      directory (the one that contains the  test_all_data_types.exe  file).
+     
+    Then, run the program (either in the Cygwin or a MS-DOS window) and
+      issue the  lf  command (load from file); when prompted for the file
+      name, just press the enter key to choose the default ( loadset.txt ).
+      
+    The following  ~/ics46projects/test_all_data_types 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+    Note that because the directory name  input files  contains a space,
+      it appears in single quotes ( 'input files' ) and must appear in
+      single quotes in all Cygwin commands. 
+      
+     IMPORTANT : If a program reads data files, the root directory for the
+         specifying the files is the directory in which the  .exe  file
+         appears.
+       It is simplest to copy all the data files into this directory.
+       An alternative would be to leave the files in the  input files 
+         directory, and enter their names like  input files/loadset.txt 
+         (note no quotes here: this is not a Cygwin command).
+  
+
+   A typical project folder may have more than one  .cpp  file with a
+     main function (as  test_all_data_types  has).
+    Only one of these  .cpp  files can have its main function uncommented,
+      otherwise the build will fail.
+    When working on project, it is typical to 
+     
+       Comment-out code in one  .cpp  file.
+        Uncomment code in another  .cpp  file.
+        Rebuild/Rerun the newly uncommented  .cpp  file.
+       
+    In the  test_all_data_types  project folder, the  driver.cpp 
+      file has many main functions: we uncommented one (in step 4) to allow us
+      to run the Set driver.
+    If more than one main function is uncommented, attempting to build the code
+      will result in the compiler specifying a  redefinition of 'main' 
+      error.
+      
+    The  test_all_data_types  project folder also contains many  .cpp 
+      files (their names all start with  test ) that each contain one main
+      function (each is a  Googletest  for one data type).
+    If more than one file contains a main function, attempting to build the
+      code will result in the linker specifying a
+       multiple definition of 'main'  error.
+      
+    To switch this project from running the Set driver to the Set Googletest
+       Edit the  driver.cpp  file and comment-out lines 30-35.
+        Edit the  test_set.cpp  file and uncomment all its lines. 
+          Most program editors have a special command that allows commenting
+          on selected lines to be toggeled.
+       
+    Rebuild/Rerun the newly uncommented  .cpp  file.
+      
+    The following  ~/ics46projects/test_all_data_types 
+      Cygwin64 Terminal window shows all these actions.
+      
+       
+      
+    
+We are now at the end of this handout.
+You will not need to repeat the first two sections during the course, but you
+  will frequently download project folders and use them as demonstrated in
+  section 2.
+
+ </body> 

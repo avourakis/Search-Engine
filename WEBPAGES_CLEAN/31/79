@@ -1,0 +1,60 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: version management and relative links<body> version management and relative links 
+ Larry Masinter  (  masinter@parc.xerox.com  )  Sat, 8 Jun 1996 16:37:40 PDT 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   David G. Durand: "Re: version management and relative links" 
+    Previous message:   Christopher Seiwald: "what's doable in Web version control" 
+
+    Next in thread:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   Daniel W. Connolly: "Re: version management and relative links" 
+    Maybe reply:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   Daniel W. Connolly: "Re: version management and relative links" 
+    Maybe reply:   David J. Fiander: "Re: version management and relative links" 
+
+    
+One of the main things that bother me about all of the proposals for
+dealing with versions with non-version-aware browsers is the handling
+of versioned links and embedded absolute links.
+
+Let's say that you ask to view "version 3" of a HTML page. Do you want
+the verison 3 of the GIF images that were included, too? Do you want
+all of the hyperlinks to be links to version 3, or continue to be
+links to the original material.
+
+Is it possible to do this without rewriting the URLs contained within
+the material? If the material uses relative links, do you want to
+arrange it so that relative URLs don't have to be rewritten?
+
+In the MHTML working group (sending HTML in MIME), there was some
+design work at one time on a 'catalog' which might be included as a
+wrapper to a HTML page as part of multipart/related. The 'catalog'
+would consist of a set of renamings
+
+&gt; Interpret the following (enclosed) HTML page, but within it,
+&gt; whenever you see this URL
+&gt;        " http://blah.blah.com/stuff "
+&gt; substitute the following URL instead
+&gt;        "cid:012312313ab@blah.com"
+
+I'm wondering if we might presuppose a 'catalog-aware' browser rather
+than a 'version-aware' browser. A versioned resource would be
+delivered as a cataloged entity so that embedded URLs that pointed to
+or included versioned material could themselves be versioned.
+
+Larry
+ 
+
+  
+     Next message:   David G. Durand: "Re: version management and relative links" 
+    Previous message:   Christopher Seiwald: "what's doable in Web version control" 
+
+    Next in thread:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   Daniel W. Connolly: "Re: version management and relative links" 
+    Maybe reply:   David G. Durand: "Re: version management and relative links" 
+    Maybe reply:   Daniel W. Connolly: "Re: version management and relative links" 
+    Maybe reply:   David J. Fiander: "Re: version management and relative links" 
+
+  </body> 

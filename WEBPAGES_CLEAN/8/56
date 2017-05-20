@@ -1,0 +1,401 @@
+ Graph Algorithms I:
+
+  (Topological Sorting, Connected Components, Minimum Spanning Tree)
+
+Before looking at these three algorithms, let's examine the HashGraph class
+that you will write as part of Programming Assignment #5.
+
+First, note that it uses a LocalInfo class which keeps sets of incoming and
+outgoing nodes and edges for each node in the graph. Second, note that the
+ArrayGraph classes keeps a map from each node to its LocalInfo as well as a
+map from each node-pair to its edge value (of type T) if the nodes are
+connected by an edge.
+
+template
+class ArrayGraph {
+  //Forward declaration: used in templated typedefs below
+  private:
+    class LocalInfo;
+
+  public:
+    //Typedefs
+    typedef std::string                         NodeName;
+    typedef ics::pair       Edge;
+    typedef ics::pair      NodeLocalEntry;
+    typedef ics::ArrayMap  NodeMap;
+    typedef ics::ArrayMap              EdgeMap;
+    typedef ics::pair      NodeMapEntry;
+    typedef ics::pair                  EdgeMapEntry;
+    typedef ics::ArraySet             NodeSet;
+    typedef ics::ArraySet                 EdgeSet;
+
+    static bool LocalInfo_gt(const NodeLocalEntry&amp; a, const NodeLocalEntry&amp; b)
+    {return a.first &amp; g);
+
+    //Queries
+    bool empty      ()                                     const;
+    int  node_count ()                                     const;
+    int  edge_count ()                                     const;
+    bool has_node  (std::string node_name)                 const;
+    bool has_edge  (NodeName origin, NodeName destination) const;
+    T    edge_value(NodeName origin, NodeName destination) const;
+    int  in_degree (NodeName node_name)                    const;
+    int  out_degree(NodeName node_name)                    const;
+    int  degree    (NodeName node_name)                    const;
+
+    const NodeMap&amp; all_nodes()                   const;
+    const EdgeMap&amp; all_edges()                   const;
+    const NodeSet&amp; out_nodes(NodeName node_name) const;
+    const NodeSet&amp; in_nodes (NodeName node_name) const;
+    const EdgeSet&amp; out_edges(NodeName node_name) const;
+    const EdgeSet&amp; in_edges (NodeName node_name) const;
+
+    //Commands
+    void add_node   (NodeName node_name);
+    void add_edge   (NodeName origin, NodeName destination, T value);
+    void remove_node(NodeName node_name);
+    void remove_edge(NodeName origin, NodeName destination);
+    void clear      ();
+    void load       (std::ifstream&amp; in_file,  std::string separator = ";");
+    void store      (std::ofstream&amp; out_file, std::string separator = ";");
+
+    //Operators
+    ArrayGraph&amp; operator = (const ArrayGraph&amp; rhs);
+    bool operator == (const ArrayGraph&amp; rhs) const;
+    bool operator != (const ArrayGraph&amp; rhs) const;
+
+    template
+    friend std::ostream&amp; operator&amp; g);
+
+
+  private:
+    //All methods and operators relating to LocalInfo are defined below, followed by
+    //  a friend function for * g) : from_graph(g) {}
+        void connect(ArrayGraph* g) {from_graph = g;}
+        bool operator == (const LocalInfo&amp; rhs) const {
+          //No need to check in_nodes and _out_nodes: redundant information there
+          return this-&gt;in_edges == rhs.in_edges &amp;&amp; this-&gt;out_edges == rhs.out_edges;
+        }
+        bool operator != (const LocalInfo&amp; rhs) const {
+          return !(*this == rhs);
+        }
+
+        //LocalInfor instance variables
+        //The LocalInfo class is private to code #including this file, but public
+        //  instance variables allows ArrayGraph them directly
+        //from_graph should point to the ArrayGraph of the LocalInfo it is in, so
+        //  LocalInfo methods can access its edge_value map (see * from_graph = nullptr;
+        NodeSet       out_nodes;
+        NodeSet       in_nodes;
+        EdgeSet       out_edges;
+        EdgeSet       in_edges;
+    };
+
+
+    friend std::ostream&amp; operator" edge_values[e] edge_values[e] " ;
+
+      outs  instance variables
+    NodeMap node_values;
+    EdgeMap edge_values;
+};
+
+In the following algorithms, we assume a HashGraph for computing complexity
+classes (and HashSets, HashMaps, etc). We also assume a graph has N nodes and
+M edges: recall M can be anything from 0 to N^2.
+
+------------------------------------------------------------------------------
+
+Topological Sorting
+
+First, we will discuss Topological Sorting. Here the domain is a digraph where
+an edge from A to B means node A "comes before" node B (or, if you will, node
+A is less than node B). Note that the edge can have a value too, but only the
+existence of an edge is relevant to this algorithm.
+
+Unlike normal types where the law of trichotomy holds (for any two values, one
+is  than the other) two values might be "uncomparable" meaning their
+order is not directly specified: there is no edge from A to B or from B to A.
+Of course, if there is a path from A to B that means A is b (a c (b ). Note
+that this algorithm mutates the graph while running: if it must remain
+unchanged, copy the graph first.
+
+  while there is a node with in-degree 0
+    enqueue it to (put it next in) the answer queue
+    remove it from the graph (affecting the degrees of other nodes
+                              the refer to it or that it refers to)
+
+This process continues until (a) all nodes are removed from graph or (b) some
+nodes still remain in the graph, but no node has in-degree = 0. In the latter
+case, the graph is cyclic: there are nodes a, b, c, ... ,x, y, z such that 
+edges require that a must come before b, b must come before c, ... x must come
+before y, y must come before z, and z must come before a (which is an impossible
+ordering). If no node has degree 0, then every node is the destination of
+another (only possible if there is a cycle).
+
+Note that the sequence of nodes may not be uniquely determined: if at any time
+there is more than 1 node with in-degree 0, we can arbirarily choose any of
+those nodes to come next in the queue: there are no constraints on which order
+they appear.
+
+Recall that in graphs, we usually let N denote the number of nodes in the graph
+and M denote the number of edges. In sparse graphs M is O(N) and in dense graphs
+M is O(N^2).
+
+We can characterize this algorithm as O(N^2 + M): finding an in-degree 0 node
+is O(N) (iterate through all the nodes), and in a non-cyclic graph this will
+happen N times before the graph is empty. To remove all the nodes requires
+removing all M edges. For dense graphs the complexity is O(N^2 + N^2) = O(N^2).
+For sparse graphs the complexity is O(N^2 + N) = O(N^2).
+
+We will apply this algorithm to generate one (of a few different) topological
+orders (we have lattitude to pick an in-degree 0 node; different picks lead
+to different final orders, but all satisifying the required constraints) for
+the graph below (draw a picture of this graph before starting).
+
+A -&gt; D
+A -&gt; E
+B -&gt; D
+C -&gt; E
+C -&gt; H
+D -&gt; F
+D -&gt; G
+D -&gt; H
+E -&gt; G
+
+One order is: A, B, C, D, E, F, G, H
+Another is  : B, A, C, D, F, H, E, G
+
+A slightly more complicated but faster algorithm (by Kahn) for a graph G
+
+O = a queue that is empty
+S = a set of all nodes with in-degree 0
+while S is not empty
+  n = any node from S (use iterator to get just the "first")
+  enqueue n to O
+  for each edge e (from n to m)
+    remove edge e from the graph
+    if in-degree of m is now reduced to 0 by the removal
+      add m into S
+
+if the graph has edges after terminating the loop, then
+  the graph is cyclic
+else 
+  O is a topologically sorted version of all nodes in G
+
+For an acyclic graph, the outer loop executes once for each node, so is executed
+N times (once for each node); the inner loop executes once for each edge, so is
+executed a total of M times (a bit at a time for each outer loop). The other
+operations are all O(1) so the running time is O(N+M). Recall that for dense
+graphs M is O(N^2), so in the worst case (a dense graph) this algorithm is
+O(N+N^2) = O(N^2). But if the graph is sparse (say each node as at most 10N
+edges), then it is O(N + 10N) = O(N).
+
+------------------------------------------------------------------------------
+
+
+Connected Components
+
+If an undirected graph is connected, it means that we can reach any node by
+following a path from any other node (edges go both ways). If a graph is not
+connected, there are node pairs that are not reachable from each other.
+Non-connected graphs contain connected components: subgraphs that are each
+connected. If a graph is connected then there is just one component, which
+includes every node; if it is not connected there will be some number of
+subgraphs, each of which is connected (all the subgraph's nodes can reach each
+other) and in the extreme case -a graph with no edges- every node is in its own
+connected component. 
+
+"Connected to" is an equivalence relation:
+  1) Any node is connected to itself
+  2) If a is connected to b, then b is connected to a (in an undirected graph)
+  3) If a is connected to b, and b is connected to c, then a is connected to c
+
+So, we can compute the connected components of a graph using an equivalence
+relation. Each equivalence class represents one connected component: all the
+nodes in an equivalence class can reach each other. The algorithm is simply:
+
+  1) Put every node in the graph into its own equivalence class (as a singleton)
+
+  2) For every edge in the graph, merge the equivalence classes of its
+       origin and destination nodes.
+
+The complexity class is O(N+M) since (1) we put each of the N nodes in an
+equivalence class N*O(1), and (2) each the loop process every edge exactly
+once and each equivalence relation operation is approximately O(1) for a
+HashEquivlance. Again, given the at worst, in a dense graph M is N^2, so
+this algorithm is also O(N^2) for dense graphs and O(N) for sparse ones.
+
+------------------------------------------------------------------------------
+
+Minimum Spanning Tree (MST):
+
+A spanning tree of a undirected graph is a subgraph, such that every node is
+reachable from every other node, WITH NO REDUNDANT EDGES. That means in a graph
+with N nodes, will have exactly N-1 edges in its spanning tree. The graph must
+be connected to have a spanning tree. We can prove we need only N-1 edges by
+induction. In all 1 node graphs, we need only 0 edges to have the graph be
+connected (satisfying the N-1 requirement); if we take any connected N node
+graph and add another node, all we must do is add one more edge (from any of
+the N nodes to the new one) to have the graph be connected again.
+
+Note that spanning trees are acyclic graphs, because any cyclic structure has a
+redundant edge: we can remove any edge in the cycle and the graph is still a
+spanning tree.
+
+We call this graph a spanning "tree" because we can look at each graph as
+a tree: chose any node as the root; all the nodes immediately reachable from it
+become the root's children; the nodes immediately reachable from these (those
+not already reached) become the grandchildren, etc. Choosing a different root
+will yield a different tree. The height of each tree is the maximum number of
+edges that must be followed from the root node to reach the "farthest away"
+node.
+
+A minimum spanning tree (MST) is a spanning tree whose cost (sum of its edges)
+is the minimum possible.
+
+If we wanted to connect various cities with a phone network, and we knew the
+cost of laying the fiber-optic cable between any two cities (it might NOT just
+be proportional to the the linear distance between the cities: this cost is the
+value on an edge between two cities), finding the MST would solve the problem.
+
+Kruskal's algorithm is one efficient way to find a MST. To run this algorithm,
+we must be able to tell whether an edge connects two nodes that do not yet (in
+the MST we are building) have a path between them. We can easily "see" this
+property on small graphs; we have seen above tht connectedness is an
+equivalence relation, which we implement efficiently with a HashEquivalence. We
+will use that data type in our algorithm, along with a priority queue.
+
+Kruskal's Algorithm for MST
+
+  1) Put each node in own equivalence class (add_singleton in Equivalence). 
+
+  2) Put all the edges in a priority queue, such that edges with smaller values
+       have higher priorities.
+
+  3) Start with a MST graph containing only nodes. It will eventually store
+       only edges that are in the minimum spanning tree.
+
+  4) While T's # edges B means the cost of the undirected edge between A and B is 4.
+
+AB
+AC
+AD
+BC
+BG
+BE
+BF
+CD
+DG
+DJ
+EF
+EH
+EI
+FG
+FH
+GH
+GJ
+HI
+HJ
+IJ
+
+If we put these values in the priority queue, one order (there are multiple
+edges with the same value). Also, initially each node is in its own separate
+cluster/equivalence class
+
+AC
+EF
+FH
+CD
+HI
+AB
+AD
+EH
+BC
+EI
+BG
+FG
+GJ
+BE
+BF
+GH
+HJ
+IJ
+DG
+DJ
+
+Note that this graph has 10 nodes so the MST will have 9 edges, so we can
+terminate the algorithm when we reach 9 edges.
+
+ 1) We remove AC; A and C are in different clusters, so we put this edge
+in the MST (it now has 1 edge) and update the clusters so that now {A,C} are in
+the same cluster.
+
+ 2) We remove EF; E and F are in different clusters, so we put this edge
+in the MST (it now has 2 edges) and update the clusters so that now {E,F} are
+in the same cluster.
+
+ 3) We remove FH; F and H are in different clusters, so we put this edge
+in the MST (it now has 3 edges) and update the clusters so that now {E,F,H} are
+in the same cluster.
+
+ 4) We remove CD; C and D are in different clusters, so we put this edge
+in the MST (it now has 4 edges) and update the clusters so that now {A,C,D} are
+in the same cluster.
+
+ 5) We remove HI; H and I are in different clusters, so we put this edge
+in the MST (it now has 5 edges) and update the clusters so that now {E,F,H,I}
+are in the same cluster.
+
+ 6) We remove AB; A and B are in different clusters, so we put this edge
+in the MST (it now has 6 edges) and update the clusters so that now {A,B,C,D}
+are in the same cluster.
+
+ 7) We remove AD; A and D are already in the same cluster (see 6) so we
+don't include this edge in the MST. This is the first time that we are
+discarding an edge (not using it in the result graph).
+
+ 8) We remove EH; E and H are already in the same cluster (see 5) so we
+don't include this edge in the MST.
+
+ 9) We remove BC; B and C are already in the same cluster (see 6) so we
+don't include this edge in the MST.
+
+ 9) We remove EI; E and I are already in the same cluster (see 5) so we
+don't include this edge in the MST.
+
+10) We remove BG; B and G are in different clusters, so we put this edge
+in the MST (it now has 7 edges) and update the clusters so that now {A,B,C,D,G}
+are in the same cluster.
+
+11) We remove FG; F and G are in different clusters, so we put this edge
+in the MST (it now has 8 edges) and update the clusters so that now
+{A,B,C,D,E,F,G,H,I} are in the same cluster. This edge connects two formerly
+unconnected components.
+
+11) We remove GJ; G and J are in different clusters, so we put this edge
+in the MST (it now has 9 edges) and update the clusters so that now
+{A,B,C,D,E,F,G,H,I,J} are in the same cluster.
+
+Note, we now have the needed 9 edges, and we see that all the nodes are in the
+same cluster (all reachable from each other). So, the following nodes are in
+the MST
+
+AC
+EF
+FH
+CD
+HI
+AB
+BG
+FG
+GJ
+
+With a total cost of 1+2+2+3+3+4+7+8+8 = 38.
+
+------------------------------------------------------------------------------
+
+
+
+
+
+ 

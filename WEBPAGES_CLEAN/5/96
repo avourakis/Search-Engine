@@ -1,0 +1,134 @@
+ aolibILP/Demo - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   aolibILP    Demo  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    aolibILP/Demo  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+  aolibILP step-by-step instructions 
+     In the following we provide step-by-step instructions on how to use the  aolibILP  algorithm on an example problem instance. This example is based on Windows, but the steps for Linux are almost the same.       
+  Downloading and running the algorithm 
+     Download the archive with the executable from the algorithm's  page . Since we assume a Windows operating system here, we need  this  file.       Unpack the archive contents (the binary and a sample parameter file) into a directory of your choice, say  C:\aolib\ .       Obtain an  MPS  file of a  ILP  problem instance, for instance from our local  Repository . For this example we pick  p0201  from the  MIPLIB  problem set.       The problem instance file comes in gzip'ed form, so unpack it to the same directory as the algorithm executable; in our case  C:\aolib\ .  1        Open a command line (In Windows: Choose "Run" in the start menu and enter  cmd ) and navigate to the directory where we put the files by entering  cd C:\aolib\ .       Run the algorithm according to the algorithm's  page . We'll use AND/OR Branch-and-Bound graph search and enable verbosity, so the command line call in our case will be:           aolibILP-win32.exe -f p0201.mps -h hypergraph -a 3 -v yes      
+  Algorithm output 
+   The algorithm will run and, depending on the speed of your computer, the result should be returned shortly afterwards. The output should look somewhat like this:                                                                                                                                                                                             PP: forced connected:           no
+  PP: number of variables:        201
+  PP: number of functions:        133
+  PP: domain size bound:          2
+  PP: constraint arity:           67
+  PP: induced width:              120
+  PP: pseudo-tree depth:          142
+  PP: number of nodes in graph:   201
+  PP: number of edges in graph:   7497
+  PP: graph density:              37.2985 %
+  PP: preprocessing time:         0 seconds
+  PP: pseudo-tree time:           1.907 seconds
+  
+  AOBB started ...
+     time limit:  -1
+     c-bound:     10000
+     cache sch:   classic
+     cache impl:  hash
+     # cached:    33
+     simplex:     lp_solve 5.5.0.9
+     ordering:    SVO
+      -time        1.0, nodes 281, open 31, closed 283
+      -time        2.0, nodes 637, open 26, closed 219
+      -time        3.0, nodes 971, open 17, closed 121
+      -time        4.0, nodes 1236, open 24, closed 173
+      -time        5.0, nodes 1475, open 16, closed 115
+      -time        6.0, nodes 1655, open 25, closed 183
+      -time        7.0, nodes 1867, open 10, closed 67
+      -time        8.0, nodes 2062, open 23, closed 167
+      -time        9.0, nodes 2256, open 27, closed 239
+      -time       10.0, nodes 2486, open 12, closed 109
+      -time       11.0, nodes 2664, open 23, closed 195
+      -time       12.0, nodes 2825, open 16, closed 131
+      -time       13.0, nodes 2993, open 13, closed 105
+      -time       14.0, nodes 3152, open 13, closed 97
+      -time       15.0, nodes 3301, open 8, closed 83
+      -time       16.0, nodes 3440, open 5, closed 49
+      -time       17.0, nodes 3576, open 11, closed 89
+      -time       18.0, nodes 3707, open 10, closed 77
+      -time       19.0, nodes 3841, open 4, closed 37
+      -time       20.0, nodes 3973, open 8, closed 61
+      -time       21.0, nodes 4102, open 10, closed 85
+      -time       22.0, nodes 4228, open 5, closed 43
+      -time       23.0, nodes 4361, open 9, closed 79
+      -time       24.0, nodes 4490, open 8, closed 77
+      -time       25.0, nodes 4615, open 15, closed 125
+      -time       26.0, nodes 4743, open 10, closed 87
+      -time       27.0, nodes 4875, open 14, closed 117
+      -time       28.0, nodes 4992, open 8, closed 79
+      -time       29.0, nodes 5121, open 12, closed 101
+      -time       30.0, nodes 5306, open 15, closed 119
+      -time       31.0, nodes 5476, open 9, closed 75
+      -time       32.0, nodes 5611, open 13, closed 115
+      -time       33.0, nodes 5737, open 7, closed 69
+      -time       34.0, nodes 5861, open 5, closed 39
+      -time       35.0, nodes 5972, open 7, closed 59
+      -time       36.0, nodes 6088, open 5, closed 53
+      -time       37.0, nodes 6213, open 4, closed 49
+      -time       38.0, nodes 6337, open 4, closed 35
+      -time       39.0, nodes 6462, open 6, closed 65
+      -time       40.0, nodes 6587, open 12, closed 97
+      -time       41.0, nodes 6706, open 8, closed 79
+      -time       42.0, nodes 6836, open 4, closed 45
+      -time       43.0, nodes 6954, open 10, closed 77
+      -time       44.0, nodes 7085, open 14, closed 125
+      -time       45.0, nodes 7216, open 11, closed 105
+      -time       46.0, nodes 7348, open 8, closed 77
+      -time       47.0, nodes 7458, open 3, closed 35
+      -time       48.0, nodes 7587, open 5, closed 49
+      -time       49.0, nodes 7708, open 2, closed 47
+      -time       50.0, nodes 7827, open 8, closed 81
+      -time       51.0, nodes 7944, open 6, closed 51
+      -time       52.0, nodes 8064, open 9, closed 79
+      -time       53.0, nodes 8192, open 9, closed 85
+      -time       54.0, nodes 8321, open 11, closed 99
+      -time       55.0, nodes 8441, open 8, closed 97
+      -time       56.0, nodes 8551, open 4, closed 47
+      -time       57.0, nodes 8690, open 13, closed 137
+      -time       58.0, nodes 8816, open 7, closed 79
+      -time       59.0, nodes 8936, open 6, closed 77
+      -time       60.0, nodes 9067, open 4, closed 71
+     out of time: no
+     optimal solution cost:       7615
+     CPU time (preproc):        1.9070
+     CPU time (search):        60.1250
+     CPU time (total):         62.0320
+     number of nodes:             9076
+     memory usage:                0.0022 MB
+  END.      In addition to this diagnostic output,  aolibILP  also outputs/appends a short summary of its computation to the file  summary.txt , which you should feel free to look at.             If your archiver doesn't support GZIP, a copy of gunzip for the command line is available [ http://csp.ics.uci.edu/files/gunzip.exe  here].   ( 1 )        aolibILP/Demo  (last edited 2008-03-10 19:07:37 by  localhost ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

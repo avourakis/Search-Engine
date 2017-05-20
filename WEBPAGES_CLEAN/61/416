@@ -1,0 +1,246 @@
+ Informatics 102 Spring 2012, Assignment #4: Mixed-Language Programming<body>
+
+ 
+
+ 
+Informatics 102 Spring 2012 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Lab Manual  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ Informatics 102 Spring 2012 
+   Assignment #4:  Mixed-Language Programming  
+   
+ 
+
+ 
+
+  Due date and time:   Wednesday, May 30, 11:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ We talked in lecture about the need for mixed-language programming.  In many
+real-world projects, the mixture of requirements leads to a situation in which
+there isn't one "right tool" for the job, but there are "right tools" for
+different parts of that job.  The trick, when solving larger-scale software
+problems with multiple languages, is getting programs written in different
+languages to communicate with one another when it's necessary. 
+
+ In some cases, multiple language programming can be very straightforward.  Earlier this quarter, we mixed Java and AspectJ, which are a natural match for one another, since both run on the Java Virtual Machine (JVM), and especially since AspectJ was intended as an extension to Java.  There are other languages whose programs run on the JVM, such as Scala and Groovy; these are easily interoperable with Java, since the JVM doesn't see code in these other languages as being different from Java code.  Similarly, native code generated from, say, C++ and Fortran compilers can be made to work together, provided that there is agreement (or at least compatibility) in their calling/linkage conventions (i.e., what data gets placed on to the runtime stack when functions are called, how values are returned from functions, etc.). 
+
+ We also talked in lecture about some ways that programs communicate when they don't run on a common infrastructure (or even, potentially, on the same machine): 
+
+   Sockets .  These are network connections that allow each programs to send a stream of bytes to the other.  This is what Internet applications (e.g., browsers, instant messaging clients, etc.) use. 
+    Files .  One program can write information into a file that can be read into another. 
+    Databases .  One program can store information into a database, while another can query that information later. 
+    Pipes .  These allow data to be sent between two programs on the same machine.  One way they're often used is for the "standard output" (e.g., System.out, in Java) of one program to be wired automatically to the "standard input" (e.g., System.in, in Java) of another, though they can be used more flexibly than that.  The operating system shuttles data between them automatically and efficiently. 
+  The common thread that runs through all of these examples is the idea that information needs to be sent out of one program (across a socket, into a file, into a database, through a pipe) and read into another.  One issue that arises immediately when we need to send information from one program to another, regardless of what language each program is written in, is the need for a  protocol  governing the communication.  If the information is saved into a file, we need a  file format  describing what the file looks like; if the information is sent across a more direct connection, like a socket or a pipe, we need to agree on what the conversation will look like.  From the perspective of either program, there are just bits being written into a file or sent across a communication mechanism; it's up to the two programs to agree on what those bits mean. 
+
+ This assignment allows you to explore two ways of connecting code written in multiple languages together.  First, we'll connect Erlang programs to Java programs using  Erlang ports , which presents a fairly low-level mechanism whereby an Erlang interpreter can launch a Java program, send information to its standard input (System.in) and receive information from its standard output (System.out); that information is transmitted as  packets  containing sequences of bytes. 
+
+ Second, we'll connect two Java programs together using  Protocol Buffers ; optionally, you can also write a C++, Python, or Erlang program that can also participate in this part.  Protocol Buffers is a not a full-fledged programming language; it's a "little language" that is used to describe the structure of messages that can be read from and written to a variety of sources (e.g., files, sockets, pipes), with a compiler that generates code in one of three languages (Java, C++, or Python) that is capable of handling these messages interchangeably.  (There are open source compilers that generate code in a wide variety of other languages.) 
+
+ We often say that "little languages" like Protocol Buffers are called  domain-specific languages , in that they focus their efforts on a very narrow problem domain, as opposed to  general-purpose languages  like Java, which are intended to be used to solve a wider variety of problems.  Domain-specific languages will be the focus of most of the remainder of this course. 
+
+ 
+
+ 
+
+  Part 1: Combining Erlang and Java Using Ports (30 points) 
+
+ Write an Erlang module called  sorter  in a file called  sorter.erl  that implements an Erlang process whose job is to sort lists of integers.  Your  sorter  module should export these four functions: 
+
+   start/1 , which starts a sorter process and returns a tuple of the form  {ok, Pid} , where Pid is the pid of the newly-created sorter process.  If the function could not start the sorter process, the function returns any error message you'd like (e.g., any atom), so long as it doesn't match the pattern  {ok, Pid} .  The argument to this function is described below. 
+    stop/1 , which takes the pid of a sorter process and stops the process, returning  ok .  If the function is unable to stop the process within five seconds, the function returns  couldnotstop . 
+    ascending/2 , which takes the pid of a sorter process and a list of integers and returns a list containing the same integers sorted in ascending order. 
+    descending/2 , which takes the pid of a sorter process and a list of integers and returns a list containing the same integers sorted in descending order. 
+  The interesting twist here is that the  ascending/2  and  descending/2  functions are not permitted to actually sort the integers themselves.  Instead, they are required to use Erlang ports to ask a Java program, which you'll also need to write, to perform the sort instead.  Furthermore, the Java program should not be relaunched each time a sort is performed; instead, it should be launched when  start/1  is called and closed when  stop/1  is called.  If there are multiple sorter processes running, they should each have their own instances of the Java program associated with them.  The argument to  start/1  should be the full command required to launch the Java program (e.g., "C:\\jdk1.7.0_03\bin\\java -cp C:\\Inf102\\Workspace\\Assignment4\\bin;C:\\jdk1.7.0_03\\lib inf102.assignment4.Main").  Accepting this as an argument will allow us to automatically test your program, even though we may have Java installed in a different place or your compiled Java code stored in a different place. 
+
+ There are a few things you'll need to think through in order to be successful in implementing this part: 
+
+  Be sure to look at the  code example  that demonstrates using Erlang ports to communicate between Erlang and Java; the techniques shown in the code (and in the README file!) will be of importance here.  There are some minor details here that have a major, negative impact if you don't get them right. 
+   You'll need to design a communication protocol, similar to the protocol that is used in the code example.  One difference here, though, is that the messages you'll be sending back and forth will differ in their lengths, so the packet sizes will be more important than they were in the code example.  There is no requirement regarding how you design your protocol; anything that works is permitted. 
+   Remember that Erlang adds and removes packet lengths automatically, while the Java program will need to read and write them explicitly. 
+   The debugging technique shown in the code example, where the Java program writes to a debug output file, will be very helpful as you debug your protocol. 
+  Assume that each of the integers in the lists passed to  ascending/2  or  descending/2  could be any legitimate Java integer value (i.e., -2,147,483,648 through 2,147,483,647).  Additionally, you should be able to handle lists of as many as 65,535 integers.  So you'll need to be sure you handle this in your protocol appropriately — consider, for example, the number of bytes you use for your packet length, and how you translate each of the integers to be sorted into bytes and back.  (The  IntBytesConverter  class described in Part 2, in some form, could be a lot of use here.) 
+
+ An important note about who is allowed to send messages to Erlang ports 
+
+ Even though you can communicate with an Erlang port by sending messages to it, as you would with an Erlang process, there are restrictions about which process is allowed to send messages to a port.  At any given time, an Erlang port is said to be  connected  to exactly one Erlang process.  Only the connected process is allowed to send messages to that port and all data received from the port will result in messages being send to the connected process. 
+
+ By default, the process that opens the port is the one that's connected to it.  This means you have two choices about how you set things up: 
+
+  Make sure that your sorter process — the one that your  start/1  function spawns — is the one to open the port.  This will require some care, so that  start/1  can return  couldnotstart  if opening the port fails. 
+   Open the port in  start/1 , but then connect your sorter process to it afterward.  The currently-connected process can change which process is connected to a port by sending it a message of the form  {self(), {connect, NewPid}} , where NewPid is the pid of the process that you want to be connected to the port.  This approach has the virtue that the failure will occur in the same process that needs to return an error message, but requires care to ensure that the appropriate process is connected to the port before you start sending messages to it. 
+  Either of these approaches is viable and it's your choice which you use.  Just be sure to consider this problem and a solution to it, one way or another. 
+
+ 
+
+ 
+
+  Part 2: Using Google Protocol Buffers with Java (70 points) 
+
+ For this part of the assignment, you'll write two Java programs, one that writes information about a set of exercises (e.g., walking on a treadmill, lifting weights) performed by a user — encoded using Google Protocol Buffers — and another that reads that information back and computes summary statistics about those exercises.  The programs will explore both the kinds of problems that Protocol Buffers solves and the kinds that it doesn't; you'll need to handle the issues that Protocol Buffers does not address on your own. 
+
+ The "writer" program 
+
+ The "writer" program is comprised of a console mode user interface (or a graphical user interface, if you prefer, but this is not required and no extra credit is offered) that allows a user to enter information about three kinds of exercises.  All fields are required. 
+
+   Cardio .  The following information should be stored about each occurrence of a cardio exercise:
+       ID , an integer that is a unique identifier for this cardio exercise. 
+        Description , a string describing the kind of cardio exercise performed (e.g., "treadmill, walking"). 
+        Intensity , an integer from 0-10 describing the intensity of the exercise, with 10 being the most intense, and 0 being sitting in a chair staring at the wall. 
+        Duration , an integer specifying how long, in seconds, the user spent doing the exercise. 
+      
+    Weight Training .  The following information should be stored about each occurrence of a weight training exercise:
+       ID , in integer that is a unique identifier for this weight training exercise. 
+        Description , a string describing the kind of weight training exercise performed (e.g., "leg lifts"). 
+        Weight Amount , the amount of weight, in pounds, being used as resistance 
+        Sets , the number of sets of the exercise that were performed. 
+        Repetitions , the number of repetitions of the exercise that were performed in each set. 
+      
+    Stretching .  The following information should be stored about each occurrence of a stretching exercise:
+       ID , an integer that is a unique identifier for this stretching exercise. 
+        Description , a string describing the kind of stretching exercise performed (e.g., "hurdler stretches"). 
+        Repetitions , the number of repetitions of the stretching exercise that were performed. 
+        Hold Duration , the duration, in seconds, that the stretch was held in each repetition. 
+      
+  For each kind of exercise, there are two commands that should be presented: one to add a new occurrence of that exercise and one to remove an occurrence of that exercise given its unique identifier.  (You're welcome to support modifying an occurrence of an exercise, as well, though this is not required.)  Keep track of the order in which the exercises were added using a sequence number (a number that increases each time you add one) or a date and time it was added.  One way to handle this is to generate the IDs automatically and sequentially, then use these IDs as a sequence number. 
+
+ There is one additional command that must be included in your user interface: writing information about all of the exercises into an output file, whose name is specified by the user.  For this part, you will use Protocol Buffers to encode the exercises as Protocol Buffers messages, writing them into the output file in the order that they were added in the user interface.  This program is not required to be able to read one of these files, but you're welcome to support this if you'd like. 
+
+ Also, there is one last command that you'll need to support: quitting the program. 
+
+ There are no hard requirements about your user interface, other than it must support the commands listed as requirements above and that it must be easy enough to use for us to figure out just by running it.  (For example, we shouldn't have to read your source code in order to figure out what commands to enter.)  Beyond that, be as creative or as straightforward as you'd like. 
+
+ Part of the design of your program will be a Protocol Buffers (.proto) file that describes the messages that you'll be writing into each output file. 
+
+ The "reader" program 
+
+ The "reader" program is comprised of a console mode user interface (or a graphical user interface, if you prefer, but this is not required and no extra credit is offered) that allows a user to specify an input file — one that was written by the "writer" program — and then reads its contents and prints out summary information about what's contained inside of it. 
+
+ The information to be printed by the "reader" program is, in this order: 
+
+  A list of all of the exercises performed, in the order they were written into the output file by the "writer" program.  For each, show the type of exercise (e.g., cardio, weight training, or stretching), its ID, and its description. 
+   Summary statistics about the exercises performed, in this order:
+      The total duration of all the cardio exercises performed. 
+       The total duration of all the cardio exercises performed whose intensity was at least 6. 
+       The total duration of all the cardio exercises performed whose intensity was no greater than 5. 
+       The ID, description, and duration of the longest cardio exercise performed.  In the event of a tie, choose any of the ones that are equally the longest. 
+       The total number of sets performed in all the weight training exercises. 
+       The total number of repetitions performed in all the weight training exercises. 
+       The ID, description, and total number of repetitions performed in the weight training exercise with the largest total number of repetitions.  In the event of a tie, choose any of the ones with the equally largest number of repetitions. 
+       The total hold duration of all the stretching exercises performed. 
+       The ID, description and hold duration of the longest stretching exercise performed (i.e., the one with the longest total hold duration across all its repetitions).  In the event of a tie, choose any of the ones that are equally the longest. 
+      
+  All durations should be specified in the form HH:MM:SS (e.g., "05:30:45" for five hours, 30 minutes, and 45 seconds).
+
+  (Of course, I'm obliged to point out here that the summary statistics don't represent a very good way of determining the quality of an exercise program, but they serve our purposes here.) 
+
+ The "reader" program is required to be compatible with the same Protocol Buffers (.proto) file that you used in the "writer" program; you are not permitted (and shouldn't need to) write a new .proto file for this program, since its goal is to read the same information written by the "writer" program. 
+
+ What Protocol Buffers will and won't do automatically 
+
+ Protocol Buffers are intended as a mechanism for describing the structure of  messages .  Messages can be used for a variety of purposes — for sending messages between programs, saving data into a file so that other programs can read it, and so on — that all fall into the category of "getting information out of one program and into another."  The Protocol Buffers language gives you a syntax for describing the structure of messages; its compiler generates code that can automatically translate individual messages into particularly-formatted sequences of bytes — which can then be written into files, sent across sockets, etc. — and back again. 
+
+ However, this is where Protocol Buffers' mandate ends.  In particular, Protocol Buffers ignores a few issues that crop up in our program: 
+
+  When a sequence of messages is being written, how to know where one message ends and another begins 
+   How to determine, from the content of a message, what kind of message it is 
+  It seems strange that these seemingly crucial details are not handled automatically, though they were purposefully left out of the design of Protocol Buffers.  The reason is that Protocol Buffers was intended to form the basis of a wide variety of protocols and file formats, as opposed to just one; it's focused only on the problem of serializing and deserializing messages in an efficient, cross-platform, and version-insensitive way.  (The latter issue, in particular, can be very expensive to solve in the general case, but very cheap in a specific program, where there are relatively few message types.)  There are additional open source projects that wrap Protocol Buffers in different ways to solve different kinds of problems (such as one that implements  Remote Procedure Call using Java ); we won't be using them in this course, but you're encouraged to investigate them if you're curious. 
+
+ Nonetheless, regardless of the reasoning that led to these choices, if we intend to use Protocol Buffers, we'll need to find workarounds for the two issues listed above.  In particular, you'll need to store extra data in the file besides just the bytes that Protocol Buffers generates automatically, with that extra data used by your program to make the decisions that Protocol Buffers cannot. 
+
+ To solve the problem of knowing when one message ends and another begins, the designers of Protocol Buffers recommend storing the length of each message before each message.  (This is similar to the "packet" technique used by Erlang ports in Part 1, where the first few bytes specify the packet's length.)  So, to read each message, you'll do three things: 
+
+  Read the length of the next message 
+   Read the number of bytes specified by this length into a byte[] 
+   Parse the message from the byte[] 
+  Note that the files we're writing and reading are not text files, so it's best not to store the lengths as text (e.g., the length 19 would not be written as the characters '1' and '9').  Instead, we should convert int values into their underlying bytes, then write those bytes into the files; when reading the length back, we should read those bytes into a byte[], then convert them back to an int.  For the purposes of making these conversions, I've provided an  IntBytesConverter  class with two static methods that perform conversions between ints and array of bytes.  (There are more efficient ways of storing integer values than this, but this strategy will suffice.  If you prefer to use your own method, that's fine; you don't have to use the provided converter.) 
+
+ To solve the problem of knowing what kind of message should be read when it's time to read one, you'll need to write some information that indicates what kind of message it is.  When you read this information, you'll then be able to know what kind of message to build.  I'll leave it to you to decide how to write this information; anything that works will be accepted. 
+
+ In general, the structure of one message should look like this: 
+
+   Message Type Indicator    Message Content Length    Message Content    where the  Message Type Indicator  is whatever you've written to allow you to determine the type of the message, the  Message Content Length  is the length of the message's content, and  Message Content  is the content of the message (i.e., the bytes generated by Protocol Buffers automatically). 
+
+ Note that you won't be able to just pass a FileInputStream to the parseFrom( ) method of your message class, as was done in the  code example  of using Protocol Buffers that we did in lecture.  Instead, you'll need to read the message into a byte[], then use the variant of parseFrom( ) that takes a byte[] as a parameter. 
+
+ Also, when writing your messages to the output file, you'll first need to serialize them to find out their length, so that you can write the length before writing the message; the ByteArrayOutputStream class in the Java library, which is a sort of a cross between an output stream (so you can write to it with write() methods common to other output streams) and an ArrayList (in that it grows dynamically as data is added to it) will be of help here. 
+
+ Because I'd like for you to confront and handle the issues of writing multiple messages to a file and determining the types of individual messages, you are not permitted to simply create a single message type with a  repeated  field in it; each exercise should be its own, separate message. 
+
+ A word about Eclipse and sharing code between the two programs 
+
+ You may well find that some of the code you write will be useful in both programs.  (You may also find that it won't, and that's fine; it's not a requirement that you find code to share between them.)  To support this possibility, I suggest using one Eclipse project for this part of the assignment, with two separate classes containing  main  methods, one for the "writer" program and one for the "reader" program. 
+
+ Using Protocol Buffers from within your Eclipse project 
+
+ First of all, you'll need to download the Protocol Buffers compiler from  this link .  Like the Erlang distribution, it is provided in two forms: a zip containing a Windows binary (i.e.,  protoc.exe ) and source code (allowing you to compile a version of the compiler for Mac OS X, Linux, etc.). 
+
+ The Protocol Buffers compiler does not generate all of the code necessary to write and read messages; it instead generates code that relies on a set of supporting code (e.g., superclasses from which message classes are derived) that makes up a package called  com.google.protobuf .  The supporting code provided on the official web site is not quite complete; it requires an intermediate step to generate part of it.  To keep things simple, I am providing a JAR containing the complete version of the supporting code at  this link . 
+
+ Copy the Protocol Buffers compiler (e.g.,  protoc.exe  on Windows) into your Eclipse project folder, neither within the  src  folder nor the  bin  folder. 
+
+ Create a folder called  lib  within your Eclipse project (again, neither within  bin  nor  src ).  Copy the JAR into the new  lib  folder.  Then go back into Eclipse, refresh your Eclipse project by right-clicking on it in Package Explorer and clicking  Refresh .  Finally, right-click the JAR file (which should now appear in a  lib  folder within your project), select  Build Path  and then  Add to Build Path .  This will make the Protocol Buffers support library available in your project. 
+
+ When you write .proto file(s), store them in the  src  folder of your Eclipse project.  .proto files are source code, so this is a sensible place to put them. 
+
+ When you've made changes to your .proto file(s), execute the following command for each of them, from a command prompt or terminal window (from within the folder containing your Eclipse project, again not within  bin  or  src ): 
+
+ 
+    protoc --java_out=src YOUR_PROTO_FILE.proto
+ 
+
+ This command will generate new .java files, placing them into the package (subfolders) specified in your .proto file automatically.  Whenever you've recompiled your .proto file(s), refresh your Eclipse project to pick up the new versions of the files, by right-clicking on the project in Package Explorer and clicking  Refresh .  Note that when you remove a .proto file, you'll also need to remove the corresponding .java file that you've already generated, if any. 
+
+ I have heard that there are Eclipse plug-ins for Protocol Buffers that mitigate some of these kinds of file-management tasks, though I've yet to try any of them; you're welcome to give one of them a shot, but you'll be on your own in terms of getting it to work. 
+
+ An additional, optional challenge — Using Protocol Buffers to combine Java with either C++, Python, Erlang, or something else 
+
+ Protocol Buffers is not just a technique for efficiently serializing and deserializing messages in Java programs.  It is also made language-independent by the presence of Protocol Buffers compilers for multiple programming languages.  The official Google release includes compilers that generate C++ and Python, in addition to Java; other languages are supported (at varying levels of completeness) by separate projects, such as a variety of open-source alternatives listed  here .  For example, in lecture, we saw an Erlang implementation of Protocol Buffers, which you can download from  GitHub .  Compiling it is a little tricky, but I'm happy to help if you'd like. 
+
+ As an additional challenge, once you've finished your two Java programs, write compatible versions of either or both programs in either C++, Python, Erlang, or something else.  The appropriate Protocol Buffers compiler for your chosen programming language will support part of this effort, though you'll also need to solve the problems of determining message types and message boundaries separately in your new program, in a way that's compatible with your Java programs.  Once finished, you should be able to write output from your Java program and read it into a program written in another language. 
+
+ As with other additional challenges offered in this course, no extra credit is offered for this one, but it will allow you to delve into territory beyond what we've covered in this course, if you're so inclined. 
+
+ 
+
+ 
+
+  Deliverables 
+
+ For Part 1, submit your  sorter.erl  file, along with the one or more .java files that make up your Java program. 
+
+ For Part 2, submit a zip archive containing the following deliverables: 
+
+  All of the .java files that you wrote for your two Java programs: the "writer" program and the "reader" program.  If you used packages, please put these files into the appropriate subfolder (e.g., a folder called  assignment4  within a folder called  inf102  if you used package  inf102.assignment4 . 
+   The .proto file(s) that describe the Protocol Buffers messages used by both programs. 
+   A short text file that tells us the fully-qualified name (including the package, if you use them) of the  main  methods for both of your Java programs, so we'll know how to run them. 
+   If you do the additional challenge, write up a document explaining what Protocol Buffers compiler you used and give us a link to some instructions on how to set it up. 
+  Do not submit the support files that make up the  com.google.protobuf  package; it is also not necessary to submit the file(s) generated by the Protocol Buffers compiler, as we will be generating these ourselves as part of the grading process. 
+
+ Follow  this link  for a discussion of how to submit your assignment via Checkmate.  Be aware that I'll be holding you to all of the rules specified in that document, including the one that says that you're responsible for submitting the version of the assignment that you want graded.  We won't regrade an assignment simply because you submitted the wrong version by accident. 
+
+ 
+
+ 
+
+   Various requirements adjusted by Alex Thornton, Spring 2012. 
+   A few minor tweaks by Alex Thornton, Winter 2010. 
+   Originally written by Alex Thornton, Winter 2009. 
+  
+
+</body> 

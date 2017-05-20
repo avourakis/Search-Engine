@@ -1,0 +1,1078 @@
+ //  
+// $Id: Trie.cpp 1106 2007-04-16 23:20:29Z chenli $
+//
+// Trie.cpp: implementation of the Trie class.
+//
+//  Copyright (C) 2004 - 2007 by The Regents of the University of
+//  California
+//
+// Redistribution of this file is permitted under the terms of the GNU
+// Public License (GPL).
+//
+// Date: October, 2004
+//
+// Author: 
+//          Liang Jin (liangj@ics.uci.edu)
+//
+
+#include "stdafx.h"
+#include 
+#include 
+//#include 
+#include 
+#include 
+#include 
+#include 
+//#include "parameters.h"
+#include 
+#include 
+#include "NFA.h"
+#include "NFAMatch.h"
+
+using namespace std;
+
+
+#include "Trie.h"
+
+extern double totalEDTime;
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Trie::Trie()
+{
+	root = TrieNewNode();
+	//TrieInitNode(root);
+
+	setName(root-&gt;names, EPSILON);
+
+//	memset(content, ' ', TRIELEN);
+}
+
+Trie::~Trie()
+{
+	TrieFreeNode(root);
+}
+
+struct TrieNode * Trie::TrieNewNode()
+{
+	register struct TrieNode *n;
+
+	//n = new Node;
+	n = (struct TrieNode*)malloc(sizeof(struct TrieNode));
+	assert(n);
+	TrieInitNode(n);
+	return n;
+}
+
+void Trie::TrieInitNode(struct TrieNode *N)
+{
+	register struct TrieNode *n = N;
+	register int i;
+
+	n-&gt;count = 0;
+
+	n-&gt;isCompressed = false;
+
+	n-&gt;names = 0;
+
+	n-&gt;com.size = 0;
+	n-&gt;com.depth = 0;
+
+	for (i = 0; i child[i] = NULL;
+
+	n-&gt;parent = NULL;
+	
+}
+
+void Trie::TrieFreeNode(struct TrieNode *p)
+{
+	int i;
+	assert(p);
+	//delete p;
+	if(p-&gt;count == 0)
+	{
+		p-&gt;parent = NULL;
+		free(p);
+	}
+	else
+	{
+		for(i = 0; i child[i] != NULL)
+			{
+				TrieFreeNode(p-&gt;child[i]);
+				p-&gt;child[i] = NULL;
+			}
+		}
+		free(p);
+	}
+	return;
+}
+
+void Trie::TrieClearTrie()
+{
+	TrieFreeNode(root);
+
+	root = TrieNewNode();
+	setName(root-&gt;names, EPSILON);
+}
+
+struct TrieNode* Trie::CopyTrie(struct TrieNode* p, struct TrieNode* parent)
+{
+	int i;
+
+	struct TrieNode* newnode = TrieNewNode();
+	newnode-&gt;names = p-&gt;names;
+	newnode-&gt;isCompressed = p-&gt;isCompressed;
+	newnode-&gt;count = p-&gt;count;
+	newnode-&gt;depth = p-&gt;depth;
+	newnode-&gt;com.depth = p-&gt;com.depth;
+	newnode-&gt;com.size = p-&gt;com.size;
+	newnode-&gt;parent = parent;
+
+	if(newnode-&gt;count == 0)
+		return newnode;
+
+	for(i = 0; i child[i] != NULL)
+			newnode-&gt;child[i] = CopyTrie(p-&gt;child[i], newnode);
+	}
+	return newnode;
+
+}
+
+
+string Trie::Trie2Str(struct TrieNode *root)
+{
+	string result;
+	oneNode2Str(root, result);
+	return result;
+
+}
+
+void Trie::oneNode2Str(struct TrieNode *node, string &amp;result){
+	int i;
+	char name;
+	if(node-&gt;count==0){
+		if(node-&gt;isCompressed == false)
+		{
+			name = getSingleName(node-&gt;names);
+			result.append(&amp;name, 1);
+		}
+		else
+		{
+			result.append("[");
+			
+			char alpha[10];
+			sprintf(alpha, "%d", node-&gt;names);
+			result.append(alpha);
+
+
+			result.append(",");
+
+			char temp[2];
+			//itoa(node-&gt;com.depth, temp, 10);
+			sprintf(temp, "%d", node-&gt;com.depth);
+
+			result.append(temp);
+
+			result.append("]");
+		}
+		return;
+	}
+	
+	else{
+		//result.append(&amp;node-&gt;name, 1);
+		if(node-&gt;isCompressed == false)
+		{
+			name = getSingleName(node-&gt;names);
+			result.append(&amp;name, 1);
+		}
+		else
+		{
+			result.append("[");
+			
+			char alpha[10];
+			sprintf(alpha, "%d", node-&gt;names);
+			result.append(alpha);
+
+			result.append(",");
+
+			char temp[2];
+			//itoa(node-&gt;com.depth, temp, 10);
+			sprintf(temp, "%d", node-&gt;com.depth);
+
+			result.append(temp);
+
+			result.append("]");
+		}
+
+		if(node-&gt;count!=1)
+			result.append("(");
+		int counter = 0;
+		for(i=0; iname);
+			if(node-&gt;child[i] != NULL)
+			{
+				oneNode2Str(node-&gt;child[i], result);
+
+				if(counter != node-&gt;count - 1){
+					result.append("|");
+				}
+
+				counter++;
+			}
+		}
+		if(node-&gt;count!=1)
+			result.append(")");
+	}
+	return;
+}
+
+
+struct TrieNode* Trie::Str2Trie(string input)
+{
+	struct TrieNode* n;
+	n = TrieNewNode();
+	//TrieInitNode(n);
+	setName(n-&gt;names, EPSILON);
+
+	input.erase(0,1); //remove the &amp; at the beginning it's a epsilon state
+	Str2oneNode(n, input);
+
+	return n;
+}
+
+void Trie::Str2oneNode(struct TrieNode *node, string input)
+{
+	int pos = input.find_first_of('(');
+	int i, j, k, subIndex;
+	
+	struct TrieNode *temp = node;
+	int index;
+	
+	//No ()
+	if(pos == -1) //there is no (), it's a single path
+	{
+		for(i=0; inames, input[i]);
+				index = getIndex(input[i]);
+				temp-&gt;child[index] = n;
+
+				n-&gt;parent = temp;
+			
+				temp-&gt;count++;
+
+				temp = temp-&gt;child[index];
+			}
+			else
+			{
+				j = i+1;
+				
+				while(input[j] != ']')
+				{
+					j++;
+				}
+
+				char* substring = new char[j - i];
+				
+				for(k = 0; k isCompressed = true;
+
+				char* name = new char[j - i];
+				
+				for(k = 0; k names, substring[k]);
+						
+						//n-&gt;com.size++;
+					}
+					else
+						break;
+				}
+				name[k] = '\0';
+
+				n-&gt;names = atoi(name);
+				for(subIndex = 0; subIndex names, subIndex) == true)
+						n-&gt;com.size++;
+				}
+				
+				n-&gt;com.depth = atoi(substring + k + 1);
+
+				temp-&gt;child[ALPH_SIZE - 1] = n; //38 for compressed node
+				n-&gt;parent = temp;
+
+				temp-&gt;count++;
+
+				temp = temp-&gt;child[ALPH_SIZE - 1];
+
+				i = j;  //skip the part between [ ]
+
+				delete[] substring;
+				delete[] name;
+			}
+		}
+
+		return;
+	}
+
+	//There is ()
+	if(pos &gt; 0) //there are chars that are in a single path from the parent
+	{
+		for(i=0; inames, input[i]);
+				index = getIndex(input[i]);
+				temp-&gt;child[index] = n;
+				n-&gt;parent = temp;
+			
+				temp-&gt;count++;
+
+				temp = temp-&gt;child[index];
+			}
+			else
+			{
+				j = i+1;
+				
+				while(input[j] != ']')
+				{
+					j++;
+				}
+
+				char* substring = new char[j - i];
+				
+				for(k = 0; k isCompressed = true;
+				
+				char* name = new char[j-i];
+
+				for(k = 0; k names, substring[k]);
+
+						//n-&gt;com.size++;
+					}
+					else
+						break;
+				}
+				name[k] = '\0';
+
+				n-&gt;names = atoi(name);
+				for(subIndex = 0; subIndex names, subIndex) == true)
+						n-&gt;com.size++;
+				}
+				
+				n-&gt;com.depth = atoi(substring + k + 1);
+
+				temp-&gt;child[ALPH_SIZE - 1] = n; //ALPH_SIZE - 1 for compressed node
+				n-&gt;parent = temp;
+
+				temp-&gt;count++;
+
+				temp = temp-&gt;child[ALPH_SIZE - 1];
+
+				i = j;  //skip the part between [ ]
+
+				delete[] substring;
+				delete[] name;
+			}
+
+		}
+		
+		input.erase(0,pos); //erase everything before the first (, including the (
+	}
+
+	input.erase(0, 1);
+
+	if(input.length() == 0) return;
+
+	int leftcount = 0;
+	int cursor = 0;
+
+	for(i = 0; i  0)
+		{
+			leftcount --;
+		}
+		else if(input[i] == ')' &amp;&amp; leftcount == 0) //last branch here
+		{
+			string input3 = input.substr(cursor, i - cursor);
+			Str2oneNode(temp, input3);
+			break;
+		}
+	}
+	assert(i == input.length() - 1);
+
+	return;
+
+}
+
+void Trie::AddToTrie(string s)
+{
+	int lcv, index, character;
+	s.append("&amp;");
+	 
+    struct TrieNode *t = root;
+     
+ 
+    // loop over the length of the string to add and traverse the trie...
+    for(lcv=0; lcv child[index] == NULL) {
+ 
+ 			// if not, make one!
+			t-&gt;child[index] = TrieNewNode();
+
+			t-&gt;child[index]-&gt;parent = t;
+			//TrieInitNode(t-&gt;child[index]);
+            setName(t-&gt;child[index]-&gt;names, character);
+			
+			t-&gt;count++;
+        }
+ 
+        // there is another string under this node...
+        //t-&gt;child[index]-&gt;count++;
+ 
+        // move to it this node... and loop
+        t = t-&gt;child[index];
+    }
+}
+
+int Trie::getIndex(int character)
+{
+	int index;
+	
+	if(character &gt;= 'a' &amp;&amp; character = 'a'-'a' &amp;&amp; index count == 0) 
+	{
+		insert.erase(insert.length() - 1, 1); //get rid of the last &amp;, since the insert will append it
+
+		AddToTrie(insert);
+		return;
+	}
+
+	for(i = 0; i child[i] != NULL)
+		{
+			name = getSingleName(t2-&gt;child[i]-&gt;names);
+			insert.append(&amp;name, 1);
+			InsertStrs(t2-&gt;child[i], insert);
+			insert.erase(insert.length() - 1, 1);
+		}
+
+		
+	}
+}
+
+long Trie::getSize(struct TrieNode *p)
+{
+	assert(p);
+	string s;
+	s = Trie2Str(p);
+
+	return s.length();
+}
+
+double Trie::getNumofStr(struct TrieNode* p)
+{
+	assert(p);
+	
+	double counter = 0.0;
+
+	getNum(p, counter);
+
+	return counter;
+}
+
+bool Trie::getNum(struct TrieNode * p, double &amp;counter)
+{
+	int i;
+
+	double temp;
+
+	if(p-&gt;count == 0) // leaf node
+	{
+		if(p-&gt;isCompressed == false) // the node is compressed
+			counter ++;
+		else //not compressed
+		{
+			temp = (double)pow(p-&gt;com.size, p-&gt;com.depth);
+			if(temp &gt;= 0.0)
+				counter += (double)pow(p-&gt;com.size, p-&gt;com.depth);
+		}
+		return true;
+	}
+	else //interior node
+	{
+		for(i = 0; i child[i] != NULL)
+			{
+				getNum(p-&gt;child[i], counter);
+			}
+		}
+	}
+
+	return true;
+
+}
+
+void Trie::assignDepth()
+{
+	assert(root);
+
+	root-&gt;depth = assignOneDepth(root);
+}
+
+int Trie::assignOneDepth(struct TrieNode* p)
+{
+	if(p-&gt;count == 0) //leaf node
+	{
+		p-&gt;depth = 0;
+		return 0;
+	}
+	int i;
+	bool first=true;
+	int depth, temp;
+
+	for(i = 0; i child[i] != NULL)
+		{
+			if(first)
+			{
+				depth = assignOneDepth(p-&gt;child[i]) + 1;
+				first = false;
+			}
+			else
+			{
+				temp = assignOneDepth(p-&gt;child[i]) + 1;
+				if(temp &gt; depth)
+					depth = temp;
+			}
+
+		}
+	}
+	
+	p-&gt;depth = depth;
+
+	return depth;
+}
+
+int Trie::getAlpha(struct TrieNode *p)
+{
+	assert(p);
+
+	int i;
+
+	bool existing[ALPH_SIZE];
+
+	for(i=0; ichild[i] != NULL)
+			getAlphaHelper(p-&gt;child[i], existing);
+
+	int counter = 0;
+	for(i=0; ichild[i] != NULL)
+			getAlphaHelper(p-&gt;child[i], existing);
+
+	if(existing[27] == true) existing[27] = false;
+
+	
+	return existing;
+}
+
+void Trie::getAlphaHelper(struct TrieNode* p, bool* existing)
+{
+	int index;
+	int i;
+	if(p-&gt;count == 0) //leaf node
+	{
+		if(p-&gt;isCompressed == false)
+		{
+			index = getIndex(getSingleName(p-&gt;names));
+			existing[index] = true;
+		}
+		else
+		{
+			for(i = 0; i names, i) == true)
+					existing[i] = true; 
+		}
+		return;
+	}
+	
+	index = getIndex(getSingleName(p-&gt;names));
+	existing[index] = true;
+
+	for(i = 0; i child[i] != NULL)
+			getAlphaHelper(p-&gt;child[i], existing);
+	}
+	
+	return;
+}
+
+
+//----------------------------------------------------
+//---------------Bottom Up Compression----------------
+//----------------------------------------------------
+
+void Trie::getCandidateBottom(struct TrieNode* p, vector &amp;list)
+{
+	//insert all the depth 2 nodes into the vector as candidate list
+	if(p-&gt;depth == 2)
+	{
+		struct BottomElem *ce = new struct BottomElem;
+		ce-&gt;n = p;
+
+		int numofchars = getAlpha(p);
+		ce-&gt;newStrs = (double)pow(numofchars, p-&gt;depth - 1);
+		ce-&gt;oldStrs = getNumofStr(p);
+		ce-&gt;newSize = numofchars + (int)floor(log10(p-&gt;depth-1)+1) + 3; //[d,1], numofchars for d, floor() for 1, 3 for [,]
+		ce-&gt;oldSize = Trie2Str(p).length() - 1; //(d$) -1 minus itself. Trie2Str() include p-&gt;name
+
+		if(ce-&gt;newStrs oldStrs == INVALID)
+			ce-&gt;cost = INVALID;
+		else
+			ce-&gt;cost = ce-&gt;newStrs - ce-&gt;oldStrs;
+
+		ce-&gt;benefit = ce-&gt;oldSize - ce-&gt;newSize;
+
+		list.push_back(ce);
+
+		return;
+	}
+
+	if(p-&gt;depth == 0 || p-&gt;depth == 1)
+		return; // for compressed node... doesn't count for candidate?
+
+	for(int i=0; ichild[i] != NULL)
+			getCandidateBottom(p-&gt;child[i], list);
+	}
+	
+	return;
+
+}
+
+void Trie::CompressTrieBottomUp()
+{
+	vector candid;
+
+	getCandidateBottom(root, candid);
+
+	//candid = getCandidateList(); // get all the leaf nodes
+
+	int size, i;
+
+	size = candid.size();
+
+	double originalsize = Trie2Str(root).length();
+	
+	struct BottomElem *ce;
+	struct TrieNode *parent;
+
+	//double benefitratio, tempratio;
+	double maxbenefit;
+	double mincost, tempcost;
+	
+	int id;
+	vector::iterator it;
+
+	while(originalsize &gt; TRIELEN &amp;&amp; candid.size() &gt; 0)
+	{
+		//compress here
+		//find the best one to compress
+		id = -1;
+		
+		size = candid.size();
+
+		for(i = 0; i cost != INVALID)
+			{
+				mincost = candid[i]-&gt;cost;
+				maxbenefit = candid[i]-&gt;benefit;
+				id = i;
+				break;
+			}
+			else
+			{
+				mincost = -INVALID;
+				maxbenefit = candid[i]-&gt;benefit;
+				id = i;
+				break;
+			}
+		}
+
+		for( i++ ; i cost != INVALID)
+			{
+				if(candid[i]-&gt;cost cost;
+					maxbenefit = candid[i]-&gt;benefit;
+					id = i;
+				}
+				else if(candid[i]-&gt;cost == mincost)
+				{
+					if(candid[i]-&gt;benefit &gt; maxbenefit)
+					{
+						mincost = candid[i]-&gt;cost;
+						maxbenefit = candid[i]-&gt;benefit;
+						id = i;
+					}
+				}
+			}
+			else
+			{
+				tempcost = -INVALID;
+				if(tempcost benefit;
+					id = i;
+				}
+				else if(tempcost == mincost)
+				{
+					if(candid[i]-&gt;benefit &gt; maxbenefit)
+					{
+						mincost = tempcost;
+						maxbenefit = candid[i]-&gt;benefit;
+						id = i;
+					}
+				}
+
+			}
+		}
+
+		if(id == -1) break;
+		
+		ce = candid[id];
+		parent = ce-&gt;n-&gt;parent;
+
+		//compress the subtree, attach it as the child of ce-&gt;n
+		bool* existing;
+		existing = getAlpha(ce-&gt;n, true);
+
+		struct TrieNode* newnode;
+		newnode = TrieNewNode();
+
+		newnode-&gt;count = 0;
+		newnode-&gt;isCompressed = true;
+		newnode-&gt;depth = ce-&gt;n-&gt;depth - 1;
+		newnode-&gt;com.depth = ce-&gt;n-&gt;depth - 1;
+		newnode-&gt;com.size = 0;
+
+		for(i = 0; i names, getCharFromIndex(i));
+				newnode-&gt;com.size ++;
+			}
+		}
+
+		ce-&gt;n-&gt;child[ALPH_SIZE - 1] = newnode;
+		for(i = 0; i n-&gt;child[i] != NULL)
+				TrieFreeNode(ce-&gt;n-&gt;child[i]);
+			
+			ce-&gt;n-&gt;child[i] = NULL;
+		}
+		ce-&gt;n-&gt;count = 1;
+		newnode-&gt;parent = ce-&gt;n;
+
+		//remove the entry from the candidate list. insert its parent
+		it = candid.begin();
+		for(i = 0; i n == parent)
+				{
+					found = true;
+					break;
+				}
+			}
+
+			if(found == false)//if the parent doesn't exist in the list, insert its parent
+			{
+				struct BottomElem *par = new struct BottomElem;
+				par-&gt;n = parent;
+				int numofchars = getAlpha(par-&gt;n);
+				par-&gt;newStrs = (double)pow(numofchars, par-&gt;n-&gt;depth - 1);
+				par-&gt;oldStrs = getNumofStr(par-&gt;n);
+				par-&gt;newSize = numofchars + (int)floor(log10(par-&gt;n-&gt;depth-1)+1) + 3; //[d,1], numofchars for d, floor() for 1, 3 for [,]
+				par-&gt;oldSize = Trie2Str(par-&gt;n).length() - 1; //(d$) -1 minus itself. Trie2Str() include p-&gt;name
+
+				if(par-&gt;newStrs oldStrs == INVALID)
+					par-&gt;cost = INVALID;
+				else
+					par-&gt;cost = par-&gt;newStrs - par-&gt;oldStrs;
+
+				par-&gt;benefit = par-&gt;oldSize - par-&gt;newSize;
+
+				candid.push_back(par);
+
+			}
+		}
+		
+		originalsize -= maxbenefit;
+	}
+	
+	//final cleanup
+	for(i = 0; i  candidates;
+
+	struct TrieNode* newroot;
+	newroot = TrieNewNode();
+	setName(newroot-&gt;names, EPSILON);
+	newroot-&gt;depth = root-&gt;depth;
+
+	//construct the initial result tree
+	bool* existing;
+	
+	existing = getAlpha(root, true);
+	struct TrieNode *temp = TrieNewNode();
+	temp-&gt;isCompressed = true;
+	temp-&gt;count = 0;
+	temp-&gt;depth = root-&gt;depth - 1;
+	temp-&gt;com.size = 0;
+	temp-&gt;com.depth = temp-&gt;depth;
+
+	for(j = 0; j names, getCharFromIndex(j));
+			temp-&gt;com.size++;
+		}
+	}
+
+	newroot-&gt;count = 1;
+	newroot-&gt;child[ALPH_SIZE-1] = temp;
+	temp-&gt;parent = newroot;
+
+	struct TopElem *te;
+	te = getCandidateTop(root, newroot);
+
+	candidates.push_back(te);
+
+	double originalsize = Trie2Str(newroot).length();
+	double mincost = 0;
+	double tempcost;
+	double maxbenefit;
+
+	//process the candidate list
+	vector::iterator it;
+	//double benefitratio, tempratio;
+	struct TopElem  te1;
+	bool first = true;
+
+	int numOfCenters = 1;
+
+	while(candidates.size() &gt; 0 &amp;&amp; /*originalsize cost + originalsize cost + numOfCenters cost;
+					maxbenefit = candidates[i]-&gt;benefit;
+					id = i;
+					start = false;
+				}
+				else
+				{
+					tempcost = candidates[i]-&gt;cost;
+
+					if(tempcost benefit;
+						id = i;
+					}
+					else if(tempcost == mincost)
+					{
+						if(candidates[i]-&gt;benefit &gt; maxbenefit)
+						{
+							mincost = tempcost;
+							maxbenefit = candidates[i]-&gt;benefit;
+							id = i;
+						}
+					}
+				}
+			}
+		}//for
+
+		if(id == -1) break;
+
+		te1.copy = candidates[id]-&gt;copy;
+		te1.old = candidates[id]-&gt;old;
+		te1.subtree = candidates[id]-&gt;subtree;
+		te1.newSize = candidates[id]-&gt;newSize;
+		te1.newStrs = candidates[id]-&gt;newStrs;
+		te1.oldSize = candidates[id]-&gt;oldSize;
+		te1.oldStrs = candidates[id]-&gt;oldStrs;
+		te1.cost = candidates[id]-&gt;cost;
+		te1.benefit = candidates[id]-&gt;benefit;
+
+		it = candidates.begin();
+		for(i = 0; i parent = te1.copy-&gt;parent;
+
+			index = getIndex(getSingleName(te1.copy-&gt;names));
+			te1.copy-&gt;parent-&gt;child[index] = te1.subtree;
+
+			//add for clean up ==== liang
+			TrieFreeNode(te1.copy);
+			//end
+
+			//te1.copy = te1.copy-&gt;parent-&gt;child[index];
+			te1.copy = te1.subtree;
+		}
+
+		for(i = 0; i child[i] != NULL)
+			{
+				if(te1.old-&gt;child[i]-&gt;depth != 1) //if depth=1, no furthur decompression possible
+				{
+					struct TopElem *te2;
+					te2 = getCandidateTop(te1.old-&gt;child[i], te1.copy-&gt;child[i]);
+					candidates.push_back(te2);
+				}
+			}
+		}
+		//remove the entry from the candidate list. insert its children
+		
+		
+		//originalsize += mincost;
+		numOfCenters += mincost;
+
+	}//while
+
+	//add for clean up ===== liang
+	TrieFreeNode(root);
+
+	for(i = 0; i subtree);
+		delete candidates[i];
+	}
+
+	root = newroot;
+
+	return;
+}
+
+struct TopElem* Trie::getCandidateTop(struct TrieNode* pOld, struct TrieNode* pCopy)
+{
+	int i, j;
+	bool* existing;
+	
+	//construct the future subtree if we uncompress the node
+	struct TrieNode* sub = TrieNewNode();
+	sub-&gt;names = pOld-&gt;names;
+	sub-&gt;depth = pOld-&gt;depth;
+
+	int sizeincrease = 0;
+
+	for(i = 0; i child[i] != NULL)
+		{
+			//temp = te.old-&gt;child[i];
+
+			struct TrieNode* children = TrieNewNode();
+			children-&gt;names = pOld-&gt;child[i]-&gt;names;
+			//setName(children-&gt;names, getSingleName(pOld-&gt;child[i]-&gt;names));
+			children-&gt;isCompressed = false;
+			children-&gt;count = 1;
+			children-&gt;depth = pOld-&gt;child[i]-&gt;depth;
+			children-&gt;parent = sub;
+			
+			sub-&gt;child[i] = children;
+			sub-&gt;count++;
+			
+			struct TrieNode* grandchildren = TrieNewNode();
+			if(pOld-&gt;child[i]-&gt;depth == 1) // if there is no furthur data, just attach a '&amp;'
+			{
+				//struct TrieNode* grandchildren = TrieNewNode();
+				setName(grandchildren-&gt;names, EPSILON);
+				grandchildren-&gt;depth = 0;
+				grandchildren-&gt;isCompressed = false;
+				grandchildren-&gt;count = 0;
+
+				children-&gt;child[ALPH_SIZE-2] = grandchildren;
+				grandchildren-&gt;parent = children;
+			}
+			else // if there is furthur data, attach the compressed node
+			{
+				sizeincrease++;
+
+				existing = getAlpha(pOld-&gt;child[i], true);
+
+				//struct TrieNode* grandchildren = TrieNewNode();
+				grandchildren-&gt;isCompressed = true;
+				grandchildren-&gt;count = 0;
+				grandchildren-&gt;depth = pOld-&gt;child[i]-&gt;depth - 1;
+				grandchildren-&gt;com.size = 0;
+				grandchildren-&gt;com.depth = grandchildren-&gt;depth;
+
+				for(j = 0; j names, getCharFromIndex(j));
+						grandchildren-&gt;com.size++;
+					}
+				}
+
+				children-&gt;child[ALPH_SIZE-1] = grandchildren;
+				grandchildren-&gt;parent = children;
+			}
+
+		}
+	}
+
+	
+	struct TopElem* te = new struct TopElem;
+
+	te-&gt;old = pOld;
+	te-&gt;copy = pCopy;
+	te-&gt;subtree = sub;
+
+	int numofchars = pCopy-&gt;child[ALPH_SIZE-1]-&gt;com.size;
+	
+	te-&gt;newStrs = getNumofStr(sub);
+	te-&gt;oldStrs = (double)pow(numofchars, pCopy-&gt;depth - 1);
+	
+	if(te-&gt;newStrs == INVALID || te-&gt;oldStrs benefit = INVALID;
+	else
+		te-&gt;benefit = te-&gt;oldStrs - te-&gt;newStrs;
+
+	te-&gt;cost = sub-&gt;count;
+	
+
+	return te;
+
+}
+
+
+//get the edit distance between the trie and a string
+int Trie::getED(string str, NFA* nfa)
+{
+	
+	clock_t tv1, tv2;
+	double time;
+	tv1 = clock();
+  
+  	NFAMatch* nm = new NFAMatch(nfa);
+
+	int distance;
+	distance = nm-&gt;match(str);
+	//bool good = nm-&gt;match(str, 2);
+
+	delete nm;
+		
+	tv2 = clock();
+	time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+	totalEDTime += time;
+	
+
+	return distance; 
+}
+
+bool Trie::getED(string str, int delta)
+{
+	clock_t tv1, tv2;
+	double time;
+	tv1 = clock();
+  
+	NFA* nfa = new NFA();
+	nfa-&gt;ConvertFromTrie(this);
+
+  	NFAMatch* nm = new NFAMatch(nfa);
+
+	//int distance;
+	//distance = nm-&gt;match(str);
+	bool good = nm-&gt;match(str, delta);
+
+	delete nm;
+	
+
+	
+	tv2 = clock();
+	time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+	totalEDTime += time;
+	
+	delete nfa;
+
+	return good; 
+}
+
+
+int Trie::getNumofNodes(struct TrieNode* p)
+{
+	int i, count;
+	assert(p);
+	
+	if(p-&gt;count == 0)
+	{
+		return 1;		
+	}
+	else
+	{
+		count = 0;
+		for(i = 0; i child[i] != NULL)
+			{
+				count += getNumofNodes(p-&gt;child[i]);
+				
+			}
+		}
+		count++;
+		return count;
+	}
+}
+
+void Trie::setName(int &amp;names, char character)
+{
+	int index = getIndex(character);
+	int oper = 1;
+	oper = oper  

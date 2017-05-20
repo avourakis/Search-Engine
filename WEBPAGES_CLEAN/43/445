@@ -1,0 +1,479 @@
+ 
+  Class Task
+<body>
+  
+ 
+  Class Task
+ 
+ 
+java.lang.Object
+   |
+   +----Task
+ 
+    public class  Task 
+    extends Object
+    implements EventDestination
+    
+Implements a task, which is part of a job. A unique number, called
+ the  global task identifier , is associated with each job.
+ This identifier is composed of the identifier for the job that the
+ task is part of, and a  local task identifier  which
+ uniquely identifies a task within its job.
+ 
+     See Also: 
+        JobManager ,  Job 
+     
+ 
+    
+      COMMUNICATING  
+      The communicating state.
+        ENDED  
+      The ended state.
+        MIGRATING  
+      The migrating state.
+        READY  
+      The ready state.
+        RUNNING  
+      The running state.
+        spinTime  
+      Spin time of the task
+
+
+        SUSPENDED  
+      The suspended state.
+        SYNCHRONIZING  
+      The synchronizing state.
+   
+    
+      getAverageCommunicationTime  ()
+      Returns the average communication time.
+        getAverageIOTime  ()
+      Returns the average I/O time.
+        getAverageSynchronizationTime  ()
+      Returns the average synchronization time.
+        getComputationTime  ()
+      Returns the computation time of this task.
+        getExecutionTime  ()
+      Returns the total execution time for this task.
+        getId  ()
+      Returns the global task identifier for this object.
+        getJob  ()
+      Returns object Job associated with this task.
+        getJobId  ()
+     
+        getLocalId  ()
+      Returns the local task identifier for this object.
+        getMaxCommunicationTime  ()
+      Returns the maximum communication time.
+        getMaxIOTime  ()
+      Returns the maximum I/O time.
+        getMaxSynchronizationTime  ()
+      Returns the maximum synchronization time.
+        getNumberOfIOOperations  ()
+      Returns the number of I/O operations performed by this task.
+        getNumberOfReceives  ()
+      Returns the number of messages received by this task.
+        getNumberOfSends  ()
+      Returns the number of messages sent by this task.
+        getNumberOfSynchronizations  ()
+      Returns the number of synchronization performed by this task.
+        getPEId  ()
+      Returns the identifier for the processing element that this
+ object belongs to.
+        getSpinning  ()
+      Returns true if a task is spinning.
+        getSpinSync  ()
+      Returns if a task is spinning due to synchronization.
+        getState  ()
+      Returns the current state of this object.
+        getTaskSpinning  ()
+      Returns if the task is spinning or not.
+        getTimeToFirstScheduling  ()
+      Returns the time from task creation to first scheduling of this
+ task.
+        getTotalCommunicationTime  ()
+      Returns the total Communication time.
+        getTotalIOTime  ()
+      Returns the total I/O time.
+        getTotalSynchronizationTime  ()
+      Returns the total Synchronization time.
+        handleEvent  (SimEvent)
+      Handles incoming events.
+        jobIdPart  (long)
+      Returns the global job identifier part of the given
+ global task identifier.
+        localIdPart  (long)
+      Returns the local task identifier part of the given
+ global task identifier.
+        makeId  (int, int)
+      Creates a global task identifier from a global job identifier
+ and a local task identifier.
+        toString  ()
+      Returns a string representation of this object.
+    
+ 
+    
+   
+ READY 
+ 
+ public static final int READY
+ 
+   The ready state. 
+      
+ RUNNING 
+ 
+ public static final int RUNNING
+ 
+   The running state. 
+      
+ ENDED 
+ 
+ public static final int ENDED
+ 
+   The ended state. 
+      
+ SUSPENDED 
+ 
+ public static final int SUSPENDED
+ 
+   The suspended state. 
+      
+ SYNCHRONIZING 
+ 
+ public static final int SYNCHRONIZING
+ 
+   The synchronizing state. 
+      
+ MIGRATING 
+ 
+ public static final int MIGRATING
+ 
+   The migrating state. 
+      
+ COMMUNICATING 
+ 
+ public static final int COMMUNICATING
+ 
+   The communicating state. 
+      
+ spinTime 
+ 
+ public float spinTime
+ 
+   Spin time of the task 
+     
+ 
+    
+   
+  makeId  
+ 
+ public static long makeId(int jobId,
+                           int localId)
+ 
+   Creates a global task identifier from a global job identifier
+ and a local task identifier.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      localId - a local task identifier.
+         Returns: 
+       a global task identifier.
+     
+     
+  jobIdPart  
+ 
+ public static int jobIdPart(long taskId)
+ 
+   Returns the global job identifier part of the given
+ global task identifier.
+ 
+        Parameters: 
+       taskId - a global task identifier.
+        Returns: 
+       a global job identifier.
+     
+     
+  localIdPart  
+ 
+ public static int localIdPart(long taskId)
+ 
+   Returns the local task identifier part of the given
+ global task identifier.
+ 
+        Parameters: 
+       taskId - a global task identifier.
+        Returns: 
+       a local task identifier.
+     
+     
+  getId  
+ 
+ public long getId()
+ 
+   Returns the global task identifier for this object.
+ 
+        Returns: 
+       the global task identifier for this object.
+     
+     
+  getLocalId  
+ 
+ public int getLocalId()
+ 
+   Returns the local task identifier for this object.
+ 
+        Returns: 
+       the local task identifier for this object.
+     
+     
+  getState  
+ 
+ public int getState()
+ 
+   Returns the current state of this object.
+ 
+        Returns: 
+       the current state of this object.
+     
+     
+  getSpinning  
+ 
+ public boolean getSpinning()
+ 
+   Returns true if a task is spinning.
+ 
+        Returns: 
+       s true if a task is spinning.
+     
+     
+  getSpinSync  
+ 
+ public boolean getSpinSync()
+ 
+   Returns if a task is spinning due to synchronization.
+ 
+        Returns: 
+       s if a task is spinning due to synchronization.
+     
+     
+  getJobId  
+ 
+ public int getJobId()
+ 
+   
+  getJob  
+ 
+ public  Job  getJob()
+ 
+   Returns object Job associated with this task.
+ 
+        Returns: 
+       s object Job associated with this task.
+     
+     
+  getPEId  
+ 
+ public int getPEId()
+ 
+   Returns the identifier for the processing element that this
+ object belongs to.
+ 
+        Returns: 
+       the identifier for the processing element that this
+ object belongs to.
+     
+     
+  getComputationTime  
+ 
+ public float getComputationTime()
+ 
+   Returns the computation time of this task.
+ 
+        Returns: 
+       the computation time of this task.
+     
+     
+  getNumberOfSends  
+ 
+ public int getNumberOfSends()
+ 
+   Returns the number of messages sent by this task.
+ 
+        Returns: 
+       the number of messages sent by this task.
+     
+     
+  getNumberOfReceives  
+ 
+ public int getNumberOfReceives()
+ 
+   Returns the number of messages received by this task.
+ 
+        Returns: 
+       the number of messages received by this task.
+     
+     
+  getAverageCommunicationTime  
+ 
+ public float getAverageCommunicationTime()
+ 
+   Returns the average communication time.
+ 
+        Returns: 
+       the average communication time.
+     
+     
+  getMaxCommunicationTime  
+ 
+ public float getMaxCommunicationTime()
+ 
+   Returns the maximum communication time.
+ 
+        Returns: 
+       the maximum communication time.
+     
+     
+  getNumberOfSynchronizations  
+ 
+ public int getNumberOfSynchronizations()
+ 
+   Returns the number of synchronization performed by this task.
+ 
+        Returns: 
+       the number of synchronization performed by this task.
+     
+     
+  getTaskSpinning  
+ 
+ public boolean getTaskSpinning()
+ 
+   Returns if the task is spinning or not.
+ 
+        Returns: 
+       if the task is spinning or not.
+     
+     
+  getAverageSynchronizationTime  
+ 
+ public float getAverageSynchronizationTime()
+ 
+   Returns the average synchronization time.
+ 
+        Returns: 
+       the average synchronization time.
+     
+     
+  getMaxSynchronizationTime  
+ 
+ public float getMaxSynchronizationTime()
+ 
+   Returns the maximum synchronization time.
+ 
+        Returns: 
+       the maximum synchronization time.
+     
+     
+  getNumberOfIOOperations  
+ 
+ public int getNumberOfIOOperations()
+ 
+   Returns the number of I/O operations performed by this task.
+ 
+        Returns: 
+       the number of I/O operations performed by this task.
+     
+     
+  getAverageIOTime  
+ 
+ public float getAverageIOTime()
+ 
+   Returns the average I/O time.
+ 
+        Returns: 
+       the average I/O time.
+     
+     
+  getMaxIOTime  
+ 
+ public float getMaxIOTime()
+ 
+   Returns the maximum I/O time.
+ 
+        Returns: 
+       the maximum I/O time.
+     
+     
+  getTotalSynchronizationTime  
+ 
+ public float getTotalSynchronizationTime()
+ 
+   Returns the total Synchronization time.
+ 
+        Returns: 
+       the total Synchronization time.
+     
+     
+  getTotalCommunicationTime  
+ 
+ public float getTotalCommunicationTime()
+ 
+   Returns the total Communication time.
+ 
+        Returns: 
+       the total Communication time.
+     
+     
+  getTotalIOTime  
+ 
+ public float getTotalIOTime()
+ 
+   Returns the total I/O time.
+ 
+        Returns: 
+       the total I/O time.
+     
+     
+  getTimeToFirstScheduling  
+ 
+ public float getTimeToFirstScheduling()
+ 
+   Returns the time from task creation to first scheduling of this
+ task.
+ 
+        Returns: 
+       the time from task creation to first scheduling of this
+ task.
+     
+     
+  getExecutionTime  
+ 
+ public float getExecutionTime()
+ 
+   Returns the total execution time for this task.
+ 
+        Returns: 
+       the total execution time for this task.
+     
+     
+  handleEvent  
+ 
+ public void handleEvent( SimEvent  event)
+ 
+   Handles incoming events.
+ 
+        Parameters: 
+       event - incoming event.
+     
+     
+  toString  
+ 
+ public String toString()
+ 
+   Returns a string representation of this object.
+ 
+        Returns: 
+       a string representation of this object.
+        Overrides: 
+        toString  in class Object
+     
+  </body> 

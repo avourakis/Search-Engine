@@ -1,0 +1,16 @@
+ ##### Section 2:  WinBUGS model for ovarian cancer data
+
+ model{ # Model for the outcomes for both tests
+ for(i in 1:51){
+  ty0CA199[i]  0.50
+Sefat1 ~ dbeta(9.628,3.876) ### Mode=0.75, 95% sure &gt; 0.50
+Spfat1 ~ dbeta(15.034, 2.559) ### Mode=0.90, 95% sure &gt; 0.70
+Sefat2 ~ dbeta(9.628, 3.876) ### Mode=0.75, 95% sure &gt; 0.50
+Spfat2 ~ dbeta(15.034, 2.559) ### Mode=0.90, 95% sure &gt; 0.70
+covDn ~ dunif(lc, uc)
+covDp ~ dunif(ls, us)
+rhoD  0.95
+ Spbapa ~ dbeta(13.3,6.3) ## Mode=0.70, 95% sure &gt; 0.50
+ Seriv ~ dbeta(130.7,15.4) ## Mode=0.90, 95% sure &gt; 0.85
+ Spriv ~ dbeta(99.7,6.2) ## Mode=0.95, 95% sure &gt; 0.90
+ alpha  

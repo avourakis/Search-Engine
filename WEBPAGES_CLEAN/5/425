@@ -1,0 +1,43 @@
+ CompSci 263, Spring 2014, Homework 2<body> CS 263, Spring 2014, Homework 2  Due at the start of class, Thursday, April 17   [Mitzenmacher and Upfal 3.8] Suppose that algorithm A chooses a single random number in the range from 1 to  n  and then performs a computation that, if all choices are equally likely, takes expected time  O ( n  2 ). What can you say about the worst-case time for algorithm A? 
+  Hint: use  Markov's inequality .   
+
+ [Mitzenmacher and Upfal 3.21] Let  p  be a random permutation of  n  items, with all permutations equally likely. What is the probability that item  i  is mapped to itself by permutation  p ?
+Use your answer and linearity of expectation to compute  E [ X ] where  X  is the number of items that are mapped to themselves.  
+
+  Define a graph to be "tight" if every two vertices are either
+adjacent or connected by a path of length two (or both). We wish to find
+the threshold probability that determines whether a random graph is
+tight. 
+   In the  G ( n , p ) model of random graphs,
+what is the probability that a given pair of vertices are not
+tight?  
+  Approximately how large does  p  need to be to ensure that
+with constant probability the whole graph is tight? (Apply Markov's
+inequality to the expected number of non-tight pairs.)  
+  What is the expected number of edges in a random graph with this probability?    
+
+  We saw in class that if  n  balls each choose the less full
+of two random bins, from a set of  B  bins, then: 
+  If  n  is much smaller than √ B  then with high
+probability each bin will have at most one ball (the birthday paradox),
+and 
+ if  n  and  B  are approximately equal, then with high probability the most full bin will have  O (log log  n ) balls (the power of two choices).   The aim of this problem is to interpolate between those two results. 
+ Recall the following facts: 
+  For  n  smaller than a constant times  B ,
+each connected component of the random graph  G  whose vertices are
+bins and whose edges are the pairs of cells for each ball is (with high
+probability) either a tree or a tree-plus-one-edge. 
+ When the  i th ball lands in a bin, and that bin belongs to a
+component that is either a tree or a tree-plus-one-edge, we can find a
+complete binary tree of height  i  on the balls in that
+component, showing that  i  is at most logarithmic in the size of
+the component.   Now suppose that  n  is significantly smaller
+than  B . Calculate (in terms of  n  and  B ) the
+expected number of components of  G  that have at least one edge,
+the expected number of components that have at least two edges, etc. Use
+Markov's inequality to find the maximum value  c  such that there
+is constant probability of having a component of size at
+least  c . What does this bound on component size, together with
+the complete binary tree argument, imply about the maximum number of
+balls per bin?  
+ </body> 

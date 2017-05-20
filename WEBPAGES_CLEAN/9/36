@@ -1,0 +1,148 @@
+ Random_points_on_sphere_3&lt;Point_3, Creator&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Random_points_on_sphere_3&lt;Point_3, Creator&gt;  
+ 
+
+  Definition 
+ 
+
+The class   Random_points_on_sphere_3 &lt; Point_3 , Creator&gt;  is an input iterator creating points uniformly
+distributed on a sphere. The default  Creator  is
+  Creator_uniform_3 &lt; Kernel_traits &lt;P&gt;:: Kernel ::RT,P&gt; .
+  
+
+  Is Model for the Concept InputIterator   PointGenerator  
+ 
+
+ #include &lt; CGAL/point_generators_3.h &gt; 
+  
+
+  Types 
+ 
+
+    
+           
+  
+typedef std::input_iterator_tag
+         
+              
+         
+    iterator_category;
+         
+         
+    
+           
+           
+  
+typedef  Point_3 
+         
+          
+         
+    value_type;
+         
+         
+    
+           
+           
+  
+typedef std::ptrdiff_t
+         
+              
+         
+    difference_type;
+         
+         
+    
+           
+           
+  
+typedef const  Point_3 *
+         
+              
+         
+    pointer;
+         
+         
+    
+           
+           
+  
+typedef  Point_3 
+         
+          
+         
+    reference;
+         
+         
+    
+           
+
+  Operations 
+ 
+
+    
+             
+     Random_points_on_sphere_3 &lt; Point_3 , Creator&gt; g (     
+    double r, 
+
+Random&amp; rnd = default_random);     
+              
+     g  is an input iterator creating points of type   Point_3   uniformly
+  distributed on the boundary of a sphere with radius  r ,
+  i.e.  | *g | == r  . Two random numbers are needed from
+   rnd  for each point.
+ 
+
+     
+
+  See Also 
+ 
+
+  CGAL::copy_n     CGAL::Counting_iterator     CGAL::Random_points_on_circle_2 &lt; Point_2 , Creator&gt;    CGAL::Random_points_in_cube_3 &lt; Point_3 , Creator&gt;    CGAL::Random_points_in_sphere_3 &lt; Point_3 , Creator&gt;   std::random_shuffle    
+
+    Next:    Random_points_on_square_2&lt;Point_2, Creator&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

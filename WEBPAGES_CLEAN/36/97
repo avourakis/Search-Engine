@@ -1,0 +1,381 @@
+   
+  Class System.TMWNetwork
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class System.TMWNetwork
+ 
+ 
+ java.lang.Object 
+   |
+   +----System.TMWNetwork
+ 
+    public class  TMWNetwork 
+    extends  Object 
+   
+Perform Network utilitiy functions on Category Activities and
+Activity Networks.  This includes Network and Sub-Network 
+relationships, control flow between Actvities, coordination of
+presentation and view specific information.
+    See Also: 
+        TMWFoundation ,  TMWTypes ,  TMWCategory ,  TMWSpecification ,  TMWInstance 
+     
+ 
+    
+      ArcInfo  
+     Stores Arc id's with access to its internal information.
+        ArcLiteral  
+     
+        Classification  
+     
+        Conditionals  
+     
+        ControlLinks  
+     
+        Description  
+     
+        HasNodes  
+     
+        Icon  
+     
+        InNetworks  
+     
+        NodeInfo  
+     Stores Node id's with access to its internal information.
+        Owner  
+     
+        ParameterLinks  
+     
+        PostObject  
+     
+        PreObject  
+     
+        SpecificationParent  
+     
+        Specifications  
+     
+        SubNetworks  
+     
+        ViewInfo  
+      These literals are provided for shorthand notation and
+ compatibility.
+        XVar  
+     
+        YVar  
+     
+   
+    
+      TMWNetwork  ()
+     
+   
+    
+      ConnectNodes  (Integer, Integer, Vector, Integer)
+     
+        CreateNode  (String, String, Integer, Integer, Integer, String)
+     Create a network node which includes presentation information
+as well as Category and Activity Network control flow information.
+        DeleteEdge  (Integer)
+     
+        DeleteNode  (Integer)
+     
+        GetActivityGraphic  (Integer)
+     Get the name of the graphic that is associated with the Node.
+        GetArcInfo  (Integer)
+     
+        GetArcList  (Integer)
+     
+        GetLabel  (Integer)
+     
+        GetNetwork  (String)
+     
+        GetNodeChild  (Integer)
+     
+        GetNodeInfo  (Integer)
+     
+        GetNodeList  (Integer)
+     
+        GetPoints  (Integer)
+     
+        GetPosition  (Integer)
+     
+        GetX  (Integer)
+     
+        GetY  (Integer)
+     
+        SetActivityGraphic  (Integer, String)
+     Set the Activity graphic to the named graphic.
+        UpdateNodeChild  (Integer, Integer)
+     
+        UpdateNodeLabel  (Integer, String)
+     
+        UpdateNodePosition  (Integer, Integer, Integer)
+     
+        UpdatePointLocation  (Integer, Integer, Integer, Integer)
+     
+    
+ 
+    
+   
+ ViewInfo 
+ 
+  public static  String  ViewInfo
+ 
+   These literals are provided for shorthand notation and
+ compatibility.
+     
+ Description 
+ 
+  public static  String  Description
+ 
+   
+ Icon 
+ 
+  public static  String  Icon
+ 
+   
+ XVar 
+ 
+  public static  String  XVar
+ 
+   
+ YVar 
+ 
+  public static  String  YVar
+ 
+   
+ Classification 
+ 
+  public static  String  Classification
+ 
+   
+ SubNetworks 
+ 
+  public static  String  SubNetworks
+ 
+   
+ InNetworks 
+ 
+  public static  String  InNetworks
+ 
+   
+ ArcLiteral 
+ 
+  public static  String  ArcLiteral
+ 
+   
+ Owner 
+ 
+  public static  String  Owner
+ 
+   
+ PreObject 
+ 
+  public static  String  PreObject
+ 
+   
+ PostObject 
+ 
+  public static  String  PostObject
+ 
+   
+ HasNodes 
+ 
+  public static  String  HasNodes
+ 
+   
+ Conditionals 
+ 
+  public static  String  Conditionals
+ 
+   
+ ControlLinks 
+ 
+  public static  String  ControlLinks
+ 
+   
+ ParameterLinks 
+ 
+  public static  String  ParameterLinks
+ 
+   
+ Specifications 
+ 
+  public static  String  Specifications
+ 
+   
+ SpecificationParent 
+ 
+  public static  String  SpecificationParent
+ 
+   
+ NodeInfo 
+ 
+  public static  Hashtable  NodeInfo
+ 
+   Stores Node id's with access to its internal information.
+     
+ ArcInfo 
+ 
+  public static  Hashtable  ArcInfo
+ 
+   Stores Arc id's with access to its internal information.
+    
+ 
+    
+  
+   
+ TMWNetwork 
+ 
+  public TMWNetwork()
+ 
+  
+ 
+    
+   
+  SetActivityGraphic  
+ 
+  public static void SetActivityGraphic( Integer  Node,
+                                         String  Graphic)
+ 
+   Set the Activity graphic to the named graphic.  The name
+is the label of a GIF file in the Teamware library directory.
+      Parameters: 
+       Node - is the object id.
+      Graphic - is the name of the graphic to use.
+          
+  GetActivityGraphic  
+ 
+  public static  String  GetActivityGraphic( Integer  Node)
+ 
+   Get the name of the graphic that is associated with the Node.
+      Parameters: 
+       Node - is the object id.
+        Returns: 
+       s the name of the Activity graphic.
+         
+  CreateNode  
+ 
+  public static  Integer  CreateNode( String  Kind,
+                                    String  Name,
+                                    Integer  XVal,
+                                    Integer  YVal,
+                                    Integer  Parent,
+                                    String  ActivityType)
+ 
+   Create a network node which includes presentation information
+as well as Category and Activity Network control flow information. 
+Information about a Node can be accessed through the static data 
+structure NodeInfo (@see TMWNetwork.NodeInfo).
+      Parameters: 
+       Kind - is the node kind, most likely 'network_node'.
+      Name - is the name of the node to create.
+      XVal - is the X position on the network drawing window.
+      YVal - is the Y position on the network drawing window.
+      Parent - is the id of the Category parent of the node.
+      ActivityType - is the name of the type of Activity.
+             Returns: 
+       s a node id with the initialized values.
+         
+  ConnectNodes  
+ 
+  public static  Integer  ConnectNodes( Integer  FromNode,
+                                      Integer  ToNode,
+                                      Vector  PointList,
+                                      Integer  Parent)
+ 
+   
+  GetNodeList  
+ 
+  public static  Vector  GetNodeList( Integer  Parent)
+ 
+   
+  GetArcList  
+ 
+  public static  Vector  GetArcList( Integer  Node)
+ 
+   
+  GetArcInfo  
+ 
+  public static  TMWArc  GetArcInfo( Integer  From)
+ 
+   
+  GetX  
+ 
+  public static  Integer  GetX( Integer  Node)
+ 
+   
+  GetY  
+ 
+  public static  Integer  GetY( Integer  Node)
+ 
+   
+  GetPosition  
+ 
+  public static  TMWPoint  GetPosition( Integer  Node)
+ 
+   
+  GetLabel  
+ 
+  public static  String  GetLabel( Integer  Node)
+ 
+   
+  GetNodeInfo  
+ 
+  public static  TMWNode  GetNodeInfo( Integer  Node)
+ 
+   
+  GetNodeChild  
+ 
+  public static  Integer  GetNodeChild( Integer  Node)
+ 
+   
+  UpdateNodeChild  
+ 
+  public static void UpdateNodeChild( Integer  Node,
+                                      Integer  Child)
+ 
+   
+  UpdateNodePosition  
+ 
+  public static void UpdateNodePosition( Integer  Node,
+                                         Integer  X,
+                                         Integer  Y)
+ 
+   
+  UpdateNodeLabel  
+ 
+  public static void UpdateNodeLabel( Integer  Node,
+                                      String  NodeName)
+ 
+   
+  DeleteNode  
+ 
+  public static void DeleteNode( Integer  Node)
+ 
+   
+  DeleteEdge  
+ 
+  public static void DeleteEdge( Integer  Edge)
+ 
+   
+  GetNetwork  
+ 
+  public static  Integer  GetNetwork( String  Name)
+ 
+   
+  GetPoints  
+ 
+  public static  Vector  GetPoints( Integer  Edge)
+ 
+   
+  UpdatePointLocation  
+ 
+  public static void UpdatePointLocation( Integer  Edge,
+                                          Integer  NumPoint,
+                                          Integer  XVal,
+                                          Integer  YVal)
+ 
+  
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

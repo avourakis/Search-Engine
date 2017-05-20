@@ -1,0 +1,70 @@
+ Asst. 8 * Concurrency and Exceptions<body>
+  
+ 
+   This assignment is due on Monday, March 13,
+by 7:00 p.m. in the box in CS 189.  
+ 
+  Summary:   Finally, we consider concurrency
+and exceptions.  
+ 
+  Readings and review questions:   You
+should know the answers to the review questions listed below, but you do
+not have to turn them in.  Remember that going over all of the review questions
+we've singled out is good preparation for the final.  
+ 
+ Chapter 12:  1-6, 19-24  
+ 
+ Chapter 13:  1-4, 11-23  
+ 
+  (a)   This part refers to the Java code
+on pages 524 and 525, with these substitutions:  
+  
+ Use   new Queue(5)  
+instead of   new Queue(100)  
+(in other words, just create a queue with 5 elements).  
+   
+ In   Producer  's
+run method on page 525, change the loop to read:   
+   while (true) {  
+      if TimeToAct() {  
+         //-- Create a new_item  
+         buffer.deposit(new_item);  
+   }}   
+   
+ Change the loop in   Consumer  's
+run method to call   TimeToAct  
+the same way.  
+  
+ Assume that both threads start running at
+7:00 a.m.  Assume that   consumer1  
+tries to consume a new item every 5 minutes, starting at 7:10 a.m., stopping
+at 7:36 a.m., and starting again at 9:25 a.m.  These timings are handled
+(magically) by the function   TimeToAct  ,
+which just returns false until the time for the next action comes up.  
+ 
+ Assume that   producer1  
+produces an item every 10 minutes from at 7:21 a.m. to 9:21 a.m.  Each item
+is an integer representing the time (721, 731, 741, ..., 921).  
+ 
+  (a.1)   Give a snapshot of the concurrent
+processes' execution every 5 minutes, starting at 7:03 a.m. (7:03, 7:08,
+7:13, 7:18, ...) and continuing until the contents don't change any
+more.  Each snapshot should show the contents of   buff1  
+and the state of execution of the threads   producer1  
+and   consumer1  
+(i.e., where in the code they are executing).  
+ 
+  (a.2)   (extra credit)  Rewrite the
+producer/consumer code to use the   sleep  
+method instead of the   TimeToAct  
+function described above.  
+ 
+  (a.3)   (extra credit)  Implement this
+producer/consumer problem in Java; turn in your code, a test plan, and the
+results.  Make sure you can do part  (e.1)  by hand, though; you won't
+have a computer on the final exam.  
+ 
+  (b)   Briefly answer problems 6, 7,
+8, and 15 in the problem set on page 564.  For extra credit, do either problem
+12 or 13.  
+ </body> 

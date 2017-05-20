@@ -1,0 +1,418 @@
+ 
+DetailsTableModel
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.localFileSystem.view.detail 
+ 
+Class DetailsTableModel 
+ 
+java.lang.Object
+   javax.swing.table.AbstractTableModel
+        org.itr_rescue.dataGuard.localFileSystem.view.detail.DetailsTableModel 
+ 
+   All Implemented Interfaces:    java.io.Serializable, javax.swing.table.TableModel 
+     public class  DetailsTableModel   extends javax.swing.table.AbstractTableModel    
+Title: Java File Manager Description: Copyright: Copyright (c) 2001 Company:
+ Home
+  
+
+  
+    Version:  
+   1.0 
+  Author:  
+   Giurgiu Sergiu 
+  See Also:    Serialized Form     
+
+
+  
+     
+ Field Summary   
+  
+   
+    Fields inherited from class javax.swing.table.AbstractTableModel  
+    listenerList  
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      DetailsTableModel  ( JFMFileSystem  fs) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    addRow  (java.lang.Object[] newRow) 
+
+ 
+          Add a row to the data model. 
+    
+  void   
+    addRow  (java.util.Vector newRow) 
+
+ 
+          Add a row to the data model. 
+    
+  void   
+    browseDirectory  ( JFMFile  el) 
+
+ 
+            
+    
+  void   
+    clear  () 
+
+ 
+          Removes all rows from the data model. 
+    
+ protected static java.util.Vector   
+    convertToVector  (java.lang.Object[] anArray) 
+
+ 
+          Returns a vector that contains the same objects as the array. 
+    
+ protected static java.util.Vector   
+    convertToVector  (java.lang.Object[][] anArray) 
+
+ 
+          Returns a vector of vectors that contains the same objects as the array. 
+    
+  java.lang.Class   
+    getColumnClass  (int c) 
+
+ 
+            
+    
+  int   
+    getColumnCount  () 
+
+ 
+          Returns the number of columns 
+    
+  int   
+    getColumnIndex  (java.lang.Class colClass) 
+
+ 
+            
+    
+  java.lang.String   
+    getColumnName  (int column) 
+
+ 
+          Returns the column name 
+    
+  java.util.Vector   
+    getCurrentFiles  () 
+
+ 
+          Returns a List of all the files found in the directory. 
+    
+   JFMFile    
+    getFileAt  (int index) 
+
+ 
+          Returns the JFMFile found at the specific index. 
+    
+   JFMFileSystem    
+    getFilesystem  () 
+
+ 
+            
+    
+  int   
+    getRowCount  () 
+
+ 
+          Returns the number of rows 
+    
+  java.lang.Object   
+    getValueAt  (int row,
+           int column) 
+
+ 
+          Returns the element at the specified row and column 
+    
+   JFMFile    
+    getWorkingDirectory  () 
+
+ 
+          This is the view that this model belongs to. 
+    
+  boolean   
+    isCellEditable  (int row,
+               int column) 
+
+ 
+          Returns whether the cell is editable. 
+    
+  void   
+    removeRow  (int row) 
+
+ 
+            
+    
+  void   
+    setFilesystem  ( JFMFileSystem  filesystem) 
+
+ 
+            
+    
+  void   
+    setValueAt  (java.lang.Object value,
+           int row,
+           int column) 
+
+ 
+          Sets an object at the specified row and column 
+  
+   
+    Methods inherited from class javax.swing.table.AbstractTableModel  
+    addTableModelListener, findColumn, fireTableCellUpdated, fireTableChanged, fireTableDataChanged, fireTableRowsDeleted, fireTableRowsInserted, fireTableRowsUpdated, fireTableStructureChanged, getListeners, getTableModelListeners, removeTableModelListener  
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+DetailsTableModel 
+ 
+public  DetailsTableModel ( JFMFileSystem  fs) 
+    
+    
+ Method Detail   
+     
+getWorkingDirectory 
+ 
+public  JFMFile   getWorkingDirectory () 
+  This is the view that this model belongs to. In order to save the current
+ working directory in the users' preferences, we have to call view's
+ method setCurrentDirectory
+ 
+     
+      
+getColumnIndex 
+ 
+public int  getColumnIndex (java.lang.Class colClass) 
+     
+     
+getCurrentFiles 
+ 
+public java.util.Vector  getCurrentFiles () 
+  Returns a List of all the files found in the directory.
+ 
+     Returns:   Vector   
+      
+getFileAt 
+ 
+public  JFMFile   getFileAt (int index) 
+  Returns the JFMFile found at the specific index.
+ 
+     Returns:   Vector   
+      
+browseDirectory 
+ 
+public void  browseDirectory ( JFMFile  el) 
+     
+     
+getColumnClass 
+ 
+public java.lang.Class  getColumnClass (int c) 
+     Specified by:    getColumnClass  in interface  javax.swing.table.TableModel    Overrides:    getColumnClass  in class  javax.swing.table.AbstractTableModel    
+    
+     
+clear 
+ 
+public void  clear () 
+  Removes all rows from the data model.
+ 
+     
+      
+addRow 
+ 
+public void  addRow (java.util.Vector newRow) 
+  Add a row to the data model.
+ 
+     
+      
+addRow 
+ 
+public void  addRow (java.lang.Object[] newRow) 
+  Add a row to the data model.
+ 
+     
+      
+getColumnName 
+ 
+public java.lang.String  getColumnName (int column) 
+  Returns the column name
+ 
+     Specified by:    getColumnName  in interface  javax.swing.table.TableModel    Overrides:    getColumnName  in class  javax.swing.table.AbstractTableModel    
+    
+      
+getRowCount 
+ 
+public int  getRowCount () 
+  Returns the number of rows
+ 
+     
+      
+getColumnCount 
+ 
+public int  getColumnCount () 
+  Returns the number of columns
+ 
+     
+      
+getValueAt 
+ 
+public java.lang.Object  getValueAt (int row,
+                                   int column) 
+  Returns the element at the specified row and column
+ 
+     
+      
+isCellEditable 
+ 
+public boolean  isCellEditable (int row,
+                              int column) 
+  Returns whether the cell is editable. It isn't.
+ 
+     Specified by:    isCellEditable  in interface  javax.swing.table.TableModel    Overrides:    isCellEditable  in class  javax.swing.table.AbstractTableModel    
+    
+      
+removeRow 
+ 
+public void  removeRow (int row) 
+     
+     
+setValueAt 
+ 
+public void  setValueAt (java.lang.Object value,
+                       int row,
+                       int column) 
+  Sets an object at the specified row and column
+ 
+     Specified by:    setValueAt  in interface  javax.swing.table.TableModel    Overrides:    setValueAt  in class  javax.swing.table.AbstractTableModel    
+    
+      
+convertToVector 
+ 
+protected static java.util.Vector  convertToVector (java.lang.Object[] anArray) 
+  Returns a vector that contains the same objects as the array.
+ 
+     Parameters:    anArray  - the array to be converted
+   Returns:   the new vector; if  anArray  is  null ,
+         returns  null    
+      
+convertToVector 
+ 
+protected static java.util.Vector  convertToVector (java.lang.Object[][] anArray) 
+  Returns a vector of vectors that contains the same objects as the array.
+ 
+     Parameters:    anArray  - the double array to be converted
+   Returns:   the new vector of vectors; if  anArray  is
+          null , returns  null    
+      
+getFilesystem 
+ 
+public  JFMFileSystem   getFilesystem () 
+     
+     
+setFilesystem 
+ 
+public void  setFilesystem ( JFMFileSystem  filesystem) 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

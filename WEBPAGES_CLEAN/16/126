@@ -1,0 +1,68 @@
+ 3.17.5 Active Conformer<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.17.4 operator= 
+ Up:   3.17 OEMCMolBaseT 
+ Next:   3.17.6 GetMaxConfIdx 
+   
+
+
+  
+3.17.5 Active Conformer 
+ 
+
+ 
+This section details the API for modal access to conformers.
+
+  
+    
+virtual bool SetActive(OEConfBaseT&lt;C,dim&gt; *conf) = 0
+virtual OEConfBaseT&lt;C,dim&gt; *GetActive() const = 0
+virtual bool PushActive(OEConfBaseT&lt;C,dim&gt;*conf) = 0
+virtual void PopActive() = 0
+    
+These four functions can be used to set the  OEMCMolBase  into a
+state where it acts as if it is an  OEMolBase  with coordinates the
+same as the active conformer ( e.g.  - the  OEMCMolBaseT  is put
+in the ``mode'' of the selected conformer).   SetActive  makes the
+conformer passed in become the active conformer.  The conformer passed in
+must already be a member of the  OEMCMolBase .   GetActive() 
+returns the currently active conformer.  These two functions are often
+sufficient for all the needs of modal access in multi-conformer molecules.
+
+  
+In rare cases, it may be important to maintain a stack of active
+conformers.  For these cases, the  PushActive  and  PopActive 
+functions are defined.   PushActive  makes the new conf the active
+conformer and pushed the previous active conformer down the stack.
+ PopActive  removes the top active conformer from the active stack and
+makes the next highest conformer in the stack active.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.17.4 operator= 
+ Up:   3.17 OEMCMolBaseT 
+ Next:   3.17.6 GetMaxConfIdx 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

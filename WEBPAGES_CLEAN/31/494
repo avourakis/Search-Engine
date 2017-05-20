@@ -1,0 +1,321 @@
+   Classes and Objects  <body>  Classes and Objects  
+
+   Why bother?  
+     What do they give you ?
+      How can I find them?
+      How do I define them? 
+      Answers:  
+      Provide problem decomposition, simplicity, sharing, reusability.
+      Simple reusable parts with simple interactions.
+       Finding classes: Narrowing the gap, problem -&gt;code
+        Domain objects -&gt; classes
+          What activities need to be supported? What before how.
+          OOP promotes separation of what and how.
+          Bottom-up design and inheritance: keep it simple.
+          Common classes: stacks, queues, trees, hashtables, etc.
+          Novel ones
+          Hiding information
+           hide implementation: you usually don't know what
+       data structure is best (tree, list, array, ..).
+             Y2K problem. ignorance or tools?
+         
+            Class Year
+            {
+              char[] annum;
+              Year(int n)
+              {
+                annum = new char[2];
+                annum[0] = Character.forDigit( n%10,10);
+                annum[1] = Character.forDigit( n/10,10);
+              }
+            public  String toString()
+             {
+                return "19"+String.valueOf(annum);
+             }
+            }
+ 
+                     
+             hide ignorance: user has unclear preference
+             Getting information
+          How many objects of type P do you have?
+            How much work would be required to modify
+           some method/routine.
+            Change
+          We just switched to metric system. Change reporting
+       and acquisition forms.
+             On learning a programming language  
+
+  
+    An expert programmer knows all the tricks,
+     and doesn't use them.  -- James Neighbors
+ 
+   
+    For each construct you should learn:
+    Syntax: how to define
+     Test: compiler accepts
+      Semantics: what really happens 
+      Tests: Explain to friend, does what you expect
+      Purpose: why you want it
+      Test: you use it
+      Defining a class and a simple application 
+The file is named "ComplexTest.java". Normally one puts
+each class definition in a separate file and the files for
+a program/project into a single directory. *DO NOT* follow
+the comment style given here. These are explanatory comments
+for learning the language. Alternatively you can view these
+as bad comments, which are sometimes seen. We will provide
+examples of good commenting style.
+
+
+ 
+     class Complex        //  end of line comment
+   {
+     private double x;   // private: not accessible outside of class
+     private double y;   // data member
+      
+     Complex(double x, double y)   // constructor
+       {
+         this.x = x;        // x is passed parameter
+         this.y = y;        // this.x is the x of the object
+                            // . accesses data members
+       } 
+     Complex(double x)     // by Convention, class names begin with capital
+      {                   // Java is case sensitive
+         this(x,0);        // here "this" refers to constructor at this level
+       }
+     Complex()           // functions are distinguished by their parameters
+     {
+       this(0,0);
+     }
+
+     double getReal()     // accessor: get values of data members
+    {                     // by conventions methods, start with lower case letter
+       return x;
+    }
+     double getImaginary()
+    { 
+       return y;
+    }
+    void setReal(double x)   // mutators: change values of fields
+    {
+      this.x = x;
+     }
+    void setImaginary(double y)
+    {
+      this.y = y;
+    }                    
+    Complex  mult(Complex c)          
+      {
+        Complex d = new Complex(); // new allocates storage and returns reference to it.
+         d.setReal( x*c.getReal() - y*c.getImaginary() );  
+                 // . accesses member functions
+         d.setImaginary( x*c.getImaginary() + y*c.getReal() );
+        return d;
+      }
+ public String toString()  
+/*     String is class in Java, not array of characters.
+       toString() is useful for printing and debugging
+       This overrides Object.toString(). Note that 
+       overriding requires that the accessibility not be changed.
+       toString() has unusual semantics. It is called whenever
+       an object of type String is needed. Why did they do this?
+*/
+
+   {
+     return(x+"+"+y+"i"); // + concatenates string objects
+   }
+}
+
+public class ComplexTest   //note the class corresponds to the filename
+{
+  public static void main(String[] args)  // this line is required by applications
+ {
+   Complex c1 = new Complex(3,2); 
+   Complex c2 = new Complex(1,2);
+   System.out.println(c1.toString());
+   System.out.println(c2); // automatic call to toString()
+   System.out.println("product of c1 and c2 is ");
+   System.out.println(c1.mult(c2));
+   Complex c3 = new Complex(Double.valueOf(args[0]).doubleValue(),
+                            Double.valueOf(args[1]).doubleValue());
+   // note . is left associative
+   System.out.println(c3);
+ }
+}
+ 
+   To compile under Unix:  javac ComplexTest.java
+    This will generate ComplexTest.class
+     To run under Unix:   java ComplexTest 
+     this will run the "main" routine
+     note: A file can have at most one public class.
+     note: The semantics of toString() are unusual. If a string object
+   is needed, say by println, and the object is not a string then
+  the method toString() will be called automatically.
+    Java Class Vector in java.util  
+    A vector holds objects and allows addition and deletion of objects.
+   You may think of it as an extensible array.
+  It has 3 constructors and  about 30 methods. Vectors contain
+   objects (references). If you need it, Vector probably has it.
+      Constructor: Vector()
+     public final synchronized void addElement(Object o); 
+     public final synchronized void removeElement(Object o); 
+     public final boolean contains(Object e);
+     public final synchronized Enumeration elements();
+     Notes:  
+       final  </strong> means that it can't be overridden. This
+     is a safety feature.
+        Enumeration </strong> permits moving through items of
+    data-structure one at time, as in a for-loop.
+      Enumeration is an interface that has only two methods, namely:
+           hasMoreElements()
+             nextElement()
+               synchronized </strong> provides the ability to control
+    who  updates the vector, for example to prevent multiple simultaneous
+    deletions from same  bank account.
+     Address Book: Class Exercise  
+      What are the objects: book, address, name, last-name,...
+       What are the behaviors: 
+    Static Classes and Static Methods  
+     Java has no global functions or globals constants.
+       Global functions are implemented as static member functions.
+       Ex.  Math.random() is the function in the class Math which
+         generates a random number.
+       Global constants are implemented as static  member objects. By
+   convention constants are in all caps.
+       Ex.  Math.PI  stands for the constant 3.14....
+       Notice that we did not create an instance of the class Math.
+        These constants and functions are attached to the class itself.
+      Example  
+   Return to the Complex number class.  Suppose we want to
+   count the number of complex numbers our program  generated.
+   To do this  add a static data member "count" and modify our
+   constructors.  Static functions can only access static data
+   members. We also add a corresponding  print function.
+   
+
+ 
+  public  class Complex
+  {
+     private static int count = 0;    // int is associated with class
+   
+     private double x;   // x,y are associated with each instance of class
+     private double y;
+      
+     Complex(double x, double y)   
+       {
+         this.x = x;        
+         this.y = y;        
+         count++;
+       } 
+
+     ...
+   
+    public static printCount()   
+    { 
+      System.out.println("Number of Complex numbers used is "+count);
+    }
+    // The output goes to the console. It would be called with
+    //  Complex.printCount();     
+ 
+   Notice that static functions are not passed a "this" parameter.
+
+
+  Java Semantics  
+    Semantics are defined operationally or procedural, ie.
+    by what the compiler/interpreter does.
+      Recall: Java program is collection of classes.
+      One class must have the same name as the file. This is
+      the main or "driver" class. This class is a bit unusual as
+     is allows command-line interaction. However it is derived from
+     Object and has an implicit call to "super()";
+      Before an object of a class is used, it must be constructed,
+     except for the "driver" class or classes without data members.
+      When an object's lifetime is over, it is automatically
+   garbage-collected. This removes a major source of errors from
+   languages that require the programmer to free memory. Memory
+   leaks have been a major source of problems with code.
+      The order of classes or methods in a class is unimportant.
+    The language processor will sort out the order, unlike in C or C++.
+    This removes an annoyance.
+      If a class has static variables and/or static expressions,
+     these are initialize/executed at load-time as they need to be available
+     for the objects of the class.
+      Order of loading classes determines order of execution of static
+   expression blocks.
+      The "main" routine in the driver class of an
+     application will be the first one that is executed. The driver
+   class of an application must  contain a definition of
+      public static void main(String[] args)  
+      Other classes may have "main" routines which is useful for debugging.
+       In applets, the "driver" class must extend an Applet. We will
+    discuss the interpretation of applets later.
+    
+     Design Rules (from Eiffel school)  
+     Eiffel is an  Object-Oriented language that
+   came after C++ but before Java. Eiffel
+   does not rest on C but stressed object-oriented design,
+   bottom-up implementation, inheritance, programming by
+   contract, and use of assertions for preconditions and postconditions.
+   The goal was high-quality software.
+     Why isn't this a succesful language?
+     Classes should have few data members and many simple functions.
+     A class defines the behavior of an object.
+     If you repeat code, your design is wrong.
+     If your code is complicated, your design is probably wrong.
+     Reuse classes by inheritance.
+     Reuse classes by creating multiple object of the class.
+    Code and test each class separately. (not always possible)
+     Push code up the inheritance hierarchy.
+     Novice coders use "grab and run".
+     Experienced coders use "guess, check and iterate".
+      Redesign: learn from the process.
+     Object-Oriented Design Review  
+    Classes are new, user defined types.
+     Classes define objects and hide implementations.
+     Dependencies define relationships among classes.
+     Dependencies allow for reuse and variation.
+     Static-type checking promotes integration correctness,
+       efficiency, and comprehensibility.
+      Bottom-up design yields more reuse, but also more less
+       abstraction.
+      Top-design yields more better organization but less reuses.
+      Proper design entails mixing top-down design and 
+    and bottom-up design to maximize information-hiding (Parnas).
+     Class/Object Summary  
+     An object is an instance of a class.
+       Each object has data members, corresponding to what
+    objects knows, and data functions, corresponding to what
+    an object can do.
+       Be sure you can distinguish class members and object members.
+       Arrays and Strings are objects in Java.
+       Checklist of methods: constructors, accessors, mutators.
+       Java does not have destructors as it uses garbage collection,
+    which can be called(scheduled) explicitly. 
+       A class is a user-defined type.
+       Objects help bridge the gap between the problem and
+        code by decomposing the process.
+       Domain classes are derived from domain analysis. They
+     model the world.
+       Code classes are built from the primitive types. These
+    increase the level of abstraction of the code.
+       Beyond minimality, add useful operations.
+       For each class, expect to define constructors, accessors, and mutators.
+       Functions can return objects.
+      Primitive Types  
+      The primitive types in Java are: boolean, char, byte, short,
+  int, long, float and double.
+      Primitive types are not objects.
+      Wrappers convert primitive types to objects, e.g.
+        Integer(3) is a wrapper that constructs an Integer object
+       from the integer 3. This is useful as some generic functions
+      require objects. For example Vector() is a container of objects,
+     not of primitive types.
+      What you should be absolutely sure of  
+     How to  define   and   access  
+        classes
+         objects
+         class or static methods
+        object methods
+        class or static variables
+        object variables
+        </body> 

@@ -1,0 +1,92 @@
+ CHIME: An Efficient Error-Tolerant Chinese Pinyin Input Method<body> 
+		  
+		    
+			  
+			 CHIME: An Efficient Error-Tolerant Chinese Pinyin Input Method               
+				  
+				    
+					 Yabin Zheng  1   
+				    
+				    
+				 Chen Li  2  
+					 Maosong Sun  1   
+                  
+				 1 Department of Computer Science, Tsinghua University   2 Department of Computer Science, University of California, Irvine	        
+                                 A paper to appear in  IJCAI 2011 . 
+                                 Paper in  PDF .
+			  
+			  
+			   Abstract  
+			   Chinese Pinyin input methods are very important for Chinese language
+				 processing. In many cases, users may make typing errors. For example, a user wants to type
+				 in "shenme" (ä»ä¹, meaning "what" in English) but may type in "shenem" instead.
+				 Existing Pinyin input methods fail in converting such a Pinyin sequence with errors
+				 to the right Chinese words. To solve this problem, we developed an efficient error-tolerant
+				 Pinyin input method called "CHIME" that can handle typing errors. By incorporating state-of-the-art
+				 techniques and language-specific features, the method achieves a better performance
+				 than state-of-the-art input methods. It can efficiently find relevant words
+				 in milliseconds for an input Pinyin sequence. 			  
+			 
+			 
+			   Framework 
+                           For an input Pinyin sequence with typing errrors, CHIME works in three steps: 
+                            Detect mistyped Pinyins that are not included in the predefined Pinyin dictionary. 
+			     For each mistyped Pinyin, CHIME find top-k similar candidate Pinyins. 
+			     CHIME converts the corrected Pinyin sequence to the most likely sequence of Chinese words. 
+			    
+			 
+			    
+                         
+                         Evaluation Dataset 
+			 Bellow are the datasets used in the study.  (To see the text properly in your browser, please make sure to change the encoding of your browser to UTF-8.) 
+			   inputPinyin : contains the 2,000 input Pinyin sequences (679 sequences contain at least one typo). 
+			    outputHanzi : contains the corresponding Chinese word sequences that users intend to type in. 
+			    SogouResult : contains the conversion results from  Sogou  .  
+			    CHIMEResult : contains the conversion results from CHIME. 
+			  
+                          
+
+                         Just for Fun! 
+			  Check  this page  (in Chinese) as a motivation of our research! :-) 
+
+                         
+                         Acknowledgments  
+          		 Most of the work was done while Yabin Zheng was visiting
+			UCI. We thank Alexander Behm and Shengyue Ji for their
+			insightful discussions at UCI. This work is partially supported
+			by the National Natural Science Foundation of China (No.
+			60873174 and 60828004).  	
+                         
+		    
+	   
+ 
+ 
+
+
+ 
+  CHIME: An Efficient Error-Tolerant Chinese Pinyin Input Method CHIME: ä¸ç§é«æçå®¹éä¸­ææ¼é³è¾å¥æ³  
+ 
+     
+ 
+   
+ Type in Pinyins with errors, and we are trying to predict what you intend to type in. 
+If you type in "shenem", we can find "ä»ä¹". If you type in "xiexe", we can find "è°¢è°¢". 
+å¦ææ¨è¾å¥çæ¼é³åºåä¸­åå«éè¯¯ï¼æä»¬å¯ä»¥å°éè¯¯è¿è¡çº æ­£å¹¶è½¬æ¢ä¸ºæ¨æéè¦çæ±å­åºåã 
+ä¾å¦ï¼å½æ¨æ³è¾å¥"è°¢è°¢"(xiexie)æ"shenme"(shenme)ï¼å´è¯¯è¾å¥ä¸º"xiexe"æ"shenem"ï¼æä»¬å¯ä»¥å°æ¨éè¦çç®æ è¯æ¡è¿åã  
+  
+ 
+
+  
+ 
+
+
+
+ 
+  
+  
+
+  
+ 
+
+
+</body> 

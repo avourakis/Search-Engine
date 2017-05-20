@@ -1,0 +1,120 @@
+  Type Evolution Software System<body>
+    Type Evolution Software System  
+  
+     Name:  
+TESS (Type Evolution Software System)
+ 
+     Source:  
+University of Massachusetts Arcadia Project
+ 
+     Brief description:  
+TESS supports the evolution of persistent types by
+	semi-automatically generating a transformer that can translate
+	between two versions of a set of types.  More specifically,
+	the input to TESS is two source files representing two
+	versions of a set of type definitions.  TESS compares these
+	files and produces a transformer describing how to translate
+	instances of the old versions of the types into the new
+	versions of the types.  Ultimately, the user will be able to
+	edit these descriptions if they are incorrect, but this is not
+	yet implemented.  Also, a runtime environment to interpret
+	these descriptions and actually update the instances (either
+	permanently via converting the instances or virtually via
+	screening the instances) is planned, but does not yet exist.
+ 
+     Evaluation against applicable general dimensions: 
+ 
+     Availability: commercial/licensed/public domain    
+Not currently available to the public.
+ 
+     Cost:  
+N/A
+ 
+     Degree of support/maturity/testing/usage:   
+N/A
+ 
+     Speed:  
+In the worst case, the type comparison algorithm is
+	NP-complete.  However, there are several features of the
+	system that make type comparison feasible.  First, there are a
+	several heuristics to reduce the number of types that must
+	be compared.  For example, types with the same names are
+	compared first.  Given the nature of type changes in evolving
+	systems, this will typically offer good results and make it
+	unnecessary to compare these types to other types.  Other
+	heuristics are also used to limit the number of comparisons.
+	Furthermore, the user has the ability to limit the kinds of
+	comparisons that are done to prevent an exhaustive search
+	comparison of the types, and also can focus the system on the
+	comparison of a pair of old and new types rather than entire
+	sets of types if necessary.
+ 
+     Computing platforms:  
+SunAda 1.1 for Sun/SPARC
+	C
+	X windows
+	Pleiades
+	RepoManGen
+	BMS
+	SUIT 2.3  (The Simple User Interface Toolkit from the
+		   University of Virginia)
+ 
+     Language compatibilities:  
+TESS is currently able to accept input written either in
+	Pleiades.
+ 
+     Footprint: 
+	    Kernel:                      23381 SLOC
+	        Pleiades front-end:            529 SLOC
+	        User interface (C code):      1808 SLOC
+	        Total for Pleiades version:  25718 SLOC
+	   
+     Openness/integrability/source availability:  
+The license includes source.  Integration is restricted to
+	non-commercial use.
+ 
+     Extensibility:  
+The kernel type comparison algorithms use a language
+	independent type model.  A new version of Tess can be created
+	to compare types in a different language by creating a new
+	front-end for that language and a back-end capable of reading
+	and writing persistent objects of that language.
+ 
+     Pedigree: ARPA developed?   
+N/A
+   
+     Contact person(s) 
+  arcadia-software@cs.umass.edu  
+or  
+Dr. Lori A. Clarke (clarke@cs.umass.edu)  
+Department of Computer Science 
+University of Massachusetts 
+Amherst, MA 01003 
+(413) 545-1328        
+(413) 545-1249 - fax  
+ 
+ 
+     Pointers to literature, demos, etc.: 
+  	David Garlan, Charles W. Krueger, Barbara Staudt Lerner.
+	TransformGen:  Automating the Maintenance of
+	Structure-Oriented Environments. ACM Transactions on
+	Programming Languages and Systems, To appear.
+ 
+   	Adrian Koren, Identifying Type Changes in a Collection of
+	Evolving Types. Masters project report, Computer Science
+	Department, University of Massachusetts, Amherst, May 1992
+ 
+    	Barbara Staudt Lerner. Extending the Notion of Type
+	Conformance to Interfaces and Type Systems. OOPSLA '93
+	Workshop on Supporting the Evolution of Class Definitions,
+	September 1993, Washington, DC.
+ 
+      Demonstration available upon request.
+     
+   
+  
+ The Arcadia Project
+&lt;arcadia-www@ics.uci.edu&gt;  
+Last modified: Wed Nov 30 14:44:52 1994
+ 
+</body> 

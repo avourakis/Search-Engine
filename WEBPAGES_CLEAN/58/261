@@ -1,0 +1,115 @@
+ Alderis@UCI - Analysis Language for Distributed, Embedded, and Real-time Systems<body>
+
+		 
+		
+				 
+				
+						 Alderis@UCI 
+						 Analysis Language for Distributed, Embedded, and Real-time Systems. 
+				
+				 
+				
+				   Downloads  
+								  Publications  
+								  DRE Systems  
+								  AMBA  
+								  Links  
+								  Home  
+								
+				   
+				
+						 AMBA AHB MPSoC Example 
+
+						 
+							The NuSMV finite state machine models listed on this page were used to analyze a digital camera system-on-chip design. The results of this analysis were published in the following paper:
+						 
+
+						 
+							Gabor Madl, Sudeep Pasricha, Qiang Zhu, Luis Angel D. Bathen, Nikil Dutt:  Formal Performance Evaluation of AMBA-based System-on-Chip Designs , Proceedings of EMSOFT 2006.  Bibtex .
+						 
+
+						 
+The publication is covered by copyright. It is provided for personal use only and may not be distributed.
+						 
+						
+						 
+						
+								 DREAM 
+								 ACES 
+								 FORGE 
+						
+						 
+						
+						  
+				
+				 
+				
+				 
+									
+						 Ambiguity in the AMBA AHB Specification 
+
+						 
+							The EMSOFT publication cited on the left describes an ambiguity in the final version of the AMBA AHB specification. We do not claim in any way that the AMBA AHB protocol is incorrect, nor do we claim that it contains irresolvable contradictions. However, the AMBA AHB specification does not mention this problem and therefore it is up to the designers to find and resolve this and other special cases, and these implementations may not work with each other even though they all correspond to the specification. This shows the need to verify even simple MPSoC designs rather than rely on protocols themselves in general as they do not enforce a correct working system. These problems could be easily overcome by providing a formal specification rather than natural languages that are prone to ambiguities.
+						 
+
+						 Functional Verification 
+
+						 
+							The following example demonstrates how the simultaneous use of the HRESP=RETRY response and the HSPLITx unmask request in the same clock cycle by the slave may result in a deadlock situation:
+
+						    Two masters deadlock SMV source  
+								  Two masters deadlock output  
+						  
+							The following example shows that disallowing the simultaneous use of the HRESP=RETRY response and the HSPLITx unmask request allows to avoid the deadlock:
+
+						    Two masters correct SMV source  
+								  Two masters correct output  
+						  
+							The same problem can be shown for three masters:
+
+						    Three masters deadlock SMV source  
+								  Three masters deadlock output  
+						  
+							The following example shows that disallowing the simultaneous use of the HRESP=RETRY response and the HSPLITx unmask request allows to avoid the deadlock using three masters as well:
+
+						    Three masters correct SMV source  
+								  Three masters correct output  
+						  
+							The final model that shows the correctness of our design:
+
+						    Three masters correct SMV source  
+								  Three masters correct output  
+						  Performance Evaluation 
+
+						 
+							The finite state machines were changed for the performance evaluation to provide better scalability. Therefore we need to verify that the resulting model is still correct:
+
+						    Three masters using dedicated state wires/variables correct SMV source  
+								  Three masters using dedicated state wires/variables correct output  
+						  
+							Performance evaluation results using 64x64 pixel tiles for JPEG 2000 compression:
+
+						    Performance evaluation using 64x64 pixel tiles SMV source  
+								  Performance evaluation using 64x64 pixel tiles output  
+						  
+							Performance evaluation results using 128x128 pixel tiles for JPEG 2000 compression:
+
+						    Performance evaluation using 128x128 pixel tiles SMV source  
+								  Performance evaluation using 128x128 pixel tiles output  
+						  
+		
+		 
+		
+		 
+		
+				 
+						
+								© All the material published on this website is copyrighted. All rights reserved.    
+
+				
+						 
+		
+		 
+
+
+</body> 

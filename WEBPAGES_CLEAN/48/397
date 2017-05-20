@@ -1,0 +1,780 @@
+ Informatics 102 Spring 2012: Erlang Tutorial<body>
+
+ 
+
+ 
+Informatics 102 Spring 2012 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Lab Manual  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ Informatics 102 Spring 2012 
+   Erlang Tutorial 
+
+ 
+
+ 
+
+  Background 
+
+ Erlang is a functional programming language that has direct, built-in support for  concurrency  — the ability to perform more than one task simultaneously on a machine — and  distribution  — the ability to perform cooperating tasks on multiple machines.  In an era of networked, multicore computers, concurrency and distribution are becoming increasingly important.  While Erlang doesn't do anything so special that it can't be done in other languages, it clearly demonstrates the difference between a language that allows you to build infrastructure that supports concurrency and distribution (like Java) and one that has this infrastrucfture built in. 
+
+ Some of Erlang's features and syntax will be familiar from your past experience with other programming languages that you may have seen in prerequisite coursework, such as Scheme, Haskell, and Prolog.  I'll point these similarities out as they arise in this tutorial.  Though some aspects of Erlang will be familiar, where it becomes especially mind-opening is when it diverges from these similarities. 
+
+  
+
+ 
+
+ 
+
+  Using Erlang in the ICS labs 
+
+ A reasonably-recent (good enough for us) version of Erlang is installed on the Windows workstations in the ICS labs for your use.  You can execute the Erlang interpreter from any command prompt by executing the command  erl , though you may first need to execute these commands each time you start a new command prompt window: 
+
+ 
+set PATH=%PATH%;"C:\Program Files\erl5.9.0\bin"
+set ERLANG_HOME="C:\Program Files\erl5.9.0"
+ 
+
+ 
+
+ 
+
+  Installing Erlang on your own machine 
+
+ Erlang is open source, so downloading and installing it is free.  It is distributed as a package called  Erlang/OTP .  (OTP is a library for building concurrent, fault tolerant applications.  We won't be covering OTP in this course.)  The latest version is Erlang/OTP R15B01. 
+
+ Erlang/OTP is actually distributed as a source code bundle, which you can compile on many operating systems, given a C compiler and the right ancillary tools.  Downloading and compiling source code can be cumbersome, though, so there are prebuilt installations available if you know where to look; where to look depends on what operating system you want to install Erlang/OTP on. 
+
+ Installing Erlang/OTP on Windows 
+
+ An installer for the latest version of Erlang/OTP is available on the  download page  at  erlang.org .  The download page lists the most recent several versions along the right-hand side; be sure you choose the latest (R15B01).  To download the Windows installer, click the  download  link titled  R15B01 Windows binary . 
+
+ After downloading the installer, execute it, then follow these steps. 
+
+  The first screen is titled "Choose Components."  Accept the defaults by clicking  Next . 
+   The next screen asks where you'd like to install Erlang.  The default is  C:\Program Files\erl5.9.1 , but I suggest something shorter (that, importantly, contains no spaces); install to  C:\erl5.9.1  instead.  Either way, make a note of where you chose to install Erlang; you'll need it later.  The rest of these instructions assume you installed to  C:\erl5.9.1 . 
+   The next screen asks whether and where you'd like Erlang on your start menu.  Do whatever you prefer here, then click  Install . 
+  Once the installer is complete, you're not quite finished.  Next on the agenda, you'll need to alter some Windows settings that will allow you to run the Erlang interpreter from the command line. 
+
+ Right-click on the  My Computer  icon on your desktop (or right-click it in Windows Explorer, if you can't find it on your desktop) and select  Properties .  Select the  Advanced  tab.  Click the  Environment Variables...  button.  Under "System variables," find the  PATH  variable and add this to the  end  of it: 
+
+ 
+;C:\erl5.9.1\bin
+ 
+
+ Then, also under "System variables," click the  New  button and create a new variable named  ERLANG_HOME  with this value: 
+
+ 
+C:\erl5.9.1
+ 
+
+ You can now execute the Erlang interpreter from any command prompt by typing the command  erl .  If, after executing the  erl  command, you receive the following prompt, your installation was successful: 
+
+ 
+    Eshell V5.9.1 (abort with ^G)
+    1&gt;
+ 
+
+ Installing Erlang/OTP on Other Operating Systems 
+
+ A consulting company called Erlang Solutions maintains a set of documentation and downloadable files for installing Erlang R15B01 on other operating systems (and also Windows, but the "official" release for Windows is just as simple).  Head to  this link . 
+
+ Others maintain scrips that you can run to download the source code, compile it, and install it.  For example,  this  GitHub "gist" is a script that installs Erlang R15B01 on Ubuntu Linux.  It takes a while to run, but I've tested this on an Ubuntu Server 11.10 virtual machine to good effect. 
+
+ 
+
+ 
+
+  The Erlang interpreter 
+
+ Whether you're using it in the ICS labs or you've installed it on your own machine, the Erlang interpreter can be executed from a command prompt or terminal window using the command  erl , upon which you'll see something like this: 
+
+ 
+    Eshell V5.9.1  (abort with ^G)
+    1&gt; 
+ 
+
+ An Erlang interpreter, which is also called an Erlang  shell , is a lot like the interpreters for other functional languages like Scheme or Haskell; it is centrally a  read-evaluate-print loop  (or REPL), in which it reads an expression from the keyboard, evaluates that expression, then prints its value.  The  1&gt;  that you see when you first start the interpreter is a prompt asking you to enter an expression.  So, for example, we could type a mathematical expression, then get a response, like this: 
+
+ 
+    1&gt;  2 + 4. 
+    6
+    2&gt;
+ 
+
+ Note that each expression you type into the interpreter must be terminated with a period (.) character, so this is an expression that adds the integers 2 and 4.  After evaluating the expression and printing its result (6), the interpreter asks for another expression; the prompt changes to  2&gt;  as this will be the second expression we've entered since starting the interpreter. 
+
+ When you want to stop the interpreter, there are at least a couple of ways to do it.  One is to call the function  q , like this: 
+
+ 
+    2&gt;  q(). 
+ 
+
+ Another (which at least works on Windows) is to press Ctrl+C, which terminates the interpreter immediately.  You can also restart the interpreter by typing Ctrl+G, then Enter; this is equivalent to stopping the interpreter and starting it again.  The prompts will begin from  1&gt;  again.  Also, notably, the values of variables will all be cleared, which is important since variables can only be assigned once within a particular scope; more about this later in the tutorial. 
+
+ As I proceed through the examples in this tutorial, I'll do a couple of things to aid readability: 
+
+  Things you should type will be in  boldface , while things that the interpreter prints out will be in normal text. 
+   I'll restart the command numbers whenever I'm starting a new example.  You might want to do the same (using the Ctrl+G "abort" trick described above), to prevent variable names from one example from conflicting with variable names from another. 
+  
+
+ 
+
+  Numbers and mathematical operators 
+
+ Erlang offers support for two kinds of numbers. 
+
+   Integers , which can be written like their counterparts in many languages (including Java).
+      Example integer values are  34  and  709 .  Unlike Java, but like Scheme, integers can be arbitrarily large, meaning that  7621348123950871235376234786012935871235  is a perfectly legal integer value in Erlang. 
+       There is also a syntax for integers in bases other than 10.  For example,  2#100101  is 100101  2   or 37.   16#fe34  is fe34  16   or 65076.  This can be handy for dealing with binary, octal, and hexadecimal values, though any base from 2 through 36 is supported. 
+      
+    Floating-point numbers , which are equivalent to  double  values in Java.  They are written using the same syntax as Java.
+      Example double values are  2.54  and  2.74878e11 . 
+      
+  As in most programming languages, Erlang supports basic mathematical operators: addition, subtraction, multiplication, division, and remainder (modulus).  Below are some examples: 
+
+ 
+    1&gt;  2 + 4. 
+    6
+    2&gt;  6 - 8. 
+    -2
+    3&gt;  7 * 5. 
+    35
+    4&gt;  7 div 2. 
+    3
+    5&gt;  7 / 2. 
+    3.5
+    6&gt;  5 rem 4. 
+    1
+    7&gt;  6 rem 4. 
+    2
+    8&gt;  7 rem 4. 
+    3
+    9&gt;  8 rem 4. 
+    0
+    10&gt;  2 + 3 * 5. 
+    17
+    11&gt;  (2 + 3) * 5. 
+    25
+ 
+
+ We can see a few things from these examples: 
+
+  There are two kinds of division, indicated by different operators.  (There are two kinds of division in Java, too, but they're both written with the same operator and are differentiated by context.)
+      Integer division, which is specified by the  div  operator, with the result of  i div j  being  floor ( i  /  j ).
+        Floating-point division, which is specified by the  /  operator.  Note that the  /  operator indicates floating-point division even when its two arguments are integers, so  7 / 2  is  3.5 . 
+      
+   The  rem  operator indicates a  remainder  or  modulus , analogous to Java's  %  operator.  (The  %  symbol has meaning in Erlang, too; it is used for commenting, which will be familiar if you've ever seen Prolog.  Erlang's syntax is influenced in several places by the syntax of Prolog.) 
+   A fairly standard set of precedence rules govern mathematical expressions.  For example, we see in the second-to-last expression above that multiplication has a higher precedence than addition; we see in the last expression that parentheses can be used to override precedence. 
+  
+
+ 
+
+  Variables 
+
+ Erlang supports  variables .  As in Prolog, variables are distinguished by names that start with an uppercase letter.  Example variable names are  A ,  Alex , and  U2 . 
+
+ Being a functional language, Erlang places a restriction on variables: they can't vary!  Once they've been assigned a value, they can never be reassigned while they are in scope.  In the interpreter, this is a harsh rule; once you've assigned a variable, you can never use it again.  However, this rule isn't as restrictive as it sounds because of scoping rules that are like those in other languages; variables declared within a function, for example, are only bound while that function is executing, and do not conflict with variables in other functions that have the same name. 
+
+ Assigning a value to a variable can be done using the  =  operator.  In its simplest form, the  =  operator is just like its counterpart in Java: the expression on the right-hand side is evaluated, its value is assigned into the variable on the left-hand side, and its result is that value.  For example: 
+
+ 
+    1&gt;  X = 3. 
+    3
+    2&gt;  X + 2. 
+    5
+    3&gt;  Y = X + 9. 
+    12
+    4&gt;  Y div X 
+    4
+ 
+
+ There's more to  =  than this, but first we need to learn a few other things. 
+
+ 
+
+ 
+
+  Dynamic typing 
+
+ Notice that when we assign a value to a variable, we aren't required to declare the variable first, and we aren't required to declare its type.  This is because Erlang, like Scheme, is  dynamically typed , which means that types are determined entirely at run-time, and that type errors are all run-time errors.  For example, consider this situation: 
+
+ 
+    1&gt;  X = 2.5. 
+    2.5
+    2&gt;  X div 2. 
+    ** exception error: bad argument in an arithmetic expression
+         in operator  div/2
+            called as 2.5 div 2
+ 
+
+ The  div  operator only works when its two operands are integer values.  In this case, X has a floating-point value, so our attempt to use  div  fails with an error message. 
+
+ Had the expression  X div 2  been in a function that we'd called, and had X been an argument to that function, we would have received a run-time error in that function when it executed.  There is no up-front type checking done in Erlang; dynamic typing means that type checking is done on an as-needed basis at run-time. 
+
+ 
+
+ 
+
+  Atoms 
+
+  Atoms  are global, automatically-generated, named constants, which are distinguished by names that start with a lowercase letter; that lowercase letter can be followed by upper- and lowercase letters, underscores, and  @  symbols.  Simply using the atom  alex  means that you've declared a new atom called  alex . 
+
+ Atoms can also have names that don't conform to the rules above if surrounded by single-quotes.  For example,  'EXIT' , and  'I am happy today'  are both atoms.   'alex'  is an atom, which is equivalent to the atom  alex . 
+
+ 
+
+ 
+
+  Tuples 
+
+ In Java, when we want to collect a fixed-size group of values together, we write a class and declare these values as fields.  For example, we might write a Point class, representing a point on the x/y plane, like this one: 
+
+ 
+    public class Point
+    {
+        private double x;
+        private double y;
+        
+        // constructors, getters, setters, etc.
+    }
+ 
+
+ Erlang offers a mechanism for collecting a fixed-size group of values together, as well; it's called a  tuple .  Tuples are simpler to use than their counterparts in Java — though, to be fair, they don't do as much. 
+
+ Tuples are written as a sequence of expressions, separated by commas, and surrounded by curly braces.  For example: 
+
+ 
+    1&gt;  P = {point, 10, 20}. 
+    {point, 10, 20}
+    2&gt;  P. 
+    {point, 10, 20}
+ 
+
+ Here, we see that it's possible to assign a tuple into a variable, then get that tuple back when we evaluate the variable.  Notice, too, that the first value in our tuple is the atom  point ; it's very common in Erlang for the first value of a tuple to be an atom that specifies what "kind" of value it represents.  We can then use that atom as a way to decide what to do, in a similar way to Java's use of polymorphism to determine which version of a method to call based on the type of the object it's being called on. 
+
+ Of course, we need a way to get the individual elements of a tuple.  One way is to ask for them based on their index.  The  element  function can do this job.  Continuing the previous example: 
+
+ 
+    3&gt;  element(1, P). 
+    point
+    4&gt;  element(2, P). 
+    10
+    5&gt;  element(3, P). 
+    20
+ 
+
+ But this is ultimately unsatisfying, because it requires us to do so much work to unpackage the values in a tuple, one at a time, just like calling accessor methods in Java.  It would be nice if we could unpackage them in one fell swoop. 
+
+ 
+
+  Pattern matching 
+
+ The  =  operator in Erlang is actually not an assignment operator, as in Java.  It's actually something else: a  pattern matching  operator.  Its job is to take the value of the expression on the right, then match it to the pattern on the left, where the pattern on the left generally contains variables.  Its job is to answer this question:  Does the value on the right look like the pattern on the left and, if so, is there some set of values I can give to the variables on the left to make the two sides have the same value?   If so, the variables on the left are given their new values. 
+
+ When we use  =  as we do in Java, the pattern match is trivial: to make the thing on the left have the same value as the thing on the right, give the thing on the left the value of the thing on the right.  That's what makes this example work: 
+
+ 
+    1&gt;  X = 3. 
+    3
+    2&gt;  X. 
+    3
+ 
+
+ But we can express more complicated patterns on the left.  For example, we can write a tuple on the left, which can be used to unpackage a tuple's elements all at once. 
+
+ 
+    1&gt;  P = {point, 10, 20}. 
+    {point, 10, 20}
+    2&gt;  {point, X, Y} = P. 
+    {point, 10, 20}
+    3&gt;  X. 
+    10
+    4&gt;  Y. 
+    20
+ 
+
+ Here, the interpreter is saying "Is there some set of values I can give to X and Y that make the thing on the left look like the value of P?"  P's value is the tuple  {point, 10, 20} .  The interpreter correctly deduces the right set of values: if X were 10 and Y were 20, both sides of the  =  operator would be the value  {point, 10, 20} .  So, the matching succeeds, and X and Y take their new values. 
+
+ (The algorithm used to do this matching is called  unification .  If you've ever worked with Prolog before, you'll recognize this algorithm as one that is used in Prolog to match variables with values as rules are searched and applied.  It's not especially useful to know the details of how unification works; most of the time, your intuition will lead you to the right expectations.) 
+
+ As we discussed earlier in the tutorial, variables in Erlang cannot take on a new value once they've been given a value.  This rule affects pattern matching in the sense that it requires variables that already have values to retain those values; pattern matching will succeed only if the values of bound variables — those that already have values — do not need to change in order for matching to succeed.  Consider the following example: 
+
+ 
+    1&gt;  A = {person, "Alex", "Thornton"}. 
+    {person, "Alex", "Thornton"}
+    2&gt;  {person, FirstName, LastName} = A. 
+    {person, "Alex", "Thornton"}
+    3&gt;  FirstName. 
+    "Alex"
+    4&gt;  LastName. 
+    "Thornton"
+    5&gt;  {person, FirstName, LastName2} = A. 
+    {person, "Alex", "Thornton"}
+    6&gt;  LastName2. 
+    "Thornton"
+    7&gt;  {person, LastName, LastName2} = A. 
+    ** exception error: no match of right hand side value {person,"Alex","Thornton"}
+ 
+
+ (Side note: Notice that Erlang supports strings, much like those in many other programming languages.  More about them later.) 
+
+ The pattern match in expression 2 succeeded, because neither FirstName nor LastName already had a value, so they could be given the values "Alex" and "Thornton," respectively.  The pattern match in expression 5 succeeded, even though FirstName already had a value, since it had the same value as the second element of A: "Alex."  The pattern match in expression 7, on the other hand, failed, since LastName already had the value "Thornton," which did not match the value in the second element of A. 
+
+ Sometimes you want to match only some values but others you don't care about.  In this case, you can use  anonymous variables , which have names that begin with an underscore (or are just an underscore by themselves).  For example: 
+
+ 
+    1&gt;  Person = {person, "Alex", "Thornton"}. 
+    {person, "Alex", "Thornton"}
+    2&gt;  {person, FirstName, _} = Person. 
+    {person, "Alex", "Thornton"}
+    3&gt;  FirstName. 
+    "Alex"
+ 
+
+ Anonymous variables are never bound to a value.  Using an anonymous variable in a pattern matching expression is a way of saying "I don't care what the value of this part of the pattern is."  In the example above, only the second element is actually pulled out of the tuple; the third element is irrelevant. 
+
+ Pattern matching is supported in some other languages — Haskell is an example you may have seen before — and is a feature that generally leads to shorter, clearer code than you can write without it.  Erlang supports pattern matching in several places, as we'll see, in addition to just expressions that use the  =  operator; it works the same way in every place that it occurs. 
+
+ 
+
+ 
+
+  Lists 
+
+  Lists  are sequences of elements.  They are implemented in Erlang in the same way as they are in other functional languages like Scheme and Haskell: fundamentally, lists are implemented as a  head  (the first element) and a  tail  (the list containing everything except the first element). 
+
+ Syntactically, lists appear like their counterparts in Haskell, with elements separated by commas and surrounded by brackets.  For example,  [1, 2, 3]  and  [a, b, c, d, e, f, g, h, i, j]  are lists.  Unlike in Haskell (but as in Scheme), Erlang permits lists to have any combination of kinds of elements, so  [1, a, 2, b, 3, c]  is also a valid list. 
+
+ One way to break a list into pieces is to use the built-in functions  hd  and  tl , which return the head and the tail of a list, respectively.  Examples: 
+
+ 
+    1&gt;  X = [1, 2, 3, 4, 5]. 
+    [1, 2, 3, 4, 5]
+    2&gt;  hd(X). 
+    1
+    3&gt;  tl(X). 
+    [2, 3, 4, 5]
+    4&gt;  tl(tl(X)). 
+    [3, 4, 5]
+    5&gt;  hd(tl(tl(X))). 
+    3
+ 
+
+ Pattern matching provides us with a better approach, however, so  hd  and  tl  are rarely used in practice.  The syntax  [H | T]  (which you might recognize from Prolog) is used to describe a list whose head is H and whose tail is T.  (This is analogous to the syntax  (x:xs)  that appears in Haskell.)  Depending on where you put it, this syntax can be used to create a new list or to split up an existing list.  Examples: 
+
+ 
+    1&gt;  L = [1, 2, 3, 4]. 
+    [1, 2, 3, 4]
+    2&gt;  [H | T] = L. 
+    [1, 2, 3, 4]
+    3&gt;  H. 
+    1
+    4&gt;  T. 
+    [2, 3, 4]
+    5&gt;  [H1, H2, H3 | TT] = L. 
+    [1, 2, 3, 4]
+    6&gt;  H1. 
+    1
+    7&gt;  H2. 
+    2
+    8&gt;  H3. 
+    3
+    9&gt;  TT. 
+    [4]
+    10&gt;  L2 = [H2 | TT]. 
+    [2, 4]
+    11&gt;  L2. 
+    [2, 4]
+ 
+
+ In expression 2, we used pattern matching to split the list L into a head and a tail, storing the head in H and the tail in T; the reason that expression 2 splits the list is because the  [H | T]  syntax appears on the left hand side of the  =  operator, which means that Erlang will find a value for H and T that make  [H | T]  look like the list L.  Expression 5 is a variant of this syntax, in which we store the first three elements of the list H1, H2, and H3, then the remaining elements in TT.  Expression 10 builds a new list, since it appears on the right side of the  =  operator. 
+
+ There are other ways to manipulate lists.  For example, there is a concatenation operator,  ++ , which can be used to concatenate two lists together. 
+
+ 
+    1&gt;  [1, 2, 3] ++ [4, 5, 6]. 
+    [1, 2, 3, 4, 5, 6]
+ 
+
+ It should be noted that list concatenation is more expensive than building a list using the  [H | T]  notation, so it should be avoided if possible. 
+
+ 
+
+ 
+
+  Strings 
+
+ Erlang supports  strings .  Strings are actually not a special, separate data type; they're implemented as a list of integers, where each integer is a character code for some character.  For example, the string  "Alex"  is equivalent to the list  [65, 108, 101, 120] , since the character code for 'A' is 65, the character code for 'l' is 108, and so on. 
+
+ This leads us to an interesting question: if strings are lists of integers, how does the interpreter know whether to print a string value like  "Alex"  or a list of integers like  [65, 108, 101, 120] .  If you're accustomed to Java, the answer will surprise you: Erlang decides based on the contents of the list.  If the list contains only character codes for printable characters, the list is printed as a string; otherwise, it's printed as a list.  Examples: 
+
+ 
+    1&gt;  [1, 2, 3, 4]. 
+    [1, 2, 3, 4]
+    2&gt;  [65, 108, 101, 120]. 
+    "Alex"
+    3&gt;  "Alex". 
+    "Alex"
+ 
+
+ It's not necessary to know what character code corresponds to a particular character; if you need it, you can ask for it using the syntax  $x , which evaluates to the character code for the character  x .  Examples: 
+
+ 
+    1&gt;  $A. 
+    65
+    2&gt;  [$A, $b, $c]. 
+    "Abc"
+ 
+
+ Since strings are implemented as lists, all of the things we can do with lists can be done with strings, as well, including built-in list-processing functions like  map ,  filter , and so on. 
+
+ 
+
+ 
+
+  Modules and functions 
+
+ A language implementation with only a REPL and interactive commands is only of limited use; at some point, we'd like to be able to write code, save it into a file, then load it up when we need it.  Erlang allows us to do this by writing  modules . 
+
+ Modules are collections of  functions .  Functions serve the same purpose that they do in Scheme or Haskell; they describe how to calculate a result given a sequence of arguments. 
+
+ An example module follows: 
+
+ 
+    -module(mymath).
+    -export([fib/1]).
+    
+    fib(0) -&gt; 0;
+    fib(1) -&gt; 1;
+    fib(N) -&gt; fib(N - 1) + fib(N - 2).
+ 
+
+ This code should be written in a file named  mymath.erl  (i.e., the name of the file should match the name of the module, with the extension  .erl  added). 
+
+ In order to use this module, we first need to compile it.  There are two ways to compile it: 
+
+  From an operating system command prompt or terminal window, type the command  erlc mymath.erl . 
+   From the Erlang interpreter, type the command  c(mymath). . 
+  Either way, a compiled version of the file, named  mymath.beam , will be generated.  Erlang is similar to Java, in the sense that the compiler translates Erlang source code to a virtual machine language, which is then executed by the interpreter.   .erl  files are analogous to  .java  files, while  .beam  files are analogous to  .class  files. 
+
+ Once compiled, it is possible to call any of the module's  exported  functions — those that appear in the export list denoted by the  -export  directive — from the interpreter prompt (or from other modules).  Modules are permitted to export as many functions as they'd like; in this case, we've just exported one of them.  The name of a function is the name of the module combined with the name of the function, separated by a colon.  So, for example, the name of the function exported by this module is  mymath:fib .  Example: 
+
+ 
+    1&gt;  c(mymath). 
+    {ok, mymath}
+    2&gt;  mymath:fib(10). 
+    55
+    3&gt;  mymath:fib(20). 
+    6765
+ 
+
+ Note that the call to the  c  function is only necessary if the module has not already been compiled. 
+
+ There are a few other things worth noting here: 
+
+  The  fib  function takes one argument, but nowhere is the type of that argument defined.  Remember that Erlang is dynamically typed, which means that the compiler does no type checking; type checking is done when the function is called, based on what the function does. 
+   When necessary, the name of the function includes its  arity  (i.e., the number of arguments it accepts).  For example, in the  -export  directive, the function is listed as  fib/1 , which means "a function called fib that takes one argument."  This is important, because it's possible to overload a function with different numbers of arguments.  Note that since you cannot specify the types of arguments, you cannot overload a function on the basis of its argument types; you can overload only on the number of arguments it accepts. 
+   The  fib  function is made up of three  function clauses .  Each clause consists of a  head  (a signature) and a  body  (how to calculate a result).  The clauses are separated by semicolons and the last one is terminated with a period. 
+   Pattern matching is used to choose which clause should execute in any given situation, which is often used as a replacement for some kind of "if" or "case" expression.  The actual parameters are pattern-matched against the clauses in the order specified; the first match is the one that is executed.  So, if  fib  is passed 0, it returns 0; if it is passed 1, it returns 1; if it is passed some other value  N , it returns the sum of calling  fib  on  N -1 and  N -2.  Order is important here; had we placed the last clause first, there would be no base case and the recursion will continue unabated (until the run-time stack overflows), since any value would match  N . 
+  
+
+ 
+
+  Funs 
+
+  Funs  are anonymous functions.  Funs are data, as is typical of functions in functional languages like Scheme and Haskell.  (Note that, unlike Scheme and Haskell, functions are not data.)  This means that funs can be passed as arguments, returned as results, stored in tuples and lists, and so on. 
+
+ Syntactically, a fun is written in this form:  fun( arguments ) -&gt;  body  end ; it is an expression whose result is the fun itself.  Here is an example of creating and calling a fun: 
+
+ 
+    1&gt;  Square = fun(N) -&gt; N * N end. 
+    #Fun
+    2&gt;  Square(3). 
+    9
+ 
+
+ More interestingly, though, funs can be used with  higher-order functions , as they can in other functional languages like Scheme and Haskell.  A predefined module called  lists  contains a variety of higher-order functions that may be familiar to you, like  map ,  filter ,  foldl , and  zip .  These functions accept funs as their "function" arguments.  Examples: 
+
+ 
+    1&gt;  Square = fun(N) -&gt; N * N end. 
+    #Fun
+    2&gt;  lists:map(Square, [1, 2, 3, 4]). 
+    [1, 4, 9, 16]
+    3&gt;  IsPositive = fun(N) -&gt; N &gt; 0 end. 
+    #Fun
+    4&gt;  lists:filter(IsPositive, [1, -1, 2, -2, 3, -3]). 
+    [1, 2, 3]
+ 
+
+ Note that you can't pass a function as an argument; only funs can be passed this way.  However, there is a shorthand mechanism for wrapping a function as a fun: 
+
+ 
+    1&gt;  lists:map(fun mymath:fib/1, [1, 2, 3, 4, 5, 6]). 
+    [1, 1, 2, 3, 5, 8]
+ 
+
+ 
+
+ 
+
+  Equals vs. identical 
+
+ There are two ways in Erlang to compare values for equality. 
+
+  The  =:=  and  =/=  operators mean "identical" and "not identical," respectively.  They can be used to compare any two values to see if they are identical to one another (e.g., two numbers that are the same type and have the same value, two lists that have the same sequence of values). 
+   The  ==  and  /=  operators mean "equal" and "not equal," respectively.  They behave just like the  =:=  and  =/=  operators, except where numbers are concerned.  For numbers,  ==  and  /=  enable comparisons between integer and floating-point values.  (This means that there is a performance benefit in using  =:=  and  =/= , as no type checking and type coercion is done.) 
+  Some examples of these follow: 
+
+ 
+    1&gt;  [1, 2, 3] =:= [2, 3, 4]. 
+    false
+    2&gt;  [1, 2, 3] =:= [1, 2, 3]. 
+    true
+    3&gt;  3 =:= 3. 
+    true
+    4&gt;  3.0 =:= 3. 
+    false
+    5&gt;  3.0 == 3. 
+    true
+ 
+
+ (Side note: Notice that Erlang has boolean constants  true  and  false .) 
+
+ 
+
+ 
+
+  Recursion and the importance of tail recursion 
+
+ Being a functional language, Erlang does not offer loops, for the simple reason that it doesn't offer the mutable variables that are necessary to support them.  This doesn't mean that repetition is impossible; it just means that recursion is the only practical way to do it.  (If you've written code in Scheme or Haskell before, this will come as no surprise.) 
+
+ The potential downside of recursion is the need for the run-time stack to grow the deeper you want to recurse, as an activation record is stored on the stack for each recursive call.  This can be a serious problem for functions that are intended to process very long lists; it can be an insurmountable problem for the kinds of functions we'll write later, which are effectively like infinite loops. 
+
+ Perhaps surprisingly, it is possible to write functions that recurse infinitely without running out of stack space, though it does require some care.  It requires the use of a special form of recursion called  tail recursion . 
+
+ A  tail recursive call  (or, more broadly, a  tail call ) is a function call that is the last act that a function will perform; whatever that function call returns, its caller will also return, with no further calculations done. 
+
+ Tail calls allow an important optimization.  A normal function call requires a new activation record to be pushed on to the run-time stack, carrying a variety of information, including the parameters, local variables, and return address.  Tail calls can be handled differently; when a function  f  makes a tail call to a function  g , the new activation record for  g  replaces the activation record for  f , since  f  will have no more work to do after  g  returns.  Recursion using only tail calls (i.e., tail recursion) can run infinitely, since the stack space used does not grow as the recursion deepens. 
+
+ Tail calls are also faster than non-tail calls, which makes tail recursion an important approach in practice, even when you expect recursion to be relatively shallow. 
+
+ It should be noted that not all programming languages optimize tail calls.  Java is a notable example of a language that does not, though this may someday change.  But for a language that performs this optimization, it's worth paying attention to.  Some things in Erlang absolutely require it; for example, we'll soon be writing potentially long-running servers as single, infinitely-recursive functions, which would soon run out of stack space if they aren't tail recursive. 
+
+ The following module demonstrates two versions of a factorial function: one that uses tail recursion and one that does not. 
+
+ 
+    -module(factest).
+    -export([fac/1, factail/1]).
+
+    
+    % A non-tail-recursive version
+    fac(0) -&gt; 1;
+    fac(N) -&gt; N * fac(N - 1).
+
+        
+    % A tail-recursive version
+    factail(N) -&gt; factail(N, 1).
+    
+    factail(0, Product) -&gt; Product;
+    factail(N, Product) -&gt; factail(N - 1, N * Product).
+ 
+
+ 
+
+ 
+
+  Concurrency 
+
+ Thus far, there is probably little about Erlang that you haven't seen before in at least one programming language, even if you haven't seen very many of them.  Where Erlang really shines, and where it delves into territory that will be less familiar and more mind-opening, is its built-in support for  concurrency , which allows you to easily write programs that are capable of doing more than one thing at a time.  This is important for at least a couple of reasons: 
+
+  If you intend to run your program on a machine with multiple processors — a scenario that has, and will continue to, become increasingly common — it becomes necessary to write your program so that it can do more than one thing at a time. 
+   Even if you don't have a lot of cores, concurrency provides a nice way to break up a complex program into a set of separate, simpler tasks. 
+  Lots of programming languages support concurrency in one way or another.  Erlang is very particular in how it supports it.  An Erlang program is a set of concurrently-running  processes .  Processes are entirely isolated from one another, sharing no memory at all; they communicate with one another, when necessary, by sending messages to one another.  Processes communicate the same way if they are all running on one machine or if they are running on many machines spread across the Internet; Erlang hides virtually all of the details about how the processes communicate, which makes building  distributed systems  not much harder than building concurrent ones that run on a single machine.  Erlang also provides other important mechanisms, such as the ability for one process to know that another one has died, which is the backbone of  fault-tolerance , the ability for a system to systematically and swiftly react to what would otherwise be catastrophic problems. 
+
+ Note that Erlang's flavor of concurrency is very different from the one available in Java.  Java programs are a set of running  threads .  Each thread has its own run-time stack, but all threads share the same heap; in other words, all objects are shared.  This makes it necessary to carefully coordinate access to these objects, understanding which objects are actually being shared and which happen to be isolated (implicitly, since only one thread happens to touch them); access to those that are shared must be carefully  synchronized , so, for example, they won't become corrupted if modified simultaneously by multiple threads.  This kind of synchronization turns out to be difficult to get right, which is one of the reasons why Erlang's model of concurrency is so attractive; it promises a simplicity that's often impossible to achieve in Java. 
+
+ 
+
+ 
+
+  Spawning a new process 
+
+ When we want to run a function concurrently with other functions, we  spawn  a new process to execute that function.  The new process runs until the function completes — either normally or due to an error — at which time it dies. 
+
+ Spawning a new process can be done by calling the  spawn  function.  There are a few variants of the  spawn  function, but the simplest one takes a fun as an argument and executes that fun in a new process.  Here's an example: 
+
+ 
+    1&gt;  WaitAndPrint = fun() -&gt;
+                          timer:sleep(5000),
+                          io:format("Hello!~n")
+                      end. 
+    2&gt;  spawn(WaitAndPrint). 
+    &lt;0.33.0&gt;
+ 
+
+ After calling  spawn , you'll notice that you immediately get the next prompt from the interpreter, which is ready and able to accept additional expressions from you.  Meanwhile, in the background, the WaitAndPrint fun is executing.  Notice a couple of things about the WaitAndPrint fun: 
+
+  It consists of two expressions, separated by commas.  This is legal in Erlang and is useful for situations like this, where functions have side effects, but also for taking complex expressions and breaking them into separate ones with results stored in local variables. 
+   The  timer:sleep  function pauses the process that calls it for the given number of milliseconds; the process won't be able to do anything for that length of time.  Our call here will pause the calling process for five seconds.   Note that no other processes will be affected; they'll still be able to continue processing expressions as normal. 
+    io:format  is analogous to  System.out.format  in Java; it prints formatted output to the console.  The  ~n  placeholder means "newline character." 
+  So even though we're sleeping for five seconds, the interpreter will still accept expressions as input.  Why?  Because the interpreter process is separate from the one we spawned; they're running concurrently. 
+
+ After five seconds, no matter what we're doing in the interpreter, we'll see the text  Hello!  pop up in the interpreter window.  Granted, seeing text pop up in the interpreter, colliding with other text you're typing, isn't especially convenient.  But if processes are doing other kinds of things, like writing files, communicating across networks, or drawing graphics in isolated windows, this kind of concurrency becomes very handy indeed. 
+
+ 
+
+ 
+
+  Pids, mailboxes and message passing 
+
+ Concurrent processes are of relatively limited use if they are isolated from one another and have no means of interacting.  While there is wisdom in trying to limit the amount of interaction when possible, some interaction is necessary, just as it's usually necessary, when you hire people to work for you, that they communicate with each other (and with you) at least some of the time. 
+
+ Though Erlang processes are isolated from one another, in the sense that they share no memory, they are capable of sending messages to one another.  This section details the mechanisms that are needed for message passing. 
+
+ Pids 
+
+ In the example above, notice that the call to  spawn  returned the value  &lt;0.33.0&gt; .  Every process has a unique  process identifier , or  pid , associated with it.  The pid associated with the process we created in the example above was  &lt;0.33.0&gt; .  (You may notice a slightly different return value when you run this code, as you won't always get the same pid back when you create a process, but the value will have a similar structure.) 
+
+ The syntax  &lt;0.33.0&gt;  is the printable representation of a pid in the Erlang shell, but it does not literally build a pid in Erlang.  There is a built-in function called  pid  that does; for example,  pid(0, 33, 0)  would return the pid  &lt;0.33.0&gt; .)  However, it will most often be more convenient to store pids in variables, pass them as parameters, etc.  For example: 
+
+ 
+    1&gt;  WaitAndPrint = fun() -&gt;
+                          timer:sleep(5000),
+                          io:format("Hello!~n")
+                      end. 
+    2&gt;  Pid = spawn(WaitAndPrint). 
+    &lt;0.33.0&gt;
+    3&gt;  Pid. 
+    &lt;0.33.0&gt;
+ 
+
+ Mailboxes 
+
+ Every process has its own  mailbox , which collects messages sent to that process.  As messages are received by a process, they are removed from the mailbox.  In order to make use of mailboxes, we'll need to learn two things: how to send messages and how to receive them. 
+
+ Sending a message to a process 
+
+ The simplest way to send a message to a process is to use its pid.  The  !  operator is used to send a message to a process.  It is a binary operator, with the pid of the receiving process on the left-hand side and the message on the right-hand side.  Messages are not special; a message can be any Erlang term (i.e., any Erlang data structure, such as a number, an atom, a list, a tuple, a fun, etc.). 
+
+ Continuing the previous example: 
+
+ 
+    4&gt;  Pid ! 35. 
+    35
+ 
+
+ This expression sends the message  35  to the process we created previously. 
+
+ One important thing to understand about sending messages is that it will never appear to fail, so long as we place a pid on the left-hand side of the  ! .  If the pid is not associated with any currently-running process, the message will quietly be lost.  There will also be no notification provided when the other process receives the message.  We say that this kind of message passing is  fire and forget , meaning that we send messages with little regard to whether they'll get to where they need to go.  (That said, we can build our own mechanisms for checking whether messages were received, such as expecting receivers to send us responses.  But no such mechanism is automatically provided.) 
+
+ Receiving a message from a process' mailbox 
+
+ A process receives one message from its mailbox using the  receive  expression.  The general structure of a  receive  expression is: 
+
+ 
+     receive 
+        Pattern1 -&gt;
+            Expressions1;
+        Pattern2 -&gt;
+            Expressions2;
+        ...
+        PatternN -&gt;
+            ExpressionsN
+     end 
+ 
+
+ When a  receive  expression is evaluated, the first message in the process' mailbox is removed and matched against the patterns in the order they're listed, using the same kind of pattern matching that's done on function arguments and by the  =  operator.  The expressions corresponding to the first pattern that matches the message are evaluated, with the result of the  receive  expression being the result of the last corresponding expression. 
+
+ If there are no patterns that match the first message, the second message is tried, then the third, and so on, until a message matches a pattern.  If no messages match any patterns (or if there are no messages in the mailbox at all), the  receive  expression  blocks  the process until a matching message arrives.  By "blocks," I mean that the process will not be able to do any additional work until a message arrives that matches one or more of the patterns in the  receive  expression. 
+
+ Example: 
+
+ 
+    1&gt;  Pid = spawn(fun() -&gt;
+                       receive
+                           hello -&gt;
+                               io:format("Hello!~n");
+                           goodbye -&gt;
+                               io:format("Goodbye!~n");
+                           _Other -&gt;
+                               io:format("Unknown message~n")
+                       end
+                   end). 
+    &lt;0.53.0&gt;
+    2&gt;  Pid ! goodbye. 
+    Goodbye!
+    goodbye
+ 
+
+ Expression 1 spawns a new process, executing a function that expects one of three kinds of messages: the atom  hello , the atom  goodbye , or anything else (note the underscore at the beginning of the variable name, which is a way of saying "I don't care what this value is").  Expression 2 sends the  goodbye  message.  Notice that the spawned process prints  Goodbye!  to the output in response. 
+
+ Receive with timeout 
+
+ A variant of the  receive  expression supports a timeout, so that a process won't be blocked indefinitely if no messages arrive.  This variant looks like this: 
+
+ 
+     receive 
+        Pattern1 -&gt;
+            Expressions1;
+        Pattern2 -&gt;
+            Expressions2;
+        ...
+        PatternN -&gt;
+            ExpressionsN
+     after  TimeInMilliseconds -&gt;
+        TimeoutExpressions
+     end 
+ 
+
+ The only difference between this variant and the previous one is that it will evaluate the TimeoutExpressions if no message arrives before the given timeout, with the result of the  receive  expression being the result of the last of the TimeoutExpressions. 
+
+ 
+
+ 
+
+  Process registration 
+
+ Pids can be inconvenient to deal with, since it is often necessary to pass them to many processes and store them.  For this reason, Erlang offers the ability to  register  a process.  Registering a process is to associate it with an atom that functions as its name.  Once a process is registered, its registered name is available globally to all other processes; other processes can send messages to it using its registered name instead of its pid.  Example: 
+
+ 
+    1&gt;  register(handler, spawn(fun connection_handler:handle_connection/0)). 
+    true
+    2&gt;  handler ! 35. 
+    35
+    3&gt;  unregister(handler). 
+    true
+ 
+
+ Expression 1 spawns a new process and registers it with the name  handler .  Expression 2 sends the message  35  to that process.  Finally, Expression 3 unregisters  handler , making that name available to other processes; only one process can be registered with a particular name at any given time. 
+
+ 
+
+ 
+
+  That's it?  Where can I learn more? 
+
+ This concludes the Erlang tutorial.  Note that we haven't covered the entire Erlang language, nor have we covered every detail of the features that we've discussed.  If you'd like to learn more, there are a few places you can go. 
+
+  Of course, we'll cover several detailed  code examples  in lecture, which will be posted here on the course web site afterward. 
+   If you're interested in reference material, there is a fair amount of documentation available at  erlang.org's documentation page  and also at  erldocs.com . 
+   If you're interested in a much more thorough book on the subject, there is a wonderful, free online book titled  Learn You Some Erlang for Great Good , which, despite its peculiar title, is an excellent book. 
+  
+
+ 
+
+   A few tweaks and fixes by Alex Thornton, Spring 2012. 
+   Some additions, clarifications, and link updates added by Alex Thornton, Winter 2010. 
+   Originally written by Alex Thornton, Winter 2009. 
+  
+
+ </body> 

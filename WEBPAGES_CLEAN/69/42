@@ -1,0 +1,185 @@
+ Chimera Archives: 2-4/97<body>
+
+   
+             Chimera Archives February-April, 1997 
+         
+
+         
+              
+       
+             
+                 Home 
+             
+         
+
+         
+             
+                 What's New Archives: 02/97 to 04/97 
+             
+
+ April 22, 1997 
+
+ 
+  Two major changes made to the 2.0 alpha release. 
+ (5:00 PM PST) 
+ 
+ 
+ 
+Switched to using buffered network i/o. This simple change resulted
+in a 4x increase in performance! Our average message roundtrip was
+about 110 milliseconds previous to this change. It is now 25 milliseconds!
+ 
+ 
+Switched to using a hand-written file database rather than continue to
+use the Java Object Persistence mechanism. Thus, JOP is now longer
+needed to use Chimera 2.0. In the future, we may switch to using
+Java's Object Serialization. That switch will have to wait until the
+beta version when we switch to JDK 1.1 this summer.  Because of this
+change, you will have to recreate any hyperwebs that you have
+constructed with former alpha versions of Chimera 2.0.  If this is
+a problem, contact Ken Anderson (kanderso@ics.uci.edu) for help with
+converting the old webs to the new format.
+ 
+ 
+It is highly recommended that you download the latest version of the
+alpha release from the  software  page!
+ 
+ 
+ 
+
+ April 15, 1997 
+
+ 
+  Very minor change to the source code of the 2.0 alpha release. 
+ (10:25 AM PST) 
+ 
+ 
+ 
+Removed references to JOP.persist.PersistableArray from viewer_JOP.java and
+link_JOP.java. If you have downloaded the source code release prior to this
+day, be sure to delete the  import JOP.persist.PersistableArray 
+statements from these two files. You may have problems compiling the release
+otherwise.
+ 
+ 
+ 
+
+ April 14, 1997 
+
+ 
+  Updated the  
+Test Installation  instructions. 
+ (4:14 PM PST) 
+ 
+ 
+ 
+The instructions for verifying the installation of Chimera contained two
+errors. The instructions have been updated to remove these errors. In
+particular, an environment variable for the hyperwebManager was incorrectly
+specified, and the instructions failed to specify how to add machine names
+to the Servers panel of the Chimera server.
+ 
+ 
+ 
+
+ 
+  Updated the  
+Step by Step  installation instructions. 
+ (4:04 PM PST) 
+ 
+ 
+ 
+Instructions were added to specify the correct use of the chimeraJOP.zip
+file.
+ 
+ 
+ 
+
+ 
+  Added Chimera JOP Class Files to the
+ software  page. 
+ (3:50 PM PST) 
+ 
+ 
+ 
+Several key files with respect to the Java Object Persistence system
+were left out of the chimera20a.zip file. As a result, those users who
+use the chimera20a.zip file directly instead of compiling the source code
+will have the hyperweb server fail when trying to write its hyperwebs.
+ 
+ 
+The solution to the problem is to download the chimeraJOP.zip file and
+unpack it in JOP's persistmarshall class directory. This will enable the
+JOP to function correctly when trying to write Chimera related information
+into a database. See the
+ Installation Instructions  for
+more details.
+ 
+ 
+ 
+
+ March 6, 1997 
+
+ 
+  Small update made to the released source code and class files. 
+ (12:00 PM PST) 
+ 
+ 
+ 
+Another minor update has been made to the 2.0 alpha release. In particular,
+a dependence was removed on a library not listed on the
+ Before you Install  page.
+This could cause problems when trying to compile the source code or
+using the class files, since the referenced library would not be available.
+ 
+ 
+If you downloaded the source and class archives from the
+ Software page  before
+March 6, 12:00 PM PST, be sure to update your copy.
+ 
+ 
+ 
+
+ March 3, 1997 
+
+ 
+  Small update made to the released source code and class files. 
+ (4:30 PM PST) 
+ 
+ 
+ 
+A very small change has been made to the source code archives and class file
+archive that was released on February 28th. In particular, the files
+ hwmunixInvoker.java  and  hwmunixInvoker.class  were replaced.
+ 
+ 
+If you downloaded the source and class archives from the
+ Software page  before
+March 3, 4:30 PM PST, be sure to update your copy.
+ 
+ 
+The problem prevented the hyperwebManager from automatically invoking the
+hyperwebServer and chimeraServer. The fix now allows this auto-invocation
+to take place.
+ 
+ 
+ 
+
+ February 28, 1997 
+
+ 
+  Chimera 2.0 site goes on-line.  
+ 
+ 
+This is the alpha release of Chimera 2.0. Not all features have been
+implemented. Not all bugs have been squashed.
+ 
+ 
+This web-site is also at the alpha-level. Not all pages have been
+written.
+ 
+ 
+ 
+
+           
+       </body> 

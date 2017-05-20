@@ -1,0 +1,347 @@
+ More Java<body>
+
+ 
+ More Java 
+ 
+  Introduction to Computer Science I-III
+ 
+ICS-21/-22/-23  
+ 
+  
+
+
+
+
+        Introduction  
+ 
+  In this short lecture, we will clarify some points about the meaning of
+     final  in variable declarations, introduce two operators used in
+     conditional expressions  and discuss  short-circuit  evaluation
+    in logical operators
+  All these features allow us to write more compact and understandable code,
+    once we understand these language features.
+ 
+           More on final  
+ 
+  In the real world, a constant is a named value that never changes. 
+  Examples of constants are π (pi), e, the speed of light, the mass of a
+    proton (we think?) etc.
+  In programs, a constant is a variable whose value never changes within its
+    scope (i.e., during the time the variable is declared).
+  This is a slightly more liberal definition.
+  So, any real-world constant is a program constant, but a program constant
+    doesn't have to be a real-world constant.
+   
+  For example, to compute a mortgage, a program uses the current interest rate.
+  This value is not a real-world constant, because its value changes daily.
+  But, once the program starts computing the mortgage payments, the current
+    interest rate is a constant in that program.
+    
+  We have seen that we can declare local variables as constants, by using the
+      final  access modifier (recall that  final  restricts how we
+     can access the variable).
+  When a variable is declared  final  it must be intialized, its value
+    can be examined in subsequent expressions, but its value can never be
+    changed by a state-change operator.
+  We will use the terms  constant  and  final variable  
+    interchangably.
+  If we write code that tries to change a constant, the Java compiler detects
+    and reports a syntax constraint error.
+  In fact, we can use this rule to get some interesting information from the
+    compiler: every statement where we change the state of a variable.
+  We do so by changing it from a variable to a constant, and then let the 
+    compiler locate all the "errors" where we try to change its state.
+    
+  When we write programs, we should declare constants instead of using "magic"
+     literals.
+  The names of the constants will help us remember what the constant means
+    (without having to see its values: what is  6.022141E23  or
+     2.99792458E8 ?).
+  Using constants instead of variables makes our programs less prone to error:
+    if we use a variable, we might accidentally change what value it stores
+    -this is impossible with constants.
+    
+  Using constants also makes it easier to change our programs: in the upcoming
+    Rocket program we can write  .01  in lots of places, but if we
+     needed to change that value to  .001  (for a more accurate
+     simulation), we might have to search our code carefully to make the
+     correct changes (there might be other  .01 s in our program not 
+    refering to the time increment).
+  If instead we declared  final double dT = .01;  (here  dT 
+    stands for delta/change-in time) in our program, and then used the
+    constant  dT  throughout our code, to change this value
+    requires editing just this one line of code, and then recompiling the
+    program.
+    
+  Although use of  final  in the example below may be a bit confusing, it
+     is perfectly legal.
+       int count = 0;
+  int sum   = 0;
+  for (;;) {
+    final int score = Prompt.forInt("Enter score (-1 to terminate)");
+    if (score == -1)
+      break;
+    count++;
+    sum += score;
+  }
+  System.out.println("Average = " + sum/count);  
+  In this example,  score  is declared  final  and indeed, its value
+    (once initialized) never changes in its scope: the block in which
+     score  is declared.
+  When the block finishes,  score  becomes undeclared; then the  for 
+    loop re-executes the block, redeclaring and reinitializing the  score 
+    constant all over again.
+  So, our use of  score  meets all the technical requirements for a 
+    constant.
+  Some programmers would pronounce this code excellent; others would say that
+    indicating  final  is not worth it.
+  What do you think?
+   
+  Most constants specify an initializer in their declaration; but surprsingly,
+    this is not necessary.
+  If the initializer is omitted, it is called a  blank final  variable.
+  The Java compiler is smart enought to ensure
+       a blank final variable is eventually assigned an initial value
+        a blank final variable is not used until after it is assigned a value
+        a blank final variable it is never reassigned another one value.
+      
+  So, it is OK to write code like    final double d;     //blank final
+  ...code...          //cannot refer to the constant d
+  if (whatever)       //value is assigned to constant d in one if branch
+    d = ...
+  else
+    d = ...
+  ...more code...     //care refer to but not change the constant d  
+  Any further attempt to store a value into  d  will be detected and
+    reported as an error by the Java compiler.
+  When we learn how to write instance variables in classes, we will see more
+    reasonable uses of blank final.
+  
+            Conditional Operators ? and :  
+ 
+  There are two operators that work together in Java, helping us to condense
+    our code by allowing us to write short expressions instead of longer
+    statements.
+  These two operators,  ?  and  :  constitute what is called a
+     conditional expression .
+  Please constrast this with  if  statements, which are sometimes 
+    called  conditional statements : the distinction between
+     expression  and  statement  is important.
+  The EBNF rule for a conditional expression is
+   
+&amp;nbsp &amp;nbsp  conditional-expression  expression ?  expression  :  expression 
+    
+  As a syntax constraint, the first  expression  must return a 
+     boolean  result, and the second two  expression s
+    must return a result of the same type (it can be any type, but they must
+    match).
+    
+  We will write conditional expressions using the following form (almost
+    always putting them in parentheses, which makes reading them easier)
+      (test ? expression T  : expression F )  
+  Together,  ?  and  :  are called  ternary  operators (not
+    unary or binary: they have three operands); they are called  distfix 
+    because the operators are  dis tributed around their operands
+    (not prefix, infix, or postfix).
+    
+  Semantically, Java first evaluates  test , if it is  true  the
+    result of the conditional expression is the result of evaluating
+     expression T  ; if it is  false  the result of the
+    conditional expression is the result of evaluating
+     expression F  .
+  So, only two of the three expressions are ever evaluated.
+  Because each conditional expression must have a unique result type, and
+    because its value can be computed by either  expression T  
+    or  expression F  , the Java compiler has a syntax constraint
+    that requires these expressions to have the same type. 
+    
+  Let's look at three concrete examples of conditional expressions and the
+     if  statements that they condense.
+  One can often simplify short  if  statements with even shorter
+    conditional expressions, but large  if  statements often cannot
+    be simplified.
+      if (n &gt; 0)         x = (n&gt;0 ? 0 : 1);
+    x = 0;
+  else
+    x = 1;
+
+
+  if (pennies == 1)
+    System.out.println("1 penny");
+  else
+    System.out.println(pennies + " pennies");
+
+  System.out.println(pennies + (pennies==1 ? " penny" : " pennies"));
+
+
+  if (n%2 == 0)
+    System.out.println(n + " is even");
+  else
+    System.out.println(n + " isn't even");
+
+  System.out.println(n + (n%2==0 ? " is" : " isn't") + " even");  
+  Upon reading this code, many students think that the  if  statements are
+    simpler; but that is because they are more familiar with  if 
+    statements, and less familiar with conditional expressions.
+  Most experience programmers think that the conditional expressions are
+    simpler.
+  Of course, which form you ultimately use is a matter of taste.
+  But it is important that you understand conditional expressions, and can
+    switch back and forth between them and simple  if  statements,
+    when it is possible.
+  
+           Short-Circuit Evaluation  
+ 
+  We have learned that binary infix operators evaluate both their operands 
+   first, and then compute their resulting value.
+  Actually, this ordering is correct for all but the  &amp;&amp;  and  || 
+     logical operators.
+  Instead, these operators use  short-circuit  evaluation: they always
+    evaluate their left operand first; if they can compute their resulting 
+   value from this operand alone, they do so without evaluating their right
+   operand; if they cannot determine the resulting value from the left operand
+    alone, then they evaluate their right operand and compute the resulting
+    value
+   
+  Note that if the left operand of  &amp;&amp;  evaluates to  false , the
+    result must be  false :  false &amp;&amp; false  as well as
+     false &amp;&amp; true  evaluate to  false , so the value of the right
+    operand is irrelevant.
+  Note that if the left operand of  ||  evaluates to  true , the
+    result must be  true :  true || false  as well as
+     true || true  evaluate to  true , so again the value of the
+    right operand is irrelevant.
+    
+  To see how we can use this short-circuit property when programming, assume
+    that a program declares  int totalParts = 0, badParts = 0;  and
+    increments the appropriate variables when a part is tested.
+  Next, assume that if the ratio of bad parts to total parts is ever over 5%
+   (or  .05 ) we want to recognize this problem and display a message.
+  Because we have short-circuit evaluation, we can simply write  
+  if ( totalParts != 0 &amp;&amp; (double)badParts/(double)totalParts &gt; .05)
+    System.out.println("Too many bad parts");  
+  Notice that if  totalParts  is zero, then the left operand of  &amp;&amp; 
+    is  false , so Java doesn't bother to evaluate the right operand.
+  Without short-circuit evaluation, Java would evaluate the right operand too,
+    causing an exception to be thrown because of division by zero.
+  Also, if we had written the second conjunct first, Java would do the division
+    BEFORE comparing  totalParts  to zero, which could also throw an
+    exception.
+  So, the operands to the  &amp;&amp;  and  ||  operators are not symmetric
+    because short-circuit evaluation is used.
+    
+  In a programming language without short-circuit evaluation, we would have to
+    write the following, more complicated code, to achieve safety from division
+    by zero.
+     if (totalParts != 0)
+    if ((double)badParts/(double)totalParts &gt; .05)
+      System.out.println("Too many bad parts");  
+  which requires two, nested  if  statements, instead of one.
+    
+  As a final example, suppose that we are writing a game-playing program, and
+    the user must terminate the bet-play loop if his/her purse is 0 or if
+    he/she elects to quit (if the former is true, the user shouldn't even be
+     prompted about electively quitting; he/she must quit because he/she has
+     no more money).
+  With short-circuit evaluation, we can write one  if  statement that
+    captures all these semantics
+      if (purse == 0 || Prompt.forBoolean("Quit?"))
+    break;  
+  Because of short-circuit evaluation, if purse is zero, the  if 's test
+    will evaluate to  true  before prompting the user; only if purse is
+    not zero will the user be prompted about quitting.
+    
+  Again, in a programming language without short-circuit evaluation, we could
+    safely write the following, more complicated code
+      if (purse == 0)
+    break;
+  if (Prompt.forBoolean("Quit?"))
+    break;  
+  which requires two, sequential  if  statements, instead of one.
+    
+  Finally, short-circuit evaluation actually works in conditional expressions
+     too.
+  For example, if we write the conditional expresson  (true ? 1 : 1/0) 
+    Java's result is  1 ; because the expression evaluates to  true 
+    Java evaluates only the expression  1  and not the expression
+     1/0 .
+  If Java fully evaluated all expressions first, it would throw an exception.
+  Recall the semantics of the conditional expression:
+  Java first evaluates the  test , if it is  true  the result of the
+    conditional expression is the result of evaluating
+     expression T  ; if it is  false  the result of the
+     conditional expression is the result of evaluating
+      expression F  .
+  So, it uses  test  to determine which other expression to evaluate, and
+    only evaluates that one other expression.
+  It always evaluates two of the three expressions.
+  
+           Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a CA, or any other student.
+
+     Assume that we declared  final int maxClassSize = 50;  which
+           of the following statements would cause the Java compiler to detect
+           and report an error. Also assume  int x; 
+            maxClassSize++; 
+              System.out.println(maxClassSize); 
+              maxClassSize = 50; 
+              maxClassSize += 10; 
+              x = maxClassSize + 2; 
+            
+     
+        Assume that we declared  final StringTokenizer st = new StringTokenizer("A man, a plan, a canal: Panama");  which
+           of the following statements would cause the Java compiler to detect
+           and report an error. Also assume  int x; 
+            String s = st.nextToken(); 
+              x = st.countTokens(); 
+              st = new StringTokenizer("Another string"); 
+            
+     
+
+        Examine the two code fragments below.
+         For each, say whether it is legal and why (or why not).
+         Rewrite the  if  statement using a conditional expression.
+  
+  int x = Prompt.forInt("Enter x");
+  if (x != 0)
+    final int y = 0;
+  else
+    final int y = 1;
+  System.out.println(y);
+
+  int x = Prompt.forInt("Enter x");
+  final int y;
+  if (x != 0)
+    y = 0;
+  else
+    y = 1;
+  System.out.println(y);  
+ 
+     
+        Assume that we declare  int x;  what is wrong with the following
+           conditional expression:
+           System.out.println(x==0 ? 0 : "non-zero"); 
+      
+     
+        Translate the following  if  statement into an equivalent
+           conditional expression (see above).
+             if (x&gt;y)
+    max = x;
+  else
+    max = y;  
+      
+
+        Assume that we declare  int minute;  and assign it a value
+           between  0  and  59 .
+         Write a conditional expression whose values is always a two digit
+            String  representing a  minute : e.g.,
+           if  x  stores  5  its result is  "05" ;
+           if  x  stores  25  its result is  "25" .
+   
+   </body> 

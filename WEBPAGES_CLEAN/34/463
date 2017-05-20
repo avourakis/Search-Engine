@@ -1,0 +1,465 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Paths in graphs
+ 
+   Ten algorithms for Egyptian fractions . 
+D. Eppstein.  Mathematica in Education and Research  4 (2): 5–15, 1995.
+ 
+Number theory.
+I survey and implement in  Mathematica  several methods
+for representing rational numbers as sums of distinct unit fractions.
+One of the methods involves searching for paths in a certain graph
+using a   k  shortest paths  heuristic.
+  ( BibTeX  --
+ Citations  --
+ Also available
+in HTML and Mathematica notebook formats )
+  
+    Finding the  k  shortest paths . 
+D. Eppstein.  35th IEEE Symp. Foundations of Comp. Sci.,  Santa Fe, 1994, pp. 154–165.  Tech. Rep. 94-26 , ICS, UCI, 1994.  
+ SIAM J. Computing  28 (2): 652–673, 1998 .
+ 
+This paper presents an algorithm that finds multiple short paths connecting
+two terminals in a graph
+(allowing repeated vertices and edges in the paths)
+in constant time per path after a preprocessing stage
+dominated by a single-source shortest path computation.
+The paths it finds are the  k  shortest in the graph, where  k  is a
+parameter given as input to the algorithm.
+  
+The  k  shortest paths problem has many important applications for finding
+alternative solutions to geographic path planning problems, network
+routing, hypothesis generation in computational linguistics, and
+sequence alignment and metabolic pathway finding in
+bioinformatics. Although there have been many papers on the
+ k  shortest paths problem before and after this one, it has become
+frequently cited in those application areas.
+Additionally, it marks a boundary in the theoretical study of the problem:
+prior theoretical work largely concerned how quickly the problem could
+be solved, a line of research that was closed off by the optimal time
+bounds of this paper. Subsequent work has focused instead
+on devising efficient algorithms for more complex alternative
+formulations of the problem that avoid the repeated
+vertices and other shortcomings of the alternative paths produced by
+this formulation.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ Graehl implementation  --
+ Jiménez-Marzal implementations  --
+ Shibuya implementation  --
+ Martins implementation  --
+ Cliff OpenStreetMap demo  --
+CiteSeer:
+ TR '94 ,
+ SJC '98  --
+ ACM DL )
+  
+    Representing all minimum spanning trees with applications to
+counting and generation . 
+D. Eppstein.  Tech. Rep. 95-50 , ICS, UCI, 1995.
+ 
+Shows how to find for any edge weighted graph G an equivalent
+graph EG such that the  minimum spanning trees 
+of G correspond one-for-one with the spanning trees of EG.
+The equivalent graph can be
+constructed in time O(m+n log n) given a single minimum spanning tree of
+G.  As a consequence one can find fast algorithms for counting, listing,
+and randomly generating MSTs.
+Also discusses similar
+equivalent graph constructions for
+ shortest paths , minimum cost flows,
+and  bipartite matching .
+  ( BibTeX  --
+ Citations )
+  
+    Finding common ancestors and disjoint paths in DAGs . 
+D. Eppstein.  Tech. Rep. 95-52 , ICS, UCI, 1995.
+ 
+This paper describes algorithms for finding pairs of vertex-disjoint
+paths in a DAG, either connecting two given nodes to a common
+ancestor, or connecting two given pairs of terminals.
+The main results were merged into the journal version of
+" Finding the  k  shortest paths ".
+  ( BibTeX )
+  
+    Beta-skeletons have unbounded dilation . 
+D. Eppstein.  Tech. Rep. 96-15 , ICS, UCI, 1996.  arXiv:cs.CG/9907031 .  
+ Comp. Geom. Theory &amp; Applications  23: 43–52, 2002 .
+ 
+Beta-skeletons are geometric graphs used among other purposes
+for  empirical
+network analysis  and minimum weight triangulation.
+A fractal construction shows that, for any beta&gt;0,
+the beta-skeleton of a point set can have arbitrarily large dilation:
+Omega(n c ), where c is a constant depending on beta
+and going to zero in the limit as beta goes to zero.
+In particular this applies to the Gabriel graph.
+We also show upper bounds on dilation of the same form.
+  ( BibTeX  --
+ Citations  --
+ ACM DL )
+  
+    Spanning trees and spanners . 
+D. Eppstein.  Tech. Rep. 96-16 , ICS, UCI, 1996.  Handbook of Computational Geometry,  J.-R. Sack and J. Urrutia,
+eds., Elsevier, 1999, pp. 425–461.
+ 
+Surveys results in geometric network design theory, including algorithms for
+constructing minimum spanning trees and low-dilation graphs.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    An efficient algorithm for shortest paths in vertical and horizontal
+segments . 
+D. Eppstein and
+ D. Hart .   5th Worksh. Algorithms and Data Structures,  Halifax, Nova Scotia, 1997 . 
+Springer,  Lecture Notes in
+Comp. Sci.  1272, 1997, pp. 234–247.
+ 
+We show how to find shortest paths along the segments of
+an arrangement of  n  vertical and horizontal line segments in the
+plane, in time O( n  3/2 ).
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Diameter and treewidth in minor-closed graph families . 
+D. Eppstein.  arXiv:math.CO/9907126 .  Algorithmica  27: 275–291, 2000
+(special issue on treewidth, graph minors, and algorithms).
+ 
+This paper introduces the  diameter-treewidth
+property  (later known as  bounded local treewidth ): a
+functional relationship between the diameter of its graph and its treewidth.
+Previously known results imply that planar graphs have
+bounded local treewidth; we characterize the
+other minor-closed families with this property. Specifically,
+minor-closed family F has bounded local treewidth if and only if there
+exists an  apex graph  G that is not in F; an apex graph is a graph
+that can be made planar by removing a single vertex.
+The minor-free families that exclude an apex graph (and therefore have
+bounded local treewidth) include the bounded-genus
+graphs (for which, as with planar graphs, we show a linear bound for the
+treewidth as a function of the diameter) and K 3,a -free graphs.  As
+a consequence, subgraph isomorphism for subgraphs of bounded size and
+approximations to several NP-hard optimization problems can be computed
+efficiently on these graphs, extending previous results for planar
+graphs.
+  Some of these results
+were announced in the conference version of
+" subgraph isomorphism for planar graphs and related
+problems " but not included in the journal version. Since its
+publication, there have been many more works on local treewidth. The class of
+problems that could be solved quickly on graphs of bounded local
+treewidth was extended and classified by Frick and Grohe, " Deciding first-order
+properties of locally tree-decomposable structures ",  J. ACM 
+48: 1184–1206, 2001;
+the proof that bounded local treewidth is equivalent to having an
+excluded apex minor was simplified, and the dependence of the treewidth
+on diameter
+improved, by a subsequent paper of Demaine and Hajiaghayi, " Diameter and
+treewidth in minor-closed graph families, revisited ",  Algorithmica 
+40: 211–215, 2004. The concept of local treewidth is the basis for the
+theory of  bidimensionality , a general framework for
+fixed-parameter-tractable algorithms and approximation algorithms in
+minor-closed graph families; for a survey, see Demaine and Hajiaghayi,
+" The
+bidimensionality theory and its algorithmic applications ",  The
+Computer J.  51: 292–302, 2008.
+  ( BibTeX  --
+ Citations )
+  
+    Shortest paths in an arrangement with  k  line orientations . 
+D. Eppstein and
+ D. Hart .  
+ 10th ACM-SIAM Symp. Discrete Algorithms,  Baltimore, 1999, pp. 310–316 .
+ 
+We show how to find shortest paths between two points on the lines of
+an arrangement of  n  lines with  k  distinct orientations,
+in time O( n  +  k  2 ).
+  
+( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer )
+  
+    Setting parameters by example . 
+D. Eppstein.  arXiv:cs.DS/9907001 .   40th
+IEEE Symp. Foundations of Comp. Sci. , 1999, pp. 309–318 .  
+ SIAM J. Computing  32 (3): 643–653, 2003 .
+ 
+We introduce a class of "inverse parametric optimization"
+problems, in which one is given both a parametric optimization problem
+and a desired optimal solution; the task is to determine parameter
+values that lead to the given solution.  We use
+ low-dimensional linear programming 
+and geometric sampling techniques to solve
+such problems for
+ minimum spanning trees ,
+ shortest paths , and
+other optimal subgraph problems, and discuss applications in
+multicast routing, vehicle path planning, resource allocation, and board
+game programming.
+  ( BibTeX  --
+ Citations  --
+ ACM DL (FOCS)  --
+ ACM DL (SJC) )
+  
+    Searching for spaceships . 
+D. Eppstein.  arXiv:cs.AI/0004003 . 
+MSRI Combinatorial Game Theory Research Worksh., July 2000.  
+ More Games of No Chance ,
+R. J. Nowakowski, ed., MSRI Publications 42, pp. 433–453 .
+ 
+We describe software that searches for
+ spaceships in Conway's Game of
+Life and related two-dimensional cellular automata .
+Our program searches through a state space
+related to the de Bruijn graph of the automaton,
+using a method that combines features of breadth first and
+iterative deepening search, and includes fast
+bit-parallel  graph reachability 
+and  path enumeration  algorithms
+for finding the successors of each state.
+Successful results include a
+ new 2c/7
+spaceship in Life , found by searching a space with 2^126 states. 
+  
+( BibTeX  --
+ MSRI
+talk on streaming video  and
+ Slides  --
+ Citations  --
+ CiteSeer )
+  
+    One-dimensional peg solitaire, and duotaire .  C. Moore 
+and D. Eppstein.  arXiv:math.CO/0006067  and
+ math.CO/0008172 . 
+MSRI Combinatorial Game Theory Research Worksh., July 2000.  Santa Fe Inst. working paper 00-09-050 , September 2000.  
+ More Games of No Chance ,
+R. J. Nowakowski, ed., MSRI Publications 42, pp. 341–350 .
+ 
+We describe by a regular expression the one-dimensional peg-solitaire
+positions reducible to a single peg, and provide a linear-time algorithm
+(based on finding  shortest paths  in an
+associated DAG) for
+reducing any such position to the minimum number of pegs.
+We then investigate impartial games in which players alternate peg
+solitaire moves in an attempt to be the one to move last.
+  
+( BibTeX  --
+ Citations  --
+ Cris' MSRI
+talk on streaming video  --
+ Cris' publications page  --
+ CiteSeer )
+  
+    Phutball endgames are hard .  E. Demaine ,
+ M. Demaine ,
+and D. Eppstein.  arXiv:cs.CC/0008025 .  
+ More Games of No Chance ,
+R. J. Nowakowski, ed., MSRI Publications 42, pp. 351–360 .
+ 
+We show that, in John Conway's board game Phutball (or Philosopher's
+Football), it is NP-complete to determine whether the
+current player has a move that immediately wins the game. In
+contrast, the similar problems of determining whether there is an
+immediately winning move in checkers, or a move that kings a man,
+are both solvable in polynomial time. 
+  
+( BibTeX  --
+ Citations  --
+ Erik's
+publications page  --
+ CiteSeer )
+  
+    Fast approximation of centrality . 
+D. Eppstein and
+ J. Wang .  arXiv:cs.DS/0009005 .  
+ 12th ACM-SIAM Symp. Discrete Algorithms, 
+Washington, 2001, pp. 228–229 .   J. Graph Algorithms &amp; Applications  8 (1): 39–45, 2004 .
+ 
+We use random sampling to quickly estimate, for each vertex in a graph,
+the average  distance  to all other vertices.
+  
+( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer )
+  
+    Nonrepetitive paths and cycles in graphs with application to Sudoku . 
+D. Eppstein.  arXiv:cs.DS/0507053 .
+ 
+We describe algorithms and hardness results for finding paths in
+edge-labeled graphs such that no two consecutive edges have the same label,
+and use our algorithms to implement heuristics for a program that
+automatically solves and generates Sudoku puzzles.
+  
+( BibTeX  --
+ Citations )
+  
+    Succinct greedy geometric routing using hyperbolic geometry . 
+D. Eppstein and
+ M. T. Goodrich .  arXiv:0806.0341 .  Proc. 16th Int. Symp. Graph Drawing , Heraklion, Crete, 2008 
+(under the different title "Succinct greedy graph drawing in the
+hyperbolic plane"), 
+Springer,  Lecture Notes in Comp. Sci.  5417, 2009, pp. 14–25.   IEEE Transactions on Computing  60 (11): 1571–1580, 2011 .
+ 
+Greedy drawing is an idea for encoding network routing tables into the
+geometric coordinates of an embedding of the network, but most previous
+work in this area has ignored the space complexity of these encoded tables.
+We refine a method of R. Kleinberg for embedding arbitrary graphs into
+the hyperbolic plane, which uses linearly many bits to represent each
+vertex, and show that only logarithmic bits per point are needed.
+  
+    Studying (non-planar) road networks through an algorithmic lens . 
+D. Eppstein, and
+ M. T. Goodrich .  arXiv:0808.3694 .   Proc. 16th ACM SIGSPATIAL Int. Conf. Advances in Geographic
+Information Systems (ACM GIS 2008) , Article 16  (best paper award). 
+Invited talk at INFORMS 2009, San Diego.
+ 
+We examine US road network data and show that, contrary to the
+assumptions of much past GIS work, these networks are highly nonplanar.
+We introduce a class of "multiscale dispersed" networks that better fit
+the data; these networks are defined by a family of disks of varying
+sizes such that, if a small number of outliers is removed, the remaining
+disks cover each point of the plane a constant number of times.
+As we show, these networks have good graph separators, allowing for
+efficient algorithms for minimum spanning trees, graph Voronoi diagrams,
+and related problems.
+  
+    Linear-time algorithms for geometric graphs with sublinearly many
+crossings . 
+D. Eppstein,
+ M. T. Goodrich , and
+ D. Strash .  arXiv:0812.0893 .   20th ACM-SIAM Symp. Discrete Algorithms, 
+New York, 2009, pp. 150–159 .   SIAM J. Computing  39 (8): 3814–3829, 2010 .
+ 
+If a connected graph corresponds to a set of points and line segments in
+the plane, in such a way that the number of crossing pairs of line
+segments is sublinear in the size of the graph by an iterated-log
+factor, then we can find the arrangement of the segments in linear
+time. It was previously known how to find the arrangement in linear time
+when the number of crossings is superlinear by an iterated-log factor,
+so the only remaining open case is when the number of crossings is close to the
+size of the graph.
+  
+    Optimal angular resolution for face-symmetric drawings . 
+D. Eppstein and
+ K. Wortman .  arXiv:0907.5474 .   J. Graph
+Algorithms and Applications  15 (4): 551–564, 2011 .
+ 
+We consider drawings of planar partial cubes in which all interior faces are
+centrally symmetric convex polygons, as in my previous
+paper  Algorithms for Drawing Media . Among all
+drawings of this type, we show how to find the one with optimal angular
+resolution. The solution involves a transformation from the problem
+into the parametric negative cycle detection problem: given a graph in
+which the edge weights are linear functions of a parameter λ,
+find the minimum value of λ for which the graph contains no
+negative cycles.
+  
+    Category-based routing in social networks: membership dimension and the small-world phenomenon . 
+D. Eppstein,
+ M. T. Goodrich ,
+ M. Löffler ,
+ D. Strash , and
+ L. Trott .  Workshop on Graph Algorithms and Applications , Zürich,
+Switzerland, July 2011.  International Conference on Computational
+Aspects of Social Networks (CASoN 2011) , Salamanca, Spain, October
+2011.  arXiv:1108.4675 .   Theor. Comput. Sci.  514: 96–104, 2013 . (Special issue on Graph
+Algorithms and Applications: in Honor of Professor Giorgio Ausiello)  
+We investigate greedy routing schemes for social networks, in which
+participants know categorical information about some other participants
+and use it to guide message delivery by forwarding messages to neighbors
+that have more categories in common with the eventual destination.
+We define the membership dimension of such a scheme to be the maximum
+number of categories that any individual belongs to, a natural measure
+of the cognitive load of greedy routing on its participants.
+And we show that membership dimension is closely related to the small
+world phenomenon: a social network can be given a category system with
+polylogarithmic membership dimension that supports greedy routing if,
+and only if, the network has polylogarithmic diameter.
+  
+    Randomized speedup of the Bellman–Ford algorithm .  M. J. Bannister  and
+D. Eppstein.  arXiv:1111.5414 .   Analytic Algorithmics and Combinatorics (ANALCO12) , Kyoto, Japan, 2012, pp. 41–47 .
+ 
+The Bellman–Ford algorithm for single-source shortest paths in graphs
+that may have negatively weighted edges but no negative cycles can be
+sped up by a technique of Yen in which the graph is partitioned into two
+directed acyclic subgraphs and edge relaxations alternate between these
+two subgraphs. We show that choosing this partition randomly gains an
+additional factor of 2/3 in running time.
+  
+    Solving single-digit Sudoku subproblems . 
+D. Eppstein.  arXiv:1202.5074 .  6th International Conference on Fun with Algorithms (FUN 2012) ,
+Venice, Italy, 2012.  Springer,  Lecture Notes in
+Comp. Sci.  7288, 2012, pp. 142–153 .
+ 
+We find an algorithm for making all possible deductions based on the set
+of candidate locations for a single digit in a Sudoku puzzle; the
+problem is NP-hard, and our algorithm takes exponential time, but the
+mild form of the exponential allows it to be fast for practical problem sizes.
+  
+( Slides )
+  
+    Near-linear-time deterministic plane Steiner spanners and TSP
+approximation for well-spaced point sets .  G. Borradaile  and
+D. Eppstein.  arXiv:1206.2254 .  24th Canadian Conference on Computational Geometry (CCCG 2012) ,
+Prince Edward Island, Canada, 2012, pp. 311–316.   Comp. Geom. Theory
+&amp; Applications  49: 8–16, 2015  (special issue for CCCG 2012).
+ 
+When a planar point set has the property that its Delaunay triangulation
+has no large angles, we show how to connect it by a plane graph (having
+linearly many additional Steiner vertices) in which the distances
+between the original points are approximations to their Euclidean
+distance, and in which the total graph weight is at most a constant
+times the minimum spanning tree weight. The time to construct this graph
+is near-linear, the same as for integer sorting. We use this result to
+approximate the traveling salesman problem, for these point sets, in the
+same time bound.
+  
+     k -best enumeration . 
+D. Eppstein.   Encyclopedia of Algorithms   (Ming-Yang Kao, ed.), Springer, added 2014.  arXiv:1412.5075 .   Bull. EATCS  115, 2015 .
+ 
+A brief survey of algorithms for finding the  k  shortest paths and
+related  k -best enumeration problems. The arXiv/EATCS version is
+significantly longer and with more references than the Springer version.
+  
+    Rooted cycle bases . 
+D. Eppstein,
+ J. M. McCarthy , and
+B. E. Parrish.  arXiv:1504.04931 . 
+14th Algorithms and Data Structures Symp. (WADS 2015), Victoria, BC.  Springer,  Lecture Notes in Comp. Sci.  9214 (2015), pp. 339–350 .
+ 
+We consider the problem of finding a cycle basis for a graph in which
+all basis cycles contain a specified edge. We characterize the graphs
+having such a basis in terms of their vertex connectivity, we show that
+the minimum weight cycle basis with this constraint can be found in
+polynomial time and is weakly fundamental, and we show that finding a
+fundamental cycle basis with this constraint is NP-hard but
+fixed-parameter tractable.
+  
+( Slides )
+  
+    Approximate greedy clustering and distance selection for graph metrics . 
+D. Eppstein,
+ S. Har-Peled , and
+ A. Sidiropoulos .  arXiv:1507.01555 .  
+We provide fast approximation algorithms for the farthest-first
+traversal of graph metrics.
+  
+     
+ Graph Theory  --
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

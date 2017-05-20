@@ -1,0 +1,1587 @@
+ Kernel<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Kernel  
+
+
+The concept of a  kernel  is defined by a set of requirements on
+the provision of certain types and access member functions to create 
+objects of these types. The types are function object classes to be used
+within the algorithms and data structures in the basic library of C GAL . 
+This allows you to use any model of a kernel as a traits class in 
+the C GAL  algorithms and data structures, unless they require types 
+beyond those provided by a kernel.
+ 
+
+A kernel provides types, construction objects, and generalized predicates. 
+The former replace constructors of the kernel classes and constructive 
+procedures in the kernel. There are also function objects replacing operators, 
+especially for equality testing.
+  
+
+  Has Models 
+ 
+
+  CGAL::Cartesian &lt; FieldNumberType &gt;    CGAL::Homogeneous &lt; RingNumberType &gt;    CGAL::Simple_cartesian &lt; FieldNumberType &gt;    CGAL::Simple_homogeneous &lt; RingNumberType &gt;    
+
+  Types 
+ 
+
+    
+          Kernel ::FT
+         
+              
+    a model of  FieldNumberType 
+ 
+
+     
+          Kernel ::RT
+         
+              
+    a model of  RingNumberType 
+ 
+
+     
+
+  Two-dimensional Kernel 
+ 
+
+  Coordinate Access 
+ 
+
+    
+          Kernel ::Cartesian_const_iterator_2
+         
+              
+    a model of  Kernel::CartesianConstIterator_2 
+ 
+
+     
+
+  Geometric Objects 
+ 
+
+    
+          Kernel::Point_2 
+         
+              
+    a model of  Kernel::Point_2 
+ 
+
+     
+          Kernel::Vector_2 
+         
+              
+    a model of  Kernel::Vector_2 
+ 
+
+     
+          Kernel::Direction_2 
+         
+              
+    a model of  Kernel::Direction_2 
+ 
+
+     
+          Kernel::Line_2 
+         
+              
+    a model of  Kernel::Line_2 
+ 
+
+     
+          Kernel::Ray_2 
+         
+              
+    a model of  Kernel::Ray_2 
+ 
+
+     
+          Kernel::Segment_2 
+         
+              
+    a model of  Kernel::Segment_2 
+ 
+
+     
+          Kernel::Triangle_2 
+         
+              
+    a model of  Kernel::Triangle_2 
+ 
+
+     
+          Kernel :: Iso_rectangle_2 
+         
+              
+    a model of  Kernel::IsoRectangle_2 
+ 
+
+     
+          Kernel::Circle_2 
+         
+              
+    a model of  Kernel::Circle_2 
+ 
+
+     
+          Kernel::Object_2 
+         
+              
+    a model of  Kernel::Object_2 
+ 
+
+     
+
+  Constructions 
+ 
+
+    
+          Kernel ::Construct_point_2
+         
+              
+    a model of  Kernel::ConstructPoint_2 
+ 
+
+     
+          Kernel ::Construct_vector_2
+         
+              
+    a model of  Kernel::ConstructVector_2 
+ 
+
+     
+          Kernel ::Construct_direction_2
+         
+              
+    a model of  Kernel::ConstructDirection_2 
+ 
+
+     
+          Kernel ::Construct_segment_2
+         
+              
+    a model of  Kernel::ConstructSegment_2 
+ 
+
+     
+          Kernel ::Construct_line_2
+         
+              
+    a model of  Kernel::ConstructLine_2 
+ 
+
+     
+          Kernel ::Construct_ray_2
+         
+              
+    a model of  Kernel::ConstructRay_2 
+ 
+
+     
+          Kernel ::Construct_circle_2
+         
+              
+    a model of  Kernel::ConstructCircle_2 
+ 
+
+     
+          Kernel ::Construct_triangle_2
+         
+              
+    a model of  Kernel::ConstructTriangle_2 
+ 
+
+     
+          Kernel ::Construct_iso_rectangle_2
+         
+              
+    a model of  Kernel::ConstructIsoRectangle_2 
+ 
+
+     
+          Kernel ::Construct_object_2
+         
+              
+    a model of  Kernel::ConstructObject_2 
+ 
+
+     
+          Kernel ::Construct_scaled_vector_2
+         
+              
+    a model of  Kernel::ConstructScaledVector_2 
+ 
+
+     
+          Kernel ::Construct_translated_point_2
+         
+              
+    a model of  Kernel::ConstructTranslatedPoint_2 
+ 
+
+     
+          Kernel ::Construct_point_on_2
+         
+              
+    a model of  Kernel::ConstructPointOn_2 
+ 
+
+     
+          Kernel ::Construct_projected_point_2
+         
+              
+    a model of  Kernel::ConstructProjectedPoint_2 
+ 
+
+     
+          Kernel ::Construct_projected_xy_point_2
+         
+              
+    a model of  Kernel::ConstructProjectedXYPoint_2 
+ 
+
+     
+          Kernel ::Construct_cartesian_const_iterator_2
+         
+              
+    a model of  Kernel::ConstructCartesianConstIterator_2 
+ 
+
+     
+          Kernel ::Construct_vertex_2
+         
+              
+    a model of  Kernel::ConstructVertex_2 
+ 
+
+     
+          Kernel ::Construct_bbox_2
+         
+              
+    a model of  Kernel::ConstructBbox_2 
+ 
+
+     
+          Kernel ::Construct_perpendicular_vector_2
+         
+              
+    a model of  Kernel::ConstructPerpendicularVector_2 
+ 
+
+     
+          Kernel ::Construct_perpendicular_direction_2
+         
+              
+    a model of  Kernel::ConstructPerpendicularDirection_2 
+ 
+
+     
+          Kernel ::Construct_perpendicular_line_2
+         
+              
+    a model of  Kernel::ConstructPerpendicularLine_2 
+ 
+
+     
+          Kernel ::Construct_max_vertex_2
+         
+              
+    a model of  Kernel::ConstructMaxVertex_2 
+ 
+
+     
+          Kernel ::Construct_midpoint_2
+         
+              
+    a model of  Kernel::ConstructMidpoint_2 
+ 
+
+     
+          Kernel ::Construct_min_vertex_2
+         
+              
+    a model of  Kernel::ConstructMinVertex_2 
+ 
+
+     
+          Kernel ::Construct_center_2
+         
+              
+    a model of  Kernel::ConstructCenter_2 
+ 
+
+     
+          Kernel ::Construct_centroid_2
+         
+              
+    a model of  Kernel::ConstructCentroid_2 
+ 
+
+     
+          Kernel ::Construct_circumcenter_2
+         
+              
+    a model of  Kernel::ConstructCircumcenter_2 
+ 
+
+     
+          Kernel ::Construct_bisector_2
+         
+              
+    a model of  Kernel::ConstructBisector_2 
+ 
+
+     
+          Kernel ::Construct_opposite_direction_2
+         
+              
+    a model of  Kernel::ConstructOppositeDirection_2 
+ 
+
+     
+          Kernel ::Construct_opposite_segment_2
+         
+              
+    a model of  Kernel::ConstructOppositeSegment_2 
+ 
+
+     
+          Kernel ::Construct_opposite_ray_2
+         
+              
+    a model of  Kernel::ConstructOppositeRay_2 
+ 
+
+     
+          Kernel ::Construct_opposite_line_2
+         
+              
+    a model of  Kernel::ConstructOppositeLine_2 
+ 
+
+     
+          Kernel ::Construct_opposite_triangle_2
+         
+              
+    a model of  Kernel::ConstructOppositeTriangle_2 
+ 
+
+     
+          Kernel ::Construct_opposite_circle_2
+         
+              
+    a model of  Kernel::ConstructOppositeCircle_2 
+ 
+
+     
+          Kernel ::Construct_opposite_vector_2
+         
+              
+    a model of  Kernel::ConstructOppositeVector_2 
+ 
+
+     
+
+If the result type is not determined, there is no  Construct_  prefix:
+  
+
+    
+          Kernel::Intersect_2 
+         
+              
+    a model of  Kernel::Intersect_2 
+ 
+
+     
+          Kernel::Assign_2 
+         
+              
+    a model of  Kernel::Assign_2 
+ 
+
+     
+
+If the result type is a number type, the prefix is  Compute_ :
+  
+
+    
+          Kernel ::Compute_squared_distance_2
+         
+              
+    a model of  Kernel::ComputeSquaredDistance_2 
+ 
+
+     
+          Kernel ::Compute_squared_length_2
+         
+              
+    a model of  Kernel::ComputeSquaredLength_2 
+ 
+
+     
+          Kernel ::Compute_squared_radius_2
+         
+              
+    a model of  Kernel::ComputeSquaredRadius_2 
+ 
+
+     
+          Kernel ::Compute_area_2
+         
+              
+    a model of  Kernel::ComputeArea_2 
+ 
+
+     
+
+  Generalized Predicates 
+ 
+
+    
+          Kernel::Angle_2 
+         
+              
+    a model of  Kernel::Angle_2 
+ 
+
+     
+          Kernel::Equal_2 
+         
+              
+    a model of  Kernel::Equal_2 
+ 
+
+     
+          Kernel ::Equal_x_2
+         
+              
+    a model of  Kernel::EqualX_2 
+ 
+
+     
+          Kernel ::Equal_y_2
+         
+              
+    a model of  Kernel::EqualY_2 
+ 
+
+     
+          Kernel ::Less_x_2
+         
+              
+    a model of  Kernel::LessX_2 
+ 
+
+     
+          Kernel ::Less_y_2
+         
+              
+    a model of  Kernel::LessY_2 
+ 
+
+     
+          Kernel ::Less_xy_2
+         
+              
+    a model of  Kernel::LessXY_2 
+ 
+
+     
+          Kernel ::Less_yx_2
+         
+              
+    a model of  Kernel::LessYX_2 
+ 
+
+     
+          Kernel ::Compare_x_2
+         
+              
+    a model of  Kernel::CompareX_2 
+ 
+
+     
+          Kernel ::Compare_x_at_y_2
+         
+              
+    a model of  Kernel::CompareXAtY_2 
+ 
+
+     
+          Kernel ::Compare_y_2
+         
+              
+    a model of  Kernel::CompareY_2 
+ 
+
+     
+          Kernel ::Compare_xy_2
+         
+              
+    a model of  Kernel::CompareXY_2 
+ 
+
+     
+          Kernel ::Compare_y_at_x_2
+         
+              
+    a model of  Kernel::CompareYAtX_2 
+ 
+
+     
+          Kernel ::Compare_distance_2
+         
+              
+    a model of  Kernel::CompareDistance_2 
+ 
+
+     
+          Kernel ::Compare_angle_with_x_axis_2
+         
+              
+    a model of  Kernel::CompareAngleWithXAxis_2 
+ 
+
+     
+          Kernel ::Compare_slope_2
+         
+              
+    a model of  Kernel::CompareSlope_2 
+ 
+
+     
+          Kernel ::Less_distance_to_point_2
+         
+              
+    a model of  Kernel::LessDistanceToPoint_2 
+ 
+
+     
+          Kernel ::Less_signed_distance_to_line_2
+         
+              
+    a model of  Kernel::LessSignedDistanceToLine_2 
+ 
+
+     
+          Kernel ::Less_rotate_ccw_2
+         
+              
+    a model of  Kernel::LessRotateCCW_2 
+ 
+
+     
+          Kernel ::Left_turn_2
+         
+              
+    a model of  Kernel::LeftTurn_2 
+ 
+
+     
+          Kernel::Collinear_2 
+         
+              
+    a model of  Kernel::Collinear_2 
+ 
+
+     
+          Kernel::Orientation_2 
+         
+              
+    a model of  Kernel::Orientation_2 
+ 
+
+     
+          Kernel ::Side_of_oriented_circle_2
+         
+              
+    a model of  Kernel::SideOfOrientedCircle_2 
+ 
+
+     
+          Kernel ::Side_of_bounded_circle_2
+         
+              
+    a model of  Kernel::SideOfBoundedCircle_2 
+ 
+
+     
+          Kernel ::Is_horizontal_2
+         
+              
+    a model of  Kernel::IsHorizontal_2 
+ 
+
+     
+          Kernel ::Is_vertical_2
+         
+              
+    a model of  Kernel::IsVertical_2 
+ 
+
+     
+          Kernel ::Is_degenerate_2
+         
+              
+    a model of  Kernel::IsDegenerate_2 
+ 
+
+     
+          Kernel ::Has_on_2
+         
+              
+    a model of  Kernel::HasOn_2 
+ 
+
+     
+          Kernel ::Collinear_has_on_2
+         
+              
+    a model of  Kernel::CollinearHasOn_2 
+ 
+
+     
+          Kernel ::Has_on_bounded_side_2
+         
+              
+    a model of  Kernel::HasOnBoundedSide_2 
+ 
+
+     
+          Kernel ::Has_on_unbounded_side_2
+         
+              
+    a model of  Kernel::HasOnUnboundedSide_2 
+ 
+
+     
+          Kernel ::Has_on_boundary_2
+         
+              
+    a model of  Kernel::HasOnBoundary_2 
+ 
+
+     
+          Kernel ::Has_on_positive_side_2
+         
+              
+    a model of  Kernel::HasOnPositiveSide_2 
+ 
+
+     
+          Kernel ::Has_on_negative_side_2
+         
+              
+    a model of  Kernel::HasOnNegativeSide_2 
+ 
+
+     
+          Kernel ::Oriented_side_2
+         
+              
+    a model of  Kernel::OrientedSide_2 
+ 
+
+     
+          Kernel ::Bounded_side_2
+         
+              
+    a model of  Kernel::BoundedSide_2 
+ 
+
+     
+          Kernel ::Are_parallel_2
+         
+              
+    a model of  Kernel::AreParallel_2 
+ 
+
+     
+          Kernel ::Are_ordered_along_line_2
+         
+              
+    a model of  Kernel::AreOrderedAlongLine_2 
+ 
+
+     
+          Kernel ::Are_strictly_ordered_along_line_2
+         
+              
+    a model of  Kernel::AreStrictlyOrderedAlongLine_2 
+ 
+
+     
+          Kernel ::Collinear_are_ordered_along_line_2
+         
+              
+    a model of  Kernel::CollinearAreOrderedAlongLine_2 
+ 
+
+     
+          Kernel ::Collinear_are_strictly_ordered_along_line_2
+         
+              
+    a model of  Kernel::CollinearAreStrictlyOrderedAlongLine_2 
+ 
+
+     
+          Kernel ::Counterclockwise_in_between_2
+         
+              
+    a model of  Kernel::CounterclockwiseInBetween_2 
+ 
+
+     
+          Kernel ::Do_intersect_2
+         
+              
+    a model of  Kernel::DoIntersect_2 
+ 
+
+     
+
+  Three-dimensional Kernel 
+ 
+
+  Coordinate Access 
+ 
+
+    
+          Kernel ::Cartesian_const_iterator_3
+         
+              
+    a model of  Kernel::CartesianConstIterator_3 
+ 
+
+     
+
+  Geometric Objects 
+ 
+
+    
+          Kernel::Point_3 
+         
+              
+    a model of  Kernel::Point_3 
+ 
+
+     
+          Kernel::Vector_3 
+         
+              
+    a model of  Kernel::Vector_3 
+ 
+
+     
+          Kernel::Direction_3 
+         
+              
+    a model of  Kernel::Direction_3 
+ 
+
+     
+          Kernel :: Iso_cuboid_3 
+         
+              
+    a model of  Kernel::IsoCuboid_3 
+ 
+
+     
+          Kernel::Line_3 
+         
+              
+    a model of  Kernel::Line_3 
+ 
+
+     
+          Kernel::Ray_3 
+         
+              
+    a model of  Kernel::Ray_3 
+ 
+
+     
+          Kernel::Sphere_3 
+         
+              
+    a model of  Kernel::Sphere_3 
+ 
+
+     
+          Kernel::Segment_3 
+         
+              
+    a model of  Kernel::Segment_3 
+ 
+
+     
+          Kernel::Plane_3 
+         
+              
+    a model of  Kernel::Plane_3 
+ 
+
+     
+          Kernel::Triangle_3 
+         
+              
+    a model of  Kernel::Triangle_3 
+ 
+
+     
+          Kernel::Tetrahedron_3 
+         
+              
+    a model of  Kernel::Tetrahedron_3 
+ 
+
+     
+          Kernel::Object_3 
+         
+              
+    a model of  Kernel::Object_3 
+ 
+
+     
+
+  Constructions 
+ 
+
+    
+          Kernel ::Construct_point_3
+         
+              
+    a model of  Kernel::ConstructPoint_3 
+ 
+
+     
+          Kernel ::Construct_vector_3
+         
+              
+    a model of  Kernel::ConstructVector_3 
+ 
+
+     
+          Kernel ::Construct_direction_3
+         
+              
+    a model of  Kernel::ConstructDirection_3 
+ 
+
+     
+          Kernel ::Construct_plane_3
+         
+              
+    a model of  Kernel::ConstructPlane_3 
+ 
+
+     
+          Kernel ::Construct_iso_cuboid_3
+         
+              
+    a model of  Kernel::ConstructIsoCuboid_3 
+ 
+
+     
+          Kernel ::Construct_line_3
+         
+              
+    a model of  Kernel::ConstructLine_3 
+ 
+
+     
+          Kernel ::Construct_ray_3
+         
+              
+    a model of  Kernel::ConstructRay_3 
+ 
+
+     
+          Kernel ::Construct_sphere_3
+         
+              
+    a model of  Kernel::ConstructSphere_3 
+ 
+
+     
+          Kernel ::Construct_segment_3
+         
+              
+    a model of  Kernel::ConstructSegment_3 
+ 
+
+     
+          Kernel ::Construct_triangle_3
+         
+              
+    a model of  Kernel::ConstructTriangle_3 
+ 
+
+     
+          Kernel ::Construct_tetrahedron_3
+         
+              
+    a model of  Kernel::ConstructTetrahedron_3 
+ 
+
+     
+          Kernel ::Construct_object_3
+         
+              
+    a model of  Kernel::ConstructObject_3 
+ 
+
+     
+          Kernel ::Construct_scaled_vector_3
+         
+              
+    a model of  Kernel::ConstructScaledVector_3 
+ 
+
+     
+          Kernel ::Construct_translated_point_3
+         
+              
+    a model of  Kernel::ConstructTranslatedPoint_3 
+ 
+
+     
+          Kernel ::Construct_point_on_3
+         
+              
+    a model of  Kernel::ConstructPointOn_3 
+ 
+
+     
+          Kernel ::Construct_projected_point_3
+         
+              
+    a model of  Kernel::ConstructProjectedPoint_3 
+ 
+
+     
+          Kernel ::Construct_lifted_point_3
+         
+              
+    a model of  Kernel::ConstructLiftedPoint_3 
+ 
+
+     
+          Kernel ::Construct_cartesian_const_iterator_3
+         
+              
+    a model of  Kernel::ConstructCartesianConstIterator_3 
+ 
+
+     
+          Kernel ::Construct_vertex_3
+         
+              
+    a model of  Kernel::ConstructVertex_3 
+ 
+
+     
+          Kernel ::Construct_bbox_3
+         
+              
+    a model of  Kernel::ConstructBbox_3 
+ 
+
+     
+          Kernel ::Construct_supporting_plane_3
+         
+              
+    a model of  Kernel::ConstructSupportingPlane_3 
+ 
+
+     
+          Kernel ::Construct_orthogonal_vector_3
+         
+              
+    a model of  Kernel::ConstructOrthogonalVector_3 
+ 
+
+     
+          Kernel ::Construct_base_vector_3
+         
+              
+    a model of  Kernel::ConstructBaseVector_3 
+ 
+
+     
+          Kernel ::Construct_perpendicular_plane_3
+         
+              
+    a model of  Kernel::ConstructPerpendicularPlane_3 
+ 
+
+     
+          Kernel ::Construct_perpendicular_line_3
+         
+              
+    a model of  Kernel::ConstructPerpendicularLine_3 
+ 
+
+     
+          Kernel ::Construct_midpoint_3
+         
+              
+    a model of  Kernel::ConstructMidpoint_3 
+ 
+
+     
+          Kernel ::Construct_center_3
+         
+              
+    a model of  Kernel::ConstructCenter_3 
+ 
+
+     
+          Kernel ::Construct_centroid_3
+         
+              
+    a model of  Kernel::ConstructCentroid_3 
+ 
+
+     
+          Kernel ::Construct_circumcenter_3
+         
+              
+    a model of  Kernel::ConstructCircumcenter_3 
+ 
+
+     
+          Kernel ::Construct_bisector_3
+         
+              
+    a model of  Kernel::ConstructBisector_3 
+ 
+
+     
+          Kernel ::Construct_cross_product_vector_3
+         
+              
+    a model of  Kernel::ConstructCrossProductVector_3 
+ 
+
+     
+          Kernel ::Construct_opposite_direction_3
+         
+              
+    a model of  Kernel::ConstructOppositeDirection_3 
+ 
+
+     
+          Kernel ::Construct_opposite_segment_3
+         
+              
+    a model of  Kernel::ConstructOppositeSegment_3 
+ 
+
+     
+          Kernel ::Construct_opposite_ray_3
+         
+              
+    a model of  Kernel::ConstructOppositeRay_3 
+ 
+
+     
+          Kernel ::Construct_opposite_line_3
+         
+              
+    a model of  Kernel::ConstructOppositeLine_3 
+ 
+
+     
+          Kernel ::Construct_opposite_plane_3
+         
+              
+    a model of  Kernel::ConstructOppositePlane_3 
+ 
+
+     
+          Kernel ::Construct_opposite_sphere_3
+         
+              
+    a model of  Kernel::ConstructOppositeSphere_3 
+ 
+
+     
+          Kernel ::Construct_opposite_vector_3
+         
+              
+    a model of  Kernel::ConstructOppositeVector_3 
+ 
+
+     
+
+If the result type is not determined, there is no  Construct_  prefix:
+  
+
+    
+          Kernel::Intersect_3 
+         
+              
+    a model of  Kernel::Intersect_3 
+ 
+
+     
+          Kernel::Assign_3 
+         
+              
+    a model of  Kernel::Assign_3 
+ 
+
+     
+
+If the result type is a number type, the prefix is  Compute_ :
+  
+
+    
+          Kernel ::Compute_area_3
+         
+              
+    a model of  Kernel::ComputeArea_3 
+ 
+
+     
+          Kernel ::Compute_squared_area_3
+         
+              
+    a model of  Kernel::ComputeSquaredArea_3 
+ 
+
+     
+          Kernel ::Compute_squared_distance_3
+         
+              
+    a model of  Kernel::ComputeSquaredDistance_3 
+ 
+
+     
+          Kernel ::Compute_squared_length_3
+         
+              
+    a model of  Kernel::ComputeSquaredLength_3 
+ 
+
+     
+          Kernel ::Compute_squared_radius_3
+         
+              
+    a model of  Kernel::ComputeSquaredRadius_3 
+ 
+
+     
+          Kernel ::Compute_volume_3
+         
+              
+    a model of  Kernel::ComputeVolume_3 
+ 
+
+     
+
+  Generalized Predicates 
+ 
+
+    
+          Kernel::Angle_3 
+         
+              
+    a model of  Kernel::Angle_3 
+ 
+
+     
+          Kernel::Equal_3 
+         
+              
+    a model of  Kernel::Equal_3 
+ 
+
+     
+          Kernel ::Equal_x_3
+         
+              
+    a model of  Kernel::EqualX_3 
+ 
+
+     
+          Kernel ::Equal_y_3
+         
+              
+    a model of  Kernel::EqualY_3 
+ 
+
+     
+          Kernel ::Equal_z_3
+         
+              
+    a model of  Kernel::EqualZ_3 
+ 
+
+     
+          Kernel ::Equal_xy_3
+         
+              
+    a model of  Kernel::EqualXY_3 
+ 
+
+     
+          Kernel ::Less_x_3
+         
+              
+    a model of  Kernel::LessX_3 
+ 
+
+     
+          Kernel ::Less_y_3
+         
+              
+    a model of  Kernel::LessY_3 
+ 
+
+     
+          Kernel ::Less_z_3
+         
+              
+    a model of  Kernel::LessZ_3 
+ 
+
+     
+          Kernel ::Less_xy_3
+         
+              
+    a model of  Kernel::LessXY_3 
+ 
+
+     
+          Kernel ::Less_xyz_3
+         
+              
+    a model of  Kernel::LessXYZ_3 
+ 
+
+     
+          Kernel ::Compare_x_3
+         
+              
+    a model of  Kernel::CompareX_3 
+ 
+
+     
+          Kernel ::Compare_y_3
+         
+              
+    a model of  Kernel::CompareY_3 
+ 
+
+     
+          Kernel ::Compare_z_3
+         
+              
+    a model of  Kernel::CompareZ_3 
+ 
+
+     
+          Kernel ::Compare_xy_3
+         
+              
+    a model of  Kernel::CompareXY_3 
+ 
+
+     
+          Kernel ::Compare_xyz_3
+         
+              
+    a model of  Kernel::CompareXYZ_3 
+ 
+
+     
+          Kernel ::Less_signed_distance_to_plane_3
+         
+              
+    a model of  Kernel::LessSignedDistanceToPlane_3 
+ 
+
+     
+          Kernel ::Less_distance_to_point_3
+         
+              
+    a model of  Kernel::LessDistanceToPoint_3 
+ 
+
+     
+          Kernel ::Compare_distance_3
+         
+              
+    a model of  Kernel::CompareDistance_3 
+ 
+
+     
+          Kernel::Collinear_3 
+         
+              
+    a model of  Kernel::Collinear_3 
+ 
+
+     
+          Kernel::Coplanar_3 
+         
+              
+    a model of  Kernel::Coplanar_3 
+ 
+
+     
+          Kernel::Orientation_3 
+         
+              
+    a model of  Kernel::Orientation_3 
+ 
+
+     
+          Kernel ::Coplanar_orientation_3
+         
+              
+    a model of  Kernel::CoplanarOrientation_3 
+ 
+
+     
+          Kernel ::Coplanar_side_of_bounded_circle_3
+         
+              
+    a model of  Kernel::CoplanarSideOfBoundedCircle_3 
+ 
+
+     
+          Kernel ::Side_of_oriented_sphere_3
+         
+              
+    a model of  Kernel::SideOfOrientedSphere_3 
+ 
+
+     
+          Kernel ::Side_of_bounded_sphere_3
+         
+              
+    a model of  Kernel::SideOfBoundedSphere_3 
+ 
+
+     
+          Kernel ::Is_degenerate_3
+         
+              
+    a model of  Kernel::IsDegenerate_3 
+ 
+
+     
+          Kernel ::Has_on_3
+         
+              
+    a model of  Kernel::HasOn_3 
+ 
+
+     
+          Kernel ::Has_on_bounded_side_3
+         
+              
+    a model of  Kernel::HasOnBoundedSide_3 
+ 
+
+     
+          Kernel ::Has_on_unbounded_side_3
+         
+              
+    a model of  Kernel::HasOnUnboundedSide_3 
+ 
+
+     
+          Kernel ::Has_on_boundary_3
+         
+              
+    a model of  Kernel::HasOnBoundary_3 
+ 
+
+     
+          Kernel ::Has_on_positive_side_3
+         
+              
+    a model of  Kernel::HasOnPositiveSide_3 
+ 
+
+     
+          Kernel ::Has_on_negative_side_3
+         
+              
+    a model of  Kernel::HasOnNegativeSide_3 
+ 
+
+     
+          Kernel ::Oriented_side_3
+         
+              
+    a model of  Kernel::OrientedSide_3 
+ 
+
+     
+          Kernel ::Bounded_side_3
+         
+              
+    a model of  Kernel::BoundedSide_3 
+ 
+
+     
+          Kernel ::Are_parallel_3
+         
+              
+    a model of  Kernel::AreParallel_3 
+ 
+
+     
+          Kernel ::Are_ordered_along_line_3
+         
+              
+    a model of  Kernel::AreOrderedAlongLine_3 
+ 
+
+     
+          Kernel ::Are_strictly_ordered_along_line_3
+         
+              
+    a model of  Kernel::AreStrictlyOrderedAlongLine_3 
+ 
+
+     
+          Kernel ::Collinear_are_ordered_along_line_3
+         
+              
+    a model of  Kernel::CollinearAreOrderedAlongLine_3 
+ 
+
+     
+          Kernel ::Collinear_are_strictly_ordered_along_line_3
+         
+              
+    a model of  Kernel::CollinearAreStrictlyOrderedAlongLine_3 
+ 
+
+     
+          Kernel ::Do_intersect_3
+         
+              
+    a model of  Kernel::DoIntersect_3 
+ 
+
+     
+
+  d-dimensional Kernel 
+ 
+
+  Coordinate Access 
+ 
+
+    
+          Kernel ::Cartesian_const_iterator_d
+         
+              
+    a model of  Kernel ::CartesianConstIterator_d
+ 
+
+     
+
+  Geometric Objects 
+ 
+
+    
+          Kernel :: Point_d 
+         
+              
+    a model of  Kernel :: Point_d 
+ 
+
+     
+
+  Constructions 
+ 
+
+    
+          Kernel ::Construct_Point_d
+         
+              
+    a model of  Kernel ::ConstructPoint_d
+ 
+
+     
+
+  Operations 
+ 
+
+For each of the function objects above, there must exist a member function
+that requires no arguments and returns an instance of that function object.
+The name of the member function is the uncapitalized name of the type
+returned with the suffix  _object  appended.  For example, for the 
+function object
+  Kernel ::Construct_vector_2  the following member function must exist:
+  
+
+    
+           
+ Kernel ::Construct_vector_2
+         
+              
+         
+    kernel.construct_vector_2_object ()
+         
+        
+    
+            
+
+  See Also 
+ 
+
+ C GAL  d-dimensional Kernel manual .
+  
+
+    Next:    EuclideanRingNumberType   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

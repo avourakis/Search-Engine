@@ -1,0 +1,99 @@
+ 4-bit Counting Circuit 
+
+ 
+
+  4-bit Counting Circuit    
+
+  
+
+   
+
+  Lab 1     
+
+ The objective of this lab assignment is to get familiar with VHDL and to
+learn the use of  ModelSim-Altera  CAD tools.  
+
+ Please read  ALL  instruction carefully. Only   properly submitted  
+assignments will be graded. Make sure to create a zip file, named by your
+student id, and submit your files in it.  
+
+   Specification   - Due Fri, 4/10 at 11:45am.   
+
+ This 4-bit counting circuit computes the absolute value of the difference
+between the number of 1's and 0's
+in the input signal. The 4-bit circuit has 4 input bits: X0, X1,
+X2, and X3.  There are 3 output bits; Y0, Y1, and Y2.  X0 and Y0 are low-order bits. 
+For example, the output is "100" for the input of "0000"
+ 
+
+ Please specify the circuit with a truth table. Then produce a 'sum of
+products' expression for each output bit. 
+
+ You should think about these questions when specifying the truth table and
+deriving expression for each output bit: 
+
+   Based on the number of bits in the input, how many rows
+     should the truth table have?    
+   Which rows contribute to the ‘sum of
+     products’ for each output bit?     
+   Once you obtain the ‘sum of products’
+     expressions, can you simplify them   to have fewer product terms and/or product terms that contain fewer
+     variables?      
+   Design   - Due Tu, 4/14 at
+11:45pm  
+
+ Your task is to design a 4-bit counting circuit and a test bench to test the
+functionality of the module. The template VHDL files for the counting module
+(lab1.vhd) and the test bench (lab1_tb.vhd) have been provided to you. The
+interface (that is, ports) is already defined. You need to complete the design
+in both files. Please do not make any changes to the interface.  
+
+ The counting module (that is, the lab1 entity) has one 4-bit input and one
+3-bit output. The interface (ports) is defined as below for the lab1 entity in
+lab1.vhd file. - Inputs X: in STD_LOGIC_ VECTOR( 3  downto  0) - Output Y : out STD_LOGIC_VECTOR(2  downto  0)  
+
+ Your design should be based on basic logic operators: OR, AND, and NOT. You are
+required to implement the counting module as a combinational circuit using
+concurrent signal assignments in VHDL. 
+
+ Start by downloading   lab1.zip   and unpacking it. 
+
+  Verification   - Due Tuesday,
+4/14 at 11:45pm  
+
+ Inside the test bench, you should test your counting module using various
+input combinations. At each specific interval of time (which can be on the
+order of some tens of nanoseconds for example), change the input, get the result
+from the counting module and compare the product with the expected value to see
+if it is correct. In case the result does not match the expected value, the
+test bench should generate an error message. Use the ASSERT statement for
+reporting the error message. Note that the entity lab1_tb in the test bench
+does not have ports since there are no input and output signals to it.  
+
+  
+
+   
+
+   What
+you should produce in this lab:        
+
+       
+
+       
+
+  Please
+submit the specification to EEE by Fri, 4/10 at 11:45am.    
+
+   A
+     specification for your design, including the truth-table and the logic
+     expressions.    
+   Please
+submit the files below to EEE by Tu, 4/14 at 11:45pm     
+
+   Your VHDL design.     
+   Your VHDL test-bench.     
+   Screenshots of the waveforms for all in/out signals in
+     the design.     
+  
+
+</body> 

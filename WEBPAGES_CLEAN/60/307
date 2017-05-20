@@ -1,0 +1,95 @@
+  <body>  This is Google's cache of  http://www.vdlande.com/VHDL/exits.html . It is a snapshot of the page as it appeared on Sep 29, 2009 00:53:33 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  exits       
+
+
+VHDL Reference Guide - Exit Statement 
+   Exit Statement  
+       Sequential Statement 
+ ---- used in ----&gt; 
+ Loop For Loop While Loop 
+          Syntax       
+  
+
+ 
+    exit;
+  
+   
+  
+
+ 
+    
+exit loop_label;
+  
+   
+  
+
+ 
+    
+exit loop_label when condition;
+  
+   
+  
+
+ 
+See LRM section 8.10
+
+        Rules and Examples       
+  
+
+ 
+   The exit statement is used to terminate a  while, for  or
+infinite  loop :
+ for I in 0 to 7 loop
+  if FINISH_LOOP_EARLY = '1' then
+    exit;
+  else
+    A_BUS   
+   
+  
+
+ 
+   The exit statement may test a boolean condition directly using the
+ when  keyword
+ process (A)
+   variable I : integer range 0 to 4; 
+begin
+   Z   
+   
+  
+
+ 
+   For an exit statement within a set of nested loops, the optional
+loop label may be used to indicate which level of loop is to be exited.
+The default (no label) is the innermost loop:
+ L1: for I in 0 to 7 loop
+  L2: for J in 0 to 7 loop
+    exit L1 when QUIT_BOTH_LOOPS = '1';
+    exit when QUIT_INNER_LOOP = '1';
+    -- other statements 
+  end loop L2;
+end loop L1;  
+   
+  
+
+ 
+        Synthesis Issues       
+  
+
+The exit statement is supported by some logic synthesis tools, with
+certain restrictions.
+
+ 
+        Whats New in '93       
+
+In  VHDL -93, the  exit  statement may have an optional label
+  label:  exit  loop_label; 
+
+ 
+
+  
+   
+   
+   
+ 
+
+  </body> 

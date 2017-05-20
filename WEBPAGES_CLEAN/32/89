@@ -1,0 +1,90 @@
+ GraphTool<body>
+
+ GraphTool: A Tool for Interactive Design and Manipulation of Graphs and
+Graph Algorithms 
+   GraphTool  is an interactive tool for editing graphs and visualizing
+the execution and results of graph algorithms.
+It runs under the X Windows environment and has full window/mouse interface.
+While the primary purpose of  GraphTool  is to provide a means for
+experimentally investigating the performance of graph algorithms, it has other
+useful features as well.
+It provides features for printing graphs in a visually appealing format, which
+makes it easier to prepare papers for publication.
+It also provides a facility for "animating" algorithms, which means that it can
+be used in computer assisted instruction (CAI) and for preparing video
+presentation of algorithms.
+ Much more information  about  GraphTool  is
+available.
+ A SUN OS 4.x version  of  GraphTool  is
+available.
+In addition to the executable  xbt_gtool , there is a library,
+ graphtool.h  and  libgraphtool.a , that handles many
+common functions used in algorithms.
+Algorithms are made visible to  GraphTool  by adding an entry for them in
+the  .graphrc  file.
+A sample  .graphrc  file, the source for its
+ algorithm entries , and a  Makefile  have
+all been included.
+ 
+GraphTool has also been ported to run under the Windows '95 environment
+ . 
+   Algorithm Entries  
+   Random vertices
+   Voronoi diagram: compute Voronoi diagram, by first computing Delaunay
+triangulation, using simple O(N**2) algorithm due to (I think) McLain, and then
+taking dual.  This program also demonstrates how edge (node) colors become edge
+styles (node patterns) in black and white.
+   Eucl Shortest Paths: compute shortest (Euclidean path in an undirected
+graph.
+Algorithm used is such that triangle inequality need not hold
+(although in this case it does), but all weights must be positive.
+   Delaunay Tri: compute Delaunay triangulation, using simple O(N**2)
+algorithm due to (I think) McLain.
+   Shortest Cycle: compute shortest weighted cycle in an undirected graph
+by: For each edge, remove that edge, find shortest path through remaining
+graph, add on edge length.
+Algorithm used is such that triangle inequality need not hold
+(although in this case it does), but all weights must be positive.
+   Shortest Nonfacial Cycle: compute shortest weighted cycle in an
+undirected graph that is not the boundary of a face.
+Algorithm used is such that triangle inequality need not hold
+(although in this case it does), but all weights must be positive.
+   Display Faces and Weights: display each face and the sum of the weights
+of the vertices incident on the face.
+Useful for checking the validity of Rivin-Smith (inscribability) weightings.
+   Display Min, Max weights, sums: compute facts about weights, including:
+max edge weight, min edge weight, max face sum and min face sum
+   flipdt: compute Delaunay triangulations by edge flipping.
+Use greedy (queuing) strategy, for now.
+   sweeptri: compute plane-sweep (left-to-right) triangulation.
+   bipartite: find a bipartite subgraph with many edges, using a greedy
+heuristic.
+   Bipartite Matching: bipartite matching using Hopcroft-Karp algorithm.
+The algorithm first colors the graph, then does the matching.
+   Extreme Edges: compute longest and shortest edges
+   Geometric MST: compute geometric minimum spanning tree, using dumb
+algorithm.
+   Hamiltonian Cycle: check for Hamiltonian cycle, using slightly improved
+brute force algorithm.
+   Total Edge Length: compute total edge length.
+   Convex Hull: compute convex hull, using Jarvis March.
+   Convex Layers: computer convex layers, by successive applications of
+Jarvis March.
+   Remove Edges and unmarked vertices: strip all edges and all white
+vertices, then color remaining vertices white.
+   Remove thin edges: delete all edges with width = 1.
+     References  
+   V. J. Leung ,
+ M. B. Dillencourt , and A. L. Bliss,
+ 
+ GraphTool :
+A Tool for Interactive Design and Manipulation of Graphs and Graph Algorithms,
+ 
+in N. Dean and G. E. Shannon, editors,
+ Computational Support for Discrete Mathematics , 269-278.
+ American Mathematical Society , 1994.
+    This information brought to you by
+ vitus@ics.uci.edu 
+ 
+Current as of 29 August 1997 
+</body> 

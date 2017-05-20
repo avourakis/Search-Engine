@@ -1,0 +1,592 @@
+ ExtendedKernelTraits_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  ExtendedKernelTraits_2  
+
+
+
+     
+     
+     
+   
+
+  
+ 
+
+  Definition 
+ 
+
+  ExtendedKernelTraits_2   is a kernel concept providing extended
+geometry  1  . Let  K 
+be an instance of the data type   ExtendedKernelTraits_2  .  The
+central notion of extended geomtry are extended points. An extended
+point represents either a standard affine point of the  Cartesian  plane
+or a non-standard point representing the equivalence class of rays
+where two rays are equivalent if one is contained in the other.
+  
+
+Let  R  be an infinimaximal number  2  ,  F  be the  square  box with corners  NW(-R,R) ,  NE(R,R) ,
+ SE(R,-R) , and  SW(-R,-R) . Let  p  be a non-standard point and let
+ r  be a ray defining it. If the frame  F  contains the source point
+of  r  then let  p(R)  be the  intersection  of  r  with the frame  F ,
+if  F  does not contain the source of  r  then  p(R)  is undefined.
+For a standard point let  p(R)  be equal to  p  if  p  is contained in
+the frame  F  and let  p(R)  be undefined otherwise. Clearly, for any
+standard or non-standard point  p ,  p(R)  is defined for any
+sufficiently large  R . Let  f  be any function on standard points,
+say with  k  arguments. We call  f  extensible  if for any  k 
+points  p 1  , ...,  p k   the function value
+ f(p 1 (R),...,p k (R))  is constant for all sufficiently large
+ R . We define this value as  f(p 1 ,...,p k ) .  Predicates like
+lexicographic order of points,  orientation , and incircle tests are
+extensible.
+  
+
+An extended segment is defined by two extended points such that it is
+either an affine segment, an affine ray, an affine line, or a segment
+that is part of the  square  box. Extended directions extend the affine
+notion of direction to extended objects.
+  
+
+This extended geometry concept serves two purposes. It offers
+functionality for changing between standard affine and extended
+geometry. At the same time it provides extensible geometric primitives
+on the extended geometric objects.
+  
+
+  Types 
+ 
+
+  Affine kernel types 
+ 
+
+    
+          ExtendedKernelTraits_2 ::Standard_kernel
+         
+              
+    the standard affine kernel.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_RT
+         
+              
+    the standard ring type.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_point_2
+         
+              
+    standard points.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_segment_2
+         
+              
+    standard segments.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_line_2
+         
+              
+    standard oriented lines.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_direction_2
+         
+              
+    standard directions.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_ray_2
+         
+              
+    standard rays.
+ 
+
+          
+          ExtendedKernelTraits_2 ::Standard_aff_transformation_2
+         
+              
+    standard affine transformations.
+ 
+
+     
+
+  Extended kernel types 
+ 
+
+    
+          ExtendedKernelTraits_2 ::RT
+         
+              
+    the ring type of our extended kernel.
+ 
+
+          
+          ExtendedKernelTraits_2 :: Point_2 
+         
+              
+    extended points.
+ 
+
+          
+          ExtendedKernelTraits_2 :: Segment_2 
+         
+              
+    extended segments.
+ 
+
+          
+          ExtendedKernelTraits_2 :: Direction_2 
+         
+              
+    extended directions.
+ 
+
+          
+           
+  
+    
+     enum   Point_type  {    
+     SWCORNER   
+,  LEFTFRAME   
+,  NWCORNER   
+,  BOTTOMFRAME   
+,  STANDARD   
+,  TOPFRAME   
+,  SECORNER   
+,  RIGHTFRAME   
+,  NECORNER   
+};    
+              
+    a type descriptor for extended points.
+ 
+
+     
+
+  Operations 
+ 
+
+  Interfacing the affine kernel types 
+ 
+
+    
+           
+ Point_2 
+         
+          
+         
+    K.construct_point (  Standard_point_2 p)
+         
+                
+    creates an extended point and initializes it to the standard point
+ p .
+                 
+           
+ Point_2 
+         
+          
+         
+    K.construct_point (  Standard_line_2 l)
+         
+                
+    creates an extended point and initializes it to the equivalence class
+of all the rays underlying the oriented line  l .
+                 
+           
+ Point_2 
+         
+          
+             
+    K.construct_point (     
+     Standard_point_2 p1, 
+
+Standard_point_2 p2)     
+                
+    creates an extended point and initializes it
+to the equivalence class of all the rays underlying the oriented line
+ l(p1,p2) .
+                 
+           
+ Point_2 
+         
+          
+             
+    K.construct_point (     
+     Standard_point_2 p, 
+
+Standard_direction_2 d)     
+                
+    creates an extended point and initializes
+it to the equivalence class of all the rays underlying the ray
+starting in  p  in direction  d .
+                 
+           
+ Point_2 
+         
+          
+         
+    K.construct_opposite_point (  Standard_line_2 l)
+         
+                
+    creates an extended point and initializes it to the equivalence
+class of all the rays underlying the oriented line  opposite  to
+ l .
+                 
+           
+ Point_type 
+         
+          
+         
+    K.type (   Point_2  p)
+         
+                
+    determines the type of
+ p  and returns it.
+                 
+           
+bool
+         
+          
+         
+    K.is_standard (   Point_2  p)
+         
+                
+    returns  true  iff
+ p  is a standard point.
+                 
+           
+Standard_point_2
+         
+          
+         
+    K.standard_point (   Point_2  p)
+         
+                
+    returns
+the standard point represented by  p .  Precondition:   K.is_standard(p) .
+                 
+           
+Standard_line_2
+         
+          
+         
+    K.standard_line (   Point_2  p)
+         
+                
+    returns
+the oriented line representing the bundle of rays defining  p .  Precondition:   !K.is_standard(p) .
+                 
+           
+Standard_ray_2
+         
+          
+         
+    K.standard_ray (   Point_2  p)
+         
+                
+    a ray
+defining  p .  Precondition:   !K.is_standard(p) .
+                 
+           
+ Point_2 
+         
+          
+         
+    K.NE ()
+         
+          
+    returns the point on the northeast frame
+corner.
+                 
+           
+ Point_2 
+         
+          
+         
+    K.SE ()
+         
+          
+    returns the point on the southeast frame
+corner.
+                 
+           
+ Point_2 
+         
+          
+         
+    K.NW ()
+         
+          
+    returns the point on the northwest frame
+corner.
+                 
+           
+ Point_2 
+         
+          
+         
+    K.SW ()
+         
+          
+    returns the point on the southwest frame
+corner.
+            
+
+  Geometric kernel calls 
+ 
+
+    
+           
+ Point_2 
+         
+          
+         
+    K.source (   Segment_2  s)
+         
+                
+    returns the source
+point of  s .
+                 
+           
+ Point_2 
+         
+          
+         
+    K.target (   Segment_2  s)
+         
+                
+    returns the target
+point of  s .
+                 
+           
+ Segment_2 
+         
+          
+         
+    K.construct_segment (   Point_2  p,   Point_2  q)
+         
+                
+    constructs a segment  pq .
+                 
+           
+int
+         
+          
+         
+    K. orientation  (   Segment_2  s,   Point_2  p)
+         
+                
+    returns the  orientation  of  p  with respect to the line through
+ s .
+                 
+           
+int
+         
+          
+         
+    K. orientation  (   Point_2  p1,   Point_2  p2,   Point_2  p3)
+         
+                
+    returns the  orientation  of  p3  with respect to
+the line through  p1p2 .
+                 
+           
+bool
+         
+          
+         
+    K. left_turn  (   Point_2  p1,   Point_2  p2,   Point_2  p3)
+         
+                
+    return true iff the  p3  is left of the line
+through  p1p2 .
+                 
+           
+bool
+         
+          
+         
+    K.is_degenerate (   Segment_2  s)
+         
+                
+    return true iff
+ s  is degenerate.
+                 
+           
+int
+         
+          
+         
+    K. compare_xy  (   Point_2  p1,   Point_2  p2)
+         
+                
+    returns the lexicographic order of  p1  and  p2 .
+                 
+           
+int
+         
+          
+         
+    K. compare_x  (   Point_2  p1,   Point_2  p2)
+         
+                
+    returns the order on the  x -coordinates of  p1  and  p2 .
+                 
+           
+int
+         
+          
+         
+    K. compare_y  (   Point_2  p1,   Point_2  p2)
+         
+                
+    returns the order on the  y -coordinates of  p1  and  p2 .
+                 
+           
+ Point_2 
+         
+          
+         
+    K. intersection  (   Segment_2  s1,   Segment_2  s2)
+         
+                
+    returns the point of  intersection  of the lines supported by
+ s1  and  s2 .  Precondition:  the  intersection  point exists.
+                 
+           
+ Direction_2 
+         
+          
+         
+    K.construct_direction (   Point_2  p1,   Point_2  p2)
+         
+                
+    returns the direction of the vector  p2  -
+ p1 .
+                 
+           
+bool
+         
+          
+             
+    K.strictly_ordered_ccw (     
+      Direction_2  d1,  Direction_2  d2,  Direction_2  d3)     
+                
+    returns  true  iff
+ d2  is in the interior of the counterclockwise angular sector
+between  d1  and  d3 .
+                 
+           
+bool
+         
+          
+             
+    K.strictly_ordered_along_line (     
+      Point_2  p1,  Point_2  p2,  Point_2  p3)     
+                
+    returns  true  iff  p2  is
+in the relative interior of the segment  p1p3 .
+                 
+           
+bool
+         
+          
+         
+    K.contains (   Segment_2  s,   Point_2  p)
+         
+                
+    returns true iff  s  contains  p .
+                 
+           
+bool
+         
+          
+             
+    K.first_pair_closer_than_second (     
+      Point_2  p1,  Point_2  p2,  Point_2  p3,  Point_2  p4)     
+                
+    returns true iff
+    p1-p2    &lt;    p3-p4   .
+                 
+           
+const char*
+         
+          
+         
+    K.output_identifier ()
+         
+                
+    returns a unique
+identifier for kernel object Input/Output. Usually this should be the
+name of the model.
+            
+
+  Has Models 
+ 
+
+  CGAL::Extended_cartesian &lt;FT&gt;    CGAL::Extended_homogeneous &lt;RT&gt;    CGAL::Filtered_extended_homogeneous &lt;RT&gt; 
+  
+
+   Footnotes 
+ 
+
+    
+    
+           1     
+It is called extended geometry for simplicity,
+though it is not a real geometry in the classical sense.
+    
+           2     
+A finite but very large
+number.
+
+      Next:    Extended_cartesian&lt;FT&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

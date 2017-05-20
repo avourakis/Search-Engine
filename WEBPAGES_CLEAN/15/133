@@ -1,0 +1,27 @@
+ #include "oechem.h"
+#include "oesystem.h"
+
+#include 
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+unsigned int Count(const OEUnaryPredicate &amp;fcn,
+                   const OEMolBase &amp;mol)
+{
+  unsigned int count = 0;
+  OEIter atom;
+  for(atom = mol.GetAtoms();atom;++atom)
+    if(fcn(*atom))
+      ++count;
+
+  return count;
+}
+
+int main() 
+{
+  OEGraphMol mol;
+  OEParseSmiles(mol, "c1c(O)c(O)c(Cl)cc1CCCBr");
+  
+  cerr  

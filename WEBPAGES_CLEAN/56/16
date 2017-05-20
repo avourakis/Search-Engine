@@ -1,0 +1,89 @@
+ 2.1 Creating and Destroying Molecules<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   2. Manipulating Molecules 
+ Up:   2. Manipulating Molecules 
+ Next:   2.2 Reusing Molecules 
+   
+
+
+  
+2.1 Creating and Destroying Molecules 
+ 
+
+ 
+OEChem molecules use C++ constructors and destructors, allowing them to
+be defined and used much like normal variables.  The example, below
+represents the smallest possible OEChem program.  This creates a
+molecule called  mol  when main is run, and destroys it automatically
+when the program finishes.
+
+  
+    #include "oechem.h"
+
+using namespace OEChem;
+
+int main()
+{
+  OEMol mol;
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+By using C++ constructors and destructors there is no need to explicitly
+call a function to allocate and initialize the molecule, and also no
+need to explicitly destroy it when we're done.
+
+  
+Of course, there may be times when it is necessary to create and destroy
+molecules dynamically.  This is possible using C++'s new and delete
+operators to allocate a molecule.
+
+  
+    #include "oechem.h"
+
+using namespace OEChem;
+
+int main()
+{
+  OEMol *ptr;
+
+  ptr = new OEMol;
+  delete ptr;
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   2. Manipulating Molecules 
+ Up:   2. Manipulating Molecules 
+ Next:   2.2 Reusing Molecules 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

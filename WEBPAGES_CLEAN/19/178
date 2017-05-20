@@ -1,0 +1,122 @@
+  /*****************************************************************************
+ gui.StackLayout
+
+ Simple layout manager for filling a panel horizontally or vertically.
+
+ bruce.miller@nist.gov
+ Contribution of the National Institute of Standards and Technology,
+ not subject to copyright.
+ *****************************************************************************/
+package gui;
+import java.awt.*;
+import java.util.*;
+
+/** **************************************************************************
+ StackLayout is a LayoutManager that arranges components in a vertical
+ (or horizontal) strip aligning them at right, left or centered, and/or
+ filling them to take up any extra vertical or horizontal space.
+ Arrangement tags are provided by using the add(tag,component) form to
+ add components to the container.
+
+ The tag consists of one or more of the following, with the two forms applying
+ to horizontal or vertical dimension.
+  
+ Positioning:
+  "Center"                : centered horizontally &amp; vertically (the default)
+  "Left"    or "Top"      : pushed at the left|top edge.
+  "Right"   or "Bottom"   : pushed against the right|top edge
+ Sizing:
+  "Wide"    or "Tall"     : filled to use available space.
+  "Wide*#"  or "Tall*#"   : filled but weighted by the number #.
+  "Fill" (or "Fill*#")    : filled in both directions.
+  "Width=#" or "Height=#" : given explicit width|height
+ Margins:
+  "Flush"                 : margins are not added around this component.
+ 
+  By default, a component is centered in both directions.
+  The available space along the orientation is divided between the filled
+  components.  A common idiom is to build a complicated panel out of, say, a
+  vertical stack of horizontal stacks (both using StackLayout).  In that
+  case, it would usually be good to add the horizontal panels using the
+  tag "Wide Flush", so that spacing comes out evenly.
+ 
+
+ Much of what can be done with GridBagLayout can be achieved by combining
+ a set of subpanels using StackLayout, but typically more concisely.
+ On the other hand, with StackLayout there is less compile time checking 
+ of the layout.
+
+@author Bruce R. Miller (bruce.miller@nist.gov)
+@author Contribution of the National Institute of Standards and Technology,
+@author not subject to copyright.
+*/
+
+public class StackLayout implements LayoutManager {
+  /** The orientation constant for horizontal layouts. */
+  public static final int HORIZONTAL = 0;
+  /** The orientation constant for vertical layouts. */
+  public static final int VERTICAL = 1;
+
+  int orientation = HORIZONTAL;
+  int margin = 2;
+  Hashtable codeTable = new Hashtable();
+
+  /* Layout codes */
+  static final int CENTER = 0x00;
+  static final int FRONT  = 0x01;
+  static final int BACK   = 0x02;
+  static final int FILL   = 0x04;
+  static final int ABS    = 0x08;
+  static final int FLUSH  = 0x10;
+
+  static final int POSMASK=0x03;
+  static final int SIZEMASK=0x0C;
+
+  /* *********************************************************************
+    Creators. */
+
+  /** Create a horizontal StackLayout. */
+  public StackLayout() {}
+
+  /** Create a StackLayout with the given orientation. */
+  public StackLayout(int orientation) {
+    this.orientation = orientation; }
+
+  /** Create a StackLayout with the given orientation and space 
+  between components. */
+  public StackLayout(int orientation, int margin) {
+    this.orientation = orientation; 
+    this.margin = margin; }
+
+  /* *********************************************************************
+    Note any named components . */
+
+  /** Add the specified component to the layout, parsing the layout tag. */
+
+  public void addLayoutComponent(String tag, Component comp) {
+    tag = tag.toUpperCase().trim();
+    int hcode=CENTER,vcode=CENTER, harg=0, varg=0;
+    int i,l = tag.length(),n;
+    for(i=0; i 0) l = fill*code[along+2]; break; 
+          case ABS    : l = code[along+2]; break; }
+	switch (c &amp; POSMASK) {
+    	  case CENTER : r += rubber; break;
+   	  case BACK   : if(prev != BACK) r += rubber; break; }
+	prev = (c &amp; POSMASK);
+	switch (ca &amp; SIZEMASK) {
+	  case FILL   : d = D-2*m; break; 
+	  case ABS    : d = code[across+2]; break; }
+	switch (ca &amp; POSMASK) {
+	  case BACK   : s += D-d; break;
+	  case CENTER : s += (D-d)/2; break; }
+	Component comp = parent.getComponent(i);
+	if (orientation == HORIZONTAL)
+	  comp.reshape(r,s,l,d);
+	else
+	  comp.reshape(s,r,d,l);
+	r += l + m;  }}
+  }
+
+}
+
+  

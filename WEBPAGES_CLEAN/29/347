@@ -1,0 +1,113 @@
+ Function for List Processing
+
+Examine the list processing functions in this project. Hand simulate
+them or run them (in the debugger) to understand them using the driver
+supplied. The best way to learn how to write list functions is to study
+other list functions Here is some commentary. See the Notes, including two new
+ways to bind multiple names to values.
+
+list_sum:
+  intializes answer to 0, then iterates through all the values in the list,
+  adding each value to answer. When the loop has finished, this function
+  return the value accumulated in answer.
+
+
+list_max:
+  intializes answer to the first value in the list, then specifies a slice 
+  (index 1 to the end) to iterate through all the other values in the list,
+  updating answer if it finds a larger value. When the loop has finished, this
+  function return the value accumulated in answer.
+
+  Question: What happens if the list has no values? What would happen if the
+  for loop was: for v in alist (instead of the slice)?
+
+
+list_min_max:
+  simlar to list_max, while also finding the miniimum
+
+  Note: (1) Python allows a = b = c = ... = expression for multiple assignment
+            In list_min_max, both min_answer and max_answer are intialized
+              to alist[0]
+        (2) We must return 2 values, but Python allows us to return only 1
+            value, so the value we return is a list of 2 values. This simple
+            use of returning lists termendously expands the usefulness of
+            functions that we can write
+
+
+count_predicate: count how many values in the list for which the predicate
+  function p returns True. Initializes count to 0,  then iterates through all
+  the values in the list, incrementing count if and only if the predicate
+  returns True for that value. When the loop has finished, this function return
+  the value accumulated in count.
+
+
+sum_predicate: sum all the values in the list for which the predicate function
+  p returns True: initializes answer to 0,  then iterates through all the
+  values in the list, adding each to sum if and only if the predicate returns
+  True for that value. When the loop has finished, this function return the
+  value accumulated in sum.
+
+
+find_value_predicate: finds the first value in the list for which the predicate
+  function p returns True. It iterates through all the values v in the list,
+  returning the first one for which p(v) is True; if the for loop returns no
+  values, return None after the loop.
+
+  Note: if there were no return None statement, and the function terminated the
+  for loop, reaching the end of this function without executing a return
+  statement, Python would automatically return None
+ 
+
+find_index_predicate: find the index of the first value in the list for which
+  the predicate function p returns True. It iterates through all the indexes i
+  in the list, returning the first one for which p(v[i]) -the predicate called
+  on the value of the index- is True; if the for loop returns no values, return
+  -1 after the loop; like find for strings, -1 specifies a non-existant index
+  (None might be another good result to return for Python).
+
+
+all_true: determine whether or not predicate function p returns True for EVERY
+  list value. It MAY iterate through all the values v in the list, returning
+  False as soon as it finds even one for which p(v) is False -not p(v) is True;
+  if the for loop returns no values, then every p(v) must have been True, so
+  this function returns True after the loop -because not p(v) was NEVER True
+ 
+any_true: determine whether or not predicate function p returns True for ANY
+  list value. It MAY iterate through all the values v in the list, returning
+  True as soon as it finds even one for which p(v) is True; if the for loop
+  returns no values, then every p(v) must have been False, so this function
+  returns False after the loop -because p(v) was NEVER True.
+ 
+
+rank: finds value's rank in the list: 1 more than the number of bigger values 
+  (number of higher ranks). For example rank(5, [5, 12, 4, 63]) returns 1 more
+  than the number of values in the list &gt; 5: 1+2 is 3. So 5 is the third
+  biggest value (ranked 3rd) in the list.
+    
+  Note: calls count_predicte with a lambda checking whether the argument lambda
+        is called on is strictly &gt; values. Without a lambda we would have to
+        write:
+
+        def rank(value,alist):
+            def pred(x)
+                return x &gt; value # refers to value in enclosing function
+            
+            return count_predicate(alist, pred)+1
+
+  Generally a function can refer to its own local names (parameters and
+     other locally declared names) and the local names of any functions in
+     which it is enclosed. The lambda is enclosed in the rank function so it
+     can (and does) refer to the parameter to "value" of the rank function.
+
+
+is_sorted: determines whether values in a list are non-decreasing: each is
+  &gt;= the one before it. It iterates through all the indexes of values in the
+  list -except the last- returning False if any are out of order (bigger than
+  the one following them); if the for loop doesn't return False, after it
+  terminates the function returns True, because no out-of-order values were
+  found
+
+  Note: All lists with 1 or 0 values are sorted; in such a case the loop
+        executes 0 times. We could write 
+
+        if len(alist) = 0 but  

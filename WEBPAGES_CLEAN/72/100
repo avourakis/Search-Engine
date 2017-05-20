@@ -1,0 +1,211 @@
+ ICS 33 Summer 2013, Code Example: Inheritance<body>
+
+ 
+
+ 
+ICS 33 Summer 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 33 Summer 2013 
+   Code Example: Inheritance 
+
+ 
+
+ 
+
+  Background 
+
+ Programming languages like Python aim to improve our ability to write programs.  The goal is for us to be able to write code that reads naturally (given an understanding of how the language works), that means what it says, that meets the necessary requirements, and that is amenable to being changed. 
+
+ The last of those is a very big deal indeed.  In real-world scenarios, code lives a lot longer than you might think; it's not at all uncommon for systems to be in real use for ten years or more.  (Checkmate, the system that you use to submit your projects, was originally written around 2002.)  Yet, in those ten years, it's not as though the systems don't change.  New features need to be added, existing problems need to be fixed, all while preserving the original functionality without breaking it, and often the later changes are written by people other than those who wrote the original system. 
+
+ The primary antidote to this problem is to divide up a program into as many separate pieces as possible, with each depending on as little knowledge as possible about the others, and with each problem solved once and only once.  Previously, we've seen that functions provide some assistance with this: for a function to make productive use of another function, all it needs to know is the  contract  that the other function specifies (i.e., what arguments it accepts and what results it gives back).  So one way to divide up a large program is into many interacting functions, with each one solving a single problem, and each making use of other functions that solve smaller parts of the problem.  And if we ever want to write two functions that are partly the same, our best move is to take the parts that are similar and write a third function that implements them, then to have the other two functions call the third — this is vastly better than copying and pasting the similarity in two places. 
+
+ We've seen, too, how classes also form part of the solution to the problem of organizing a large program, by allowing us to define new kinds of objects other than the ones that are built into Python.  Like the built-in kinds of objects, ours can store information in attributes and can provide methods to allow us to interact with them.  And by providing methods with the same signatures, two or more different kinds of objects can be used interchangeably. 
+
+ But what do we do about the problem of two classes that both need the same code — the same methods with the same bodies.  The answer lies in a Python feature called  inheritance , which allows us to define a new kind of class whose objects behave like objects of another class that's already been defined,  except  in the ways that we specify.  We've seen this previously when we define new kinds of exceptions: 
+
+  
+class GameError(Exception):
+    pass
+  
+
+ This says "A GameError object is just like any other Exception object and, other than their types, it doesn't differ from them in any way."  (The "just like any other Exception object" part is what we get when we put "Exception" in parentheses after the name of the class when we define it; the "doesn't differ from them in any way" part is because the body of our new class simply says "pass".)  Automatically, without me having to say anything else, I can now raise a GameError the same way I raise other kinds of exceptions in Python; that GameError will carry with it a traceback and other things that every other kind of exception carries.  And to get all of that, all I had to do was say that GameError  inherits  from Exception — which is the technical term for putting Exception in parentheses at the top of GameError's definition. 
+
+ Inheritance is a very powerful technique for allowing many classes to share common behavior without having to copy and paste that behavior into all of them.  This example explores the details of that technique and demonstrates how it can be used to solve a practical problem. 
+
+ 
+
+ 
+
+  Namespaces and lookup rules 
+
+ Suppose you have an object  x  of some class  C  and you write the following expression: 
+
+  
+x.hello(7, 'boo')
+  
+
+ There is a set of rules that Python uses to determine how to evaluate an expression like this.  They start like this: 
+
+  As we've seen every object has  attributes .  Those attributes are stored in the object's  namespace , a dictionary inside of the object (and note that the dictionary has a name,  x.__dict__ ).  Given the expression above, Python will first check to see if  x  contains an attribute called  hello  and, if so, whether it is a function that can be called with two arguments.
+      If  x  has no attribute  hello , Python continues to the next rule, looking in the next possible place for  hello . 
+       If  x  has an attribute  hello  that is a function that can be called with two arguments, it does so; the result of the function is the result of the expression. 
+       If  x  has an attribute  hello  that is not a function, or that is a function that cannot be called with two arguments, Python raises an exception. 
+      
+   If  hello  doesn't appear in the object  x , Python continues its search in the  class  of  x .  Classes, too, have namespaces associated with them, and those namespaces are also implemented as dictionaries.   C.__dict__  or  type(x).__dict__  would give you back that dictionary.  Inside of a class' dictionary is a collection of the methods and class variables defined in the class.  So Python will check to see if the class C contains a method  hello  that takes three arguments (the first being the "self" argument, then the other two that we passed).
+      If the class  C  has a  hello  method that can take three arguments, it calls the method; the result of the method is the result of the expression. 
+       If the class  C  has a  hello  method that cannot take three arguments, Python raises an exception. 
+       If the class  C  does not have a  hello  method, all is not lost yet, but we need to know more of the story... 
+      
+  
+
+ 
+
+  Superclasses and subclasses 
+
+ When we say that a class inherits from another class, we're introducing a relationship between the two classes.  Philosophically, that relationship is what is sometimes called an "is a" relationship; for example, our class GameError inherited from Exception, so we've effectively said "A GameError  is an  Exception."  Implicit in that relationship is the understanding that GameErrors can do whatever Exceptions can do, without us having to say any more about it.  "A GameError is an Exception."  That's a powerful thing to be able to say. 
+
+ When we've established such a relationship, we say that Exception is a  superclass  of GameError, and that GameError is a  subclass  of Exception.  (Exception is also sometimes called a  base class  of GameError; these terms are used fairly interchangeably, though the term "superclass" is more common.) 
+
+ The 'object' class 
+
+ Perhaps unbeknownst to you, you've been using inheritance already in every class you've ever written.  That's because classes that don't specify a superclass are automatically given a superclass called  object .  In other words, this class definition: 
+
+  
+class Person:
+    pass
+  
+
+ is equivalent to this one: 
+
+  
+class Person(object):
+    pass
+  
+
+ We don't generally bother to write the long form of this, since it is implied by the shorter one, but we do need to understand that this relationship is in place.  If, philosophically, an inheritance relationship establishes an "is a" relationship between the two classes, then we've effectively said "A Person is an object."  And that's not very surprising, when you think about it for a minute; a class is a blueprint for a kind of object, so it's no surprise that anything you create from that blueprint "is an object." 
+
+ You might be wondering why there's a class called  object  and why every other class would inherit from it.  The reason is that this is a way for Python to provide behavior that's common to all objects automatically.  For example, you can display any kind of object in the Python interpreter: 
+
+  
+&gt;&gt;&gt; Person()
+&lt;__main__.Person object at 0x02EC1DD0&gt;
+  
+
+ Why is that?  Because the  object  class provides an implementation of the  __repr__  method that controls how an object is displayed in the interpreter.  Unless you say otherwise, all objects of your class use that implementation, for reasons we'll see shortly. 
+
+ 
+
+ 
+
+  Namespaces and superclasses 
+
+ Consider the following two classes  A  and  B . 
+
+  
+class A:
+    def foo(self, x):
+        return x * x
+
+    def bar(self, x):
+        return x + x
+
+
+class B(A):
+    def bar(self, x):
+        return x + 1
+
+    def boo(self, x):
+        return x * 3
+  
+
+ From this, we see that the class  B  inherits from the class  A , which, in turn, inherits from the built-in class  object .  Neither  A  nor  B  objects have any attributes (because we never assigned anything to  self. anything  ), but each of these classes has a namespace which contain (more or less) the following things: 
+
+   A    method  foo(self, x)     method  bar(self, x)        B    method  bar(self, x)     method  boo(self, x)     The  object  class, too, has a namespace, which contains many things that Python provides automatically to every kind of object. 
+
+ The big question, then, is what happens when we call various methods on  A  and  B  objects.  Suppose we have an object  q  of the class  A  and an object  r  of the class  B .  Here are some examples: 
+
+   q.foo(13) 
+      Python first looks for an attribute  foo  in the object  q .   q  has no attributes, so Python continues searching elsewhere. 
+       Next, Python looks for  foo  in the class  A 's namespace.  The class  A  contains a method  foo , and that method can be called with two arguments ( self  =  q ,  x  = 13), so that's what Python does.  The method returns the square of  x , so the result is 169. 
+      
+    r.bar(12) 
+      Python first looks for an attribute  bar  in the object  r , which has no attributes. 
+       Next, Python looks for  bar  in the class  B 's namespace (since  r  is a  B  object).  The class  B  contains a method  bar , and that method can be called with two arguments ( self  =  r ,  x  = 12), so that's what Python does.  The method returns  x  + 1, so the result is 13. 
+      
+    r.foo(10) 
+      First, Python fails to find an attribute  foo  in  r . 
+       Next, Python fails to find  foo  in  B 's namespace. 
+       All is not lost.  If  foo  isn't found in  B 's namespace, Python continues searching in the namespace of  B 's superclass.   B 's superclass is  A , so Python checks to see if the class  A  defines  foo .  And, as we can see, it does, and it takes the right arguments!  So Python calls  A 's  foo  method, which squares its argument and returns 100. 
+      
+    q.boo(9) 
+      Python fails to find an attribute  boo  in  q . 
+       Python also fails to find  boo  in the class  A 's namespace. 
+       Finally, Python looks in the class  object 's namespace, but doesn't find  boo  there, either. 
+       So this object has no  boo  method; Python raises an exception. 
+      
+  
+
+ 
+
+  The story behind the story 
+
+ The general rule shown above can be boiled down simply: when you try to access something belonging to an object, Python first checks if the object has it, then checks if the object's class has it, then checks if its class' superclass has it, and so on, until it either finds what it's looking for or runs out of places to look. 
+
+ That rule isn't arbitrary; there's actually a very good reason for it, and if you know the reason, the rule is easier to remember.  When you write a class that inherits from another class, you're essentially saying "These things are like those other things,  except  here's how they're different."  The subclass specifies only the things that make its objects different from objects of the superclass; in every other way, the intent is that subclass objects are just like superclass objects. 
+
+ To make that idea a reality, Python conducts its search by starting from more specific types and moving to less specific types.  If it finds a method in a subclass, that takes precedence over what it might find in the superclass — because if a method is written in a subclass, it's intended to be part of what makes that subclass' objects different from objects of the superclass.  If not, it continues searching in the superclass, because if the subclass doesn't say that its objects are different, they should act just like objects of its superclass do. 
+
+ Consider these two classes: 
+
+  
+class Person:
+    def acting_ability(self):
+        return 0
+
+    def singing_ability(self):
+        return 0
+
+
+class ProfessionalSinger(Person):
+    def singing_ability(self):
+        return 10
+  
+
+ The spirit of what we wrote in these two classes is this: 
+
+  In general, people have no acting ability and no singing ability. 
+   However, professional singers have a higher singing ability, yet they have no acting ability; in terms of acting, they're just like everyone else. 
+  What's most useful about this is that it's all automatic.  If you have an object of one of these classes and call the  singing_ability  method, the "right thing" happens — if it's a Person object, the answer is 0; if it's a ProfessionalSinger, the answer is 10; if it's anything else, the result is an exception. 
+
+ 
+
+ 
+
+  The complete code example 
+
+ In lecture, we explored an example of writing a video game, specifically a first-person shooter in which the player navigates the world and shoots three-headed monsters with various kinds of weapons.  We obviously didn't build the entire game; we focused our energy on one tiny slice of it: 
+
+  There are many kinds of weapons.  We implement two kinds: a  water pistol  (which fires bursts of water) and a  trout gun  (which fired fish, given that the three-headed monsters are allergic). 
+   Every kind of weapon has an amount of  ammunition , i.e., the number of times it can be fired before it has no more ammunition (no more bullets, no more rockets, no more water, no more fish, or whatever else it fires). 
+   Every kind of weapon can be fired, provided that it has ammunition in it. 
+   Weapons can be  blocked , which means that they are unable to fire even though they have ammunition in them.  Water might corrode the water pistol gradually; the fish fired by the trout gun might fall apart in the barrel of the gun and jam it.  What causes a weapon to be blocked — and how often it is blocked — depends on what kind of weapon it is. 
+  Putting these ideas together, we realized that there were some things that all weapons had in common, while there were other things that made them different from one another.  This is a classic situation in which inheritance can be useful, with the commonalities being implemented in a superclass and the specifics being implemented in subclasses. 
+
+ The code example below implements these ideas using inheritance. 
+
+   weapons.py  
+  
+
+</body> 

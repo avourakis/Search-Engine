@@ -1,0 +1,82 @@
+ HelpOnVariables - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   HelpOnVariables  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    HelpOnVariables  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+                   This page tells you more how you can use variables in wiki pages. This is especially helpful within  templates , but also on "normal" wiki pages (like for signing a contribution).          Contents   
+ Predefined Variables   
+ Expanding Variables   
+ Getting Variables   
+ At Every Page Refresh   
+ When Saving the Page            
+  Predefined Variables 
+   The following variables are substituted when a page is saved.   Note that they will appear unreplaced in the preview!</strong>              Variable           
+     Description                                    
+     Example   
+       @  PAGE@       
+     Name of the page (useful for template pages)   
+      HelpOnPageCreation    
+       @  DATE@       
+     Current date in the system's format            
+     2004-08-30   
+       @  TIME@       
+     Current date and time in the user's format     
+     2004-08-30 06:38:05   
+       @  ME@         
+     Just the user's name                           
+      TheAnarcat    
+       @  USERNAME@   
+     Just the user's name (or his domain/IP)        
+      TheAnarcat    
+       @  USER@       
+     Signature "-- loginname"                       
+     --  TheAnarcat    
+       @  SIG@        
+     Dated Signature "-- loginname date time"       
+     --  TheAnarcat  2004-08-30 06:38:05   
+       @  MAILTO@     
+     A fancy mailto: link with the user's data      
+     None - on public sites, better use the Mail  To macro)   
+           
+  Expanding Variables 
+     You can use Home  Page  Name/My  Dict to expand those variables, just put a dictionary (see  HelpOnDictionaries ) there with your variables and values. For example,              VAR1:: substitution 1
+   VAR2:: substitution 2        
+  Getting Variables 
+     
+  At Every Page Refresh 
+     You can use these values using the  GetVal  macro:               &lt;&lt;GetVal(WikiDict,var1)&gt;&gt; &lt;&lt;GetVal(WikiDict,var2)&gt;&gt; &lt;&lt;GetVal(WikiDict,var3)&gt;&gt;      Renders as:                
+  When Saving the Page 
+     If the variables are set on !UserName/! MyDict  (UserName must of course be replaced as appropriate), you can get the variables when saving any page with @var1@, @var2@, ...etc. instead of the  GetVal  macro.                    Note that data in dict pages is cached and does not require opening and parsing the page file for each access to the value. In CGI, the value is fetched from a pickle, in long running process, the pickle is loaded once and then the value is accessed from memory.         Note that saving template pages and using preview does  not  expand variables. Other than that, variable expansion is very global and happens anywhere on the page, including code displays, comments, processing instructions and other "special" areas of a page you might think are excluded.       
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

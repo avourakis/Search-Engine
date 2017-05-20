@@ -1,0 +1,60 @@
+ // Maintain list of words with frequencies, sorted by pattern of letters
+//
+// A pattern is the alphabetically first string of letters that could possibly
+// be a translation of the given string, i.e. the word "MAINTAIN" would correspond
+// to the pattern "ABCDEBCF".
+
+import java.lang.*;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+
+public class WordPatterns {
+
+	// initialize WordPatterns object by reading frequency count file
+	// these two parameters should match args to freq.c
+	private final int MIN_FREQ = 10;
+	private final int MAX_FREQ = 40000;
+	
+	public WordPatterns( String codeBase ) {
+		try {
+			StringBuffer wordBuf = new StringBuffer();
+			InputStream wordStream = new GZIPInputStream(
+				new URL(codeBase + "trie.gz").openConnection().getInputStream() );
+			InputStream freqStream = new GZIPInputStream(
+				new URL(codeBase + "freq.gz").openConnection().getInputStream() );
+			
+			double logmin = Math.log(MIN_FREQ);
+			double logscale = (Math.log(MAX_FREQ)-logmin)/255.0;
+			logmin += logscale/2.0;	// make truncation look more like rounding
+			
+			char decode[] = new char[32];
+			for (int i = 0; i = 0 &amp;&amp; (buf[pos] &amp; (1= 'A' &amp;&amp; c  0; }
+		
+		private void stripStart() {
+			while (hasMoreElements()) {
+				if (!letter(thePhrase.charAt(0))) thePhrase = thePhrase.substring(1);
+				else if (thePhrase.charAt(1) == '.') thePhrase = thePhrase.substring(2);
+				else return;
+			}
+		}
+		
+		public int firstBreak(String phrase) {
+			int space = phrase.indexOf(" ");
+			int dash = phrase.indexOf("-");
+			if (dash &gt;= 0 &amp;&amp; dash = 0 &amp;&amp; dots  0 &amp;&amp; !letter(theWord.charAt(theWord.length()-1)))
+				theWord = theWord.substring(0, theWord.length() - 1);
+			return theWord;
+		}
+	}
+	public Enumeration words(String thePhrase) { return new WordEnumerator(thePhrase); }
+	
+	// how good is this phrase?
+	public long badWords(String thePhrase) {
+		long bits = 0;
+		int n = 0;
+		Enumeration e = words(thePhrase);
+		while (e.hasMoreElements()) {
+			if ( getWord( (String) e.nextElement() ) == null )
+				bits |= (1L  

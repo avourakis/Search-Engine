@@ -1,0 +1,62 @@
+ /*
+  $Id: speedtest.cc 5149 2010-03-24 23:37:18Z abehm $
+
+  Copyright (C) 2010 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license.
+
+  Date: 03/16/2007
+  Author: Rares Vernica 
+*/
+
+#include 
+
+#include 
+#include 
+#include 
+#include 
+#include 
+
+#include "appsearch.h"
+#include "input.h"
+#include "scan.h"
+#include "partenum/partenum.h"
+// #include "filtertree_old/filtertree.h"
+
+using namespace std;
+
+void run(AppSearch &amp;appsearch, const vector &amp;data, 
+         const string pathData, const string nameDataset, 
+         const unsigned editdist) 
+{
+  const unsigned queryCount = 200;
+  
+  cout  query;
+  readQuery(query, pathData, nameDataset, queryCount);
+
+  vector &gt; answer;
+  readAnswer(answer, pathData, nameDataset, queryCount, editdist);
+
+  appsearch.build();
+
+  struct timeval tv1, tv2;
+  struct timezone tz;
+  unsigned time = 0;
+
+  cerr  results;
+    gettimeofday(&amp;tv1, &amp;tz);
+    appsearch.search(data[query[que]], editdist, results);
+    gettimeofday(&amp;tv2, &amp;tz);
+    time += (tv2.tv_sec - tv1.tv_sec) * 1000000 + (tv2.tv_usec - tv1.tv_usec);
+
+    // integrity check
+    set resultsSet(results.begin(), results.end());
+    if (resultsSet != answer[que]) {
+      cout (time) / queryCount / 1000  data;
+  readString(data, pathData + nameDataset);
+
+  AppSearch *appsearch;
+  
+  if (type == 0) {
+    cout  

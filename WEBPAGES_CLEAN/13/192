@@ -1,0 +1,174 @@
+ min_strip_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::min_strip_2  
+
+
+  
+   
+     
+     
+   
+
+   
+
+  
+   
+     
+     
+  
+ 
+
+  Definition The function computes a minimum width enclosing strip
+   S(P)  of a given convex point set  P . A strip is the closed region
+  bounded by two  parallel  lines in the plane. Note that  S(P)  is not
+  unique in general. The focus on convex sets is no restriction, since any
+  parallelogram enclosing  P  - as a convex set - contains the convex
+  hull of  P . For general point sets one has to compute the convex hull
+  as a preprocessing step.
+ 
+
+ #include &lt; CGAL/min_quadrilateral_2.h &gt; 
+  
+
+    
+         
+    template &lt; class ForwardIterator, class OutputIterator, class Traits &gt;
+         
+            
+           
+OutputIterator
+         
+          
+             
+     min_strip_2  (         
+    ForwardIterator points_begin, 
+
+ForwardIterator points_end, 
+
+OutputIterator o, 
+
+Traits&amp; t = Default_traits)     
+        
+    
+            
+
+computes a minimum enclosing strip of the point set described by
+  [ points_begin ,  points_end ), writes its two bounding lines
+  to  o  and returns the past-the-end iterator of this sequence. 
+
+If the input range is empty or consists of one element only,  o 
+  remains unchanged.
+  
+
+  Precondition:  The points denoted by the range [ points_begin ,
+   points_end ) form the boundary of a simple convex polygon  P 
+  in counterclockwise  orientation .
+  
+
+The geometric types and operations to be used for the computation
+  are specified by the traits class parameter  t . The parameter
+  can be omitted, if  ForwardIterator  refers to a two-dimensional
+  point type from one the C GAL  Kernels. In this case, a default
+  traits class (  Min_quadrilateral_default_traits_2 &lt; Kernel &gt; ) is
+  used.
+  
+
+  Requirement:     If  Traits  is specified, it is a model for
+      MinQuadrilateralTraits_2   and the value type  VT  of
+     ForwardIterator  is  Traits:: Point_2  . Otherwise  VT 
+    is   CGAL::Point_2 &lt; Kernel &gt;  for some kernel   Kernel  .
+     OutputIterator  accepts  Traits:: Line_2   as value type.
+     
+
+  See Also   CGAL::min_rectangle_2     CGAL::min_parallelogram_2     MinQuadrilateralTraits_2     CGAL::Min_quadrilateral_default_traits_2 &lt; Kernel &gt; 
+ 
+
+  Implementation We use a rotating caliper
+  
+   
+ algorithm [ Tou83 ]
+  with worst case running time linear in the number of input points.
+ 
+
+  Example The following code generates a random convex polygon
+   P  with 20 vertices and computes the minimum enclosing
+  strip of  P .
+ 
+
+  #include &lt;CGAL/ Cartesian .h&gt;
+#include &lt;CGAL/ Polygon_2 .h&gt;
+#include &lt;CGAL/point_generators_2.h&gt;
+#include &lt;CGAL/ random_convex_set_2 .h&gt;
+#include &lt;CGAL/min_quadrilateral_2.h&gt;
+#include &lt;iostream&gt;
+
+struct  Kernel  : public  CGAL::Cartesian &lt;double&gt; {};
+
+typedef  Kernel::Point_2                             Point_2 ;
+typedef  Kernel::Line_2                              Line_2 ;
+typedef  CGAL::Polygon_2 &lt; Kernel &gt;                    Polygon_2 ;
+typedef  CGAL::Random_points_in_square_2 &lt; Point_2 &gt;  Generator;
+
+int main()
+{
+  // build a random convex 20-gon p
+   Polygon_2  p;
+   CGAL::random_convex_set_2 (20, std::back_inserter(p), Generator(1.0));
+  std::cout &lt;&lt; p &lt;&lt; std::endl;
+
+  // compute the minimal enclosing strip p_m of p
+   Line_2  p_m[2];
+   CGAL::min_strip_2 (p.vertices_begin(), p.vertices_end(), p_m);
+  std::cout &lt;&lt; p_m[0] &lt;&lt; "\n" &lt;&lt; p_m[1] &lt;&lt; std::endl;
+
+  return 0;
+} 
+ 
+ 
+
+    Next:    Min_quadrilateral_default_traits_2&lt;Kernel&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

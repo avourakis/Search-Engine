@@ -1,0 +1,88 @@
+ Hobbes Genome Sequence Mapping, UC Irvine<body> 
+  
+   
+   Hobbes   
+  Genome Sequence Mapping  
+  Information Systems Group       Institute for Genomics and Bioinformatics  
+  Bren School of ICS  UC Irvine  
+    
+ 
+  
+ 
+    About  
+  Downloads  
+  Quick Start  
+  Examples  
+  Manual  
+  People  
+  FAQ  
+  Contact  
+  
+
+
+ 
+
+ Examples 
+
+   Data sets  
+ 1. Human Genome (HG18 -  hg18.fa )  
+ 
+ hg76_500k.fastq : 500k single-end reads of length 76bp.   
+- We picked the fist 500k reads from  DRR000617_1.fastq .
+ 
+
+  
+ hg100_1m.fastq : 1 million single-end reads of length 100bp.  
+- We picked the first 1 million reads from  SRR062634_1.filt.fastq .
+ 
+
+  
+ hg100_1m_pe1.fq  &amp;  hg100_1m_pe2.fq : 1 million paired-end reads of length 100bp.  
+- We picked the first 1 million pairs of reads from  SRR062634_1.filt.fastq &amp; SRR062634_2.filt.fastq 
+ 
+
+  2. Caenorhabdities Elegans (WormBase WS201 -  ce.fa ) 
+ 
+ ce100_1m.fastq : 1 million single-end reads of length 100bp.  
+- We picked the first 1 million reads from  SRR065390_1.fastq 
+ 
+
+  3. Drosophila Melanogaster (FlyBase release 5.42 -  dm.fa ) 
+ 
+ dm100_1m.fastq : 1 million single-end reads of length 100bp for D. melanogaster  
+- We picked the first 1 million reads from  SRR497711_1.fastq 
+ 
+    Constructing Hobbes Indexes 
+ 
+HG18  ./hobbes-index --sref hg18.fa -i hg18.hix -g 11 -p 4 
+  
+C. elegans  ./hobbes-index --sref ce.fa -i ce.hix -g 11 -p 4 
+   
+D. melanogaster  ./hobbes-index --sref dm.fa -i dm.hix -g 11 -p 4 
+    Running Hobbes for Single-End Reads  
+
+  1. Edit Distance  
+  
+genome = HG18, read length = 100bp, # of reads = 1 million, threshold = 5  ./hobbes -q hg100_1m.fastq --sref hg18.fa -i hg18.hix -a --indel -v 5 -n 1000000 -p 1 &gt; out.sam   ./hobbes -q hg100_1m.fastq --sref hg18.fa -i hg18.hix -a --indel -v 5 -n 1000000 -p 16 &gt; out.sam 
+   
+genome = C. elegans, read length = 100bp, # of reads = 1 million, threshold = 5  ./hobbes -q ce100_1m.fastq --sref ce.fa -i ce.hix -a --indel -v 5 -n 1000000 -p 1 &gt; out.sam   ./hobbes -q ce100_1m.fastq --sref ce.fa -i ce.hix -a --indel -v 5 -n 1000000 -p 16 &gt; out.sam 
+   
+genome = D. melanogaster, read length = 100bp, # of reads = 1 million, threshold = 5  ./hobbes -q dm100_1m.fastq --sref dm.fa -i dm.hix -a --indel -v 5 -n 1000000 -p 1 &gt; out.sam   ./hobbes -q dm100_1m.fastq --sref dm.fa -i dm.hix -a --indel -v 5 -n 1000000 -p 16 &gt; out.sam 
+
+   2. Hamming Distance  
+ 
+genome = HG18, read length = 76bp, # of reads = 500k, threshold = 3  ./hobbes -q hg76_500k.fastq --sref hg18.fa -i hg18.hix -a --hamming -v 3 -n 500000 -p 1 &gt; out.sam   ./hobbes -q hg76_500k.fastq --sref hg18.fa -i hg18.hix -a --hamming -v 3 -n 500000 -p 16 &gt; out.sam 
+   
+genome = HG18, read length = 100bp, # of reads = 500k, threshold = 5  ./hobbes -q hg100_1m.fastq --sref hg18.fa -i hg18.hix -a --hamming -v 5 -n 500000 -p 1 &gt; out.sam   ./hobbes -q hg100_1m.fastq --sref hg18.fa -i hg18.hix -a --hamming -v 5 -n 500000 -p 16 &gt; out.sam 
+    Running Hobbes for Paired-End Reads  
+  1. Edit Distance  
+ 
+genome = HG18, read length = 100bp, # of reads = 1 million, threshold = 5  ./hobbes --pe --seqfq1 hg100_1m_pe1.fq --seqfq2 hg100_1m_pe2.fq --sref hg18.fa -i hg18.hix -a --indel -v 5 --min 110 --max 290 -n 1000000 -p 1 &gt; out.sam   ./hobbes --pe --seqfq1 hg100_1m_pe1.fq --seqfq2 hg100_1m_pe2.fq --sref hg18.fa -i hg18.hix -a --indel -v 5 --min 110 --max 290 -n 1000000 -p 16 &gt; out.sam 
+
+   2. Hamming Distance  
+ 
+genome = HG18, read length = 100bp, # of reads = 500k, threshold = 5  ./hobbes --pe --seqfq1 hg100_1m_pe1.fq --seqfq2 hg100_1m_pe2.fq --sref hg18.fa -i hg18.hix -a --hamming -v 5 --min 110 --max 290 -n 500000 -p 1 &gt; out.sam   ./hobbes --pe --seqfq1 hg100_1m_pe1.fq --seqfq2 hg100_1m_pe2.fq --sref hg18.fa -i hg18.hix -a --hamming -v 5 --min 110 --max 290 -n 500000 -p 16 &gt; out.sam 
+    
+
+
+   � 2015 ISG | Website maintained by Jongik Kim | Created by  Yun Huang  | Original design   Andreas Viklund      Last Updated on Jul 13, 2015   </body> 

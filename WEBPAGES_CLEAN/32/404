@@ -1,0 +1,35 @@
+ FOCL- Pazzani &amp; Kibler(1992)<body>
+
+  FOCL- Pazzani &amp; Kibler(1992)  
+      Typed Logic
+ 
+    no_payment_due(Name) :- enlist(Name, A)
+ 
+   no_payment_due(Name) :- enlist(A, Name)
+ 
+   no_payment_due(Name) :- enlist(Name, Name)
+ 
+   
+ 
+    Background Knowledge: Possibly incorrect domain theory 
+ 
+    no_payment_due(Name) :- continuouslyt(Name) :- financial_deferment(Name)
+ 
+   eligible_for_deferment(Name) :- military_deferment(Name)
+ 
+   
+ 
+   military_deferment(Name) :- male(Name) &amp; enlist(Name, O) &amp;
+ 
+                               armed_forces(O)
+ 
+   financial_deferment(Name) :- unemployed(Name)
+ 
+   financial_deferment(Name) :- enrolled(Name, uci, N). 
+    
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

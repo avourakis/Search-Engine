@@ -1,0 +1,99 @@
+ Chimera 2.0 Tutorial: swing CLASSPATH setup for Solaris<body>
+ 
+
+ How to set CLASSPATH in Solaris and how to set swing in the CLASSPATH 
+
+  
+This section will explain how to set the CLASSPATH environment variable
+to include swing 1.0.1, the specific file needed is swingall.jar.
+This assumes that you have swing downloaded and placed somewhere on your system.  
+This section will begin with a disscussion of environment variables 
+before discussing the CLASSPATH environment variable and how to set it
+to the proper swing files.
+ 
+
+ Note: The examples use the tcsh shell.
+ 
+
+ Environment Variables in Unix 
+
+   Unix uses environment variables to provide 
+information to applications.  
+The Unix shell for instance sets up some variables automatically (LOGNAME,
+HOME, etc.) when you login.  These variables may then be used by other 
+applications you use.  For instance, the X Window System uses the value
+of the DISPLAY environment variable to determine which host, window, and 
+screen to display on.  
+ 
+
+ The CLASSPATH environment variable 
+
+  
+CLASSPATH is the environment variable that the Java interpretor uses to 
+look for Java byte-code (located in files that end in .class, .jar, etc.).  
+This
+variable must be set to include swing 1.0.1 which Chimera 2.0 uses.
+(Note: If you are using JDK 1.2 beta 3 or later, then swing 1.0.1 is already 
+included with JFC 1.1 whicch comes
+with it so you do not have to download swing and add it to your CLASSPATH.)
+ 
+
+ Displaying the CLASSPATH 
+
+ 
+To display your current CLASSPATH type the command 
+  echo $CLASSPATH  
+ 
+This
+command asks your shell to display the string associated with the
+CLASSPATH environment variable.
+ 
+
+   
+
+ 
+Note: The CLASSPATH has no value.  In this example, we will construct 
+the CLASSPATH environment variable.  If you have items already in your
+CLASSPATH variable you wish to keep, consult any of these links for 
+examples on how to append to an existing CLASSPATH.
+ 
+
+  
+ 
+Example of appending CLASSPATH with the path to the JSDK on Solaris 
+  
+ 
+Example of appending CLASSPATH with the path to Rivendell on Solaris 
+  
+ 
+Example of appending CLASSPATH with the path to MSXML on Solaris  
+   Setting the CLASSPATH to the swing files 
+
+  To set the CLASSPATH variable, you may use the command setenv.
+For Chimera 2.0, you need to specify the location of 
+the swing 1.0.1 file used by Chimera 2.0.
+The swing 1.0.1 files is:
+ 
+  swingall.jar
+   Note: swingall.jar includes the swing.jar, motif.jar, windows.jar, and 
+beaninfo.jar files. 
+
+  You can use the setenv command in the following way when you
+have no CLASSPATH value. The command will look like this:
+  setenv CLASSPATH  path_to_swingall.jar  
+ 
+In the example below, the path to where swing 1.0.1 was located 
+in the tester's environment.
+ 
+
+   
+
+  Note: You should verify that the CLASSPATH has been set by using the 
+command echo $CLASSPATH which was described earlier.
+ 
+
+  You now have the swing file you need for Chimera 2.0 set in the 
+CLASSPATH
+ 
+
+</body> 

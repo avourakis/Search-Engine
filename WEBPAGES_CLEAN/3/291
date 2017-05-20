@@ -1,0 +1,170 @@
+ Software: AJANA 
+
+ 
+
+  AJANA: A General Framework for Source-Code-Level  Interprocedural 
+Dataflow Analysis of  AspectJ  Software    
+
+  Thanks to  Aleksandra Seremina  for providing a  Romanian
+translation  of this webpage.     
+
+  Aspect-oriented software presents
+new challenges for the designers of static analyses. Our work aims to establish
+systematic foundations for dataflow analysis of  AspectJ 
+software. We propose a control- and data-flow program representation for  AspectJ  programs, as basis for subsequent  interprocedural  dataflow analyses. The representation is
+built at the source code level and captures the semantic intricacies of various
+ pointcut  designators, multiple applicable advices per
+joint point, dynamic advices, and general flow of data to, from, and between
+advices.     
+
+  We also propose two dataflow
+analyses for  AspectJ  software: (1) a novel object
+effect analysis based on a flow- and context-sensitive must-alias analysis, and
+(2) a dependence analysis used for constructing the system dependence graph for
+slicing, refactoring, change impact analysis, etc. Both analyses are
+representative of a general category of dataflow analyses referred to as  interprocedural  distributed environment (IDE) problems. The
+two analyses are built on top of the proposed representation, and take into
+account the complex flow of control and data due to aspect-oriented features.
+We present a study of the proposed techniques on 37 program versions, using our
+AJANA analysis framework which is based on the   abc    AspectJ  compiler. The
+results show that the representation can be built efficiently, that it is
+superior to an approach based on the woven  bytecode ,
+and that it enables analyses that are both faster and more precise. These
+findings strongly indicate that the proposed approach is a promising candidate
+for a foundation upon which various  interprocedural 
+analyses for  AspectJ  can be designed and built.    
+
+  
+
+   
+
+  Download (Version 0.1, Released on March 8, 2009)    
+
+    ajana-0.1.jar  - source and binary    
+   
+
+   
+
+  Publications    
+
+   " AJANA:
+     A General Framework for Source-Code-Level  Interprocedural 
+     Dataflow Analysis of  AspectJ  Software " 
+     by Guoqing Xu and Atanas Rountev  In  Proc. International Conference on
+     Aspect-Oriented Software  Developement  (AOSD'08),
+     Brussels, Belgium, March, 2008. [ PDF ]
+     [ Talk ]     
+   " Regression
+     Test Selection for  AspectJ  Software " 
+     by Guoqing Xu and Atanas Rountev 
+     In Proc. ACM SIGSOFT/IEEE International Conference on Software Engineering
+     (ICSE'07), Minneapolis, MN, May, 2007. [ PDF ]
+     [ Talk ]     
+   
+
+   
+
+  AJANA Usage:    
+
+  This section shows how to use
+AJANA framework.     
+
+     prerequisite     :    
+     Before being able to use AJANA, you have to install the   AspectBench 
+     compiler , which may in turn require the installation of the  Soot  program analysis
+     framework.     
+    Where
+     to start:    
+     The main entrance of the program is    analysis.aspectj.Main   ,
+     which takes five parameters:     
+      arg   [0] : the directory containing all benchmarks     
+     arg   [1]: the benchmark name     
+     arg   [2]: benchmark version -- this does not make sense
+      now, though it used to work for test selection purpose    
+     arg   [3]: main class name     
+     arg   [4]: client analysis selector -- 0 for object
+      effect analysis; 1 for slicing     
+     Example:    if the  bytecode 
+of a project    dcm    is
+located at directory     
+
+   /home/ gxu /projects/  dcm   / v1/       
+
+   ,the    command
+line  args  that you need to give are the follows,     
+
+   /home/ gxu /projects/ dcm    dcm   v1  certrevsim.Simulator 
+0        
+
+    Usage
+     details:     
+     Currently, the tool does not support the use of  per  pointcut  .
+     You can simply build your analysis on top of the AJIG representation
+     constructed by AJANA, by instantiating class     
+      analysis.aspectj.ajig.AspectJInterModuleGraph         
+
+  , and then invoking method     
+
+      AspectJInterModuleGraph.build         (        SootMethod         startMethod )        
+
+  . The AJIG control flow and data flow representations are
+described precisely in our ICSE'07 and AOSD'08 papers, respectively.     
+
+    Sample
+     analysis:    
+     You can look at my effect analysis     
+    method      build  
+in    analysis.aspectj.summary.SummaryAnalysis       
+
+   for    the
+example of manipulating AJIG.     
+
+  
+
+   
+
+  Contributions    
+
+  You can contribute to AJANA by
+sending bug reports, code patches, and suggestions. Please send your inquiries
+to  xug  at  cse  dot  ohio -state dot  edu .     
+
+  
+
+   
+
+  People    
+
+    Harry Xu     
+    Nasko Rountev     
+   
+
+   
+
+  Publications that make use of AJANA    
+
+   " Unweaving
+     the impact of aspect changes in  AspectJ  " 
+     by Luca  Cavallaro  and  Mattia 
+      Monga  
+     In Proc. the 2009 workshop on Foundations of Aspect-Oriented Languages
+     (FAOL), Charlottesville, VA, March, 2009.     
+   
+
+   
+
+  Acknowledgement    
+
+  We thank all of the developers of the    abc  
+  AspectJ  compiler, without whom the research would
+not happen.     
+
+  
+
+   
+
+  Last updated: March 8, 2009     
+
+ 
+
+</body> 

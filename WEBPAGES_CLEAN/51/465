@@ -1,0 +1,55 @@
+ INF 133 Fall 2010: User Interaction Software<body>
+ Informatics 133: User Interaction Software  
+ Fall 2010-2011 
+ Department of Informatics 
+ Donald Bren School of Information and Computer Sciences  
+  
+    Home  |  Administrative Policies   |  Course Structure  |  Materials  |  Assignment Schedule   
+ 
+ 
+    Assignment 02  :  
+    Goal: Gain experience with the real-time web</strong> 
+   
+          This is a solo assignment
+              Identify 5 JSON/XML data sources (URLs) that have geo-data in them. 
+                Create a web-page that loads one of the 5 data-sources using AJAX, parses it and presents the data as a table on the webpage.
+                   You must deal with cross-site data requests, 
+                   You must pick a library to parse and manipulate the data 
+                   You must insert/modify a javascript structure into a web-page 
+                   For the table
+                      It must have one row for every entry in the feed 
+                       Each row must have a description of the feed entry and the associated geo-data (at least)  
+                       The number of rows must *not* be hardcoded into the HTML  
+                      
+                  
+               Turn in a link to your web-page using the EEE Quiz Mechanism
+                  The web-page should list the  5 data sources (by URL) and a hand written description of what they are 
+                   Also on the web page should be a description of how you accomplished your data-parsing 
+                   Also on the web page is the  table that is the result of your parsing (it should generate itself from a live AJAX call) 
+                  
+              
+           Resources:
+              a proxy program which will get around the cross-site data restrictions:
+                  Please note that this file must be on a machine that has both php and curl installed (students.ics.uci.edu is one such machine). The myProxy.php file must be on the same domain as the one that is executing the javascript. That's the whole point of why you need it.                   
+                   When it is called with a url like this:
+                      http://www.mydomain.com/myProxy.php?http://www.yourdomain.com/file.xml 
+                      
+                   It will use php and curl to load www.yourdomain.com/file.xml and send it back as if it were on the local machine  
+                   For those who were working with me to debug this for XML the problem was that the mime/type wasn't being set correctly and jQuery was confused. The copy below does the right thing  
+                     myProxy.php  (right-click to download)  
+                     
+               an example of a webpage which loads 3 AJAX data sources, one by XML , one by JSON and one by JSONP.
+              Please note the following:
+                  It won't run where it is stored because www.ics.uci.edu won't run php 
+                   Notice how the proxy is only used on XML and JSON fetching. JSONP fetches data as a remote script and that isn't blocked. 
+                   Notice that when you get xml back you access the data structure differently than when you access json and all three are accessed differently based on which data you are working with. 
+                       Step14.html  
+                        Step14.js  
+                      
+                   To see it run live, click  here   
+                  
+              
+           This is all due Tuesday morning at midnight (10/19 12:00am) right right as it becomes Tuesday.  
+          
+ 
+</body> 

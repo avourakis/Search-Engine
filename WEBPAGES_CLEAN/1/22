@@ -1,0 +1,791 @@
+ 
+XmlFileSystemModel
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.remoteView.XmlModel 
+ 
+Class XmlFileSystemModel 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.remoteView.XmlModel.XmlFileSystemModel 
+ 
+    public class  XmlFileSystemModel   extends java.lang.Object    
+   
+
+
+  
+     
+ Field Summary   
+    
+ static java.lang.String   
+    COPY_SOURCE   
+
+ 
+            
+    
+ static java.lang.String   
+    COPYING   
+
+ 
+            
+    
+ static java.lang.String   
+    DELETING   
+
+ 
+            
+    
+ static java.lang.String   
+    FAILED_COPY   
+
+ 
+            
+    
+ static int   
+    FILE   
+
+ 
+            
+    
+ static int   
+    FIND_FILES_ONLY   
+
+ 
+            
+    
+ static int   
+    FIND_FOLDERS_AND_FILES   
+
+ 
+            
+    
+ static int   
+    FIND_FOLDERS_ONLY   
+
+ 
+            
+    
+ static int   
+    FOLDER   
+
+ 
+            
+    
+ static java.lang.String   
+    NORMAL   
+
+ 
+            
+    
+ static java.lang.String   
+    ROOT_ID   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      XmlFileSystemModel  (java.io.File file) 
+
+ 
+          XmlFileSystemModel(File myFile) this constructor instantiates the file
+ system by taking in an already-existing file 
+      XmlFileSystemModel  (java.lang.String userid) 
+
+ 
+          XmlFileSystemModel(String userid) call this constructor is the user has
+ just registered 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    browseFolder  (java.lang.String folderID) 
+
+ 
+            
+    
+  boolean   
+    checkFileName  (java.lang.String name,
+              java.lang.String folderId) 
+
+ 
+          Check if in the folderId folder there is the filename name return true is
+ there isn't, false otherwise 
+    
+  boolean   
+    checkFolderName  (java.lang.String name,
+                java.lang.String folderId) 
+
+ 
+            
+    
+  void   
+    createFile  (java.lang.String parentFolderId,
+            FileObjectData  file) 
+
+ 
+            
+    
+  void   
+    createFolder  ( FileObjectData  folder) 
+
+ 
+          Create a folder underneath the currentFolder. 
+    
+  void   
+    createFolder  (java.lang.String parentFolderId,
+              FileObjectData  folder) 
+
+ 
+            
+    
+  void   
+    deleteFile  ( FileObjectData  file) 
+
+ 
+            
+    
+  void   
+    deleteFolder  ( FileObjectData  folder) 
+
+ 
+            
+    
+  java.lang.String[]   
+    find  (java.lang.String keyword,
+     int option) 
+
+ 
+          String[] find(String keyword, int option), where 'option' is one of the
+ following: FIND_FILES, FIND_FILES_ONLY, or FIND_FOLDERS_ONLY Returns a
+ String[] with either all fileIDs, all folderIDs, or a combination of
+ folder and fileIDs that match the keyword the user is looking for 
+    
+  java.lang.String   
+    getCurrentFolderID  () 
+
+ 
+            
+    
+  java.lang.String   
+    getCurrentFolderName  () 
+
+ 
+            
+    
+  java.lang.String   
+    getFileIdByIndex  (java.lang.String index) 
+
+ 
+            
+    
+  int   
+    getFileIndex  (java.lang.String fileID) 
+
+ 
+            
+    
+  long   
+    getFileModified  (java.lang.String fileID) 
+
+ 
+            
+    
+  java.lang.String   
+    getFileName  (java.lang.String fileID) 
+
+ 
+            
+    
+  java.lang.String   
+    getFileNameByIndex  (java.lang.String index) 
+
+ 
+            
+    
+  java.lang.String[]   
+    getFilesContained  (java.lang.String folderID) 
+
+ 
+            
+    
+  long   
+    getFileSize  (java.lang.String fileID) 
+
+ 
+            
+    
+  long   
+    getFolderModified  (java.lang.String fileID) 
+
+ 
+            
+    
+  java.lang.String   
+    getFolderName  (java.lang.String folderID) 
+
+ 
+            
+    
+  java.lang.String[]   
+    getFoldersContained  (java.lang.String folderID) 
+
+ 
+            
+    
+  int   
+    getNumFilesContained  () 
+
+ 
+            
+    
+  int   
+    getNumFoldersContained  () 
+
+ 
+            
+    
+  java.lang.String   
+    getStatus  (java.lang.String fileID) 
+
+ 
+            
+    
+  int   
+    getTotalNumFilesContained  () 
+
+ 
+            
+    
+  int   
+    getTotalNumFoldersContained  () 
+
+ 
+            
+    
+  java.lang.String   
+    getUserid  () 
+
+ 
+            
+    
+  boolean   
+    isFile  (java.lang.String id) 
+
+ 
+          boolean isFile(String id) Returns true if the parameter fileID is indeed
+ a file somewhere under the root directory 
+    
+  boolean   
+    isFolder  (java.lang.String id) 
+
+ 
+            
+    
+  void   
+    moveFilesUnder  (java.lang.String[] fileIDs,
+               java.lang.String folderDest) 
+
+ 
+            
+    
+  void   
+    moveFolderUnder  (java.lang.String folderSrc,
+                java.lang.String folderDest) 
+
+ 
+            
+    
+  void   
+    oneLevelUp  () 
+
+ 
+            
+    
+  java.io.File   
+    retrieveStructure  () 
+
+ 
+          public File retrieveStructure() return the XML document file in the most
+ current state CALLED WHEN NEED TO PUSH XML ONTO DB 
+    
+  void   
+    setFileModified  (java.lang.String fileID,
+                long newModified) 
+
+ 
+            
+    
+  void   
+    setFileSize  (java.lang.String fileID,
+            long newSize) 
+
+ 
+            
+    
+  void   
+    setFolderToCurrentPath  (java.lang.String folderID) 
+
+ 
+            
+    
+  void   
+    setStatus  (java.lang.String fileID,
+          java.lang.String newStatus) 
+
+ 
+            
+    
+  void   
+    toRoot  () 
+
+ 
+            
+    
+  void   
+    updateStructure  () 
+
+ 
+          public void updateStructure() physically rewrite the XML document file in
+ the most current state 
+    
+  java.lang.String[]   
+    wipeOutAll  () 
+
+ 
+          BigInt[] wipeOutAll() traverse the whole tree, find and return all
+ fileIDs for deletion NOTE: THE ACTUAL DELETION OF FILE CONTENTS IS LEFT
+ TO THE SYSTEM, THIS XML WRAPPER MERELY RIDS OF THE XML FILE STRUCTURE 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+ROOT_ID 
+ 
+public static final java.lang.String  ROOT_ID  
+        
+FIND_FILES_ONLY 
+ 
+public static final int  FIND_FILES_ONLY  
+    See Also:    Constant Field Values        
+FIND_FOLDERS_ONLY 
+ 
+public static final int  FIND_FOLDERS_ONLY  
+    See Also:    Constant Field Values        
+FIND_FOLDERS_AND_FILES 
+ 
+public static final int  FIND_FOLDERS_AND_FILES  
+    See Also:    Constant Field Values        
+FILE 
+ 
+public static final int  FILE  
+    See Also:    Constant Field Values        
+FOLDER 
+ 
+public static final int  FOLDER  
+    See Also:    Constant Field Values        
+NORMAL 
+ 
+public static final java.lang.String  NORMAL  
+    See Also:    Constant Field Values        
+DELETING 
+ 
+public static final java.lang.String  DELETING  
+    See Also:    Constant Field Values        
+COPYING 
+ 
+public static final java.lang.String  COPYING  
+    See Also:    Constant Field Values        
+COPY_SOURCE 
+ 
+public static final java.lang.String  COPY_SOURCE  
+    See Also:    Constant Field Values        
+FAILED_COPY 
+ 
+public static final java.lang.String  FAILED_COPY  
+    See Also:    Constant Field Values      
+    
+ Constructor Detail   
+     
+XmlFileSystemModel 
+ 
+public  XmlFileSystemModel (java.io.File file) 
+  XmlFileSystemModel(File myFile) this constructor instantiates the file
+ system by taking in an already-existing file
+ 
+       
+XmlFileSystemModel 
+ 
+public  XmlFileSystemModel (java.lang.String userid) 
+  XmlFileSystemModel(String userid) call this constructor is the user has
+ just registered
+ 
+     
+    
+ Method Detail   
+     
+retrieveStructure 
+ 
+public java.io.File  retrieveStructure () 
+  public File retrieveStructure() return the XML document file in the most
+ current state CALLED WHEN NEED TO PUSH XML ONTO DB
+ 
+     
+      
+updateStructure 
+ 
+public void  updateStructure () 
+  public void updateStructure() physically rewrite the XML document file in
+ the most current state
+ 
+     
+      
+wipeOutAll 
+ 
+public java.lang.String[]  wipeOutAll () 
+  BigInt[] wipeOutAll() traverse the whole tree, find and return all
+ fileIDs for deletion NOTE: THE ACTUAL DELETION OF FILE CONTENTS IS LEFT
+ TO THE SYSTEM, THIS XML WRAPPER MERELY RIDS OF THE XML FILE STRUCTURE
+ 
+     
+      
+createFile 
+ 
+public void  createFile (java.lang.String parentFolderId,
+                        FileObjectData  file)
+                throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+createFolder 
+ 
+public void  createFolder (java.lang.String parentFolderId,
+                          FileObjectData  folder)
+                  throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+createFolder 
+ 
+public void  createFolder ( FileObjectData  folder) 
+  Create a folder underneath the currentFolder.
+ 
+     Parameters:    parentFolderId  -   folder  -     
+      
+deleteFile 
+ 
+public void  deleteFile ( FileObjectData  file)
+                throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+deleteFolder 
+ 
+public void  deleteFolder ( FileObjectData  folder)
+                  throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+getFileName 
+ 
+public java.lang.String  getFileName (java.lang.String fileID)
+                             throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+getFileNameByIndex 
+ 
+public java.lang.String  getFileNameByIndex (java.lang.String index)
+                                    throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+getFileIdByIndex 
+ 
+public java.lang.String  getFileIdByIndex (java.lang.String index)
+                                  throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+getFileSize 
+ 
+public long  getFileSize (java.lang.String fileID) 
+     
+     
+getFileIndex 
+ 
+public int  getFileIndex (java.lang.String fileID) 
+     
+     
+getFileModified 
+ 
+public long  getFileModified (java.lang.String fileID) 
+     
+     
+getFolderModified 
+ 
+public long  getFolderModified (java.lang.String fileID) 
+     
+     
+getCurrentFolderID 
+ 
+public java.lang.String  getCurrentFolderID () 
+     
+     
+getCurrentFolderName 
+ 
+public java.lang.String  getCurrentFolderName () 
+     
+     
+getFolderName 
+ 
+public java.lang.String  getFolderName (java.lang.String folderID)
+                               throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+setFileSize 
+ 
+public void  setFileSize (java.lang.String fileID,
+                        long newSize)
+                 throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+setFileModified 
+ 
+public void  setFileModified (java.lang.String fileID,
+                            long newModified)
+                     throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+getNumFoldersContained 
+ 
+public int  getNumFoldersContained () 
+     
+     
+getTotalNumFoldersContained 
+ 
+public int  getTotalNumFoldersContained () 
+     
+     
+getNumFilesContained 
+ 
+public int  getNumFilesContained () 
+     
+     
+getTotalNumFilesContained 
+ 
+public int  getTotalNumFilesContained () 
+     
+     
+setFolderToCurrentPath 
+ 
+public void  setFolderToCurrentPath (java.lang.String folderID)
+                            throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+getFilesContained 
+ 
+public java.lang.String[]  getFilesContained (java.lang.String folderID)
+                                     throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+getFoldersContained 
+ 
+public java.lang.String[]  getFoldersContained (java.lang.String folderID)
+                                       throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+browseFolder 
+ 
+public void  browseFolder (java.lang.String folderID)
+                  throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+oneLevelUp 
+ 
+public void  oneLevelUp () 
+     
+     
+toRoot 
+ 
+public void  toRoot () 
+     
+     
+checkFileName 
+ 
+public boolean  checkFileName (java.lang.String name,
+                             java.lang.String folderId) 
+  Check if in the folderId folder there is the filename name return true is
+ there isn't, false otherwise
+ 
+     Parameters:    name  -   folderId  - 
+    Returns:   
+   Throws: 
+    FolderNotExistException     
+      
+checkFolderName 
+ 
+public boolean  checkFolderName (java.lang.String name,
+                               java.lang.String folderId) 
+     
+     
+getStatus 
+ 
+public java.lang.String  getStatus (java.lang.String fileID)
+                           throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+setStatus 
+ 
+public void  setStatus (java.lang.String fileID,
+                      java.lang.String newStatus)
+               throws  FileNotExistException  
+     Throws: 
+    FileNotExistException     
+     
+isFile 
+ 
+public boolean  isFile (java.lang.String id) 
+  boolean isFile(String id) Returns true if the parameter fileID is indeed
+ a file somewhere under the root directory
+ 
+     
+      
+isFolder 
+ 
+public boolean  isFolder (java.lang.String id) 
+     
+     
+getUserid 
+ 
+public java.lang.String  getUserid () 
+     
+     
+find 
+ 
+public java.lang.String[]  find (java.lang.String keyword,
+                               int option) 
+  String[] find(String keyword, int option), where 'option' is one of the
+ following: FIND_FILES, FIND_FILES_ONLY, or FIND_FOLDERS_ONLY Returns a
+ String[] with either all fileIDs, all folderIDs, or a combination of
+ folder and fileIDs that match the keyword the user is looking for
+ 
+     
+      
+moveFolderUnder 
+ 
+public void  moveFolderUnder (java.lang.String folderSrc,
+                            java.lang.String folderDest)
+                     throws  FolderNotExistException  
+     Throws: 
+    FolderNotExistException     
+     
+moveFilesUnder 
+ 
+public void  moveFilesUnder (java.lang.String[] fileIDs,
+                           java.lang.String folderDest) 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

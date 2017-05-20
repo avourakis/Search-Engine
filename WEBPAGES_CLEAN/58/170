@@ -1,0 +1,194 @@
+ SpArcFiRe Web Interface<body>
+		
+		 
+	  
+				 
+					 
+						  SpArcFiRe Web Interface 
+					 
+				 
+			 
+			 
+				 
+					  
+				 
+			 
+		   
+					 Submit New Job 
+				 
+				 
+					 Lookup Previous Job 
+				 
+			  
+		
+		 
+			 
+				 
+					 
+						 WARNING 
+						 Our submission form uses JavaScript! 
+						 Please enable JavaScript in your browser and refresh the page. 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						  
+								   
+								 select image 
+							 
+							 
+								   
+								 options 
+							 
+							 
+								   
+								 confirm 
+							 
+							 
+								   
+								 preprocessing 
+							 
+						  
+					
+					
+					 
+						
+							 
+								 
+									 Select an image of a galaxy for processing. Allowed types are:  
+									  PNG → .png 
+										 JPEG → .jpg, .jpeg, .jpe, .jif, .jfif, .jfi 
+										 FITS → .fits, .fit, .fts 
+									  
+								 
+									 NOTE 
+									 Please note the following: 
+									  Processing time scales roughly as O(N 4 ), where N is the linear scale of your image (in pixels). 
+										 Please use discretion and pre-shrink your image before submitting (if necessary). 
+										 This interface does not accept images larger than 1024 x 1024 pixels, nor larger than 1MB in size. 
+									  
+								 
+									 
+								 
+									 
+										 next → 
+									 
+								 
+							 
+							 
+								 
+									 Options Help 
+									 To see a description of a given option, simply hover over it. 
+									 You can also view the entire help menu by clicking the button below. 
+									
+									 
+										 + Show Options Help Menu 
+									 
+									 
+										 .fits To .png Processing Options 
+											   Lower brightness cutoff quantile   Pixels below this brightness quantile will be be assumed 0.     Number of asinh applications   The number of times the asinh transform will be applied. The brightness quantiles are recomputed for each transform.     Linear log asinh transition quantile   Image brightness quantile where the brightness transformation transitions from approximately linear to approximately logarithmic.     Ignore starmask?   We use SExtractor to create starmasks that are used during ellipse fitting of the galactic disk; SExtractor options may need to be changed for images sufficiently different from SDSS images. You may re-use previously computed starmasks by unchecking 'Compute', or ignore previously computed starmasks using 'Ignore...'     Compute starmask with SExtractor?   We use SExtractor to create starmasks that are used during ellipse fitting of the galactic disk; SExtractor options may need to be changed for images sufficiently different from SDSS images. Star mask processing may currently take a long time at high resolution and/or with a large number of SExtractor-detected objects. You may re-use previously computed starmasks by unchecking 'Compute', or ignore previously computed starmasks using 'Ignore...'  										 Standard Image Processing Options 
+											   Median filter radius   Median filter radius [pixels], to reduce image noise in the input image; use 0 to turn off; use 0 to turn off.     Fail when no starmask found?   Skip a galaxy if it's supposed to have a starmask but the starmask can't be found; normally if we can't find a starmask we proceed without it, which can make it difficult to isolate the galactic disk if there is, in fact, a bright star nearby.     Center drift threshold for starmask   If the distance between the estimated galaxy center and the image center (in pixels) exceeds this number, the use of star masking is escalated, on the assumption that there is a bright star that is distracting us from finding the center of the galactic disk.  Note the galaxy should be at least this well centered in the input image.   Advanced Options    Use deprojection stretch?   Deprojects a tilted galaxy to make it appear face-on; turn off only if the galaxy is already close to face-on.     Delete cluster containing center?   A cluster that contains the center is more likely to be due to the bulge rather than a spiral arm. Consequently, such a cluster is deleted by default. Uncheck to turn this effect off.     Allow arc beyond 2π?   There's probably no reason to turn this off unless you see problems with arms longer than one rotation; if so, please notify the authors.     Error ratio threshold   Tolerance for allowed error increase for the combined cluster when deciding whether to merge two clusters. Larger values are more lenient about allowing merges, but risk over-merging.     Merge check minimum cluster size   Fit error change is not checked in proposed merges until both clusters are at least this big (in pixels).     Cluster size cutoff   Minimum cluster area (in pixels) for inclusion in output.     Stop threshold   Minimum orientation similarity needed in order to continue clustering; lower values give more cluster growth and merging.     Unsharp mask width   Width of Gaussian blur to subtract from the image during unsharp masking. Objects (arms or the space between them) smaller than this in the standardized image are blurred to insignificance; objects (arms or the space between them) this size or bigger will be detected.     Unsharp mask amount   This parameter affects the amount of contrast enhancement caused by the unsharp mask.  Larger values provide higher contrast, but may amplify noise and increase clipping.     Fit using pre-unsharp mask values?   The logarithmic spiral arc fits are weighted by image brightness after brightness transformation. If checked, the weights will be taken from the pre-unsharp-mask brightness values rather than the post-unsharp-mask brightness values.   Expert Options    Look for bulge?   Attempt to find an outline of the bulge using the same algorithm as is used to find the disk; note this is probably NOT as reliable as traditional disk-bulge decomposition used by astronomers, so it's off by default.     Number of orientation field levels   For images of size NxN, three orientation fields are generated at resolutions of full, half, and one-quarter N (default N=256). For resizeDims significantly larger, you may increase numOrienationFieldLevels, as long as the standardized image size is divisible by 2^numOrientationFieldLevels.     Fix to center?   Whether to force the center of the fitted ellipse to remain exactly at the image center. Use only if you are sure that the input galaxy is exactly centered (or otherwise better centered than the centering given by our ellipse fit). Currently, this implicitly disables star masking; see ctrDriftThresForStarMask. Mutually exclusive with useTwoStageCtrFinding.     Use two-stage center finding?   Attempt to increase accuracy of the fitted galaxy center by fitting it separately from the galaxy disk outline. The first ellipse fit is allowed to contract within the galaxy disk, stopping only when the center stabilizes (instead of considering other factors). Next, the fitted center is fixed for a second ellipse fit that determines the elliptical outline of the galaxy disk. Mutually exclusive with fixToCenter.     Use image standardization?   Find the galactic disk and resize it to fit inside a square image of size resizeDims (default 256x256). Note that SpArcFiRe has been tuned for square 256x256 images. Use caution turning this off or changing resizeDims since image size impacts many other options. If you change this option, be prepared to change many other options to get sensible results.     Resize dimensions   Find the galactic disk and resize it to fit inside a square image of size resizeDims (default 256x256). Note that SpArcFiRe has been tuned for square 256x256 images. Use caution turning this off or changing resizeDims since image size impacts many other options. If you change this option, be prepared to change many other options to get sensible results.   
+								 
+								 .fits To .png Processing Options 
+									     Lower brightness cutoff quantile          Number of asinh applications          Linear log asinh transition quantile          Ignore starmask?          Compute starmask with SExtractor?      									  Standard Image Processing Options 
+									 
+											
+																				
+													     Median filter radius          Fail when no starmask found?          Center drift threshold for starmask      													   
+														 + 
+														 - 
+														 
+														Advanced Options 
+														 
+													 
+												 
+													
+																				
+													     Use deprojection stretch?          Delete cluster containing center?          Allow arc beyond 2π?          Error ratio threshold          Merge check minimum cluster size          Cluster size cutoff          Stop threshold          Unsharp mask width          Unsharp mask amount          Fit using pre-unsharp mask values?      													   
+														 + 
+														 - 
+														 
+														Expert Options 
+														 
+													 
+												 
+													
+																				
+													     Look for bulge?          Number of orientation field levels      													  
+													 
+														 NOTE 
+														 These following two methods are mutually exclusive: only one can be selected. 
+													 
+													     Fix to center?          Use two-stage center finding?      													  
+												 
+													 
+														 NOTE 
+														 "Use image standardization?" must be selected in order to resize the image.  
+														 The required format for "Resize dimensions" is '[width height]' . 
+													 
+													     Use image standardization?          Resize dimensions      													  
+												
+									  
+									 
+										 ← back 
+									 
+									 
+										 next → 
+									 
+								 
+							 
+						
+						
+		
+	
+						 
+							 
+								 NOTE 
+								 Please note the following: 
+								  The image will be processed with the following options, which cannot be changed after submission. To proceed, hit the submit button. 
+									 Faded values are unchanged, default values. To make changes, click the back button. 
+								  
+							 
+								 .fits To .png Processing Options 
+									    Lower brightness cutoff quantile   0.75  0.75       Number of asinh applications   2  2       Linear log asinh transition quantile   0.25  0.25       Ignore starmask?   No  No       Compute starmask with SExtractor?   Yes  Yes    									  Standard Image Processing Options 
+									    Median filter radius   1  1       Fail when no starmask found?   No  No       Center drift threshold for starmask   2.5  2.5    										  Advanced Options 
+										    Use deprojection stretch?   Yes  Yes       Delete cluster containing center?   Yes  Yes       Allow arc beyond 2π?   Yes  Yes       Error ratio threshold   2.5  2.5       Merge check minimum cluster size   25  25       Cluster size cutoff   150  150       Stop threshold   0.15  0.15       Unsharp mask width   25  25       Unsharp mask amount   6  6       Fit using pre-unsharp mask values?   Yes  Yes    										  Expert Options 
+										    Look for bulge?   No  No       Number of orientation field levels   3  3       Fix to center?   No  No       Use two-stage center finding?   Yes  Yes       Use image standardization?   Yes  Yes       Resize dimensions   '[256 256]'  '[256 256]'    										  
+							
+							 
+								 
+									 ← back 
+								 
+								 
+									 submit → 
+								 
+							 
+						 
+						
+						
+						 
+							 
+								 
+									  
+								 
+									 Preprocessing Image... 
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		
+		 SpArcFiRe software 
+	 Written by Darren R. Davis under the supervision of  Wayne B. Hayes  at U.C. Irvine. 
+	 Last updated: September 04, 2016 	  SpArcFiRe web interface 
+	 Original developer:  Wilmer R. Domingo  
+	 Current developer:  Justin D. Quinn  
+	 Last updated: January 25, 2016 
+	  Please contact the current developer above and/or Wayne B. Hayes for questions, comments, or bugs. 
+</body> 

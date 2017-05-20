@@ -1,0 +1,119 @@
+ SEAL - RESIST<body>
+ 
+
+
+ RESIST: Resilient Situated Software Systems 
+
+ 
+RESIST is a framework intended to address reliability concerns in mission critical, dynamic and mobile settings.
+ 
+
+ Overview 
+ 
+Systems that are predominantly pervasive, embedded, and mobile are marked with a high degree of unpredictability and dynamism in the execution context. RESIST continuously monitors the system at run-time and produces reliability predictions by using monitoring data, and by incorporating various sources of information including architectural models and contextual information. The reliability predictions are derived at component and system-level, which are then leveraged to proactively to place the system in a near-optimal configuration.
+ 
+
+   RESIST Framework 
+ 
+Architecture-based reliability models along with contextual and monitoring information obtained from the system are used by the Component-Level Reliability Analyzer to predict the reliability of system's components in their near future operation. These fine-grained reliability estimates are utilized by the Configuration Reliability Analyzer to determine the reliability of alternative configurations for the system. The Configuration Selector is in turn used to select a suitable configuration for the near future operation of the system. The Configuration Selector may use other quality attributes, such as performance, in making the configuration selection.
+  
+Once a new configuration is selected, the Context-Aware Middleware adapts the system at run-time to reflect the changes in configuration. The Context-Aware Middleware provides support for execution, monitoring, and adaptation of a software system in terms of its architectural constructs (e.g., components, connectors, and configuration).
+ 
+
+ Download and Setup Guidelines 
+ Before setting up RESIST framework, the following tools and environments need to be setup as they are prerequisites: 
+  
+        Generic Modeling Environment ( GME ). We recommend version 7.6.29 as this was the version used for the case studies provided on this page.
+     
+     
+        The eXtensible Tool-chain for Evaluation of Architectural Models ( XTEAM ).
+     
+     
+        The  Prism-MW  environment
+     
+     
+         Matlab . We recommend version 7.0. or later.
+     
+     
+         Matlab HMM toolkit . The Component-level and System-level reliability analysis is performed within Matlab using this toolkit.
+     
+     
+        Eclipse environment. We recommend  Eclipse Classic .
+     
+  Follow these steps to download the various components in the RESIST framework and to execute cases studies and examples.
+ 
+  
+        First you will need to setup XTEAM with the SafeXADL paradigm and interpreter required by RESIST. The SafeXADL paradigm and interpreter included in XTEAM have been extended for use in RESIST.
+     
+      
+            In GME, register the following paradigm:  SafeXADL_Ext_Paradigm 
+         
+         
+            In GME, register the following interpreter:  SafeXADL_Ext_Interpreter 
+         
+         
+            Once the paradigm is registered, the executable architectural models for the  Emergency Response case study  can be opened, and the model-to-code transformation should be performed within this environment
+         
+      
+       The generated system architecture and code should be executed on top of Prism-MW. We recommend the tutorials accompanying Prism-MW on how this execution can be performed. 
+     
+     
+      The system executing on top of Prism-MW will generate execution logs for the components such as the Controller and Navigator in the robotic example of the Emergency Response system you setup previously. These logs serve as the runtime observations required for training the HMM.  
+     
+     
+        Next the observations generated in the previous step needs to be fed into RESIST's  Component and Configuration Reliability Analyzers  that need to be run within the Matlab environment.  
+     
+      
+        To run the reliability analysis on the observations, execute the following Matlab scripts found within the above zip file:
+     
+          
+                For the Robot without Navigator replication: Robot5_SystemReliability.m
+             
+             
+                For the Robot with Navigator replication: Robot5FT_SystemReliability.m
+             
+             
+                The file paths of the observation file and the initially estimated Transition/Observation matrices are specified inside the above Matlab scripts. They need to be updated inside the script depending on the unzipped location on your computer. The following are these parameters:
+             
+              
+                    "simulationDataPath" – The location of the simulation (observation) data. 
+                 
+                 
+                   "modelFilePath" – Initial estimations of the Transition/Observation matrices. 
+                 
+                
+        Once the reliability analyzer has been setup, the  Configuration Selector  needs to be setup within Eclipse. This is a Java project and can be directly imported into Eclipse. The output of the reliability analysis done in the previous step (specifically the component and system level operational profile and the component reliability predictions) must be provided into the optimization algorithm to be executed within the Java project. There are many examples that can be found in this Java project for your perusal. Once the optimization algorithms have been executed the output is printed out into the console. This is the near-optimal architecture that RESIST produces. 
+     
+  Publications 
+
+More details about RESIST can be found in our publication:
+
+   Proactive Self-Adaptation for Improving the Reliability of Mission-Critical, Embedded, and Mobile Software   
+    Deshan Cooray, Ehsan Kouroshfar, Sam Malek, and Roshanak Roshandel  IEEE Transactions on Software Engineering, Vol. 39, No. 12, December 2013. 
+     [ PDF ]
+      
+    RESISTing Reliability Degradation through Proactive Reconfiguration   
+    Deshan Cooray, Sam Malek, Roshanak Roshandel, and David Kilgore  25th IEEE/ACM International Conference on Automated Software Engineering (ASE 2010), Antwerp, Belgium, September 2010.(17% acceptance rate) 
+     [ PDF ]
+      
+  Research Project Members 
+  
+         Dr. Sam Malek 
+     
+     
+         Dr. Roshanak Roshandel 
+     
+     
+         Ehsan Kouroshfar 
+     
+     
+         Deshan Cooray 
+     
+    
+               
+ 
+ 
+               
+  
+ 
+</body> 

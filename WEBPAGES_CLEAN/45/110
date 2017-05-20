@@ -1,0 +1,174 @@
+ 143A Principles of Operating Systems<body>
+	    
+			  
+	   
+		 
+			 Home 
+			  
+	 
+	   
+
+                 143A Principles of Operating Systems 
+                  Winter 2017, University of California, Irvine  
+		  Instructor:  Anton Burtsev    
+
+		  Email:  aburtsev at uci at edu  
+                  Office:  DBH 3066 
+                  Meeting time/place:  M, W, F, 9:00-9:50am, PSCB 140 
+                  Office ours:  Wednesday 4:00-5:00pm (my office DBH 3066, feel free to contact me for more) 
+                  Discussion section:  Friday 1:00-2:00pm (optional, PSCB 140, starts Jan 20) 
+		  Mailing list:   pos-W17 at classes.uci.edu  
+                  Message board:   https://eee.uci.edu/boards/w17/pos/  
+                  Grading policy:  Homework: 60%, midterm exam: 15%, final exam: 25% of your grade. 
+                  Late homework policy:  You can submit late homework 3 days after the deadline for 60% of your grade. 
+
+                
+
+                 
+		   Schedule  
+		 
+                   Jan 9:  
+                  Lecture 01 - Introduction . 
+                 Reading:   OSTEP: 2 Introduction . 
+
+                  Jan 11:  
+		 
+                 Lecture 02 - OS Interfaces (Whiteboard Discussion) .
+                 Reading:   xv6: Chapter 0: Operating system interfaces . 
+
+                  Jan 13:  
+                  Lecture 03 - OS Interfaces .
+                 Reading:   xv6: Chapter 0: Operating system interfaces . 
+
+                  Jan 18:  
+                  Lecture 04 - PC Hardware .
+                 Reading:   Intel SGX Explained: Section 2: Computer Architecture Background . 
+                   HW1: Shell  (due Jan 30, 11:59pm)  
+
+                  Jan 20:  
+                  Lecture 05 - Calling conventions .
+                 Reading:   PC Assembly Language. Paul A. Carter: Section 4 Subprograms (4.1 - 4.5) , 
+                and  Wikipedia: x86 calling conventions  
+
+                  Jan 23:  
+                  Lecture 06 - Address translation .
+                 Reading:   Intel® 64 and IA-32 architectures software developer's manual volume 3A: System programming guide, part 1 (Chapter 3: 3.1-3.4.5 and Chapter 4: 4.2-4.3)  
+
+                  Jan 25:  
+                  Lecture 07 - System boot .
+                 Reading:   Appendix B: The boot loader and Chapter 1: Code: the first address space  
+
+                  Jan 27:  
+                  Lecture 08 - System init .
+                 Reading:   Chapter 2: Page tables (up to "User part of an address space").  
+
+                  Jan 30:  
+                  Lecture 09 - Address Spaces .
+                 Reading:   Chapter 2: Page tables (up to "User part of an address space").  
+
+                  Feb 1:  
+                  Lecture 10 - First process .
+                 Reading:   Chapter 2: Page tables.  
+                  HW2: xv6 boot  (due Feb 10, 11:59pm)  
+
+                  Feb 3:  
+                  Lecture 11 - Interrupts .
+                 Reading:   Chapter 3: Traps, interrupts and drivers.  
+
+                  Feb 6:  
+                  Lecture 12 - Starting other CPUs .
+                 
+
+                  Feb 8:  
+                  Lecture 13 - Context switch .
+                 Reading:   Chapter 1. Subsection: Running the first process, Chapter 5 - Scheduling (up until Sllep and Wakeup).  
+
+                  Feb 10:  
+                  Lecture 14 - System calls and the first process (again) .
+                 Reading:   Chapter 1. Subsection: Code: creating the first process, Chapter 3 - The first system call (up until Drivers).  
+
+                  Feb 10:  
+                  Lecture  - Midterm recap .
+                 Reading:   Example midterms from MIT  (note, MIT is more advanced class, so don't get scared). 
+
+
+		
+                
+
+		 
+		   Class overview  
+
+ 143A teaches the fundamentals of operating systems. You will study, in
+detail, virtual memory, kernel and user mode, system calls, threads, context
+switches, interrupts, interprocess communication, coordination of concurrent
+activities, and the interface between software and hardware. Most importantly,
+you will study the interactions between these concepts, and how to manage the
+complexity introduced by the interactions. 
+
+ To master the concepts, 143A is organized in as a series of lectures,
+and homeworks. The lectures (and the book readings) familiarize you with the
+main concepts. The homrworks force you to understand the concepts at a deep
+level. 
+
+ The lectures are based on  xv6 (x86 version 6) ,
+which is a modern re-implementation of one of the early UNIX operating systems, 
+specifically Unix Version 6 which was developed in the 1970s, on the modern hardware. 
+xv6 is only 9,000 lines of C code, but it can run real processes, and perform many 
+functions of a traditional operating system, e.g., Windows, Linux, and Mac OS. 
+Due to its small size, it is possible to read the source code and understand the entire 
+operating system. Moreover, xv6 is accompanied by a  book 
+describing its architecture (and a  printout of its
+source code ).  Homework assignments will help you to deepen the
+understanding of the principles and internal organization of a simple, but real
+operating system. 
+
+ You may wonder why we are studying an operating system that resembles Unix
+v6 instead of the latest and greatest version of Linux, Windows, or BSD Unix.
+xv6 is big enough to illustrate the basic design and implementation ideas in
+operating systems. On the other hand, xv6 is far smaller than any modern
+production operating systems, and correspondingly easier to understand. xv6 has
+a structure similar to many modern operating systems; once you've explored xv6
+you will find that much is familiar inside kernels such as Linux. 
+
+
+		 
+
+		     Prerequisites  
+
+		 Xv6 is implemented in C, so you're expected to be familiar
+with the C programming language.  
+
+		 Xv6 runs in the QEMU simulator and on bare-metal. You're
+expected to be familiar with the basics of Linux environment. 
+
+
+
+		 
+
+
+	         
+		   Books  
+
+		The class is based on two books that are freely available from
+the authors:     Operating Systems: Three Easy
+Pieces  (free, available online). Remzi H.  Arpaci-Dusseau and Andrea C.
+Arpaci-Dusseau   
+
+		    Xv6 a Simple,
+Unix-like Teaching Operating System  (free, available online). Russ Cox,
+Frans Kaashoek, Rober Morris   
+
+                  Additional resources  
+                  Intel 64 and IA-32 Architectures Software Developer's Manual (Combined volumes)  
+		
+		
+
+
+
+	 			
+	    
+			  
+	   
+		 Updated: December, 2016 
+	 
+	  </body> 

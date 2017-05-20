@@ -1,0 +1,125 @@
+ 10.23.2 Category record format<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.23.1 Parameter record format 
+ Up:   10.23 OEConfigure 
+ Next:   10.24 OECheckHelp 
+   
+
+
+  
+10.23.2 Category record format 
+ 
+
+ 
+When OEConfigure encounters a category record, it creates add a
+child OEInterface object to the current OEInterface.  A category
+record takes the following form.
+
+  
+    
+!CATEGORY &lt;name&gt; [order priority]
+  !DETAIL
+    &lt;detailed description line 1&gt;
+    &lt;detailed description line 2&gt;
+    &lt;detailed description line 3&gt;
+    .
+    .
+    .
+  !BRIEF &lt;brief description&gt;
+  [Parameter Record]
+  [Category Record]
+!END
+    
+The order individual fields appear within the category record is unimportant.
+All fields within the category record are optional.  So the minimal category
+record is as follows.
+
+  
+    
+!CATEGORY &lt;name&gt; [order priority]
+!END
+    
+Which, when parsed by OEConfigure is equivilant to
+
+  
+    
+OEInterface* child_itf = itf.AddInterface();
+child_itf-&gt;SetName(&lt;name&gt;);
+child_itf-&gt;SetOrderPriority([order priority]);
+    
+If [order priority] is not specified 0 is assumed.
+
+  
+Fields within the category record have the following meaning.
+
+  
+     !DETAIL </strong> 
+  
+All lines following the !DETAIL keyword up until this next line
+begining with another category record keyword are added to the
+child OEInterface via
+
+  
+    
+child_itf-&gt;AddDetail(&lt;detail line&gt;);
+    
+This field can appear once in a parameter record.
+
+  
+  
+   !BRIEF  &lt;brief description&gt;</strong> 
+  
+    
+param-&gt;SetBrief(&lt;brief description&gt;);
+    
+This field can only appear once.
+
+  
+  
+   parmameter record </strong> 
+ Parameter records can appear inside
+category records.  There format is the same as those outside the
+category record, however the parameter will be added to the child
+interface.  A category record can hold any number of parameter
+records.
+
+ 
+  
+   category record </strong> 
+ Category records can be nested within
+category records, thus creating a child OEInterface of a child
+OEInterface.  There is no limit to the depth of nesting, and any
+number of nested category records can appear within a category
+record.
+
+ 
+  
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.23.1 Parameter record format 
+ Up:   10.23 OEConfigure 
+ Next:   10.24 OECheckHelp 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,1586 @@
+ Ucigame - Reference - version 2010.12.16a<body>
+
+ 
+ Ucigame Reference
+ 
+2010.12.16a version 
+ 
+
+ 
+ Home  |
+ Getting Started  |
+ Reference  |
+ Introduction to Java  |
+ Gallery 
+ 
+
+
+ Running your Ucigame program 
+
+ 
+ 
+ The code in the Ucigame package was compiled with Java
+version 1.5.  You can use Java 1.5 or any later version to
+compile and run your Ucigame game.
+ 
+ When you compile or run a Ucigame game, ucigame.jar must be in
+the classpath.
+ 
+ When running a Ucigame game from the Command Prompt, the
+game name must be repeated.  For example:
+  
+	java MyGame MyGame
+  
+ 
+
+ In a Ucigame program Esc
+(the Escape key) has magic powers.
+	   Pressing Esc stops the game (permanently). 
+	  Pressing Shift-Esc (that is, hold down the Shift
+		key while pressing Esc) suspends the game.  The
+		animation pauses (but any playing sounds continue).
+		Pressing Shift-Esc again resumes play.
+	   When the game is paused with Shift-Esc, pressing
+		F1 causes draw() to be invoked once.  This is a handy way
+		to "single step" through your game.
+	   
+
+ Different methods are called in different ways 
+
+ 
+Some Ucigame methods are associated with specific
+built-in objects.  They are invoked like this:
+ objectname.methodname ( parameters ).
+An example is window.size(200, 300).
+ 
+
+ Some Ucigame methods are associated with classes; to
+use them you must first create an object of that class.
+In this example, the position() method is called using
+a Sprite object called sprite1:
+  
+	sprite1 = makeSprite(getImage("images/sprite1.png", 0)); 
+	sprite1.position(10, 5);
+ 
+
+
+ Finally, some Ucigame methods are associated with the
+Ucigame class itself. Since your game class extends Ucigame,
+you can use these methods without an  objectname. 
+prefix.  An example is the call to makeSprite() above.
+ 
+
+ Summary of objects and classes 
+
+ 
+The   window   object represents the entire window in
+which the game is played, and specifically the borders and
+frame of the window.
+It has the following methods:
+size(), title(), showFPS(), hideFPS().
+ 
+
+ 
+The   canvas   object represents the rectangular
+interior of the window.
+It has the following methods:
+width(), height(), background(),
+
+font(), and putText().
+ 
+
+ 
+The   keyboard   object represents the
+computer keyboard.
+It has several methods for finding out the most recently pressed key:
+isDown(), lastCharacter(), isBackspace(), key(), shift(), ctrl(), and alt().
+The typematic (auto-repeat) feature can be turned on and off
+with typematicOn() and typematicOff().
+ 
+
+ 
+The   mouse   object represents the
+mouse and the associated cursor symbol on the monitor.
+It has the following methods:
+x(), y(), Xchange(), Ychange(), button(),
+isAltDown(), isControlDown(), isMetaDown(), isShiftDown(),
+wheelClicks(), sprite(), and setCursor().
+ 
+
+ 
+Each object in the   Sprite   class
+is a sprite.
+To create new Sprite objects, there are three versions of
+makeSprite(), as well as makeTiledSprite(), and makeButton().
+A Sprite object has the following methods:
+addFrame(), pin(), framerate(),
+draw(), font(), putText(),
+setTiles(),
+defineSequence(), currSequence(), play(),
+restart(), setToFrame(),
+width(), height(), hide() show(), isShown(), position(),
+motion(), move(), x(), y(), xPixel(), yPixel(),
+nextX(), nextY(), xspeed(), yspeed(),
+rotate(), flipHorizontal(), flipVertical(),
+bounceIfCollidesWith(), stopIfCollidesWith(),
+checkIfCollidesWith(), pauseIfCollidesWith(), collided().
+ 
+
+ 
+Each object in the   Image   class is
+a rectangular image.
+A Image object has the following methods:
+draw(), width(), height(), and transparent().
+ 
+
+ 
+Each object in the   Sound   class is
+a sound or piece of music.
+A Sound object has the following methods:
+play(), loop(), and stop().
+ 
+
+ 
+The   Ucigame   class contains
+the functionality of the other classes and objects.
+It also has several useful methods of its own:
+framerate(), actualFPS(), randomSeed(), random(),
+randomInt(), arrayOfAvailableFonts(), isAvailableFont(),
+setIconImage(),
+startScene(), startTimer, and stopTimer().
+There are also Ucigame methods that create objects:
+getImage(), getSound(),
+makeSprite(), makeTiledSprite(), and makeButton().
+ 
+
+ 
+ 
+
+  
+ The window object 
+
+ 
+Every Ucigame has one window object named  window .
+When the program is running as an applet in a browser window,
+the window is part of the web page.
+ 
+ window.size( width ,  height )
+ 
+	Sets the width and height of the window's canvas.
+	The entire window, including caption bar and borders, will
+	be slightly larger.
+	Values must be between 50 and 1000, inclusive.
+	If values are invalid or window.size is not called, the
+	windows width and height are 100.
+	This method should only be called once, in setup();
+	Demo'd in:  BallFollower .
+	 
+	Applets: method is ignored.
+ 
+ 
+
+ window.title( titleTextString )
+ 
+	Sets the window's title text.  If not called, the
+	title text is "No Title".  May be called multiple times.
+	Demo'd in:  BallFollower .
+	 
+	Applets: method is ignored.
+ 
+ 
+
+ window.showFPS()
+ 
+	Causes the current actual rate of frames per second to
+	be displayed in the title text.
+	Demo'd in:  BallFollower .
+	 
+	Applets: frames per seconds will display in the browser's
+		status bar (somewhat browser-dependent).
+ 
+ 
+
+ window.hideFPS()
+ 
+	Removes the display of current frames per second from the title text.
+	 
+	Applets: removes the display from the status bar.
+ 
+ 
+
+  
+ The canvas object 
+
+ 
+The  canvas  object represents the area in the window
+where the game's images appear.
+ 
+
+  w  = canvas.width() (returns int)
+ 
+  h  = canvas.height() (returns int)
+ 
+	These methods return the value of the game canvas's width and height.
+	Demo'd in:  BallFollower .
+ 
+ 
+
+ canvas.background( shade )
+ 
+	This method determines the color of the canvas's background.
+	To actually set the background to that color, call the
+	canvas.clear() method inside of draw().
+	The one parameter version of background() sets the background
+	color to a shade of gray.
+	The varible  shade  can range from 0 (black)
+	to 128 (gray) to 255 (white).
+	If  shade  is less than 0 or greater than 255,
+	the method call has no effect.
+	The default background color is white.
+	See the  about color page  for
+	more information about colors in Ucigame and computer graphics.
+	Demo'd in:  SpinIt .
+ 
+ 
+
+ canvas.background( red ,  green ,  blue )
+ 
+	The three parameter version background() can set
+	the background to any color.
+	See  the about color page  for
+	more information about colors in Ucigame and computer graphics.
+	Demo'd in:  PushMe .
+ 
+ 
+
+ canvas.background( image )
+ 
+	If background's parameter is a Image, then the background is
+	set to that image, which will be displayed when
+	canvas.clear() is called in draw().
+	Demo'd in:  Pong .
+ 
+ 
+
+ canvas.clear()
+ 
+	Clears the canvas by setting all pixels to the specified
+	color or to the colors of specified image.
+	Typically canvas.clear() is called at the start of draw().
+	Demo'd in:  BallFollower .
+ 
+ 
+
+ canvas.font( fontNameString ,  style ,  size )
+ 
+
+	This method specifies the font to use in subsequent calls
+	to canvas.putText().
+	See the about fonts page
+	(coming soon!) for more information
+	about fonts in Ucigame and computer graphics.
+	The  style  parameter must be one of the following:
+	PLAIN, BOLD, ITALIC, BOLDITALIC.
+	Demo'd in:  FontDemo .
+ 
+ 
+
+ canvas.font( fontNameString ,  style ,  size ,
+					 r ,  g ,  b )
+ 
+	Similar to the three parameter version of  font() , and
+	also sets the font color to the RGB value specified by the
+	last three parameters.  (These values must all be between 0 and 255, inclusive.)
+	Demo'd in:  MegaBounce .
+ 
+ 
+
+ canvas.putText( text ,  x ,  y )
+ 
+	Draws the specified text (which can be a string, such as
+	"Press Here" or a number) on the canvas,
+	using the canvas's current font.
+	The upper left hand corner of  text  is
+	located  x  pixels to the right and
+	 y  pixels below the upper left hand corner of
+	the canvas.
+	Demo'd in:  FontDemo .
+ 
+ 
+
+
+  
+ The keyboard object 
+
+ 
+Every Ucigame has one object named  keyboard ; the
+object's methods reveal the most recently pressed key.
+ 
+  keydown  = keyboard.isDown(any number of keyboard keys) (returns boolean)
+ 
+	This method indicates whether any of the specified keyboard
+	keys is currently down.  The values passed to this method
+	should each be one of those
+	 listed here .
+	This method is usually used inside the game's onKeyPress() method.
+	For example:
+	 
+	 
+	if (keyboard.isDown(keyboard.UP, keyboard.W)) 
+	  paddle.nextY(paddle.y() - 2);
+	  
+	Demo'd in:  Pong .
+ 
+ 
+
+  keypressed  = keyboard.key()  (returns int)
+ 
+	Returns the value of the most recently pressed keyboard key.
+	The value will be one of those
+	 listed here .
+	Note that the escape key (Esc) is handled in a special way
+	by Ucigame programs, and thus cannot be detected using keyboard.key().
+	If Esc is pressed without the Shift key down, the program immediately stops.
+	If Esc is pressed with Shift, then the program is suspended;
+	if can be restarted with another Shift-Esc combination.
+ 
+ 
+
+  shiftWasPressed  = keyboard.shift() (returns boolean)
+ 
+	Returns  true  if the Shift key was held down when the
+	last key was pressed;  false  otherwise.
+ 
+ 
+
+  ctrlWasPressed  = keyboard.ctrl() (returns boolean)
+ 
+	Returns  true  if the Ctrl key was held down when the
+	last key was pressed;  false  otherwise.
+ 
+ 
+
+  altWasPressed  = keyboard.alt() (returns boolean)
+ 
+	Returns  true  if the Alt key was held down when the
+	last key was pressed;  false  otherwise.
+ 
+ 
+
+ keyboard.typematicOn()
+ 
+ keyboard.typematicOff()
+ 
+	These methods turn on and off the typematic (auto-repeat) feature.
+	When typematic is on (the default), a key which is held down
+	will cause  onKeyPress()  to be called multiple times.
+	When typematic is off, holding a key down is only a single key press.
+	These methods apply to all keyboard keys.
+	Demo'd in:  ClickAndClack  and
+	            TypeAway .
+ 
+ 
+
+ keyboard.typematicOn(any number of keyboard keys)
+ 
+ keyboard.typematicOff(any number of keyboard keys)
+ 
+	The values passed to these methods should each be one of those
+	 listed here .
+	These methods turn on and off the typematic (auto-repeat) feature
+	for specific keys, without changing the typemetic status of
+	other keys.
+	Demo'd in:  TypeAway  and
+	            BounceHouse .
+ 
+ 
+
+  characterPressed  = keyboard.lastCharacter()  (returns String)
+ 
+	Returns a String containing the last "regular" keyboard character
+	pressed, that is, letters, digits, and punctuation, but not
+	the function keys and arrow keys.
+	The returned value is affected by the Shift and Caps Lock keys.
+	Once this function is called, subsequent calls will return the
+	empty string ("") until the user presses another key or the
+	operating system's auto-repeat feature generates another key press.
+	This method is not affected by keyboard.typematicOn() or
+	keyboard.typematicOff();
+	Thus, in
+	  
+	println(keyboard.lastCharacter());  
+	println(keyboard.lastCharacter());
+	  
+	the second line will print the empty string.
+	Demo'd in:  TypeAway .
+ 
+ 
+
+  bkPressed  = keyboard.isBackspace( string )  (returns boolean)
+ 
+	Returns  true  if  string  is a one character String
+	containing a "backspace" character.
+	Demo'd in:  TypeAway .
+ 
+ 
+
+
+  
+ The mouse object 
+
+ 
+Every Ucigame has one object named  mouse ; the
+object's methods reveal the location of the mouse and
+the topmost sprite under the mouse.
+ 
+
+  xpos  = mouse.x()  (returns int)
+ 
+  ypos  = mouse.y()  (returns int)
+ 
+	Returns the current x and y position of the mouse,
+	relative to the upper left hand corner of the game
+	window, which is at position (0, 0).
+	Demo'd in:  BallFollower .
+ 
+ 
+
+  xdelta  = mouse.Xchange()  (returns int)
+ 
+  ydelta  = mouse.Ychange()  (returns int)
+ 
+	When the mouse is being dragged, these methods
+	return the difference between the current and previous
+	x and y positions of the mouse.
+	Demo'd in:  MouseTrap .
+ 
+ 
+
+  whichButton  = mouse.button()  (returns int)
+ 
+	Returns the value of the mouse button involved
+	when the mouse is pressed, released, moved, or dragged.
+	The return value will be one of:
+	mouse.NONE, mouse.LEFT, mouse.MIDDLE, mouse.RIGHT.
+	Demo'd in:  MouseTrap .
+ 
+ 
+
+  altDown  = mouse.isAltDown()  (returns boolean)
+ 
+  controlDown  = mouse.isControlDown()  (returns boolean)
+   metaDown  = mouse.isMetaDown()  (returns boolean)
+   shiftDown  = mouse.isShiftDown()  (returns boolean)
+ 
+	These methods return  true  or  false 
+	depending on the state of the corresponding keyboard key
+	when the mouse is pressed, released, moved, or dragged.
+	Demo'd in:  MouseTrap .
+ 
+ 
+
+  clicks  = mouse.wheelClicks()  (returns int)
+ 
+	Returns the number of clicks as of the last time the
+	wheel (a special kind of middle mouse button) was rotated.
+	A negative value means the mouse wheel was rotated up/away
+	from the user, and a positive value means the mouse wheel
+	was rotated down/towards the user.  The value is usually
+	-1 or 1.
+	Demo'd in:  MouseTrap .
+ 
+ 
+
+  sprite  = mouse.sprite()  (returns Sprite)
+ 
+	Returns the topmost Sprite object under the current
+	mouse position.  The return value will be  null 
+	if the mouse position is not over a sprite.
+	The value returned from mouse.sprite() can be
+	compared with sprite objects using  == .
+	Example code:
+	 
+	Sprite thing1, thing2, thing3;		 
+	...									 
+	void onMousePressed()				 
+	{									 
+	 	if (mouse.sprite() == thing1)	 
+	  		// do something				 
+	 	if (mouse.sprite() == null)		 
+	  		// do something	else		 
+	}									  
+	Demo'd in:  ClickAndClack .
+ 
+ 
+
+ mouse.setCursor( cursorType )
+ 
+	Changes the cursor to one of the standard system cursors.
+	Legal values for  cursorType  are:
+	mouse.CROSSHAIR, mouse.DEFAULT, mouse.HAND, mouse.MOVE,
+	mouse.TEXT, mouse.WAIT,
+	mouse.N_RESIZE, mouse.NE_RESIZE, mouse.E_RESIZE,
+	mouse.SE_RESIZE, mouse.S_RESIZE, mouse.SW_RESIZE,
+	mouse.W_RESIZE, mouse.NW_RESIZE.
+	Demo'd in:  FoiledAgain .
+ 
+ 
+
+ mouse.setCursor( image ,  xPos ,  yPos )
+ 
+	Changes the cursor to the image supplied.
+	The size of the cursor is determined by the operating system,
+	and the image will be scaled if necessary.
+	In practice 32 pixels by 32 pixels works well.
+	The  xPos  and  yPos  values indicate the position
+	of the cursor's "hot spot," relative to the upper left hand
+	corner of the image.
+	Demo'd in:  FoiledAgain .
+ 
+ 
+
+  
+ The Sprite class 
+
+ 
+A sprite is an image that can be moved around in the game window.
+Ucigame uses many kinds of sprites: they can be stationary;
+they can cycle between multiple images, and they can act like
+buttons and be sensitive to mouse clicks.
+Sprites can have text written on them, and multiple sprites can
+be "pinned" together so that when one moves the others follow.
+ 
+
+ 
+There are several ways to control the movement of a sprite, and
+the flexibility can be confusing.  Each Sprite object holds some
+position and movement related information:
+   Its current position:  currentX  and  currentY 
+  Its movement:  moveX  and  moveY 
+  Its next position:  nextX  and  nextY 
+   
+Note that  currentX ,  currentY ,  nextX , and  nextY 
+all refer to the sprite's upper left hand corner.
+The main reason for keeping track of current and next positions
+is to facilitate the built-in collision detection.
+Here is how various Sprite methods use and update this information:
+   position( x ,  y ):
+	 currentX  ←  x    
+	 currentY  ←  y   
+	 nextX  ←  x   
+	 nextY  ←  y    (warning: messes up collision detection)
+   motion( xchange ,  ychange ):
+	 moveX  ←  xchange    
+	 moveY  ←  ychange   
+  move():
+	 nextX  ←  currentX  +  moveX   
+	 nextY  ←  currentY  +  moveY   
+  draw():
+	 currentX  ←  nextX    
+	 currentY  ←  nextY   
+	(and then sprite is drawn at ( currentX, currentY ))
+   nextX( xvalue ):
+	 nextX  ←  xvalue   
+	 moveX  ← 0   
+   nextY( yvalue ):
+	 nextY  ←  yvalue   
+	 moveY  ← 0   
+  x() returns  currentX 
+  y() returns  currentY 
+  xPixel() returns  currentX  rounded to the closest integer
+  yPixel() returns  currentY  rounded to the closest integer
+  xspeed() returns  moveX 
+  yspeed() returns  moveY 
+  xxxIfCollidesWith(): detects a collision as sprites move from
+	( currentX, currentY ) to ( nextX, nextY ).
+   
+In Ucigame sprites are objects in the Sprite class.
+In the following, we assume that a reference to a Sprite
+called  sprite1  has been defined:
+  
+	Sprite  sprite1 ;
+ 
+
+
+  sprite1  = makeSprite( image )
+ 
+	This makeSprite method takes an already loaded Image object,
+	and creates a Sprite with the same width and height as the
+	image.  Usually used for creating sprites with a single image.
+	Demo'd in:  BallFollower .
+ 
+ 
+
+  sprite1  = makeSprite( image ,
+						 width ,  height )
+ 
+	This makeSprite method takes an already loaded Image object,
+	and creates a Sprite with the specified width and height.
+	If  width  is larger than  image 's width,
+	and/or  height  is larger than  image 's height,
+	then the  image  will be tiled to cover the complete sprite.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  sprite1  = makeSprite( width ,  height )
+ 
+	This makeSprite method creates a sprite with the specified width
+	and height, but with no image(s).  Usually used when multiple
+	images will be added later with addFrame() or addFrames().
+	Demo'd in:  TimeTrial .
+ 
+ 
+
+  sprite1  = makeTiledSprite( numCols ,
+		 numRows ,  tileWidth ,  tileHeight )
+ 
+	Use makeTiledSprite() to create a sprite which is a matrix
+	of tiles.  Each tile has the specified width and height.
+	The matrix can have any positive number of columns and rows.
+	The matrix entries are filled in with  setTiles() .
+ 
+ 
+
+ Constructors
+ 
+	The Sprite class has four constructors, which correspond to
+	the three  makeSprite()  methods and the
+	 makeTiledSprite()  method described above:
+	  Sprite( image )
+			Demo'd in:  MegaBounce 
+			via a call to  super()  in a subclass.
+	  Sprite( image ,  width ,  height )
+	  Sprite( width ,  height )
+	  Sprite( numCols ,
+		 numRows ,  tileWidth ,  tileHeight )
+	   
+ 
+
+  sprite1 .addFrame( image ,
+						 x ,  y )
+ 
+	A sprite can have multiple frames, or images, assigned to
+	it with addFrame().
+	Each time the sprite is displayed on the canvas with draw(), it will
+	automatically cycle to the next frame.
+	 image  is an already loaded Image object.
+	The  x  and  y  parameters specify the
+	upper left hand corner of a rectangle in the image that
+	will be  sprite1 's next frame.  The width and height
+	of that rectangle are same as  sprite1 's width and height.
+ 
+ 
+
+  sprite1 .addFrames( image ,
+					any number of  x ,  y  pairs)
+ 
+	This method is a variant of addFrame() which allows multiple
+	frames from one Image object
+	to be added to  sprite1  with one method call.
+	For instance, three frames might be added with
+	 
+		 sprite1 .addFrames( image , 10, 20,
+						85, 100, 8, 52, 55, 0);
+	 
+	Demo'd in:  TimeTrial .
+ 
+ 
+
+  sprite1 .setTiles( image ,
+		 x ,  y ,
+		any number of  col ,  row  pairs)
+ 
+	This method can only be used if  sprite1  was
+	created with  makeTiledSprite .
+	The method takes a frame from  image 
+	(with an upper left hand corner as specified by  x  and  y 
+	and with width and height as specified in  makeTiledSprite() ),
+	and puts that frame into one or more of  sprite1 's tiles
+	as specified by the  col  and  row  pairs.
+	Note that counting columns and rows starts from zero, and that
+	position (0, 0) is in the matrix's upper left hand corner.
+	Here is an example, which references a 50 pixel by 50 pixel
+	image called  colorblocks.png .
+	   
+		Image cb = getImage("colorblocks.png");  
+		Sprite bkg = makeTiledSprite(4, 3, 25, 25);  
+		bkg.setTiles(cb, 0, 0, /* red */ 
+		    0,0, 1,0, 2,0, 3,0);  
+		bkg.setTiles(cb, 25, 0, /* blue */ 
+		    0,1, 1,1);  
+		bkg.setTiles(cb, 25, 25, /* black */ 
+		    0,2, 1,2, 2,2, 3,2);  
+		bkg.setTiles(cb, 0, 25,, /* green */ 
+		    3,1);    
+	The resulting  bkg  will look like this:
+	 
+	Note that the tile at column 2, row 1 was not set to an image.
+	On this web page it appears white; in a game it would be transparent.
+ 
+ 
+
+  sprite1 .pin( sprite2 ,  x ,  y )
+ 
+	Pins  sprite2  on top of  sprite1 , which
+	means that  sprite2  will be drawn whenever
+	 sprite1 .draw() is performed.
+	The upper left hand corner of  sprite2  is
+	located  x  pixels to the right and
+	 y  pixels below the upper left hand corner of
+	 sprite1 ;
+	thus  sprite2  moves when  sprite1  is moved.
+	Any number of other sprites can be pinned to a sprite.
+	A sprite cannot be pinned to itself.
+	If a sprite is hidden, all sprites pinned to it are hidden.
+	A sprite can be pinned to multiple sprites; thus
+	 sprite1.pin(sprite9, 10, 10);
+	    sprite2.pin(sprite9, 50, 60);
+	    sprite3.pin(sprite9, 20, 70);  is legal.
+	If  sprite2  is pinned to  sprite1  more than
+	once, the second call to pin() effectively "re-pins"  sprite2 
+	to a new location.  Thus
+	 sprite1.pin(sprite2, 10, 10);
+	    sprite1.pin(sprite2, 50, 60);
+	  is legal, but  sprite2  will only appear once, offset
+	(50, 60) from  sprite1 .
+	Demo'd in:  BounceHouse ,
+	            SpinIt .
+ 
+ 
+
+  sprite1 .framerate( number )
+ 
+	Sets a framerate for this sprite; Ucigame will try to
+	change the sprite's current frame  number  times per second, although
+	there is no guarantee that it will be successful.
+	This method has no effect if  number  is negative
+	or greater than the framerate specified for the entire game.
+	Demo'd in:  TimeTrial .
+ 
+ 
+
+  sprite1 .draw()
+ 
+	Causes the sprite, and any other sprites pinned to this sprite,
+	to be drawn on the canvas, unless the sprite is hidden.
+	Can only be called inside the game class's draw() method.
+	Demo'd in:  BallFollower .
+ 
+ 
+
+  sprite1 .show()
+ 
+	Makes  sprite1  not hidden; that is, normally visible.
+	Demo'd in:  BounceHouse .
+ 
+ 
+
+  sprite1 .hide()
+ 
+	Makes  sprite1  hidden, which means that it (and
+	any sprites pinned to it) will not display when
+	 sprite1 .draw() is invoked.
+	Demo'd in:  BounceHouse ,
+	            LunchTimer .
+ 
+ 
+
+  sprite1 .position( x ,  y )
+ 
+	Moves the sprite so that its upper left hand corner is
+	at the specified position, relative to the upper left hand
+	corner of the canvas.
+	Demo'd in:  Pong .
+ 
+ 
+
+  sprite1 .motion( xchange ,  ychange )
+ 
+	Sets the x and y motion amounts ( moveX  and  moveY )
+	for this sprite. See move().
+	Demo'd in:  Pong .
+ 
+ 
+
+  sprite1 .motion( xchange ,  ychange , SET)
+ 
+	Sets the x and y motion amount for this sprite.
+	Note that positive values represent rightwards and downwards motion;
+	negative values represent leftwards and upwards motion.
+	(Same as the two parameter version of motion()).
+ 
+ 
+
+  sprite1 .motion( xchange ,  ychange , MULTIPLY)
+ 
+	Multiplies the sprite's x and y motion amounts by the specified
+	amounts.  For instance,
+	if a sprite's x motion and y motion amounts are both 10, after
+	motion(0.5, 3.2, MULTIPLY) is called the x motion amount will be
+	5.0, and the y motion amount will be 32.0.
+ 
+ 
+
+  sprite1 .motion( xchange ,  ychange , ADD)
+ 
+	Increments the sprite's x and y motion amounts by the specified
+	amounts.  For instance,
+	if a sprite's x motion and y motion amounts are both 10, after
+	motion(0.5, 3.2, ADD) is called the x motion amount will be
+	10.5, and the y motion amount will be 13.2.
+	Demo'd in:  BounceHouse .
+ 
+ 
+
+  sprite1 .motion( xchange ,  ychange , ADDONCE)
+ 
+	Increments, for the next call of  sprite1 .move() only,
+	the sprite's x and y motion amounts by the specified
+	amounts.  For instance,
+	if a sprite's x motion and y motion amounts are both 10, after
+	motion(0.5, 3.2, ADDONCE) is called the x motion amount will be
+	10.5, and the y motion amount will be 13.2 for the next
+	 sprite1 .move(); afterwards the motion amounts will
+	revert to 10 and 10.
+	Demo'd in:  MouseTrap .
+ 
+ 
+
+  sprite1 .move()
+ 
+	Moves the sprite by its x and y motion amounts.
+	Typically this method is called once for every moving sprite,
+	before collision detection.
+	Demo'd in:  Pong .
+ 
+ 
+
+  x  =  sprite1 .x()  (returns double)
+ 
+  y  =  sprite1 .y()  (returns double)
+ 
+  x  =  sprite1 .xPixel()  (returns int)
+ 
+  y  =  sprite1 .yPixel()  (returns int)
+ 
+	These methods return the  x  and  y  values
+	of the sprite's upper left hand corner (relative to the
+	upper left hand corner of the canvas).
+	Pixel versions return a value rounded to the nearest integer;
+	sometimes useful since pixel locations are always integers.
+ 
+ 
+
+  sprite1 .nextX( xvalue )
+   sprite1 .nextY( yvalue )
+ 
+	Sets the sprite's next x and y positions (relative to the upper
+	left hand corner of the canvas).
+	These methods are usually used instead of motion() and move(),
+	but like move() they
+	are called before collision detection and before draw().
+	Calling these method sets the sprite's x and y motion amounts to 0.
+	Demo'd in:  BallFollower ,
+	            Pong .
+ 
+ 
+
+  sprite1 .rotate( angle )
+ 
+	Rotates the sprite clockwise by the number of
+	degrees specified.
+	The center of rotation is the center of the sprite.
+	Any sprites pinned to  sprite1  are also rotated
+	around the same center of rotation.
+	Note that rotation occurs immediately before
+	 sprite1 .draw() is executed, no matter when
+	the call to rotate() is made (as long as rotate() is
+	called before draw()).  This means that rotation does
+	not affect collision detection; collision detection
+	is computed on the unrotated sprite.
+	(Defined as a feature, but could well be considered a bug.)
+	After draw() is called on a sprite any rotation is
+	removed; thus if a sprite should be rotated in every
+	frame rotate() must be called before every draw().
+	Demo'd in:  FlippedOut ,
+	            SpinIt .
+ 
+ 
+
+  sprite1 .rotate( angle ,  x ,  y )
+ 
+	Same as the one parameter version of rotate(), except that
+	the center of rotation is  x  pixels to the right
+	and  y  pixels down from the upper left hand corner
+	of the sprite.
+ 
+ 
+
+  sprite1 .flipHorizontal()
+ 
+  sprite1 .flipVertical()
+ 
+	These methods flip the sprite around its center.
+	flipHorizontal() flips the sprite around a vertical line running
+	through the center of the sprite.
+	flipVertical() flips the sprite around a horizontal line running
+	through the center of the sprite.
+	After either method is called on a sprite any flipping is
+	removed; thus if a sprite should be flipped in every
+	frame flipHorizontal() and/or flipVertical() must be called before every draw().
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  sprite1 .defineSequence( sequenceName ,
+                          one or more frame indices)
+ 
+	For an animated sprite, defines a sequence of one or more
+	animation frames, which can later be cycled through while
+	the sprite is displayed.
+	The  sequenceName  cannot be "All" as the name
+	"All" is reserved to refer to the sequence of all frames
+	in the order they were specified with addFrame() or addFrames().
+	The indices specify the frames in the sequence.
+	A frame's index is based on the order it was added to the
+	sprite with addFrame() or addFrames(); the first frame has index 0.
+	A frame index may be repeated in the list of frame indices.
+	Demo'd in:  Arrownaut .
+ 
+ 
+
+  sequenceName  =  sprite1 .currSequence()   (returns String)
+ 
+	Returns the name of the sprite's current sequence.
+	If no squence has been specified (with play()), the
+	the name of the default sequence "All" is returned.
+	Demo'd in:  Arrownaut .
+ 
+ 
+
+  sprite1 .play( sequenceName )  
+  sprite1 .play( sequenceName , ONCE)
+ 
+	Sets the sprite's animation sequence to the series of frames
+	indicated by  sequenceName .
+	If  sequenceName  is different than the sprite's current
+	sequence, then the newly specified sequence of frames is started.
+	Calling play() with  sequenceName  equal to the current
+	sequence does not restart the animation loop at the first frame;
+	use restart() to achieve that.
+	If the ONCE option is used, then the specified sequence is played
+	through once, and when it is complete the sprite shows the last
+	frame in the sequence.  If ONCE is not used, then the sprite cycles
+	from the last frame in the sequence back to the first one.
+	Demo'd in:  Arrownaut .
+ 
+ 
+
+  sprite1 .play( sequenceNameOnce ,  sequenceNameLoop )  
+  sprite1 .play( sequenceNameOnce ,  sequenceNameLoop , ONCE)
+ 
+	These convenience methods are the same as
+	  
+		 sprite1 .play( sequenceNameOnce , 1,  sequenceNameLoop )
+	  
+	or
+	  
+		 sprite1 .play( sequenceNameOnce , 1,  sequenceNameLoop , ONCE)
+	  
+ 
+ 
+
+  sprite1 .play( sequenceNameRepeat ,  times ,  sequenceNameLoop )  
+  sprite1 .play( sequenceNameRepeat ,  times ,  sequenceNameLoop , ONCE)
+ 
+	Sets the sprite's animation sequence to the series of frames
+	indicated by  sequenceNameRepeat , and plays that
+	sequence  times  times.
+	The sprite then switches to the  sequenceNameLoop 
+	sequence.
+	If the ONCE option is used,  sequenceNameLoop  is played
+	through once, and when it is complete the sprite shows the last
+	frame in that sequence.  If ONCE is not used, then the sprite cycles
+	from the last frame in that sequence back to the first one.
+	Demo'd in:  Arrownaut .
+ 
+ 
+
+  sprite1 .setToFrame( frameNumber )
+ 
+	For an animated sprite, sets the next frame to display
+	(when  sprite1 .draw() is next called)
+	to the specified frame in the current sequence.
+	Note that the first frame is numbered 0, and for
+	a sequence with  n  frames the last frame is  n-1 .
+	This method has no effect when  sprite1  is a
+	button, or when  frameNumber  is less than 0 or
+	greater than the highest frame number.
+ 
+ 
+
+  sprite1 .restart()
+ 
+	Same as  sprite1 .setToFrame(0).
+	Demo'd in:  Arrownaut .
+ 
+ 
+
+  w  =  sprite1 .width()  (returns int)
+ 
+  h  =  sprite1 .height()  (returns int)
+ 
+	These methods return the sprite's width and height.
+ 
+ 
+
+  xspeed  =  sprite1 .xspeed() (returns double)
+ 
+  yspeed  =  sprite1 .yspeed() (returns double)
+ 
+	These methods return the sprite's current x change and y change
+	amounts.
+ 
+ 
+
+  sprite1 .bounceIfCollidesWith(any number of  sprite s)
+ 
+  sprite1 .bounceIfCollidesWith(any number of  sprite s, PIXELPERFECT)
+ 
+	This methods tests whether  sprite1  overlaps with
+	one or more other  sprite  objects listed as parameters.
+	The built-in non-moving off-screen sprites TOPEDGE, BOTTOMEDGE,
+	LEFTEDGE, and RIGHTEDGE can also be used as parameters.
+	Specifically, the sprites' next x and y positions are compared, not
+	the current ones.
+	If more than one sprite is specified in the parameter list, the
+	method stops checking after the first overlap is detected.
+	Note that if PIXELPERFECT is not specified as the final argument,
+	all overlaps and collisions in these methods and the other
+	xxxIfCollidesWith() methods are based on the entire rectangular sprite,
+	and not on the possibly smaller visible (non-transparent) figure within
+	the image.
+	If the PIXELPERFECT option is used, then a collision requires the
+	overlap of the two sprites' visible (non-transparent) areas.
+	If there is an overlap,
+	Ucigame changes the position and speed of  sprite1  so
+	that it "bounces."
+	Demo'd in:  Pong .
+ 
+ 
+
+  sprite1 .stopIfCollidesWith(any number of  sprite s)
+ 
+  sprite1 .stopIfCollidesWith(any number of  sprite s, PIXELPERFECT)
+ 
+	Similar to the bounceIfCollidesWith() method, except that
+	 sprite1  stops instead of bouncing.
+	Stopping means that  sprite1  moves as far as possible
+	without overlapping another sprite, and then its x and y motion
+	amounts are set to 0.
+	Demo'd in:  Pong .
+ 
+ 
+
+  sprite1 .pauseIfCollidesWith(any number of  sprite s)
+ 
+  sprite1 .pauseIfCollidesWith(any number of  sprite s, PIXELPERFECT)
+ 
+	Similar to the stopIfCollidesWith() method, except that
+	 sprite1  pauses instead of stopping.
+	Pausing means that  sprite1  moves as far as possible
+	without overlapping  sprite2 , and its x and y motion
+	amounts are unchanged.
+ 
+ 
+
+  sprite1 .checkIfCollidesWith(any number of  sprite s)
+ 
+  sprite1 .checkIfCollidesWith(any number of  sprite s, PIXELPERFECT)
+ 
+	Like the other xxxIfCollidesWith() methods, this method tests whether
+	 sprite1  and another sprite will overlap in the next x and y positions.
+	However, this method doesn't change the position or motion of
+	either sprite.  The programmer can then test whether an overlap
+	occurred with collided() and code the desired behavior.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  collision  =  sprite1 .collided()  returns boolean 
+ 
+	This method returns a boolean value of  true  or  false ,
+	depending on whether a collision was detected in the immediately
+	preceeding xxxIfCollidesWith() call.  Use this no-argument version
+	if the xxxIfCollidedWith call specified PIXELPERFECT.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  collision  =  sprite1 .collided(any combination of TOP, BOTTOM, LEFT, RIGHT)  returns boolean 
+ 
+	This method returns a boolean value of  true  or  false ,
+	depending on whether a collision was detected in the immediately
+	preceeding xxxIfCollidesWith() call on the specified side or sides
+	of  sprite1 .  TOP, BOTTOM, LEFT, and RIGHT
+	refer to the sides of  sprite1 . One or more of the four
+	variables can be used in the method call.  For example:
+	 
+		    ball.bounceIfCollidesWith(paddle);
+		    if (ball.collided(LEFT))
+		       	println("Left");
+		    if (ball.collided(TOP, BOTTOM))
+		       	println("Top or Bottom");
+	 
+ 
+ 
+
+  sprite1 .font( fontNameString ,  style ,  size )
+ 
+	This method specifies the font to use in subsequent calls
+	to  sprite1 .putText().
+	See the about fonts page
+	(coming soon!) for more information
+	about fonts in Ucigame and computer graphics.
+	The  style  parameter must be one of the following:
+	PLAIN, BOLD, ITALIC, BOLDITALIC.
+	Demo'd in:  PushMe .
+ 
+ 
+
+  sprite1 .font( fontNameString ,  style ,  size ,
+					 r ,  g ,  b )
+ 
+	Similar to the three parameter version of  font() , and
+	also sets the font color to the RGB value specified by the
+	last three parameters.  (These values must all be between 0 and 255, inclusive.)
+	Demo'd in:  MegaBounce .
+ 
+ 
+
+  sprite1 .putText( text ,  x ,  y )
+ 
+	Draws the specified text (which can be a string, such as
+	"Press Here" or an int) on  sprite1 ,
+	using the sprite's current font (and font color, if specified).
+	The lower left hand corner of  text  is
+	located  x  pixels to the right and
+	 y  pixels below the upper left hand corner of
+	 sprite1 .
+	Any part of  text  that lies outside the sprite
+	is clipped (not displayed).
+	Demo'd in:  PushMe .
+ 
+ 
+
+
+ Sprites which are buttons 
+ 
+Buttons in Ucigame are made from Sprites created with the makeButton()
+method.  A button has the following properties:
+ 
+  It changes slightly when the mouse moves over it.
+  It changes again when the mouse button is pressed on it.
+  When the mouse is pressed down and released over the button,
+	Ucigame calls a specified method.
+    sprite1  = makeButton( nameString ,  image ,
+						 width ,  height )
+
+ 
+	The makeButton method takes an already loaded Image object,
+	and creates a button Sprite with the specified name.
+	A button can be composed of one or three images, all of
+	which are in the  image  object.
+	If three images are supplied, then the first is the "at rest"
+	appearance of the button, the second is the "mouse over" image,
+	and the third is the "mouse down" image.
+	The  image  can have one of three shapes:
+	  width =  width  and height =  height , in
+		which case  image  contains one image;
+	  width =  width  * 3 and height =  height ,
+		in which case  image  contains three images;
+	  width =  width  and height =  height  * 3,
+		in which case  image  contains three images;
+	  
+
+	When the player clicks on the button, Ucigame calls a method
+	called onClick nameString ().  For instance, if
+	 nameString  = "Start" then the method called is
+	onClickStart().
+	Demo'd in:  PushMe .
+ 
+ 
+
+
+  
+ The Image class 
+
+ 
+An image is a rectangular array of pixels that is read in
+from the disk.
+One color from the disk image can be designated as transparent,
+which means that pixels of that color in the image will not
+appear on the canvas.
+ 
+ 
+	In Ucigame images are objects in the Image class.
+	In the following, we assume that a reference to a Image
+	called  image1  has been defined:
+  
+	Image  image1 ;
+ 
+
+
+  image1  = getImage( filenameString )
+ 
+	This method reads in the specified image file from disk.
+	The file can be in GIF, JPEG, or PNG format.
+	Since this version of getImage() does not specify a
+	transparent pixel color, no pixels will be transparent.
+	Demo'd in:  Pong .
+ 
+ 
+
+  image1  = getImage( filenameString ,  shade )
+ 
+	Reads in an image file from disk, and makes transparent all
+	pixels with shade of grey specified by  shade .
+	Demo'd in:  PushMe .
+ 
+ 
+
+  image1  = getImage( filenameString ,
+		 red ,  green ,  blue )
+ 
+	Reads in an image file from disk, and makes transparent all
+	pixels with the color specified by the last three parameters.
+	Demo'd in:  BallFollower .
+ 
+ 
+
+  w  =  image1 .width() (returns int)
+ 
+  h  =  image1 .height() (returns int)
+ 
+	These methods return the width and height of the image.
+ 
+ 
+
+  image1 .transparent( shade )
+ 
+  image1 .transparent( red ,  green ,  blue )
+ 
+	These methods set the image's transparent color to the
+	specified shade or red green blue color.
+ 
+ 
+
+  image1 .draw( x ,  y )
+ 
+
+	Draws the image so that its upper left hand corner is
+	at the specified position, relative to the upper left hand
+	corner of the canvas.
+	Can only be called inside the game class's draw() method.
+ 
+ 
+
+
+  
+ The Sound class 
+
+ 
+An Sound object can contain music, sound effects, or any kind
+of sound recording, of any length.
+Many file formats and recording formats exist.
+Ucigame can
+play sound files in certain uncompressed formats (the exact
+possibilities seem to vary from computer to computer)
+and in the MP3 format, thanks to the JavaZoon JLayer
+library included in Ucigame.
+Multiple sound files can be played at the same time.
+ 
+
+ 
+In the following, we assume that a reference to a Sound
+called  sound1  has been defined:
+  
+	Sound  sound1 ;
+ 
+
+
+  sound1  = getSound( filenameString )
+ 
+    This method reads in the specified sound file from disk.
+    If the file is in a format that cannot be played, subsequent
+    calls to play() or loop() will have no effect.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  sound1 .play()
+ 
+    Plays the sound once, from beginning to end.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  sound1 .loop()
+ 
+    Plays the sound continuously; when the end is reached it starts over.
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+  sound1 .stop()
+ 
+    Stops the sound if it is currently playing (or looping).
+	Demo'd in:  FlippedOut .
+ 
+ 
+
+
+  
+ The Ucigame class 
+
+ framerate( number )
+ 
+	This method sets the desired framerate; Ucigame will try to
+	refresh the window  number  times per second, although
+	there is no guarantee that it will be successful.
+	This method has no effect if  number  is negative
+	or greater than 1000.  In practice, most monitors can only be
+	refreshed between 70 and 100 times per second.
+	For most games, a framerate of 20 to 30 frames per second is optimal.
+	Demo'd in:  BallFollower ,
+	            FlippedOut .
+ 
+ 
+
+  fps  = actualFPS()  (returns int)
+ 
+	The method returns the number of times the window
+	has been refreshed in the last second.
+ 
+ 
+
+ void randomSeed( seed )
+ 
+	Ucigame can generate "pseudorandom" numbers.  Pseudorandom numbers
+	appear to be random, but are actually created by a specific formula,
+	which uses a starting number called a seed.
+	The same pseudorandom numbers will be generated by calls to random()
+	if the same seed is used in randomSeed().
+	If this method is not used, then calls to random() and
+	randomInt() will return different values each time the
+	game is run.
+ 
+ 
+
+  x  = random( limit )  (returns a double)
+ 
+	Returns a random number (with a fractional part) greater than or equal to
+	0.0 and less than  limit .  If  limit  is not positive,
+	this method returns 0.0.
+	 Demo'd in  LunchTimer .
+ 
+ 
+
+  x  = random( lowerlimit ,  upperlimit )  (returns a double)
+ 
+	Returns a random number (with a fractional part) greater than or equal to
+	 lowerlimit  and less than or equal to  upperlimit .
+	If  upperlimit  is less than  lowerlimit ,
+	this method returns  lowerlimit 
+	Demo'd in:  ClickAndClack .
+ 
+ 
+
+  x  = randomInt( limit ) (returns an int)
+ 
+	Returns a random whole number greater than or equal to
+	0 and less than  limit .  If  limit  is not positive,
+	this method returns 0.
+ 
+ 
+
+  x  = randomInt( lowerlimit ,  upperlimit )  (returns an int)
+ 
+	Returns a random whole number greater than or equal to
+	 lowerlimit  and less than  upperlimit .
+	If  upperlimit  is less than  lowerlimit ,
+	this method returns  lowerlimit 
+ 
+ 
+
+  stringArray  = arrayOfAvailableFonts() (returns an array of String)
+ 
+	This method is used to find all fonts available on the computer.
+	Demo'd in:  FontDemo .
+ 
+ 
+
+  fontIsAvailable  = isAvailableFont( FontNameString ) (returns a boolean)
+ 
+	Returns  true  if the specified font is installed and
+	available on the computer, and  false  otherwise.
+	The font name is not case sensitive.
+	Demo'd in:  BounceHouse ,
+	            PushMe .
+ 
+ 
+
+ setIconImage( iconImage )
+ 
+	Sets the game window's icon to the specified iconImage.
+	This method has no effect when the game is running as an applet.
+	The default icon for Java programs is usually the steaming
+	coffee cup logo; the icon appears on the title bar and when
+	the game is minimized.
+	 iconImage  should be created by getImage(); the
+	image can have transparent pixels.
+	Demo'd in:  Pong .
+ 
+ 
+
+ startScene( sceneNameString )
+ 
+	Defines a new scene for the game.
+	A scene is frequently part or all of a level.
+	Calling startScene( SceneName ) has the following effects:
+	  The current method completes normally.
+	  If the program has a public method called start SceneName  with no parameters
+		and returning void, then that method is performed.
+	  Every time the window needs to be repainted, the public method
+		draw SceneName  is called (instead of draw()).
+		This method must take no parameters and return void.
+	  If the user presses a keyboard key and there is a public method called
+		onKeyPress SceneName  with no parameters and returning void, then
+		that method is invoked.
+	  If the user releases a keyboard key and there is a public method called
+		onKeyRelease SceneName  with no parameters and returning void, then
+		that method is invoked.
+	  
+	Demo'd in:  PongWithScenes .
+ 
+ 
+
+ startTimer( timerNameString ,  milliseconds )
+ 
+	Executing this method causes the method  timerNameString  Timer() 
+	to be run  milliseconds  milliseconds later, and every
+	 milliseconds  milliseconds afterwards.
+	The  timerNameString  Timer()  method must be defined
+	as  public , must return  void , and must not take
+	any parameters.
+	Demo'd in:  BounceHouse ,
+	            LunchTimer .
+ 
+ 
+
+ stopTimer( timerNameString )
+ 
+	Cancels subsequent executions of the  timerNameString  Timer() 
+	method.
+	Demo'd in:  BounceHouse ,
+	            LunchTimer .
+ 
+ 
+
+ print( information )
+ 
+ println( information )
+ 
+	Prints  information  on the console.  The  println 
+	version adds a new line at the end.
+	 information  can be composed of multiple fields joined
+	with  + , for example:
+	  
+		println("The value of x is " + x);
+	  
+	Demo'd in:  FontDemo ,
+	            ClickAndClack .
+ 
+ 
+
+ 
+The following Ucigame methods create objects.
+They are defined above.
+ 
+  getImage()
+	  getSound()
+	  makeSprite()
+	  makeTiledSprite()
+	  makeButton()
+    
+ The Class You Write Extending Ucigame 
+ 
+A number of methods, if coded by the programmer in the class that
+extends Ucigame, have special roles.
+ 
+
+   public void setup() 
+ 
+	This method is performed once, at the start of the game.
+	It's a good place to set up the window, load images, and
+	create sprites.
+ 
+ 
+
+   public void draw()  or  public void draw SceneName () 
+ 
+	The draw method is called every time the window needs
+	to be repainted--either because of the requested framerate
+	of because part or all of the window has been exposed.
+ 
+ 
+
+   public void onKeyPress()   or   public void onKeyPress SceneName () 
+ 
+	This method should be coded if the game needs to be alerted
+	when the user presses a key on the keyboard.
+	If one or more keys is down, onKeyPress is called once per frame,
+	just before draw().
+	Note that if the typematic or auto-repeat feature is on, which
+	it is by default, and a key is held down and not released, the method
+	will be invoked multiple times.
+	Demo'd in:  Pong ,
+	            Tank .
+ 
+ 
+
+   public void onKeyRelease()   or   public void onKeyRelease SceneName () 
+ 
+	This method should be coded if the game needs to be alerted
+	when the user releases a key on the keyboard that was held down
+	If one or more keys is released, onKeyRelease is called once per frame,
+	just before draw().
+	Demo'd in:  Tank .
+ 
+ 
+
+   public void onMousePressed() 
+    public void onMouseMoved() 
+    public void onMouseDragged() 
+    public void onMouseReleased() 
+    public void onMouseWheelMoved() 
+ 
+	The methods are called in response to various mouse events.
+	 onMousePressed()  is called when a mouse button is pressed down.
+	 onMouseReleased()  is called when a mouse button is released;
+	Demo'd in:  FontDemo .
+	 onMouseMoved()  is called when the mouse is moved and no
+		button is being held down.
+	 onMouseDragged()  is called when the mouse is moved and a
+		button is being held down.
+	 onMouseDragged()  is called when the mouse is moved and a
+		button is being held down.
+	All are demo'd in:  ClickAndClack .
+	 onMouseWheelMoved()  is called when the mouse wheel is rotated;
+	Demo'd in:  MegaBounce  and
+	            MouseTrap .
+ 
+ 
+
+  </body> 

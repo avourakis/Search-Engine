@@ -1,0 +1,52 @@
+ 4.73 OEGetSubtree<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.72 OEGetSmallestSubtree 
+ Up:   4. OEChem Functions 
+ Next:   4.74 OEGetSubtree 
+   
+
+
+  
+4.73 OEGetSubtree 
+ 
+   
+OESystem::OEIterBase&lt;OEAtomBase&gt; *OEGetSubtree(const OEAtomBase *exclude,
+                                               const OEAtomBase *root)
+    
+This function traverses the subgraph of all atoms connected to the
+'root' atom passed as the second argument.  The traversal is not
+allowed to cross the 'exclude' atom passed as the first argument.  An
+iterator over the atoms that are members of the subgraph is returned,
+including the 'root' atom.  The subgraph will include all atoms for
+which there is a path to the 'root' atom which does not pass through
+the 'exclude' atom.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.72 OEGetSmallestSubtree 
+ Up:   4. OEChem Functions 
+ Next:   4.74 OEGetSubtree 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

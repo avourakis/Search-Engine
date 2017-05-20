@@ -1,0 +1,1672 @@
+ Announcements<body>
+
+ 
+ Announcements 
+ 
+  Introduction to Computer Science I 
+ICS-21: Lecture A/Labs 1-3 
+Spring 2012
+  
+  
+
+      
+  #24: 6/11/12 
+  Program #6
+  
+ 
+I have graded (and recorded the grades for) Program #6.
+The class average was about 42 (or about 93%) and the the median was about
+  44 (or about 98%).
+The last time I taught this course the average was about 37 (or 83%) and the
+  median was about 44 (or 98%).
+The average over all programming assignments this quarter was 92%; the last
+  time I taught this course it was 97%.
+ 
+After I return your graded work in my special office hours on Monday, please
+  download the  Grades(zipped .xls file)  from the course web and ensure
+  that I have computed and entered your grade correctly (I'll be entering
+  thousands of grades for students in my course this quarter, so even if I'm
+  99% accurate, I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+Generally, very good work by most students.
+Students who missed more than 3 methods tended to miss a lot more than 3.
+There is still a lot of conufsion about when in loops to use  used  vs.
+   sequence.length : you almost always want to use  used  so as to
+  not process any  null  values at the end of the array.
+ Please check my solution methods and learn something before the final
+  exam. 
+  
+There were a few methods that seem to give many students trouble, often the
+  advanced ones:  countTrue  and  filterTrue .
+Surprisingly, many students missed  insertAt  and  remove .
+  
+         
+  #23: 6/9/12 
+  In-Class Programming Exam #4
+  
+ 
+I have graded (and recorded the grades for) In-Class Programming Exam #4.
+The class average was about 32(or about 64%) and the median was about 34
+  (or about 68%).
+The last time I taught this calsse the average was about 31 (or about 61%)
+  and the median was about the same.
+Again, because the average was below 75%, everyone has been automatically
+  awarded about 6 extra points (whose result is reflected in the % and grade
+  columns on the spreadsheet).
+So, if your actual grade was 34 (68%), your normalized grade is about 40 (80%).
+After normalization, about 50% of the students scored an A; another 11% scored
+  a B (so almost 60% passed at the B or above level).
+I have posted a download with everyone's submitted programs, so you can
+  download your work and better interpret my gradesheets, which I will return
+  during special office hours on Monday.
+ 
+Note that as I promised, I have updated the grade files so that the column that
+  adds up the Programming Exams (Sigma PE) uses the highest score from In-Class
+  Programming Exam #3 and #4 for Exam #3.
+  
+There were many different mistakes made by students writing this class.
+Here were some of the most common problems.
+   In the declarations: not initializing  used  to 0 (or instead
+        initializing it in the constructor).
+    In the constructor: not initalizing the  set  instannce variable by
+        making it refer to a constructed object:
+         set = new Object[ parameter ];  Even
+        worse, some students initialized  used  to the non-zero
+          parameter  ; while still other students declared a local
+        variable named  set  in the constructor and set it (not the
+        instance variable) to the allocated array.
+      Finally some student did not check/throw the exception (and some left
+        the parameter's value out of the message).
+    In the  lookupIndex  method: using  set.length  as an upper
+        loop bound (instead of  used ), comparing with  ==  instead
+        of  .equals . A small (but to me surprisingly large) number of
+        students did not show  int  as the return type of this method,
+        and returned a reference to the object found.
+      This method had uses in the  add  and  contains  method, both
+        which try to see if a value is in the  SimpleSet : this is the
+        same as a result returned from  lookupIndex  that is not
+         -1 . Many students rewrote looping code in these two methods.
+    In the  add  method: not checking for a value in the
+         SimpleSet  BEFORE checking whether to  doubleLength 
+        (some students NEVER checked whether the value was there; others
+         ALWAY doubled the length or NEVER did), not storing the new value in
+         the appropriate index ( used ) or not incrementing  used 
+         after a new values was added.
+      A suprisingly large number of students used an  if/else  to test
+        whether a value was at some index in the array, and if not immediately
+        added it: but the result was that it added the value if it wasn't
+        stored in the first index.
+    In the  getSize  method: not returning  used  and instead
+        couting non- null  values in the array. Students who counted 
+        sometimes had the wrong loop indexes or counted the wrong thing.
+    In the  makeEmpty  method: either not putting  null  in all
+        the non- null  array indexes ( 0  to  used-1 ) or not
+        resetting  used  to be  0 .
+      Note that allocating a new object array is legal, but requires much more
+        work (although less code) than just storing null everywhere.
+    In the  contains  method: not using  lookupIndex  or not
+        looping correctly to check: e.g., using  set.length  as the
+        upper loop bound instead of  used .
+    In the  removeRandom  method: not checking/throwing the exception,
+        not returning a result from the array (some students returned an 
+        index), not saving the the result to return before shifting the array,
+        not shifting the array or not shifting it correctly (e.g., shifting
+        lower to higher indexes, shifting a value beyond the array's upper
+        bound), not decrementing  used  and/or not storing  null 
+        where it belongs after shifting.
+    For simple solution: some students declared extra variables that were
+        not needed (often in  lookupIndex , see my solution) some students
+        used an  if  in  contains  after calling  lookupIndex 
+        when the  if  is not needed (see my solution).
+   
+         
+  #22: 6/6/12 
+  Quiz #9
+  
+ 
+I have graded (and recorded the grades for) Quiz #9.
+The class average was about 17 (or about 70%) and the median was about
+  19 (or about 76%).
+The last time I taught this class the average was about 18 (or about 70%) and
+  the median was about 20 (or about 80%).
+These were the 3rd highest scores for a quiz the quarter; most students
+  seemed to demonstrate an understanding of the major concepts, which
+  covered all sorts of material learned during the quarter.
+Look at your returned work carefully; if your score was below 20
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the final written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+I would strongly recommend that you review the code in my solution to gain
+  a better understanding of the programming involved.
+  
+For problem 1, the mistakes mostly related to the type of parameter for the
+  constructor (and type of instance variable it was stored into).
+ LengthLess  is too specific (and you cannot generalize the class for
+  problem 2)and  Object  is too general (although you can use casting,
+  but to  Decision  to include problem 2):  Decision  is just right.
+It ensures at compile-time that the object passed to the constructor will have
+  an  isOK  method and requires no casting.
+  
+For problem 2, students also did well.
+The only reoccuring problem was calling  .toString  instead of casting
+  the parameter to a  String .
+While calling  .toString  worked here, generally classes that implement
+   Decision  require casting, and it is a "more correct" (and faster)
+  solution.
+  
+For problem 3, there was more variation. 
+The whole point of this problem was to construct and use and object from the
+   Catenate  class (passing its constructor an object constructed from
+  the  Prefix  class).
+Working solutions that did not use  Catenate  were not awarded many
+  points.
+  
+         
+  #21: 6/4/12 
+  Upcoming Programming and Final Exams
+  
+ 
+We will have our last (of four)  in-class programming exam  on Thursday,
+  June 5, in  Lab .
+The program will require you to write a collection class that has about a half
+  dozen methods that manipulate an array of  Object  in a manner similar
+  to the  SimpleQueue ,  SimpleStack , and
+   Sequence .
+Study these classes and general operations on searching/updating arrays.
+It might be also useful to look at the  Portfolio  class, although that
+  uses an array of  Stock 
+ 
+We will also have a  final written exam  on Tuesday, June 12th, 
+  1:30pm - 3:30pm in SSPA 1100 (our lecture classroom).
+This exam will be comprehensive, but it will heavily focus on the material
+  covered near or after the midterm exam; of course, when writing these
+  advanced programming features you will also be making use of the simpler
+  features covered early in the quarter.
+It will cover the lectures up to and including interfaces, but nothing after,
+  from Quiz #1 to Quiz #9; from Programming Assignment #1 to Programming
+  Assignment #6.
+For more information, click the following  
+  Topics for Written Final Exam  link.
+The best way to study for this exam is to review your quizzes (the most
+  important, but we had only 3 the second half of the quarter), programming
+  assignments, the in-class programming exams, and the daily problems from the
+  readings.
+Obviously we have covered a large amount of material in the quarter, and with
+  with only a dozen or so questions on the exams, I'll have to be selective;
+  but the coverage will be broad.
+  
+         
+  #20: 6/4/12 
+  Quiz #8
+  
+ 
+I have graded (and recorded the grades for) Quiz #8.
+The class average was about 16 (or about 64%) and the median was about 16
+  (or about 66%); the last time I taught this class the average was about 16
+  (or about 65%) and the median was about 18 (or about 70%).
+Look at your returned work carefully; if your score was below 20
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the final written exam.
+ 
+After I return your graded work in class on Thursday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+On the first page, students mostly either got a full credit or none.
+On the second page the distribution was much wider.
+Common general mistakes included
+   Using  stocks.length  as the upper bound of an array instead of
+        used .
+    Not calling  indexOfSymbol  when appropriate; and if calling it,
+        not checking for  -1  as the returned value before using its
+        value to access the  stocks  array.
+      Often it was used more than once in a method, so its value should be
+        saved.
+  
+For specific methods
+  In  sharesOwned , not using the parameter's value, and instead
+        returning the number of stocks or  0  (if the symbol wasn't in the
+        array) or  1  (if the symbol was in the array).
+    In  worth , calculating  .getPrice  times  .getShares  of
+        a stock, instead  of calling its  .getWorth  method.
+    In  active , not calling  .isActive  on a stock, or not
+        catenating values (with spaces between).
+    In  withdraw , not checking for a bad parameter or not reducing
+        the  cash  instance variable.
+    In  sell , there were many errors (few students received close to
+        full credit for this part).
+      See my solution and try to understand why each part was there.
+    In  updatePrice , not calling the stock's  updateMethod .
+    
+Again, see my code for what I consider a correct solution.
+ 
+         
+  #19: 6/2/12 
+  In-Lab Programming Exam #3
+  
+ 
+I have graded (and recorded the grades for) In-Lab Programming Exam #3.
+The class average was about 37 (or about 73%); the median was higher, about 39
+  (or about 78%); the last time I taught this class the class average was about
+  36 (or about 72%) and the median was about 40 (or about 79%).
+Because the average was below 75%, everyone has been automatically awarded
+  about 1 extra point (whose result is reflected in the % and grade columns
+  on the spreadsheet).
+So, if your actual grade was 38 (76%), your normalized grade is about 39 (78%).
+After normalization, about 34% of the students scored an A; another 20% scored
+  a B (so 54% passed at the B or above level).
+I have posted a download with everyone's submitted programs, so you can
+  download your work and better interpret my gradesheets, which I will return
+  in class on Monday.
+ 
+Note that as I promised, I have updated the grade files so that the column that
+  adds up the Programming Exams (Sigma PE) uses the highest score from In-Lab
+  Programming Exam #2 and #3 for Exam #2.
+  
+There were many different mistakes made by students writing this class.
+Here were some of the most common problems.
+   In the declarations: not declaring all instance variables private; not
+        initializing some instance variables in their declarations; not
+        initializing the status of the lock to "locked" ( true ).
+    In the constructor: not copying parameters to instance variables;
+        re-initializing instance variables that should be/were initialized in
+        their declarations.
+    In the  lock  method: checking some condition (this method can
+        always just change  the state to "locked"); some student wrote code
+        that returned a value instead of being  void .
+    In the  unlock  method: comparing the wrong variables. Calling
+         .equals  between a  ModularCounter  and something that
+        is not from the  ModularCounter  class (which unfortunately
+        is syntactically correct but alwasy false); some student wrote code
+        that returned a value instead of being  void .
+    In the  changeDial  method: not using the correct dial numbers;
+        not comparing the  String  to  "Up" / "Down"  with
+        the  .equals  method (students used many "close" variants that
+        did not work); updating local state, not instance variables.
+    In the  getDialStatus  method: not returning a  String  with
+        just a number 0-9: some students executed  .toString  on the
+         ModularCounter  which returned a longer  String  like
+         1 (mod 9) .
+    In the  getLockStatus  method: not returning the exact  String 
+        values required.
+    For using the  ModularCounter  using a modulus of  9  instead
+        of  10 ; many students used the  ModularCounter  class in
+        their solution and most did so correctly.
+    For simple solution, not writing  if/else  in  getDialStatus 
+        and  getLockStatus  (in fact, these methods are ideal places to
+        use conditional expressions); testing the lock status in  unlock ;
+        writing something like  locked == true  or  locked == false 
+        instead of just  locked  or  !locked  (the instance variable
+        should be something like  locked , not  lockStatus  so
+         true  and  false  values are easier to understand).
+   
+         
+  #18: 5/29/12 
+  Program #5
+  
+ 
+I have graded (and recorded the grades for) Program #5.
+The class average was about 37 (or about 83%) and the the median was about
+  39 (or about 84%).
+The last time I taught this class the average was about 39 (or about 87%) and
+  the median was about 42 (or about 93%).
+ 
+After I return your graded work in class on Tuesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+Generally, very good work by most students.
+There were a few  static  methods that performed poorly on boundary
+  cases (e.g.,  constrain  when the value to constrain was equal to the
+  minimum or maximum); a few  compareTo/equals  methods in
+   BigRational  that did not compute correct results ( compareTo 
+  should return an  int  and neither should use  == ); a few
+    update  methods in  Ball  that did not perform the simulation
+  correctly (mostly having to do with forgetting to multiply the average
+  velocity by  dT ) or using  static  fields: they created jerky
+  simulations, not at all like my executable.
+  
+         
+  #17: 5/23/11 
+  Quiz #7
+  
+ 
+I have graded (and recorded the grades for) Quiz #7.
+The class average was about 16 (or about 64%) and the median was about 18 (or
+  about 72%); the last time I taught this class the average was about 16 (or
+  about 65%) and the median was about 19 (or about 76%).
+Look at your returned work carefully; if your score was below 20
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the final written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Generally students made lots of small mistakes that one makes when writing
+  classes for the first time.
+I hope between seeing my comments on your quizzes and reading my solutions
+  that you get a solid understanding of all the parts of a simple class.
+Here were some common mistakes for Question #1. Problems with Question #2 were
+  similar.
+In fact, there is a strong correlation between student scores on problems #1
+  and #2
+   Not writing the whole class, starting with  public class ... 
+    Using  static  fields and methods.
+      Yes, you can get this to work in Eclipse if you always construct just
+        one object; but if you construct more than one, then the different
+        objects would not have their own state, and therefore not work
+        correctly.
+    Not checking for illegal arguments/parameters in the constructor and
+        throwing an exception (with some useful  String  that included
+        the "bad" values).
+    Not copying the parameters to the instance variables in the constructor
+        (once they are found to be OK).
+      Some students are confused about using parameters and instance variables
+        together in constructors.
+    Not writing the header or body correct for  getCatenation  and
+         getCount ; both are parameterless, returning a  String 
+        and  int  instance variables respectively.
+    Not writing the header or body correct for  seeIt : a  void 
+        method that often (but not always) changes the state of some instance
+        variables (some students didn't change the state correctly).
+    Not declaring instance variables.
+    Not declaring instance variables to be  private .
+    Not specifying correct initializations for the instance variables.
+      Those variables receiving values in the constructor should use
+         default intialization;
+      the other variables should be initialized explicitly.
+    
+Again, see my code for what I consider a correct solution.
+ 
+For Question #3, most answers had something reasonably generic to say, but
+  few expressed things as I wanted them.
+This shows that students are either a bit confused about what is
+  happening during object construction or just don't quite know how
+  to use the technical terms necessary to describe this process (or both).
+It isn't enough to say "The  new  operator constructs the object and
+  the constructor finishes the construction."
+While "correct", this answer doesn't explain in detail what happens during
+  construction (instance variables are declared, initialized by  new ,
+  and sometimes reinitialized from parameters storing values supplied by 
+  arguments to the constructor, after the constructor checks their values for
+  "reasonableness").
+Again, see my complete answer.
+  
+         
+  #17: 5/21/12 
+  Program #4
+  
+ 
+I have graded (and recorded the grades for) Program #4.
+The class average was about 36 (or about 75%) and median grade was about
+  38 (or about 79%).
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+    Collatz : Almost everyone got the program working correctly.
+      If there were problems, they mostly related to not using a correct
+        constructor for  BigInteger ; a few students prompted only
+        for an  int  not a  BigInteger  (there were a few
+        different ways to do this correctly).
+      FYI, there is a  static  method named  valueOf  that
+        also constructs and returns a  BigInteger .
+      It takes a bit longer to run, but ensures no duplication of objects
+        from this immutable class: so,  BigInteger.valueOf(3)  can be used
+        in place of  new BigInteger("3")  and vice-versa.
+      I would stil recommend using the contructor.
+   
+      DiceWar : Most students got most parts correct, but there were
+        very many small erors.
+      Beside correctness issues, I did take a point off for each of the
+        following:
+        (a) not constructing a  DiceEnsemble  for each player,
+        (b) not calling  getRollCount  to help compute some
+              statistic (using an extra counter for that job), and
+        (c) declaring no variables in local blocks inside the  main 
+              method: you should work on declaring variables in the
+              most restricted scope that you can..
+   
+      PhoneDatabase : This program caused the most problems.
+      Some students did not use case-insenstive comparisons: e.g., 
+         equalsIgnoreCase .
+      Many students did not call  nextToken  in pairs; the result
+        was that if you looked up a "telephone" number, the program
+        would print the name of the next person in the  String 
+        (not the previous person, who actually had that phone number).
+   
+      ICD : Many students didn't finish this code in  this long
+        assignment: long in both in what you had to do and in how long you
+        were given.
+      Possibly I should have made the first two parts due in one week and
+        the second two due the second week to keep students on schedule.
+      Many students did not know how to terminate the program if a bad
+        configuration file was encountered (a big  try/catch  around
+        all the code, including a nested  try/catch  for reading the
+        input file if the configuration succeeded).
+      Some students hard-wired in various pieces of information instead
+        of reading them from the configuration file.
+      Finally, some students did not compute the zero-crossing count
+        correctly: two ways to do this appeared in the simplification
+        lecture.
+  
+Please always run my executable and compare it to your program's
+  behavior and output for various inputs.
+ 
+         
+  #16: 5/21/12 
+  In-Lab Programming Exam #2
+  
+ 
+I have graded (and recorded the grades for) In-Lab Programming Exam #2.
+The class average was about 36 (or about 71%) and the median was higher, about
+  38 (or about 76%); the last time I taught thisl class the average was about
+  32 (or about 63%) and the median about 34 (or about 68%).
+Because the average was below 75%, everyone has been automatically awarded
+  about 2 extra points (whose result is reflected in the % and grade columns
+  on the spreadsheet).
+So, if your actual grade was 35 (70%), your normalized grade is about 41 (82%).
+After normalization, about 35% of the students scored an A; another 15% scored
+  a B (so 50% passed at the B or above level).
+I have posted a download with everyone's submitted programs, so you can
+  download your work and better interpret my gradesheets, which I will return
+  in class on Monday.
+ 
+A good metric for your midterm performance is the average of the midterm 
+  written exam and your first two in-class programming exams (with
+  normalization points added).
+The average for all students in the class on these in-class testing instruments
+  is about 76% and the median is about 79%.
+If we switch to discussing midterm grades (including these instruments as well
+  as quizzes and programming assignments), the average for all students in the
+  class is 81% (and the median is 84%).
+Your overall grade at this time is the best estimator of your final grade.
+  
+Finally, recall that I said that typically final grade distribution in this
+  class is 25% As, 25% Bs, 25% Cs, and   25% Ds and Fs.
+At present, students are doing a bit better than that, with 30% As, 24% Bs,
+  26% Cs, and 20% Ds and Fs.
+  
+Note that as I promised, I have updated the grade files so that the column that
+  adds up the Programming Exams (Sigma PE) uses the highest score from In-Lab
+  Programming Exam #1 and #2 for Exam #1.
+  
+In the  DiceEnsemble  problem students needed to (a) check for and throw
+  the exception with a good message, (b) declare/initialize some variables,
+  including the dice ensembles and counters, (c) loop through the number
+  of rolls indicated by  toRoll , (c) change the state of the dice 
+  variables by rolling them once in the loop and then, (d) check the pip 
+  sums to decide which counter to increment (if any), and finally (e) return
+  the win/lose ratio as a  double  via casting.
+  
+In the  StringTokenizer  problem students needed to (a) construct the
+  string tokenizer from the  words  parameter, (b) include a special check
+  for  no tokens , (c) get and store the first token (if there were any)
+  and initialize the answer string, (d) loop through all the other tokens by
+  (e) storing each new token into a variable local to the loop, (f) checking
+  how it compared with the first token,(g) catenating it to the answer if it
+  was greater, (h) maintining correct spacing in the answer, and (i) returning
+  the catenated answer.
+  
+         
+  #15: 5/16/12 
+  Quiz #6
+  
+ 
+I have graded (and recorded the grades for) Quiz #6.
+The class average was about 16 (or about 63%); the median was about 17
+  (or about 68%).
+I'll remind everyone that because the average was below 75%, students will
+  receive about 3 normalization points to bring the class average to 75%
+  (these points are not given to students individually -your score is still
+  your score- but are added to the totals of every student when computing their
+  grade); it is effectively as if you scored about 4 more points on this quiz.
+Look at your returned work carefully; if your score was below 20 (most were)
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   Problem 1: Most students got full or close to full credit here.
+      I was looking for a correctly written header and body.
+      Some students called  Math.min  others used multiple
+         if  statements.
+      I took for for solutions that seemed overly complex (declaring
+        extra/unneeded variables).
+
+   
+     Problem 2: Scores here were a bit more spread out.
+      Students needed to write a loop that counted the primes,
+        calling the  Utility.isPrime  method using the correct
+        syntax; a suprising number of students omitted  Utility. 
+
+   
+     Problem 3: Most students had the right idea here, but there was some
+        confusion on what were parameters and local variables.
+      Also, some students didn't put the initial values for variables in
+        boxes.
+      Many students write a loop bounds check like  i but did
+        not show  i  going to  6  to make this continuation test
+         false .
+
+    
+     Problem 4: There was a big split among students on this problem: many
+        received very many and others received very few points; there were not
+        many students in the middle.
+      Many students wrote code only, and didn't indicate parameter and local
+        variables, or arguments.
+      I did not grade the part about which variables could be declared
+        final ; in my solution all the parameters could be final
+       (none was assigned a new value, although the  DiceEnsemble 
+       parameters had the state of their objects changed) but none of the
+       local variables could (since they were all incremented various times).
+  
+   
+     Problem 5: A lot like Problem #4, with a big split among students.
+      I graded this problem "lightly" relating to construction two
+         StringTokenizer s, checking/throwing the exception correctly
+        based on  .countTokens , declaring a variable to contain the
+        result, iterating though the  StringTokenizer s, updating the
+        variable (including spaced between tokens) and returning th result.
+      I did not take off points for incorrect placement of spaces, but see
+        my solution for one way to do this correctly; there are many others.  
+      
+         
+  #14: 5/14/12 
+  In-Lab Written Exam #1
+  
+ 
+I have graded (and recorded the grades for) In-Lab Written Exam #1.
+The class average was about 65% (the median was 65%); the last time I taught
+  this class the average was about 68% (the median was 69%).
+Becuase the average was below 75%, everyone has been automatically awarded
+  about 10 extra points (whose result is reflected in the % and grade columns
+  on the spreadsheet).
+So, if your actual grade was 75, your normalized grade is about 85.
+Look at your returned work carefully; if your score was below 60 (after
+  normalization, a C), you might want to review this exam with me or the TA.
+ 
+Recall that the exam was 105 points out of 100, so you could have skipped
+  any small question (or lost partial credit on any large one) and still
+  scored 100% on the exam.
+The highest score was in fact 100.
+See the  Exams  tab in the spreadsheet for a histogram of the scores 
+  (before normalization).
+After normalization, about 26% of the students scored 90% or above; about
+   41% score 80% or above.
+Generally, students scored well on problems 1-6, but performance dropped
+  off after that: the code synthesis problems were at the end of the exam.
+  
+Please look at this instrument's grade as part of the entire grade in the
+  course; especially look at your percentage on the midterm exam and
+  first two in-class programming exam (when we have the second).
+  
+After I return your graded work on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering about 2,000
+  grades for students in my course this semester, so even if I'm 99% accurate,
+  I'll incorrectly compute/record 20 grades).
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 68.5 is recorded as 69).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the exam.
+  
+Here were some common mistakes:
+   Problem 1: Twelved students (11%) solved this problem perfectly; the
+        average was 70%.
+      The most common mistakes were:
+       int  as a literal instead of a keyword (it is just an identifier
+         that is a keyword); not treating things like "Prompt.forInt"
+         as identifiers and seperators; not recognizing comments correctly
+         (the first comment stops at  */ ) or  String  literals as
+         one token, not recognizing  -1  as an operator followed by a
+         literal.
+
+   
+     Problem 2: No students solved this problem perfectly; the
+        average was 60%.
+      Most students made a small number of mistakes here:
+        specifying a wrong return type (or no return type) or parameter type
+        (or having the wrong number of types in the parentheses).
+      A few students had no idea what I was asking for and tried writing code
+        for these operations.
+
+   
+     Problem 3: Eighteen students (16%) solved this problem perfectly;
+        the average was 66%.
+      Most students still had a few mistakes here. Common ones
+        include: writing  double  for methods (that occurs only in the
+        prototype); redundant parentheses or omitted (necessary) parentheses
+        (especial in the product for denominator); writing  2/5  (integer
+        division truncates); forgetting  *  operators.
+      A good number of students solved part  3  correctly.
+
+   
+     Problem 4: Forty-two students (37%) solved this problem perfectly; the
+        average was 82%.
+       
+      Most students scored highly on this problem.
+      Too many students still did not indicate that all literals and variables
+        are considered Java expressions.
+      Some students did not show all subexpressions (especially the unary
+         -  operator) or the method calls.
+      Some students evaluated the the  +  before the  *  (others
+        put one oval around this subexpression which contains two operators. 
+      Other students did not oval the first  &amp;&amp;  (and its operands),
+        which becomes the left operand of the second  &amp;&amp; .
+
+    
+     Problem 5: Forty-four students (39%) solved this problem perfectly;
+        the average was 71%.
+      A big improvment over the quizzes, but a few students still do not
+        seem to understand the interaction between looping, the
+         try/catch  statement, and exceptions thrown by the file I/O
+        class methods.
+
+   
+     Problem 6: Only two students (2%) solved this problem perfectly
+        (Kevin Pham and Samantha Helstrom); the average was 70%.
+      Problem 6a: Mediocre scores here.
+      Most students are still having problems doing this correctly, especially
+        regarding  if  statements.
+      This task should be straightforward if you understand statements (and
+        is analogous to oval diagrams for expressions, which students did much
+        better on).
+       
+      Problem 6b: Generally students did better on this part (and better
+        than on the quiz), both in form and content.
+      This problem with long, with lots of input, but most students
+        seemed to make good progress even if they did not finish it correctly:
+        some students terminate the loop too soon, but even more students
+        did not terminate the loop at the right time, reading the data all the
+        way until the sentinel.
+
+    
+     Problem 7: Only four students (4%) solved this problem perfectly
+        (Andrew Angeles, Yun Chen, Gevorg Hovakimyan, and Eric Whitescarver);
+        the average was 62%.
+      Generally students still did poorly on this part (not much better
+        than on the quiz).
+      There are still too many students who don't know the material: they
+        indicated constructors at the top (as in the quiz), but not in this
+        form of the class.
+      Here I wrote the fields first - another common way of writing classes.
+       
+      Most students still did poorly on part b, although the problems were very
+        similar to those on the quiz.
+      Too many student did not correctly write all parts of the constructor,
+        and in later parts they did not use this variable when referring to
+        the constructed object.
+      I was surprised that many students did not know how to declare and
+        initialize this reference variable, which typically follow the form
+         class-name variable = new class-name(initializations) ; this
+        confusion got wors in problems 9 and 10, which also required
+        constructors.
+      And, there is still lots of confusion about what to write, especially the
+        use of variables refering to objects for non- static  methods
+        and the use of the class name in  static  methods.
+
+    
+     Problem 8: Seveenteen students (15%) solved this problem perfectly; the
+        average was 68%.
+      This problem used no classes.
+      The first loop was optimally a  do  loop although many students
+        are still using  for(;;)  loops and  if/break : note that
+        the variable used  after  the loop  CANNOT  be declared
+        inside the loop.
+      The biggest mistake in the second loop was not updating the state of
+        the variable storing the number: the code needed to include something
+        like  number = number/10;  or just  number /= 10; ;
+        it also needed an counter variable that was incremented the correct
+        number of times (some students incremented one too few or too many
+        times.
+
+   
+     Problem 9: Six students (5%) solved this problem perfectly; the
+        average was 47%.
+      Many students got a close answer (missing a variety of small things),
+        while other had major conceptual problems.
+      To get full credit you needed to construct a  DiceEnsemble  (which
+        very many students did not do), have a simple (counting) and correctly
+        terminating loop -ensuring that you rolled the dice the correct number
+        of times, correctly calling the  .roll  and  .getPipSum 
+        methods (using the constructed object), and computed and printed the
+        right value.
+
+   
+     Problem 10: Seven students (6%) solved this problem perfectly; the
+        average was 45% (the lowest on the exam).
+      Many students got a close answer (missing a variety of small things),
+        while others had major conceptual problems.
+      To get full credit you needed to construct a  StringTokenizer ,
+        have a simple ( while (...hasMoreTokens()) ) correctly terminating
+        loop, get/store the next token and perform the right test on it
+        ( .compareTo  with  maxSoFar ), and update  maxSoFar 
+        when indicated with the stored token, and print it after the loop.
+
+   
+     Problem 11: Ten students (9%) solved this problem perfectly; the
+        average was 46%.
+      Of those students who answered the first part, most did not know what
+        DeMorgan's law was (but I awarded 1 point for filling in the left-hand
+        side of the table correctly according to what boolean expressions you 
+        would write).
+      There was some confusion about what I wanted on the second part,
+        which involved writing a  for(;;)  loop with an  if/break 
+        whose test was the negated version of the continuation test given
+        in the loop.
+     
+         
+  #13: 5/9/12 
+  Quiz #5
+  
+ 
+I have graded (and recorded the grades for) Quiz #5.
+The class average was about 14 (or about 58%); the median was about 14
+  (or about 56%); the last time I taught this class the average was about
+  14 (or about 57%); the median was about 13 (or about 52%).
+I'll remind everyone that because the average was below 75%, students will
+  receive about 4 normalization points to bring the class average to 75%
+  (these points are not given to students individually -your score is still
+  your score- but are added to the totals of every student when computing their
+  grade); it is effectively as if you scored about 4 more points on this quiz.
+Look at your returned work carefully; if your score was below 20 (most were)
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   Problem 1: Most students got full or close to full credit here.
+      Some pictures did not show correct references; others showed two
+        declared variables with the same name; a few had arrows whose
+        tails were not INSIDE the center of the box, or arrows that had
+        no heads.
+      Remember, arrows point at ovals, NOT at other variable boxes
+        (e.g., what does  s2 = s1  do?).
+      Note that the  compareTo  method returns an  int  not a 
+         boolean : I wasn't looking for an exact number, but just
+        and indication of whether the values was &lt;0, =0, or &gt;0.
+
+   
+     Problem 2: There were some totally correct or close to correct
+        solutions, but the ones that were not were often very wrong.
+      The semantics of the methods in the  StringTokenizer  class
+        take some getting used to (which I hope you will, in this quiz
+        and in Programming Assignment #4).
+      Points were given for the construction a  StringTokenizer ,
+        writing a loop, terminating the loop when there were no more tokens,
+        getting a token and checking to see if it was  .equals(word) ,
+        printing the previous value and  break ing, and updating
+        the  previous  value if the loop continues.
+
+   
+     Problem 3a: Very poor performance.
+      There are simple rules that you can use to answer these questions,
+        but most students seemed very confused and did not know which rules
+        to apply.
+      I discussed these in class. You can look at my solutions online.
+      If you have questions, please ask them in class, or post information
+        on the appropriate forum.
+
+   
+     Problem 3b: Much like 3a only worse.
+      These questions were harder because they
+        asked you to synthesize, not just analyze code (but really you were
+        analyzing access modifiers).
+      You need to understand the rules for understanding access modifiers
+        to effective use classes that are in libraries (like mine and Java's).
+      Again, I suggest that you look at my solutions online.
+     
+         
+  #12: 5/7/12 
+  Program #3
+  
+ 
+I have graded (and recorded the grades for) Program #3.
+The class average was about 40 (or about 89%) and median grade was about
+  43 (or about 96%); the last time I taught this class the average was about
+  40 (or about 90%) and median grade was about 42 (or about 93%).
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+Besides a few students submitting programs that weren't immediately
+  runnable (because the class name did not match the file name or because
+  they put their code in a package, each a 1 point deduction), the typical
+  mistakes were
+   In Part 1, some students did not get the outer loop working
+        correctly; some students forgot to reset  t ,  x ,
+        and  y  back to 0 when retrying the next angle.
+      It is important to be able to treat what used to be the entire
+        program (computing the trajectory) as a part of a bigger program.
+      We will learn another way to do this by writing methods soon.
+   
+     In Part 2, many students got everything completely correct.
+      Some students had small differences in the answers, other
+        students had larger differences (some just in the height).
+      Some students had infinite loops.
+   
+     Part 3, caused more problem than the other parts.
+      I got the impression some students didn't fully understand
+        the form of the input files (nor run my executable on them).
+      I used two other test files when grading.
+      The first contained.
+       1000 -100 250 500 1001 750 100 -1  
+      and the second
+       100 90 -10 -10 -10 -10 90  -1  
+      Both follow the exact form of the other test files.
+   
+     In the style part, I took off 1 point for sometimes and 2 points
+        for rarely.
+    
+Please always run my executable and compare it to your program's
+  behavior and output for various inputs.
+ 
+Finally, a few students forgot to use the form of  Prompt.forDouble 
+  and  Prompt.forBoolean  that specified a default value.
+Please check the Javadoc for this version is you did not use it correctly.
+  
+         
+  #11: 5/7/12 
+  Programming Exam #1
+  
+ 
+I have graded (and recorded the grades for) In-Lab Programming Exam #1.
+The class average was about 41 (or about 81%) and  the class median
+  was about 46 (or about 92%).
+The big difference in these numbers results from many students
+  scoring high (half got 92% or above) and some students scoring
+  very low (below 50%), dragging down the average but not the median.
+The last time I taught this class the average was about 40 (or about 80%) and 
+  the class median was about 45 (or about 90%).
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+Generally, many students wrote correct programs (over half the class) but there
+  wre lots deductions for Java use (again, at most 5 points/10% per student).
+Common mistakes were not using the correct  Prompt  methods (or prompting
+  inside the loop), not computing whether Player A won or not correctly with a
+  random number, not always tracing points when appropriate, not using the
+  "rules of tennis" criteria to correctly terminate loop/print winner:
+  ignoring/misinterpretting the  must have 4 points  rule or the
+   must be at least two points more than your opponent  rule.
+  
+I took off up to 5 points at most for Java use.
+There were about a dozen items in this category, typically 1-2 point per item.
+The most frequent deductions were for ...
+   ...not declaring/initializing prompted-for variables in one statement
+    ...not declaring/initializing variables in the loop, if they were used
+           only in the loop
+    ...declaring extra/duplicate/unneeded variables
+    ...not using  if/else  when appropriate (often duplicating tests)
+    ...using  else  after  if  with a  break  when true
+    ...using nested  ifs  instead of the  &amp;&amp;  operator in one
+            if 
+    ...using  == true  or  != false , etc.
+    ...poor use of locality: few blank lines separating grouped code
+   Important : I will mentioned in class, students who score better on the
+  second In-Lab Exam will have that score count for both In-Lab #1 and #2.
+So if you scored poorly because you didn't know what to expect, paniced, were
+  sick, or for any other reason, you can wipe out that score by performing
+  better on the next exam.
+ 
+         
+  #10: 5/3/12 
+  Quiz #4
+  
+ 
+I have graded (and recorded the grades for) Quiz #4.
+The class average was about 16 (or about 63%) and the median was about 16
+  (or 64%); the last time I taught this class the average was about 16
+  (or about 65%); the median was about 17 (or 68%).
+Look at your returned work carefully; if your score was below 20 (most were)
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   Problem 1: Many students did much better on this problem than the
+        equivalent one on the previoius quiz (although some did just as
+        poorly and are still confused on exception handling, or just
+        understanding Java code).
+      Note that the value after one that raises the
+         NumberFormatException  is read and ignored.
+
+   
+     Problem 2: Student scores spanned a wide range.
+      In part (a) I was looking for  do/while  loop (the body must be
+        executed at least once) that negated the termination condition in its
+        continuation condition.
+      This was the most natural translation.
+      Some students wrote loops that were not equivalent in execution
+        to the loop shown, or were more complicated, not less complicated.
+      For part (b) I wanted comments about the if/break being first in the
+         loop, last in the loop, and in-between other statements in the loop.
+   
+     Problem 3: Many students received full credit on this.
+      Remember, the online notes are easily searchable; some students
+        just guessed at the second/third part of this question instead
+        of searching the notes.
+      I wouldn't expect you to remember these terms just from reading the
+        notes, but if you didn't read the notes there are other things you
+        missed.
+      Oh, and if you are going to directly quote the notes, instead of reading
+        them and putting things in your own words (which I would prefer), then
+        put quotes around what you wrote and cite the source.
+   
+     Problem 4: Most students received 1.5-2 points.
+      Some didn't know what I meant by  conditional expression  and
+        rewrote  if  statements (or a  while  loop!).
+      Many did not put  currentValue =   in front of the conditional
+        expression (and instead put these tokens twice into the conditional
+        expression, twice).
+      If you didn't use the right test (some used  =  instead of
+         == ) I deducted points.
+
+   
+     Problem 5: Students did well on this open question, but few received
+        full credit.
+      I wanted some discussion of  observing variables  and  executing
+        code  with the single statement stepper or conditional/unconditional
+        breakpoints.
+      I wanted all four of these terms mentioned for full credit.
+         
+   
+     Problem 6: Most students had a good idea of what I wanted here.
+      The first column represents the possible values for  traceInDetail 
+        while the second and third column were the expressions to be proven
+        identical (that confused some students, because the first and second
+        columns were identical).
+      Because these expressions are equivalent, the last two columns should
+        list the same values.
+      In the final part, I just wanted you to negate  traceInDetail ,
+        not using the literals  true  or  false 
+        
+   
+     Problem 7: Few student got this problem completely correct; I admit it is
+         a strange problem.
+      It is possible to use the initialization, testing, and increment part of
+        the general  for  loop.
+      Mainly I wanted a general  for  loop with an initialization, 
+         test, and update; and I wanted a negated/simplified version of the
+         test in the  if/break .
+      Note that we cannot declare  int c = 0  in the parentheses because
+        then that variable can be used only in the loop body (see the next
+        problem) and therefore not printed after the loop terminates.
+      Also, the termination condition in the  if  needed to be negated to
+        a continuation condition, and I wanted you to use DeMorgan's laws
+        to change  ||  to  &amp;&amp;  as well as correctly negate the
+        relational operators: some students negated  x &gt; 0  to 
+         x &lt; 0  when it should have been negated to  x &lt;= 0 .
+
+   
+     Problem 8: This problem caused lots of grading issues because students
+        seemed not to have a good idea of what I was looking for.
+      In (a) I wanted you to talk about an empty expression statement and an
+        infinite loop.
+      In (b) I wanted you to talk about an empty expression statement and
+        a variable ( i ) not existing (not declard) in the block
+        following the  for  loop (the scope of the variable declaration
+        was ended after the loop ended).
+      In (c) I wanted you to talk about how using the "right" control structure
+        (the  for  loop is the right one) might allow the Java compiler to
+        help you debug strange problems by detecting and reporting a compiler
+        error instead of a runtime error.
+      You had to be very explicit in your answer to get over full credit.
+      Many students lost 2 points here.
+     
+         
+  #9: 4/30/12 
+  Program #2
+  
+ 
+I have graded (and recorded the grades for) Program #2.
+The class average was about 40 (or about 90%) and the median was about 43 (or
+   96%); the last time I taught this class the average was about 42 (or about
+   93%); the median was about 43 (or 96%).
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+Besides a few students submitting programs that weren't immediately
+  runnable (because the class name did not match the file name or because
+  they put their code in a package, or incorrectly commented-out some line,
+  each a 1 point deduction), the common mistakes were
+   In Part 1, some students generated random numbers in an incorrect
+        range; others forgot to multiply the ratio by 4; some students did
+        not cast the  int s to  double s or hand other calculation
+        errors, others did not repreated prompt for a positive number; many
+        students did not follow directions and left in statements that printed
+        information.
+   
+     In Part 2, some students wrote code incorrectly for the case where
+        the sentinel was the first value (or didn't comment-out the
+        print statements, but instead removed them); many
+        students did not follow directions and left in statements that printed.
+      Some students computed statistics wrong or neglected to compute them.
+   
+     In Part 3, some students did not trace outputs in the form of
+        my executable; while it is possible to compute the door to expose
+        without using a loop with random numbers, I wanted you to get more
+        experience writing loops. 
+      Other students computed a 50%/50% win ratio, instead of the 66%/33%
+        switch vs. stay ratio, so their logic was somehow wrong.
+    
+Please always run my executable and compare it to your program's
+  behavior and output for various inputs.
+ 
+Finally, some students declared "counter" variables to be  double 
+  instead of  int  and some required two  Prompt.forInt  calls in
+  their loops (for getting a positive value) when one sufficed with the "right"
+  kind of loop.
+  
+Note the back page: we did not deduct points for style, but we indicated where
+  you need help.
+We will grade on style (deducting points) for Programming Assignment #3.
+  
+         
+  #8: 4/30/12 
+  Upcoming Programming Exam
+  
+ 
+We will have our first (of four)  in-class programming exam  on Thursday,
+  May 3, in  Lab .
+You will be asked to login on and use one of the lab computers (not your own!),
+  start Eclipse (setting up the  introlib.jar  file), and work on a
+  project folder that you will download.
+I will supply a written description of what your program should do, along
+  with a few examples of input and output, and some iterative enhancements.
+The program will involve declaration statements, expressions statements
+  (including input and output), and  if  and looping statements (but
+   not  try/catch  and not classes).
+ 
+The program is worth 50 points and you will have approximately 90 minutes to
+  work on it.
+The program will require about a two dozen lines of code.
+Some students will finish, some will not.
+I will award partial credit for partially working programs.
+This is a closed notes/book/internet exam; you will have access
+  to Javadoc for the Introlib and Java classes.
+  
+         
+  #7: 4/25/12 
+  Quiz #3
+  
+ 
+I have graded (and recorded the grades for) Quiz #3.
+The class average was about 18 (or about 70%); the median was about 18 (or
+  about 72%); the last time I taught this class the class average was about 17
+  (or about 68%); the median was about 19 (or about 72%).
+Look at your returned work carefully; if your score was below 20 (most were)
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   Problem 1: Most students did well on this problem.
+      The most "missed" statement was the declaration statement.
+      Other students listed two or three different kinds of  if 
+        statements separately (there is just one EBNF rule for ifs).
+      Some students put * after every statement or after no statements;
+        other students did not put a * after blocks (which are the
+        simplest form of control structure) or breaks (which technically
+        are a control structure -they affect what statement is executed
+        next, but different than the other control structures because
+        we don't see  statement  mentioned in their EBNF).
+
+   
+     Problem 2: Few students got full credit on this problem.
+      Part 1 had no state-change operator evaluated last (or at all).
+      Part 2 incremented  y  to 4, and then stored that value into
+         x  as well.
+      Part 3 had an illegal operand for a state change operator.
+      Part 4 incremented  x , but then the  =  operator took
+         x 's  old value (it is a postfix  ++ ) and stored it
+        back into  x ; so, the expression statement  x++;  or
+         ++x;  increments  x ; for that matter even
+         x = ++x;  works (although it is overly complex), but NOT
+         x = x++; .
+      In Part 5, many students got full credit, although this expression
+        statement is complicated, it is syntactically correct.
+
+   
+     Problem 3: Most students missed at least one part of this problem.
+      Most got part (a) correct.
+      Many got tricked by part (b): any method call is a legal expression
+        statement, even if it returns a value that is not stored or printed
+        somewhere (unlike operators, where the last operator must be a
+        state-change operator).
+      This is certainly strange, but this is what Java allows, and can be
+        useful: by putting a
+         Prompt.forString("Press enter to continue");  statement in a
+        program, Java executes it by displaying the message, waiting for
+        the user to press  enter  and it discards whatever text the
+        user entered before pressing  enter : so its net effect is
+        pausing the program until the user says "go ahead and execute the
+        rest".
+      Part (c) is the standard story about  void  methods; to get
+        full credit on this part you should have used the word  void .
+
+   
+     Problem 4: Many students got 4-5 points for writing this code.
+      There were VERY VERY many different ways to write this code correctly.
+      Common problems were failure to print the extreme values (1 and 100);
+        failure to put spaces between values; failure to increment (in any
+        form) the counting variable; failure to go to the next line after
+        printing multiples of 10s (some students don't know the semantics of
+        the  System.out.println  method); printing some values twice.
+
+   
+     Problem 5: Generally syntax errors are considered better to have,
+        as the Java compiler points them out to us for fixing; for execution
+        errors, we get no such help.
+         
+   
+     Problem 6: On part a, very few students got full credit: there were lots
+        of different errors so compare your solution to mine if you did not
+        get this one perfect.
+      On part b, more students got full credit, but still not a lot: some did 
+        not write  compact  trace tables; others forgot to show the prompt
+        or the input that followed it -in the  Console  column; others
+        just performed the hand simulation incorrectly.
+      The algorithm implemented called "Russian Peasants Multiplication":
+        for any two values for  x  and  y , the result is the
+        product of these two numbers (using doubling, halving, and adding:
+        you don't need to know any "multiplication tables").
+   
+     Problem 7: Mostly a disaster. Some students got it completely correct,
+        but most had no idea what to do: a loop with a  try/catch  that
+        printed lots of interesting things.
+      If you didn't get this correct, figure out exactly why, to the point
+        that you could solve other similar problems that might appear on
+        later testing instruments (hint hint).
+     
+         
+  #6: 4/23/12 
+  Program #1
+  
+ 
+I have graded (and recorded the grades for) Program #1.
+The class average was about 43 (or about 96%) and the median was about 44 (or
+  about 98%); the last time I taught this class the average and median were
+  both about 44 (or about 98%).
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 36.5 is recorded as 37).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+First, a few students submitted programs that weren't immediately runnable.
+In a few cases, the class name did not match the file name; in others it looked
+  like students changed something at the last minute (like a comment or brace)
+ and didn't check that the program was still runable.
+This was just a 1 point deduction this time, but it will increase in later
+  programs.
+   In  EscapeVelocity  a few students prompting for the mass and
+        gravity in the wrong order (or prompted for the gravitational constant,
+        which should be a variable that is intialized by that value without
+        prompting the user: it is always the same); please make sure your
+        program's behavior matches my executable.
+   
+     In  ExpressionTest , while some students had incorrect expressions
+        (each was a 1 point deduction), many students had expressions
+        with redundant parentheses (each pair was a .5 deduction).
+      A few students wrote .../2*a which is incorrect, but because the
+        test had a = 1, students did not detected this as an error.
+   
+     In  ChangeMaker , some programs computed wrong results: either the
+        coins did not add up to the required amount, or the change was not the
+        minimum amount of coins (e.g., returning 15 cents as 3 nickels instead
+        of a dime and nickel). 
+   
+     In  PizzaPricer 
+    Some students did not declare the right  types  for the different
+        variables ( int  vs.  double ), or did not prompt using
+        the correct method (relying on Java to implicitly convert the value).
+   
+     A few students computed the cost/person incorrectly; some printed the
+        the price as $ per sequare inch instead of cents per square inch.
+   
+     Many students declared the  diameter  as an  int , as they 
+        should have, but then wrote  diameter/2  which truncates the
+        result for an odd size diameter.
+      See the bottom of the required grade sheet for ways to have avoided
+        this problem: my favorite is explicit casting.
+       
+Please remember to run my executable, on various inputs, and compare its
+   results to your program's behavior and output.
+Many students would have been alerted to errors in their programs by doing so,
+  and most of the errors would have been fairly easy to fix, once they were
+  identified as errors.
+The input/output (prompting and printing) of the executable's behavior and your
+  program's behavior should match.
+ 
+ 
+        
+  #5: 4/18/12 
+  Quiz #2
+  
+ 
+I have graded (and recorded the grades for) Quiz #2.
+The class average was about 17 (or about 67%); the mean was also about
+  17 (or about 68%); the last time I taught this class the average and
+  mean were exactly the same.
+Because the average was below 75%, students will receive about 2 normalization
+  points to bring the class average to 75% (these points are not given to 
+  students individually -your entered score is still what is on your returned
+  quiz- but all the normalization points are added to the totals of every
+  student when computing their grade); it is effectively as if you scored about
+  2 more points on this quiz (about 8% points).
+Look at your returned work carefully; if your score was below 20 (most were)
+  you might want to review this quiz with me or a TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   
+    Problem 1: Part 1's syntax was legal, but initializes only one variable;
+        in real code, the other might be set later in an expression statement.
+      Many students said it was illegal because it didn't initialize
+         x ; fewer showed  x  being initialzed by  3 .
+      Both are wrong.
+      Please note the correct terminology (which many students did not get
+        correct): this declaration  declares  the variables  x  and
+         x  but  initializes  only  y .
+      Part 2 was illegal because it tried to use a  double  to initialize
+        an  int  variable (there is no implicit conversion this way).
+      Part 3, both declarations are legal; the second stored  3  into
+         y  (declared in first declaration) and then it was implicitly
+        converted into  3.  and stored into the newly declared
+         double  variable  x .
+      The declarator for  x  included the expression  y=3 .
+
+   
+     Problem 2: Some students didn't know the form in which to write
+        prototypes; some did not correctly determine the return type or the 
+        type of (one or more of its) operands; many wrote too few operands;
+        a few students tried writing code to perform the calculations, which is
+        unnecessary in a prototype.
+      Students generally did badly on this synthesis task: you need to be able
+        to determine the prototype of a function from its description.
+
+   
+     Problem 3: 
+        Part 1: Many student got this part completely correct: you needed to
+          refer to the word prototype and actually write two operators, one
+          overloaded and one not (some students just said something like
+          "logical operators" but I wanted you to show the symbol for one).
+        Part 2: I really wanted an answer that was general for all state-change
+          operators (saying that some operand must be the name of a variable)
+          but I gave full credit even if you just wrote about the  = 
+          state change operator and referred to the "first operand": note that
+          the  ++  operator has just one operand.
+        Part 3: Here too I wanted a general answer.
+          But here, if you wrote about just the  =  operator (specifying
+            how the state of the variable changed and what the result of the
+            expression was) I deducted .5 points.
+   
+   
+     Problem 4: Lots of small problems here (especially related to implicit
+        conversion and casting, and writing values of the correct type).
+      Probably the most missed parts were  e ,  g ,  i ,
+         and  j  (including writing  611  vs. the right answer
+          "611" .
+      Ensure you know the difference between  e  and  f .
+      See my solutions; if you still don't understand them, see me.
+         
+   
+     Problem 5: Many students didn't fully circle or label literals; some
+        didn't fully circle or label variables.
+      Many students didn't correctly circle the negate unary operator
+         and  its literal subexpression.
+      Some students applied the  +  operator before the  * 
+        operator (ignoring operator precedence).
+      Some students didn't circle the  y - 2  expression or circled it
+        but not its subexpressions:  y  and  2 .
+      In a few cases, types/values were missing or mislabelled/miscalculated.
+         
+   
+     Problem 6: A huge number of students wrote 5/9*... which results in
+        0 (then converted to the double 0.; same for 3/2 in a later part:
+        write it as 3./2. or more simply as just 1.5).
+      Many students forget to parenthesize denominators that involved
+        multiplication: .../(2*(A+B))
+      Many students used redundant parentheses: when removed, the expression's
+        operators were still evaluated in the same order.
+      Many students either left part  e  blank or used  =  (instead
+        of  == ) operators or wrote just  x+y+z==10 , not stating
+        the condition for these values being in increasing order, or wrote it
+        as  x  which uses incorrect Java syntax to express this
+        condition (as we discssed in class).
+      
+         
+  #4: 4/15/12 
+  Program #0
+  
+ 
+I have graded (and recorded the grades for) Program #0.
+The class average was a bit below 21 (or about 103%); the median was about 21
+  (or about 105%); the class average the last time I taught this class was a
+  bit above 20 (or about 102%); the median was about 21 (or about 105%)
+There were a few students who scored much lower because of forgetting to turn 
+ in or completely fill out their questionnaire, or one of the programs; if you
+  lost a large number of points you should contact me an explain what happened.
+ 
+After I return your graded work in class on Monday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an programming score of 18.5 is recorded as 19).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student programs: it makes my
+  office messier, and you don't get the benefit of the feedback I wrote.
+  
+The purpose of this assignment, besides the obvious -to get you acquainted
+  with the tools we will use while programming in this course- is to also
+  give you some opportunity to read and follow instructions (and ask questions
+  if things seem confusing).
+Here were some common mistakes (although I arranged the grading rubric so that
+  most students could get close to 100%, especially if they turned in their
+  work early):
+   Some students did not fill in the second page of the questionnaire.
+   
+     Some students did not remove all the italicized comments from the
+        questionnaire.
+   
+     Some students, in answer to the question "...how many scheduled office
+        hours do I have each week" cut and paste my office hours, but did not
+        supply the answer: 4.5 hours (or 3.5 if you discount the times I might
+        not be there).
+      Answer questions explicitly: if I asked a question about the history of
+        the Suez Canal, supplying me a URL to Wikipedia doesn't really answer
+        the question.
+   
+     Some students did not have a class name compatible with their file
+        name, and so a project created from the file did not run immediately.
+      Ensure any file name you submit, when put in a project file and loaded
+        into Eclipse, compiles and runs.
+   
+     Some students corrected the spelling of "scceeded" to "succeeded".
+      Please, if you think you see any mistakes in the assignment, ask me
+        what to do.
+      A few students did in this case, and I told them to keep the incorrect
+        spelling.
+      Programmers are often supplied what might appear to be weird
+        specifications for the programs they are to write; it is up to them
+        to understand these specifications, and question the specifier as to
+        their intended and actual meanings.
+      Please don't make assumptions about what you are suppose to do; this is
+        a Mr. Lil moment.
+      As a class member and part of the ICS-21 community, if you think you have
+        spotted an error in an assignment, or something is just confusing,
+        please contact me, perferably via the forum, so that I can correct or
+        clarify the problem for everyone in the class.
+     
+         
+  #3: 4/11/12 
+  Quiz #1
+  
+ 
+I have graded (and recorded the grades for) Quiz #1.
+The class average was about 20 (or about 80%); the median was 21 (or about
+  84%); the last time I taught this class the average was about 18 (or about
+  74%); the median was 19 (or about 76%).
+Look at your returned work carefully; if your score was below 20 (many were)
+  you might want to review this quiz with me or the TA.
+Material similar to this will be on the first written exam.
+ 
+After I return your graded work in class on Wednesday, please download the 
+   Grades(zipped .xls file)  from the course web and ensure that I have
+  computed and entered your grade correctly (I'll be entering thousands of
+  grades for students in my course this quarter, so even if I'm 99% accurate,
+  I'm likely to record some incorrect grades.
+Note that all grades are recorded as integral values: I always round up
+  (e.g., an exam score of 22.5 is recorded as 23).
+  
+If you do not pick up your returned work in class, you should pick it up during
+  my office hours ASAP; I don't like keeping student exams: it makes my office
+  messier, and you don't get the benefit of the feedback I wrote on the quiz.
+  
+Here were some common mistakes:
+   Problem 1: Most students did will on this problem.
+      Most students just copied this out of my notes, or paraphrased them:
+          if you cut/pasted, you should have cited the notes.
+      There will be few (if any) problems that allow this kind of "copying"
+         later in the quarter.
+      A few answer were a bit short, or addressed either computers or software
+        but not both.
+    
+     Problem 2: Again, most students did well.
+      I think almost everyone got the percentages correct, but some
+        students did not compute the coorect lifetime cost.
+     
+     Problem 2: Again, most students did well.
+      Some students didn't multiply 50 million by the right $/line of code from
+        the table; others computed an incorrect answer from correct number.
+      Note that the $21/line of code is what the build cost was.
+   
+     Problem 3: Many students either left out one or two lines needed in the
+        syntax chart (some omitted it altogether) or incorrectly computed
+        whether a few words were  Legal  or  Illegal  according the
+        EBNF.
+       
+     Problem 4: Some students got this completely correct while others had
+        close sol;utions.
+      Some had "useless rules" (e.g., comma name-sequence  was
+        common, but that  doesn't allow just one  name 
+      Some students wrote only the Right Hand Side of the rule, not the
+        Left Hand Side nor "is defined as" arrow.
+      There were a few students who specified a Right Hand Side without using
+         name , some didn't include commas nor the word "and"; these
+        students appear lost.
+       
+     Problem 5: Some students did get this completely correct, while others
+        had lots of small mistakes; most are covered in the "Common Errors"
+        section in the Tokens lecture.
+      Quite a few students specified  forInt  as two keywords or as
+        a keyword followed by an identifier (it is one long identifier).
+      A few others didn't tokenize  int ,  x , or  = 
+        (the first three tokens), tokenized  ++  as two tokens (it is
+        one big operator token), tokenized the white space appearing between
+        tokens (white space isn't a token; it comes between tokens), tokenized
+         };  as one separator token (it is two), or finally, tokenized
+        things "inside" comments (they are all part of one big comment token).
+      Some students did not write the types of the literals.
+   
+     Problem 6: Few students got this completely correct.
+        In part (a) some student didn't tokenize  "ans="  as one
+           String  literal, or didn't tokenize  +++  as the
+           ++  token followed by the  + token.
+        In part (b) some student used their intuition (I think) instead of
+          following the EBNF rules to determine their answer.
+        In part (c) most students had the right idea about comments, but
+          technicall they aren't "ignored" but are treated as white space. 
+   
+         
+  #2: 4/2/12 
+  Install Course Software
+  
+ 
+  All students with computers should download and install Java (latest version
+      is JDK 6 Update 31) and
+    Eclipse (latest version is Eclipse 3.7.2 - named Indigo).
+  Both these products are available for free.
+  Students can download and install this software (and other useful material)
+    from the web by exploring the
+     Online Resources 
+    link (see  Course Software , near the top of that page).
+   
+  Specifically, read the handout on
+     
+    Java and Eclipse  (Download/Installation Instructions) for details.
+  Please contact me if you are having trouble, as I will assume every has
+    successfully downloaded and installed this software by the end of the
+    first week of classes.
+  If you have a portable machine, bring it to lab if you need help
+    downloading or installing this software.
+  
+         
+  #1: 4/2/12 
+  First Message
+  
+ 
+  Welcome to ICS-21
+  I am going to post and archive important messages about the class in this
+    announcements web page: each entry will be numbered, dated, and labeled.
+  The entries will appear in reverse chronological order.
+  Whenever you follow the link to this page (and you should do so daily), scan
+    its top for new announcements; scan downward for older announcements.
+  This message will always appear at the bottom of this file. 
+   
+  I will never remove a message from this page, although a subsequent message
+    may "cancel" a previous one; in such a case, I'll refer to the number of a 
+    canceled message in the message that cancels it.
+    
+  Expect a few new messages to be posted here each week.
+    
+  Check this page, along with the the course email discussions, daily.
+  
+    </body> 

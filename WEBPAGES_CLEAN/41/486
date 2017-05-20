@@ -1,0 +1,33 @@
+ C++/Eclipse Download and Installation Instructions/Mac<body>
+
+ 
+ C++/Eclipse Download and Installation/Mac 
+ 
+  
+  
+Here are the links Jianfeng Jia, our TA, sent me for those wanting to install
+  Eclipse/G++ on their Macs.
+He said:
+   
+About the Eclipse/C++ installation, I'm using the eclipse Kepler, and installed
+  the CDT as a plugin.
+I think the orginal  CDT  should also
+  work.
+ 
+For the toolchain editor for all the lib and executions, I was using the
+ "MacOSX GCC" , and for the further Linker setting, setting the corresponding
+  Library path in  the "MacOSX C++ Linker". 
+I don't know where does this GCC come from, it might go with CDT, or get
+  installed by the previous Xcode (by 
+   this ) ?)
+  
+All the other setting is the same as your instructions. 
+   
+About the courselib, they may see the problem like this:
+  dyld: Library not loaded 
+They need to export the  DYLD_LIBRARY_PATH  environment variable to the
+  absolute path of courselib/Debug/. 
+I found one  blog  mentioned to
+  set it inside eclipse: Property -&gt; Run/Debug Settings , choose project name,
+  click "edit",  choose "Environment" tab -&gt; click "new" to add such variable.
+  </body> 

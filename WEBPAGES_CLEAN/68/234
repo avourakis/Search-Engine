@@ -1,0 +1,107 @@
+ VHDL Reference Guide - For Loop<body>  This is Google's cache of  http://www.vdlande.com/VHDL/for_loop.html . It is a snapshot of the page as it appeared on Sep 18, 2009 20:41:43 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   For Loop  
+   Sequential Statement 
+ ----used in ----&gt; 
+ Process Function Procedure 
+    
+
+ 
+       Syntax        
+  
+
+ 
+    
+ optional_label:  for  parameter  in  range  loop 
+	sequential statements
+ end loop  label;
+ 
+     
+ 
+
+  
+See LRM section 8.8
+ 
+
+ 
+       Rules and Examples        
+
+ 
+    The  for  loop defines a loop parameter which takes on the type of the range
+specified. For example, the range  0 to 3  implies an integer:
+ process (A)
+begin
+	Z &lt;= "0000";
+	for I in o to 3 loop
+		if (A = I) then
+			Z(I) &lt;= '1';
+		end if;
+	end loop;
+end process;
+ 
+     
+  
+
+ 
+    Attributes such as  'high, 'low  and  'range  may also be
+used to define the iterations of a  for  loop:
+ process (A)#
+	variable TMP : std_ulogic;
+begin
+	TMP := '0';
+	for I in A'low to A'high loop
+		TMP := TMP xor A(I);
+	end loop;
+	ODD &lt;= TMP;
+end process;
+  
+    
+  
+
+ 
+    The range may be any discrete range, e.g. an enumerated type:
+ type PRIMARY is (RED, GREEN, BLUE);
+type COLOUR is ARRAY (PRIMARY) of integer range 0 to 255;
+-- other statements
+MUX: process
+begin
+	for SEL in PRIMARY loop
+		V_BUS &lt;= VIDEO(SEL);
+		wait for 10 ns;
+	end loop;
+end process MUX;
+  
+    
+  
+
+ 
+    The loop parameter does not need to be declared: it is implicitly
+declared within the loop. It may not be modified within the loop:
+ for I in 1 to 10 loop
+	if (REPEAT = '1') then
+		I := I-1;	-- Illegal
+	end if;
+end loop;
+  
+    
+  
+
+ 
+       Synthesis Issues       
+The for loop is supported for synthesis, providing:
+  the loop range is static (i.e. implies a definite number of iterations), and
+  the loop contains no  wait  statements.
+       
+
+  
+       Whats New in '93        
+The for ... loop statement has not changed in  VHDL -93
+  
+
+   </body> 

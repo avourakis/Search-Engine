@@ -1,0 +1,403 @@
+ HalfedgeDSHalfedge<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  HalfedgeDSHalfedge  
+
+
+  
+ 
+
+  Definition 
+ 
+
+The concept   HalfedgeDSHalfedge   defines the requirements for the local  Halfedge  
+type in the   HalfedgeDS   concept. It is also required in 
+the  Halfedge_wrapper&lt;Refs,Traits&gt;  member class template of an
+items class, see the   HalfedgeDSItems   concept.
+  
+
+A halfedge is an oriented edge between two vertices. It is always
+paired with a halfedge pointing in the  opposite  direction. The
+  opposite ()  member function returns this halfedge of  opposite 
+ orientation . The  next()  member function points to the  successor 
+halfedge along the face - or if the halfedge is a border halfedge -
+along the open region. A halfedge optionally stores a reference to the
+previous halfedge along the face, a reference to an incident vertex,
+and a reference to an incident face. Type tags indicate whether the
+related member functions are supported.
+Figure 
+     
+
+depicts the relationship between a halfedge and its incident
+halfedges, vertices, and faces.
+  
+
+  
+     
+      
+            Figure: 
+    The three classes  Vertex ,  Halfedge , and 
+           Face  of the halfedge data structure. Member
+          functions with shaded background are mandatory. The others
+          are optionally supported.
+     
+ 
+
+For the protection of the integrity of the data structure classes such
+as   CGAL::Polyhedron_3   are allowed to redefine the modifying member
+functions to be private. In order to make them accessible for the
+halfedge data structure they must be derived from a base class
+ Base  where the modifying member functions are still public. Even
+more protection is provided for the  set_opposite()  member
+function. The base class  Base_base  provides access to it.  (The
+protection could be bypassed also by an user, but not by accident.)
+  
+
+  Types 
+ 
+
+    
+          HalfedgeDSHalfedge :: HalfedgeDS 
+         
+              
+    instantiated   HalfedgeDS   (      Refs ).
+ 
+
+     
+          HalfedgeDSHalfedge ::Base
+         
+              
+    base class that allows modifications.
+ 
+
+     
+          HalfedgeDSHalfedge ::Base_base
+         
+              
+    base class to access  set_opposite() .
+ 
+
+     
+          HalfedgeDSHalfedge ::Vertex
+         
+              
+    model of   HalfedgeDSVertex  .
+ 
+
+     
+          HalfedgeDSHalfedge ::Face
+         
+              
+    model of   HalfedgeDSFace  .
+ 
+
+          
+          HalfedgeDSHalfedge ::Vertex_handle
+         
+              
+    handle to vertex.
+ 
+
+     
+          HalfedgeDSHalfedge ::Halfedge_handle
+         
+              
+    handle to halfedge.
+ 
+
+     
+          HalfedgeDSHalfedge ::Face_handle
+         
+              
+    handle to face.
+ 
+
+     
+          HalfedgeDSHalfedge ::Vertex_const_handle
+         
+           
+
+
+           
+          HalfedgeDSHalfedge ::Halfedge_const_handle
+         
+           
+
+
+           
+          HalfedgeDSHalfedge ::Face_const_handle
+         
+           
+
+        
+          HalfedgeDSHalfedge ::Supports_halfedge_prev
+         
+              
+      CGAL::Tag_true   or 
+    CGAL::Tag_false  .
+ 
+
+     
+          HalfedgeDSHalfedge ::Supports_halfedge_vertex
+         
+              
+    ˜
+ 
+
+     
+          HalfedgeDSHalfedge ::Supports_halfedge_face
+         
+              
+    ˜
+ 
+
+     
+
+  Creation 
+ 
+
+    
+          HalfedgeDSHalfedge  h;
+         
+              
+    default constructor.
+ 
+
+     
+
+  Operations 
+ 
+
+    
+           
+Halfedge_handle
+         
+          
+         
+    h. opposite  () 
+         
+         
+    
+           
+           
+Halfedge_const_handle
+         
+              
+         
+    h. opposite  () const
+         
+                
+    the  opposite  halfedge.
+            
+           
+void
+         
+          
+         
+    h.set_opposite ( Halfedge_handle h) 
+         
+                
+    sets  opposite  halfedge to  h .
+                 
+           
+Halfedge_handle
+         
+          
+         
+    h.next () 
+         
+         
+    
+           
+           
+Halfedge_const_handle
+         
+              
+         
+    h.next () const
+         
+          
+    the next halfedge around the face.
+            
+           
+void
+         
+          
+         
+    h.set_next ( Halfedge_handle h) 
+         
+                
+    sets next halfedge to  h .
+                 
+           
+bool
+         
+          
+         
+    h.is_border () const
+         
+                
+    is true if  h  is a border halfedge.
+            
+
+  Operations available if  Supports_halfedge_prev       CGAL::Tag_true  
+ 
+
+    
+           
+Halfedge_handle
+         
+          
+         
+    h.prev () 
+         
+         
+    
+           
+           
+Halfedge_const_handle
+         
+              
+         
+    h.prev () const
+         
+          
+    the previous halfedge around the face.
+            
+           
+void
+         
+          
+         
+    h.set_prev ( Halfedge_handle h) 
+         
+                
+    sets prev halfedge to  h .
+            
+
+  Operations available if  Supports_halfedge_vertex       CGAL::Tag_true  
+ 
+
+    
+           
+Vertex_handle
+         
+          
+         
+    h.vertex () 
+         
+         
+    
+           
+           
+Vertex_const_handle
+         
+              
+         
+    h.vertex () const
+         
+          
+    the incident vertex of  h .
+            
+           
+void
+         
+          
+         
+    h.set_vertex ( Vertex_handle v) 
+         
+                
+    sets incident vertex to  v .
+            
+
+  Operations available if  Supports_halfedge_face       CGAL::Tag_true  
+ 
+
+    
+           
+Face_handle
+         
+          
+         
+    h.face () 
+         
+         
+    
+           
+           
+Face_const_handle
+         
+          
+         
+    h.face () const
+         
+          
+    the incident face of  h .  If  h  is a border halfedge 
+      the result is default construction of the handle.
+            
+           
+void
+         
+          
+         
+    h.set_face ( Face_handle f) 
+         
+                
+    sets incident face to  f .
+            
+
+  Has Models 
+ 
+
+  CGAL::HalfedgeDS_halfedge_base &lt;Refs&gt;    CGAL::HalfedgeDS_halfedge_min_base &lt;Refs&gt; 
+  
+
+  See Also 
+ 
+
+  HalfedgeDS &lt;Traits,Items,Alloc&gt;    HalfedgeDSItems     HalfedgeDSVertex     HalfedgeDSFace  
+  
+
+    Next:    HalfedgeDSItems   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

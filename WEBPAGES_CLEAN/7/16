@@ -1,0 +1,85 @@
+ Ucigame - Gallery - BounceHouse<body>
+
+  Ucigame - Gallery - BounceHouse  
+
+ 
+ Home  |
+ Getting Started  |
+ Reference  |
+ Introduction to Java  |
+ Gallery 
+ 
+
+ 
+    
+
+ 
+ 
+BounceHouse shows off Ucigame's "pixel perfect" collision
+detection.  (If you don't specify pixel perfect, then
+collision detection is based on the entire rectangular sprite,
+which in the case of the big X has quite a different shape.)
+Use the arrow keys to accelerate the spaceship in any
+direction.
+  
+Press the Space key to toggle the spaceship's behavior when
+it collides with an edge or the big X: it can bounce or stop.
+  
+The spaceship's "eyes" turn red briefly when it bumps against
+the big X or the side of the window.  The red "eyes"
+(see  images/et-red-eyes.png) 
+are pinned onto the spaceship sprite, and are normally
+hidden (because of spaceshipBumped.hide()).  When a collision
+is detected, spaceshipBumped.show() is called, so they
+appear on top of the usual green "eyes."
+At timer named "TurnOffBumpedIndicator" is created, which
+causes TurnOffBumpedIndicatorTimer() to be invoked every 200
+milliseconds.  But since that method turns itself off, it
+is only called once, and the eyes are set back to green by
+hiding the pinned sprite.
+ 
+   
+  BounceHouse.java 
+  
+import ucigame.*;
+
+public class BounceHouse extends Ucigame
+{
+    Sprite bigX;
+    Sprite spaceship;
+    Sprite spaceshipBumped;
+    int howManyFramesToShowInstructions = 120;
+    int currFrame = 0;
+    boolean bounce = true;
+
+    public void setup()
+    {
+        window.size(250, 250);
+        window.title("Bounce House");
+        framerate(30);
+        window.showFPS();
+
+        canvas.background(128, 0, 0);
+
+        bigX = makeSprite(getImage("images/bigX.png", 255));
+        spaceship = makeSprite(getImage("images/et.png", 255));
+        spaceshipBumped = makeSprite(getImage("images/et-red-eyes.png", 255));
+        spaceship.pin(spaceshipBumped, 12, 18);
+        spaceshipBumped.hide();
+        keyboard.typematicOff(keyboard.SPACE);
+
+        bigX.position(50, 50);
+        spaceship.position(15, 15);
+        spaceship.motion(0, 0);
+
+        if (isAvailableFont("Arial"))
+            canvas.font("Arial", ITALIC, 15, 255, 255, 0);
+    }
+
+    public void draw()
+    {
+        canvas.clear();
+
+        if (currFrame 
+  
+    </body> 

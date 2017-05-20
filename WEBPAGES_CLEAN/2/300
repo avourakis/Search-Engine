@@ -1,0 +1,105 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ Daniel W. Connolly  (  connolly@w3.org  )  Tue, 28 May 1996 21:46:22 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Previous message:   Andre van der Hoek: "Re: Version identifier in URL." 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Kenji Takahashi: "Re: Version identifier in URL" 
+
+    
+It's OK for individual systems to have conventions about
+the syntax of HTTP URLs, but it's an abstraction violation
+to standardize such conventions across all HTTP servers.
+
+In stead, the thing to standardize is the way to express
+        "the resource at X is a version-specific instance
+                 of the resource at Y"
+and
+        "the resource at X has version V"
+
+using a syntax proposed at:
+
+         http://www.w3.org/pub/WWW/MarkUp/Resource/Specification 
+
+with X=/foo;version=1.2
+        Y=/foo
+        V=1.2
+
+we would have:
+
+   &lt;resource url="/foo;version=1.2"&gt;
+           &lt;link rev=version-specific url="/foo"&gt;
+        &lt;meta name=version content="1.2"&gt;
+        &lt;/resource&gt;
+
+(Note that I've used rev, as the version-specific link type
+has the generic as the source, and the specific as the target.
+In our case, the link goes from specific to generic; hence the
+reverse relationship.)
+
+These semantics can be encoded using whatever syntax is
+appropriate to the circumstances. But the general schema for
+information about web resources is:
+
+        link(A1, A2, rel)
+                ==&gt; "There is a link of type _rel_ from A1 to A2"
+
+        attribute(A1, name, val)
+                ==&gt; "The _name_ attribute of A1 is _val_"
+
+Dan
+
+
+In message &lt;add10d040a0210045498@[128.195.21.209]&gt;, Jim Whitehead writes:
+&gt;
+&gt;One aspect of the versioning of WWW content which appears in all
+&gt;work/proposals to date is a versioned HTTP GET method.  A versioned GET
+&gt;supports browsing of an arbitrary version of an entity, a basic
+&gt;requirement.  Examples of this include (references are to work which is
+&gt;available from the working group home page, at URL:
+&gt;&lt; http://www.ics.uci.edu/~ejw/versioning/ &gt;)
+&gt;
+&gt;Pettengill &amp; Arango:
+&gt;  - add a ",{version_identifier}" suffix to the end of a URL to specify the
+&gt;version identifier
+&gt;
+&gt;MKS:
+&gt;  - add a ";version={version_identifier}" suffix to the end of a URL
+&gt;
+&gt;Whitehead:
+&gt;  - add a ";v={version_identifier}" suffix to the end of a URL
+&gt;
+&gt;&gt;From these examples, you can see that there is a basic similarity to all
+&gt;approaches.
+&gt;
+&gt;I would like to suggest we adopt the MKS approach for specifying version
+&gt;identifiers in a versioned GET operation as a usage convention for our
+&gt;future work.  I like the MKS approach because it uses a semicolon (;) to
+&gt;separate the version specification from the rest of the path (this is
+&gt;superior to a (,) because a comma is not a reserved character according to
+&gt;the URL specification in RFC 1738 "Uniform Resource Locators", and hence
+&gt;might legally be part of a path), and because the use of a full "version"
+&gt;tag is more readable, and is less likely to have a name collision with
+&gt;another URL usage convention than the "v" tag.
+&gt;
+&gt;Note that this convention only specifies the version of the entity, and
+&gt;does not specify the version of each directory in the heirarchy leading to
+&gt;that entity.
+&gt;
+&gt;Comments?
+&gt;
+&gt;- Jim Whitehead &lt; ejw@ics.uci.edu &gt;
+&gt;
+ 
+
+  
+     Next message:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Previous message:   Andre van der Hoek: "Re: Version identifier in URL." 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Kenji Takahashi: "Re: Version identifier in URL" 
+
+  </body> 

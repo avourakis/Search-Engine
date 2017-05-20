@@ -1,0 +1,54 @@
+ 9.1.15 IsDataType<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.14 HasData 
+ Up:   9.1 OEBase 
+ Next:   9.1.16 SetBoolData 
+   
+
+
+  
+9.1.15 IsDataType 
+ 
+   
+virtual bool IsDataType(const void *typ) const
+    
+This method is used for run-time type identification of OEBase derived
+classes.  The const void pointer argument passed to the function should be a
+value returned by the template function OEGetDataType
+(Section  11.2 ).  The IsDataType method will return true if the
+data type identifier passed to the function matches at least one of the data
+types in the inheritence tree of the requested OEBase derived object.  The
+method will return false if the data type identifier passed to the method
+fails to match any class type in the inheritence tree of the requested OEBase
+derived object.  Implementations of this pure virtual method should chain to
+their parent class' IsDataType method.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.14 HasData 
+ Up:   9.1 OEBase 
+ Next:   9.1.16 SetBoolData 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

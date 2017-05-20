@@ -1,0 +1,1350 @@
+ 
+  Index of all Fields and Methods
+<body>
+  
+  All Packages    Class Hierarchy    A 
+ B 
+ C 
+ D 
+ E 
+ F 
+ G 
+ H 
+ I 
+ J 
+ K 
+ L 
+ M 
+ N 
+ O 
+ P 
+ Q 
+ R 
+ S 
+ T 
+ U 
+ V 
+ W 
+ X 
+ Y 
+ Z 
+
+  
+  Index of all Fields and Methods
+ 
+  
+ 
+   A   
+ 
+   	  addEvent  (SimEvent).
+Method in class  Simulator 
+     insert a future event in the event queue
+
+     	  addEventGenerator  (EventGenerator).
+Method in class  Simulator 
+     add a event generator to this simulator
+ 
+     	  addLink  (int, int, int).
+Method in class  Network 
+     Add a link between two processors usinf processor id's
+  
+     	  addLink  (String, String, int).
+Method in class  Network 
+     Add a link between two processors using processor names
+  
+     	  addNeighbour  (Processor, int).
+Method in class  Processor 
+     Add a new neighbour to this processor
+  
+     	  addOneWayNeighbour  (Processor, int).
+Method in class  Processor 
+     
+     	  addProcessor  (int, int, int).
+Method in class  Network 
+     Add a processor to the network
+ 
+     	  addProcessor  (int, int, int, float, float, float).
+Method in class  Network 
+     
+     	  addProcessor  (Processor, Processor[]).
+Method in class  Network 
+     Add a processor to the network
+  
+     	  addProcessor  (String, int, int).
+Method in class  Network 
+     Add a processor to the network, timeslicelength default to 10
+ 
+     	  addProcessor  (String, int, int, int).
+Method in class  Network 
+     Add a processor to the network
+ 
+     	  addRelativeEvent  (SimEvent).
+Method in class  Simulator 
+     insert a future event in the event queue
+  the time specified in the event is relative to the global time
+
+     	  allIdleProcessors  ().
+Method in class  Network 
+       
+     	  allIdleProcessors  ().
+Method in class  TheSimulator 
+     
+ Return an array with id's for the currently idle processors
+
+ 
+     	  allProcessors  ().
+Method in class  Network 
+     
+     	  ASYNCHRONOUS  .
+Static variable in class  Network 
+     If the network is ASYNCHRONOUS
+    
+  
+  
+   C   
+ 
+   	  callJobArrival  (float, int).
+Method in class  TheSimulator 
+      Calls the SchedulerInterface routine JobArrival in the scheduler
+
+ 
+     	  callTaskStateChange  (float, long).
+Method in class  TheSimulator 
+      Calls the SchedulerInterface routine TaskStateChange in the scheduler
+
+ 
+     	  CommTaskEvent  (Task, float).
+Constructor for class  CommTaskEvent 
+      Constructs a communication task event.
+     	  COMMUNICATING  .
+Static variable in class  SuspendedTaskEvent 
+      Reason for suspension is communication.
+     	  COMMUNICATING  .
+Static variable in class  Task 
+      The communicating state.
+    
+  
+   D   
+ 
+   	  DEADLINE  .
+Static variable in class  SuspendedTaskEvent 
+      Reason for suspension is that the Task has reached it's deadline
+
+     	  dispatchEvent  (SimEvent).
+Method in class  Network 
+      If this network is ASYNCHRONOUS this method simply passes the event on to the simulator
+  if the network is SYNCHRONOUS it makes sure all the events arrive to the simulator at the same time
+  
+     
+  
+   E   
+ 
+   	  ENDED  .
+Static variable in class  SuspendedTaskEvent 
+      Reason for suspension is end of task.
+     	  ENDED  .
+Static variable in class  Task 
+      The ended state.
+     	  endedJobs  ().
+Method in class  JobManager 
+      Returns an array with global job identifier for ended jobs,
+ managed by this object.
+     	  EndIOTaskEvent  (Task, float).
+Constructor for class  EndIOTaskEvent 
+      Constructs an end I/O task event.
+     	  EndOfSpinningEvent  (Task, float).
+Constructor for class  EndOfSpinningEvent 
+      Constructs a end of spinning event
+
+ 
+     	  EndOfTimeSlice  (float, int).
+Method in class  GangScheduling 
+     
+	EndOfTimeSlice
+
+	Invoked at the end of a time slice
+
+
+     	  EndOfTimeSlice  (float, int).
+Method in interface  SchedulerInterface 
+      Invoked when a timeslice has expired on a PE.
+     	  EndOfTimeSliceEvent  (Object, EventDestination, float, int).
+Constructor for class  EndOfTimeSliceEvent 
+     
+     	  EndSyncTaskEvent  (Task, int).
+Constructor for class  EndSyncTaskEvent 
+      Constructs an end synchronization task event.
+     	  EndTaskEvent  (Task, float).
+Constructor for class  EndTaskEvent 
+      Constructs an end task event.
+     	  equals  (Object).
+Method in class  NetworkEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  equals  (Object).
+Method in class  PeIdleEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  equals  (Object).
+Method in class  ProcessorEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  equals  (Object).
+Method in class  ScheduleTaskEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  equals  (Object).
+Method in class  SimEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  equals  (Object).
+Method in class  TaskEvent 
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+     	  eventProcessed  (SimEvent).
+Method in interface  EventGenerator 
+     Every time the simulator processes an event created by an EventGenerator
+  the EventGenerator will be notified via this method
+
+     	  eventProcessed  (SimEvent).
+Method in class  GlobalClockEventGenerator 
+     
+     	  ExponentialDistribution  (float).
+Constructor for class  ExponentialDistribution 
+      Constructs an exponential probability distribution.
+     	  ExponentialDistribution  (float, float).
+Constructor for class  ExponentialDistribution 
+      Constructs a shifted exponential probability distribution.
+    
+  
+   F   
+ 
+   	  floatSample  ().
+Method in class  ExponentialDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  ().
+Method in class  HyperErlangDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  ().
+Method in class  NormalDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  ().
+Method in class  ProbabilityDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  ().
+Method in class  UniformDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  (float).
+Static method in class  ExponentialDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  (float, float).
+Static method in class  ExponentialDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  (float, float).
+Static method in class  NormalDistribution 
+      Returns a float sample from this probability distribution.
+     	  floatSample  (float, float).
+Static method in class  UniformDistribution 
+      Returns a float sample from this probability distribution.
+    
+  
+   G   
+ 
+   	  GangScheduling  (TheSimulator).
+Constructor for class  GangScheduling 
+     
+     	  generateJob  (int, float, int, int, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, float, float, String).
+Method in class  JobManager 
+      Generates a job and adds it to this object.
+     	  generateTask  (float, int, float).
+Method in class  Job 
+      Generates a task and adds it to this job.
+     	  generateTasks  (int, float, int, float).
+Method in class  Job 
+      Generates the given number of tasks and adds them to this job.
+     	  getAverageCommunicationTime  ().
+Method in class  Task 
+      Returns the average communication time.
+     	  getAverageCommunicationTime  ().
+Method in class  TaskStatistics 
+      Returns the average communication time.
+     	  getAverageIOTime  ().
+Method in class  Task 
+      Returns the average I/O time.
+     	  getAverageIOTime  ().
+Method in class  TaskStatistics 
+      Returns the average I/O time.
+     	  getAverageSynchronizationTime  ().
+Method in class  Task 
+      Returns the average synchronization time.
+     	  getAverageSynchronizationTime  ().
+Method in class  TaskStatistics 
+      Returns the average synchronization time.
+     	  getAverageTimeslice  ().
+Method in class  Network 
+     
+     	  getComputationTime  ().
+Method in class  Task 
+      Returns the computation time of this task.
+     	  getComputationTime  ().
+Method in class  TaskStatistics 
+      Returns the computation time of this task.
+     	  getDestinationProcessor  ().
+Method in class  SendEvent 
+     
+     	  getExecutionTime  ().
+Method in class  Job 
+      Returns the total execution time of the job.
+     	  getExecutionTime  ().
+Method in class  Task 
+      Returns the total execution time for this task.
+     	  getExecutionTime  ().
+Method in class  TaskStatistics 
+      Returns the total execution time for this task.
+     	  getFrom  ().
+Method in class  SimEvent 
+     
+     	  getFromTask  ().
+Method in class  ReceiveEvent 
+     
+     	  getFromTask  ().
+Method in class  SendEvent 
+     
+     	  getId  ().
+Method in class  Job 
+      Returns the global job identifier for this object.
+     	  getId  ().
+Method in class  Task 
+      Returns the global task identifier for this object.
+     	  getJob  ().
+Method in class  Task 
+      Returns object Job associated with this task.
+     	  getJob  (int).
+Method in class  JobManager 
+      Returns the sought job.
+     	  getJobExecutionTime  (int).
+Method in class  JobManager 
+      Returns the execution time for the given job.
+     	  getJobId  ().
+Method in class  Task 
+     
+     	  getJobId  (long).
+Method in class  TheSimulator 
+     
+     	  getJobType  ().
+Method in class  Job 
+     
+     	  getJobTypeId  (int).
+Method in class  TheSimulator 
+     
+     	  getLocalId  ().
+Method in class  Task 
+      Returns the local task identifier for this object.
+     	  getManager  ().
+Method in class  Job 
+      Returns the manager of this job.
+     	  getMaxCommunicationTime  ().
+Method in class  Task 
+      Returns the maximum communication time.
+     	  getMaxCommunicationTime  ().
+Method in class  TaskStatistics 
+      Returns the maximum communication time.
+     	  getMaxIOTime  ().
+Method in class  Task 
+      Returns the maximum I/O time.
+     	  getMaxIOTime  ().
+Method in class  TaskStatistics 
+      Returns the maximum I/O time.
+     	  getMaxSynchronizationTime  ().
+Method in class  Task 
+      Returns the maximum synchronization time.
+     	  getMaxSynchronizationTime  ().
+Method in class  TaskStatistics 
+      Returns the maximum synchronization time.
+     	  getNeighbours  ().
+Method in class  Processor 
+     
+     	  getNeighbours  (int).
+Method in class  Network 
+     return the neighbours of the processor
+  
+     	  getNeighbours  (int).
+Method in class  TheSimulator 
+      Returns the neighbours of a processor
+
+ 
+     	  getNetwork  ().
+Method in class  Simulator 
+     override this method to access the Network object
+
+     	  getNetwork  ().
+Method in class  TheSimulator 
+      Return the object Network.
+     	  getNumberOfIOOperations  ().
+Method in class  Task 
+      Returns the number of I/O operations performed by this task.
+     	  getNumberOfIOOperations  ().
+Method in class  TaskStatistics 
+      Returns the number of I/O operations performed by this task.
+     	  getNumberOfReceives  ().
+Method in class  Task 
+      Returns the number of messages received by this task.
+     	  getNumberOfReceives  ().
+Method in class  TaskStatistics 
+      Returns the number of messages received by this task.
+     	  getNumberOfSends  ().
+Method in class  Task 
+      Returns the number of messages sent by this task.
+     	  getNumberOfSends  ().
+Method in class  TaskStatistics 
+      Returns the number of messages sent by this task.
+     	  getNumberOfSynchronizations  ().
+Method in class  Task 
+      Returns the number of synchronization performed by this task.
+     	  getNumberOfSynchronizations  ().
+Method in class  TaskStatistics 
+      Returns the number of synchronization performed by this task.
+     	  getPeId  ().
+Method in class  Processor 
+     
+     	  getPeId  ().
+Method in class  ProcessorEvent 
+     
+     	  getPEId  ().
+Method in class  RunTaskEvent 
+      Returns the identifier for processing element to run task on.
+     	  getPEId  ().
+Method in class  Task 
+      Returns the identifier for the processing element that this
+ object belongs to.
+     	  getPEId  (long).
+Method in class  JobManager 
+      Returns the identifier for the processing element which the
+ given task is located on.
+     	  getPEId  (long).
+Method in class  TheSimulator 
+      Returns the id of the processor on which task with taskId resides
+
+ 
+     	  getPeriod  ().
+Method in class  ScheduleTaskEvent 
+     
+     	  getProcessor  (int).
+Method in class  Network 
+     get the processor with the corresponding ID
+ 
+     	  getRandomProcessor  ().
+Method in class  Network 
+     
+     	  getReason  ().
+Method in class  PeIdleEvent 
+     
+     	  getReason  ().
+Method in class  SuspendedTaskEvent 
+      Returns the reason for suspension.
+     	  getSimulator  ().
+Method in class  Job 
+      Returns the simulator that this object belongs to.
+     	  getSimulator  ().
+Method in class  JobManager 
+      Returns the simulator.
+     	  getSpawningSize  ().
+Method in class  SpawnTaskEvent 
+      Returns the spawning size.
+     	  getSpinning  ().
+Method in class  Task 
+      Returns true if a task is spinning.
+     	  getSpinSync  ().
+Method in class  Task 
+      Returns if a task is spinning due to synchronization.
+     	  getState  ().
+Method in class  Task 
+      Returns the current state of this object.
+     	  getTask  ().
+Method in class  ScheduleTaskEvent 
+     
+     	  getTask  (long).
+Method in class  Job 
+      Returns the sought task.
+     	  getTask  (long).
+Method in class  JobManager 
+      Returns the sought task.
+     	  getTask  (long).
+Method in class  TheSimulator 
+      Return the object task corresponding to a given id.
+     	  getTaskId  ().
+Method in class  TaskArrivalEvent 
+      Returns the global task identifier of arrived task.
+     	  getTaskId  ().
+Method in class  TaskEvent 
+      Returns the global task identifier of destination task.
+     	  getTaskSpinning  ().
+Method in class  Task 
+      Returns if the task is spinning or not.
+     	  getTaskStatistics  (int).
+Method in class  JobManager 
+      Returns statistics for the given task.
+     	  getThroughput  (int, int).
+Method in class  JobManager 
+      Returns the throughput.
+     	  getTime  ().
+Method in class  SimEvent 
+     
+     	  getTime  ().
+Method in class  Simulator 
+     
+  
+     	  getTimeSlice  ().
+Method in class  RunTaskEvent 
+      Returns the length of the time slice.
+     	  getTimeToFirstScheduling  ().
+Method in class  Task 
+      Returns the time from task creation to first scheduling of this
+ task.
+     	  getTimeToFirstScheduling  ().
+Method in class  TaskStatistics 
+      Returns the time from task creation to first scheduling of this
+ task.
+     	  getTo  ().
+Method in class  SimEvent 
+     
+     	  getTotalCommunicationTime  ().
+Method in class  Task 
+      Returns the total Communication time.
+     	  getTotalIOTime  ().
+Method in class  Task 
+      Returns the total I/O time.
+     	  getTotalSynchronizationTime  ().
+Method in class  Task 
+      Returns the total Synchronization time.
+     	  getToTask  ().
+Method in class  SendEvent 
+     
+     	  getType  ().
+Method in class  Network 
+     Get the network type
+  
+     	  globalClock  .
+Variable in class  Simulator 
+     
+     	  GlobalClock  (float).
+Method in class  GangScheduling 
+     
+ Invoked when a receiving a global clock signal
+
+ 
+     	  GlobalClock  (float).
+Method in interface  SchedulerInterface 
+     
+ Invoked when a global clock is trasmited to all processors
+
+ 
+     	  GlobalClockEventGenerator  (Network).
+Constructor for class  GlobalClockEventGenerator 
+     
+    
+  
+   H   
+ 
+   	  handleEvent  (ProcessorEvent).
+Method in class  Processor 
+     Takes care of events arriving from the Network
+
+     	  handleEvent  (SimEvent).
+Method in class  JobManager 
+      Handles incoming events.
+     	  handleEvent  (SimEvent).
+Method in class  Network 
+      Receives events from the simulator, implements the interface EventDestination
+  
+      	  handleEvent  (SimEvent).
+Method in class  Task 
+      Handles incoming events.
+     	  handleEvent  (SimEvent).
+Method in class  TheSimulator 
+     
+ Overrides handleEvent in Simulator.
+     	  hasCommonTasks  (TaskSynchronization).
+Method in class  TaskSynchronization 
+      Tests if this monitor has any tasks in common with the
+ given one.
+     	  hasEnded  ().
+Method in class  Job 
+      Tests if the job has ended.
+     	  HyperErlangDistribution  (double, double, int, double).
+Constructor for class  HyperErlangDistribution 
+      Constructs a hypererlang probability distribution.
+    
+  
+   I   
+ 
+   	  id  .
+Variable in class  Processor 
+     
+     	  initializeGenerator  (Simulator).
+Method in interface  EventGenerator 
+     When the EventGenerator is registered in the simulator the 
+   initzializeGenerator(Simulator) method will be called
+
+     	  initializeGenerator  (Simulator).
+Method in class  GlobalClockEventGenerator 
+     
+     	  initiateGlobalSynchronization  (Task).
+Method in class  Job 
+      Initiates global synchronization.
+     	  initiateLocalSynchronization  (Task).
+Method in class  Job 
+      Initiates local synchronization.
+     	  InternalTaskEvent  (Task, float).
+Constructor for class  InternalTaskEvent 
+      Constructs an internal task event.
+     	  intSample  ().
+Method in class  ExponentialDistribution 
+      Returns an integer sample from this probability distribution.
+     	  intSample  ().
+Method in class  HyperErlangDistribution 
+      Returns an integer sample from this probability distribution.
+     	  intSample  ().
+Method in class  NormalDistribution 
+      Returns an integer sample from this probability distribution.
+     	  intSample  ().
+Method in class  ProbabilityDistribution 
+      Returns an integer sample from this probability distribution.
+     	  intSample  ().
+Method in class  UniformDistribution 
+      Returns an integer sample from this probability distribution.
+     	  intSample  (float, float).
+Static method in class  UniformDistribution 
+      Returns an integer sample from this probability distribution.
+     	  involves  (Task).
+Method in class  TaskSynchronization 
+      Tests if the given task is involved in this synchronization.
+     	  IO  .
+Static variable in class  SuspendedTaskEvent 
+      Reason for suspension is I/O.
+     	  IOCompletionTime  (float).
+Method in class  Processor 
+     Models contention in the disk associated with this processor 
+	by serializing consecutive requests
+
+ 
+     	  isContainedWithin  (int, int).
+Method in class  Job 
+      Specifies whether or not the execution of this job is
+ completely contained within the given interval of time.
+     	  isIdle  ().
+Method in class  Processor 
+       
+     	  isMigration  ().
+Method in class  SendEvent 
+     
+     	  isNeighbour  (Processor).
+Method in class  Processor 
+     
+    
+  
+   J   
+ 
+   	  Job  (JobManager, int, int, float, int, int, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, float, float, String).
+Constructor for class  Job 
+      Constructs a job.
+     	  JobArrival  (float, int).
+Method in class  GangScheduling 
+     Invoked when a new job arrives
+
+ 
+     	  JobArrival  (float, int).
+Method in interface  SchedulerInterface 
+     
+ Invoked when a new job arrives
+
+ 
+     	  jobClass  ().
+Method in class  Job 
+      Returns the user-defined class of the job.
+     	  jobClass  (int).
+Method in class  JobManager 
+      Returns the job class defined by the user.
+     	  jobClass  (int).
+Method in class  TheSimulator 
+     
+ Returns user defined job class
+
+ 
+     	  jobEnded  (int).
+Method in class  JobManager 
+      Called by an ended job.
+     	  jobIdPart  (long).
+Static method in class  Task 
+      Returns the global job identifier part of the given
+ global task identifier.
+     	  JobManager  (TheSimulator).
+Constructor for class  JobManager 
+      Constructs a job manager.
+     	  jobs  ().
+Method in class  JobManager 
+      Returns an array with global job identifiers for all jobs
+ managed by this object.
+     	  jobs  ().
+Method in class  TheSimulator 
+     
+ Returns an array with global job identifiers for all jobs managed by this object
+
+ 
+     	  jobsWithLeastTasks  ().
+Method in class  JobManager 
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks.
+     	  jobsWithLeastTasks  ().
+Method in class  TheSimulator 
+     
+Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks
+
+ 
+     	  jobsWithLeastTasks  (int).
+Method in class  JobManager 
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks in the given state.
+     	  jobsWithLeastTasks  (int).
+Method in class  TheSimulator 
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks in the given state
+
+ 
+     	  jobsWithMostTasks  ().
+Method in class  JobManager 
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks.
+     	  jobsWithMostTasks  ().
+Method in class  TheSimulator 
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks
+
+ 
+     	  jobsWithMostTasks  (int).
+Method in class  JobManager 
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks in the given state.
+     	  jobsWithMostTasks  (int).
+Method in class  TheSimulator 
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks in the given state
+
+ 
+     	  joinWith  (TaskSynchronization).
+Method in class  TaskSynchronization 
+      Joins this monitor with the given one.
+    
+  
+  
+   L   
+ 
+   	  localIdPart  (long).
+Static method in class  Task 
+      Returns the local task identifier part of the given
+ global task identifier.
+    
+  
+   M   
+ 
+   	  main  (String[]).
+Static method in class  GangScheduling 
+     
+     	  makeId  (int, int).
+Static method in class  Task 
+      Creates a global task identifier from a global job identifier
+ and a local task identifier.
+     	  MIGRATING  .
+Static variable in class  Task 
+      The migrating state.
+    
+  
+   N   
+ 
+   	  Network  ().
+Constructor for class  Network 
+     Creates a new network, does not create any processors or connections, use other method for this
+
+     	  Network  (TheSimulator, FileInputStream).
+Constructor for class  Network 
+     Creates a new network with the specified characteristics
+  
+     	  NetworkEvent  (Object, EventDestination, int).
+Constructor for class  NetworkEvent 
+     
+     	  newInstance  (double[]).
+Static method in class  ExponentialDistribution 
+      Creates a new instance of this probability distribution.
+     	  newInstance  (double[]).
+Static method in class  HyperErlangDistribution 
+      Creates a new instance of this probability distribution.
+     	  newInstance  (double[]).
+Static method in class  NormalDistribution 
+      Creates a new instance of this probability distribution.
+     	  newInstance  (double[]).
+Static method in class  ProbabilityDistribution 
+      Creates a new instance of this probability distribution.
+     	  newInstance  (double[]).
+Static method in class  UniformDistribution 
+      Creates a new instance of this probability distribution.
+     	  NO_PROCESSOR  .
+Static variable in class  Processor 
+     
+     	  NormalDistribution  (float, float).
+Constructor for class  NormalDistribution 
+      Constructs a normal probability distribution.
+     	  nrIdleProcessors  ().
+Method in class  TheSimulator 
+     
+ Return the number of idle processors in the current network
+
+ 
+     	  nrProcessors  ().
+Method in class  Network 
+     return the number of processors in this network
+  
+     	  nrProcessors  ().
+Method in class  TheSimulator 
+     
+ Return the number of processors in the current network
+
+ 
+     	  numberOfJobs  ().
+Method in class  JobManager 
+      Returns the number of jobs managed by this object.
+     	  numberOfJobs  ().
+Method in class  TheSimulator 
+     
+ Returns the number of jobs managed by this object
+
+ 
+     	  numberOfLivingTasks  ().
+Method in class  Job 
+      Returns the number of living tasks contained by this object.
+     	  numberOfLivingTasks  ().
+Method in class  JobManager 
+      Returns the total number of living tasks, contained by jobs
+ managed by this object.
+     	  numberOfTasks  ().
+Method in class  Job 
+      Returns the number of tasks contained by this object.
+     	  numberOfTasks  ().
+Method in class  JobManager 
+      Returns the total number of tasks, contained by jobs managed
+ by this object.
+     	  numberOfTasks  ().
+Method in class  TheSimulator 
+     
+ Returns the total number of tasks, contained by jobs managed by this object
+ 
+ 
+     	  numberOfTasks  (int).
+Method in class  Job 
+      Returns the number of tasks in the given state, contained by
+ this object.
+     	  numberOfTasks  (int).
+Method in class  JobManager 
+      Returns the number of tasks in the given state, contained by
+ jobs managed by this object.
+     	  numberOfTasks  (int).
+Method in class  TheSimulator 
+     
+ Returns the number of tasks in the given state, contained by jobs managed by this object
+
+ 
+     	  numberOfTasksInJob  (int).
+Method in class  JobManager 
+      Returns the number of tasks contained by the given job.
+     	  numberOfTasksInJob  (int).
+Method in class  TheSimulator 
+     
+ Returns the number of tasks contained by the given job
+
+ 
+     	  numberOfTasksInJob  (int, int).
+Method in class  JobManager 
+      Returns the number of tasks in the given state, contained by
+ the given job.
+     	  numberOfTasksInJob  (int, int).
+Method in class  TheSimulator 
+     
+ Returns the number of tasks in the given state, contained by the given job
+
+ 
+     	  numberOfTasksInJobOnPE  (int, int).
+Method in class  JobManager 
+      Returns the number of tasks on the given processing element,
+ contained by the given job.
+     	  numberOfTasksInJobOnPE  (int, int).
+Method in class  TheSimulator 
+      Returns the number of tasks on the given processing element, contained by the given job.
+     	  numberOfTasksInJobOnPE  (int, int, int).
+Method in class  JobManager 
+      Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+     	  numberOfTasksInJobOnPE  (int, int, int).
+Method in class  TheSimulator 
+      Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+     	  numberOfTasksOnPE  (int).
+Method in class  Job 
+      Returns the number of tasks on the given processing element,
+ contained by this object.
+     	  numberOfTasksOnPE  (int).
+Method in class  JobManager 
+      Returns the number of task on the given processing element.
+     	  numberOfTasksOnPE  (int, int).
+Method in class  Job 
+      Returns the number of tasks on the given processing element
+ in the given state, contained by this object.
+     	  numberOfTasksOnPE  (int, int).
+Method in class  JobManager 
+      Returns the number of task on the given processing element
+ in the given state.
+     	  numberOfTasksSpinning  ().
+Method in class  Job 
+      Returns the number of tasks spinning, contained by
+ this object.
+     	  numberOfTasksSpinSync  ().
+Method in class  Job 
+      Returns the number of tasks spinning due to synchronization, contained by
+ this object.
+    
+  
+  
+   P   
+ 
+   	  PeIdle  (float, int, int).
+Method in class  GangScheduling 
+      Invoked when a PE has become idle for some reason
+
+ 
+     	  PeIdle  (float, int, int).
+Method in interface  SchedulerInterface 
+      Invoked when a PE has become idle for some reason
+
+ 
+     	  PeIdleEvent  (Object, EventDestination, float, int, int).
+Constructor for class  PeIdleEvent 
+     
+     	  PreemptStatistics  (int, float).
+Method in class  TheSimulator 
+     
+     	  PreemptTaskEvent  (Task, float).
+Constructor for class  PreemptTaskEvent 
+      Constructs a preempt task event.
+     	  printStatistics  ().
+Method in class  TheSimulator 
+     
+     	  ProbabilityDistribution  ().
+Constructor for class  ProbabilityDistribution 
+     
+     	  processEvent  (SimEvent).
+Method in class  Simulator 
+     override this method to see all events that pass through the simulator
+
+     	  processEvent  (SimEvent).
+Method in class  TheSimulator 
+      Overrides method in Simulator.
+     	  Processor  (int, Network, int, int, int, TheSimulator).
+Constructor for class  Processor 
+     Create a new processor with the specified characteristics
+  
+     	  Processor  (int, Network, int, int, int, TheSimulator, float, float, float).
+Constructor for class  Processor 
+     Create a new processor with the specified characteristics for a LogP network
+
+ 
+
+     	  ProcessorEvent  (Object, EventDestination, float, int).
+Constructor for class  ProcessorEvent 
+     
+     	  pSeed  .
+Static variable in class  ProbabilityDistribution 
+      Random number generator for internal use.
+    
+  
+   Q   
+ 
+   	  queueElements  ().
+Method in class  Simulator 
+     
+    
+  
+   R   
+ 
+   	  randomTask  (Task).
+Method in class  Job 
+      Returns a randomly chosen task.
+     	  randomTasks  (float, Task).
+Method in class  Job 
+      Returns an array of randomly chosen tasks.
+     	  rd  .
+Static variable in class  HyperErlangDistribution 
+     
+     	  rd  .
+Static variable in class  UniformDistribution 
+     
+     	  readConfigStream  (FileInputStream).
+Method in class  Network 
+     Creates a network according to the supplied instream
+ for a specification of the file format see configfile.spec
+
+     	  READY  .
+Static variable in class  Task 
+      The ready state.
+     	  ReceiveEvent  (SendEvent).
+Constructor for class  ReceiveEvent 
+     
+     	  regScheduler  (SchedulerInterface).
+Method in class  TheSimulator 
+      Registers an instance of the Scheduler class in the simulator
+
+ 
+     	  removeEvent  (SimEvent).
+Method in class  Network 
+     Removes an already existing event from the global simulation queue
+  
+     	  removeEvent  (SimEvent).
+Method in class  Simulator 
+     
+     	  removeEvents  (Object).
+Method in class  Simulator 
+     
+     	  removeEventsToTask  (long).
+Method in class  TheSimulator 
+     
+     	  RUNNING  .
+Static variable in class  Task 
+      The running state.
+     	  RunTaskEvent  (Object, EventDestination, float, long, int, float).
+Constructor for class  RunTaskEvent 
+      Constructs a run task event.
+    
+  
+   S   
+ 
+   	  scheduleTask  (int, long, float, float).
+Method in class  TheSimulator 
+      Schedules a task at a processor at a certain time
+
+ 
+     	  ScheduleTaskEvent  (Object, EventDestination, float, int, long, float).
+Constructor for class  ScheduleTaskEvent 
+     
+     	  SendEvent  (Object, EventDestination, float, int, long, int, long, int).
+Constructor for class  SendEvent 
+     
+     	  SendEvent  (Object, EventDestination, float, int, long, int, long, int, boolean).
+Constructor for class  SendEvent 
+     
+     	  setFrom  (Object).
+Method in class  SimEvent 
+     
+     	  setSeed  (long).
+Static method in class  ProbabilityDistribution 
+      Sets the seed of the generator the the samples.
+     	  setStopTime  (int).
+Method in class  Simulator 
+     
+     	  setTime  (float).
+Method in class  SimEvent 
+     
+     	  setTo  (EventDestination).
+Method in class  SimEvent 
+     
+     	  setType  (int).
+Method in class  Network 
+     Set the network type
+  
+     	  setType  (int, int).
+Method in class  Network 
+     Set the network type
+  
+     	  SimEvent  (Object, EventDestination, float).
+Constructor for class  SimEvent 
+     
+     	  Simulator  ().
+Constructor for class  Simulator 
+     
+     	  size  ().
+Method in class  TaskSynchronization 
+      Returns the number of involved tasks.
+     	  SpawnTaskEvent  (Task, float, int).
+Constructor for class  SpawnTaskEvent 
+      Constructs an spawn task event.
+     	  spinTime  .
+Variable in class  Task 
+      Spin time of the task
+
+
+     	  start  ().
+Method in class  Simulator 
+     call this method to start the simulation
+
+     	  start  ().
+Method in class  TheSimulator 
+     
+ Starts the simulation
+
+
+     	  StartIOTaskEvent  (Task, float).
+Constructor for class  StartIOTaskEvent 
+      Constructs a start I/O task event.
+     	  stateOfTask  (long).
+Method in class  TheSimulator 
+      Return the state of a task
+
+ 
+     	  stop  ().
+Method in class  Simulator 
+     override this method to perform some action when
+  the simulation has stopped
+
+     	  stop  ().
+Method in class  TheSimulator 
+      Overrides stop method in Simulator.
+     	  SUSPENDED  .
+Static variable in class  Task 
+      The suspended state.
+     	  SuspendedTaskEvent  (Object, EventDestination, int, int, int).
+Constructor for class  SuspendedTaskEvent 
+      Constructs an suspended task event.
+     	  synchronizationRequested  (Task).
+Method in class  Job 
+      Tests if a synchronization has been requested for the given
+ task.
+     	  synchronize  (Task).
+Method in class  Job 
+      Notifies this job that a tasks synchronizes.
+     	  synchronize  (Task, Simulator).
+Method in class  TaskSynchronization 
+      Synchronizes the given task.
+     	  SYNCHRONIZING  .
+Static variable in class  SuspendedTaskEvent 
+      Reason for suspension is synchronization.
+     	  SYNCHRONIZING  .
+Static variable in class  Task 
+      The synchronizing state.
+     	  SYNCHRONOUS  .
+Static variable in class  Network 
+     If the network is SYNCHRONOUS
+    
+  
+   T   
+ 
+   	  TaskArrival  (float, long).
+Method in class  GangScheduling 
+     
+ Invoked when a new task arrives, only if the network is asynchronous
+
+ 
+     	  TaskArrival  (float, long).
+Method in interface  SchedulerInterface 
+     
+ Invoked when a new task arrives, only if the network is asynchronous
+
+ 
+     	  TaskArrivalEvent  (Object, EventDestination, int, long).
+Constructor for class  TaskArrivalEvent 
+      Constructs a task arrival event.
+     	  taskEnded  (Task, float).
+Method in class  Job 
+      Called by an ended task.
+     	  TaskEvent  (Object, EventDestination, float, long).
+Constructor for class  TaskEvent 
+      Constructs a task event.
+     	  tasks  ().
+Method in class  Job 
+      Returns an array with global task identifiers for all tasks
+ contained by this object.
+     	  tasks  ().
+Method in class  JobManager 
+      Returns an array with global task identifiers for tasks,
+ contained by jobs managed by this object.
+     	  tasks  ().
+Method in class  TheSimulator 
+     
+ Returns an array with global task identifiers for tasks, contained by jobs managed by this object.
+     	  tasks  (int).
+Method in class  Job 
+      Returns an array with global task identifiers for all tasks
+ in the given state, contained by this object.
+     	  tasks  (int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for tasks
+ in the given state, contained by jobs managed by this object.
+     	  tasks  (int).
+Method in class  TheSimulator 
+     
+Returns an array with global task identifiers for tasks in the given state, contained by jobs managed by this object.
+     	  tasksInJob  (int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for tasks
+ contained by the given job.
+     	  tasksInJob  (int).
+Method in class  TheSimulator 
+     
+ Returns an array with global task identifiers for tasks contained by the given job.
+     	  tasksInJob  (int, int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for tasks in
+ the given state, contained by the given job.
+     	  tasksInJob  (int, int).
+Method in class  TheSimulator 
+     
+ Returns an array with global task identifiers for tasks in the given state contained by the given job.
+     	  tasksInJobOnPE  (int, int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+     	  tasksInJobOnPE  (int, int).
+Method in class  TheSimulator 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+     	  tasksInJobOnPE  (int, int, int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+     	  tasksInJobOnPE  (int, int, int).
+Method in class  TheSimulator 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+     	  tasksOnPE  (int).
+Method in class  Job 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by this object.
+     	  tasksOnPE  (int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by jobs managed
+ by this object.
+     	  tasksOnPE  (int, int).
+Method in class  Job 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by this object.
+     	  tasksOnPE  (int, int).
+Method in class  JobManager 
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by jobs managed by this object.
+     	  TaskStateChange  (float, long).
+Method in class  GangScheduling 
+     
+ Invoked when a task has changed state
+
+ 
+     	  TaskStateChange  (float, long).
+Method in interface  SchedulerInterface 
+     
+ Invoked when a task has changed state
+
+ 
+     	  TaskStatistics  (Task).
+Constructor for class  TaskStatistics 
+      Constructs a tasks statistics object.
+     	  TaskSynchronization  (Task, Task[]).
+Constructor for class  TaskSynchronization 
+      Constructs a task synchronization monitor.
+     	  TheSimulator  (String[]).
+Constructor for class  TheSimulator 
+     
+ Constructor.
+     	  timeSlice  .
+Variable in class  Simulator 
+     
+     	  toString  ().
+Method in class  CommTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  EndIOTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  EndOfSpinningEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  EndOfTimeSliceEvent 
+     
+     	  toString  ().
+Method in class  EndSyncTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  EndTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  Job 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  PeIdleEvent 
+     
+     	  toString  ().
+Method in class  PreemptTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  Processor 
+     
+     	  toString  ().
+Method in class  ReceiveEvent 
+     
+     	  toString  ().
+Method in class  RunTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  ScheduleTaskEvent 
+     
+     	  toString  ().
+Method in class  SendEvent 
+     
+     	  toString  ().
+Method in class  SimEvent 
+     
+     	  toString  ().
+Method in class  SpawnTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  StartIOTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  SuspendedTaskEvent 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  Task 
+      Returns a string representation of this object.
+     	  toString  ().
+Method in class  TaskSynchronization 
+      Returns a string representation of this object.
+     	  transmissionSize  ().
+Method in class  SendEvent 
+     
+    
+  
+   U   
+ 
+   	  UniformDistribution  (float).
+Constructor for class  UniformDistribution 
+      Constructs a uniform probability distribution that generates values
+ within the interval  [0, high]  with uniform probability.
+     	  UniformDistribution  (float, float).
+Constructor for class  UniformDistribution 
+      Constructs a uniform probability distribution that generates values
+ within the interval  [low, high]  with uniform probability.
+    
+  
+  
+  
+</body> 

@@ -1,0 +1,44 @@
+ SEAL - Energy-Aware Test-Suite Minimization for Android Apps<body>
+ 
+    
+
+
+ Energy-Aware Test-Suite Minimization for Android Apps 
+
+ 
+The rising popularity of mobile apps deployed on battery-constrained devices has motivated the need for effective energy-aware testing techniques. Energy testing is generally more labor intensive and expensive than functional testing, as tests need to be executed in the deployment environment, specialized equipment needs to be used to collect energy measurements, etc. Currently, there is a dearth of automatic mobile testing techniques that consider energy as a program property of interest. This paper presents an energy-aware test-suite minimization approach to significantly reduce the number of tests needed to eeffectively test the energy properties of an Android app. It relies on an energy-aware coverage criterion that indicates the degree to which energy-greedy parts of a program are tested. We describe and evaluate two complementary algorithms for test-suite reduction. Experiments over test suites provided for real-world apps have corroborated our ability to reduce the test suite size by 84% on average, while maintaining the effectiveness of test suite in revealing the great majority of energy bugs.
+ 
+
+ Approach Overview 
+ 
+    Our framework for energy-aware test-suite minimization, consists of two major components: (1) Energy-Aware Coverage Calculator (ECC) which is responsible to calculate the eCoverage for each test case, ti, in the original test suite of the given app using program analysis; and (2) Energy-Aware Test-Suite Minimization (ETM) component that identifies a representative set of test cases from full test suite, suitable for energy testing of the given app.
+ 
+
+   
+ECC component statically analyzes an app to obtain its call graph and annotates each node of the call graph with energy cost estimates. Using the execution traces of test cases in the available test suite, the eCoverage of each test case will be calculated by mapping execution path information to the annotated call graph.
+
+  Given a test suite and eCoverage of test cases, ETM component produces a minimized test suite suitable for energy testing, which aids a developer by reducing the effort needed to inspect the test results, especially for identifying energy bugs in the code. ETM component performs the energy-aware test-suite minimization in two complementary ways, optimal yet computationally expensive integer programming (IP) technique, and efficient near-optimal greedy approach.
+
+  Using energy-aware test-suite minimization, the search space for assessing energy properties of the app and identifying plausible energy bugs is reduced to handful of test cases, helping the developer in fixing such issues with less effort and time. Our framework also delivers execution traces of test cases and energy estimate of executed energy-greedy segments, helping developers to understand which sequences of invoking energy-greedy segments are more energy consuming and to pinpoint actual cause of energy bugs.
+ 
+
+ Tool 
+
+ 
+The tool is available for download from  here .
+
+  Publications 
+
+More details about can be found in our publication below:
+    Energy-Aware Test-Suite Minimization for Android Apps   
+    Reyhaneh Jabbarvand, Alireza Sadeghi, Hamid Bagheri, and Sam Malek  International Symposium on Software Analysis and Testing (ISSTA), Saarbrucken, Germany, July 2016. (25% acceptance rate) 
+     [ PDF ]
+      
+    
+               
+ 
+ 
+               
+ 
+ 
+</body> 

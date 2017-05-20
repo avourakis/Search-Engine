@@ -1,0 +1,105 @@
+ 33. Design Decisions<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.11 Parameter Aliases/Shortcuts 
+ Up:   OEChem - C++ Theory 
+ Next:   33.1 Atoms, Bond, Conformers, 
+   
+
+
+  
+33. Design Decisions 
+ 
+
+ 
+This chapter builds upon important concepts introduced in the previous
+section entitled  Getting Started with OEChem Molecule  found in the
+introductory chapter as well as the chapters entitled  OEMols and
+OEGraphMols  and  OEQMols and Queries in OEChem .  It may be beneficial to review those section before
+proceeding.
+
+  
+As you have seen throughout this manual, the OEMol, OEGraphMol and OEQMol
+are the
+concrete classes which handle most molecular function in OEChem.  The
+OEGraphMol's API is defined in the OEMolBase abstract base-class, the
+OEMol's API is defined by the OEMolBase and OEMCMolBaseT abstract base-classes,
+and the OEQMol's API is defined by the OEMolBase and OEQMolBase abstract base-
+classes.  The
+OEMCMolBaseT class publicly inherits from the OEMolBase class, which in
+turn inherits from the OEBase class.  Similarly, the OEQMolBase class publicly
+inherits from the OEMolBase class, which again inherits from the OEBase class.
+An OEGraphMol,  can be passed to any
+function which takes an OEMolBase argument.  An OEMol can be passed to any
+function which takes an OEMCMolBaseT or OEMolBase argument, and an OEQMol can
+be passed to any function which takes an OEQMolBase or OEMolBase argument.
+
+  
+    Simplistic OEChem inheritance scheme:
+                OEBase
+                  |
+                  |
+             -- OEMolBase ---------------- OEGraphMol
+             |    |
+             |    |
+             |  OEMCMolBaseT ------------- OEMol
+          OEQMolBase --------------------- OEQMol
+&lt;- indicates inheritance
+-- indicates API correspondence without inheritance
+    
+This paragraph requires some previous knowledge of the C++ factory and
+smart-pointer idioms.  It is standard practice when working with abstract
+base-classes, such as OEMolBase or OEMCMolBaseT, to define a function which
+returns a pointer one of these objects.  These functions, called factories,
+give library users access to concrete objects even when only the abstract
+base-class is exposed in the public API.  The problem with factory
+functions is that they require the user to manage the object's memory.
+When the factory function returns a pointer to an abstract base-class, it
+also passes ownership of the memory to the programmer.  To alleviate the
+problems associated with memory management introduced by factories, the C++
+smart-pointer idiom is often used.  Simply put, a smart-pointer holds a
+real pointer to an object, and deallocates the pointer's memory when the
+smart-pointer goes out of scope ( e.g.  in it's destructor).  In OEChem,
+OEGraphMols and OEMols fulfill the function of both factories and
+smart-pointers.  This gives the user access to multiple OEMolBase and
+OEMCMolBase implementations without the need of worrying about memory
+management.  The OEGraphMol and OEMol constructors allow the user to specify
+which OEMolBase or OEMCMolBaseT implementation they would like ( i.e.  -
+factory function), and the OEGraphMol and OEMol objects themselves act as
+smart-pointers, cleaning up the implementation pointers when the molecules
+go out of scope.  The relationship between the OEQMolBase class and the
+OEQMol class is similar.
+
+  
+
+      Subsections</strong> 
+
+   33.1 Atoms, Bond, Conformers, and Molecules 
+   33.2 Objects and Free-Functions 
+   33.3 Programming Layers:  The Deep and Twisted Path 
+   
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.11 Parameter Aliases/Shortcuts 
+ Up:   OEChem - C++ Theory 
+ Next:   33.1 Atoms, Bond, Conformers, 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

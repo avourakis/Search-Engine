@@ -1,0 +1,161 @@
+ 
+Disjunction (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+formulaVisited 
+ 
+Class Disjunction 
+ 
+java.lang.Object
+    formulaVisited.Disjunction 
+ 
+   All Implemented Interfaces:     Formula  
+     public class  Disjunction   extends java.lang.Object implements  Formula      
+The disjunction ("and") of two subformulas.
+  A disjunction is true if either or both subformulas are true,
+  and false if both subformulas are false.
+  
+
+  
+   
+
+
+
+  
+     
+ Constructor Summary   
+      Disjunction  ( Formula  _left,
+             Formula  _right) 
+
+ 
+          Constructs the disjunction of two subformulas. 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  java.lang.Object   
+    accept  ( Visitor  _v) 
+
+ 
+          Accepts a visitor. 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+Disjunction 
+ 
+public  Disjunction ( Formula  _left,
+                    Formula  _right) 
+  Constructs the disjunction of two subformulas.
+ 
+    Parameters:    _left  - The first  subformula.  _right  - The second subformula.       
+    
+ Method Detail   
+     
+accept 
+ 
+public java.lang.Object  accept ( Visitor  _v) 
+   Description copied from interface:   Formula    
+ Accepts a visitor.
+    Each subclass implements this method as 
+     {  return _v.visit(this);  } ,
+    and the compiler identifies the right   Visitor   method
+    based on the subclass (which is the type of  this ).
+ 
+     Specified by:     accept   in interface   Formula     
+    Parameters:    _v  - The visitor.
+   Returns:   The result _v calculates for this formula.   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

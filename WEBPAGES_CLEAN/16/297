@@ -1,0 +1,52 @@
+ Chimera 2.0 Tutorial: Setting MSXML in the CLASSPATH on Solaris<body>
+ 
+
+ Setting MSXML in the CLASSPATH on Solaris 
+
+  
+This section provides an example of how to set up your downloaded XML parser
+in the CLASSPATH.  This assumes that you have uncompressed and un-tared it 
+on your system.
+ 
+
+  Note: the tcsh shell was used for this example. 
+
+
+  Changing the CLASSPATH to include the XML Parser 
+
+  You will need to add the path to the xml.class file and the classes
+directory to your CLASSPATH environment variable so that your 
+Java interpretor will find it.
+  
+
+  Setting the CLASSPATH to the xml.class file and the classes 
+directory 
+
+  To set the CLASSPATH variable, you may use the command setenv.
+You need to set the CLASSPATH to include the path to the 
+xml.class file and the classes directory for msxml.
+The command will look like this:
+  setenv CLASSPATH $CLASSPATH': path_to_msxml.class :
+ path_to_msxml_classes ' 
+ 
+
+ 
+Note: The ' symbol is used to quote all the characters between them.  This 
+is needed so that tcsh won't interpret the colon symbols :.
+ 
+
+ 
+In the example below, the first path is set to the directory where the
+msxml.class file is located and the second path is to the classes directory
+where the other class files used by the xml parser are located.
+ 
+Note: If you move msxml.class into the classes directory, you 
+don't need the first path.
+ 
+
+   
+
+  You now have the MSXML set for your system.
+ 
+
+</body> 

@@ -1,0 +1,39 @@
+ // David Eppstein, UC Irvine, 11 Jun 1997
+//
+// Disableable button with 3d appearance
+
+import java.awt.*;
+import gui.*;
+
+public abstract class ThreeStateButton extends Canvas {
+	static Font font = null;				// for button labels
+	static FontMetrics metric = null;
+	static final int margin = 4;
+
+	String text;
+	int width, height;
+	boolean depressed;
+	boolean enabled;
+	Color disColor;
+
+	public ThreeStateButton(String s) {
+		if (font == null) {
+			font = new Font("Helvetica",Font.BOLD,12);
+			metric = PatchFontMetrics.patch(getFontMetrics(font));
+		}
+		text = s;
+		width = metric.stringWidth(s) + 2*margin;
+		height = metric.getHeight() + 2*margin;
+		depressed = false;
+		enabled = true;
+	}
+
+	public Dimension minimumSize() { return new Dimension(width, height); }
+	public Dimension preferredSize() { return minimumSize(); }
+
+	public void enable() { enabled = true; repaint(); }
+	public void disable() { enabled = false; repaint(); }
+
+	public void setDisableColor(Color c) { disColor = c; }
+	
+	boolean inRange(int x, int y) { return (x &gt;= 0 &amp;&amp; x = 0 &amp;&amp; y  

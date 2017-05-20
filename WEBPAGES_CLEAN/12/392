@@ -1,0 +1,201 @@
+ ICS 32 Winter 2017, Notes and Examples: Classes<body>
+
+ 
+
+ 
+ICS 32 Winter 2017 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 32 Winter 2017 
+   Notes and Examples: Classes 
+
+ 
+
+ 
+
+  Background 
+
+ You've seen previously how to use  namedtuples , which is one way in Python to collect heterogeneous data into a single object.  Each piece of data is called a  field  and the fields are identified by their names.  You can access the value of each field, but you can't change its value; instead, if you want to change the value of a field, you build a new namedtuple with one or more fields' values replaced with something different.  Beyond that, namedtuples don't really know how to do much of anything; they're useful, but limited to the problem of bringing a few pieces of data together into the same object. 
+
+ Namedtuples are handy, but when you think about the types of objects that are built into the Python language and its standard library, like strings, you realize that they don't just  store  things, like namedtuples do; they can also  do  things.  For example, consider this interaction with a Python interpreter. 
+
+  
+&gt;&gt;&gt; s = 'Boo is happy today'
+&gt;&gt;&gt; s.upper()
+'BOO IS HAPPY TODAY'
+&gt;&gt;&gt; s.split(' ')
+['Boo', 'is', 'happy', 'today']
+  
+
+ After creating a string and storing it in the variable  s , we then ask that string to do a couple of things for us: 
+
+   Hey,  s , what would you look like if all your letters were uppercase?  
+    Hey,  s , split yourself into a list of words, by using spaces to delimit where one word ends and another begins, and give me back the resulting list.  
+  The syntax  s.upper()  is called a  method call  on the object  s ; in this case,  upper()  is called a  method .  Since the type of  s  is  str , and since  upper()  is a method belonging to the  str  type (or, more properly, the  str   class ), we can call the method  upper()  on  s , in which case we're asking  s  for an uppercase version of itself.  However, we can't ask an integer, a float, a list, or a socket to do the same thing; there is no  upper()  method in these classes, because it wouldn't make any sense for there to be one.  Different classes support different methods that are specific to what each type of object can reasonably do. 
+
+ Seeing that strings can  do  things, in addition to just  storing  things, the natural next step might be for us to wonder why we can't create objects that are endowed similarly; why can't our objects be smarter and know how to do things for themselves?  The answer is that they can.  We just have to know how to define them in Python. 
+
+ 
+
+ 
+
+  Classes 
+
+ In Python, a  class  is a blueprint for a new kind of object.  That blueprint specifies what objects of the class can do, by defining a set of  methods , each representing one operation these objects are capable of performing.  For example, the  str  class, which is built into Python, contains a number of methods we've seen, like  upper() ,  split() , and  startswith() . 
+
+ We define a new class by using the  class  construct in Python.  The simplest kind of class is one that doesn't know how to do much of anything (aside from a few built-in things that all objects can do), which we could write this way. 
+
+  
+ class  Thing:
+     pass 
+  
+
+ As in  if  statements and loops,  pass  is used to specify that a class is empty.  An empty class isn't a very interesting one, and we'll want to write ones that do more.  First, though, we need to know a little bit about the mechanics of method calls in Python, which aren't quite as they seem, and our  Thing  class will help us to learn those mechanics. 
+
+ 
+
+ 
+
+  Method calls 
+
+ When you call a method on an object in Python, there's more going on than meets the eye.  For example, consider this method call that we made previously: 
+
+  
+&gt;&gt;&gt; s.split(' ')
+['Boo', 'is', 'happy', 'today']
+  
+
+ If I were to ask you "How many parameters are being passed to this method?", you might well be tempted to answer "One."  However, methods aren't quite like functions; they get called  on  an object (i.e., they're something that you're asking some particular object to do for you).  In this case, that object is  s .  In Python, there is an alternative syntax for calling methods, which we don't use often when we write programs because it's not especially clear, but which demonstrates why the answer to the question above isn't really "One." 
+
+  
+&gt;&gt;&gt; str.split(s, ' ')
+['Boo', 'is', 'happy', 'today']
+  
+
+ This alternative syntax is written by first specifying the name of the  class  containing the method (in this case, the  str  class, which is the class from which string objects are built), followed by a dot, followed by the method's name, and followed by its parameters.  Notice that the first parameter listed is  s , the object on which we wanted to call the method. 
+
+ Whenever we write method calls in the clearer and more familiar form  s.split(' ') , Python essentially translates these calls behind the scenes to the longer form  str.split(s, ' ') .  While that sounds like a ticky-tack detail that isn't worth knowing — because writing the long-form method calls is generally not a good idea, since it's more verbose and less clear — it's a critical detail if you want to understand how to write classes that contain their own methods, as we'll see.  Methods need what seems like an "extra" parameter, usually called  self , which represents the object that the method is called on. 
+
+ 
+
+ 
+
+  Constructing an object 
+
+ If a class is a blueprint for a kind of object, it stands to reason that there must be some way to create an object from that blueprint.  In Python, that is called  constructing  an object, and we do it by calling a class'  constructor , which we do by calling a function whose name is the name of the class: 
+
+  
+&gt;&gt;&gt; x = Thing()
+  
+
+ After this statement executes,  x  will refer to a Thing, an object constructed from our Thing class. 
+
+ As we'll see, it's also possible to require a constructor to take parameters, and we can write code that is executed when an object is initialized and uses those parameters during the initialization. 
+
+ 
+
+ 
+
+  Objects and their attributes 
+
+ All objects in Python have a  class , which specifies what kind of object they are.  Additionally, all objects in Python have a collection of  attributes , which are the information that they're storing at any given time.  Assigning a value to an attribute is as simple as any other assignment statement, except that we use the "dot" operator to qualify which object we'd like to store the attribute into.  For example, given the  Thing  object we created earlier, we can store values in its attributes in the interpreter directly, and then read them back later. 
+
+  
+&gt;&gt;&gt; x.a1 = 3
+&gt;&gt;&gt; x.a2 = 4
+&gt;&gt;&gt; x.a3 = 5
+&gt;&gt;&gt; x.a1 + x.a2 + x.a3
+12
+  
+
+ As a general rule, we rarely assign to an object's attributes willy-nilly like this.  Instead, we assign values into attributes  only within the class , initializing them when the object is constructed, and changing them only within methods whenever they need to be changed.  This is so we localize the intimate knowledge of the inner workings of a class inside that class, rather than spreading it throughout our program, which has a number of benefits, including making it easier to find and fix bugs, and making it easier to make changes without causing a cascade of negative effects in other places.  (Note, also, that some classes are written in a way that makes this kind of open-ended assignment to its objects' attributes impossible.  For example, if you tried to do this with a string, an  AttributeError  would be raised.  But our classes will always have this ability.) 
+
+ Nonetheless, the syntax here is important: you assign to an object's attribute by saying   object_name . attribute_name  =  value  .  That's true wherever you do it, even within the class itself. 
+
+ 
+
+ 
+
+  Writing a "counter" class 
+
+ Next, we'll write a class that implements a "counter," whose role is to count how many times it's been asked for its count in its lifetime.  Initially, the count is zero.  Each time it's asked for its count, that count is incremented, so it grows over time.  It also allows you to reset its count, if you'd like.  You could imagine using a class like this, for example, to implement a "hit counter" on a web page that keeps track of how many times the web page had been visited. 
+
+ Before we spend too much time writing our class, we'll envision how we'd like it to work.  (This is an important thing to remember: we can't build ourselves a tool unless we know what kind of tool we want.)  Let's say that this is what we decide we want: 
+
+  
+&gt;&gt;&gt; c1 = Counter()
+&gt;&gt;&gt; c1.count()
+1
+&gt;&gt;&gt; c1.count()
+2
+&gt;&gt;&gt; c1.count()
+3
+&gt;&gt;&gt; c1.peek()
+3
+&gt;&gt;&gt; c2 = Counter()
+&gt;&gt;&gt; c2.count()
+1
+&gt;&gt;&gt; c2.peek()
+1
+&gt;&gt;&gt; c1.peek()
+3
+&gt;&gt;&gt; c1.count()
+4
+&gt;&gt;&gt; c1.reset()
+&gt;&gt;&gt; c1.count()
+1
+&gt;&gt;&gt; c2.count()
+2
+  
+
+ So we want to be able to construct a Counter object and pass no parameters to it; its count would be initialized to zero.  And we want a  count()  method that increments and returns the count belonging to that Counter, a  peek()  method that returns the count without changing it, and a  reset()  method that resets the count to zero.  Note in the example above how separate Counter objects have separate counts; attributes belong to  objects , as opposed to  classes .  (Remember: A class is a blueprint for a kind of object, but many objects can be created from that blueprint, with each of those objects being separate from the others, even though they're all capable of behaving the same way.) 
+
+ Below is the complete Counter class.  It consists of four methods: 
+
+  A special initializer method called  __init__ , which is called whenever an object of this class is being initialized just after it's been created. 
+   The  count() ,  peek() , and  reset()  methods. 
+   
+ class  Counter:
+     def  __init__(self):
+        self._count = 0
+
+     def  count(self) -&gt; int:
+        self._count += 1
+        return self._count
+
+     def  peek(self) -&gt; int:
+        return self._count
+
+     def  reset(self) -&gt; None:
+        self._count = 0
+  
+
+ You'll notice a few things here: 
+
+  Writing a method in a class is a lot like writing a function; the  def  construct is used.  But there's an interesting difference: even though I didn't want these methods to accept any parameters, I listed a parameter called  self .  (If you're not sure why, be sure you re-read and fully understand the section titled  Method calls  above.)  The reason is that when you make calls to methods, an extra parameter is added before all the others; that parameter is the object the method was called on.  By convention, we call that parameter  self . 
+   When we wanted to assign a value to an attribute, we did so the same way we saw previously: Specify the object whose attribute we want to assign, followed by a dot, followed by the name of the attribute.   self._count  means "The  _count  attribute belonging to the object  self ."  Remember that  self  is the object the method was called on.  So, for example, the  __init__  function says "When an object is being initialized, set the  _count  attribute  belonging to the object being initialized  to zero." 
+   Recall that we've been using a single underscore in front of the name of a function in a module to specify that it is intended to be  private  (i.e., it's a detail of how the module was implemented, but not one that other code using that module needs to know or use).  We can do the same with attributes and methods in classes.  Nothing stops someone from assigning a new value into the  _count  attribute belonging to a Counter object, but the underscore is at least a hint that we intend for the attribute to be private (i.e., directly accessible from code in the Counter class, but not intended to be accessed outside of it). 
+      The value in keeping attributes private (and sometimes methods, too!) is in centralizing knowledge about a program's inner workings in as few places as possible.  This makes a program easier to understand, because you don't have as far to look when you want to understand how something works, because you don't have constraints spread throughout a large program, and because you can make a change in one part of a program without a cascading set of changes affecting everything else in the program.  Keeping separate things separate is one of the hallmarks of good software engineering; we'll focus on this repeatedly in this course and again in ICS 33. 
+       
+
+ 
+
+  The code 
+
+ Below are the Counter and Person classes that we wrote in lecture. 
+
+    counter.py   
+     person.py   
+  
+
+</body> 

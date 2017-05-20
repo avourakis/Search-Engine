@@ -1,0 +1,230 @@
+ 
+      GettingStartedDoc –
+      Group
+    <body>  Back to Index    
+        
+           
+AppString &gt; AppStringDoc
+ 
+ 
+     Getting Started    Introduction   
+ Downloading the Package   
+ Requirements   
+ Wrappers (Simplest Way To Use The Library)   
+ Step-By-Step Guide    Step1: Compiling The Library   
+ Step2: Using The Library In An Application   
+ Step3: Compiling And Running The Application     
+ Basic Usage   
+ Example Files       
+ 
+ Getting Started 
+ Introduction 
+ 
+This tutorial will guide through the basics steps needed to perform approximate string search on a collection of strings using this library. This guide focuses on how to use the FilterTree (FilterTreeDoc) module.
+ 
+ Downloading the Package 
+  The entire package may be downloaded from   http://flamingo.ics.uci.edu/releases/4.0/flamingo-4.0.tgz  
+   Requirements 
+ 
+Most modules in this release were developed and tested on Ubuntu Linux using the GNU GCC/G++ compiler.
+ 
+ 
+In order to compile and run most modules you will need the following:
+ 
+  Linux environment (preferably a Debian based Linux, e.g. Ubuntu)
+  C++ compiler (GCC/G++ version 4.0 or later)
+  CMake
+  C++ Boost library,   http://www.boost.org   (only required for PartEnumDoc)
+   
+On systems with the aptitude package manager (e.g. Ubuntu, Debian) you can install all required packages by typing the following as root user (or using sudo):
+ 
+ $ apt-get install gcc g++ cmake libboost-dev
+  
+The module MatTreeDoc was developed in Visual C++. No makefile is provided for that module. We recommend using Windows and Visual C++ for that module.
+ 
+ Wrappers (Simplest Way To Use The Library) 
+ 
+For your convenience, we have added wrappers that contain all necessary objects as described in section "Basic Usage". All you need to do to build an index and execute queries, is to create an instance of a wrapper. These wrappers initialize components with default values and are the simplest and fastest way to use our library - at the expense of being able to control tuning parameters (which filters are used, fanout, etc.).  
+We recommend browsing through the code in  filtertree/wrappers/src/example.cc</strong>.
+ 
+ Step-By-Step Guide 
+ 
+In this guide we will use a wrapper to show you how to perform approximate string search using the edit distance.
+ 
+ Step1: Compiling The Library 
+ 
+Let us first test whether we can successfully compile the Flamingo libraries.  
+Let us say you have extracted the Flamingo archive to the following directory:  /home/joe/flamingo-4.0</strong>   
+ 
+The wrappers are part of the filtertree module which we compile as follows:
+ 
+ cd /home/joe/flamingo-4.0/src/filtertree/
+cmake .
+make
+  
+This should compile filtertree and the modules that it depends on, namely, util, common and listmerger.
+ 
+ 
+The libraries and executables are placed in the build folder of their corresponding modules, 
+e.g., the filtertree binaries are in  /home/joe/flamingo-4.0/src/filtertree/build/</strong>, the listmerger binaries are in  /home/joe/flamingo-4.0/src/listmerger/build/</strong>, and so on.
+ 
+ 
+Your  /home/joe/flamingo-4.0/src/filtertree/build/</strong> should look something like this after compilation:
+ 
+ joe@joe-machine:~/flamingo-4.0/src/filtertree/build$ ls -l
+-rwxr-xr-x 1 joe joe     18 2010-10-21 13:06 cleanup.sh
+-rwxr-xr-x 1 joe joe 482093 2010-10-22 12:11 example_ft
+-rwxr-xr-x 1 joe joe 307624 2010-10-22 12:11 example_wrappers
+-rwxr-xr-x 1 joe joe 106208 2010-10-22 12:11 libfiltertree-lib.so
+-rwxr-xr-x 1 joe joe   7043 2010-10-22 12:11 libwrappers-lib.so
+-rwxr-xr-x 1 joe joe 376594 2010-10-22 12:12 perftest_ft
+-rwxr-xr-x 1 joe joe 453066 2010-10-22 12:12 unittest_ft
+  
+(note that the exact file sizes may differ from yours)
+ 
+ Step2: Using The Library In An Application 
+ 
+Now that we have compiled the library, we are ready to include it into an application.  
+Let us assume you wish to use the library in an application located in  /home/joe/searchapp</strong> that consists of one source file  /home/joe/searchapp/src/main.cc</strong>  
+We assume a directory structure similar to the ones used in Flamingo, i.e., we expect  /home/joe/searchapp</strong> to have a folder  src</strong> and a folder  build</strong>.   
+We will discuss how to use a simple in-memory index. More examples can be found in  /home/joe/flamingo-4.0/src/filtertree/wrappers/example.cc</strong>.   
+You can copy and paste the following lines of source code into  /home/joe/searchapp/src/main.cc</strong> for us to compile:
+ 
+ #include "filtertree/src/wrappers/wrappers.h"
+
+int main() {
+  GramGenFixedLen gramGen(2); // using 2-grams
+  
+  StringContainerVector strContainer(true);
+  strContainer.initStatsCollector(&amp;gramGen);
+  strContainer.fillContainer("/home/joe/flamingo-4.0/src/filtertree/data/female_names.txt", 4000);
+  
+  // create wrapper using edit distance (ed) and build index
+  // params: stringcontainer, gramgenerator, use partitioning filter?
+  WrapperSimpleEd wrapper(&amp;strContainer, &amp;gramGen, true);
+  wrapper.buildIndex();
+  
+  // perform search
+  float editDistance = 1.0f;
+  string queryString = "kathrin";
+  vector&lt;unsigned&gt; resultStringIDs;
+  wrapper.search(queryString, editDistance, resultStringIDs);
+  cout &lt;&lt; "SIMILAR STRINGS: " &lt;&lt; endl;
+  for(unsigned i = 0; i &lt; resultStringIDs.size(); i++) {
+    string tmp;
+    strContainer.retrieveString(tmp, resultStringIDs[i]);
+    cout &lt;&lt; tmp &lt;&lt; endl;
+  }
+}
+  
+In this example all data structures are stored in main memory.  
+This application will use the first 4000 lines of  /home/joe/flamingo-4.0/src/filtertree/data/female_names.txt</strong> as the data strings.  
+It will build an index to support approximate string search and answer a query that asks for all data strings that are within an edit-distance of 1 to "kathrin".  
+Finally, the results will be displayed.   
+ 
+Please refer to  /home/joe/flamingo-4.0/src/filtertree/wrappers/example.cc</strong> and  /home/joe/flamingo-4.0/src/filtertree/example.cc</strong> for more examples.
+ 
+ Step3: Compiling And Running The Application 
+ 
+We recommend you use CMake to generate a makefile to build your application. Hand-crafting a makefile is also possible but requires more effort and understanding. We will discuss how to use CMake to build your application.   
+ 
+We assume the following (as in the previous sections):
+ 
+  Your application is in  /home/joe/searchapp</strong> 
+  Your application contains one source file  /home/joe/searchapp/src/main.cc</strong>
+  Flamingo is in  /home/joe/flamingo-4.0</strong>
+   
+Let us create the CMakeLists.txt used by CMake to generate a makefile. Following the convention in Flamingo we will put it in  /home/joe/searchapp/CMakeLists.txt</strong>.   
+ 
+You can copy and paste the following lines into  /home/joe/searchapp/CMakeLists.txt</strong>:
+ 
+ cmake_minimum_required(VERSION 2.6)
+
+# files to compile
+set(APPLICATION_EXEC_SRC 
+  src/main.cc
+)
+
+# where to look for header files
+include_directories (
+  .
+  ../flamingo-4.0/src/
+  ../flamingo-4.0/src/filtertree/
+  ../flamingo-4.0/src/filtertree/src/
+  ${CMAKE_SOURCE_DIR}/../
+  include
+  lib  
+)
+
+# where to look for dependent libraries
+link_directories(
+  ${CMAKE_SOURCE_DIR}/../flamingo-4.0/src/common/build/
+  ${CMAKE_SOURCE_DIR}/../flamingo-4.0/src/util/build/
+  ${CMAKE_SOURCE_DIR}/../flamingo-4.0/src/listmerger/build/
+  ${CMAKE_SOURCE_DIR}/../flamingo-4.0/src/filtertree/build/
+) 
+
+# have cmake also build the filtertree module (if not built already)
+# the filtertree module will build util, common and listmerger
+add_subdirectory(../flamingo-4.0/src/filtertree/ ../flamingo-4.0/src/filtertree/)
+
+# GCC command line args
+add_definitions(-Wall -O3 -DDEBUG_TIMER_FANCY -DDEBUG_STAT -DED_MATRIX_DIM=2000)
+
+# create executable
+add_executable(searchapp ${APPLICATION_EXEC_SRC})
+add_dependencies(searchapp wrappers-lib filtertree-lib common-lib util-lib listmerger-lib)
+target_link_libraries(searchapp wrappers-lib filtertree-lib common-lib util-lib listmerger-lib rt)
+
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/build/")
+  
+The above is a very simple CMakeLists.txt. To compile your application, cd into  /home/joe/searchapp/</strong> and type:
+ 
+ cmake .
+make
+  
+This should compile your application and all necessary libraries and link them together properly.  
+Let us test the application. The compilation should have placed your  searchapp</strong> executable in  /home/joe/searchapp/build</strong>. To run the application:
+ 
+ cd '''/home/joe/searchapp/build'''
+./searchapp
+  
+You should see the following output (or similar):
+ 
+ INPUTFILE: "/home/joe/flamingo-4.0/src/filtertree/data/female_names.txt"
+100% FILLING CONTAINER: 4000/4000; 0'0"/0'0"   
+100% INSERTING INTO INDEX: 4000/4000; 0'0"/0'0"   
+SIMILAR STRINGS: 
+kathryn
+kathrin
+kathrine
+katherin
+  
+Congratulations, you have successfully created your first application using The Flamingo Package!
+ 
+ Basic Usage 
+ 
+Approximate string search can be performed in two basic steps: (1) building the index, and (2) answering queries using the index.
+We will now discuss the basic components for each of the steps at a high-level.
+ 
+  Building The Index, Needed Components
+  String Container (stores the data strings on which you want to perform queries)
+  Gram Generator (decomposes strings into grams)
+  Indexer (builds the filter tree and the inverted lists, needs a String Container and a Gram Generator)
+      Answering Queries Using The Index, Needed Components:
+  List Merger (solves the T-occurrence problem given a set of inverted lists and a merging-threshold)
+  Indexer (builds the filtertree and the inverted-lists, needs a String Container and a Gram Generator)
+  Searcher (answers queries, needs a List Merger and an Indexer) 
+  Similarity Metric (represents the similarity metric to be used)
+  Query (contains the query string, the similarity metric and the similarity threshold)
+     
+Refer to  filtertree/src/example.cc</strong> for some advanced examples.
+ 
+ Example Files 
+ 
+Apart from reading this guide, we recommend you browse through the code of some example files. We have provided these files to help you understand how to use the library as quickly as possible.
+ 
+  filtertree/src/wrappers/example.cc
+  filtertree/src/example.cc
+  filtertree/src/perftest.cc
+       Back to Index   </body> 

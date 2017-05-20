@@ -1,0 +1,128 @@
+ Memory_sizer<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Memory_sizer  
+ 
+
+  Definition 
+ 
+
+The class   Memory_sizer   allows to measure the memory size used by the process.
+Both the virtual memory size and the resident size are available (the resident
+size does not account for swapped out memory nor for the memory which is not
+yet paged-in).
+  
+
+ #include &lt; CGAL/Memory_sizer.h &gt; 
+  
+
+  Types 
+ 
+
+The memory sizes are given in bytes.
+  
+
+    
+           
+  
+typedef std::size_t
+         
+              
+         
+    size_type;
+         
+         
+    
+           
+
+  Creation 
+ 
+
+    
+          Memory_sizer  m;
+         
+              
+    Default constructor.
+ 
+
+     
+
+  Operations 
+ 
+
+    
+           
+size_type
+         
+          
+         
+    m.virtual_size ()
+         
+          
+    Returns the virtual memory size.
+            
+           
+size_type
+         
+          
+         
+    m.resident_size ()
+         
+          
+    Returns the resident memory size.
+            
+
+  Implementation 
+ 
+
+Accessing this information requires the use of non-portable code.
+Currently, there is support for Linux platforms and the Microsoft and Intel
+compiler on Windows.  If a platform is not supported, then the macro
+ CGAL_DONT_HAVE_MEMORY_SIZER  is defined by this file.
+  
+
+    Next:    Modifier_base&lt;R&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

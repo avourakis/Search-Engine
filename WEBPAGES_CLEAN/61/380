@@ -1,0 +1,65 @@
+ Process shell 
+
+ 
+
+  Presentation/Test
+Shell: Command Language Specification    
+
+  Mandatory Commands    
+
+  The
+following commands will be used in the test files for this project:     
+
+    init       
+   Restore the system to its initial state.    
+
+    cr   
+     &lt;name&gt; &lt;priority&gt;      
+   Invoke function  Create( ), which
+creates a new process &lt;name&gt; at the priority level &lt;priority&gt;;
+&lt;name&gt; is a single character; &lt;priority&gt; can be 1 or 2 (0 is
+reserved for  Init  process).    
+
+   de &lt;name&gt;      
+   Invoke the function  Destroy( ),
+which destroy the process &lt;name&gt; and all of its descendants.    
+
+    req   
+     &lt;name&gt;      
+   Invoke the function   Request (),
+which requests the resource &lt;name&gt;; &lt;name&gt; can be R1, R2, R3, or
+R4.  
+When implementing the additional task 5.1 (page 490), the command is extended
+to:     req    &lt;name&gt; &lt;# of units&gt;    
+where &lt;# of units&gt; gives the number of units of  
+resource  &lt;name&gt; to be requested. The numbers of units constituting
+each resource are as follows: 1 for R1, 2 for R2, 3 for R3, and 4 for R4.    
+
+    rel   
+     &lt;name&gt;      
+   Invoke the function   Release (),
+which release the resource &lt;name&gt;.  
+When implementing the additional task 5.1 (page 490), the command is extended
+to:     rel    &lt;name&gt; &lt;# of units&gt;    
+where &lt;# of units&gt; gives the number of units of  
+resource  &lt;name&gt; to be released.    
+
+   to      
+   Invoke the function  Timeout( ).    
+
+       
+
+  Optional Commands    
+
+  For
+the purposes of testing and demonstration, it is useful to implement additional
+commands to obtain information about the current status of the system, such as:
+    
+
+   list all processes and their status    
+   list all resources and their status    
+   provide information about a given process    
+   provide information about a given resource    
+  
+
+</body> 

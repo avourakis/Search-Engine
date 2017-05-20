@@ -1,0 +1,169 @@
+ 
+LogicalConstant (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+  
+ 
+formulaVisited 
+ 
+Class LogicalConstant 
+ 
+java.lang.Object
+    formulaVisited.LogicalConstant 
+ 
+   All Implemented Interfaces:     Formula  
+     public class  LogicalConstant   extends java.lang.Object implements  Formula      
+A logical constant, representing true or false.
+  
+
+  
+   
+
+
+
+  
+     
+ Method Summary   
+    
+  java.lang.Object   
+    accept  ( Visitor  _v) 
+
+ 
+          Accepts a visitor. 
+    
+ static  LogicalConstant    
+    one  () 
+
+ 
+          Returns a logical constant for 1 (true). 
+    
+ static  LogicalConstant    
+    zero  () 
+
+ 
+          Returns a logical constant for 0 (false). 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Method Detail   
+     
+one 
+ 
+public static  LogicalConstant   one () 
+  Returns a logical constant for 1 (true).
+    The same constant is returned for every call.
+    The constant is constructed at initialization time (eager initialization).
+ 
+     
+    
+      
+zero 
+ 
+public static  LogicalConstant   zero () 
+  Returns a logical constant for 0 (false).
+    The same constant is returned for every call.
+    The constant is not constructed until the first call (lazy initialization).
+ 
+     
+    
+      
+accept 
+ 
+public java.lang.Object  accept ( Visitor  _v) 
+   Description copied from interface:   Formula    
+ Accepts a visitor.
+    Each subclass implements this method as 
+     {  return _v.visit(this);  } ,
+    and the compiler identifies the right   Visitor   method
+    based on the subclass (which is the type of  this ).
+ 
+     Specified by:     accept   in interface   Formula     
+    Parameters:    _v  - The visitor.
+   Returns:   The result _v calculates for this formula.   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+ </body> 

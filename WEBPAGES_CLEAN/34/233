@@ -1,0 +1,143 @@
+ Number theory files for David Eppstein<body>
+
+ 
+ Number-Theoretic Hacks 
+
+  I have implemented a number of simple number-theoretic
+algorithms 
+for my own amusement, and provide them here on the net.  
+
+     Egyptian Fractions -- algorithms and
+references.   
+
+ This notebook for Mathematica 2.2/Macintosh (also available in
+HTML format) describes and implements a number of different
+algorithms for representing rational numbers as sums of distinct
+unit fractions. 
+ 
+  
+
+  
+
+     C++ implementation of J.H.Conway's
+"nimber" arithmetic.   
+
+ Conway's nimbers (used in  
+combinatorial game theory ) form an infinite field of
+characteristic two, with a natural binary representation in which
+truncation to a fixed number of bits produces finite subfields
+GF[2^2^k]. The algorithms in this file implement nimber
+multiplication, square root, and other functions, using O(k 3^k)
+bit operations. This bound is somewhat worse than what one can
+achieve for the more standard irreducible polynomial representation
+of GF[2^2^k] but is simpler and more uniform. 
+This version is an update to my code by Achim Flammenkamp,
+to make it run under less archaic versions of C++ and allow
+numbers with more bits than machine precision;
+the original code is  here .
+ 
+  
+
+  
+
+     C++ fast algorithm for computing 2-adic
+inverse.   
+
+ The p-adic numbers, much beloved of a certain net.crackpot, can
+be thought of as describing arithmetic modulo powers of p^k, in the
+limit as k becomes large. The 2-adic inverse of some odd integer x
+is then another integer y such that xy=1 mod 2^k. (Actually y is
+only well-defined mod 2^k rather than as an integer itself.) The
+algorithm in this file defines a fast method for finding such
+inverses (mod 2^32) found by analogy to a standard method for
+floating point inversion. 
+ 
+  
+
+  
+
+     C program for rational approximation of
+real numbers.   
+
+ This program finds the most accurate possible approximations of
+a given input value by rationals x/y such that y is within a given
+bound. Two approximations are returned, one on each side of the
+input. The method is to truncate the continued fraction
+representation of the input, and then slightly modify the last term
+of the truncated representation. 
+ 
+  
+
+  
+
+     Interference pattern.   
+
+ The value of each pixel (x,y) of this image (used as the
+background for this page) was formed by testing whether (x^2+y^2)
+mod q is greater than or less than q/2 for some large value of q.
+If one interprets (x,y) as the complex number (Gaussian integer)
+x+iy, the form (x^2+y^2) is its norm, and we can form similar
+pictures by using norms of other rings. For instance, the norm of
+the Eisenstein integers produces a similar pattern of concentric
+circles in a triangular grid. See also Eric Weisstein's entry on the
+ Circles
+and Squares Fractal , and  Helmut
+Dersch's image interpolation quality comparison  using an image like this
+for the tests.
+ Source
+code is available for producing similar figures.  
+ 
+   Other number theory on the web: 
+
+   
+  
+Computational maths bits and pieces , Rob Harley, INRIA. 
+
+  Ian
+Connell's Elliptic Curve Handbook  
+
+  
+Continued fractions . Curious continued fraction evaluations
+from MathSoft. 
+
+  The
+factorization of the beast  
+
+  
+Factorize numbers and polynomials on the web  using PARI. 
+
+  My
+favorite proof that there are infinitely many prime numbers  
+
+  
+Golomb Ruler Calculations . Bill Rankin, Duke U. 
+
+  Integer
+Sequences , N. J. A. Sloane, AT&amp;T Research. 
+
+  Keith
+Numbers . 
+
+  The
+largest known prime numbers  
+
+  Math pages:
+Number Theory  
+
+  
+Mathematics Archives - Numbers  
+
+  Keith
+Matthews' Number Theory Web  
+
+  Number recreations
+by Shyam Sunder Gupta  
+
+  Recreational
+topics from the theory of numbers  
+ 
+    David Eppstein ,  Dept. Inf.
+&amp; Comp. Sci. ,  UC
+Irvine .  Last update:   
+ 
+</body> 

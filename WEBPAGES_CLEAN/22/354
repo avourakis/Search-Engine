@@ -1,0 +1,350 @@
+ CS 154 Lab 4: ALU 
+
+ 
+
+  Lab 4    
+
+  ALU and  Datapath  Design    
+
+   Due dates are in the Labs table     
+
+           
+
+ The objective of this lab assignment is to design and implement the ALU and
+design a basic datapath consisting of a Register file and an ALU. 
+
+ Please read  ALL 
+instructions carefully.  Only   properly submitted 
+assignments will be graded. Make sure to create a zip file, named by your
+student id, and submit required files in it.  
+
+     
+
+   Specification
+for the ALU     
+
+  
+
+ Your task is to design an Arithmetic Logic Unit (ALU) to execute all
+arithmetic or logical operations required by the subset of the MIPS ISA we are
+implementing.     The
+table below uses in0, in1 as the inputs and out as the output of the ALU.  
+
+     
+
+ The operations this ALU executes are:  
+
+   
+    Name    
+   
+   
+    ALU
+  Control    (  func  )    
+   
+   
+    Syntax    
+   
+   
+    Description    
+   
+   
+    Comments    
+   
+    
+    ADD
+      
+   
+   
+    000    
+   
+   
+    ADD out, in0, in1     
+   
+   
+    out = in0 + in1;     
+   
+   
+         
+   
+    
+    SUB
+      
+   
+   
+    001    
+   
+   
+    SUB out, in0, in1     
+   
+   
+    out = in0 - in1;     
+   
+   
+         
+   
+    
+    SLL
+      
+   
+   
+    010    
+   
+   
+    SLL out, in0,  C     
+   
+   
+    out = in0 &lt;&lt; C;     
+   
+   
+    See a note below (* )               
+        
+   
+    
+    SRL
+      
+   
+   
+    011    
+   
+   
+    SRL out, in0, C    
+   
+   
+    out = in0 &gt;&gt; C;     
+   
+   
+         
+   
+    
+    AND
+      
+   
+   
+    100    
+   
+   
+    AND out, in0, in1     
+   
+   
+    out = in0 &amp; in1; //bit-wise and     
+   
+   
+         
+   
+    
+    OR
+      
+   
+   
+    101    
+   
+   
+    OR out, in0, in1     
+   
+   
+    out = in0 | in1; //bit-wise or     
+   
+   
+         
+   
+    
+    XOR
+      
+   
+   
+    110    
+   
+   
+    XOR out, in0, in1     
+   
+   
+    out = in0 ^ in1; //bit-wise  xor      
+   
+   
+         
+   
+    
+    NOR
+      
+   
+   
+    111    
+   
+   
+    NOR our, in0, in1     
+   
+   
+    out = ~(in0 | in1)     
+   
+   
+         
+   
+     
+*  C  is a
+5-bit unsigned immediate value. Your implementation will perform shifts by
+ C 
+bits for SLL and SRL.  
+
+     
+
+ There are data, control and status ports in the ALU interface.  
+
+   1.           Use
+the following 3 data ports: 2 for input (  in0   and   in1  ),
+1 for output (  out  ). All
+3 data ports are 32 bits wide. 
+
+     
+
+   2.           Use
+a control port    func </strong>  to control the ALU, e.g.
+specify the operation it performs. For example,  func ="000"
+causes the ALU to perform addition. Use IEEE std_logic_1164 library to perform
+logical operations and use IEEE  std_logic_unsigned 
+library to perform numerical operations (no casting is needed). 
+
+     
+
+   3.           Use
+a 1-bit output port   zero  .
+The ALU generates   zero='1'
+  when   out  ='0'.
+Otherwise   zero   =
+'0'. 
+
+     
+
+     
+
+  Specification for
+the basic  datapath     
+
+     
+
+ The basic datapath consists of the register file (RF) from Lab 3 and the
+ALU. In addition, it uses 3 registers and a MUX.  
+
+   �               
+   A register called A, with its input connected to
+the RF output d_out_1 and its output to the ALU input   in0  .  
+
+   �               
+   A register called B, with its input connected to
+the RF output d_out_2 and its output to a MUX on the ALU input   in1  . 
+
+   �               
+   A register called  ALUout ,
+with its input connected to the ALU output   out  .  
+
+   �               
+   The MUX on the ALU input   in1   is used to select either the Register B
+or the immediate value  Imm  as an input to the ALU (  in1  ),     as
+described below.  
+
+     
+
+ All registers are D flip-flop based and use a clock signal. 
+
+     
+
+    ALU  control       func    ="01-" will
+cause the MUX to select the immediate value C, otherwise it selects Register B.
+ 
+
+     
+
+ You are required to submit, in the specification, the following diagrams: 
+
+   1.           A
+block diagram of an  8-bit  ALU, where each bit is shown as a box with labeled inputs and
+outputs. Show all the connections between bits. 
+
+   2.           Use
+the following basic elements in your schematic: logic gates (AND, OR, XOR, NOT,
+NOR), full adder, decoder and MUX. You need to come up with logic to implement  both 
+ADD and SUB using the same full-adder (Hint: think about 2's compliment). 
+
+   3.           The
+block diagram of your datapath including the register file, ALU and other
+registers (A, B and  ALUout ). Name the signals properly.
+Please pay attention to signal width and mark them correctly. 
+
+     
+
+  Design    
+
+ Your task is to design the ALU module and assemble the datapath.  
+
+ The  template VHDL files  for both modules ( ALU.vhd  and  datapath.vhd ) and the
+ testbench  ( ALU_tb.vhd  and
+datapath_tb.vhd) have been provided to you. The interface (that is, ports) is
+already defined. You need to add code for functionality in both files to make
+them work.  Do
+not make any change to the interface.   
+
+     
+
+ The first part of this lab is to design the ALU.     
+
+   �               
+   Perform all operations on 32-bit signals, e.g.
+your add should look like  out &lt;= in1 + in0.  
+
+   �               
+   You can put the entire ALU into a process and
+use the VHDL case statement to select different operations.    Or use selected or conditional signal
+assignment in the architecture body. 
+
+   �               
+   You can use packages discussed in class. 
+
+     
+
+ The second part of this lab is to design the datapath. 
+
+   -           
+   The  datapath  design
+should use components for the Register file and the ALU and add the registers
+A, B,  ALUout  and the MUX. 
+
+   -           
+    Click here  for a
+reference on datapath design. 
+
+   -           
+       
+
+  Verification    
+
+   �               
+   The ALU  testbench 
+needs to test your ALU module for each operation with random inputs.    This is a single-cycle operation. 
+
+   �               
+   The  datapath   testbench  needs to test reading values from the Register
+file, executing operations using the ALU, and writing the result into the  ALUout  register Also test the use of the immediate
+operand.    Pay attention to
+clocking.    You want to put some
+values in the RF before testing the ALU... 
+
+     
+
+  Submission:    
+
+ - Via EEE 
+
+     
+
+  References    
+
+    Wikipedia
+     article about adder.     
+    Wikipedia
+     article about ALU.     
+    Wikipedia article about 74181,
+     an ALU implemented on TTL IC.     
+    Wikipedia article
+     about MIPS ISA.     
+  
+
+</body> 

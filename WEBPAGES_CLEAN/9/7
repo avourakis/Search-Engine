@@ -1,0 +1,62 @@
+ 24.6 oesstream<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.5 oegzstream 
+ Up:   24. I/O Utilities 
+ Next:   24.7 oestdstream 
+   
+
+
+  
+24.6 oesstream 
+ 
+
+ 
+These classes provide a mechanism to read from and write to strings of data.
+The  oeisstream  is capable of wrapping and reading from a std::string as
+well as a simple memory buffer. The  oeosstream  writes directly to an
+internal string of which a copy can be accessed at any time.
+
+  
+    std::string str = "hello world!"
+
+oeisstream ois(str);
+oeosstream oos;
+
+if (ois)
+{
+    std::string buffer;
+    while (ois.getline(buffer))
+        oos &lt;&lt; buffer;
+    oos &lt;&lt; "!dlrow olleh" &lt;&lt; oeendl;
+}
+
+str = oos.str();
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.5 oegzstream 
+ Up:   24. I/O Utilities 
+ Next:   24.7 oestdstream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,35 @@
+ while Statements
+
+
+In this lecture we will examine indefinite iteration with Python's while loop.
+In the process we will learn about the break statement, which can be used in
+both of Python's loops. And once we learn about break, we will see that the
+keyword else is usable with both of Python's loops, and we will learn its
+meaning (related to whether the loop finishes "normally" or via a break). Once
+we cover Python's try/except statement, we can write a try/except/while that is
+equivalent to (and further illustrates) Python's for loop
+
+While loops are called indefinite loops: at the time they start they do not
+know how many iterations they will perform (and if written incorrectly, they
+might never terminate: what we call an "infinite" loop). While loops use a
+boolean condition (really an expression, just like those used in if statements)
+to determine when to continue or terminate the loop.
+
+The EBNF for a while_statement is quite simple. Note that like all the control
+structures we've seen, its first line ends with a : indicating that a block
+(indented) follows. The word while is a keyword in Python.
+
+  while_statement  10 and s[10] == '*':
+      ....
+
+Python would first evaluate the expression: len(s) &gt; 10. When False it would
+determine the value of the and operator is already known: it is False. It
+would not have to evaluate s[10] == '*' and that is a good thing, because that
+would throw an IndexError exception, because if the length of a string is  10:
+      if s[10] == '*':
+          ....
+
+But that requires nested if statements and is much more cumbersome. It is
+better to spend some time learning about short-circuit operators now, and then
+understand how to use them and save time later by using them appropriately.
+ 

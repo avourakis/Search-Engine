@@ -1,0 +1,148 @@
+ // m2html - convert mail/news/babyl files to HTML format
+// David Eppstein, UC Irvine, 12 Apr 1996
+
+#include "lineb.h"
+#include 
+#include 
+
+// Page break is automatic paragraph break
+// include ^_ as EOP as well for recognizing Babyl files
+
+inline int pagebreak(char v)
+{
+    return (v == '\014' || v == '\037');
+}
+
+// Read char into variable, returning nz if end of line or end of page.
+
+inline int eolgetc(char &amp; v, istream &amp; i)
+{
+    i.get(v);
+    return (!i.eof() &amp;&amp; (v == '\n' || pagebreak(v)));
+}
+
+// Add a char to the save buffer.
+
+inline void reset(line_buffer &amp; lb) { lb.set_buffer(0); }
+void add(line_buffer &amp; lb, char c)  { lb.replace(lb.textlen(), &amp;c, 1, 0); }
+
+// Complain about inappropriate args
+
+extern "C" void exit(int);
+
+const char * progname = "m2html";
+
+void usage()
+{
+    cerr  htmlfile\n";
+    exit (1);
+}
+
+// shared variables between process() and main()
+
+static enum { filestart, msgheader, msgtext } filestate = filestart;
+static line_buffer para;
+
+// process a line of text
+// input = pointer to start of line
+// output = pointer to start of next line
+//
+// does untabification,  conversion, @ and URL HREFification
+
+static void outword(const char * w, const char * s)
+{
+    while (w != s) {
+	if (*w == '') cout ': case ',': case ' ':
+	 case '(': case ')': case '[': case ']':
+	 case '\t': case '"': case '\'':
+	 case ';': // no colon tho because of http: etc
+	    outword(w,s+1);	// punctuation, output
+	    w = s+1;		// including punc char itself
+	    inword = 1;
+	    break;
+
+	 case '@':
+	    if (inword &amp;&amp; w != s &amp;&amp;
+		((w - para.text()) = 'a' &amp;&amp; *s = 'A' &amp;&amp; *s = '0' &amp;&amp; *s ";
+		outword(w,s);
+		cout ";
+		w = s;
+		s--;		// make up for extra s++ below
+		break;
+	    }
+	    // atsign after nonword, treat as default nonword char
+	    inword = 0;
+	    break;
+
+	 case '$':
+	    // this character shows up in many msg-ids and few real email addrs
+	    inword = 0;
+	    break;
+
+	 case ':':		// maybe URL?
+	    if (inword &amp;&amp; (strncmp(w,"mailto:",7) == 0 ||
+			   strncmp(s,"://",3) == 0))
+	    {
+		while (*++s != '' &amp;&amp; *s != ' '
+		       &amp;&amp; *s != '(' &amp;&amp; *s != ')' &amp;&amp; *s != '\t'
+		       &amp;&amp; *s != ','
+		       &amp;&amp; *s != '\n' &amp;&amp; *s != '\0')
+		    ;		// find end of URL by looking for break char
+		while (*(s-1) == '.') s--; // back over period
+		cout ";
+		outword(w,s);
+		cout ";
+		w = s;
+		s--;		// make up for extra s++ below
+		break;
+	    }
+	    // colon after nonword, treat as default nonword char
+	    inword = 0;
+	    break;
+
+	 default:		// any other character
+	    break;
+	}
+	s++;
+    }
+    outword(w,s);		// flush final word
+    cout " ";
+    cout  \n";
+	break;
+
+     case msgheader:
+	if (is_header) cerr   \n";
+	break;
+
+     case msgtext:
+	if (is_header) cout   \n";
+	else cout  1) usage();
+    int was_eol = 1;
+    int have_nonspace = 0;
+    for (;;) {		// looping over chars in file
+	char inchar;
+	if (eolgetc(inchar, cin)) { // end of line?
+	    if (was_eol || pagebreak(inchar) || !have_nonspace) {
+		// found paragraph break
+		if (have_nonspace) process(); // output old paragraph
+		reset(para);    // and start new one
+		have_nonspace = 0;
+	    }
+	    else {
+		was_eol = 1;	// one newline, remember the next
+		add(para,'\n'); // but assume internal to para for now
+	    }
+	    continue;		// back to top of loop
+	}
+	if (cin.eof()) {
+	    // maybe eolgetc() above hit eof?
+	    if (have_nonspace) process(); // process final paragraph
+	    cout \n";	// finish output
+	    break;		// break out of loop
+	}
+	was_eol = 0;		// if we got here, have non-line-break char
+	if (inchar != ' ' &amp;&amp; inchar != '\t') have_nonspace = 1;  
+	add(para, inchar);	// add it to buffer
+    }				// end loop over chars in line
+}
+    

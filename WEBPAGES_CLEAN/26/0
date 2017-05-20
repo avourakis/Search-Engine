@@ -1,0 +1,181 @@
+ 
+RSACrypto
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.encryption.asymmetric 
+ 
+Class RSACrypto 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.encryption.asymmetric.RSACrypto 
+ 
+    public class  RSACrypto   extends java.lang.Object    
+   
+
+
+
+  
+     
+ Constructor Summary   
+      RSACrypto  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  byte[]   
+    decrypt  (byte[] CipherText,
+        java.security.Key PKey) 
+
+ 
+          Function Decrypt: 
+    
+  byte[]   
+    encrypt  (byte[] PlainText,
+        java.security.Key PKey) 
+
+ 
+          Function Decrypt: 
+    
+  java.security.KeyPair   
+    GenerateKeys  (java.lang.String MasterPassword) 
+
+ 
+          Function that generates an RSA key Pair 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+RSACrypto 
+ 
+public  RSACrypto () 
+    
+    
+ Method Detail   
+     
+GenerateKeys 
+ 
+public java.security.KeyPair  GenerateKeys (java.lang.String MasterPassword)
+                                   throws java.lang.Exception 
+  Function that generates an RSA key Pair
+ 
+     Parameters:    MasterPassword:  - Used to deterministically determine the RSA key pair
+   Throws: 
+   java.lang.Exception    
+      
+encrypt 
+ 
+public byte[]  encrypt (byte[] PlainText,
+                      java.security.Key PKey)
+               throws java.lang.Exception 
+  Function Decrypt:
+ 
+     Parameters:    PlainText:  - The unencrypted text  PKey:  - Public key or the Private Key
+    Returns:   An encrypted representation of the plaintext.
+   Throws: 
+   java.lang.Exception    
+      
+decrypt 
+ 
+public byte[]  decrypt (byte[] CipherText,
+                      java.security.Key PKey)
+               throws java.lang.Exception 
+  Function Decrypt:
+ 
+     Parameters:    CipherText:  - The encrypted text  Key:  - Public key or the Private Key
+    Returns:   The decrypted representation of the plaintext.
+   Throws: 
+   java.lang.Exception    
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

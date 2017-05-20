@@ -1,0 +1,693 @@
+ 
+  Class TheSimulator
+<body>
+  
+ 
+  Class TheSimulator
+ 
+ 
+java.lang.Object
+   |
+   +---- Simulator 
+           |
+           +----TheSimulator
+ 
+    public class  TheSimulator 
+    extends  Simulator 
+    implements EventDestination
+    
+A subclass of Simulator
+ 
+     See Also: 
+        Simulator 
+     
+ 
+    
+      TheSimulator  (String[])
+     
+ Constructor.
+   
+    
+      allIdleProcessors  ()
+     
+ Return an array with id's for the currently idle processors
+
+ 
+        callJobArrival  (float, int)
+      Calls the SchedulerInterface routine JobArrival in the scheduler
+
+ 
+        callTaskStateChange  (float, long)
+      Calls the SchedulerInterface routine TaskStateChange in the scheduler
+
+ 
+        getJobId  (long)
+     
+        getJobTypeId  (int)
+     
+        getNeighbours  (int)
+      Returns the neighbours of a processor
+
+ 
+        getNetwork  ()
+      Return the object Network.
+        getPEId  (long)
+      Returns the id of the processor on which task with taskId resides
+
+ 
+        getTask  (long)
+      Return the object task corresponding to a given id.
+        handleEvent  (SimEvent)
+     
+ Overrides handleEvent in Simulator.
+        jobClass  (int)
+     
+ Returns user defined job class
+
+ 
+        jobs  ()
+     
+ Returns an array with global job identifiers for all jobs managed by this object
+
+ 
+        jobsWithLeastTasks  ()
+     
+Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks
+
+ 
+        jobsWithLeastTasks  (int)
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks in the given state
+
+ 
+        jobsWithMostTasks  ()
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks
+
+ 
+        jobsWithMostTasks  (int)
+     
+ Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks in the given state
+
+ 
+        nrIdleProcessors  ()
+     
+ Return the number of idle processors in the current network
+
+ 
+        nrProcessors  ()
+     
+ Return the number of processors in the current network
+
+ 
+        numberOfJobs  ()
+     
+ Returns the number of jobs managed by this object
+
+ 
+        numberOfTasks  ()
+     
+ Returns the total number of tasks, contained by jobs managed by this object
+ 
+ 
+        numberOfTasks  (int)
+     
+ Returns the number of tasks in the given state, contained by jobs managed by this object
+
+ 
+        numberOfTasksInJob  (int)
+     
+ Returns the number of tasks contained by the given job
+
+ 
+        numberOfTasksInJob  (int, int)
+     
+ Returns the number of tasks in the given state, contained by the given job
+
+ 
+        numberOfTasksInJobOnPE  (int, int)
+      Returns the number of tasks on the given processing element, contained by the given job.
+        numberOfTasksInJobOnPE  (int, int, int)
+      Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+        PreemptStatistics  (int, float)
+     
+        printStatistics  ()
+     
+        processEvent  (SimEvent)
+      Overrides method in Simulator.
+        regScheduler  (SchedulerInterface)
+      Registers an instance of the Scheduler class in the simulator
+
+ 
+        removeEventsToTask  (long)
+     
+        scheduleTask  (int, long, float, float)
+      Schedules a task at a processor at a certain time
+
+ 
+        start  ()
+     
+ Starts the simulation
+
+
+        stateOfTask  (long)
+      Return the state of a task
+
+ 
+        stop  ()
+      Overrides stop method in Simulator.
+        tasks  ()
+     
+ Returns an array with global task identifiers for tasks, contained by jobs managed by this object.
+        tasks  (int)
+     
+Returns an array with global task identifiers for tasks in the given state, contained by jobs managed by this object.
+        tasksInJob  (int)
+     
+ Returns an array with global task identifiers for tasks contained by the given job.
+        tasksInJob  (int, int)
+     
+ Returns an array with global task identifiers for tasks in the given state contained by the given job.
+        tasksInJobOnPE  (int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+        tasksInJobOnPE  (int, int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+    
+ 
+    
+  
+   
+ TheSimulator 
+ 
+ public TheSimulator(String args[])
+ 
+   Constructor.
+ 
+        Parameters: 
+       arguments - Runtime arguments supplied
+        See Also: 
+        Network , Job1
+     
+    
+ 
+    
+   
+  regScheduler  
+ 
+ public void regScheduler( SchedulerInterface  sched)
+ 
+   Registers an instance of the Scheduler class in the simulator
+ 
+        Parameters: 
+       sched - An instance of the Scheduler class
+        See Also: 
+       Scheduler
+     
+     
+  start  
+ 
+ public void start()
+ 
+   Starts the simulation
+ 
+        Overrides: 
+        start  in class  Simulator 
+     
+     
+  stop  
+ 
+ public void stop()
+ 
+   Overrides stop method in Simulator. Called when the simulation has ended i.e no
+ more events to process
+ 
+        Overrides: 
+        stop  in class  Simulator 
+        See Also: 
+        Simulator 
+     
+     
+  printStatistics  
+ 
+ public void printStatistics()
+ 
+   
+  processEvent  
+ 
+ public void processEvent( SimEvent  e)
+ 
+   Overrides method in Simulator. Forwards End Of Timeslice events to the registered
+ scheduler by calling EndOfTimeSlice method in the Scheduler class. Also prints out
+ event information using the event's toString-method.
+ 
+        Parameters: 
+       e - An instance of the SimEvent class
+        Overrides: 
+        processEvent  in class  Simulator 
+        See Also: 
+        SimEvent , Scheduler
+     
+     
+  PreemptStatistics  
+ 
+ public void PreemptStatistics(int PeId,
+                               float time)
+ 
+   
+  handleEvent  
+ 
+ public void handleEvent( SimEvent  e)
+ 
+   Overrides handleEvent in Simulator.
+ 
+        Parameters: 
+       e - An instance of SimEvent
+        See Also: 
+        Simulator ,  SimEvent 
+     
+     
+  removeEventsToTask  
+ 
+ protected void removeEventsToTask(long taskId)
+ 
+   
+  scheduleTask  
+ 
+ public void scheduleTask(int PeId,
+                          long taskId,
+                          float time,
+                          float period)
+ 
+   Schedules a task at a processor at a certain time
+ 
+        Parameters: 
+       PeId - Processor ID
+      taskId - Task ID
+      time - Time to schedule task
+       
+     
+  numberOfJobs  
+ 
+ public int numberOfJobs()
+ 
+   Returns the number of jobs managed by this object
+ 
+        Returns: 
+       the number of jobs managed by this object
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks()
+ 
+   Returns the total number of tasks, contained by jobs managed by this object
+ 
+        Returns: 
+       the total number of tasks, contained by jobs managed by this objec
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks(int state)
+ 
+   Returns the number of tasks in the given state, contained by jobs managed by this object
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       the number of tasks in the given state, contained by jobs managed by this object
+     
+     
+  numberOfTasksInJob  
+ 
+ public int numberOfTasksInJob(int jobId)
+ 
+   Returns the number of tasks contained by the given job
+ 
+        Parameters: 
+       jobId - a global job identifier
+        Returns: 
+       the number of tasks contained by the given job
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object
+     
+     
+  jobClass  
+ 
+ public String jobClass(int jobId)
+ 
+   Returns user defined job class
+ 
+        Parameters: 
+       jobId - a global job identifier
+        Returns: 
+       the string describing job
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object
+     
+     
+  numberOfTasksInJob  
+ 
+ public int numberOfTasksInJob(int jobId,
+                               int taskState)
+ 
+   Returns the number of tasks in the given state, contained by the given job
+ 
+        Parameters: 
+       jobId - a global job identifier
+      taskState - a task state
+         Returns: 
+       the number of tasks in the given state, contained by the given job
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object
+     
+     
+  tasksInJob  
+ 
+ public long[] tasksInJob(int jobId)
+ 
+   Returns an array with global task identifiers for tasks contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+        Returns: 
+       an array with global task identifiers for tasks contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object.
+     
+     
+  tasksInJob  
+ 
+ public long[] tasksInJob(int jobId,
+                          int taskState)
+ 
+   Returns an array with global task identifiers for tasks in the given state contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+        Returns: 
+       an array with global task identifiers for tasks in the given statecontained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object.
+     
+     
+  tasks  
+ 
+ public long[] tasks()
+ 
+   Returns an array with global task identifiers for tasks, contained by jobs managed by this object.
+ 
+        Returns: 
+       an array with global task identifiers for tasks, contained by jobs managed by this object
+     
+     
+  tasks  
+ 
+ public long[] tasks(int state)
+ 
+   Returns an array with global task identifiers for tasks in the given state, contained by jobs managed by this object.
+ 
+        Parameters: 
+       state - a task state
+        Returns: 
+       an array with global task identifiers for tasks in the given state, contained by jobs managed by this object
+     
+     
+  jobs  
+ 
+ public int[] jobs()
+ 
+   Returns an array with global job identifiers for all jobs managed by this object
+ 
+        Returns: 
+       an array with global job identifiers for all jobs managed by this object
+     
+     
+  jobsWithLeastTasks  
+ 
+ public int[] jobsWithLeastTasks()
+ 
+   Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks
+ 
+        Returns: 
+       an array with global job identifiers for jobs, managed by this object, with least number of tasks
+     
+     
+  jobsWithMostTasks  
+ 
+ public int[] jobsWithMostTasks()
+ 
+   Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks
+ 
+        Returns: 
+       an array with global job identifiers for jobs, managed by this object, with most number of tasks
+     
+     
+  jobsWithLeastTasks  
+ 
+ public int[] jobsWithLeastTasks(int state)
+ 
+   Returns an array with global job identifiers for jobs, managed by this object, with least number of tasks in the given state
+ 
+        Parameters: 
+       state - - a task state
+        Returns: 
+       an array with global job identifiers for jobs, managed by this object, with least number of tasks in the given state
+     
+     
+  jobsWithMostTasks  
+ 
+ public int[] jobsWithMostTasks(int state)
+ 
+   Returns an array with global job identifiers for jobs, managed by this object, with most number of tasks in the given state
+ 
+        Parameters: 
+       state - - a task state
+        Returns: 
+       an array with global job identifiers for jobs, managed by this object, with most number of tasks in the given state
+     
+     
+  nrProcessors  
+ 
+ public int nrProcessors()
+ 
+   Return the number of processors in the current network
+ 
+        Returns: 
+       the number of processors in the current network
+     
+     
+  nrIdleProcessors  
+ 
+ public int nrIdleProcessors()
+ 
+   Return the number of idle processors in the current network
+ 
+        Returns: 
+       the number of idle processors in the current network
+     
+     
+  allIdleProcessors  
+ 
+ public int[] allIdleProcessors()
+ 
+   Return an array with id's for the currently idle processors
+ 
+        Returns: 
+       an array with id's for the currently idle processors
+     
+     
+  getPEId  
+ 
+ public int getPEId(long taskId)
+ 
+   Returns the id of the processor on which task with taskId resides
+ 
+        Parameters: 
+       taskId - Task identifier
+        Returns: 
+       Processor identifier
+     
+     
+  numberOfTasksInJobOnPE  
+ 
+ public int numberOfTasksInJobOnPE(int jobId,
+                                   int peId)
+ 
+   Returns the number of tasks on the given processing element, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+         Returns: 
+       the number of tasks on the given processing element, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasksInJobOnPE  
+ 
+ public long[] tasksInJobOnPE(int jobId,
+                              int peId)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+         Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksInJobOnPE  
+ 
+ public long[] tasksInJobOnPE(int jobId,
+                              int peId,
+                              int taskState)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+      taskState - a task state.
+          Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasksInJobOnPE  
+ 
+ public int numberOfTasksInJobOnPE(int jobId,
+                                   int peId,
+                                   int taskState)
+ 
+   Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+      taskState - a task state.
+          Returns: 
+       the number of tasks on the given processing element
+ in the given state, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  getNeighbours  
+ 
+ public int[] getNeighbours(int PeId)
+ 
+   Returns the neighbours of a processor
+ 
+        Parameters: 
+       PeId - The id of the processor
+        Returns: 
+       An array with the id's of the neighbour processors
+     
+     
+  stateOfTask  
+ 
+ public int stateOfTask(long taskId)
+ 
+   Return the state of a task
+ 
+        Parameters: 
+       The - task id
+        Returns: 
+       The state of the task
+     
+     
+  getJobId  
+ 
+ public int getJobId(long taskId)
+ 
+   
+  getJobTypeId  
+ 
+ public int getJobTypeId(int jobId)
+ 
+   
+  getNetwork  
+ 
+ public  Network  getNetwork()
+ 
+   Return the object Network.
+ Overrides method in Simulator.java
+ 
+        Returns: 
+       the Task
+        Overrides: 
+        getNetwork  in class  Simulator 
+        See Also: 
+        Task 
+     
+     
+  getTask  
+ 
+ public  Task  getTask(long taskId)
+ 
+   Return the object task corresponding to a given id.
+ 
+        Parameters: 
+       Task - Id
+        Returns: 
+       the Task
+        See Also: 
+        Task 
+     
+     
+  callJobArrival  
+ 
+ public void callJobArrival(float time,
+                            int jobID)
+ 
+   Calls the SchedulerInterface routine JobArrival in the scheduler
+ 
+        Parameters: 
+       time - Arrival time of the new job
+      jobID - the id of the new job
+         See Also: 
+        JobManager 
+     
+     
+  callTaskStateChange  
+ 
+ public void callTaskStateChange(float time,
+                                 long taskID)
+ 
+   Calls the SchedulerInterface routine TaskStateChange in the scheduler
+ 
+        Parameters: 
+       time - time when the change of state occurred
+      taskID - id of the task
+         See Also: 
+        Task 
+     
+  </body> 

@@ -1,0 +1,625 @@
+ Simplification<body>
+
+ 
+ Simplification 
+ 
+  ICS-31: Introduction to Programming
+ 
+ 
+  
+
+
+
+
+        Introduction  
+ 
+In this lecture, we will discuss a variety of general issues in program
+  simplification.
+It introduces no new Python programming features, but instead steps back to
+  provide a perspective on one very important programming skill that all
+  competent programmers must acquire.
+Sometimes simplifying a program is the only way to comprehend it, and hence
+  debug it.
+Finally, this lecture shows that programs themselves can be studied and
+  manipulated in a formal way (just as expressions are manipulated in algebra).
+ 
+           Simplification  
+ 
+We can use the laws of algebra to tell whether two forms are equivalent: using
+  either one produces the same result.
+Thus, equivalence is a mathematical topic.
+But as programmers, we must judge which form (the simpler one) to use in our
+  programs.
+ 
+The simplest program is the one that is easiest to read, debug, and maintain.
+Thus, simplicity is a psychological topic.
+As a rule of thumb, smaller forms are often easier to understand (although
+   sometimes a bit ofredundancy makes forms easier to understand:
+   smtms lss s nt mr).
+  
+In this section we will examine three kinds of algebras for proving equivalences
+   Boolean Algebra
+    Relational Algebra
+    Control Structure Algebra
+  
+We will learn how to prove equivalences in each algebra and discuss how to
+  gauge simplicity, as well as show lots of examples of simplifictions.
+ 
+           Boolean Algebra  
+ 
+Boolean Algebra concerns equivalences involving the  bool  type and the
+   logical operators.
+The following is a list of useful laws (theorems, if you will) of Boolean
+  Algebra.
+The most practical law is DeMorgan's law: one form explains how to simplify the
+  negation of a conjunction ( and ) and the other form explains how to
+  simplify the negaion of a disjunction ( or ).
+ 
+     
+     &amp;nbsp 
+ 
+We can easily prove laws in Boolean Algebra by trying every combination of
+  the  True  and  False  values for each of the variables.
+For example, to prove the conjunctive version of DeMorgan's law, we can start
+with the following table of values, called a  truth table .
+Here we list all the variables in the leftmost columns, and the two
+  expressions -which we hope to prove equivalent- in the rightmost columns.
+ 
+     A  B  not(A and B)  not A or not B 
+     True  True  &amp;nbsp  &amp;nbsp 
+   True  False  &amp;nbsp  &amp;nbsp 
+   False  True  &amp;nbsp  &amp;nbsp 
+   False  False  &amp;nbsp  &amp;nbsp 
+
+    
+We then fill in each column by just computing the values of the expressions
+  (using the semantics of the operators and our knowledge of evaluating
+   expressions: e.g., operator precedence and associativity).
+  
+     A  B  not(A and B)  not A or not B 
+     True  True  False  False 
+   True  False  True  True 
+   False  True  True  True 
+   False  False  True  True 
+
+    
+The law is proved if the columns under the two expressions always contain the
+  same pair of values on each line.
+This means that for every pair of operands, the expressions compute the same
+  result, so the expression are equivalent and thus interchangable in our code.
+  
+This approach also illustrates a divide and conquer strategy to proofs: we
+  divide the complicated proof into four different parts (each a line in the
+  truth table); each line is easy to verify by pure calculation; once we verify
+  all of the lines, we have verified the entire proof.
+  
+           Relational Algebra  
+ 
+Relational Algebra concerns equivalances mostly involving the  int  and
+   float  types and the numeric and relational operators.
+It is based on the law of trichotomy. 
+   The law of trichotomy : Given two values, the first is either less
+            than, equal to,or greater than the second.
+         One (and exactly one) of these relationships must always hold.
+  
+We can use the law of trichotomy as a divide and conquer method to break one
+  hard proof into many simpler ones.
+Unlike using boolean values, there are an infinite number of different
+    int  values (even though the truth is the amount of memory on a 
+   computer is finite, so we can store at most a finite number of digits in any
+    int  object).
+ 
+As a first example, we will prove that  max(x,y)+1  is equivalent to
+   max(x+1,y+1) .
+So, we can factor additive constants out of calls to the  max  function.
+  
+     x?y  max(x,y)+1  max(x+1,y+1) 
+     x   y+1  y+1 
+   x = y  x+1 or y+1  x+1 or y+1 
+   x &gt; y  x+1  x+1 
+
+    
+Here, knowing the relationship between  x  and  y  allows us to
+  compute the answer for each expression.
+For example, if we know that  x&amp;lty , we know  max(x,y)  evaluates to
+    y , so  max(x,y)+1  evaluates to  y+1 ; likewise, if we know
+   that  x&amp;lty , we know that  x+1&amp;lty+1 , so  max(x+1,y+1) 
+   evaluates to  y+1 .
+The other two cases can be simplified similarly. 
+  
+Again, the law is proved if the columns under the two expressions always have
+  the same pair of values on each line.
+This means that for every pair of values, the expressions compute the same
+  result, so the expressions are interchangable.
+  
+As another example, we can prove that the expression  x is
+  equivalent to   (x=0 and y&gt;=0) , which is True when
+   x  and  y  have the same sign (assuming the sign of 0 is
+  considered positive).
+Here we need to list all possibilities of how  x  and  y 
+  compare to  0 .
+   
+     x?0  y?0  x  (x=0 and y&gt;=0) 
+     x  y  True  True 
+   x  y=0  False  False 
+   x  y&gt;0  False  False 
+   x=0  y  False  False 
+   x=0  y=0  True  True 
+   x=0  y&gt;0  True  True 
+   x&gt;0  y  False  False 
+   x&gt;0  y=0  True  True 
+   x&gt;0  y&gt;0  True  True 
+
+    
+So again, the equivalence it proven.
+Here is an interesting case where the smaller/simpler/more efficient code is
+  not necessarily easier to understand.
+Most students believe the larger expression is easier to understand, until
+  they intensely study the meaning of  ==  when applied to
+   boolean  values generated by relational operators.
+  
+In actual code, I would suggest using the simpler form, and then include
+  the larger -easier to understand- form in a comment; we could even include
+  the above proof as part of the comment.
+  
+Finally we can use the law of trichotomy to prove that we simplify the 
+  negation of relational operators.
+Be careful when you do so, and recall the law of trichotomy.
+If it is not true that x is less than y, then there are two possiblities
+  left: x is equal to y or x is greater than y.
+Beginning programmers make the mistake of negating  x&lt;y  as
+ x&gt;y , but the correct equivalent expression is  x&gt;=y 
+  
+     x?y  not (x   x &gt;= y 
+     x   False  False 
+   x = y  True  True 
+   x &gt; y  True  True 
+
+    
+In fact, we can use the same kinds of proofs to show how to simplify the
+  negation of every relational operator.
+  
+     Negated Form  Simplified Form   
+      not (x   x &gt;= y  not (x 
+    not (x   x &gt; y  y 
+    not (x == y)  x != y  x 
+    not (x != y)  x == y  not (x 
+    not (x &gt;= y)  x   x 
+    not (x &gt; y)  x   not (y 
+ 
+    
+Also notice that each of the relational operators is equivalent to an
+  expression that includes only the  &amp;lt  relational operator (along
+  with sone logical operators).
+Although we don't need the five other relational operators to write Python
+   programs (in a mathematical sense), they are provided because most
+   programmers are aware of them and can use them to write simpler programs
+   (in a psychological sense).
+Thus the Python language is made larger (more operators) to make it easier for
+   human minds to use.
+Such value judgements (which is better, a smaller language or a language
+easier for humans to use) are required by programming language designers.
+  
+Finally, we can often simplify negatated relational operators in DeMorgan's
+  Laws simplifications.
+For example, we can "simplify"  not (x  10)  to
+   not (x  10)  which is actually a bit larger, but
+  can be further simplified to  x &gt;= 0 and y  which is truly 
+  simpler.  
+   
+           Control Structure Algebra  
+ 
+Now we will explore the richest algebra: the algebra of control structures.
+First we will examine when changing the order in a sequence of statements
+  doesn't change the results of executing the sequence.
+Second we will discuss transformations to  if  statements.
+Finally, we will discuss transformations to  while  loops containing
+   break  statements.
+
+ 
+ Sequence equivalences 
+We start by examining the orderings of statements and defining two important
+  terms.
+  A statement  rebind  a name if the name is rebound to an object.
+      So, in  x = y  rebinds  b  (but not  y )).
+    A statement  evaluates  a name if the statement needs to retrieve
+        the value bound to that name.
+      So,  x = y  evalutes  y  (but not  x ).
+  
+Interestingly enough, the expression statement  x += 1  both binds and
+  evaluates  x : it first finds the value stored in  x , then
+  computes the value one higher, then rebinds  x  to that new value
+  (the equivalent assignment statement  x = x+1  illustrates this
+  assertion more clearly).
+In the entire  if  statement   
+  if x &gt; y:            #Evaluates x and y
+      z = x            #Rebinds z; evaluates x
+  else:
+      y++              #Rebinds and evaluates y  
+we say that the  if  statement rebinds  z  and  y ; it evaluates
+   x  and  y .
+This accounts for everything the  if  statement might do when exeucted
+  (even though, for example, sometimes it rebinds only  x  and sometimes
+   only  y : it depends on the result of the test).
+Note that we will also say  print("...")  rebinds into the console
+  because this function causes new information to appear inside the console
+  window (changing its state); this is a bit of a stretch.
+ 
+Armed with this terminology, we can define  indepdendent  statements in a
+  sequence.
+Two statements are independent if we can exchange their order and they still
+  always compute equivalent results.
+Two statements  S 1   and  S 2   are independent if
+   S 1   rebinds and evaluates no names that  S 2  
+  rebinds, and  S 2   rebinds and evaluates no names that
+   S 1   rebinds.
+Or, more simply two statements are independent (and we can reverse their order)
+  if neither rebinds a name the other rebinds or evaluates.
+  
+For example, we can exchange the order of
+    x = 1
+  print(y)  
+because these statements satisfy the property above (also, just think about
+  whether either statement affects the other: they don't).
+We cannot exchange the order of
+    x = 1
+  print(x)  
+because the second statement evaluates   x , which the first statement
+  rebinds (the value printed depends on whether  x  is assigned the value
+  1 before or after the call of  print ).
+Likewise, we can exchange the order of
+    x = 1
+  y = 0  
+because they satisfy the property above.
+We cannot exchange the order of 
+    x = 1
+  x += 1  
+because the second statement rebinds  x , which the first statement also
+ rebinds.
+  
+Obviously, changing the order of two statements doesn't simplify anything; but
+  we will learn that such exchanges can sometimes enable further "real"
+  simplifications.
+  
+
+
+ 
+ if equivalences 
+Now, onto  if  statements.
+We can use a modified truth table to prove the equivalence of two  if 
+  statements.
+For the  if  statement below
+    if test:
+      statement 1 
+  else:
+      statement 2   
+we have the following modified truth table. 
+Note that although  test  can be an arbitrarily complicated expression,
+  ultimately its value is either  True  or  False .
+ 
+        test  Code Executed 
+     True  statement 1  
+   False  statement 2  
+
+    
+ Boolean Assignment :
+Let's examine various pairs of statements that we can prove equivalent by
+  using these modified truth tables.
+The first involves storing a  bool  value into a name.
+For the two statements     if test:                   b = test
+      b = True
+  else:
+      b = False  
+we have the following modified truth table. 
+  
+     test  Left Code Executed  Right Code Executed 
+     True  b = True  b = True(becaue  test  is  True ) 
+   False  b = False  b = False (becaue  test  is  False ) 
+
+    
+Again, because both columns show the same statements executed, regardless of
+  the value of  test , the  if/else  statement on the left and
+  expression statement on the right are equivalent.
+  
+  Test Reversal :
+This equivalence shows that we can negate the  test  AND the order of
+  the two statements inside the  if/else  and the resulting  if/else 
+  statement is equivalent to the first.
+    if test:           if not(test):
+      statement 1          statement 2 
+  else:              else:
+      statement 2          statement 1   
+we have the following modified truth table. 
+  
+     test  Left Code Executed  Right Code Executed 
+     True  statement 1   statement 1  
+   False  statement 2   statement 2  
+
+    
+Which means that the following two  if/else  statements are equivalent.
+I'd argue that the one on the right is simpler and easier to understand,
+  because it is easier to see that it is an  if/else  statement: our
+  eyes can see that loking just at the top three lines.
+In the version on the left, the small  else  clause is almost hidden
+  at the bottom.
+  
+  if test              if not(test)
+      statement T1           statement F 
+      statement T2       else:
+      ... &amp;nbsp                  statement T1 
+      statement Tn           statement T2 
+  else:                    ...
+      statement F            statement Tn   
+Of course, we might be able to use DeMorgan's law to further simplify
+    not(test)  too.
+  
+ Bottom Factoring :
+This equivalence shows that we can  always  remove (factor) a common
+  statement out from the bottom  of an  if/else  statement.
+It is similar to algebraically factoring  AX+BX  into  (A+B)X .
+  
+  if test:             if test
+      statement 1            statement 1 
+      statement c        else:
+  else:                    statement 2 
+      statement 2        statement c 
+      statement c   
+To prove this equivalence we use the following modified truth table. 
+  
+     test  Left Code Executed  Right Code Executed 
+     True  statement 1  statement c   statement 1  statement c  
+   False  statement 2  statement c   statement 2  statement c  
+
+    
+For example, the code on the top is equivalent to the code on the bottom.
+      if zcc == 0:
+      print('zcc = 0')
+      zcc = 1
+  else:
+      print('zcc != 0')
+      zcc = 1;
+
+  if zcc == 0:
+      print('zcc = 0')
+  else:
+      print('zcc != 0')
+  zcc = 1  
+  
+
+ Top Factoring :
+This equivalence is shows that we can  often  remove a common statement 
+  out from the front of an  if/else  statement.
+It is similar to algebraically factoring  XA+XB  into  X(A+B) .
+    
+  if test:             statement c 
+      statement c        if test:
+      statement 1            statement 1 
+  else:                else:
+      statement c            statement 2 
+      statement 2   
+To prove this equivalence we use the following modified truth table. 
+   
+     test  Left Code Executed  Right Code Executed 
+     True  statement c  statement 1   statement c  statement 1  
+   False  statement c  statement 2   statement c  statement 2  
+
+    
+But there is one more detail to take care of.
+Now we are executing  statement c   before the  if/else ,
+  which means it is executed before the  test  expression is evaluated. 
+This is guaranteed to work only if the statement and test are independent (as
+  defined earlier).
+Because a  test  only evaluates names, we can simplify this to
+   statement c   must not redefine a name evaluated in
+   test 
+In the example below, the code on the top is NOT equivalent to the code on the
+  bottom.
+    if zcc == 0:
+      zcc = 1
+      print('zcc = 0')
+  else:
+      zcc = 1
+      print('zcc != 0')
+  }
+
+
+  zcc = 1
+  if zcc == 0:
+      print('zcc = 0')
+  else
+      print('zcc != 0')  
+because the code on the bottom can never have the test  zcc == 0 
+  evalute to True.
+This is because the  test  ( zcc == 0 ) is not independent of the
+  statement   zcc = ; : it evaluates a name redefined by this statement.
+  
+On the other hand, sometimes even if the expression and statement are not
+  independent, we can modify the test to account for the statement always
+  executing before the  if/else  statement.
+The code on the top here is equivalent to the code on the bottom (we can prove
+  it using the law of trichotomy:  zcc ? 0 ).
+      if zcc == 0:
+      zcc += 1
+      print('zcc was == 0')
+  else:
+      zcc += 1
+      print('zcc was not == 0')
+
+
+  zcc++
+  if zcc == 1:
+      print('zcc was == 0')
+  else
+      print('zcc was not == 0')  
+In fact, another way to simplify this code is to exchange the two statements in
+  each block (they are independent) and then just bottom-factor  zcc += 1 ,
+  yielding
+    if zcc == 0:
+      print('zcc was == 0')
+  else:
+      print('zcc was not == 0')
+  zcc += 1  
+
+  
+ 
+
+ 
+ loop equivalences 
+Finally, let's look at three loop equivalences.
+ 
+ else Removal :
+This equivalence involves the removal of an unnecessary  else  in an
+   if  controlling a  break .
+    while True:              while True:
+      statements 1               statements 1 
+      if test:                 if test:
+          break                    break
+      else:                    statements 2 
+          statements 2   
+In both loops, if  test  is  True  Python executes the  break ;
+  if  test  is  False  each loop executes
+   statements 2   next and
+  then re-executes the loop: on the left because  statements 2  
+  is in the  else , and on the right 
+  because the  if  finishes and Python executes the next statement in the
+  loop's body.
+  After executing  statements 2  , the bodies of both loops are
+  finished executing, so the loop causes Python to execute them again.
+  
+Typically code is simpler if it isn't nested deeply.
+  
+ Loop Factoring :
+  The second loop equivalence again involves factoring statements.
+    
+  while True:             while True:
+      statements 1              statements 1 
+      if test:                if (test)
+          statements a               break
+          break               statements 2 
+      statements 2          statements a   
+In both loops, if  test  is  False  each executes
+   statements 2  , and the bodies of both loops are executed
+  again.
+In the left loop, if  test  is  True  it executes
+   statements a   and then terminates the loop; on the right it
+  terminates the loop and afterward executes   statements a  .
+The order of these operations makes no difference.
+  
+Typically, loop statements are the most complex to understand, in terms of
+  what they do; so by removing  statements a   from the body
+  of the loop, we simplify it.
+  
+ Loop Rerolling :    
+The third loop equivalence involves moving statements repeated before and at
+  the bottom of a loop completely inside the loop.
+    
+  statements 1              while True:
+  while True:                 statements 1 
+      if test:                if test:
+          break                   break
+      statements 2              statements 2 
+      statements 1   
+Each code fragment first executes  statements 1   (on the left
+  before the loop; on the right as the first statement in the loop's body).
+Then, each tests for termination; if the  test  is not True, each executes
+   statements 2  , followed by  statements 1   (on
+  the left at the  bottom of the loop; on the right at the top of th loop),
+  followed by testing for termination again.
+  
+Typically, we want to avoid duplicating statements inside and outside of
+  loops.
+By using  while / if / break , which allows a termination test
+  in the middle of a loop, we can remove this redundancy.
+    
+    
+           Pragmatics  
+ 
+The formal techniques presented and illustrated above allow us to prove that
+  two programming forms are equivalent.
+It is then up to us to determine which form is simpler, and use it in our
+  programs.
+As a rule of thumb, the smaller the code the simpler it is.
+Also, code with fewer nested statements is generally simpler.
+ 
+More generally, we should try to distribute complexity.
+So, when decidiing between two equivalences, choose the one whose most
+  complicated statement is simplest.
+  
+If you ever find yourself duplicating code, there is an excellent chance that
+  some simplification will remove this redundancy.
+Beginners are especially prone to duplicating large chunks of code, missing the
+  important simplification.
+  
+We should aggressively simplify our code while we are programming.
+We will be amply rewarded, because it is easier to add more code (completing
+  the phases of the enhancements) to an already simplified program.
+If we wait until the program is finished before simplifying...well, we many
+  never finish the program because it has become too complex; if we do
+  finish, the  context in which to perform each simplification will be much
+  bigger and more complex, making it harder to simplify.
+Excessive complexity is one of the biggest problems that a software engineer
+  faces.
+  
+Generally, I try not to get distracted when I am writing code; but one of 
+  the few times that I will stop writing code is when I see a simplification.
+I know that in the long run, taking time to do a simplification immediately
+  will likely allow me to finish the  program faster.
+  
+           Problem Set  
+ 
+To ensure that you understand all the material in this lecture, please solve
+  the the announced problems after you read the lecture.
+ 
+If you get stumped on any problem, go back and read the relevant part of the
+   lecture.
+If you still have questions, please get help from the Instructor, a TA, or any
+  other student.
+
+   Prove that the expressions  x  and  (x  are
+         equivalent.
+       Prove that the expressions  x  and  (x &gt;= 10) == False 
+          are equivalent.
+       In each case, which would you judge the simpler expression?
+      
+     
+     Use the law of trichotomy to prove that  (x+y-abs(x-y))//2  and
+            min(x,y)  compute the same value.
+      
+     
+     In the following statements, identify which names rebind and which
+         are evaluted.
+            x += y 
+              x = x + 1 
+              print(x) 
+              if x &gt; 0: x = 0 
+              if x == 0: break 
+            
+
+     Prove that the following two statements are equivalent.
+        declared  boolean b; 
+          if test:           b = !test;
+      b = False
+  else:
+      b = True  
+   
+
+     The code on the left is not equivalent to the code on the right (which
+         has been top factored).
+      They are not equivalent because the  if 's test and the statement
+          x += 1  are not independent.
+      Rewrite the  if 's test in the code on the right so that left and
+         right are equivalent.
+         if x   
+
+   
+     Suppose we are comparing aspirin A1, A2, A3, and A4 for efficacy.
+      Suppose that the company making A1 goes on TV with the advertisement:
+      �No aspirin is better than A1�.
+      Could the other companies also run ads saying the exact same thing about their products?
+       
+      How does this question relate to the material in this lecture?
+      How does it relate to mathematical vs. perceptual/psychological truths in advertising?
+      As a programmer whose code is read by other people (as well as the Python compiler), what
+        implications does this have for the audience for which we are writing code?
+    
+   </body> 

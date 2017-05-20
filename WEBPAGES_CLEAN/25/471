@@ -1,0 +1,18 @@
+ 1. Suppose that we create a binary tree by inserting a set of n different keys in a random order, without rebalancing the tree, and with all permutations of the keys being equally likely to be the insertion order. Given two keys x and y in the set, what is the probability that x becomes a child of y? Write your answer as a formula in terms of the distance from x to y in the sorted sequence of all of the keys.
+
+THE INTENDED SOLUTION: x becomes a child of y if and only if, among all keys in the range from x to y, y is inserted first and x is inserted second. If there are i keys in this range, this happens with probability 1/(i(i-1)), and the distance from x to y is d=i-1. Therefore, the probability is 1/(d(d+1)).
+
+BUT THIS IS NOT CORRECT. The conditions that y is inserted first in this range and that x is inserted second are necessary but not sufficient. It is also possible for an element z with z  x &gt; z to be inserted after y but before x, causing the child of y on the same side as x to be z instead of x.
+The corrected description is: x becomes a child of y if and only if (1) among all keys in the range from x to y, y is inserted first, and (2) among the same range, x is inserted second, and (3) for each key z outside this range on the 
+same side of y as x, z is either inserted before y or after x.
+Because of case (3), there isn't a simple formula that depends only on the distance.
+
+A better question would have been: what is the probability that x becomes an ancestor of y? Then the answer would be 1/d, by the same reasoning.
+
+
+2. Suppose we are given a set of n numbers x1, x2, x3, ... xn. Show that the amortized time for a splay tree to search for the number xi in this set is O(log i).
+
+Hint: it almost works to assign the number xi the weight wi=1/i. However, the sum W of all the weights in this case is proportional to log n, so plugging in these weights to the formula O(log(W/wi)) for the amortized time of a splay tree would give amortized time O(log(log n / (1/i)) = O(log log n + log i) per operation, not good enough when i is small. One way to solve the problem is to find a different set of weights with a smaller total sum.
+
+SOLUTION: Use wi = 1/i^2. The total weight is
+W = sum_{i=1}^n 1/i^2 = n. 

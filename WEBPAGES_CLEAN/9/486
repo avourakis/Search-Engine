@@ -1,0 +1,53 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ Robert C. Pettengill  (  rcp@austin.sar.slb.com  )  Wed, 29 May 1996 02:08:38 -0500 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+    Previous message:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+
+    
+It isn't clear to me that it is necessary to standardize the syntax of
+version identifiers across all servers.  As long as the version appears as
+some kind of path extention, URLs can point to a unique version object
+without need for agreement on how the path is exteneded.
+
+The proposal in  http://www.w3.org/pub/WWW/MarkUp/Resource/Specification 
+seems to be pretty heavy weight.  I can't simply have a URL to a specific
+document in the "version space", I need to define a resource and then
+provide a URL to that resource which seems more than a little awkward.
+Why not allow link attributes to be specified in the anchor, e.g.
+&lt;A HREF="mumble/foo" VERSION="x"&gt;?
+
+It might be worthwhile discussing the requirements for versioned links
+before discussing the syntax.  Some questions that occur to me are:
+
+Is the versioning model constrained to be single threaded?  (i.e. unique
+answers to the queries below)
+
+Fetch the version previous to URL(x).
+Fetch the version subsequent to URL(x).
+Fetch the version of URL(x) current at time t.
+Fetch the version of URL(x) current as of the creation time of URL(y)
+Fetch the most recent version of URL(y)
+
+;rob
+
+--
+  Robert C. Pettengill
+  Schlumberger Austin Research, P. O. Box 200015, Austin, Texas  78720
+   rcp@slb.com  Internet, +1 512-331-3728 Voice, +1 512-331-3760 Fax
+ &lt;A HREF=" http://www.austin.sar.slb.com/~rcp/ "&gt;WWW Home Page&lt;/A&gt;
+ 
+
+  
+     Next message:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+    Previous message:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+
+  </body> 

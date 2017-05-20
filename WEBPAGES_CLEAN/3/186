@@ -1,0 +1,708 @@
+ 
+Uses of Class org.itr_rescue.dataGuard.localFileSystem.JFMFile
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+          Class     
+       Use    
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+
+
+  
+ 
+ Uses of Class org.itr_rescue.dataGuard.localFileSystem.JFMFile  
+ 
+
+    
+Packages that use  JFMFile   
+     org.itr_rescue.dataGuard.DataObject.conversion   
+    
+     org.itr_rescue.dataGuard.DataObjectModel   
+    
+     org.itr_rescue.dataGuard.localFileSystem   
+    
+     org.itr_rescue.dataGuard.localFileSystem.view.detail   
+    
+     org.itr_rescue.dataGuard.localFileSystem.view.list   
+    
+     org.itr_rescue.dataGuard.ui.event   
+    
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.DataObject.conversion   
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.DataObject.conversion  with parameters of type  JFMFile  
+    
+ static  FileObjectData    
+   JFMFile2FileObjectData.   convertLocalFile  ( JFMFile  file) 
+
+ 
+            
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.DataObjectModel   
+  
+ 
+ 
+
+    Fields in  org.itr_rescue.dataGuard.DataObjectModel  declared as  JFMFile  
+    
+ protected   JFMFile []   
+   AbstractFileAction.   selectedLocalFiles   
+
+ 
+            
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.DataObjectModel  with parameters of type  JFMFile  
+    
+  void   
+   ActionLoader.   createIndexAction  ( RemoteFileSystemView  view,
+                   JFMFile [] files,
+                  int[] indexes) 
+
+ 
+            
+  
+ 
+ 
+
+    Constructors in  org.itr_rescue.dataGuard.DataObjectModel  with parameters of type  JFMFile  
+      IndexAction  ( AbstractStorageServer  server,
+             JFMFile [] selectedLocalFiles,
+            int[] indexes) 
+
+ 
+            
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.localFileSystem   
+  
+ 
+ 
+
+    Subclasses of  JFMFile  in  org.itr_rescue.dataGuard.localFileSystem  
+    
+  class   
+    JFMLocalFile   
+
+ 
+          TODO change me!!! 
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem  that return  JFMFile  
+    
+   JFMFile    
+   JFMLocalFile.   createFile  (java.lang.String name) 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFile.   createFile  (java.lang.String name) 
+
+ 
+          Creates the file named by the abstract pathname denoted by the parameter. 
+    
+   JFMFile    
+   JFMLocalFile.   getAbsoluteFile  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFile.   getAbsoluteFile  () 
+
+ 
+          Returns the absolute form of this abstract pathname. 
+    
+   JFMFile    
+   JFMLocalFile.   getCanonicalFile  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFile.   getCanonicalFile  () 
+
+ 
+          Returns the canonical form of this abstract pathname. 
+    
+ abstract   JFMFile    
+   JFMView.   getCurrentWorkingDirectory  () 
+
+ 
+          This method returns the current working directory of the view. 
+    
+   JFMFile    
+   JFMLocalFilesystem.   getDefaultRootDirectory  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFileSystem.   getDefaultRootDirectory  () 
+
+ 
+          The default root directory in the case of filesystems with more than one root directories (like windows) 
+    
+   JFMFile    
+   JFMLocalFilesystem.   getFile  (java.lang.String pathName) 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFileSystem.   getFile  (java.lang.String pathName) 
+
+ 
+          This method returns an JFMFile object based on the pathname provided 
+    
+ abstract   JFMFile    
+   JFMView.   getFilefromName  (java.lang.String fileName) 
+
+ 
+            
+    
+   JFMFile    
+   JFMLocalFile.   getParentFile  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFile.   getParentFile  () 
+
+ 
+          Returns the abstract pathname of this abstract pathname's parent,
+ or  null  if this pathname does not name a parent
+ directory. 
+    
+   JFMFile    
+   JFMFile.   getRootDriveFile  () 
+
+ 
+          This method returns the root directory of the filesystem of witch the file belongs to. 
+    
+   JFMFile    
+   JFMFileSystem.   getRootDriveFile  ( JFMFile  file) 
+
+ 
+          This method returns the root directory of the filesystem of witch the supplied file belongs to. 
+    
+ abstract   JFMFile    
+   JFMView.   getSelectedFile  () 
+
+ 
+          This method returns the current selected file from the view. 
+    
+ abstract   JFMFile []   
+   JFMView.   getSelectedFiles  () 
+
+ 
+          This method returns the current selected files from the view. 
+    
+   JFMFile    
+   JFMLocalFilesystem.   getStartDirectory  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFileSystem.   getStartDirectory  () 
+
+ 
+          This method returns the start directory for this filesystem 
+    
+   JFMFile []   
+   JFMLocalFile.   listFiles  () 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFile.   listFiles  () 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by this abstract pathname. 
+    
+   JFMFile []   
+   JFMLocalFilesystem.   listFiles  ( JFMFile  root) 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFileSystem.   listFiles  ( JFMFile  rootFile) 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname. 
+    
+   JFMFile []   
+   JFMLocalFilesystem.   listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFileSystem.   listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+          Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter. 
+    
+   JFMFile []   
+   JFMLocalFilesystem.   listRoots  () 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFileSystem.   listRoots  () 
+
+ 
+          List the available filesystem roots. 
+    
+   JFMFile    
+   JFMLocalFile.   mkdir  (java.lang.String name) 
+
+ 
+            
+    
+ abstract   JFMFile    
+   JFMFile.   mkdir  (java.lang.String name) 
+
+ 
+          Creates the directory named by the abstract pathname denoted by the parameter. 
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem  with parameters of type  JFMFile  
+    
+  boolean   
+   JFMLocalFilesystem.   canRead  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMFileSystem.   canRead  ( JFMFile  file) 
+
+ 
+          Tests whether the application can read the file denoted by the
+ abstract pathname. 
+    
+  boolean   
+   JFMLocalFilesystem.   canWrite  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMFileSystem.   canWrite  ( JFMFile  file) 
+
+ 
+          Tests whether the application can modify to the file denoted by the
+ abstract pathname. 
+    
+ abstract  void   
+   JFMView.   changeDirectory  ( JFMFile  file) 
+
+ 
+            
+    
+  int   
+   JFMLocalFile.   compareTo  ( JFMFile  pathname) 
+
+ 
+            
+    
+ abstract  int   
+   JFMFile.   compareTo  ( JFMFile  pathname) 
+
+ 
+          Compares two abstract pathnames lexicographically. 
+    
+  boolean   
+   JFMLocalFilesystem.   createNewFile  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMLocalFilesystem.   createNewFile  ( JFMFile  parent,
+              java.lang.String name) 
+
+ 
+            
+    
+ abstract  boolean   
+   JFMFileSystem.   createNewFile  ( JFMFile  parent,
+              java.lang.String name) 
+
+ 
+          Atomically creates a new, empty file named by the abstract pathname if
+ and only if a file with that name does not yet exist. 
+    
+  boolean   
+   JFMLocalFilesystem.   delete  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMFileSystem.   delete  ( JFMFile  file) 
+
+ 
+          Deletes the file or directory denoted by the abstract pathname. 
+    
+  boolean   
+   JFMLocalFilesystem.   exists  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMFileSystem.   exists  ( JFMFile  file) 
+
+ 
+          Tests whether the file or directory denoted by the abstract pathname
+ exists. 
+    
+   JFMFile    
+   JFMFileSystem.   getRootDriveFile  ( JFMFile  file) 
+
+ 
+          This method returns the root directory of the filesystem of witch the supplied file belongs to. 
+    
+   JFMFile []   
+   JFMLocalFilesystem.   listFiles  ( JFMFile  root) 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFileSystem.   listFiles  ( JFMFile  rootFile) 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname. 
+    
+   JFMFile []   
+   JFMLocalFilesystem.   listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+            
+    
+ abstract   JFMFile []   
+   JFMFileSystem.   listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+          Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter. 
+    
+  boolean   
+   JFMLocalFilesystem.   mkdir  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMLocalFilesystem.   mkdir  ( JFMFile  parent,
+      java.lang.String name) 
+
+ 
+            
+    
+ abstract  boolean   
+   JFMFileSystem.   mkdir  ( JFMFile  parent,
+      java.lang.String name) 
+
+ 
+          Creates the directory named by the abstract pathname denoted by the parameter. 
+    
+  boolean   
+   JFMLocalFilesystem.   mkdirs  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+   JFMLocalFilesystem.   setLastModified  ( JFMFile  file,
+                long time) 
+
+ 
+            
+    
+ abstract  boolean   
+   JFMFileSystem.   setLastModified  ( JFMFile  file,
+                long time) 
+
+ 
+          Sets the last-modified time of the file or directory named by the
+ abstract pathname. 
+    
+  boolean   
+   JFMLocalFilesystem.   setReadOnly  ( JFMFile  file) 
+
+ 
+            
+    
+ abstract  boolean   
+   JFMFileSystem.   setReadOnly  ( JFMFile  file) 
+
+ 
+          Marks the file or directory named by the abstract pathname so that
+ only read operations are allowed. 
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.localFileSystem.view.detail   
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem.view.detail  that return  JFMFile  
+    
+   JFMFile    
+   DetailView.   getCurrentWorkingDirectory  () 
+
+ 
+            
+    
+   JFMFile    
+   DetailsTableModel.   getFileAt  (int index) 
+
+ 
+          Returns the JFMFile found at the specific index. 
+    
+   JFMFile    
+   DetailView.   getFilefromName  (java.lang.String fileName) 
+
+ 
+            
+    
+   JFMFile    
+   DetailView.   getSelectedFile  () 
+
+ 
+            
+    
+   JFMFile []   
+   DetailView.   getSelectedFiles  () 
+
+ 
+            
+    
+   JFMFile    
+   DetailsTableModel.   getWorkingDirectory  () 
+
+ 
+          This is the view that this model belongs to. 
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem.view.detail  with parameters of type  JFMFile  
+    
+  void   
+   DetailsTableModel.   browseDirectory  ( JFMFile  el) 
+
+ 
+            
+    
+  void   
+   DetailView.   changeDirectory  ( JFMFile  file) 
+
+ 
+            
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.localFileSystem.view.list   
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem.view.list  that return  JFMFile  
+    
+ abstract   JFMFile    
+   ListView.   getCurrentWorkingDirectory  () 
+
+ 
+            
+    
+   JFMFile    
+   ComboBoxCellObject.   getFile  () 
+
+ 
+            
+    
+ abstract   JFMFile    
+   ListView.   getSelectedFile  () 
+
+ 
+          This method returns the current selected file from the view. 
+    
+ abstract   JFMFile []   
+   ListView.   getSelectedFiles  () 
+
+ 
+          This method returns the current selected files from the view. 
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.localFileSystem.view.list  with parameters of type  JFMFile  
+    
+  void   
+   ListView.   changeDirectory  ( JFMFile  file) 
+
+ 
+          Change the current directory to the one specified by the file, making
+ that file the current working directory 
+    
+  void   
+   ComboBoxCellObject.   setFile  ( JFMFile  file) 
+
+ 
+            
+  
+ 
+ 
+
+    Constructors in  org.itr_rescue.dataGuard.localFileSystem.view.list  with parameters of type  JFMFile  
+      ComboBoxCellObject  ( JFMFile  file) 
+
+ 
+            
+  
+ 
+ 
+  
+     
+Uses of  JFMFile  in  org.itr_rescue.dataGuard.ui.event   
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.ui.event  that return  JFMFile  
+    
+   JFMFile    
+   ChangeDirectoryEvent.   getDirectory  () 
+
+ 
+            
+  
+ 
+ 
+
+    Methods in  org.itr_rescue.dataGuard.ui.event  with parameters of type  JFMFile  
+    
+  void   
+   ChangeDirectoryEvent.   setDirectory  ( JFMFile  directory) 
+
+ 
+            
+  
+ 
+ 
+
+    Constructors in  org.itr_rescue.dataGuard.ui.event  with parameters of type  JFMFile  
+      ChangeDirectoryEvent  ( JFMFile  dir) 
+
+ 
+            
+  
+ 
+ 
+    
+  
+   
+  
+          Overview     
+          Package     
+          Class     
+       Use    
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+
+
+ </body> 

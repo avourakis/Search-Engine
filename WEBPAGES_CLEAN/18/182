@@ -1,0 +1,81 @@
+ 4.136 OESubsetMol<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.135 OESmilesAtomCount 
+ Up:   4. OEChem Functions 
+ Next:   4.137 OESuppressHydrogens 
+   
+
+
+  
+4.136 OESubsetMol 
+ 
+
+ 
+    
+bool OESubsetMol(OEMolBase &amp;dst, const OEMolBase &amp;src,
+                 const OESystem::OEUnaryPredicate&lt;OEAtomBase&gt; &amp;atomfcn,
+                 const OESystem::OEUnaryPredicate&lt;OEBondBase&gt; &amp;bondfcn,
+                 bool adjustHCount=false)
+
+bool OESubsetMol(OEMolBase &amp;dst, const OEMatchBase *match,
+                 bool adjustHCount=false)
+
+bool OESubsetMol(OEMCMolBase &amp;dst, const OEMCMolBase &amp;src,
+                 const OESystem::OEUnaryPredicate&lt;OEAtomBase&gt; &amp;atomfcn,
+                 bool adjustHCount=false)
+
+bool OESubsetMol(OEMCMolBase &amp;dst, const OEMCMolBase &amp;src,
+                 const OESystem::OEUnaryPredicate&lt;OEAtomBase&gt; &amp;atomfcn,
+                 const OESystem::OEUnaryPredicate&lt;OEBondBase&gt; &amp;bondfcn,
+                 bool adjustHCount=false)
+
+bool OESubsetMol(OEMCMolBase &amp;dst, const OEMCMolBase &amp;src,
+                 const OEMatchBase *match,
+                 bool adjustHCount=false)
+
+bool OESubsetMol(OEMolBase &amp;dst, const OEMolBase &amp;src,
+                 const OESystem::OEUnaryPredicate&lt;OEAtomBase&gt; &amp;atomfcn,
+                 bool adjustHCount=false)
+    
+These functions allows the user to make a fully-functional molecule from
+a subset of another molecule. The original molecule may be a
+multi-conformer molecule, in which case a multi-conformational copy
+is produced. The basis for selection of atoms and bonds
+is a predicate function,  i.e.  a function that will return
+true or false for any atom or bond. By default bonds are carried along with
+the selected atoms,  i.e.  all bonds between such. If a bond predicate is
+also provided then this transfer is controlled by the user. As some atoms
+in the copy will now have 'dangling' bonds,  i.e.  'edge' atoms,
+the user can also specify that the hydrogen count be altered to preserve
+the original hybridization. An alternate mechanism of selection is to provide
+an  OEMatchBase , which itself contains a subset of atoms.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.135 OESmilesAtomCount 
+ Up:   4. OEChem Functions 
+ Next:   4.137 OESuppressHydrogens 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

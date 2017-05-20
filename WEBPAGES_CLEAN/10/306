@@ -1,0 +1,778 @@
+ /*
+ $Id: lbaktree.cc 5795 2010-10-23 01:18:03Z abehm $
+ 
+ Copyright (C) 2010 by The Regents of the University of California
+ 
+ Redistribution of this file is permitted under
+ the terms of the BSD license.
+ 
+ Date: 08/19/2010
+ Author: Sattam Alsubaiee 
+*/
+
+#include 
+#include "lbaktree.h"
+
+LBAKTree::LBAKTree(Storage *storage, AlgorithmType type, unsigned il, float simT) : RTree(storage), kf1("temp1"), kf2("temp2")
+{
+	if(type != fl)
+	{
+		cout  *&gt;::iterator mit1;
+	for (mit1 = recordsMap.begin(); mit1 != recordsMap.end(); ++mit1) 
+	{
+		delete recordsMap[mit1-&gt;first];
+	}
+	recordsMap.clear();
+	unordered_map  *&gt;::iterator mit2;
+	for (mit2 = keywordsHashesMap.begin(); mit2 != keywordsHashesMap.end(); ++mit2) 
+	{
+		delete keywordsHashesMap[mit2-&gt;first];
+	}
+	keywordsHashesMap.clear();
+	unordered_map ::iterator mit3;
+	for (mit3 = wrappersMap.begin(); mit3 != wrappersMap.end(); ++mit3) 
+	{
+		delete wrappersMap[mit3-&gt;first];
+	}
+	wrappersMap.clear();
+	unordered_map ::iterator mit4;
+	for (mit4 = strContainersMap.begin(); mit4 != strContainersMap.end(); ++mit4) 
+	{
+		delete strContainersMap[mit4-&gt;first];
+	}
+	strContainersMap.clear();
+}
+
+void LBAKTree::init(AlgorithmType type, float simT)
+{
+	create();
+	algoType = type;
+	simThreshold = simT;
+	avgKwdsLength = 0;
+	numKwds = 0;
+	q = 2;
+	gramGen = new GramGenFixedLen(q);
+	sx = 0;
+    sy = 0;
+    sx2 = 0;
+    sy2 = 0;
+    sxy = 0;
+    n = 0;
+}
+
+void LBAKTree::insert(const Object &amp;obj, vector  &amp;kwds)
+{
+    recordsMap[obj.id] = new vector  ();
+    for(unsigned i = 0; i ::iterator it;
+        it = keywordsMap.find(kwds.at(i));
+		avgKwdsLength += (double)kwds.at(i).length();
+		++numKwds;
+        if(it == keywordsMap.end())
+        {
+            dictionary.push_back(kwds.at(i));
+            keywordsMap[kwds.at(i)] = dictionary.size() - 1;
+            recordsMap[obj.id]-&gt;push_back(dictionary.size() - 1);
+        }
+        else
+        {
+            recordsMap[obj.id]-&gt;push_back(it-&gt;second);
+        }
+    }
+    RTree::insert(obj);
+}
+
+void LBAKTree::buildIndex()
+{
+	if(!kf1.open(true)) 
+	{
+		cout getRoot());   
+	selectSANodes();
+	fillKeywordsHashesMap();  
+	fillWrappersMap();
+    kf1.close();
+	kf2.close();
+}
+
+void LBAKTree::readQueryWorkload(const Rectangle &amp;range)
+{
+    unsigned id = storage-&gt;getRoot();
+    ++queryWorkloadMap[id];
+    readQueryWorkload(range, id);
+}
+
+void LBAKTree::readQueryWorkload(const Rectangle &amp;range, unsigned objectId)
+{
+    Node *node = (Node *)storage-&gt;read(objectId);
+    for(unsigned i = 0; i numChildren; ++i)
+    {
+        if(node-&gt;objects[i].mbr.intersects(range))
+        {
+            ++queryWorkloadMap[node-&gt;objects[i].id];
+            if(!node-&gt;isLeaf())
+            {
+                readQueryWorkload(range, node-&gt;objects[i].id);
+            }
+        }
+    }
+    storage-&gt;free(node);
+}
+
+void LBAKTree::propagateKeywords(unsigned objectId)
+{
+    Node *node = (Node *)storage-&gt;read(objectId);
+	unordered_set kwds;
+    if(node-&gt;isLeaf())
+    {
+        for(unsigned i = 0; i numChildren; ++i)
+        {
+			insertKeywords(node-&gt;objects[i].id, kwds, true);
+        }
+    }
+    else
+    {
+        for(unsigned i = 0; i numChildren; ++i)
+        {
+            propagateKeywords(node-&gt;objects[i].id);
+			insertKeywords(node-&gt;objects[i].id, kwds, false);
+        }
+    }
+	string text;
+	unordered_set::iterator it;
+	for (it = kwds.begin(); it != kwds.end(); ++it)
+	{
+		text += *it;
+		text += " ";
+	}
+	kf1.write(text, node-&gt;id, kwds.size());
+    storage-&gt;free(node);
+}
+
+void LBAKTree::insertKeywords(unsigned objectId, unordered_set &amp;kwds, bool leaf)
+{		
+	if(leaf)
+	{
+		for (unsigned i = 0; i size(); ++i)
+		{
+			kwds.insert(dictionary[recordsMap[objectId]-&gt;at(i)]);
+		}
+	}
+	else
+	{
+		string text = kf1.read(objectId);
+		parseKeywords(text, kwds);
+	}
+}
+
+void LBAKTree::parseKeywords(string &amp;text, unordered_set &amp;kwds)
+{
+	string::size_type lastPos = text.find_first_not_of(" ", 0);
+	string::size_type pos = text.find_first_of(" ", lastPos);
+	while (string::npos != pos || string::npos != lastPos)
+	{
+		kwds.insert(text.substr(lastPos, pos - lastPos));
+		lastPos = text.find_first_not_of(" ", pos);
+		pos = text.find_first_of(" ", lastPos);
+	}
+}
+
+void LBAKTree::computeGradientIntercept(unsigned objectId, vector  &amp;keywords)
+{
+    Node *node = (Node *)storage-&gt;read(objectId);
+	string text = kf1.read(node-&gt;id);
+	unordered_set kwds;
+	parseKeywords(text, kwds);
+	if(objectId == storage-&gt;getRoot())
+	{
+		srand((unsigned)time(0));
+		for(unsigned i = 0; i ::iterator it;
+	for (it = kwds.begin(); it != kwds.end(); ++it)
+	{
+		strContainer.insertString(*it);
+	}
+	WrapperSimpleEdNorm wrapper(&amp;strContainer, gramGen, false);
+	wrapper.buildIndex();
+	for(unsigned i = 0; i  resultStringIDs;
+		struct timeval t1, t2;
+		struct timezone tz;
+		startTimeMeasurement(t1, tz);
+		wrapper.search(keywords.at(i), simThreshold, resultStringIDs);
+		stopTimeMeasurement(t2, tz);
+		double timeMeasurement = getTimeMeasurement(t1, t2);
+		sx += (double) strContainer.size();
+		sy += timeMeasurement;
+		sx2 += ((double)strContainer.size() * (double)strContainer.size());
+		sy2 += (timeMeasurement * timeMeasurement);
+		sxy += ((double)strContainer.size() * timeMeasurement);
+		++n;
+	}
+	if(!node-&gt;isLeaf())
+    {
+		computeGradientIntercept(node-&gt;objects[0].id, keywords);
+    }
+    storage-&gt;free(node);
+}
+
+void LBAKTree::selectSANodes()
+{
+	avgKwdsLength /= (double)numKwds;
+	if(algoType == fl)
+	{
+		useFL();
+	}
+	else
+	{
+		vector keywords;
+		computeGradientIntercept(storage-&gt;getRoot(), keywords);
+		gradient = ((sx * sy) - (n * sxy)) / ((sx * sx) - (n * sx2));
+		intercept = ((sx * sxy) - (sy * sx2)) / ((sx * sx) - (n * sx2));
+		
+		ifstream queries(queryWorkloadFile.c_str());
+		if (!queries)
+		{
+			cerr &gt; range.min.x &gt;&gt; range.min.y &gt;&gt; range.max.x &gt;&gt; range.max.y;
+			readQueryWorkload(range);
+		}
+		if(algoType == vl)
+		{
+			useVL();
+		}
+		else
+		{
+			fillKeywordsIntersectionsFile();
+			useVLF();
+		}
+	}
+}
+
+void LBAKTree::useFL()
+{
+	Node *root = (Node *)storage-&gt;read(storage-&gt;getRoot());
+	if(indexesLevel &gt; root-&gt;level)
+	{
+		indexesLevel = root-&gt;level;
+	}
+	storage-&gt;free(root);
+	
+	unordered_map ::iterator mit; 
+    for (mit = kf1.begin(); mit != kf1.end(); ++mit) 
+    {
+		Node *node = (Node *)storage-&gt;read(mit-&gt;first);
+        if(node-&gt;level &gt;= indexesLevel)
+        {
+			StringContainerVector *strContainer;
+			strContainer = new StringContainerVector(true);
+            strContainer-&gt;initStatsCollector(gramGen);
+			strContainersMap[node-&gt;id] = strContainer;
+		}
+		storage-&gt;free(node);
+	}
+}
+
+void LBAKTree::useVL()
+{
+    vector heap;
+    Node *root = (Node *)storage-&gt;read(storage-&gt;getRoot());
+    double pFuzzySpaceCost = (double)kf1.getIndexNode(root-&gt;id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+    double pFuzzyTimeCost = (double)queryWorkloadMap[root-&gt;id] * (gradient * (double)kf1.getIndexNode(root-&gt;id).numKeywords + intercept);
+    double cFuzzySpaceCost = 0;
+    double cFuzzyTimeCost = 0;
+    for(unsigned i = 0; i numChildren; ++i)
+    {
+        cFuzzySpaceCost += (double)kf1.getIndexNode(root-&gt;objects[i].id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+        cFuzzyTimeCost += (double)queryWorkloadMap[root-&gt;objects[i].id] * (gradient * (double)kf1.getIndexNode(root-&gt;objects[i].id).numKeywords + intercept);
+    }
+    NodePriority rootImportance;
+    rootImportance.id = root-&gt;id;
+    rootImportance.priority = (cFuzzyTimeCost - pFuzzyTimeCost) / (pFuzzySpaceCost - cFuzzySpaceCost);
+    rootImportance.pFuzzySpaceCost = pFuzzySpaceCost;
+    rootImportance.cFuzzySpaceCost = cFuzzySpaceCost;
+    rootImportance.pFuzzyTimeCost = pFuzzyTimeCost;
+    rootImportance.cFuzzyTimeCost = cFuzzyTimeCost;
+    spaceBudget -= pFuzzySpaceCost;
+    heap.push_back(rootImportance);
+    storage-&gt;free(root);
+    while(!heap.empty())
+    {
+        NodePriority nodeImportance;
+        nodeImportance.id = heap[0].id;
+        nodeImportance.priority = heap[0].priority;
+        nodeImportance.pFuzzySpaceCost = heap[0].pFuzzySpaceCost;
+        nodeImportance.cFuzzySpaceCost = heap[0].cFuzzySpaceCost;
+        nodeImportance.pFuzzyTimeCost = heap[0].pFuzzyTimeCost;
+        nodeImportance.cFuzzyTimeCost = heap[0].cFuzzyTimeCost;
+        pop_heap(heap.begin(), heap.end());
+        heap.pop_back();
+        Node *node = (Node *)storage-&gt;read(nodeImportance.id);
+        if(nodeImportance.priority &gt; 0 &amp;&amp; nodeImportance.cFuzzySpaceCost isLeaf() &amp;&amp; node-&gt;level != 1)
+        {
+            spaceBudget += nodeImportance.pFuzzySpaceCost;
+            spaceBudget -= nodeImportance.cFuzzySpaceCost;
+			StringContainerVector *strContainer;
+			strContainer = new StringContainerVector(true);
+            strContainer-&gt;initStatsCollector(gramGen);
+			strContainersMap[node-&gt;id] = strContainer;
+        }
+        else
+        {
+			StringContainerVector *strContainer;
+			strContainer = new StringContainerVector(true);
+            strContainer-&gt;initStatsCollector(gramGen);
+			strContainersMap[node-&gt;id] = strContainer;
+            storage-&gt;free(node);
+            continue;
+        }
+        for(unsigned i = 0; i numChildren; ++i)
+        {
+            Node *node2 = (Node *)storage-&gt;read(node-&gt;objects[i].id);
+            pFuzzySpaceCost = (double)kf1.getIndexNode(node2-&gt;id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+            pFuzzyTimeCost = (double)queryWorkloadMap[node2-&gt;id] * (gradient * (double)kf1.getIndexNode(node2-&gt;id).numKeywords + intercept);
+            cFuzzySpaceCost = 0;
+            cFuzzyTimeCost = 0;
+            if(node2-&gt;isLeaf())
+            {
+                cFuzzySpaceCost = 0;
+                cFuzzyTimeCost = std::numeric_limits::max(); 
+            }
+            else
+            {
+                for(unsigned j = 0; j numChildren; ++j)
+                {
+                    cFuzzySpaceCost += (double)kf1.getIndexNode(node2-&gt;objects[j].id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+                    cFuzzyTimeCost += (double)queryWorkloadMap[node2-&gt;objects[j].id] *  (gradient * (double)kf1.getIndexNode(node2-&gt;objects[j].id).numKeywords + intercept);
+                }
+            }
+            NodePriority nodeImportance2;
+            nodeImportance2.id = node2-&gt;id;
+            nodeImportance2.priority = (cFuzzyTimeCost - pFuzzyTimeCost) / (pFuzzySpaceCost - cFuzzySpaceCost);
+            nodeImportance2.pFuzzySpaceCost = pFuzzySpaceCost;
+            nodeImportance2.cFuzzySpaceCost = cFuzzySpaceCost;
+            nodeImportance2.pFuzzyTimeCost = pFuzzyTimeCost;
+            nodeImportance2.cFuzzyTimeCost = cFuzzyTimeCost;
+            heap.push_back(nodeImportance2);
+            push_heap(heap.begin(), heap.end());
+            storage-&gt;free(node2);
+        }
+        storage-&gt;free(node);
+    }
+}
+
+void LBAKTree::useVLF()
+{
+    vector heap;
+    Node *root = (Node *)storage-&gt;read(storage-&gt;getRoot());
+    double pFuzzySpaceCost = (double)kf1.getIndexNode(root-&gt;id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+    double pFuzzyTimeCost = (double)queryWorkloadMap[root-&gt;id] * (gradient * (double)kf1.getIndexNode(root-&gt;id).numKeywords + intercept);
+    double cFuzzySpaceCost = 0;
+    double cFuzzyTimeCost = 0;
+    for(unsigned j = 0; j numChildren; ++j)
+    {
+        unordered_set  intersectedKeywords;
+        unordered_set::iterator it;
+		string text = kf1.read(root-&gt;objects[j].id);
+		unordered_set kwds;
+		parseKeywords(text, kwds);
+		string intsctText = kf2.read(root-&gt;objects[j].id);
+		unordered_set intsctKwds;
+		parseKeywords(intsctText, intsctKwds);
+        for (it = intsctKwds.begin(); it != intsctKwds.end(); ++it)
+        {
+            if(kwds.find(*it) != kwds.end())
+            {
+                intersectedKeywords.insert(*it);
+            }
+        }
+        cFuzzySpaceCost += (double)(kf1.getIndexNode(root-&gt;objects[j].id).numKeywords - intersectedKeywords.size()) * (avgKwdsLength + (double)q - 1.0) * 4.0;
+        cFuzzyTimeCost += (double)queryWorkloadMap[root-&gt;objects[j].id] *  (gradient * (double)(kf1.getIndexNode(root-&gt;objects[j].id).numKeywords - intersectedKeywords.size()) + intercept);
+    }
+    cFuzzySpaceCost += (double)kf2.getIndexNode(root-&gt;id).numKeywords * (avgKwdsLength + (double)q - 1.0) * 4.0;
+    cFuzzyTimeCost += (double)queryWorkloadMap[root-&gt;id] *  (gradient * (double)kf2.getIndexNode(root-&gt;id).numKeywords + intercept);
+    NodePriority rootImportance;
+    rootImportance.id = root-&gt;id;
+    if(pFuzzySpaceCost == cFuzzySpaceCost)
+    {
+        rootImportance.priority = pFuzzyTimeCost - cFuzzyTimeCost;
+    }
+    else
+    {
+        rootImportance.priority = (cFuzzyTimeCost - pFuzzyTimeCost) / (pFuzzySpaceCost - cFuzzySpaceCost);
+    }
+    rootImportance.pFuzzySpaceCost = pFuzzySpaceCost;
+    rootImportance.cFuzzySpaceCost = cFuzzySpaceCost;
+    rootImportance.pFuzzyTimeCost = pFuzzyTimeCost;
+    rootImportance.cFuzzyTimeCost = cFuzzyTimeCost;
+    spaceBudget -= pFuzzySpaceCost;
+    heap.push_back(rootImportance);
+    storage-&gt;free(root);
+    while(!heap.empty())
+    {
+        NodePriority nodeImportance;
+        nodeImportance.id = heap[0].id;
+        nodeImportance.priority = heap[0].priority;
+        nodeImportance.pFuzzySpaceCost = heap[0].pFuzzySpaceCost;
+        nodeImportance.cFuzzySpaceCost = heap[0].cFuzzySpaceCost;
+        vector  ancestorsIds = heap[0].ancestorsIds;
+        nodeImportance.pFuzzyTimeCost = heap[0].pFuzzyTimeCost;
+        nodeImportance.cFuzzyTimeCost = heap[0].cFuzzyTimeCost;
+        pop_heap(heap.begin(), heap.end());
+        heap.pop_back();
+        Node *node = (Node *)storage-&gt;read(nodeImportance.id);
+        if(nodeImportance.priority &gt; 0 &amp;&amp; nodeImportance.cFuzzySpaceCost isLeaf())
+        {
+            spaceBudget += nodeImportance.pFuzzySpaceCost;
+            spaceBudget -= nodeImportance.cFuzzySpaceCost;
+			StringContainerVector *strContainer;
+			strContainer = new StringContainerVector(true);
+            strContainer-&gt;initStatsCollector(gramGen);
+			strContainersMap[node-&gt;id] = strContainer;
+        }
+        else
+        {
+			StringContainerVector *strContainer;
+			strContainer = new StringContainerVector(true);
+            strContainer-&gt;initStatsCollector(gramGen);
+			strContainersMap[node-&gt;id] = strContainer;
+            storage-&gt;free(node);
+            continue;
+        }
+        ancestorsIds.push_back(nodeImportance.id);
+        for(unsigned i = 0; i numChildren; ++i)
+        {
+            Node *node2 = (Node *)storage-&gt;read(node-&gt;objects[i].id);
+            string text = kf1.read(node2-&gt;id);
+			unordered_set kwds;
+			parseKeywords(text, kwds);
+			string intsctText = kf2.read(node2-&gt;id);
+			unordered_set intsctKwds;
+			parseKeywords(intsctText, intsctKwds);	
+			unordered_map &gt; tempMap;
+			for(unsigned j = 0; j isLeaf())
+            {
+                for(unsigned j = 0; j ::iterator it;
+                    for (it = tempMap[ancestorsIds[j]].begin(); it != tempMap[ancestorsIds[j]].end(); ++it)
+                    {
+                        kwds.erase(*it);
+                    }
+                }
+                cFuzzySpaceCost = 0;
+                cFuzzyTimeCost = std::numeric_limits::max(); 
+            }
+            else
+            {
+                for(unsigned j = 0; j ::iterator it;
+                    for (it = tempMap[ancestorsIds[j]].begin(); it != tempMap[ancestorsIds[j]].end(); ++it)
+                    {
+						intsctKwds.erase(*it);
+                        kwds.erase(*it);
+                    }
+                }
+                cFuzzySpaceCost = 0;
+                cFuzzyTimeCost = 0;
+                ancestorsIds.push_back(node2-&gt;id);
+                for(unsigned j = 0; j numChildren; ++j)
+                {
+					string text2 = kf1.read(node2-&gt;objects[j].id);
+					unordered_set kwds2;
+					parseKeywords(text2, kwds2);
+                    unordered_set  intersectedKeywords;
+                    for(unsigned k = 0; k ::iterator it;
+						for (it = tempMap[ancestorsIds[k]].begin(); it != tempMap[ancestorsIds[k]].end(); ++it)
+						{
+							if(kwds2.find(*it) != kwds2.end())
+                            {
+                                intersectedKeywords.insert(*it);
+                            }
+						}
+                    }
+                    cFuzzySpaceCost += (double)(kf1.getIndexNode(node2-&gt;objects[j].id).numKeywords - intersectedKeywords.size()) * (avgKwdsLength + (double)q - 1.0) * 4.0;
+                    cFuzzyTimeCost += (double)queryWorkloadMap[node2-&gt;objects[j].id] *  (gradient * (double)(kf1.getIndexNode(node2-&gt;objects[j].id).numKeywords - intersectedKeywords.size()) + intercept);
+                }
+                cFuzzySpaceCost += (double)intsctKwds.size() * (avgKwdsLength + (double)q - 1.0) * 4.0;
+                cFuzzyTimeCost += (double)queryWorkloadMap[node2-&gt;id] *  (gradient * (double)intsctKwds.size() + intercept);
+                ancestorsIds.pop_back();
+            }
+            pFuzzySpaceCost = (double)kwds.size() * (avgKwdsLength + (double)q - 1.0) * 4.0;
+            pFuzzyTimeCost = (double)queryWorkloadMap[node2-&gt;id] * (gradient * (double)kwds.size() + intercept);
+            NodePriority nodeImportance2;
+            nodeImportance2.id = node2-&gt;id;
+            if(pFuzzySpaceCost == cFuzzySpaceCost)
+            {
+                nodeImportance2.priority = pFuzzyTimeCost - cFuzzyTimeCost;
+            }
+            else
+            {
+                nodeImportance2.priority = (cFuzzyTimeCost - pFuzzyTimeCost) / (pFuzzySpaceCost - cFuzzySpaceCost);
+            }
+            nodeImportance2.pFuzzySpaceCost = pFuzzySpaceCost;
+            nodeImportance2.cFuzzySpaceCost = cFuzzySpaceCost;
+            nodeImportance2.ancestorsIds = ancestorsIds;
+            nodeImportance2.pFuzzyTimeCost = pFuzzyTimeCost;
+            nodeImportance2.cFuzzyTimeCost = cFuzzyTimeCost;
+            heap.push_back(nodeImportance2);
+            push_heap(heap.begin(), heap.end());
+			text = "";
+			unordered_set::iterator it;
+			for (it = kwds.begin(); it != kwds.end(); ++it)
+			{
+				text += *it;
+				text += " ";
+			}
+			kf1.write(text, node2-&gt;id, kwds.size());
+			intsctText = "";
+			for (it = intsctKwds.begin(); it != intsctKwds.end(); ++it)
+			{
+				intsctText += *it;
+				intsctText += " ";
+			}
+			kf2.write(intsctText, node2-&gt;id, intsctKwds.size());
+            storage-&gt;free(node2);
+        }
+        storage-&gt;free(node);
+    }
+}
+
+void LBAKTree::fillKeywordsIntersectionsFile()
+{
+	unordered_map ::iterator mit; 
+    for (mit = kf1.begin(); mit != kf1.end(); ++mit) 
+    {
+		Node *node = (Node *)storage-&gt;read(mit-&gt;first);
+        if(!node-&gt;isLeaf())
+        {
+			unordered_set intsctKwds;
+			string text = kf1.read(node-&gt;id);
+			unordered_set kwds;
+			parseKeywords(text, kwds);	
+			unordered_map &gt; tempMap;
+			for(unsigned i = 0; i numChildren; ++i)
+			{
+				string text2 = kf1.read(node-&gt;objects[i].id);
+				parseKeywords(text2, tempMap[node-&gt;objects[i].id]);
+			}
+			unordered_set::iterator it;
+			for (it = kwds.begin(); it != kwds.end(); ++it)
+			{
+				double counter = 0;
+				for(unsigned i = 0; i numChildren; ++i)
+				{
+					if(tempMap[node-&gt;objects[i].id].find(*it) != tempMap[node-&gt;objects[i].id].end())
+					{
+						++counter;
+					}
+				}
+				if(counter &gt;= (double)node-&gt;numChildren * kfThreshold)
+				{
+					intsctKwds.insert(*it);
+				}
+			}
+			string intsctText;
+			for (it = intsctKwds.begin(); it != intsctKwds.end(); ++it)
+			{
+				intsctText += *it;
+				intsctText += " ";
+			}
+			kf2.write(intsctText, node-&gt;id, intsctKwds.size());
+        }
+        storage-&gt;free(node);
+	}
+}
+
+void LBAKTree::fillKeywordsHashesMap()
+{	
+	unordered_map ::iterator mit; 
+    for (mit = kf1.begin(); mit != kf1.end(); ++mit) 
+    {
+		Node *node = (Node *)storage-&gt;read(mit-&gt;first);
+		if(strContainersMap.find(node-&gt;id) == strContainersMap.end())
+        {
+			string text = kf1.read(node-&gt;id);
+			unordered_set kwds;
+			parseKeywords(text, kwds);
+            Array *array = new Array(kwds.size(), 1);
+            unordered_set::iterator it;
+            for (it = kwds.begin(); it != kwds.end(); ++it)
+            {
+				array-&gt;append(keywordsMap[*it]);
+            }
+            sort (array-&gt;begin(), array-&gt;end());
+            keywordsHashesMap[node-&gt;id] = array;
+        }
+        storage-&gt;free(node);
+	}
+}
+
+void LBAKTree::fillWrappersMap()
+{
+    WrapperSimpleEdNorm *wrapper;
+	unordered_map ::iterator mit; 
+    for (mit = kf1.begin(); mit != kf1.end(); ++mit) 
+    {
+        Node *node = (Node *)storage-&gt;read(mit-&gt;first);
+		if(strContainersMap.find(node-&gt;id) != strContainersMap.end() &amp;&amp; strContainersMap.find(node-&gt;objects[0].id) == strContainersMap.end())
+        {
+			string text = kf1.read(node-&gt;id);
+			unordered_set kwds;
+			parseKeywords(text, kwds);
+			unordered_set::iterator it;
+            for (it = kwds.begin(); it != kwds.end(); ++it)
+            {
+                strContainersMap[node-&gt;id]-&gt;insertString(*it);
+            }
+            wrapper = new WrapperSimpleEdNorm(strContainersMap[node-&gt;id], gramGen, false);
+            wrapper-&gt;buildIndex();
+            wrappersMap[node-&gt;id] = wrapper;
+        }
+		else if(strContainersMap.find(node-&gt;objects[0].id) != strContainersMap.end())
+        {
+			string intsctText = kf2.read(node-&gt;id);
+			unordered_set intsctKwds;
+			parseKeywords(intsctText, intsctKwds);
+			unordered_set::iterator it;
+            for (it = intsctKwds.begin(); it != intsctKwds.end(); ++it)
+            {
+                strContainersMap[node-&gt;id]-&gt;insertString(*it);
+            }
+            wrapper = new WrapperSimpleEdNorm(strContainersMap[node-&gt;id], gramGen, false);
+            wrapper-&gt;buildIndex();
+            
+            wrappersMap[node-&gt;id] = wrapper;
+        }
+        storage-&gt;free(node);
+    }
+}
+
+void LBAKTree::rangeQuery(vector &amp;objects, const Rectangle &amp;range,
+						  const vector  &amp;kwds)
+{
+    unsigned id = storage-&gt;getRoot();
+    vector strings[kwds.size()];
+    vector hashes[kwds.size()];
+	
+    if(searchWrapper(id, kwds, strings, hashes, strings, hashes))
+    {
+        rangeQuery(objects, range, id, kwds, strings, hashes);
+    }
+}           
+
+void LBAKTree::rangeQuery(vector &amp;objects, const Rectangle &amp;range, 
+						  unsigned id, const vector  &amp;kwds, vector strings[], vector hashes[])
+{
+    Node *node = (Node *)storage-&gt;read(id);
+    
+	if(strContainersMap.find(node-&gt;id) != strContainersMap.end() &amp;&amp; strContainersMap.find(node-&gt;objects[0].id) == strContainersMap.end())
+    {
+        for(unsigned i = 0; i numChildren; ++i)
+    {
+        if(node-&gt;objects[i].mbr.intersects(range))
+        {
+            if(node-&gt;isLeaf())
+            {
+                bool keywordFounded = true;
+                for (unsigned j = 0; j objects[i].id, strings[j].at(k)))
+                        {
+                            candidateFounded = true;
+                            break;
+                        }
+                    }
+                    if (!candidateFounded)
+                    {
+                        keywordFounded = false;
+                        break;
+                    }
+                }
+                if(keywordFounded)
+                {
+                    objects.push_back(node-&gt;objects[i]);
+                }
+            }
+            else
+            {
+                vector resultStrings[kwds.size()];
+                vector resultHashes[kwds.size()];
+				if(strContainersMap.find(node-&gt;objects[i].id) != strContainersMap.end())
+                {
+                    if(searchWrapper(node-&gt;objects[i].id, kwds, strings, hashes, resultStrings, resultHashes))
+                    {
+                        rangeQuery(objects, range, node-&gt;objects[i].id, kwds, resultStrings, resultHashes);
+                    }
+                }
+                else
+                {
+                    if(searchArray(node-&gt;objects[i].id, kwds.size(), strings, hashes, resultStrings, resultHashes))
+                    {
+                        rangeQuery(objects, range, node-&gt;objects[i].id, kwds, resultStrings, resultHashes);
+                    }
+                }
+            }
+        }
+    }
+    storage-&gt;free(node);
+}
+
+bool LBAKTree::searchWrapper(unsigned objectId, const vector  &amp;kwds, vector strings[], vector hashes[], vectorresultStrings[], vectorresultHashes[])
+{
+    for(unsigned i = 0; i  resultStringIDs;
+        wrappersMap[objectId]-&gt;search(kwds.at(i), simThreshold, resultStringIDs);
+        for (unsigned j = 0; j retrieveString(temp, resultStringIDs.at(j));
+            resultStrings[i].push_back(temp);
+			resultHashes[i].push_back(keywordsMap[temp]);
+        }      
+    }
+    return true;
+}
+
+bool LBAKTree::searchArray(unsigned objectId, unsigned numKeywords, vector strings[], vector hashes[], vectorresultStrings[], vectorresultHashes[])
+{
+    for(unsigned i = 0; i has(hashes[i].at(j)))
+            {
+                resultStrings[i].push_back(strings[i].at(j));
+                resultHashes[i].push_back(hashes[i].at(j));
+            }
+        }
+        if (resultStrings[i].empty())
+            return false;
+    }
+    return true;
+}
+
+bool LBAKTree::searchVector(unsigned objectId, const string &amp;keyword)
+{
+    for(unsigned i = 0; i size(); ++i)
+    {
+        if(dictionary[recordsMap[objectId]-&gt;at(i)].length() == keyword.length())
+        {
+            if(dictionary[recordsMap[objectId]-&gt;at(i)].compare(keyword) == 0)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void LBAKTree::getObjectKeywords(unsigned objectId, vector &amp;objectKeywords)
+{
+	for(unsigned i = 0; i size(); ++i)
+	{
+		objectKeywords.push_back(dictionary[recordsMap[objectId]-&gt;at(i)]);
+	}
+}
+
+void LBAKTree::startTimeMeasurement(struct timeval &amp;t1, struct timezone &amp;tz)
+{
+	gettimeofday(&amp;t1, &amp;tz);
+}
+
+void LBAKTree::stopTimeMeasurement(struct timeval &amp;t2, struct timezone &amp;tz)
+{
+	gettimeofday(&amp;t2, &amp;tz);
+}
+
+double LBAKTree::getTimeMeasurement(struct timeval &amp;t1, struct timeval &amp;t2)
+{
+	unsigned totalTime = (t2.tv_sec - t1.tv_sec) * 1000000 +
+	(t2.tv_usec - t1.tv_usec);
+	double tval = 0;
+	tval = static_cast(totalTime) / 1000;
+	return tval;
+}
+ 

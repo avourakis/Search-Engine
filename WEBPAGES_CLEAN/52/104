@@ -1,0 +1,109 @@
+ VHDL Reference Guide - Subtype Declaration<body>  This is Google's cache of  http://www.vdlande.com/VHDL/subt_dec.html . It is a snapshot of the page as it appeared on Sep 16, 2009 09:40:25 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Subtype Declaration  
+        Declaration 
+ ---- used in ----&gt; 
+ Package Entity Architecture Process Procedure Function 
+            Syntax        
+  
+
+ 
+      subtype  subtype_name  is  base_type  range  range_constraint;
+  
+    
+  
+
+
+
+ 
+See LRM section 4.2
+
+         Rules and Examples        
+  
+
+ 
+    Assignments may not be made between objects of different types even
+though they may be similar.
+ type BUS_VAL is range 0 to 255;
+type MY_LOGIC is ('0','1');
+
+variable X_INT : integer := 22;
+variable X_BUS : BUS_VAL := 22;
+variable X_BIT : bit := '0';
+variable X_MY  : MY_LOGIC := '0';
+...
+X_BUS := X_INT; --illegal
+X_MY  := X_BIT; --illegal  
+    
+  
+
+ 
+    Since a subtype is the  same type  as its base type,
+assignments between subtype and base type onjects can be made without
+conversion:
+ subtype BUS_VAL is integer
+                range 0 to 255;
+subtype MY_LOGIC is std_ulogic
+                range 'X' to 'Z';
+variable X_INT : integer    := 22;
+variable X_BUS : BUS_VAL;
+variable X_STD : std_ulogic := '0';
+variable X_MY  : MY_LOGIC;
+...
+X_BUS := X_INT; --legal
+X_MY  := X_STD; --legal
+  
+    
+  
+
+ 
+    Subtypes  natural  and  positive  are predefined subtypes
+of  integer 
+ subtype NATURAL is integer range 0 to integer'high;
+subtype POSITIVE is integer range 1 to integer'high;
+  
+    
+  
+
+ 
+    The std_logic_1164 package defines the following subtypes of
+ std_logic :
+ subtype XO1  is std_ulogic range 'X' to '1';
+subtype XO1Z is std_ulogic range 'X' to 'Z';
+subtype UXO1 is std_ulogic range 'U' to '1';
+  
+    
+  
+
+ 
+         Synthesis Issues        
+  
+
+ 
+    Most logic synthesis tools support subtypes of types that they
+recognise.
+ 
+Synthesis tools will infer an appropriate number of bits for enumerated
+and integer subtypes, depending on the range.
+  
+    
+  
+
+
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, a new predefined subtype  delay_length  is defined,
+which can only take on positive values.
+  subtype delay_length is time range 0 fs to time'high; 
+
+ 
+
+  </body> 

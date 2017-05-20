@@ -1,0 +1,68 @@
+ 24.2 oeistream<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.1 oestream 
+ Up:   24. I/O Utilities 
+ Next:   24.3 oeostream 
+   
+
+
+  
+24.2 oeistream 
+ 
+
+ 
+All of the  oestream  classes that provide input handling derive from this
+class. This class provides efficient implementations of standard input stream
+functions at the byte level:  getbyte, get, skipbyte, peekbyte ; at the
+data buffer level:  read, skip ; and at the text level:  getline,
+skipline, gettoken . Like the standard  istreams , the     operator is
+overloaded for easy assignment of data from text streams.
+
+  
+This class also provides the framework but not fully functional implementations
+of the  open  and  close  routines. However, if a data buffer already
+exists in memory, an  oeistream  instance can be used to read from that
+buffer using the provided  open  and  close  routines.
+
+  
+    char      buffer[] = "hello world!";
+oeistream is;
+
+if (is.open(buffer, 12))
+{
+    while (is)
+    {
+       int c = is.getbyte();
+       oeout &lt;&lt; c;
+    }
+    is.close();
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.1 oestream 
+ Up:   24. I/O Utilities 
+ Next:   24.3 oeostream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

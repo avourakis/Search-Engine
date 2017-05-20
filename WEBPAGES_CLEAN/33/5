@@ -1,0 +1,289 @@
+ Analysis of Algorithms (Complexity Classes and Big-O Notation)
+
+
+Analysis of Algorithms is a mathematical area of Computer Science in which we
+analyze the resources (mostly time; but sometimes space; and at the chips level,
+power) used by algorithms to solve problems. An algorithm is a precise
+procedure for solving a problem, written in any notation that humans understand
+(and thus can carry-out the algorithm): if we write an algorithm as code in
+some programming language, then a computer can execute it too.
+
+The main tool that we use to analyze algorithms is big-O notation: it means
+"growth (in resources, based on the problem size) on the order of". We use
+big-O notation to characterize the performance of an algorithm by placing it in
+a complexity class (most often based on its WORST-CASE behavior -but sometimes
+on its AVERAGE-CASE behavior) when solving a problem of size N: we will learn
+how to characterize the size of problem, which is most often as simple as N is
+the number of values in a list/set/dictionary. Once we know the complexity
+class of an algorithm, we have a good handle on understanding its actual
+performance (within certain limits). Thus, in AA we don't necessarily compute
+the exact resources needed, but typically an approximate bound on the resources,
+based on the problem size.
+
+------------------------------------------------------------------------------
+
+Getting to Big-O Notation: Throwing away Irrelevant Details
+
+Here is one simple Python function for computing the maximum of a list (or
+returning None if there are no values in the list). 
+
+def maximum(alist):
+    answer = None if alist == [] else alist[0]
+    for i in range(1,len(alist)):
+        if alist[i] &gt; answer
+            answer = alist[i]
+    return answer
+
+Often, the problem size is the number of values processed: e.g., the number of
+values in a list or lines in a file. But we can use other metrics as well: it
+can be the count of number of digits in an integer value, when looking at the
+complexity of multiplication based on the size of the numbers. Thus, there is
+no single measure of size that fits all problems: instead, for each problem we
+try to choose a measure that makes sense and is natural for that problem.
+
+Python translates functions like maximum into a sequence of instructions that
+the computer executes (the subject of one of the last lectures). To solve a
+problem, the computer always executes an integral number of instructions. For
+simplicity, we will assume that all instructions take the same amount of time
+to execute. So to compute the amount of time it takes to solve a problem is
+equivalent to computing how many instructions the computer must execute to
+solve it (which we can divide by the number of instructions/second the machine
+executes, to compute the actual amount of time taken).
+
+Again, we typically look at the worst case behavior of algorithms. For maximum
+the worst case occurs if the list is in increasing order. In this case, each
+new value examined in the list will be bigger than the previous maximum, so the
+if statement's condition will always be True, which always requires updating
+answer. If any value was lower, it wouldn't have to update answer and thus take
+fewer instructions/less time to execute.
+
+It turns out that for a list of N values, the computer executes 14N + 9
+instructions in the worst case for this function. You need to know more CS than
+you do at this time to determine this formula, but you will get there by
+ICS 51 (and I expect to cover the basics during the last week of the quarter,
+when I cover the Python Virtual Machine: its equivalent of machine code).
+
+A simple way to think about this formula is that there are 14 computer
+instructions that are executed each time Python executes the body of the for
+loop and 9 instructions that are executed only once: they deal with starting
+and terminating the loop and the entire function. We can write I(N) = 14N + 9
+for the worst case of the maximum function, where I(N) is the number of
+instructions the computer executes when solving a problem on a list with N
+values.  Or to be more specific we would write Imaximum(N) = 14N  + 9.
+
+I would like to argue now that if simplify this function to just I(N) = 14N we
+have lost some information, but not much. Specifically, as N gets bigger (i.e.,
+we are dealing with very big problems - the kinds computers are used to solve),
+14N and 14N+9 are relatively close. Let's look at the result of this function
+vs. the original as N gets for values of N increasing by a factor of 10.
+
+    N     |   14N + 9  |    14N     | error: (14N+9 - 14N)/(14N+9) as a % of N
+ ---------+------------+------------+---------------------------
+        1 |         23 |         14 |   61%         or 39%       accurate
+       10 |        149 |        140 |    6%            94%       accurate
+      100 |       1409 |       1400 |     .6%          99.4%     accurate
+     1000 |      14009 |      14000 |     .06%         99.94%    accurate
+     ...
+1,000,000 | 14,000,009 | 14,000,000 |     .00006%      99.99994% accurate
+     ...
+
+Each line shows the % error of computing 14N when the true answer is 14N + 9.
+So by the time we are processing a list of 1,000 values, using the formula
+14N instead of 14N+9 is 99.94% accurate. For computers solving real problems,
+a list of 1,000 values is small: a list of millions is more normal. For
+1,000,000 values 14N is off by just 9 parts in 14 million. So the 9 doesn't
+affect the value of the formula much.
+
+Analysis of Algorithms really should be referred to as ASYMPTOTIC Analysis of
+Algorithms, as it is mostly concerned with the performance of algorithms as
+the problem size gets very big (N -&gt; infinity). We see here that as N-&gt;Infinity
+14N is a better and better approximation to 14N+9: dropping the extra 9 becomes
+less and less important.
+
+Here is a simple Python function for sorting a list of values. This is much
+simpler than the actual sort method in Python (and the simplicity of code
+results in this function taking much more time, but it is a good starting point
+for understanding sorting now; ICS-46 spends a week studying sorting). If you
+are interested in how this function accomplishes sorting, hand simulate it
+working on a list of 5-10 values (try increasing values, decreasing values,
+values in random order): basically each execution of the outer loops mutates
+the list so that the next value in the list is in the correct position.
+
+def sort(alist):
+    for base in range(len(alist)):
+        for check in range(base+1,len(alist)):
+            if alist[base] &gt; alist[check]:
+                alist[base], alist[check] = alist[check],alist[base]
+    return None  # list is mutated
+
+
+It turns out that for a list of N values, the computer executes 8N**2 + 12N + 6
+instructions in the worst case for this function. The outer loop executes N
+times (N is len(alist)) and inner loop on average executes N/2 times, so the
+if statement in the inner loop is executed a quadratic number of times. We can
+say I(N) = 8N**2 + 12N  + 6 for the worst case of the sort function, where I(N)
+is again the number of instructions the computer executes. Or to be more
+specific we would write Isort(N) = 8N**2 + 12N  + 6.
+
+I would like to argue in the same way that if simplify this function to just
+I(N) = 8N**2, we have not lost much information. Let's look at the result of
+this this function vs. the original as N gets bigger and bigger
+
+    N     | 8N**2+12N+6|      8N**2  | error: (12N+6)/(8N**2+12N+6) as a % of N
+ ---------+------------+-------------+---------------------------
+        1 |         26 |           8 |   70%      or 30%    accurate
+       10 |        926 |         800 |   14%         86%    accruate
+      100 |     81,206 |      80,000 |    1.5%       98.5%  accurate
+     1000 |  8,012,006 |   8,000,000 |     .15%      99.85% accurate
+
+So by the time we are processing a list of 1,000 values, using the formula
+8N**2 instead of 8N**2 + 12N + 6 is 99.85% accurate. For 1,000,000 values
+(10**6), 8N**2 is 8*10^12 while 8N**2 + 12N + 6 is 8*10^12 +12*10^6 + 6; the
+simpler formula is is 99.999985% accurate. 
+
+CONCLUSION (though not proven): If the real formula I(N) is a sum of a bunch of
+terms, we can drop any term that doesn't grow as quickly as the most quickly
+growing term. In computing the maximum, the linear term 14N grows more quickly
+than the next term, the constant 9, which doesn't grow at all (as N grows) so
+we drop the 9 term. In sorting, the quadratic term 8N**2 grows more quickly
+than the next two terms, the linear term 12N and the constant 6, so we drop the
+12N and 6 terms.
+
+    In fact note that we can prove that the Limit as N-&gt; of 12N/8N**2 = 
+    3/(2N) -&gt; 0, which means we can discard the 12N term as growing more slowly
+    than the 8N**2 term.
+
+The result is a simple function that is still an accurate approximation of the
+number of computer instructions executed for lists of various LARGE sizes. It
+consists of a constant multiplied by some function of N (here N and N**2, but
+other functions are possible too).
+
+We now will explain another rationale for dropping the constant in front of N
+and N**2, and classifying these algorithms as O(N) growing at a linear rate and
+O(N**2) growing at a quadratic rate. Again O means "grows on the order of",
+so O(N) means grows on the order of N and O(N**2) means grows on the order of
+N**2.
+
+1) If we assume that every instruction in the computer takes the same amount
+   of time to execute. Then the time taken for maximum is about 14N/speed and
+   time for sort is about 8N**2/speed. We should really think about these
+   formulas as (14/speed)N and (8/speed)N**2. We know the 14 and 8 came from
+   the number of instructions inside loops that Python needed to execute: but a
+   different Python interpreter (or a different language) might generate a
+   different number of instructions and therefore a different constant. Thus,
+   this number is based on TECHNOLOGY, and we want our analysis to be
+   independent of technology. And, of course, "speed" changes based on
+   technology too.
+
+Since we are trying to come up with a "science" of algorithms, we don't want
+our results to depend on technology, so we are also going to drop the constant
+in front of the biggest term as well. For the reason explained above (relating
+to instructions generated by Python and the speed of the machine), this number
+is based solely on technology.
+
+Here is another justification for not being concerned with the constant in
+front of the biggest term.
+
+2) A fundamental question that we want answered about any algorithm is, "how
+   much MORE resources does it need when solving a problem TWICE AS BIG". In
+   maximum, when N is big (so we can drop the +9 without losing much accuracy)
+   the ratio of time to solve solve a problem of size 2N to the time to solve a
+   problem of size N is easily computed:
+
+    Imaximum(2N)     14(2N)
+   -------------- ~ -------- ~ 2
+    Imaximum(N)      14 N
+
+   The ratio is a simple number (no matter how many instructions are in the
+   loop, since the constant 14 appears as a multiplicative factor in both the
+   numerator and denominator, so in division it cancels itself out).  So, we
+   know for this code, if we double the size of the list, we double the number
+   of instructions that maximum executes to solve the problem, and thus double
+   the amount of time (for whatever the speed of the computer is).
+
+   Thus, the constant 14 is irrelevant when asking this "doubling" question. 
+
+   Likewise, for sorting we can write
+
+    Isort(2N)     8(2N)**2
+   ----------- ~ ---------- ~ 4
+    Isort(N)      8 N**2
+
+   Again, the ratio is is a simple number, with the constant (no matter what it
+   is, disappearing).  So, we know for this code that if we double the size of
+   the list, we increase by a factor of 4 the number of instructions that are
+   executed, and thus increase by a factor of 4 the amount of time (for
+   whatever the speed of the computer is).
+
+   Thus, the constant 8 is irrelevant when asking this "doubling" question. 
+
+   Note if we didn't simplify, we'd have
+
+    I(2N)     8(2N)**2 + 12(2N) + 6     32N**2 + 24N + 6
+   ------- = ----------------------- = -----------------------
+    I(N)      8N**2 + 12N + 6            8N**2 + 12N + 6
+
+   which doesn't simplify easiy; although, as N-&gt;inifinty, this ratio gets
+   closer and closer to 4 (and is very close even for small-sized problems).
+
+As with air-resistance and friction in physics, typically ignoring the
+contribution of these negligible factors (for big, slow-moving objects) allows
+us to quickly solve an approximately correct problem.
+
+Using big-O notation, we say that the complexity class of the code to find the
+maximum is O(N). The big-O means "grows on the order of" N, which means a
+linear growth (double the input size, double the time). For the sorting code,
+its complexity class is O(N**2), which means grows on the order of N**2, which
+means a quadratic growth rate (double the input size, quadruple the time).
+
+----------
+IMPORTANT: A Quick way to compute the complexity class of an algorithm
+
+To analyze a Python function's code and compute its complexity class, we
+approximate the number of times the most frequently executed statement is
+executed, dropping all the lower (more slowly growing) terms and dropping the
+constant in front of the most frequently executed statement (the fastest
+growing term). We will show how to do this much more rigorously in the next
+lecture.
+
+The maximum code executes the if statement N times, so the code is O(N). The
+sorting code executes the if statement N(N-1)/2 times (we will justify this
+number below), which is N**2/2 - N/2, so dropping the lower term and the
+constant 1/2, yields a complexity class of O(N**2) for this code.
+----------
+
+------------------------------------------------------------------------------
+
+Comparing Algorithms by their complexity classes
+
+Primarily from this definition we know that if two algorithms, a and b, both
+solve some problem, and a is in a lower complexity class than b, then for all
+BIG ENOUGH N, Ta(N) parameters/copying a reference | T(2N) = T(N)
+O(LogN) | binary searching of a sorted list		| T(2N) = c + T(N)
+O(N)	| linear searching a list (the in operator)	| T(2N) = 2T(N)
+O(NLogN)| Fast sorting					| T(2N) = cN + 2T(N)
+
+  Fast algorithms come before here; NLogN grows a bit more slowly than linearly
+  (because logarithms grow so slowly compared to N) and nowhere near as fast as
+   O(N**2)
+
+O(N**2) | Slow sorting; scanning N times list of size N | T(2N) = 4T(N)
+O(N**3) | Slow matrix multiplication		        | T(2N) = 8T(N)
+O(N**m) | for some fixed m: 4, 5, ...			| T(2N) = 2**mT(N)
+
+  Tractable algorithms come before here; their work is polynomial in N.
+  In the complexity calss below N is in an exponent.
+
+O(2**N) | Finding boolean values that satisfy a formula | T(2N)=2**N T(N)
+
+For example, for an O(N**2) algorithm, doubling the size of the problem
+quadruples the time required: If T(N) ~ cN^2 then T(2N) ~ c(2N)**2 = c4N**2
+= 4cN**2 = 4T(N).
+
+Note that in Computer Science, logarithms are mostly taken to base 2. (Remember
+that algorithms and logarithms are very different terms). All logarithms are
+implicitly to base 2 (e.g., Log N = Log2 N). You should memorize and be able to
+use the following facts to approximate logarithms without a calculator.
+
+Log 1000 ~ 10
+  Actually, 2**10 = 1,024, 2**10 is approximatley 1,000 with  

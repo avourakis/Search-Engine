@@ -1,0 +1,159 @@
+ ICS 33 Summer 2013, Assignment #0: The ICS 33 Development Environment: Installation and Configuration on Windows<body>
+
+ 
+
+ 
+ICS 33 Summer 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 33 Summer 2013 
+   Assignment #0:  The ICS 33 Development Environment  
+   Installation and Configuration on Windows 
+
+ 
+
+ 
+
+  Introduction 
+
+ This document explains how to install the ICS 33 development environment on a machine running Windows XP, Windows Vista, Windows 7, or Windows 8.  You'll need to be sure you pay attention to small details as you follow through them; as with many technical tasks, misspelling words, leaving out punctuation, or other seemingly minor mistakes can have fairly major consequences. 
+
+ 
+
+ 
+
+  Step 1: Show file name extensions 
+
+ The first step is not to install a software package at all, but to reconfigure a Windows default that is fine for everyday users, but very troublesome for those of us who write programs or do other serious work.  By default, when Windows displays a list of filenames (e.g., in Windows Explorer or on the desktop), it hides the "file name extension" (i.e., the part of the filename that follows the last dot), so that a file named  alex.txt  will simply have its name displayed as  alex  instead, with an icon used to visually differentiate one "type" of file from another. 
+
+ This default is sure to cause us problems in this course — and routinely causes my students problems in courses where there is programming involved — so everyone needs to turn this off, which is easy to do: 
+
+   Windows 8:  From the desktop, start File Explorer by holding down the Windows key and pressing E.  In the ribbon at the top of the window, click  View , then select  Options , then choose  Change folder and search options  from the dropdown menu.  On the window that pops up, click the  View  tab, uncheck  Hide extensions for known file types , then click  OK . 
+    Windows 7 or Vista:  Start Windows Explorer by holding down the Windows key and pressing E.  Near the upper left corner of the window is a button that says  Organize .  Click that button and select  Folder and Search Options  from the dropdown menu.  On the window that pops up, click the  View  tab, uncheck  Hide extensions for known file types , then click  OK . 
+    Windows XP:  Start Windows Explorer by holding down the Windows key and pressing E.  From the  Tools  menu, select  Folder Options... .  On the window that pops up, click the  View  tab, uncheck  Hide extensions for known file types , then click  OK . 
+   Seriously!  Do this!   You'll be very glad you did; as a programmer, it is important to see filenames as they are. 
+
+ 
+
+ 
+
+  Step 2: Downloading and installing Python 
+
+ If you've taken previous coursework in Python, you may already have a version of Python installed on your machine, but it will be important that you use the right version in this course.  What you need is  Python 3.3.2 32-bit for Windows , which is available at the following link. 
+
+   Python 3.3.2 32-bit for Windows  
+   Before you run this , it's not a bad idea to uninstall any other version you already have installed.  Different versions of Python can safely coexist on a system, but they do cause some confusion, so if you don't have a specific reason to maintain multiple versions, it's easiest to keep just one.  You can uninstall Python just as you would any other Windows application (e.g., Add/Remove Programs, Programs and Features, etc., depending on your Windows version). 
+
+ The file linked above is a standard Windows installer, so you should be able to simply download and run it.  The most important question you'll be asked along the way is where you want to install Python; otherwise, accept all defaults.  I'd suggest accepting the default installation path of  C:\Python33 , but anything will do, so long as (a) the path does not contain any spaces, and (b) you make a note of what you chose, as you'll need to refer back to that location again.  We'll call that location your  Python root  from now on. 
+
+ 
+
+ 
+
+  Step 3: Configuring your Python installation 
+
+ Starting a Command Prompt 
+
+ Many of you may never have used a Command Prompt in Windows before, but we'll occasionally have use for it in this course.  Whenever I specify that you should start a Command Prompt on any version of Windows, you can most easily do this by holding down the Windows key and pressing R, which will pop up a dialog asking you what you would like to run.  Type  cmd  into the text field and click  OK .  (You can also create shortcuts, find it in your Start Menu, or pin it to your taskbar, but  cmd  will work if you have no other way to do it.) 
+
+ Understanding the PATH environment variable
+
+  A Command Prompt offers a way to navigate the files on your hard drive manually and run programs and other commands by typing their names.  For example, there is a command-line version of the Python interpreter; the program is called  python.exe , and you can execute it by simply typing its name (and the .exe is not necessary, so you can just type  python ).   However , you can only run a program from the Command Prompt if Windows can find it.  Rather than searching your entire hard drive for the program, it will search only in the places it's been told to search.  The  PATH  environment variable specifies all of the folders that will be searched. 
+
+ Because we'll occasionally need to run Python programs from a Command Prompt, we'll need to configure the PATH environment variable to include a couple of new folders in the search. 
+
+ Configuring your PATH environment variable 
+
+ The PATH environment variable is a list of folders, separated by semicolons, in which Windows will look for a program whenever you try to execute one by typing its name at a Command Prompt.  You can see the current value of your PATH by typing this command at a Command Prompt: 
+
+  
+echo %PATH%
+  
+
+ Notice that you'll get back a list of folders separated by semicolons, so you might see something like this — though it will be different, depending on what software you've installed previously.  Mine has 20 or so entries, some of which look like this: 
+
+  
+C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\WiFi\bin\
+  
+
+ Our goal is to add two new folders to this list, while being sure to remove previously-installed versions of Python from it (if there are any). 
+
+ The easiest way to permanently change environment variables is to bring up the built-in environment variable editor in Windows.  How you get to this editor is slightly different on different versions of Windows. 
+
+   On Windows 8:  Press the Windows key and type  Control Panel  to search for the Windows control panels.  Once you've selected the Control Panel, select  View by: Large Icons , then click on  System .  In the window that pops up, click the  Advanced System Settings  link, then click the  Environment Variables...  button. 
+    On Windows 7 or Vista:  Click the Start button in the lower-left corner of the screen, move your mouse over  Computer , right-click, and select  Properties  from the pop-up menu.  Click the  Advanced System Settings  link, then click the  Environment Variables...  button. 
+    On Windows XP : Right-click the  My Computer  icon on your desktop and select  Properties .  Select the  Advanced  tab, then click the  Environment Variables...  button. 
+  Once you've brought up the environment variable editor, you'll do the same thing regardless of which version of Windows you're running.  Under  System variables  in the bottom half of the editor, find a variable called  PATH .  If there is is one, select it, click  Edit... .  Assuming your Python root is  C:\Python33 , add these two directories to your path (and make sure you get the semicolons right; there should be a semicolon  between  each folder in the list): 
+
+  
+C:\Python33
+C:\Python33\Scripts
+  
+
+ Also, if you see folders belonging to another Python installation (e.g.,  C:\Python32 ), remove them to avoid conflicts.  After making your edits, press  OK . 
+
+ If you don't have a PATH environment variable at all, add it by clicking  New... , specifying the  Variable name  as  PATH , and specifying its value as follows: 
+
+  
+C:\Python33;C:\Python33\Scripts
+  
+
+ Testing your Python installation 
+
+ Now that you've come this far, you should be ready to test your Python installation.  Start a Command Prompt and type the command  python  and hit the  Enter  key.  You should see this show up in the Command Prompt window as a result: 
+
+  
+Python 3.3.2 (v3.3.2:d047928ae3f6, May 16 2013, 00:03:43) [MSC v.1600 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt;
+  
+
+ If so, type  quit()  and press Enter to stop the interpreter, then close the Command Prompt window; you're good to go and are ready to launch IDLE! 
+
+ If you see a different version, that means you have another version of Python installed and its folder appears earlier in your PATH environment variable than the new one does.  If instead you see an error message like this (note that it varies a bit from one version of Windows to another): 
+
+  
+'python' is not recognized as an internal or external command,
+operable program or batch file.
+  
+
+ then the likeliest cause is that you didn't configure your PATH environment variable correctly, so Windows isn't searching for  python.exe  in the right place. 
+
+ Starting IDLE 
+
+ Lastly, you'll want to be sure that you try starting IDLE and verify that it, too, is running the right version of Python.  The easiest way to launch IDLE is to find it in your Start Menu — there should be a program group called  Python 3.3 , in which you'll find a link called  IDLE (Python GUI) .  Click that link; you should see a window pop up, in which will appear the same message you saw when you started Python from the Command Prompt: 
+
+  
+Python 3.3.2 (v3.3.2:d047928ae3f6, May 16 2013, 00:03:43) [MSC v.1600 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt;
+  
+
+ If so, you're ready to roll! 
+
+ 
+
+ 
+
+  Congratulations! 
+
+ Nice work!  You should now be ready to proceed with your work this quarter.  We will likely need additional tools later in the quarter, but this will be sufficient to get started. 
+
+ 
+
+ 
+
+   Originally written by Alex Thornton, Winter 2013. 
+  
+
+</body> 

@@ -1,0 +1,239 @@
+ Gliders and Wolfram's Classification<body>
+      Wolfram's Classification of Cellular Automata  
+
+      In his influential paper "University and Complexity in
+    Cellular Automata"  [Physica D 10 (1984) 1-35; all page
+    numbers refer to the reprint in  Cellular Automata and
+    Complexity , Addison-Wesley 1994, pp. 115-157] ,
+    Stephen Wolfram proposed a classification of cellular automaton
+    rules into four types, according to the results of evolving the
+    system from a "disordered" initial state:  
+
+       Evolution leads to a homogeneous state.  
+
+        Evolution leads to a set of separated simple stable
+      or periodic structures.  
+
+        Evolution leads to a chaotic pattern.  
+
+        Evolution leads to complex localized structures,
+      sometimes long-lived.  
+       This classification was initially only for
+    one-dimensional cellular automata, but in "Two-Dimensional
+    Cellular Automata"  [with N. H. Packard, J. Stat. Phys.
+    38 (1985) 901-946, reprinted in  Cellular Automata and
+    Complexity  pp. 211-249]  he extended it to
+    two-dimensional automata.  
+
+      Intuitively, according to this classification, one
+    should only expect gliders, Turing-universality, and similar
+    complex behavior in class 4 automata. Indeed, after discussing
+    the existence of glider-like structures in a class 4 automaton,
+    and their resemblance to structures in Conway's Life, Wolfram
+    writes  [p.151]  "These analogies lead to the
+    speculation that class 4 automata are characterized by the
+    capability for universal computation."  
+
+      However, there is a major flaw in this reasoning:
+    because the classification is based on evolution from an
+    unordered state, there is little reason for it to characterize
+    behavior on initially ordered states. Our investigation has
+    turned up gliders in systems that would likely be classified in
+    each of the four classes: e.g. ( in
+    standard semitotalistic rule notation )  B367/S3678 
+    (class 1),  
+    B3/S256  or  B3/S234  (both
+    class 2 although having very different behavior),  
+    B345678/S12468  (class 3), and  B3/S23  (class 4).
+    This result throws the usefulness of this classification system
+    into question.  
+
+      The existence of a glider should automatically place a
+    system into class 4, since such a complex localized structure
+    would also arise from sufficiently large disordered initial
+    conditions, however "sufficiently large" may be so huge that
+    one can not in practice discover such structures by chance.
+    Wolfram's classification may then be worse than useless: it may
+    be ill-defined, since there is no quick test for distinguishing
+    class 4 rules from other rules.  
+
+      In "Two-Dimensional Cellular Automata", Wolfram
+    mentions a number of particular rules. How do they stack up in
+    terms of his classification and the existence of
+    gliders?  
+
+        Rule  
+
+	  Ref.  
+
+	  Classification    
+
+	  Gliders?  
+          
+	B236/S0468  
+
+	 Figs. 7(a), 13(g)   
+
+	 Class 3 
+
+	 No 
+          
+	B257/S27  
+
+	 Fig. 7(b) 
+
+	 
+	 
+
+	 Yes 
+          
+	B13456/S01356  
+
+	 Fig. 7(d) 
+
+	 
+	 
+
+	 No 
+          
+	B1/S012345678  
+
+	 Fig. 7(e) 
+
+	 
+	 
+
+	 No 
+          
+	B137/S45678  
+
+	 Fig. 7(f) 
+
+	 
+	 
+
+	 No 
+          
+	B34/S03456  
+
+	 Fig. 7(g) 
+
+	 
+	 
+
+	 Unknown 
+          
+	B0578/S12456  
+
+	 Fig. 7(h) 
+
+	 
+	 
+
+	 No 
+          
+	B0578/S045  
+
+	 Fig. 7(i) 
+
+	 
+	 
+
+	 No 
+          
+	B378/S012345678    
+
+	 Fig. 9(a) 
+
+	 
+	 
+
+	 No 
+          
+	B3/S234  
+
+	 Figs. 9(b), 13(b) 
+
+	 Class 2 
+
+	 Yes 
+          
+	B367/S2346  
+
+	 Fig. 9(c) 
+
+	 
+	 
+
+	 Yes 
+          
+	B018/S018  
+
+	 Fig. 13(c) 
+
+	 Class 2 
+
+	 No 
+          
+	B123567/S0238  
+
+	 Fig. 13(f) 
+
+	 Class 3 
+
+	 No 
+          
+	B135/S135  
+
+	 Fig. 13(h) 
+
+	 Class 3 
+
+	 No 
+          
+	B3/S23  
+
+	 Fig. 13(i) 
+
+	 Class 4 
+
+	 Yes 
+          (When I could find a classification in Wolfram's
+    paper, I listed it above; otherwise the "Classification" column
+    is blank.)  
+
+      A simpler classification scheme explains the data
+    better than Wolfram's:  
+
+        Contraction impossible.  If a rule includes B1,
+      any pattern expands to
+      infinity in all directions, no gliders can exist, and the
+      question of whether a pattern lives or dies can not be
+      universal. Similarly, if a rule (such as  
+      B378/S012345678  above) includes S01234, or includes
+      B23/S0, the bounding box of a pattern can never shrink, and
+      no pattern can die or move. However,  
+      as Tim Tyler has pointed out , universal computation could
+      still occur in other ways; for instance the boundary of an
+      expanding pattern could simulate the behavior of a 1d
+      universal automaton.  
+
+         Expansion impossible.  If a
+      rule does not include B2 or B3, any pattern remains within
+      its initial bounding box, no gliders can exist, and again the
+      question of whether a pattern lives or dies is not universal
+      (it can be solved in at most exponential time). Some rules
+      with B3 (such as  B345/S5 ,
+      "longlife") appear to exhibit similar behavior of remaining
+      inside a region bounded by the dimensions of the original
+      pattern.  
+
+         Both expansion and contraction possible. 
+      Only in the remaining cases can gliders exist. Our
+      investigations show that a large fraction of the remaining
+      cases do indeed support gliders; much more work would be
+      required to show that they are universal.  
+       
+        Cellular automata  ,  D. Eppstein  
+     
+  </body> 

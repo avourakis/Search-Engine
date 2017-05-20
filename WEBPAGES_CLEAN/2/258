@@ -1,0 +1,143 @@
+ PDF Fonts<body>
+
+   Use Type-1 Fonts in PDF Papers    Chen
+Li  
+Department of Computer Science, UC Irvine 
+May 11, 2005 
+ 
+
+ 
+Recently many publishers have strict requirements about the fonts used
+in camera-ready paper submissions.  Specifically, they require authors
+to substitute Adobe Postscript Type 1 fonts for any bitmap fonts
+(e.g., Postscript Type 3 bitmapped fonts, PCL fonts, MacOS bitmap
+fonts, Windows vector (outline) fonts). Being the Proceedings Chair of
+ ACM PODS 2005 , I
+set up the  instructions  for
+camera-ready submissions.  In the process of editing the proceedings,
+ I saw many common problems for authors to meet such a requirement.
+I wrote this page so that it may benefit other authors with similar
+problems.  As always, comments are very welcome.  
+
+     Font Requirements 
+     Why Such Requirements? 
+     How do you tell what fonts your pdf file is using? 
+     LaTeX  dvips  command to produce PDF files using Type 1 fonts only 
+     Common Problems 
+       Use the right  dvips  option 
+         Missing fonts 
+         Type 3 fonts from figures (xfig) 
+         Related Links 
+     
+ Font Requirements 
+
+The following are some general font requirements by ACM.
+ Authors should substitute Adobe Postscript Type 1 fonts for any
+bitmap fonts (e.g., Postscript Type 3 bitmapped fonts, PCL fonts,
+MacOS bitmap fonts, Windows vector (outline) fonts). Bitmapped fonts
+display poorly on screen in PDF files and sometimes cause printing
+problems.  Whenever possible, please substitute Type 1 Postscript
+fonts for Type 3 fonts in LaTEX files, then generate PS or PDF.  LaTEX
+FILES: PDFs generated from LaTEX files generally do not display well
+on screen because the fonts that are generated from LaTEX for the PDFs
+are bitmap images. 
+
+
+
+
+   
+ Why Such Requirements? 
+
+The simple reason for having these requirements is to make sure your
+PDF papers can be displayed nicely when they are browsed by people.
+Type 1 fonts are displayed much  better than Type 3 fonts, even
+though the paper in Type 1 fonts may print the same as the one in Type
+3 fonts.  Click  this page  to see
+good examples to illustrate the quality difference of different
+fonts.
+I copied their examples here. Here are examples from pdf files viewed
+in Acrobat Reader at 400% zoom. 
+
+      Default LaTeX/dvips    behavior 
+
+      Package times.sty  (part of PSNFSS)   forces use of  Postscript fonts 
+       Outline fonts from AMS    embedded in PDF file 
+         
+ How do you tell what fonts your pdf file is using? 
+
+When you open your PDF file using  Adobe Acrobat Reader ,
+go to "File --&gt; Document Properties --&gt; Fonts" to see the fonts used
+in your PDF file.   Make sure to click "List All Fonts" to see all the
+fonts.  You may also bring up this box by typing "Ctrl+Alt+F".  The
+following is an example. 
+
+    
+
+   
+ LaTeX  dvips  command to produce PDF files using Type 1 fonts only 
+
+I used the following dvips command (in MiKTeX) to produce PDF files
+using Type 1 fonts only: 
+
+     dvips -t letter -Ppdf -G0 -j0 mypaper.dvi -o mypaper.ps  
+ 
+Check  this
+link  for more information about the options.
+
+    
+ Common Problems 
+
+If your PDF file includes type 3 fonts, you may check the following to
+get rid of such fonts.
+
+  
+ 1. Use the right  dvips  option 
+
+Make sure to use the right options in the  dvips 
+command. Try the following:  
+     dvips -t letter -Ppdf -G0 -j0 mypaper.dvi -o mypaper.ps   
+
+  
+  2. Missing fonts 
+
+If your LaTeX environment doesn't have all the necessary fonts used by
+your file, when you use  dvips , it will produce a file called:
+
+    missfont.log   
+
+Check if this file exists.  If it does, it means your environment
+misses some fonts, and needs to install them.  Check  this
+link  for more information.
+
+  
+  3. Type 3 fonts from figures (xfig) 
+
+Often type-3 fonts are introduced from figures.  In particular, I
+found that eps files produced by xfig can introduce type-3 fonts.  In
+particular, according to  http://leon.bottou.com/nips/ , 
+ 
+    * xfig "patterned" shapes are implemented with bitmap fonts.
+      Use "solid" shapes instead.
+ 
+
+As an example, the following two xfig files both draw the same circle.
+The file "pattern.fig" uses a "patterned" shape to draw the circle,
+and its corresponding "pattern.pdf" is using a type-3 font.  The file
+"solid.fig" uses a "slide" shape to draw the circle, and its
+corresponding "slide.pdf" is not introducing any type-3 font. 
+
+A circle using a patterned shape (type-3 font introduced)
+    pattern.fig 
+    pattern.eps 
+    pattern.pdf 
+   A circle using a solid shape (type-3 font not introduced)
+    solid.fig 
+    solid.eps 
+    solid.pdf 
+  </body>    Related Links   Computer Modern and AMSFonts in Type 1 (PostScript) Form,  http://www.ams.org/tex/type1-fonts.html 
+
+   Getting Good PDF from LaTeX,  http://web.gat.com/diag/pci/ltx2pdf.html 
+
+   Type-3 fonts in xfig,  http://leon.bottou.com/nips ,
+ Search for "xfig"
+   

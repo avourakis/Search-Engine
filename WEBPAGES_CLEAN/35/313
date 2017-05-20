@@ -1,0 +1,73 @@
+ Kernel::LessRotateCCW_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Kernel::LessRotateCCW_2  
+
+
+A model for this must provide:
+ 
+
+    
+         
+    bool  
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Point_2  p,  Kernel::Point_2  q,  Kernel::Point_2  r)     
+                
+    returns true iff the three points  p ,  q  
+and  r  form a left turn or if they are  collinear  and
+the distance of  q  to  p  is
+larger than the distance of  r  to  p , where  p  is the point
+passed to the object at construction.  Precondition:   p  does not lie in the interior of the segment  rq ,
+i.e.  p  is an extreme point with respect to  {p,q,r} .
+            
+
+  Refines  AdaptableFunctor  (with three arguments)
+ 
+
+    Next:    Kernel::LessSignedDistanceToLine_2   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

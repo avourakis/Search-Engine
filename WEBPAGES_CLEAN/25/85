@@ -1,0 +1,68 @@
+ /*
+  $Id: record.h 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/21/2006
+  Author: Rares Vernica 
+*/
+
+#ifndef _record_h_
+#define _record_h_
+
+#include "predicate.h"
+
+class Record: public Predicate 
+{
+public:
+  float est, relErr;
+  unsigned real;
+  unsigned cntCluster, cntPPDpair;
+
+  Record(): Predicate(), est(0), relErr(-1), real(0) {}
+  Record(string q, SimType d): Predicate(q, d), est(0), relErr(-1), real(0) {}
+  Record(string q, SimType d, float e, unsigned r): 
+    Predicate(q, d), est(e), real(r) {
+    setRelErr(); }
+  Record(string q, SimType d, float e, unsigned r, unsigned cntC, unsigned cntP): 
+    Predicate(q, d), est(e), real(r), cntCluster(cntC), cntPPDpair(cntP) {
+    setRelErr(); }
+  Record(Predicate p, float e):
+    Predicate(p), est(e), relErr(-1), real(0) {}
+  Record(Predicate p, float e, unsigned r): Predicate(p), est(e), real(r) {
+    setRelErr(); }
+  Record(Predicate p, float e, unsigned r, unsigned cntC, unsigned cntP):
+    Predicate(p), est(e), real(r), cntCluster(cntC), cntPPDpair(cntP) {
+    setRelErr();
+  }
+
+  bool operator==(const Record &amp;r) const {
+    return this == &amp;r || 
+      (est == r.est &amp;&amp; relErr == r.relErr &amp;&amp; real == r.real &amp;&amp; 
+       cntCluster == r.cntCluster &amp;&amp; cntPPDpair == r.cntPPDpair); 
+  }
+
+  void setRelErr();
+
+  ostream&amp; toWeka(ostream &amp;out);
+
+  friend ostream&amp; operator&gt;(istream &amp;in, Record &amp;r);
+};
+
+typedef vector VectRecord;
+typedef VectRecord::iterator VectRecordIt;
+
+ostream&amp; operator&gt;(istream &amp;in, VectRecord &amp;v);
+ostream&amp; vectRecordToWeka(ostream  &amp;out,  VectRecord  &amp;v);
+
+inline float recordGetEst(Record r) { return r.est; }
+inline float recordGetLen(Record r) { return static_cast(r.query.length()); }
+inline float recordGetThr(Record r) { return static_cast(r.dist); }
+
+typedef float recordFunc(Record);
+
+#endif
+ 

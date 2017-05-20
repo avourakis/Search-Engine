@@ -1,0 +1,639 @@
+ Relations<body>
+
+ 
+
+ 
+Relations
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+  A (binary)  relation 
+ R 
+between sets  X  and  Y 
+is a subset of  X × Y . 
+( X × Y  is a
+ Cartesian product .) 
+ 
+
+  Thus, a relation is a set of pairs. 
+ 
+
+  The interpretation of this subset
+is that it contains all the pairs for which the relation is true. 
+We write  xRy  if the relation is true for
+ x  and
+ y 
+(equivalently, if
+( x , y ) ∈  R ). 
+ 
+
+   X  and  Y  can be the same set,
+in which case the relation is
+said to be "on" rather than "between":
+ 
+
+  A (binary)  relation   R 
+on set  E 
+is a subset of  E × E . 
+( E × E 
+is a  Cartesian product .) 
+ 
+
+  Examples using  E ={0,1,2,3}:
+ 
+  {(0,0), (1,1), (2,2), (3,3)}.  This relation is =.
+   
+   {(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)}.  This relation is &lt;.
+   
+   {(0,0), (1,1), (1,0), (2,2), (2,1), (2,0), (3,3), (3,2), (3,1), (3,0)}. 
+    This relation is ≥.
+   
+  
+Relations may also be of other  arities . 
+An   n -ary relation 
+ R  between sets
+ X  1 , ... ,
+and
+ X  n 
+is a subset of the
+  n -ary product 
+ X  1 ×...× X  n ,
+in which case  R  is a set of
+ n -tuples. 
+ 
+
+
+ Some specific relations 
+
+ 
+The  empty relation  between sets
+ X  and  Y ,
+or on  E ,
+is the empty set  ∅ . 
+ 
+
+  The empty relation is false for all pairs. 
+ 
+
+ 
+The  full relation 
+(or  universal relation )
+between sets
+ X  and  Y 
+is the set  X × Y . 
+ 
+
+ 
+The  full relation  on set  E 
+is the set  E × E . 
+ 
+
+  The full relation is true for all pairs. 
+ 
+
+ 
+The  identity relation  on set
+ E 
+is the set
+{( x , x ) |  x  ∈  E }. 
+ 
+
+ 
+The identity relation is true for all pairs whose first and second element
+are identical. 
+ 
+
+
+ Examples 
+
+ 
+All these relations are definitions of the relation "likes"
+on the set {Ann, Bob, Chip}. 
+ 
+  Happy world 
+      In this world, "likes" is the full relation on the universe. 
+      Because it is full,
+      every person likes every other person,
+      including him- or herself. 
+      The extension of this "likes" relation is
+      {(Ann,Ann),(Ann,Bob),(Ann,Chip),(Bob,Ann),(Bob,Bob),(Bob,Chip),      (Chip,Ann),(Chip,Bob),(Chip,Chip)}. 
+     
+   Narcissistic world 
+      In this world, "likes" is the identity relation on the universe. 
+      Because it is the identity relation,
+      every person likes him- or herself, but no one else. 
+      The extension of this "likes" relation is
+      {(Ann,Ann),(Bob,Bob),(Chip,Chip)}. 
+     
+   Emptily unhappy world 
+      In this world, "likes" is the empty relation. 
+      Because it is empty,
+      no person likes any other person,
+      including him- or herself. 
+      The extension of this "likes" relation is
+      {}. 
+     
+  Properties of relations 
+
+ 
+Let  R  be a relation on
+ E , and let
+ x , y , z  ∈  E . 
+ 
+
+    A relation  R  is ...  if ... 
+        
+       A relation  R  is ...  if ... 
+     reflexive 
+        xRx    
+        
+       irreflexive 
+        xRy  implies  x≠y  
+     symmetric 
+        xRy  implies
+         yRx    
+        
+       antisymmetric 
+        xRy  and  yRx  implies
+       x=y  
+     transitive 
+        xRy  and  yRz  implies
+       xRz    
+        
+        
+       Examples using =, &lt;, and ≤ on integers:
+ 
+  = is reflexive (2=2)
+   
+   = is symmetric ( x =2 implies 2= x )
+   
+   &lt; is transitive (2&lt;3 and 3&lt;5 implies 2&lt;5)
+   
+   &lt; is irreflexive (2&lt;3 implies 2≠3)
+   
+   ≤ is antisymmetric
+    ( x ≤ y  and
+     y ≤ x  implies
+     x = y )
+   
+   Examples using Ann, Bob, and Chip:
+ 
+   Happy world  
+      "likes" is reflexive, symmetric, and transitive. 
+      (It is an  equivalence  relation.) 
+     
+    Narcissistic world  
+      "likes" is reflexive, symmetric, antisymmetric, and transitive. 
+      (It is both an  equivalence  relation
+      and a  non-strict order  relation,
+      and on this world produces an
+       antichain .) 
+     
+    Emptily unhappy world  
+      "likes" is not reflexive, and is trivially irreflexive,
+      symmetric, antisymmetric, and transitive. 
+     
+   Circularly
+  unhappy world 
+        This world's extension of "likes" is
+      {(Ann,Bob),(Bob,Chip),(Chip,Ann)}. 
+      "likes" is irreflexive, antisymmetric, and not transitive. 
+     
+   Somewhat-happy world with
+  2-circuit 
+      This world's extension of "likes" is {(Ann,Bob),(Bob,Ann),(Chip,Chip)}. 
+      "likes" is neither reflexive nor irreflexive, but is both
+      symmetric and transitive.. 
+     
+   Happy
+  world with 2-circuit 
+      This world's extension of "likes" is {(Ann,Ann),(Ann,Bob),(Bob,Ann),(Bob,Bob),(Chip,Chip)}. 
+      "likes" is reflexive, symmetric, and transitive.. 
+      (It is an  equivalence  relation.) 
+     
+  Equivalence relations 
+
+  An  equivalence relation 
+is a relation that is
+ reflexive ,
+ symmetric , and
+ transitive . 
+ 
+
+ Example:  = is an equivalence relation,
+because = is reflexive, symmetric, and transitive. 
+ 
+
+  An equivalence relation  partitions 
+its domain  E  into disjoint
+ equivalence classes . 
+ 
+  Each equivalence class contains a set of elements of  E 
+    that are equivalent to each other,
+    and all elements of  E  equivalent to
+    any element of the equivalence class
+    are members of the equivalence class. 
+   
+   The equivalence classes are
+     disjoint : 
+    there is no  x  ∈  E 
+    such that  x  is in more than one equivalence class. 
+   
+   The equivalence classes  exhaust  E: 
+    there is no  x  ∈  E 
+    such that  x  is in no equivalence class. 
+   
+   Any element of an equivalence class may be its
+     representative ;
+    the representative stands for all the members of its equivalence class. 
+   
+  Examples:
+ 
+  Smaller circle plus dot happy world 
+      This world's "likes" is an equivalence relation,
+      and so it induces a partition of {Ann,Bob,Chip}. 
+      The partition consists of two equivalence classes,
+      {Ann,Bob} and {Chip}. 
+      These equivalence classes are  disjoint 
+      (their intersection is empty)
+      and  exhaustive 
+      (every element is in an equivalence class). 
+     
+    Narcissistic world  
+      This world's "likes" is also an equivalence relation,
+      inducing a partition consisting of three singleton equivalence classes
+      {Ann}, {Bob}, and {Chip}
+      (clearly disjoint and exhaustive). 
+     
+    Happy world  
+      This world's "likes" is also an equivalence relation. 
+      The partition it induces consists of one equivalence class,
+      {Ann,Bob,Chip} (exhaustive and trivially disjoint). 
+     
+  Order relations 
+
+  An  order 
+(or  partial order )
+is a relation that is
+ antisymmetric 
+and
+ transitive . 
+ 
+
+ 
+Examples: 
+ 
+  ≤ is an order relation on numbers. 
+   
+    ⊆  is an order relation on sets.
+   
+   The prefix relation on
+     binary strings 
+    is an order relation.
+   
+    The symbol
+     ⊑ 
+    is often used to represent an arbitrary partial order. 
+   
+  
+In mathematics and formal reasoning,
+order relations are commonly allowed to include equal elements
+as well. 
+However, for some authors and
+in everyday usage,
+orders are more commonly
+ irreflexive ,
+so that "John is taller than Thomas"
+does not include the possibility that John and Thomas are the same height. 
+ 
+
+ 
+A   strict order  is one that is
+ irreflexive  and
+ transitive ;
+such an order is also trivially  antisymmetric 
+because there is no  x  and  y 
+such that  xRy  and  yRx . 
+ 
+
+ 
+A   non-strict order 
+is one that is
+ reflexive ,
+ antisymmetric ,
+and
+ transitive . 
+Any order we discuss will be considered non-strict
+unless specifically stated otherwise. 
+ 
+
+ 
+Examples: 
+ 
+   &lt; is strict, ≤ is non-strict. 
+   
+     ⊂  is strict,  ⊆  is non-strict. 
+   
+    "taller than" is strict (no one is taller than him- or herself). 
+   
+  
+An order relation  R  on  E 
+is a  total order 
+if either  xRy  or  yRx 
+for every pair of elements
+ x , y  ∈  E . 
+ 
+
+ 
+An order relation  R  on  E 
+is a  partial order 
+if there is a pair of elements
+ x , y  ∈  E 
+for which neither  xRy  nor  yRx . 
+ 
+
+ 
+Let  R  be an order relation on  E 
+and let
+ x , y  ∈  E . 
+ x  and  y  are
+ incomparable  under R
+if neither  xRy  nor  yRx . 
+We write this as  x || y 
+(or  x # y ). 
+From the definitions,
+we can see that a  total order 
+is one for which no two elements are incomparable,
+and a  partial order 
+is one for which at least two elements are incomparable. 
+ 
+
+  Examples: 
+ 
+   &lt; on the integers is a total order. 
+    For any two integers  x  and  y ,
+    either
+     x &lt; y 
+    or
+     y &lt; x . 
+   
+     ⊂  on the  powerset  of the integers
+    is a partial order;
+    it is not total. 
+    There are many incomparable sets in this (and any other) powerset. 
+    For example,
+    {1,4,9}⊄{1,3,5} and
+    {1,3,5}⊄{1,4,9}, so
+    these two sets are incomparable and we write {1,4,9}||{1,3,5}
+    or {1,4,9}#{1,3,5}. 
+   
+  Constructing a relation from other relations 
+
+  Let  R  be a relation from  X 
+to  Y  and
+S be a relation from  Y  to  Z . 
+ 
+
+ 
+The   composition 
+(or  join )
+of  R  and  S ,
+written  R . S ,
+is the relation
+{( x , z ) ∈  X × Z  |  xRy  and ySz for some  y  ∈  Y }. 
+ 
+
+ 
+A function-style notation
+ S ○ R 
+is also sometimes seen,
+but is quite inconvenient for relations. 
+The notation  R . S 
+is easier to deal with
+as the relations are named in the order that leaves them adjacent
+to the elements that they apply to
+(thus  x ( R .S) z 
+because  xRy 
+and  ySz   
+for some  y ). 
+ 
+
+ 
+The  product 
+of two relations  R  and  S 
+is the relation
+{( w,x,y,z ) |  wRx ∧ yRz } }
+ 
+
+
+ 
+The  converse 
+(or  transpose )
+of  R ,
+written  R   −1  ,
+is the relation
+{( y , x ) |  xRy }.   
+ 
+
+ 
+The  closure 
+of a relation  R 
+is the relation
+{( x,z ) | ( x,y )  ∈   R ∧( y,z )  ∈   R }. 
+ 
+
+ 
+The  transitive closure 
+of  R 
+is the smallest
+ transitive  relation  S 
+such that  R  ⊆  S . 
+You can obtain the transitive closure of  R 
+by  closing  it,
+closing the result,
+and continuing to close the result of the previous closure
+until no further tuples are added. 
+ 
+
+ 
+Because relations are sets (of pairs),
+all the operations on sets
+also apply to relations. 
+ 
+
+ 
+The   intersection  of
+ R  and
+ S , written
+ R      S ,
+is the relation
+{ x ( R      S )y |  xRy  and xSy}.  
+ 
+
+ 
+The   union  of  R  and  S ,
+written  R  ∪  S ,
+is the relation
+{ x ( R  ∪  S )y |  xRy  or  xSy }.
+ 
+
+ 
+The   difference  of
+ R  and  S ,
+written  R − S  or
+ R  \  S ,
+is the relation { x ( R − S ) y  |  xRy  but not  xSy }.
+ 
+
+
+ Examples 
+
+ 
+Let
+ 
+    X ={Airplane,Pool,Restaurant}
+   
+     Y ={Goggles,Heels,Seatbelt,Tuxedo}
+   
+     Z ={Buckle,Pocket,Strap}
+   
+     R  be the relation "is where one wears",
+    with extension
+    {(Airplane,Seatbelt),(Airplane,Tuxedo),(Pool,Goggles),(Restaurant,Heels),(Restaurant,Tuxedo)}
+   
+     S  the relation "can have a",
+    with extension
+    {(Goggles,Strap),(Heels,Buckle),(Heels,Strap),(Seatbelt,Buckle),(Seatbelt,Strap),(Tuxedo,Pocket)}
+   
+   Composition 
+       R.S  is
+      {(Airplane,Buckle), (Airplane,Pocket), (Airplane,Strap),
+      (Pool,Buckle), (Pool,Strap),
+      (Restaurant,Buckle), (Restaurant,Pocket), (Restaurant,Strap)}. 
+     
+   Converse 
+       R  -1  is
+      {(Goggles,Pool),(Heels,Restaurant),(Seatbelt,Airplane),(Tuxedo,Airplane),(Tuxedo,Restaurant)}.
+     
+  Concepts sometimes confused with each other 
+
+ 
+ Transitivity 
+and
+ composition 
+may seem similar: 
+both are defined using  x ,  y , and
+ z , for one thing. 
+But they are unrelated: 
+transitivity is a property of a single relation, while
+composition is an operator on two relations that produces a third relation
+(which may or may not be transitive). 
+ 
+
+ 
+ Symmetric  and  converse 
+may also seem similar;
+both are described by swapping the order of pairs. 
+But they are also unrelated: 
+symmetry is a property of a single relation,
+while
+converse is an operator that takes a relation and produces
+another relation
+(which may or may not be symmetric). 
+It is true, however,
+that the union of a relation with its converse is a symmetric relation. 
+ 
+
+
+ Relations on relations 
+
+ 
+Because relations are sets (of pairs),
+the relations on sets
+also apply to relations. 
+ 
+
+ 
+Let  E  be a set and  R  and
+ S  be relations on  E . 
+ 
+
+ 
+ R  and  S  are
+ equal  if
+for every
+ x , y  ∈  E ,
+ xRy  iff  xSy .
+ 
+
+ 
+ R  is a   subset  of
+ S  if
+for every
+ x , y  ∈  E ,
+ xRy  implies  xSy .
+ 
+
+ 
+Examples:
+ 
+   " Happy world " is equal to the full relation. 
+   
+    " Smaller circle plus dot
+    somewhat-happy world likes "
+    is a subset of "Smaller circle plus dot happy world likes". 
+   
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Sep23We10:12 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

@@ -1,0 +1,180 @@
+ 
+Visitor (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+  
+ 
+formulaVisited 
+ 
+Interface Visitor 
+   All Known Implementing Classes:     VisitorEvaluate ,  VisitorToString  
+     public interface  Visitor     
+A visitor to formulas.
+  The visitor traverses the syntax tree of a formula,
+  and calculates some result for each kind of formula.
+  For kinds of formulas that have subformulas,
+  the results for the subformulas are combined
+  into the result for the formula.
+  Each formula's result is returned from the visit() method.
+  
+
+  
+   
+
+
+
+  
+     
+ Method Summary   
+    
+  java.lang.Object   
+    visit  ( Conjunction  _f) 
+
+ 
+          Calculates the result for a Conjunction. 
+    
+  java.lang.Object   
+    visit  ( Disjunction  _f) 
+
+ 
+          Calculates the result for a Disjunction. 
+    
+  java.lang.Object   
+    visit  ( LogicalConstant  _f) 
+
+ 
+          Calculates the result for a LogicalConstant. 
+    
+  java.lang.Object   
+    visit  ( LogicalVariable  _f) 
+
+ 
+          Calculates the result for a LogicalVariable. 
+    
+  java.lang.Object   
+    visit  ( Negation  _f) 
+
+ 
+          Calculates the result for a Negation. 
+  
+ 
+ 
+
+
+
+  
+     
+ Method Detail   
+     
+visit 
+ 
+java.lang.Object  visit ( Conjunction  _f) 
+  Calculates the result for a Conjunction.
+ 
+     
+      
+visit 
+ 
+java.lang.Object  visit ( Disjunction  _f) 
+  Calculates the result for a Disjunction.
+ 
+     
+      
+visit 
+ 
+java.lang.Object  visit ( LogicalConstant  _f) 
+  Calculates the result for a LogicalConstant.
+ 
+     
+      
+visit 
+ 
+java.lang.Object  visit ( LogicalVariable  _f) 
+  Calculates the result for a LogicalVariable.
+ 
+     
+      
+visit 
+ 
+java.lang.Object  visit ( Negation  _f) 
+  Calculates the result for a Negation.
+ 
+     
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+ </body> 

@@ -1,0 +1,74 @@
+ Kernel::Side_of_oriented_sphere_d<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Kernel::Side_of_oriented_sphere_d  
+
+
+A model for this must provide:
+ 
+
+    
+         
+    template &lt;class ForwardIterator&gt;
+         
+            
+          Bounded_side 
+         
+          
+         
+     fo ( ForwardIterator first,  ForwardIterator last,   Kernel :: Point_d  p)  
+
+         
+                
+    returns the relative position of point
+   p  to the oriented sphere defined by the points in  A =     tuple [first,last)  The order of the points in  A  is important,
+  since it determines the  orientation  of the implicitly constructed
+  sphere.  If the points in  A  are positively oriented, the positive
+  side is the bounded interior of the sphere.  Precondition:   A 
+  contains  d+1  points in  d -space.  Requirement:  The value type of
+   ForwardIterator  is   Kernel :: Point_d  .
+            
+
+    Next:    Kernel::Squared_distance_d   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

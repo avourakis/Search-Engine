@@ -1,0 +1,214 @@
+ ;; color-list-&gt;image-vector: (listof color) number number -&gt; vector-of-lines<body>
+  
+  
+ 
+ ;; color-list-&gt;image-vector: (listof
+color) number number -&gt; vector-of-lines  
+ 
+ ;; Return a vector of vectors with the numbers
+of rows and columns specified,  
+ 
+ ;; containing the colors in the input list.  
+ 
+ (define color-list-&gt;image-vector  
+ 
+    (lambda (L rows cols)  
+ 
+       (local ((define image
+   ; First, set up the structure of the vector  
+ 
+               
+      (build-vector   
+ 
+               
+         rows   
+ 
+               
+         (lambda (r) (build-vector cols (lambda (c) 'anything-for-now)))))  
+ 
+               
+   (define cl-&gt;iv-aux  
+ 
+               
+      (lambda (L last-row last-col curr-row curr-col)  
+ 
+               
+         (cond        ; Use the list to guide the process  
+ 
+               
+            ((empty? L) image)  
+ 
+               
+            (else (begin  
+ 
+               
+                        (image-set!
+image curr-row curr-col (first L))  
+ 
+               
+                        (if (= curr-col
+last-col)  
+ 
+               
+                          
+(cl-&gt;iv-aux (rest L) last-row last-col  
+ 
+               
+                          
+                  (add1 curr-row) 0)  
+ 
+               
+                          
+(cl-&gt;iv-aux (rest L) last-row last-col  
+ 
+               
+                          
+                  curr-row (add1 curr-col)))))))))  
+ 
+          (cl-&gt;iv-aux
+L (sub1 rows) (sub1 cols) 0 0))))  
+  
+ ;; image-vector-&gt;color-list: vector-of-lines
+-&gt; (listof color)  
+ 
+ ;; Return a list containing all the elements
+in the image vector  
+ 
+ ;; (in row-major order, i.e., everything
+in the first row, then  
+ 
+ ;; everything in the second, and so on).
+ The approach we take here  
+ 
+ ;; is to work backwards, from the lower
+right corner, so we can just  
+ 
+ ;; cons each successive item onto the list
+we have so far.  
+ 
+ (define image-vector-&gt;color-list  
+ 
+    (lambda (image)  
+ 
+       (local ((define last-row
+(sub1 (vector-length image)))  
+ 
+               
+   (define last-col (sub1 (vector-length (vector-ref image 0))))  
+ 
+               
+   (define iv-&gt;cl-aux  
+ 
+               
+      (lambda (image curr-row curr-col list-so-far)  
+ 
+               
+         (local ((define list-with-next-pixel   
+ 
+               
+                        (cons (image-ref
+image curr-row curr-col)  
+ 
+               
+                          
+      list-so-far)))  
+ 
+               
+            (cond  
+ 
+               
+               ((and (= curr-row 0) (= curr-col
+0))   ; We've added last pixel  
+ 
+               
+                  list-with-next-pixel)  
+                  ; so return final list.  
+ 
+               
+               ((= curr-col 0)      
+                          ;
+We reached start of  
+ 
+               
+                  (iv-&gt;cl-aux image  
+                        ; a row,
+so go up one  
+ 
+               
+                          
+         (sub1 curr-row) last-col row      ; row
+the next  
+ 
+               
+                          
+         list-with-next-pixel))           
+   ; time around.  
+ 
+               
+               (else           
+                          
+         ; We stay on this row,  
+ 
+               
+                  (iv-&gt;cl-aux image  
+                        ; moving
+one pixel to  
+ 
+               
+                          
+         curr-row (sub1 curr-col)        
+   ; the left next  
+ 
+               
+                          
+         list-with-next-pixel)))))))      ; time
+around.  
+ 
+          (iv-&gt;cl-aux
+image last-row last-col empty))))  
+  
+ ;; show: image-vector -&gt; side effect
+(display)  
+ 
+ ;; Display the image in the vector using
+tools from image.ss teachpack.  
+ 
+ ;; color-list-&gt;image takes its arguments
+in (columns, rows) order   
+ 
+ ;; (i.e., x, then y), which is opposite
+from our (rows, columns) order.  
+ 
+ (define show  
+ 
+    (lambda (image)  
+ 
+       (color-list-&gt;image
+(image-vector-&gt;color-list image)  
+ 
+               
+                  (vector-length (vector-ref
+image 0))  
+ 
+               
+                  (vector-length image)  
+ 
+               
+                  0 0)))  
+  
+ 
+  
+  
+  David G. Kay ,
+  406B Computer Science
+    University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --    (949) 824-5072  
+ --  Fax   (949) 824-4056  
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Monday, December 6, 2004 -- 6:57 AM  
+</body> 

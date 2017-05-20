@@ -1,0 +1,366 @@
+ 
+AbstractFileAction
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.DataObjectModel 
+ 
+Class AbstractFileAction 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.DataObjectModel.AbstractFileAction 
+ 
+   All Implemented Interfaces:    java.lang.Comparable,  IAction  
+    Direct Known Subclasses:     CopyFileAction ,  CutFileAction ,  DeleteFileAction ,  FileSearchAction ,  HelpAction ,  IndexAction ,  MakeDirFileAction ,  MoveFileAction ,  NewServiceAction ,  OpenFileAction ,  PasteFileAction ,  QuitAction ,  RenameFileAction ,  UpdateFileAction ,  UpdateFileStructure  
+     public abstract class  AbstractFileAction   extends java.lang.Object implements  IAction      
+   
+
+
+  
+     
+ Field Summary   
+    
+ protected  java.lang.String   
+    actionParameter   
+
+ 
+            
+    
+ protected  int   
+    actionPriority   
+
+ 
+            
+    
+ protected   XmlFileSystemModel    
+    fileSystem   
+
+ 
+            
+    
+ protected  java.lang.String   
+    localPath   
+
+ 
+            
+    
+ protected   JFMView    
+    localView   
+
+ 
+            
+    
+ protected  java.lang.String   
+    remotePath   
+
+ 
+            
+    
+ protected   RemoteFileSystemView    
+    remoteView   
+
+ 
+            
+    
+ protected   JFMFile []   
+    selectedLocalFiles   
+
+ 
+            
+    
+ protected   AbstractObjectData []   
+    selectedRemoteFiles   
+
+ 
+            
+    
+ protected  boolean   
+    transferType   
+
+ 
+          transferType = false: localFileSystem --&gt; remoteFileSystem transferType =
+ true: remoteFileSystem --&gt; localFileSystem 
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      AbstractFileAction  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+ protected  void   
+    checkTransferType  () 
+
+ 
+            
+    
+ abstract  int   
+    compareTo  (java.lang.Object arg0) 
+
+ 
+            
+    
+  boolean   
+    execute  () 
+
+ 
+            
+    
+  boolean   
+    executeLocal  () 
+
+ 
+            
+    
+  boolean   
+    executeRemote  () 
+
+ 
+            
+    
+ protected  void   
+    loadComponent  () 
+
+ 
+          This method initialize the parameters for the execution. 
+    
+  void   
+    setActionParameter  (java.lang.String params) 
+
+ 
+            
+    
+  void   
+    setLocalView  ( JFMView  local) 
+
+ 
+            
+    
+  void   
+    setRemoteView  ( IRemoteView  remote) 
+
+ 
+            
+    
+  void   
+    setSelectedObjects  ( AbstractObjectData [] objs) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+remoteView 
+ 
+protected  RemoteFileSystemView   remoteView  
+        
+localView 
+ 
+protected  JFMView   localView  
+        
+fileSystem 
+ 
+protected  XmlFileSystemModel   fileSystem  
+        
+remotePath 
+ 
+protected java.lang.String  remotePath  
+        
+localPath 
+ 
+protected java.lang.String  localPath  
+        
+selectedLocalFiles 
+ 
+protected  JFMFile []  selectedLocalFiles  
+        
+selectedRemoteFiles 
+ 
+protected  AbstractObjectData []  selectedRemoteFiles  
+        
+actionParameter 
+ 
+protected java.lang.String  actionParameter  
+        
+actionPriority 
+ 
+protected int  actionPriority  
+        
+transferType 
+ 
+protected boolean  transferType  
+  transferType = false: localFileSystem --&gt; remoteFileSystem transferType =
+ true: remoteFileSystem --&gt; localFileSystem
+ 
+       
+    
+ Constructor Detail   
+     
+AbstractFileAction 
+ 
+public  AbstractFileAction () 
+    
+    
+ Method Detail   
+     
+setActionParameter 
+ 
+public void  setActionParameter (java.lang.String params) 
+     Specified by:     setActionParameter   in interface   IAction     
+    
+     
+executeLocal 
+ 
+public boolean  executeLocal () 
+     Specified by:     executeLocal   in interface   IAction     
+    
+     
+executeRemote 
+ 
+public boolean  executeRemote () 
+     Specified by:     executeRemote   in interface   IAction     
+    
+     
+execute 
+ 
+public boolean  execute () 
+     Specified by:     execute   in interface   IAction     
+    
+     
+setRemoteView 
+ 
+public void  setRemoteView ( IRemoteView  remote) 
+     Specified by:     setRemoteView   in interface   IAction     
+    
+     
+setSelectedObjects 
+ 
+public void  setSelectedObjects ( AbstractObjectData [] objs) 
+     
+    
+     
+setLocalView 
+ 
+public void  setLocalView ( JFMView  local) 
+     Specified by:     setLocalView   in interface   IAction     
+    
+     
+loadComponent 
+ 
+protected void  loadComponent () 
+  This method initialize the parameters for the execution. It must be
+ called before the execute method but after the set of remoteView and
+ localView.
+ 
+     
+    
+      
+checkTransferType 
+ 
+protected void  checkTransferType () 
+     
+    
+     
+compareTo 
+ 
+public abstract int  compareTo (java.lang.Object arg0) 
+     Specified by:    compareTo  in interface  java.lang.Comparable    
+    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

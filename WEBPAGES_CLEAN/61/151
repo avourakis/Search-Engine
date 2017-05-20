@@ -1,0 +1,55 @@
+ 22.3 Functors have State<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.2 operator() and function 
+ Up:   22. Predicate Functors 
+ Next:   22.4 OEUnaryPredicate 
+   
+
+
+  
+22.3 Functors have State 
+ 
+
+ 
+One advantage of functors over function pointers is that they can hold
+state.  Since this state is held by the instance of the object it can be
+thread safe (unlike static-variables inside functions used with function
+pointers).  The state of a functor can be initialized at construction.  For
+instance, OEChem's  OEHasAtomicNum  functor takes an argument on
+construction which defines which atomic number is required for the functor
+to return true.  The state of a functor can also change during the
+ operator()  function.  One group of functors, called accumulators,
+sum a value each time they are called.  Finally, functors can take
+advantage of all of the other properties of C++ classes.  A programmer can
+define any number of other functions which manipulate or query the state of
+the functor.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.2 operator() and function 
+ Up:   22. Predicate Functors 
+ Next:   22.4 OEUnaryPredicate 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,84 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Conga line closest pair algorithm
+
+#include "CongaLine.h"
+#include "Error.h"
+
+#define NO_SUBSET ((CongaSubset) 0xffff)
+#define SCRATCH_SUBSET ((CongaSubset) how_many_subsets)
+
+// add an edge to the graph
+inline void CongaLine::AddEdge(point in, point out, double d, CongaSubset s)
+{
+	if (how_many_edges == 2*max_points)
+		error("CongaLine: too many edges");
+	edges[how_many_edges].in = in;
+	edges[how_many_edges].out = out;
+	edges[how_many_edges].d = d;
+	edges[how_many_edges].s = s;
+	how_many_edges++;
+}
+
+// remove an edge from the graph
+inline void CongaLine::RemoveEdge(unsigned long e)
+{
+	if (e &gt;= how_many_edges) error("CongaLine: removing the same edge twice");
+	edges[e] = edges[--how_many_edges];	// copy struct
+}
+
+// move a point to a new subset, leaving all edges in place
+// caller is responsible for calling subset_sizes.Update(p)
+inline void CongaLine::MoveToSubset(point p, CongaSubset s)
+{
+	if (subsets[p] = how_many_subsets) return;
+	subset_sizes[s]--;		// temp so update sees correct value
+	subset_sizes.Update(s);
+	subset_sizes[s]++;		// undo temp change
+}
+
+// reset all data structures by inserting all points into cluster zero
+void CongaLine::CleanAllGraphs()
+{
+	unsigned long i;
+	unsigned long np = 0;
+	for (i = 0; i  2) {
+			n /= 2;
+			hms++;
+		}
+	}
+	if (hms == 1) error("CongaLine: must have at least two subsets");
+	if (hms &gt; MaxCongaSubsets) error("CongaLine: too many subsets requested");
+	how_many_subsets = hms;		// remember how many we computed
+	subset_sizes.Allocate(hms); // make data struc for finding pairs to merge
+	unsigned long i;
+	for (i = 0; i  2*max_points) {
+		CleanAllGraphs();					// run out of room, rebuild
+		return;
+	}
+	
+	// now do Conga line
+	point current = scratch[0];
+	point * p = scratch+1;
+	ns--; tp--;			// account for removal of first element
+	for (;;) {
+		unsigned long i;	// find nbr s.t. either current or nbr is in s
+		double d;
+		if (subsets[current] == s) {	// current is in s
+			if (tp p might have become longer than x-&gt;something else)
+void CongaLine::UpdatePoint(point p)
+{
+	(*this) -= p;
+	(*this) += p;
+	gInsertions--;
+	gDeletions--;
+}
+
+// Distance has changed. Move both points to new subset, get rid of old pq edges.
+// Unlike UpdatePoint this is reasonably fast.
+// Note that it's safe to remove all edges p-&gt;x and q-&gt;x, not just p-&gt;q and q-&gt;p
+void CongaLine::UpdateDistance(point p, point q)
+{
+	unsigned long i = 0;
+	while (i  

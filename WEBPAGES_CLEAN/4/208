@@ -1,0 +1,50 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ Kenji Takahashi  (  kt@nttlabs.com  )  Thu, 30 May 1996 18:49:11 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   David J. Fiander: "Re: Versions and configurations" 
+    Previous message:   Kenji Takahashi: "Re: Versions and configurations" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   David J. Fiander: "Re: Version identifier in URL" 
+
+    
+&gt;           The use of links, it appears, is an attempt to implement a
+&gt;versioning system _in HTML_.  Before I slight this approach, maybe Dan
+&gt;could explain how those links get there: humans type them in? created
+&gt;by web authoring tools? automatically inserted by an external versioning
+&gt;system on document retrieval?
+
+This may be answered by Dan.  But please let me explain our approach and
+implementation ( http://www.w3.org/pub/WWW/OOP/9606_Workshop/submission/ 
+accept/42.html).  As he mentioned, link information is described in HTTP
+headers, but not HTML bodies.  Most of current servers dynamically generate
+HTTP headers and do not store "meta" information in HTTP headers, such as
+(typed) LINK information.  We have implemented a server that can handel
+LINK information and stores it as a part of HTTP headers, and a client
+that talk to this server.  We use these LINKs to relate previous/next
+versions.  Typed LINK information is useful in a wide area of applications,
+besides version and configuration management.  For example, if entities
+are related with parent-child LINKs, you can infer a grand-grand-children
+of a specific entities using several HEAD methods without analyzing bodies
+of each entity.
+
+Best regards,
+
+Kenji
+--
+Kenji Takahashi                   | e-mail:  kt@nttlabs.com 
+NTT Software Laboratories         |  http://www.nttlabs.com/people/kt/ 
+250 Cambridge Avenue, Suite 205   | Phone : 415-833-3604
+Palo Alto, CA 94306               | Fax   : 415-326-1878
+ 
+
+  
+     Next message:   David J. Fiander: "Re: Versions and configurations" 
+    Previous message:   Kenji Takahashi: "Re: Versions and configurations" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   David J. Fiander: "Re: Version identifier in URL" 
+
+  </body> 

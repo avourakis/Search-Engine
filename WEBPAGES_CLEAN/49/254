@@ -1,0 +1,43 @@
+ Chimera 2.0 Tutorial: Setting Rivendell 0.6 in CLASSPATH on Solaris<body>
+ 
+
+ Setting Rivendell 0.6 in the CLASSPATH on Solaris 
+
+  
+This section provides an example of how to set up your downloaded Rivendell 0.6
+to be included it in the CLASSPATH environment variable.  CLASSPATH is the
+environment used by the Java interpretor (JVM) to look for Java byte-code.
+ 
+
+  Note: the tcsh shell was used for this example. 
+
+  Appending the CLASSPATH to include the Rivendell byte-code files 
+
+  After you have uncompressed and un-tared the downloaded Rivendell
+file, you
+will need to include its .class files 
+in your CLASSPATH environment variable.  
+ 
+
+  You may use any technique you like to set the CLASSPATH.  In this 
+example, we are using the setenv command to append the CLASSPATH.
+The command will look like this:
+  setenv CLASSPATH $CLASSPATH': path_to_rivendell ' 
+ 
+Note: the ' quotes the string :path_to_rivendell so that tcsh won't
+interpret the colon :.
+ 
+
+   
+
+  Note: The CLASSPATH is set to point to the directory above the
+rivendell and psl directories where their classes reside.  
+Also remember that Rivendell uses HTTPClient which you will need to download. 
+You need to include HTTPClient in your CLASSPATH as well.
+ 
+
+  You now have Rivendell installed so that your Java interpretor can 
+use it to run Chimera 2.0.
+ 
+
+</body> 

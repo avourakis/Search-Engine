@@ -1,0 +1,94 @@
+  "-//W3C//DTD HTML 4.01 Transitional//EN\"&gt;
+
+ 
+UCI Machine Learning Repository: Audiology (Standardized) Data Set   
+		                Center for Machine Learning and Intelligent Systems   
+	 
+	 
+		 
+		 About  
+		 Citation Policy  
+		 Donate a Data Set  
+		 Contact 
+		 
+
+		  
+		   Repository  
+		  Web  
+		          
+		   
+		 
+		
+
+
+		    View 
+ALL Data Sets    
+		  
+      
+
+      
+	 
+	  Audiology (Standardized) Data Set  
+	    Download  :   Data Folder  ,   Data Set Description    
+
+	  Abstract : Standardized version of the original audiology database 
+      
+        
+          Data Set Characteristics:     
+		  Multivariate  
+		   Number of Instances:   
+		  226  
+		   Area:   
+		  Life  
+	     Attribute Characteristics:   
+		  Categorical  
+		   Number of Attributes:   
+		  69  
+		   Date Donated   
+		  1992-08-18  
+	     Associated Tasks:   
+		  Classification  
+		   Missing Values?   
+		  Yes  
+		   Number of Web Hits:   
+		  61245  
+	     Source:  
+ Original Version:      (a) Original Owner: Professor Jergen at Baylor College of Medicine     (b) Donor: Bruce Porter ( porter  '@'  fall.cs.utexas.EDU )  Standardized Version:      (a) Donor: Ross Quinlan 
+
+   Data Set Information:  
+ This database is a standardized version of the original audiology database (see audiology.* in this directory).  The non-standard set of attributes have been converted to a standard set of attributes according to the rules that follow.  * Each property that appears anywhere in the original .data or .test file has been represented as a separate attribute in this file.  * A property such as age_gt_60 is represented as a boolean attribute with values f and t.  * In most cases, a property of the form x(y) is represented as a discrete attribute x() whose possible values are the various y's; air() is an example.  There are two exceptions: ** when only one value of y appears anywhere, e.g. static(normal). In this case, x_y appears as a boolean attribute. ** when one case can have two or more values of x, e.g. history(..). All possible values of history are treated as separate boolean attributes.  * Since boolean attributes only appear as positive conditions, each boolean attribute is assumed to be false unless noted as true.  The value of multi-value discrete attributes taken as unknown ("?") unless a value is specified.  * The original case identifications, p1 to p200 in the .data file and t1 to t26 in the .test file, have been added as a unique identifier attribute.   [Note: in the original .data file, p165 has a repeated specification of o_ar_c(normal); p166 has repeated specification of speech(normal) and conflicting values air(moderate) and air(mild).  No other problems with the original data were noted.] 
+
+   Attribute Information:  
+    age_gt_60:		     f, t.    air():		     mild,moderate,severe,normal,profound.    airBoneGap:		     f, t.    ar_c():		     normal,elevated,absent.    ar_u():		     normal,absent,elevated.    bone():		     mild,moderate,normal,unmeasured.    boneAbnormal:	     f, t.    bser():		     normal,degraded.    history_buzzing:	     f, t.    history_dizziness:	     f, t.    history_fluctuating:	     f, t.    history_fullness:	     f, t.    history_heredity:	     f, t.    history_nausea:	     f, t.    history_noise:	     f, t.    history_recruitment:	     f, t.    history_ringing:	     f, t.    history_roaring:	     f, t.    history_vomiting:	     f, t.    late_wave_poor:	     f, t.    m_at_2k:		     f, t.    m_cond_lt_1k:	     f, t.    m_gt_1k:		     f, t.    m_m_gt_2k:		     f, t.    m_m_sn:		     f, t.    m_m_sn_gt_1k:	     f, t.    m_m_sn_gt_2k:	     f, t.    m_m_sn_gt_500:	     f, t.    m_p_sn_gt_2k:	     f, t.    m_s_gt_500:		     f, t.    m_s_sn:		     f, t.    m_s_sn_gt_1k:	     f, t.    m_s_sn_gt_2k:	     f, t.    m_s_sn_gt_3k:	     f, t.    m_s_sn_gt_4k:	     f, t.    m_sn_2_3k:		     f, t.    m_sn_gt_1k:		     f, t.    m_sn_gt_2k:		     f, t.    m_sn_gt_3k:		     f, t.    m_sn_gt_4k:		     f, t.    m_sn_gt_500:		     f, t.    m_sn_gt_6k:		     f, t.    m_sn_lt_1k:		     f, t.     m_sn_lt_2k:		     f, t.    m_sn_lt_3k:		     f, t.    middle_wave_poor:	     f, t.    mod_gt_4k:		     f, t.    mod_mixed:		     f, t.    mod_s_mixed:		     f, t.    mod_s_sn_gt_500:	     f, t.    mod_sn:		     f, t.    mod_sn_gt_1k:	     f, t.    mod_sn_gt_2k:	     f, t.    mod_sn_gt_3k:	     f, t.    mod_sn_gt_4k:	     f, t.    mod_sn_gt_500:	     f, t.    notch_4k:		     f, t.    notch_at_4k:		     f, t.    o_ar_c():		     normal,elevated,absent.    o_ar_u():		     normal,absent,elevated.    s_sn_gt_1k:		     f, t.    s_sn_gt_2k:		     f, t.    s_sn_gt_4k:		     f, t.    speech():		     normal,good,very_good,very_poor,poor,unmeasured.    static_normal:	     f, t.    tymp():		     a,as,b,ad,c.    viith_nerve_signs:        f, t.    wave_V_delayed:	     f, t.    waveform_ItoV_prolonged:  f, t.    indentifier               (unique for each instance)     class:                                                cochlear_unknown,mixed_cochlear_age_fixation,poss_central                              mixed_cochlear_age_otitis_media,mixed_poss_noise_om,                              cochlear_age,normal_ear,cochlear_poss_noise,cochlear_age_and_noise,                              acoustic_neuroma,mixed_cochlear_unk_ser_om,conductive_discontinuity,                              retrocochlear_unknown,conductive_fixation,bells_palsy,                              cochlear_noise_and_heredity,mixed_cochlear_unk_fixation,                              otitis_media,possible_menieres,possible_brainstem_disorder,                              cochlear_age_plus_poss_menieres,mixed_cochlear_age_s_om,                              mixed_cochlear_unk_discontinuity,mixed_poss_central_om  
+
+   Relevant Papers:  
+ Bareiss, E. Ray, &amp; Porter, Bruce (1987).  Protos: An Exemplar-Based Learning Apprentice.  In the Proceedings of the 4th International Workshop on Machine Learning, 12-23, Irvine, CA: Morgan Kaufmann.  [Web Link]  
+
+   Papers That Cite This Data Set 1 :  
+  Marcus Hutter and Marco Zaffalon.  Distribution of Mutual Information from Complete and Incomplete Data . CoRR, csLG/0403025. 2004.  [ View Context ].  Vassilis Athitsos and Stan Sclaroff.  Boosting Nearest Neighbor Classifiers for Multiclass Recognition . Boston University Computer Science Tech. Report No, 2004-006. 2004.  [ View Context ].  Richard Nock and Marc Sebban and David Bernard.  A SIMPLE LOCALLY ADAPTIVE NEAREST NEIGHBOR RULE WITH APPLICATION TO POLLUTION FORECASTING . International Journal of Pattern Recognition and Artificial Intelligence Vol. 2003.  [ View Context ].  Alexander K. Seewald.  How to Make Stacking Better and Faster While Also Taking Care of an Unknown Weakness . ICML. 2002.  [ View Context ].  Wai Lam and Kin Keung and Charles X. Ling.  PR 1527 . Department of Systems Engineering and Engineering Management, The Chinese University of Hong Kong. 2001.  [ View Context ].  Alexander K. Seewald and Johann Petrak and Gerhard Widmer.  Hybrid Decision Tree Learners with Alternative Leaf Classifiers: An Empirical Study . FLAIRS Conference. 2001.  [ View Context ].  Jihoon Yang and Rajesh Parekh and Vasant Honavar.  DistAl: An inter-pattern distance-based constructive learning algorithm . Intell. Data Anal, 3. 1999.  [ View Context ].  Mark A. Hall.  Department of Computer Science Hamilton, NewZealand Correlation-based Feature Selection for Machine Learning . Doctor of Philosophy at The University of Waikato. 1999.  [ View Context ].  Pedro Domingos.  Unifying Instance-Based and Rule-Based Induction . Machine Learning, 24. 1996.  [ View Context ].  Geoffrey I. Webb.  OPUS: An Efficient Admissible Algorithm for Unordered Search . J. Artif. Intell. Res. (JAIR, 3. 1995.  [ View Context ].  Thomas G. Dietterich and Ghulum Bakiri.  Solving Multiclass Learning Problems via Error-Correcting Output Codes . CoRR, csAI/9501101. 1995.  [ View Context ].  Alexander K. Seewald.  Meta-Learning for Stacked Classification . Austrian Research Institute for Artificial Intelligence.  [ View Context ].  Bernhard Pfahringer and Ian H. Witten and Philip Chan.  Improving Bagging Performance by Increasing Decision Tree Diversity . Austrian Research Institute for AI.  [ View Context ].  D. Randall Wilson and Roel Martinez.  Improved Center Point Selection for Probabilistic Neural Networks . Proceedings of the International Conference on Artificial Neural Networks and Genetic Algorithms.  [ View Context ].  Alexander K. Seewald.  Dissertation Towards Understanding Stacking Studies of a General Ensemble Learning Scheme ausgefuhrt zum Zwecke der Erlangung des akademischen Grades eines Doktors der technischen Naturwissenschaften .  [ View Context ].  Geoffrey I Webb.  Learning Decision Lists by Prepending Inferred Rules . School of Computing and Mathematics Deakin University.  [ View Context ].  Mohammed Waleed Kadous and Claude Sammut.  The University of New South Wales School of Computer Science and Engineering Temporal Classification: Extending the Classification Paradigm to Multivariate Time Series .  [ View Context ].  Mohammed Waleed Kadous.  Expanding the Scope of Concept Learning Using Metafeatures . School of Computer Science and Engineering, University of New South Wales.  [ View Context ].  Jerome H. Friedman and Ron Kohavi and Youngkeol Yun.  To appear in AAAI-96 Lazy Decision Trees . Statistics Department and Stanford Linear Accelerator Center Stanford University.  [ View Context ].   
+
+   Citation Request:  
+ WARNING: This database should be credited to the original owner whenever used for any publication whatsoever. 
+
+      [1] Papers were automatically harvested and associated with this data set, in collaboration 
+with   Rexa.info    
+
+    Supported By:  
+           
+           In Collaboration With:  
+           
+   
+ 
+ About   || 
+ Citation Policy   || 
+ Donation Policy   || 
+ Contact   || 
+ CML 
+ 
+ 
+
+
+
+
+
+ 

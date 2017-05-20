@@ -1,0 +1,332 @@
+ TELNET: The Mother of All (Application) Protocols<body>
+
+   TELNET: The Mother of All (Application) Protocols             The equipment was state of the art, but having a room cluttered with assorted computer terminals was like having a den cluttered with several televisions sets, each dedicated to a different channel. "It became obvious," [ARPA IPTO Director Robert] Taylor said many years later, "that we ought to find a way to connect all these different machines." 
+ --  Where the Wizards Stay Up Late , Katie Hafner and Matthew Lyon 
+
+
+
+
+ In the beginning, there was ARPANET -- commissioned not, as popular myth has it, to provide survivable military command and control, but rather, as a way to reduce ARPA's grant overhead of buying every fledgling computer science department its own computer. Time-sharing had already demonstrated that a single computer could service an entire research group; networking would allow the Nation's researchers to work together off of specialized machines. Ma Bell, of course, already could install dedicated data circuits to link terminals directly to remote hosts, like the three teletypes to MIT, Berkeley, and RAND in Dr. Taylor's office. The promise of packet-switching technology, by contrast, was to allow any terminal to access any host.  
+   
+ In fact, Telnet was the first application demonstrated on the four-IMP (Interface Message Processor) network installed by December 1969. It took an additional year to make a real host-to-host protocol, and another year's work by the 'glitch-cleaning committee' to publish RFC (Request for Comments) #97, "First Cut at a Proposed Telnet Protocol" by J.T. Melvin and R.W. Watson on February 15, 1971.  
+   
+ The final edition took twelve more years to develop, culminating in Internet Standard #8 in 1983, three years after the final TCP specification was ratified (STD #7), even though TCP work began later, in 1973. Arguably, Telnet even predates internetworking and the modern IP packet and TCP transport layers. Table 1 describes the six drafts in the canonical Telnet standards suite. As simple as Telnet seems in retrospect -- it's barely a tenth the size of the HTTP/1.1specification! -- it represents decades of experience in application-layer protocol design. 
+    
+   
+   RFC    
+ 
+   STD    
+ 
+   Title    
+ 
+   Comments    
+   
+  854   
+ 
+  8   
+ 
+  Telnet Protocol Specification   
+ 
+  NVT, commands, and negotiation   
+   
+  855   
+ 
+  26   
+ 
+  Telnet Option Specifications   
+ 
+  How to register &amp; document options   
+   
+  856   
+ 
+  27   
+ 
+  Telnet Binary Transmission   
+ 
+  Allow 8-bit clean connections   
+   
+  857   
+ 
+  28   
+ 
+  Telnet Echo Option   
+ 
+  Activate remote/local echo on each way   
+   
+  858   
+ 
+  29   
+ 
+  Telnet Suppress Go Ahead Option   
+ 
+  Full-duplex NVT (rather than half)   
+   
+  859   
+ 
+  30   
+ 
+  Telnet Status Option   
+ 
+  Recap current options state   
+   
+  860   
+ 
+  31   
+ 
+  Telnet Timing Mark Option   
+ 
+  End-to-end synchronization point   
+   
+  861   
+ 
+  32   
+ 
+  Telnet Extended Options-List Option   
+ 
+  Reserve option 255 to allow future options   
+     Table 1: The canonical Telnet standard suite, published on May 1, 1983 by Jon Postel and Joyce K. Reynolds.  
+     
+ Telnet's true value is not merely the abstraction of how-to-wire-terminals-to-hosts (standardizing connections); instead, it's a common abstraction of the terminals (standardizing endpoints). Its application-level semantics are captured in Telnet's external interface, the Network Virtual Terminal (NVT). Its internal interfaces, in turn, are designed with close ties to TCP transport facilities, an option negotiation scheme, and symmetric treatment of client and server roles.    
+   
+ Notice that none of the aforementioned has any bearing on remote-login, the most popular  application  of Telnet. Instead, in considering Telnet against the taxonomic criteria set forth in the premiere installment of  Seventh Heaven , we need to separate Telnet from the services it can access. That helps highlight the enduring lessons of Telnet for future seventh-layer protocol designers .  
+    What: The Network Virtual Terminal 
+     The original spectrum of host computers connected to the ARPANET were a motley crew: varying keyboards, character sets, display sizes, line lengths, speeds, and those were just the physical incompatibilities. The terminal sessions themselves were governed by time-sharing systems, each with their own peculiar ways of stopping and starting processes, controlling the flow of output, and so on. Rather than writing pairwise adaptors in the form of idiosyncratic terminal drivers for each host system, NVT provided a common baseline: 7-bit US ASCII, three mandatory control characters (Table 2), five optional control characters (Table 3), and a basic signal set (Table 4). 
+   
+ The fundamental difference from a 'real' terminal an NVT can't abstract away is  latency . Rather than two points of control, the data flow in and out of a terminal, there are four, at the local and remote ends of each connection. For example, typing a character doesn't result automatically in an echo'd response to display back. RFC 857, the Echo option, outlines five options for corresponding to each state, no-echo being the fifth. Software flow control (XON/XOFF) can similarly be gated locally, in the Telnet client application, or at the server side (RFC 1080).  
+   
+ New features can be activated between consenting Telnet processes to upgrade the NVT to more closely approximate the actual terminal. Internationalization demands broader character set support; RFC 2066 presents how Telnet can initiate negotiation over character sets, then subnegotiate over actual sets and translation tables. Or, the work of converting into the common character set needs to be shifted. An IBM mainframe server uses EBCDIC for 3270 terminal; rather than centralizing the cost of ASCII conversion with Telnet clients, the TN3270 client pre-processes the data locally (RFC 1647 and others).  
+   
+ There are limits to stretching the simple line-printer-and-keyboard model, though. Interactive video terminals, vector graphics displays, and proprietary connections vary in far more dimensions than any NVT can hope to homogenize. In practice, terminal types appear again one more layer up, within applications like Emacs and operating system libraries like Curses. Still, obscurity can be accommodated: interested readers are directed to RFC 1097, "Telnet subliminal-message option." 
+   
+ Finally, there are also out-of-band signals for controlling the NVT session itself. There are commands to interrupt processes and erase information from terminal buffers, as enumerated in Table 4. 
+    
+   
+   #    
+ 
+   Code    
+ 
+   Name    
+ 
+   Meaning    
+   
+  0   
+ 
+  NUL   
+ 
+  Null   
+ 
+  No operation   
+   
+  10   
+ 
+  LF   
+ 
+  Line Feed   
+ 
+  Move down one line, same horizontal position   
+   
+  13   
+ 
+  CR   
+ 
+  Carriage Return   
+ 
+  Set horizontal position to the left margin   
+     Table 2: Characters which normatively control output of an NVT; all other control-characters and high-bit set characters are undefined 
+     
+   
+   #    
+ 
+   Code    
+ 
+   Name    
+ 
+   Meaning    
+   
+  7   
+ 
+  BEL   
+ 
+  Bell   
+ 
+  Audible or visible signal; no cursor movement   
+   
+  8   
+ 
+  BS   
+ 
+  Backspace   
+ 
+  Move the cursor to the previous print position   
+   
+  9   
+ 
+  HT   
+ 
+  Horizontal Tab   
+ 
+  Move cursor right towards the next tab stop (setting unspecified)   
+   
+  11   
+ 
+  VT   
+ 
+  Vertical Tab   
+ 
+  Move cursor down towards the next tab stop (setting unspecified)   
+   
+  12   
+ 
+  FF   
+ 
+  Form Feed   
+ 
+  Move cursor down to the next page, preserving horizontal pos'n    
+     Table 3: Characters which may optionally control output of an NVT. 
+     
+   
+   #    
+ 
+   Code    
+ 
+   Name    
+ 
+   Meaning    
+   
+  255   
+ 
+  IAC   
+ 
+  Interpret As Command   
+ 
+  The next byte is a command, or an escaped 0xFF   
+   
+  244   
+ 
+  IP   
+ 
+  Interrupt Process   
+ 
+  Suspend, interrupt, or abort the remote process   
+   
+  245   
+ 
+  AO   
+ 
+  Abort Output   
+ 
+  Suspend, interrupt, or abort the remote process's output   
+   
+  246   
+ 
+  AYT   
+ 
+  Are You There   
+ 
+  Check that the remote Telnet process is alive   
+   
+  247   
+ 
+  EC   
+ 
+  Erase Character   
+ 
+  Delete the previous "print position"   
+   
+  248   
+ 
+  EL   
+ 
+  Erase Line   
+ 
+  Delete the previous "line"   
+   
+  249   
+ 
+  GA   
+ 
+  Go Ahead   
+ 
+  Turn over control, for half-duplex terminal equipment   
+     Table 4: The basic commands abstracting control of an NVT.  
+    How: Telnet Protocol Implementation              "The Telnet application is one of the simplest and more straightforward of all TCP/IP applications for end users." 
+ --  TCP/IP Clearly Explained,  Pete Loshin 
+
+
+
+
+ Simple as Telnet may seem to use, its internal implementation depends intimately on an understanding of TCP, a careful ballet of option-negotiation steps, and an appreciation of symmetry as a design principle. A "textbook" implementation of the Telnet finite state machine weighs in at 70 pages ( Internetworking with TCP/IP , Volume 3 by Douglas Comer and David Stevens, Chapters 25 and 26). 
+   Transport Dependence            "A TELNET connection is a Transmission Control Protocol (TCP) connection used to transmit data with interspersed TELNET control information." -- 854 
+
+
+
+
+ Many later application-layer protocols, such as the X Window System, state instead a requirement for a "full-duplex, byte-oriented transport." They have specific enough semantics that correct implementations read and write information appropriately to use finite buffer space. Telnet, though, connects arbitrary processes, raising the scepter of deadlock if information backs up. Hence, it carefully requires TCP, a richer transport facility. In particular, it has URGent delivery of out-of-order segments. Telnet resynchronizes a connection by sending an urgent packet ahead to warn the other end to dump its buffers and throw away all the now-extraneous data until the matching Data Mark (DM). 
+   
+ There are other ways terminal latency is addressed by transport facilities. While an NVT defaults to line-by-line buffering, it can be set to character mode. On a LAN, it makes sense to allow interactive use, even if a lone keystroke triggers a 41-byte TCP segment. Across slow wide-area links, though, it falls back to the TCP layer to coalesce segments; this Telnet behavior inspired the Nagle algorithm of limiting low-bandwidth connections to a single outstanding segment (and collecting outbound characters while the ACK is pending).  
+   Negotiation 
+   Latency also affects how negotiation proceeds. Even without worrying about symmetry -- designers usually rely on a master-slave relationship to decide who moves first and how to break ties -- the fact that data can be in flight in both directions ambiguates requests and responses. It's sufficiently complex and prone to falling into infinite loops that Experimental RFC 1143, "The Q Method of Implementing TELNET Option Negotiation" was published in 1990. 
+   
+ Telnet options affect each direction of data flow separately. Either party can announce that it wants to begin using (   DO  ), that it wants the other side to begin using (  WILL  ), it refuses to use (  DON'T  ), or refuses to let the other side use (  WON'T  ) an option.
+   
+ After first ascertaining that both parties understand the option and want to apply it, there's typically a subnegotiation over the actual parameters (arbitrary data bracketed by "   IAC SB ... IAC SE  "). Since both sides could initiate discussion simultaneously, the Q Method maintains six bits of information for each option in each direction: whether the option is on, off, wanted-on, wanted-off, and who seems to have started the discussion. 
+   
+ There are 255 possible option codes. Each new option should be documented in the RFC series using the procedure outlined in RFC 855. However, if there's ever a 256 th  option, the designers planned ahead by reserving the last code for subnegotiating in an expanded code space (RFC 861). There's also an option for reporting which options are activated, allowed, or prohibited on the current connection (RFC 859). 
+    
+   
+   Request    
+ 
+   Response    
+ 
+   Interpretation    
+   
+  DO    
+ 
+  WILL   
+ 
+  Initiator begins using option   
+   
+  WON'T   
+ 
+  Responder must not use option   
+   
+  WILL   
+ 
+  DO   
+ 
+  Responder begins using option after sending    DO  
+   
+  DON'T   
+ 
+  Initiator must not use option   
+   
+  DON'T   
+ 
+  (WON'T)   
+ 
+  Warning or notification Initiator deactivated option; respond if it's a change   
+   
+  WON'T   
+ 
+  (DON'T)   
+ 
+  Warning or notification Responder should deactivate; respond if it's a change   
+     Table 5. Negotiation messages in Telnet.  
+    Symmetry 
+   Once established, there's nothing inherently client-server about a Telnet connection. True, the TCP port numbering scheme can disambiguate who initiated the connection (that's the end connected to the well-known port (e.g. 23 for Telnet); the reverse channel is randomly assigned). The designers carefully eliminated master and slave roles from Telnet's own semantics. 
+   
+ In fact, they wrote "The TELNET protocol is based on three main ideas: ... a symmetric view of terminals and processes." In other words, Telnet can connect users as well as programs, seemingly stretching UNIX pipelines across the Internet.  
+     Why: Understanding Telnet as a TP 
+     It may seem odd to have dissected Telnet at such length without once mentioning logins, passwords, and all the other details of establishing a terminal connection. In fact, Telnet is entirely silent on this point -- not that later writers haven't tried to shove authentication into this layer anyway (see RFC 1416). Telnet is entirely separate from the applications it accesses (unlike, say, the UNIX    rlogin   program or the FTP protocol, which do define accounts, passwords, and trusted hosts)
+   
+ That separation is well-hidden because there's only one category of Telnet clients, all intended for logins. HTTP, by contrast, is routinely used and abused in a myriad of different software packages to send web pages, audio, print jobs, news tickers, even distributed RPC messages. The protocol itself, however, can be used to access library catalogs, router configuration panels, multiuser games, and more. Before the Web, Telnet was the most popular way to proselytize a new application, from the Line Mode Browser installation at info.cern.ch, to WAIS, to Archie, even back to the Stanford AI Lab's Adventure server. Furthermore, one can point a Telnet client at another TP's port and debug it directly (e.g. "Telnetting to port 25 to send e-mail"). 
+   Telnet as a Transfer Protocol 
+   As open-ended as it is, it helps to think of Telnet as just another message transfer protocol. Rather than the crisply identifiable lump-of-data in a file transfer or e-mail message, though, a Telnet session is now smeared-out in spacetime, a pair of synchronized input and output logs with interspersed commands. As unfamiliar as that seems, it's only a bidirectional equivalent of a RealAudio broadcast stream or QuickTime video, other kinds of "messages" with temporal structure. 
+   
+ The message is exchanged between NVTs, which are addressed as hosts (by domain name or IP number) since Telnet is an end-to-end protocol. The actual rules governing the contents are only known by the port number, so the port determines the name of the session ("it's connected to port 119, so it's an NNTP message stream"). Data transfer is bidirectional, synchronous, and uses the URGent interrupt facility of TCP.  
+     Lessons Telnet Teaches 
+     In the fast-paced world of Internet engineering, it's hard to accept that Telnet is actually older than I am. Its remarkable stability deserves close study. Simplicity alone is held up as a classic cause: the NVT is an artul balance of features that can span the range from half-duplex teletypes to cellphone-PCs. On the other hand, the steady march of whiz-bang progress would have upset that balance and triggered periodic reengineering of the protocol; e-mail reveals this tendency. Instead, I'd hold up evolvability as its key survival skill. Option negotiation was a farsighted addition at the time; it did not become a hallmark of IETF protocol design until the late Eighties. True, many other systems had hooks for new headers, new verbs, and so on, but few planned ahead with administrative procedures for managing the option space. There have been  93 RFCs to date which describe Telnet and its options -- almost 3% of the entire IETF fossil record! 
+   
+ By contrast, file transfer is an equally ancient Internet application, and its protocol has been almost as stable, but doesn't exhibit such evolvability. More on that paradox next month in  Seventh Heaven ... 
+   
+   Kudos to Anne &amp; Lynn Wheeler for putting together an excellent resource for surfing the RFC archives at      http://www.garlic.com/~lynn/rfcietff.htm   </body> 

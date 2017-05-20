@@ -1,0 +1,837 @@
+ Convex_hull_d&lt;R&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Convex_hull_d&lt;R&gt;  
+ 
+
+  Definition 
+ 
+
+An instance  C  of type   Convex_hull_d &lt;R&gt;  is the convex hull
+of a multi-set  S  of points in  d -dimensional space. We call
+ S  the underlying point set and  d  or  dim  the dimension of
+the underlying space. We use  dcur  to denote the affine dimension
+of  S .  The data type supports incremental construction of hulls.
+  
+
+The closure of the hull is maintained as a simplicial complex, i.e.,
+as a collection of simplices. The  intersection  of any two is a face of
+both  1  . In the
+sequel we reserve the word simplex for the simplices of dimension
+ dcur . For each simplex there is a handle of type
+ Simplex_handlex  and for each vertex there is a handle of type
+ Vertex_handle .  Each simplex has  1 +  dcur   vertices
+indexed from  0  to  dcur ; for a simplex  s  and an index  i ,
+ C.vertex(s,i)  returns the  i -th vertex of  s . For any simplex
+ s  and any index  i  of  s  there may or may not be a simplex  t  opposite  to the  i -th vertex of  s .  The function
+ C.opposite_simplex(s,i)  returns  t  if it exists and returns
+ Simplex_handle()  (the undefined handle) otherwise. If  t  exists
+then  s  and  t  share  dcur  vertices, namely all but the vertex
+with index  i  of  s  and the vertex with index
+ C.index_of_vertex_in_opposite_simplex(s,i)  of  t . Assume that
+ t  exists and let  j = C.index_of_vertex_in_opposite_simplex(s,i) .  Then  s =  C.opposite_simplex(t,j)  and  i =  C.index_of_vertex_in_opposite_simplex(t,j) .
+  
+
+The boundary of the hull is also a simplicial complex. All simplices
+in this complex have dimension   dcur  - 1 .  For each boundary
+simplex there is a handle of type  Facet_handle .  Each facet has
+ dcur  vertices indexed from  0  to   dcur  - 1 . If  dcur &gt; 1  then for each facet  f  and each index  i ,  0    i &lt;
+ dcur  , there is a facet  g  opposite  to the  i -th vertex of
+ f .  The function  C.opposite_facet(f,i)  returns  g .  Two
+neighboring facets  f  and  g  share  dcur - 1  vertices, namely
+all but the vertex with index  i  of  f  and the vertex with index
+ C.index_of_vertex_in_opposite_facet(f,i)  of  g .  Let  j = C.index_of_vertex_in_opposite_facet(f,i) . Then  f = C.opposite_facet(g,j)  and  i = C.index_of_vertex_in_opposite_facet(g,j) .
+  
+
+  Types 
+ 
+
+    
+          Convex_hull_d &lt;R&gt;::R
+         
+              
+    the representation class.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;:: Point_d 
+         
+              
+    the point type.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;:: Hyperplane_d 
+         
+              
+    the hyperplane type.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Simplex_handle
+         
+              
+    handle for simplices.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Facet_handle
+         
+              
+    handle for facets.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Vertex_handle
+         
+              
+    handle for vertices.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Simplex_iterator
+         
+              
+    iterator for simplices.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Facet_iterator
+         
+              
+    iterator for facets.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Vertex_iterator
+         
+              
+    iterator for vertices.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Hull_vertex_iterator
+         
+              
+    iterator for vertices that are
+part of the convex hull.
+ 
+
+     
+
+Note that each iterator fits the handle concept, i.e. iterators can be
+used as handles. Note also that all iterator and handle types come
+also in a const flavor, e.g.,  Vertex_const_iterator  is the
+constant version of  Vertex_iterator . Const correctness requires
+to use the const version whenever the the convex hull object is
+referenced as constant. The  Hull_vertex_iterator  is convertible
+to  Vertex_iterator  and  Vertex_handle .
+  
+
+    
+          Convex_hull_d &lt;R&gt;::Point_const_iterator
+         
+              
+    const iterator for all inserted
+points.
+ 
+
+          
+          Convex_hull_d &lt;R&gt;::Hull_point_const_iterator
+         
+              
+    const iterator for all points
+that are part of the convex hull.
+ 
+
+     
+
+  Creation 
+ 
+
+    
+          Convex_hull_d &lt;R&gt; C ( int d,  R  Kernel  = R());
+         
+              
+    creates an
+instance  C  of type   Convex_hull_d  . The dimension of the
+underlying space is  d  and  S  is initialized to the empty point
+set. The traits class  R  specifies the models of all types and
+the implementations of all geometric primitives used by the convex
+hull class. The default model is one of the  d -dimensional
+representation classes (e.g.,  Homogeneous_d ).
+ 
+
+     
+
+The data type   Convex_hull_d   offers neither copy constructor nor
+assignment operator.
+  
+
+  Requirements 
+ 
+
+ R  is a model of the concept   ConvexHullTraits_d  
+  
+   
+.
+  
+
+  Operations 
+ 
+
+All operations below that take a point  x  as argument have the
+common precondition that  x  is a point of ambient space.
+  
+
+    
+           
+int
+         
+          
+         
+    C.dimension ()
+         
+          
+    returns the dimension of ambient space
+                 
+           
+int
+         
+          
+         
+    C.current_dimension ()
+         
+                
+    returns the affine dimension  dcur  of  S .
+                 
+           
+ Point_d 
+         
+          
+         
+    C.associated_point ( Vertex_handle v)
+         
+                
+    returns the point associated with vertex  v .
+                 
+           
+Vertex_handle
+         
+          
+         
+    C.vertex_of_simplex ( Simplex_handle s,  int i)
+         
+                
+    returns the vertex corresponding to the  i -th vertex of  s .   Precondition:   0    i    dcur  .
+                 
+           
+ Point_d 
+         
+          
+         
+    C.point_of_simplex ( Simplex_handle s, int i)
+         
+                
+    same as
+ C.associated_point(C.vertex_of_simplex(s,i)) .
+                 
+           
+Simplex_handle
+         
+          
+         
+    C.opposite_simplex ( Simplex_handle s, int i)
+         
+                
+    returns the simplex  opposite  to the  i -th vertex of  s 
+( Simplex_handle()  if there is no such simplex).  Precondition:   0
+   i    dcur  .
+                 
+           
+int
+         
+          
+             
+    C.index_of_vertex_in_opposite_simplex (     
+    Simplex_handle s, 
+
+int i)     
+                
+    returns the index of the vertex  opposite  to the  i -th vertex of
+ s .  Precondition:   0    i    dcur   and there is a simplex
+ opposite  to the  i -th vertex of  s .
+                 
+           
+Simplex_handle
+         
+          
+         
+    C.simplex ( Vertex_handle v)
+         
+                
+    returns a simplex
+of which  v  is a node. Note that this simplex is not unique.
+                 
+           
+int
+         
+          
+         
+    C.index ( Vertex_handle v)
+         
+                
+    returns the index of  v  in
+ simplex(v) .
+                 
+           
+Vertex_handle
+         
+          
+         
+    C.vertex_of_facet ( Facet_handle f,  int i)
+         
+                
+    returns the vertex corresponding to the  i -th vertex of  f .  Precondition:   0    i &lt;  dcur  .
+                 
+           
+ Point_d 
+         
+          
+         
+    C.point_of_facet ( Facet_handle f,  int i)
+         
+                
+    same as
+ C.associated_point(C.vertex_of_facet(f,i)) .
+                 
+           
+Facet_handle
+         
+          
+         
+    C.opposite_facet ( Facet_handle f,  int i)
+         
+                
+    returns the facet  opposite  to the  i -th vertex of  f 
+( Facet_handle()  if there is no such facet).  Precondition:   0    i
+&lt;  dcur   and  dcur &gt; 1 .
+                 
+           
+int
+         
+          
+             
+    C.index_of_vertex_in_opposite_facet (     
+    Facet_handle f, 
+
+int i)     
+                
+    returns the index of the vertex  opposite  to the  i -th vertex of
+ f .  Precondition:   0    i &lt;  dcur   and  dcur &gt; 1 .
+                 
+           
+ Hyperplane_d 
+         
+          
+         
+    C.hyperplane_supporting ( Facet_handle f)
+         
+                
+    returns a hyperplane supporting facet  f . The hyperplane is
+oriented such that the interior of  C  is on the negative side of
+it.  Precondition:   f  is a facet of  C  and  dcur &gt; 1 .
+                 
+           
+Vertex_handle
+         
+          
+         
+    C.insert (   Point_d  x)
+         
+                
+    adds point  x 
+to the underlying set of points.  If  x  is equal to (the point
+associated with) a vertex of the current hull this vertex is returned
+and its associated point is changed to  x . If  x  lies outside the
+current hull, a new vertex  v  with associated point  x  is added
+to the hull and returned. In all other cases, i.e., if  x  lies in the
+interior of the hull or on the boundary but not on a vertex, the
+current hull is not changed and  Vertex_handle()  is returned. If
+ CGAL_CHECK_EXPENSIVE  is defined then the validity check
+ is_valid(true)  is executed as a post condition.
+                 
+         
+    template &lt;typename Forward_iterator&gt;
+         
+            
+           
+void
+         
+          
+             
+    C.insert (     
+    Forward_iterator first, 
+
+Forward_iterator last)     
+                
+    adds  S = set [first,last)  to the underlying set of points. If any point
+ S[i]  is equal to (the point associated with) a vertex of the
+current hull its associated point is changed to  S[i] .
+                 
+           
+bool
+         
+          
+         
+    C.is_dimension_jump (   Point_d  x)
+         
+                
+    returns true if
+ x  is not contained in the affine hull of  S .
+                 
+           
+std::list&lt;Facet_handle&gt;
+         
+              
+         
+    C.facets_visible_from (   Point_d  x)
+         
+                
+    returns the list of all facets that are visible from  x .   Precondition:   x  is contained in the affine hull of  S .
+                 
+           
+ Bounded_side 
+         
+          
+         
+    C.bounded_side (   Point_d  x)
+         
+                
+    returns
+  ON_BOUNDED_SIDE   (  ON_BOUNDARY  ,  ON_UNBOUNDED_SIDE  ) if
+ x  is contained in the interior (lies on the boundary, is
+contained in the exterior) of  C .  Precondition:   x  is contained
+in the affine hull of  S .
+                 
+           
+void
+         
+          
+         
+    C.clear ( int d)
+         
+          
+    reinitializes  C  to an empty hull
+in  d -dimensional space.
+                 
+           
+int
+         
+          
+         
+    C.number_of_vertices ()
+         
+                
+    returns the number of vertices
+of  C .
+                 
+           
+int
+         
+          
+         
+    C.number_of_facets ()
+         
+                
+    returns the number of facets of
+ C .
+                 
+           
+int
+         
+          
+         
+    C.number_of_simplices ()
+         
+                
+    returns the number of bounded
+simplices of  C .
+                 
+           
+void
+         
+          
+         
+    C.print_statistics ()
+         
+                
+    gives information about the size
+of the current hull and the number of visibility tests performed.
+                 
+           
+bool
+         
+          
+         
+    C.is_valid ( bool throw_exceptions = false)
+         
+                
+    checks the
+validity of the data structure.  If  throw_exceptions == thrue 
+then the program throws the following exceptions to inform about the
+problem.  chull_has_center_on_wrong_side_of_hull_facet  the
+hyperplane supporting a facet has the wrong  orientation .  chull_has_local_non_convexity  a ridge is locally non convex.  chull_has_double_coverage  the hull has a winding number larger
+than 1.
+            
+
+  Lists and Iterators 
+ 
+
+    
+           
+Vertex_iterator
+         
+          
+         
+    C.vertices_begin ()
+         
+                
+    an iterator of  C  to
+start the iteration over all vertices of the complex.
+                 
+           
+Vertex_iterator
+         
+          
+         
+    C.vertices_end ()
+         
+          
+    the past the end iterator
+for vertices.
+                 
+           
+Simplex_iterator
+         
+          
+         
+    C.simplices_begin ()
+         
+                
+    an iterator of  C 
+to start the iteration over all simplices of the complex.
+                 
+           
+Simplex_iterator
+         
+          
+         
+    C.simplices_end ()
+         
+          
+    the past the end
+iterator for simplices.
+                 
+           
+Facet_iterator
+         
+          
+         
+    C.facets_begin ()
+         
+          
+    an iterator of  C  to
+start the iteration over all facets of the complex.
+                 
+           
+Facet_iterator
+         
+          
+         
+    C.facets_end ()
+         
+          
+    the past the end iterator for
+facets.
+                 
+           
+Hull_vertex_iterator
+         
+              
+         
+    C.hull_vertices_begin ()
+         
+                
+    an iterator to
+start the iteration over all vertices of  C  that are part of the
+convex hull.
+                 
+           
+Hull_vertex_iterator
+         
+              
+         
+    C.hull_vertices_end ()
+         
+                
+    the past the end
+iterator for hull vertices.
+                 
+           
+Point_const_iterator
+         
+              
+         
+    C.points_begin ()
+         
+          
+    returns the start
+iterator for all points that have been inserted to construct  C .
+                 
+           
+Point_const_iterator
+         
+              
+         
+    C.points_end ()
+         
+          
+    returns the past the
+end iterator for points.
+                 
+           
+Hull_point_const_iterator
+         
+              
+         
+    C.hull_points_begin ()
+         
+                
+    returns an
+iterator to start the iteration over all points in the convex hull
+ C . Included are points in the interior of facets.
+                 
+           
+Hull_point_const_iterator
+         
+              
+         
+    C.hull_points_end ()
+         
+                
+    returns the
+past the end iterator for points in the convex hull.
+                 
+         
+    template &lt;typename Visitor&gt;
+         
+            
+           
+void
+         
+          
+         
+    C.visit_all_facets (  Visitor V)
+         
+                
+    each facet of  C  is visited by the visitor object
+ V .   V  has to have a function call operator:  void operator()(Facet_handle) const 
+                 
+           
+ std::list&lt; Point_d &gt;
+         
+              
+         
+    C.all_points ()
+         
+          
+    returns a list of
+all points that have been inserted to construct  C .
+                 
+           
+std::list&lt;Vertex_handle&gt;
+         
+              
+         
+    C.all_vertices ()
+         
+          
+    returns a list of
+all vertices of  C  (also interior ones).
+                 
+           
+std::list&lt;Simplex_handle&gt;
+         
+              
+         
+    C.all_simplices ()
+         
+          
+    returns a list
+of all simplices in  C .
+                 
+           
+std::list&lt;Facet_handle&gt;
+         
+              
+         
+    C.all_facets ()
+         
+          
+    returns a list of
+all facets of  C .
+            
+
+  Iteration Statements 
+ 
+
+ forall_ch_vertices ( v,C )  {  ``the vertices of  C  are
+successively assigned to  v ''  }   
+
+ forall_ch_simplices ( s,C )  {  ``the simplices of  C  are
+successively assigned to  s ''  }   
+
+ forall_ch_facets ( f,C )  {  ``the facets of  C  are
+successively assigned to  f ''  }   
+
+  Implementation 
+ 
+
+The implementation of type   Convex_hull_d   is based on
+[ CMS93 ] and [ BMS94 ].  The details
+of the implementation can be found in the implementation document
+available at the download site of this package.
+  
+
+The time and space requirements are input dependent.  Let  C 1  ,  C 2  ,
+ C 3  , ...be the sequence of hulls constructed and for a point  x 
+let  k i   be the number of facets of  C i   that are visible from  x 
+and that are not already facets of  C i-1  . Then the time for
+inserting  x  is  O( dim     i  k i )  and the number of new simplices
+constructed during the insertion of  x  is the number of facets of the
+hull which were not already facets of the hull before the insertion.
+  
+
+The data type   Convex_hull_d   is derived from
+ Regular_complex_d . The space requirement of regular complexes is
+essentially  12( dim  +2)  bytes times the number of simplices
+plus the space for the points.   Convex_hull_d   needs an additional
+ 8 + (4 + x) dim   bytes per simplex where  x  is the space
+requirement of the underlying number type and an additional  12  bytes
+per point. The total is therefore  (16 + x) dim  + 32  bytes times
+the number of simplices plus  28 + x  ·  dim   bytes times the
+number of points.
+  
+
+  Low Dimensional Conversion Routine 
+include  &lt;CGAL/Convex_hull_d_to_polyhedron_3.h&gt; 
+ 
+
+    
+         
+    template &lt;class R, class T, class HDS&gt;
+         
+            
+           
+void
+         
+          
+             
+    convex_hull_d_to_polyhedron_3 (     
+     C,  Polyhedron_3 &lt;T,HDS&gt;&amp; P)     
+                
+    converts the convex hull  C  to polyedral surface stored in 
+    P .   Precondition:   dim == 3  and  dcur == 3 .
+            
+
+  Low Dimensional Output Routines 
+include  &lt;CGAL/IO/Convex_hull_d_window_stream.h&gt; 
+ 
+
+    
+         
+    template &lt;class R&gt;
+         
+            
+           
+void
+         
+          
+         
+    d2_show (  C,   CGAL::Window_stream &amp; W)
+         
+                
+    draws the convex hull  C  in window  W .   Precondition:   dim == 2 .
+                 
+         
+    template &lt;class R&gt;
+         
+            
+           
+void
+         
+          
+             
+    d3_surface_map (     
+     C, 
+
+GRAPH&lt; typename :: Point_d  ,int&gt;&amp; G)     
+                
+    constructs the representation of the surface of  C  as a 
+bidirected LEDA graph  G .   Precondition:   dim == 3 .
+            
+
+   Footnotes 
+ 
+
+    
+    
+           1     
+The empty set if a facet of every simplex.
+
+      Next:    Convex_hull_d_traits_3&lt;R&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

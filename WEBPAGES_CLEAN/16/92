@@ -1,0 +1,239 @@
+   
+  Class c2.framework.Brick
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Brick
+ 
+ 
+ java.lang.Object 
+   |
+   +----c2.framework.Brick
+ 
+    public class  Brick 
+    extends  Object 
+   
+Brick is the abstract super class of both components and connectors.  It
+contains data and behavior that is shared between the two.  
+NOTE: This class should not be used directly.  Use either Component,
+Connector, or one of their derived classes.
+     See Also: 
+        Component ,  Connector ,  ComponentThread ,  ConnectorThread 
+     
+ 
+    
+      component  
+     
+        connector  
+     
+        debugging  
+     Enables debugging output.
+        name  
+     
+        type  
+     
+   
+    
+      Brick  ()
+     
+        Brick  (String, String)
+     
+   
+    
+      brickType  ()
+     Returns the type; either "Component" or "Connector".
+        create  (String, String)
+     
+        debugPrint  (String)
+     Prints a string to System.err only if Brick.debugging is true.
+        debugPrintln  (String)
+     Prints a string to System.err only if Brick.debugging is true.
+        finish  ()
+     Immediately stops the execution of the component or connector (even
+if it has outstanding messages to process).
+        finished  ()
+     Returns true if the component or connector is idle (ie that it is
+not processing any messages).
+        handle  (Notification)
+     This method is invoked when the brick receives a   notification  
+from a brick below it.
+        handle  (Request)
+     This method is invoked when the brick receives a   request  
+from a brick below it.
+        name  ()
+     Returns the name of the component or connector.
+        newMessage  (Port)
+     This method is invoked when the brick receives a new request or
+notification.
+        send  (Notification)
+     Call this method to send a notification to a brick below your
+brick.
+        send  (Request)
+     Call this method to send a request to a brick above your
+brick.
+        start  ()
+     Start the component or connector running.
+        toString  ()
+     Returns a String representation of the Brick, including the 
+brick's type and name.
+    
+ 
+    
+   
+ component 
+ 
+  protected final static  String  component
+ 
+   
+ connector 
+ 
+  protected final static  String  connector
+ 
+   
+ debugging 
+ 
+  public static boolean debugging
+ 
+   Enables debugging output.  If set to true, calls to debugPrint() and
+debugPrintln() are forwarded to System.err.print().
+      See Also: 
+        debugPrint ,  debugPrintln ,  err 
+         
+ name 
+ 
+  protected  String  name
+ 
+   
+ type 
+ 
+  protected  String  type
+ 
+  
+ 
+    
+  
+   
+ Brick 
+ 
+  public Brick()
+ 
+   
+ Brick 
+ 
+  public Brick( String  _name,
+                String  _type)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  _name,
+                      String  _type)
+ 
+   
+  start  
+ 
+  public void start()
+ 
+   Start the component or connector running.  This method should be called
+before the component send or receives any messages.
+     
+  finish  
+ 
+  public void finish()
+ 
+   Immediately stops the execution of the component or connector (even
+if it has outstanding messages to process).
+     
+  finished  
+ 
+  public boolean finished()
+ 
+   Returns true if the component or connector is idle (ie that it is
+not processing any messages).
+     
+  name  
+ 
+  public  String  name()
+ 
+   Returns the name of the component or connector.
+     
+  brickType  
+ 
+  public  String  brickType()
+ 
+   Returns the type; either "Component" or "Connector".
+     
+  handle  
+ 
+  protected abstract void handle( Request  r)
+ 
+   This method is invoked when the brick receives a   request  
+from a brick below it.  Override this method to process requests.
+     
+  handle  
+ 
+  protected abstract void handle( Notification  n)
+ 
+   This method is invoked when the brick receives a   notification  
+from a brick below it.  Override this method to process notifications.
+     
+  send  
+ 
+  protected abstract void send( Request  r)
+ 
+   Call this method to send a request to a brick above your
+brick.
+      See Also: 
+        Request 
+         
+  send  
+ 
+  protected abstract void send( Notification  n)
+ 
+   Call this method to send a notification to a brick below your
+brick.
+      See Also: 
+        Notification 
+         
+  newMessage  
+ 
+  protected abstract void newMessage( Port  p)
+ 
+   This method is invoked when the brick receives a new request or
+notification.  By default, it invokes the appropriate handle() method.
+Override this function only if you need to do special processing on
+incomming messages.
+      See Also: 
+        handle ,  handle 
+         
+  toString  
+ 
+  public  String  toString()
+ 
+   Returns a String representation of the Brick, including the 
+brick's type and name.
+      Overrides: 
+        toString  in class  Object 
+         
+  debugPrintln  
+ 
+  public void debugPrintln( String  s)
+ 
+   Prints a string to System.err only if Brick.debugging is true.
+      See Also: 
+        debugging 
+         
+  debugPrint  
+ 
+  public void debugPrint( String  s)
+ 
+   Prints a string to System.err only if Brick.debugging is true.
+      See Also: 
+        debugging 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

@@ -1,0 +1,13 @@
+ model
+ {
+ for(i in 1:n1){low[i] ~ dlnorm(mu1, tau)}
+ for(i in 1:n2){normal[i] ~ dlnorm(mu2, tau)}
+ for(i in 1:n3){high[i] ~ dlnorm(mu3, tau)}
+ mu1 ~ dnorm(4.87, 347.12)
+ mu2 ~ dnorm(5.39, 357.42)
+ mu3 ~ dnorm(6.40, 166.67)
+ tau ~ dgamma(0.001,0.001)
+ lowf ~ dlnorm(mu1, tau)
+ normalf ~ dlnorm(mu2, tau)
+ highf ~ dlnorm(mu3, tau)
+ P  

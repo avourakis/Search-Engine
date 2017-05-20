@@ -1,0 +1,38 @@
+ dyn.load("npmle.so")
+
+mix=function(X, iter=10000, alg=4){
+  ## compute MLE of mixture proportions
+  ## maximize sum_i log(sum_j X_ij*theta_j)
+  ## required input: 
+  ##   X: matrix of mixture components (nonnegative; no row identically zero)
+  ##   X_ij: density of component j evaluated at observation i 
+  ## optional input:
+  ##   iter: maximum number of iterations (default=10000)
+  ##   alg: choice of algorithm (default=4, cocktail algorithm)
+  ## output: a list of 
+  ##   (i) MLE of mixture proportions; (ii) iteration count
+  n=as.integer(dim(X)[1]); 
+  p=as.integer(dim(X)[2]); 
+  Xvec=as.double(c(t(X)));
+  theta=as.double(rep(1/p, p));
+  .C("alg_mix", n, p, Xvec, as.double(rep(1, n)), theta, as.integer(iter), as.integer(alg))[5:6]
+}
+
+## toy example
+n=100;
+p=20;
+X=matrix(nrow=n, ncol=p);
+for(i in 1:p)
+  X[,i]=runif(n, 0, 1);
+# X=read.table("galaxy.X")
+print("cocktail algorithm for computing the MLE of mixture proportions");
+output=mix(X);
+print("MLE:");
+print(output[[1]]);
+print("number of iterations:");
+print(output[[2]]); 
+
+npmle=function(p, l, u, iter=10000, alg=4){
+  ## compute NPMLE of the distribution function for censored data 
+  ## maximize sum_i log(sum_j X_ij*theta_j)
+  ##   X_ij=1 if l_i 

@@ -1,0 +1,86 @@
+ 20.1 Obtaining the Atomic Symbol of an Atom/Element<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20. Periodic Table Functions 
+ Up:   20. Periodic Table Functions 
+ Next:   20.2 Obtaining the Atomic 
+   
+
+
+  
+20.1 Obtaining the Atomic Symbol of an Atom/Element 
+ 
+
+ 
+To simplify the task of dealing with the elements of the periodic
+table, OEChem contains several functions to obtain useful properties
+of the elements.
+
+  
+A common task is to obtain or display the atomic symbol of an atom
+represented by an OEAtomBase.  To save space and reduce redundancy and
+consistency issues the OEAtomBase class contains only an unsigned
+integer representing the atom's atomic number.  This value may be
+obtained using the OEAtomBase method  GetAtomicNum .  This value can
+be converted into an atomic symbol using the OEChem function,
+ OEGetAtomicSymbol .
+
+  
+    #include "oechem.h"
+#include &lt;iostream&gt;
+
+using namespace OEChem;
+using namespace std;
+
+int main()
+{
+   const char *symb = OEGetAtomicSymbol(OEElemNo::C);
+   cout &lt;&lt; "The atomic symbol for carbon is " &lt;&lt; symb &lt;&lt; endl;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+The example above uses the unsigned integer constant  OEElemNo::C 
+from the  OEElemNo  namespace.  This namespace represents the atomic
+numbers of the 109 elements as their symbols as a convenience.
+
+  
+The  OEGetAtomicSymbol  function always returns a valid
+ const char *  pointer.  For atomic number zero and elements greater
+than or equal to  OEElemNo::MAXELEM  (currently 110),
+ OEGetAtomicSymbol  returns a pointer to the NUL character,
+ '\0' ,  i.e.  an empty string.  For all other (valid) values, the
+returned string contains one or two characters.
+The first character is always uppercase, and the second character, if
+it exists is lower case.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20. Periodic Table Functions 
+ Up:   20. Periodic Table Functions 
+ Next:   20.2 Obtaining the Atomic 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

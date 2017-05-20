@@ -1,0 +1,131 @@
+ Heesch's Problem<body>
+
+     
+
+  Heesch's Problem 
+
+The  Heesch number  of a shape in the plane is the maximum
+number of times that shape can be completely surrounded by copies
+of itself. What possible values can this number take? 
+
+ More formally, if one has a  tiling  of the plane (a
+collection of disjoint connected open sets the closures of which cover the
+plane), the  first corona  of a tile is the set of all tiles
+that have a common boundary point with the tile, including the
+original tile itself. The  second corona  is the set of tiles
+that share a point with something in the first corona, and so on.
+The Heesch number of a shape is the maximum value of  k  for
+which all tiles in the  k th corona of any tiling are
+congruent to that shape. 
+
+ The Heesch number of a triangle, quadrilateral, regular hexagon,
+or any other shape that can tile the plane, is infinity.
+Conversely, an argument based on the axiom of choice shows that a
+shape with infinite Heesch number must tile the plane. But the
+Heesch number of a circle is zero, because it can't even be
+surrounded once by copies of itself without leaving some uncovered
+space. 
+
+ Heesch's problem is to determine the largest possible finite
+Heesch number, or more generally what values other than zero and
+infinity can occur as the Heesch numbers. For a long time the
+record holder was a shape found by Robert Ammann, consisting of a
+regular hexagon with small projections on two sides and matching
+indentations on three sides. It was believed that
+this shape had Heesch number three, until in April 2000
+ Alex Day  pointed
+out that the actual number is four (perhaps this simply reflects
+a disagreement on the definition of a tiling, since his tiling is not
+simply connected -- the common boundary of certain pairs of tiles is
+disconnected). 
+
+   
+
+ As can be seen in the picture above, there exist tilings in which
+copies of the same
+shape are used all the way out to the fourth corona. One way of
+proving that this gives the Heesch number of this shape would be to
+go through a case analysis showing that no fifth-corona tiling is
+possible. 
+
+ However a more elegant argument is possible. First note that one
+can not even produce a single corona without placing the tiles
+according to the standard hexagonal tiling, with indentations on
+one tile matched by projections on the adjacent tile. If one could
+fill the fourth corona this way, it would have 61 hexagons, 122 projections,
+and 183 indentations, so there would be at least 61 unmatched
+indentations on the outside boundary of the corona. However the
+same fourth corona would have only 54 hexagon edges on its outside
+boundary, which is not enough to hold all those unmatched
+indentations. Therefore the only way to fill the fourth corona is to
+match some pairs of indentations with flat sides or each other,
+forming small holes that prevent the creation of a fifth corona. 
+
+ If, instead, we had formed a tile with three projections and two
+indentations per hexagon, the same argument would show that its Heesch
+number is three. 
+
+ Other shapes are known with Heesch numbers one or two (see for
+instance Anne Fontaine, "An infinite number of plane figures with
+Heesch number two",  J. Comb. Th. A  57 (1991) 151-156). Very
+recently there has been significant progress on the problem: W. R.
+Marshall found a shape with Heesch number four
+(formed by indenting and outdenting the union of two hexagons, prior to
+Day's discovery that Heesch's tile achieves the same number), and
+ Casey Mann 
+has found a similarly indented and outdented pentahex with Heesch number
+five! (Or maybe even six with the same definition as Day.) 
+
+   
+
+ It remains open whether any polygon has higher Heesch number,
+but these new techniques seem very powerful and likely to lead to
+further results. Mann writes that that "rounder" polyominoes than
+the long-skinny ones he's been using may have a better chance of
+giving unbounded Heesch numbers. 
+
+ The Heesch number question seems closely connected to two other
+famous open tiling problems: does there exist an algorithm for
+determining whether a shape can tile, and does there exist a shape
+that can only tile aperiodically? Aperiodic tiling seems to act as
+a barrier to the existence of tiling algorithms, so it is not
+expected that both of these problems have the same answer. On the
+other hand, if no finite Heesch number is larger than some  
+k , then it seems that this could be used as the basis of an
+algorithm to test whether a shape tiles: simply attempt to fill out
+a tiling to the ( k +1)st corona; if successful, the shape
+must tile the plane, and if not, the shape does not tile. 
+
+ One can also ask similar questions about Heesch numbers for
+tilings in higher dimensions, for plane groups other than
+congruence, or for restricted classes of shapes, however I don't
+know any answers... 
+
+  See also:  
+
+   S. Dutch's
+page on Heesch tilings  
+
+  Erich
+Friedman's page on Heesch tilings  
+
+  Casey
+Mann's page on Heesch tilings  and
+ tile
+with Heesch number 1 and surround number 2 .
+ 
+
+  Peter
+Raedschelders' page on Heesch tilings  
+
+  Mark Thompson's page on Heesch tilings  
+
+  Eric
+Weisstein's page on Heesch tilings  
+   From the  Geometry Junkyard ,
+computational and recreational geometry.  David Eppstein ,  Theory Group ,  ICS ,  UC
+Irvine . 
+
+  Last update: 
+.  
+</body> 

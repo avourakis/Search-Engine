@@ -1,0 +1,55 @@
+ The Design Recipe<body>
+ 
+ICS 31 • David G. Kay • UC Irvine 
+   The "Design Recipe" for Functions   
+   
+ Every time you write a function, you should follow these steps.  They don't do the job for you automatically—if it could do that, software engineers wouldn't make high salaries—but it does help you get organized and avoid many common mistakes. Notice in particular how much you do before you actually start writing the code in the body of the function (in step 6 out of 7).
+ 
+ (The idea of a "design recipe" for programs comes from the 
+ Program By Design curriculum .) 
+
+  What's the  input</strong> and where does it come from? 
+Does it come as arguments/parameters? 
+Does it come from the user, e.g.,  name = input('Hello; name please:')         
+Does it read data from a file?    
+Does it come from a mouse or trackpad or other sensing device?  
+Note that a function that "takes a number as input" almost always expects an argument and  does
+not call the  input()  function; a function that "prompts (or asks) the user for a number as input"  does  call  input() .
+ 
+  What's the  output</strong> and where does it go? 
+Is it  returned  from the function?        
+Is it printed?        
+Does it write the results to a file? 
+Does it send a signal to some speakers or a robot controller or another machine on the internet?
+
+ Deciding whether to design functions with parameters and returned values or alternatively with print statements or other direct interactions is a question that requires more sophistication than we usually expect in a first course.  In most cases, then, the lab problem or exam question will tell you explicitly what to do (e.g.,  "take a number as a parameter and return its square root" or "prompt the user to input a number and then print that number's square root").  Read the problem carefully to find this vital information. 
+ As a general principle, though, it's usually best to write every function you can with parameters and return values.  That makes them flexible; the program that  calls  it can decide what to do with the returned result (print it, send it to a robot, whatever). 
+ 
+  Write a  contract</strong> that states the function's name and the       names and types of its parameters and return value. This can be in the form of a comment (so the precise syntax doesn't trip you up):
+  #   Restaurant_price:   rest: Restaurant   -&gt;   float         
+or it can use actual Python annotations in the actual Python function header (also called the function signature):
+  def Restaurant_price(rest: Restaurant) -&gt; float:     
+If you're not clear about what type(s) of data your function expects and what type it returns, you can't get any further.
+ 
+  Write a one-line  purpose statement</strong> or  docstring</strong> that says in simple English what the function does.  
+  " Take a total restaurant bill and compute the tip on that specified amount "  
+We will write this line as a quoted string and place it right after the function definition in the final code; that's called a "docstring"; Python will pick it up and display it when we call the  help()  function.
+  """ Your docstring can be triple-quoted; among other things, this
+    lets you spread it over two lines if you need to. """     Write some  examples</strong> of calling the function, including the results you expect in each case.  This helps clarify exactly what the function should do; as you work out the examples you may get ideas for how to write code to compute the results.  Moreover, the examples become your tests
+(see step 8). 
+For functions that return values, use Python's  assert  statement—the word  assert  followed by a Boolean (true or false) expression that should be true if the function is correct:
+  assert triple(0) == 0
+assert triple(5) == 15     
+Write enough different examples to convince yourself (and your TA) that your function works correctly on all expected kinds of data.
+ 
+  Write the  body</strong> of the function.  This is where you actually get to write the rest of the code.  Note that you already have the header (it was your contract) and your docstring (the purpose statement).  The examples (assert statements) go after the function body (aligned with the left margin, just like the  def  for the function.
+  def triple(value: int) -&gt; int:
+   " Return three times the parameter value "
+   return 3 * value
+assert triple(0) == 0
+assert triple(5) == 15        Run the function (which runs the  tests</strong>—your examples from step 6) and check the results.  If the assertions are true, everything stays quiet; if one is false, you get an error message that helps you locate the source of the problem. Resolve any discrepancies and repeat the process until all the tests pass.
+ 
+   
+  David G. Kay ,   kay@uci.edu 
+ 
+</body> 

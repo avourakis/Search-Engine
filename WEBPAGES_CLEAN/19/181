@@ -1,0 +1,667 @@
+ 
+Serialized Form
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+        Package   
+        Class   
+        Use   
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+
+
+  
+ 
+Serialized Form 
+ 
+     
+ Package   Raccoon.SE   
+   
+  
+     
+ Class  Raccoon.SE.AttributeMappingAnswer  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+searchTableSchema 
+ 
+ PVSchema   searchTableSchema  
+      
+resultTableSchema 
+ 
+ PVSchema   resultTableSchema  
+      
+searchTableAttrVec 
+ 
+java.util.Vector  searchTableAttrVec  
+      
+resultTableAttrVec 
+ 
+java.util.Vector  resultTableAttrVec  
+     
+  
+     
+ Class  Raccoon.SE.InstancePattern  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+instance 
+ 
+ PVInstance   instance  
+  instance of the relation to be searched
+ 
+      
+  
+     
+ Class  Raccoon.SE.PVAttribute  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+type 
+ 
+java.lang.String  type  
+      
+myName 
+ 
+java.lang.String  myName  
+      
+isNull 
+ 
+boolean  isNull  
+      
+isKey 
+ 
+boolean  isKey  
+      
+defaultValue 
+ 
+java.lang.String  defaultValue  
+      
+extra 
+ 
+java.lang.String  extra  
+     
+  
+     
+ Class  Raccoon.SE.PVInstance  extends javax.swing.table.AbstractTableModel implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+columnNameArr 
+ 
+java.util.Vector  columnNameArr  
+  array containing the attr names
+ 
+       
+columnFullNameArr 
+ 
+java.util.Vector  columnFullNameArr  
+  array containing the attr names
+ in the format of relname.attrname. 
+ It is useful when do the join
+ 
+       
+columnClassArr 
+ 
+java.util.Vector  columnClassArr  
+  array containing the Java class names of attrs
+ 
+       
+valueArr 
+ 
+java.util.Vector  valueArr  
+  array containing all the attr values
+ 
+       
+columnCount 
+ 
+int  columnCount  
+      
+rowCount 
+ 
+int  rowCount  
+      
+columnClassCount 
+ 
+int  columnClassCount  
+     
+  
+     
+ Class  Raccoon.SE.PVRelation  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+schema 
+ 
+ PVSchema   schema  
+  schema of the relation
+ 
+       
+inst 
+ 
+ PVInstance   inst  
+  instances of the relation
+ 
+      
+  
+     
+ Class  Raccoon.SE.PVSchema  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+nodeID 
+ 
+java.lang.String  nodeID  
+      
+nodeName 
+ 
+java.lang.String  nodeName  
+      
+relName 
+ 
+java.lang.String  relName  
+      
+attrArr 
+ 
+java.util.Vector  attrArr  
+     
+  
+     
+ Class  Raccoon.SE.RelationPattern  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+relation 
+ 
+ PVRelation   relation  
+  schema of the relation to be searched
+ 
+      
+  
+     
+ Class  Raccoon.SE.SchemaPattern  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+schema 
+ 
+ PVSchema   schema  
+  schema of the relation to be searched
+ 
+      
+  
+     
+ Class  Raccoon.SE.SearchAnswer  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+answers 
+ 
+java.util.Vector  answers  
+  sets of answers to a search request. Each element of this vector
+ is of the class registering to implement the interface SearchAnsFormat
+ 
+      
+  
+     
+ Class  Raccoon.SE.SearchCriteria  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+ttl 
+ 
+int  ttl  
+  maximal number of hops the search is going to be propagated
+ 
+       
+maxResult 
+ 
+int  maxResult  
+  max number of results users expect. Search stops when this number
+ of results have been retrieved
+ 
+       
+searchID 
+ 
+int  searchID  
+  used to identify a particular search from a node
+ 
+       
+sourceID 
+ 
+java.lang.String  sourceID  
+  NodeID of the source initiating this search
+ 
+       
+myPattern 
+ 
+ SearchPattern   myPattern  
+  pattern to be searched; It actually decides the schema matching
+ technique. Various kind of search patterns have various techniques
+ to get matched
+ 
+      
+  
+     
+ Class  Raccoon.SE.SingleSearchAnswer  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+nodeName 
+ 
+java.lang.String  nodeName  
+      
+nodeID 
+ 
+java.lang.String  nodeID  
+      
+schema 
+ 
+ PVSchema   schema  
+     
+      
+ Package   Raccoon.QE   
+   
+  
+     
+ Class  Raccoon.QE.QueryCriteria  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+messageID 
+ 
+java.lang.String  messageID  
+      
+type 
+ 
+int  type  
+      
+queryStr 
+ 
+java.lang.String  queryStr  
+     
+      
+ Package   Raccoon   
+   
+  
+     
+ Class  Raccoon.RaccoonApplet  extends javax.swing.JApplet implements Serializable   
+   
+
+  
+      
+ Package   Raccoon.GUI   
+   
+  
+     
+ Class  Raccoon.GUI.PeerViewBrowser  extends javax.swing.JPanel implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+rm 
+ 
+ ResourceManager   rm  
+      
+se 
+ 
+ SearchEngine   se  
+      
+qe 
+ 
+ QueryEngine   qe  
+      
+splitPane 
+ 
+javax.swing.JSplitPane  splitPane  
+      
+tgPanel 
+ 
+com.touchgraph.graphlayout.TGPanel  tgPanel  
+      
+infoPanel 
+ 
+javax.swing.JPanel  infoPanel  
+      
+tgLensSet 
+ 
+com.touchgraph.graphlayout.TGLensSet  tgLensSet  
+      
+tgUIManager 
+ 
+com.touchgraph.graphlayout.interaction.TGUIManager  tgUIManager  
+      
+hvScroll 
+ 
+com.touchgraph.graphlayout.interaction.HVScroll  hvScroll  
+      
+zoomScroll 
+ 
+com.touchgraph.graphlayout.interaction.ZoomScroll  zoomScroll  
+      
+localityScroll 
+ 
+com.touchgraph.graphlayout.interaction.LocalityScroll  localityScroll  
+      
+rotateScroll 
+ 
+com.touchgraph.graphlayout.interaction.RotateScroll  rotateScroll  
+      
+lbPopup 
+ 
+javax.swing.JPopupMenu  lbPopup  
+      
+lbMenuBar 
+ 
+javax.swing.JMenuBar  lbMenuBar  
+      
+scrollBarHash 
+ 
+java.util.Hashtable  scrollBarHash  
+      
+lbNodeDialog 
+ 
+com.touchgraph.linkbrowser.LBNodeDialog  lbNodeDialog  
+      
+lbEdgeDialog 
+ 
+com.touchgraph.linkbrowser.LBEdgeDialog  lbEdgeDialog  
+      
+pvQueryDialog 
+ 
+PVQueryDialog  pvQueryDialog  
+  added for query dialog
+ 
+       
+pvSearchDialog 
+ 
+PVSearchDialog  pvSearchDialog  
+  added for Search dialog
+ 
+       
+pvTableDialog 
+ 
+PVTableDialog  pvTableDialog  
+  added for queryAnswer display
+ 
+       
+pvSearchAnswerDialog 
+ 
+PVSearchAnswerDialog  pvSearchAnswerDialog  
+  added for searchAnswer display
+ 
+       
+pvAddMappingAnswerDialog 
+ 
+PVAddMappingAnswerDialog  pvAddMappingAnswerDialog  
+  added for addMappingResult display
+ 
+       
+modeSelectPanel 
+ 
+javax.swing.JPanel  modeSelectPanel  
+      
+xmlio 
+ 
+ PVXMLio   xmlio  
+      
+xmlFileName 
+ 
+java.lang.String  xmlFileName  
+      
+initialNodeName 
+ 
+java.lang.String  initialNodeName  
+      
+targetFrame 
+ 
+java.lang.String  targetFrame  
+      
+externalFrame 
+ 
+java.lang.String  externalFrame  
+      
+proxyServlet 
+ 
+java.lang.String  proxyServlet  
+      
+graphsVisited 
+ 
+java.util.Stack  graphsVisited  
+      
+documentBase 
+ 
+java.net.URL  documentBase  
+      
+enclosingApplet 
+ 
+javax.swing.JApplet  enclosingApplet  
+      
+enclosingFrame 
+ 
+javax.swing.JFrame  enclosingFrame  
+      
+completeEltSet 
+ 
+com.touchgraph.graphlayout.graphelements.GraphEltSet  completeEltSet  
+     
+  
+     
+ Class  Raccoon.GUI.PVEdge  extends com.touchgraph.linkbrowser.LBEdge implements Serializable   
+   
+
+  
+  
+     
+ Class  Raccoon.GUI.PVException  extends com.touchgraph.graphlayout.TGException implements Serializable   
+   
+
+  
+  
+     
+ Class  Raccoon.GUI.PVNode  extends com.touchgraph.linkbrowser.LBNode implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+nodeInfo 
+ 
+ PVNodeInfo   nodeInfo  
+      
+isExpanded 
+ 
+boolean  isExpanded  
+     
+  
+     
+ Class  Raccoon.GUI.PVNodeInfo  extends java.lang.Object implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+node_info_name 
+ 
+java.lang.String  node_info_name  
+      
+node_info_desc 
+ 
+java.lang.String  node_info_desc  
+      
+node_info_bw 
+ 
+java.lang.String  node_info_bw  
+      
+node_info_size 
+ 
+java.lang.String  node_info_size  
+      
+node_info_type 
+ 
+java.lang.String  node_info_type  
+      
+m_system 
+ 
+java.lang.String  m_system  
+      
+m_host 
+ 
+java.lang.String  m_host  
+      
+m_dbName 
+ 
+java.lang.String  m_dbName  
+      
+schemaArr 
+ 
+java.util.Vector  schemaArr  
+     
+  
+     
+ Class  Raccoon.GUI.ResultSetTableModel  extends javax.swing.table.AbstractTableModel implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+columnNameArr 
+ 
+java.util.Vector  columnNameArr  
+      
+valueArr 
+ 
+java.util.Vector  valueArr  
+      
+columnCount 
+ 
+int  columnCount  
+      
+rowCount 
+ 
+int  rowCount  
+     
+      
+ Package   Raccoon.NET   
+   
+  
+     
+ Class  Raccoon.NET.NetModuleImpl  extends java.rmi.server.UnicastRemoteObject implements Serializable   
+   
+  
+     
+ Serialized Fields   
+   
+rm 
+ 
+ ResourceManager   rm  
+      
+se 
+ 
+ SearchEngine   se  
+      
+qe 
+ 
+ QueryEngine   qe  
+      
+myNodeID 
+ 
+java.lang.String  myNodeID  
+      
+neighborList 
+ 
+ NeighborList   neighborList  
+      
+DEFAULT_PORT 
+ 
+int  DEFAULT_PORT  
+    See Also:    Constant Field Values     
+  
+     
+ Class Raccoon.NET.NetModuleImpl_Stub extends java.rmi.server.RemoteStub implements Serializable   
+   
+ serialVersionUID:  2l
+
+  
+
+  
+    
+  
+   
+  
+          Overview     
+        Package   
+        Class   
+        Use   
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+
+
+ </body> 

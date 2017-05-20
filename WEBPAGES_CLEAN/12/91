@@ -1,0 +1,4078 @@
+ CS-171 Fall Quarter 2014 
+
+ 
+
+   CompSci    (CS) 171 — Introduction to Artificial
+Intelligence —  Fall  2014      
+
+ 
+
+  
+
+  Jump to section:      
+
+                    Current
+Announcements     
+
+                
+  Place, Time, Instructors     
+
+                
+  Goal     
+
+              
+  Class Setup     
+
+              
+  Textbook     
+
+                   Grading     
+
+              
+  Syllabus     
+
+                          
+  Week 1     
+
+                          
+  Week 2     
+
+                            
+  Week 3     
+
+                            
+  Week 4     
+
+                            
+  Week 5     
+
+                            
+  Week 6     
+
+                            
+  Week 7     
+
+                            
+  Week 8     
+
+                            
+  Week 9     
+
+                            
+  Week 10     
+
+                          
+  Week 11     
+
+                          
+  Final Exam     
+
+              
+  Projects (“just for fun on an optional
+ungraded basis”)     
+
+              
+  Study Guides --- Previous CS-171 Quizzes,
+Mid-term, and Final exams     
+
+              
+  Online Resources     
+
+              
+  Academic Honesty     
+
+ 
+
+  
+
+    Current
+Announcements:     
+
+         
+
+   v  
+    Have
+ a Happy Holidays !!     and  a Joyous,
+Healthy, Prosperous, and Successful New Year!!    
+
+   v  
+    The
+Final Exam key has been posted below, and is also available  here .    
+
+   v  
+    Please,
+fill out your student evaluations for CS-171.    
+
+              ****
+Every student who fills out a course evaluation for CS-171 will receive a bonus
+of 1% added to their final grade, free and clear, off the curve, simply a
+bonus.    EEE will return to me the
+names of students who fill out evaluations (but not the content, which remains
+anonymous), provided that enough students fill out evaluations so that
+anonymity is not compromised.    I
+will add 1% free bonus to the final grade of each such named student. ****    
+
+              These
+evaluations are important to UCI in monitoring our quality and success in
+fulfilling our educational mission, and they are important to me in improving
+the CS-171 experience.    
+
+              Knowing
+what positive features you found good and strong helps me know what to repeat
+and emphasize.    Many of the positive
+features in the current offering of CS-171 were suggested as improvements by
+previous year's students.    
+
+              Please,
+fill out your student evaluations for CS-171.    
+
+   v  
+    According
+to the UCI Registrar quarter calendar website ( http://www.reg.uci.edu/calendars/quarterly/2014-2015/quarterly14-15.html ),
+“Instruction ends” occurred yesterday, Fri., Dec 12. Consequently,
+no discussion sections will occur Monday or Tuesday of next week (Dec. 15 or 16).
+Instead, please schedule an office  hours  appointment
+with your TA or me by email.    
+
+   v  
+    The
+Quiz #4 answer key has been posted below and also is available  here .    
+
+   v  
+    Please
+note that  P( A and B) = P(A) + P(B) - P(A or B).    
+
+  If,
+and only if, A and B are independent, then and only then  P( A
+and B) = P(A)*P(B).    
+
+  If
+A and B are disjoint then  P( A and B) = 0.    
+
+  If
+A and B are synonyms (i.e., co-occur exactly) then P(A and B) = P(A) = P(B).    
+
+   v  
+    ICS
+has made a video of the "ICS FACULTY PANEL ON IMPROVING YOUR GRAD SCHOOL
+APPLICATION " ?     
+
+  It
+is available on YouTube (and also from the ICS website):    
+
+              http://www.youtube.com/watch?v=P50PrQ7SOuQ    
+
+  Students
+interested in grad school who were not able to attend the panel in person still
+would benefit from watching the video.    
+
+   v  
+     Sridevi   ,
+the class Reader, kindly has supplied the Quiz #1 break-down of the fraction of
+students who got zero, partial, or perfect credit on each question. These
+statistics have been prepended to the Quiz #1 key posted below, and also are
+available  here .
+    
+
+   v  
+    The
+following seminar will be of interest to students interested in machine
+learning:    
+
+  “Never-Ending
+Language Learning” --- the AI/ML seminar in Bren Hall 4011 from 3 to 4pm.    
+
+  Tom
+M. Mitchell    
+
+  E.
+ Fredkin  University Professor    
+
+  Machine
+Learning Department    
+
+  Carnegie
+Mellon University    
+
+   ABSTRACT:    We will never really understand the process
+of learning from experience, until we can build machines that learn many
+different things, over years, and become better learners over time.    
+
+  We
+describe our research to build a Never-Ending Language Learner (NELL) that runs
+24 hours per day, forever, learning to read the web.    Each day NELL extracts (reads) more
+facts from the web, into its growing knowledge base of beliefs.    Each day NELL also learns to read better
+than the day before.    NELL has been
+running 24 hours/day for over four years now. The result so far is a collection
+of 70 million interconnected beliefs (e.g.,  servedWtih (coffee,
+ applePie )), NELL is considering at different levels
+of confidence, along with millions of learned phrasings, morphological
+features, and web page structures that NELL uses to extract beliefs from the
+web. NELL is also learning to reason over its extracted knowledge, and to
+automatically extend its ontology. Track NELL's progress at
+http://rtw.ml.cmu.edu, or follow it on Twitter at @CMUNELL.    
+
+   BIO:    Tom M. Mitchell founded and chairs
+the Machine Learning Department at Carnegie Mellon University, where he is the
+E.  Fredkin  University Professor.    His research uses machine learning to
+develop computers that are learning to read the web, and uses brain imaging to
+study how the human brain understands what it reads.    Mitchell is a member of the U.S.
+National Academy of Engineering, a Fellow of the American Association for the
+Advancement of Science (AAAS), and a Fellow and Past President of the
+Association for the Advancement of Artificial Intelligence (AAAI).    He believes the field of machine
+learning will be the fastest growing branch of computer science during the 21st
+century.    
+
+   FOR
+THE CURRENT SCHEDULE OF TALKS SEE:   
+ http://cml.ics.uci.edu/?page=events&amp;subPage=aiml     
+
+   v  
+    The
+Quiz #3 key has been posted below, and also is available  here .    
+
+   v  
+    Mid-term
+exams will be passed out at the end of class Tues., Nov. 25, for those students
+who have not yet gotten them. Otherwise, you may get them from  Sridevi , the Reader, during her office hours Wednesday
+4:00-5:00pm, or anytime by appointment, in DBH-3221. The deadline for the
+Mid-term Pedagogical Device is the beginning of class, Tuesday, 2 Dec. See
+instructions on the new page 2 of the Exam key posted below.    
+
+   v  
+    Dr.
+Lathrop’s office hours for  Weds.,  26 Nov., are
+canceled due to a death in the family.    
+
+   v  
+    As
+announced in lecture and on the class mailing list, the Mid-term Exam is now a
+designated Pedagogical Device.    You
+can receive 50% of your missed points back by repairing the bugs in your
+knowledge base that led you to miss points. The deadline for the Mid-term Pedagogical
+Device has been extended to the beginning of class, Tuesday, 2 Dec. See
+instructions on the new page 2 of the Exam key posted below.    
+
+   v  
+    The
+Reader,  Sridevi , kindly has provided a break-down of
+the fraction of students who got zero, partial, or perfect credit on each
+question of the Mid-term Exam and Quiz #2. Quiz #1 will follow.    I have inserted this analysis as the new
+page 1 of those keys posted below.    
+
+   v  
+    The
+Mid-term Exam key has been posted below, and also is available  here .    
+
+   v  
+    As
+a suggestion, please arrive a few minutes early for the Mid-term Exam, spread
+out, and take your seat quickly. Doing so will allow us to pass out the exam
+quickly and give you the most possible time to work the exam.    
+
+   v  
+    If
+you drew a line across branch arcs instead of crossing out leaf nodes for Quiz
+#2, problem #2, your answer will be considered correct if the inferred leaf
+nodes to be pruned are correct. Please check your quiz if so, and ask the
+Reader about any problems.    But,
+next time, please cross out the leaf nodes; it is faster and more accurate to
+grade.    
+
+   v  
+    A
+kind and helpful student has brought it to my attention that the PDF reader on
+a Mac (iPad) sometimes has difficulty reading the previous CS-171 tests
+correctly. For example, in Quiz #2 from SQ’2004, problems #3a and #3b,
+the erroneous “Y” on the key was corrected by an overlay in the PDF
+file of a red X through the Y, and next to it a red N. However, this overlay is
+invisible on a Mac (iPad), leading to incorrect understanding of the right
+answer. Sometimes the Mac PDF software is incompatible with the PC PDF
+software. If you are using a Mac to read the previous CS-171 test PDF files and
+something looks wrong, please bring it to my attention and then look at it
+again with a PC.    
+
+   v  
+    A
+kind and helpful student has contributed a URL for the “ Complete Map of Optimal Tic-Tac-Toe Moves. ”    
+
+   v  
+    A
+kind and helpful student has contributed a URL for “ Google
+reveals it is developing a computer so smart it can program ITSELF. ”    
+
+   v  
+    The
+Quiz #2 answer key has been posted below and also is available  here .    
+
+   v  
+    The
+Quiz #1 answer key has been posted below and also is available  here .    
+
+   v  
+    Dr.
+Lathrop’s office hours for Wednesday, 22 Oct., are canceled due to travel
+to Washington, D.C., as Chair of the NIH grant review panel on “Big Data
+to Knowledge: Targeted Software.”    
+
+   v  
+    Several
+interested students have asked what AI-related courses beyond CS-171 might be
+taught next quarter ( Winter’2015 ). Although the
+schedule is still tentative and subject to change and revision, these courses
+appear in the current tentative schedule:    
+
+               COMPSCI 116.   Computational Photography and
+Vision.  (Prof.  Ramanan )    
+
+               COMPSCI 172B.   Neural Networks and Deep
+Learning.  (Prof.  Baldi )    
+
+               COMPSCI 175.   Project in Artificial
+Intelligence.  (Prof. Smyth)    
+
+               COMPSCI 178.   Machine Learning and
+Data-Mining.  (Prof.  Ihler )    
+
+   v  
+    A
+kind and helpful student has contributed a search strategy visualization tool,
+which appears below in the Search material of Week 2 under “Interesting
+search algorithm visualization web page” and is also available  here .    
+
+   v  
+    Some
+students were unclear about the  Tabu  Search wrapper
+and implementation, so I added a slide on that topic to the Local Search
+lecture slides.    
+
+   v  
+    The
+lecture of Tue., 25 Nov., Probability, Uncertainty, Bayesian Networks, will be
+given by Robert Hasselbeck.    
+
+   v  
+    Coding
+shells for Monster Sudoku (Chapter 6, Constraint Satisfaction) and Maze Path-finding
+(Chapter 3, State Space Search) have been posted to the Project section below.
+These shells are for students who are interested and want to have fun with the
+class material, “just for fun on an optional ungraded basis.” I may
+award Bonus Points to students who contribute bug fixes or otherwise improve
+the projects.    
+
+   v  
+    Please
+plan to attend the  ICS Faculty Panel on
+Improving Your Grad School Application , Tuesday, 21 October, noon-12:50pm
+in DBH-6011.    (If you have a time
+conflict, note that the video will be posted on the ICS SAO website.)    Please review the US Bureau of Labor
+Statistics chart on “ Earnings
+and unemployment rates by educational attainment .”    
+
+   v  
+    Office
+hours update: The Reader,  Sridevi   Maharaj ,
+will hold office hours Wednesday 4:00-5:00pm, or anytime by appointment, in
+DBH-3221. Rick Lathrop’s office hours have changed to Wednesday
+2:00-3:00pm, or anytime by appointment, in DBH-4224.    
+
+   v  
+    A
+“just for fun on an optional ungraded basis” coding shell for Game
+AI (Adversarial search) has been posted below. I hope to get shells for Sudoku
+(Constraint satisfaction) and maze path-finding (Heuristic search) posted
+shortly. I have no people resources available to fix problems if they come up,
+but I will give Bonus Points to motivated students who do so.    
+
+   v  
+    Accommodations
+for missed quizzes or exams have been extended to include field maneuvers of
+the US military or National Guard (I require a copy of your official orders).  
+
+   v  
+    The
+lecture of  Thu.,  23 Oct., start Constraint
+Satisfaction, will be given by Mahdi Tehrani. A lecture by Robert Hasselbeck
+will be scheduled sometime later in the term.  
+
+   v  
+    If
+you are an Exchange student, or for any other reason are not on the EEE class
+mailing list, please let me know so that I can make other arrangements for you
+to get class email.  
+
+   v  
+    Several
+students have expressed an interest in doing one or more coding projects
+“just for fun” on an optional ungraded basis, so the coding shells
+will be posted shortly.  
+
+   v       ROOM
+CHANGE!!    ELH-100 beginning Tuesday,
+Oct. 7.      
+
+   v  
+    Current
+announcements will appear here, at top-level, for quick and easy inspection.  
+
+     
+
+ 
+
+  
+
+      Place,
+Time, Instructors:    
+
+       
+
+  Lecture:  ROOM CHANGE!!  
+  ELH-100 beginning Tuesday, Oct. 7.      
+
+  Place:  ELH 100  (Building  305  on the  UCI
+campus map  )  
+Time: Tuesday/Thursday    7:00- 8:20pm      
+
+  Discussion sections:    
+
+  Dis 1: Wednesday, 5:00- 5:50ppm in  DBH 1300  (Building  314  on the  UCI
+campus map )    
+
+  Dis 2: Monday 5:00-5:50pm in  DBH 1200  (same
+building as above)     
+
+  Dis 3: Wednesday, 6:00- 6:50ppm in  DBH 1300  (same
+building as above)    
+
+  Dis 4: Monday 6:00-6:50pm in  DBH 1200  (same
+building as above)    
+
+       
+
+  Instructor: Richard Lathrop  
+Office hours: Wednesday 2:00-3:00pm, or anytime by appointment, in DBH-4224.    
+
+  Email:     rickl@uci.edu     
+
+  (If you send email, please
+put “CS-171” somewhere in the Subject line.)    
+
+       
+
+  TA:    
+
+       
+
+  Dis 1, Dis 3: Mahdi Tehrani    
+
+  Office hours: Thursday 10:00-11 :am , or anytime by appointment, in DBH-4211.    
+
+  Email:  mabbaspo@ics.uci.edu     
+
+  (If you send email, please
+put “CS-171” somewhere in the Subject line.)       
+
+       
+
+  Dis 2, Dis 4: Robert Hasselbeck     
+
+  Office hours: Tuesday and Thursday
+1:00-2:00 pm, or anytime by appointment, in ICS2-265.    
+
+  Email:  rhasselb@uci.edu     
+
+  (If you send email, please
+put “CS-171” somewhere in the Subject line.)       
+
+       
+
+  Reader:  Sridevi 
+ Maharaj     
+
+  Office hours: Wednesday 4:00-5:00pm,
+or anytime by appointment, in DBH-3221.    
+
+  Email:  sridevi.m@uci.edu     
+
+  (If you send email, please
+put “CS-171” somewhere in the Subject line.)    
+
+       
+
+  
+
+   
+
+    Goal:      
+
+  The goal of this class is to familiarize you with the basic
+principles of artificial intelligence. You will l  earn  some
+ basic AI techniques, the problems for which they are applicable, and
+their limitations.    
+
+  The
+course content is organized roughly around what are often considered to be
+three central pillars of AI: Search, Logic, and Learning. Topics covered
+include basic search, heuristic search, game search, constraint satisfaction,
+knowledge representation, logic and inference, probabilistic modeling, and machine
+learning algorithms.     
+
+ 
+
+  
+
+    Class Setup:      
+
+  The
+course will be primarily lecture-based.  
+ There will be a Mid-term and a Final Exam.    On every second Tuesday, the first 20
+minutes will be an in-class pop quiz, followed by lecture.    The frequent quizzes are intended to
+encourage you to stay current with the course material.    All exams and quizzes may cover all
+material presented in class, including lectures and assigned textbook
+reading.    Quizzes will cover mostly
+material presented since the last quiz, and also may include questions that
+many students missed on the previous quiz.  
+ The Final Exam will cover mostly material since the Mid-term Exam, and
+also will include some questions intended to encourage you to remember the
+earlier material.    
+
+  Normally
+I require an AI coding project, but this quarter there are 190 enrolled
+students and I have been assigned only one Reader, so it is not logistically
+feasible.    If any students are
+interested in doing an AI coding project “just for fun” then I will
+make the coding project shells available (you have to write the
+“smarts” that goes into the shell).    I have shells for constraint
+satisfaction (Sudoku), game playing/adversarial search (Connect-K), and
+heuristic search (path finding in a maze). All these shells were written by
+former CS-171 students who became interested in AI and signed up for CS-199 in
+order to pursue their interest and write interesting AI project shells.    Please let me know if this is of
+interest to you (CS-171 grade of A- or better required).    
+
+  Homework
+will be assigned, but is not graded. The reason is that prior student course
+evaluations alerted me to the existence of student cheating by way of copying
+the homework answers.    I deplore
+this degree of personal degradation in dishonest students, but I cannot control
+it, and so I avoid the opportunity.  
+ I remain determined to create a fair and honest educational experience
+for all students, as best I can.    
+
+  
+
+   
+
+    Textbook      
+
+  Required:    
+ Russell &amp;   Norvig    :  Artificial Intelligence; A Modern Approach, 3 rd 
+edition.    
+
+  The
+course is based on, and the UCI bookstore has, the 3 rd  edition. The
+assigned textbook reading is required, and is fair game for quizzes and
+exams.       You place
+yourself at a distinct disadvantage if you do not have the textbook.        I expect that you have a personal copy
+of the textbook, and quizzes and exams are written accordingly.       
+
+  Please
+purchase or rent your own personal textbook for the quarter (and then resell it
+back to the UCI Bookstore at the end if you don't want it for reference). 
+  Please do not
+jeopardize your precious educational experience with the false economy of
+trying to save a few dollars by not having a personal copy of the textbook.       
+
+  Also, for
+your convenience, I have requested that a copy of the textbook be placed on
+reserve in the UCI Science Library.    There is a two-hour check-out limit.  </strong>However,
+please understand that with high student enrollments, it is unrealistic to
+expect that these thin reserves will always be available when you need
+them.    Please
+purchase or rent your own personal textbook.       </strong> 
+
+   I do deplore the high cost of textbooks.    You are likely to find the book cheaper
+if you search online at EBay.com, Amazon.com, and related sites.   </strong> 
+
+   A
+student kindly contributed link(s) to a PDF of the course textbook, for which I
+cannot vouch:   </strong> 
+
+                    http://en.tjcities.com/wp-content/uploads/Books/Artificial_Intelligence_3rd.pdf     (possibly stale?)    </strong> 
+
+                   http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;cad=rja&amp;ved=0CEYQFjAC&amp;url=http%3A%2F%2Fstpk.cs.rtu.lv%2Fsites%2Fall%2Ffiles%2Fstpk%2Fmateriali%2FMI%2FArtificial%2520Intelligence%2520A%2520Modern%2520Approach.pdf&amp;ei=VwfLUqnROZLhoASE6oKACA&amp;usg=AFQjCNGWuwp4bDR-YTsUKSSmKHPmcC7cPA&amp;bvm=bv.58187178,d.cGU     </strong> 
+
+                   http://crazy-readers.blogspot.com/2013/08/artificial-intelligence-modern-approach.html     </strong> 
+
+       </strong> 
+
+   You
+can also try to search the Internet for “artificial intelligence a modern
+approach pdf 3rd edition”. Several more hits turned up the last time I
+did so.   </strong> 
+
+       </strong> 
+
+   A
+student kindly contributed the following suggestion, for which I cannot vouch: </strong>     </strong> 
+
+  Hello,  
+I just wanted to point out that there does  exist  an
+international edition of the book which can be bought for around $40-50. I
+cannot comment on what specific differences there are for this particular book,
+though they are usually very small (exercises moved around,  etc ).
+Obviously, it is in paperback.                 http://www.valorebooks.com/affiliate/buy/siteID=e79mzf/ISBN=0136042597 
+                http://www.abebooks.com/servlet/BookDetailsPL?bi=4161131466&amp;cm_ven=sws&amp;cm_cat=sws&amp;cm_pla=sws&amp;cm_ite=4161131466&amp;afn_sr=para&amp;para_l=1 
+                http://www.biblio.com/books/360025589.html 
+ 
+Personally I plan on using this book for a while so I bought the hardcover
+version, but I just wanted to point out that this is an option for those
+looking for a more 'economical' route.  
+~ XXXXXX [name anonymized to protect student privacy]        
+
+ 
+
+  
+
+    Grading:      
+
+  Your
+grade will be based on the bi-weekly   quizzes
+(30%), a mid-term exam (35%), and a final exam (35%).      Homework is assigned but ungraded.    
+
+   ·        
+    Quizzes will be given the first 20 minutes of class on the
+dates listed in the syllabus below.  
+ Your lowest quiz score will be discarded in computing your grade.    It is not possible to make-up missed quizzes,
+but one missed quiz may be discarded as your lowest quiz score.    
+
+   ·        
+    The mid-term exam will be given in class on Thursday,
+November 13, and is closed-book, closed-notes.    It is not possible to make-up a missed
+mid-term exam.    
+
+   ·        
+    The final exam will be given on Tuesday, December 16,
+7:00-9:00 p.m., and is closed-book, closed-notes.    The final exam will cover all course
+material from the entire quarter, but mostly the second half.    It is not possible to make-up a missed
+final exam.    
+
+                Dates
+and times for all final exams are set by the UCI Registrar ( Final Exam
+Schedule 2013-14 ).    
+
+  I make exceptions for genuine medical conditions (I require
+a note from your doctor on official letterhead), deaths in the family (I
+require a copy of the death certificate), or field maneuvers of the US military
+or National Guard (I require a copy of your official orders).    Also, I honor all requests made by the
+UCI Disability Services Center.    
+
+   ·        
+    Every student who fills out a course evaluation
+for CS-171 will receive a bonus of 1% added to their final grade, free and
+clear, off the curve, simply a bonus.      
+
+            EEE will
+return to me the names of students who fill out evaluations (but not the
+content, which remains anonymous), provided that enough students fill out
+evaluations so that anonymity is not compromised.    I will add 1% free bonus to the final
+grade of each such named student.  
+
+            Student
+course evaluations are very important to me for monitoring and improving the
+course content, and very important to UCI for evaluating our success at our
+educational mission.    *Please* fill
+out your student course evaluations.    
+
+       
+
+   ·        
+    “Bonus Points” will be awarded, at my sole
+discretion, (1) to the first student who spots a genuine technical error (typos
+don’t count) in any of the course materials before I spot it too, and (2)
+for helpful contributions to the class as we go along.    One bonus point is equivalent to one
+quiz point.    
+
+       
+
+                Your
+Bonus Points, if any, should be visible to you in EEE  GradeBook .
+If for some reason you have been awarded a Bonus Point, but you did not get a
+notification from me or it did not appear in EEE  GradeBook ,
+please do not hesitate in emailing me as a reminder just to avoid an unlikely
+error.    
+
+       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    Syllabus:      
+
+  The following represents a preliminary syllabus. Some changes in the
+lecture sequence may occur due to earthquakes, fires, floods, wars, natural
+disasters, unnatural disasters, or the discretion of the instructor based on
+class progress.    
+
+  Background Reading and Lecture Slides will be changed or revised as the
+class progresses at the discretion of the instructor.    Please note:    I may tweak or revise the lecture slides
+prior to the lecture; please ensure that you have the current version.    
+
+  Please read the assigned textbook reading and review the lecture notes  in advance  of each lecture, then  again after  each lecture.    
+
+    Week
+1:    
+
+                      Thu.,      2 Oct.,
+Introduction, Agents.      
+
+                             Read
+in Advance: Textbook Chapters 1-2.     
+
+                             Lecture
+slides: Introduction, Agents [ PDF ;  PPT ].     
+
+                       Optional  Cultural Interest:      
+
+                              IBM Watson: Final Jeopardy!  and  the Future of Watson      
+
+                               AI vs. AI. 
+ Two  chatbots  talking to each other.       
+
+                       Optional
+Reading:       
+
+                             John
+McCarthy, “ What
+Is Artificial Intelligence? ”         
+
+                             AAAI,
+ AI Overview .    
+     
+
+         
+
+                  Tue., 7 Oct., Uninformed Search.       
+
+                             Read
+in Advance: Textbook Chapter 3.1-3.4.     
+
+                             Lecture
+slides (three parts):     
+
+                                         (1)
+Introduction to Search [ PDF ;  PPT ]; and     
+
+                                         (2)
+Uninformed Search [ PDF ;  PPT ].     
+
+                       Optional  Cultural Interest:      
+
+                              Boston Dynamics Big Dog (new video
+March 2008)      
+
+                              Cheetah Robot runs 28.3 mph;
+a bit faster than Usain Bolt      
+
+                              Amazing Bike Riding Robot!      
+
+                              Honda's
+robot ASIMO      
+
+   Optional Reading:     
+
+                   Newell &amp; Simon’s “Symbols and Search” Turing
+Award Lecture (1976)   .     
+     
+
+                 Herbert
+Simon was awarded a Nobel Prize (in economics, 1978).     
+
+    Week
+2:    
+
+                      Thu.,      9 Oct.,
+Heuristic Search.     
+
+                             Read
+in advance:    Textbook Chapter
+3.5-3.7.     
+
+                             Lecture
+slides: Heuristic Search [ PDF ;  PPT ].     
+
+         
+
+                 Optional
+Cultural Interest:     
+
+                              Infinite Mario AI - Long
+Level      
+
+                              An attempt at a Mario AI using the A* path-finding algorithm.      
+
+                                         It
+claims the bot won both Mario AI competitions in 2009.     
+
+                                         “    You
+can see the path it plans to go as a red line, which updates when it detects
+new obstacles at the right screen border. It uses only information visible on
+screen.”       
+
+                             See
+also  http://www.marioai.org/ .     
+
+         
+
+                               Interesting
+search algorithm visualization web page.       
+
+         
+
+               
+ Optional Cultural Interest:     
+
+                        
+   A* Search in Interplanetary Trajectory Design   , courtesy of Eric  Trumbauer , former
+CS-271 student.      
+
+                           
+               Eric
+comments, “One thing to possibly discuss with the last slide is that the
+itinerary it settles on does stay at a higher energy for a little bit until it
+passes closest to Europa, maximizing the velocity before the insertion sequence
+to the lower energy.    This is indeed
+optimal behavior, as opposed to immediately reducing its energy as a Greedy
+Best First algorithm using this heuristic would want to do.”      
+
+                              A*
+Search in Protein Structure Prediction , Lathrop and Smith, J. Mol. Biol.
+255(1996)641-665      
+
+                                
+
+                 Optional
+Reading:   
+
+     Alan
+Turing’s classic paper on AI (1950)   .    
+
+                 Alan
+Turing is the most famous computer scientist of all time.   
+
+   The Turing Award is the
+highest honor in computer science.   
+
+   The Turing Machine is
+still our fundamental theoretical model of computation.   
+
+   Turing’s work on the
+Enigma code in WWII led to programmable computers.   
+
+                 AAAI/AI
+Topics:  The Turing Test:
+“Can Machines Think?”    
+
+                 Wikipedia
+“ Computing
+Machinery and Intelligence ”   
+
+         
+
+                  Tue., 14 Oct., Local Search.       
+
+   Read in advance:    Textbook Chapter 4.1-4.2.     
+
+                             Lecture
+slides (two parts):     
+
+                                         (1)
+Local Search [ PDF ;
+ PPT ]; and     
+
+                                         (2)
+Representation [ PDF ;  PPT ].     
+
+         
+
+   Optional URLs:     
+
+                   “ Hill
+Climbing with Simulated Annealing ”     
+
+         
+
+                 “ Boxcar 2D ”     
+
+                                         The
+program learns to build a car using a genetic algorithm     
+
+                                  
+
+                 Optional
+Reading:                           Minton,
+ et .  al., 1990,     AAAI "Classic
+Paper" Award recipient in 2008 .         
+
+                                          How to solve the 1 Million Queens problem and schedule space
+telescopes.      
+
+                 Optional
+Lecture Slides:       
+
+                              Review Search  [ PDF ;  PPT ].     
+
+                  Optional  Ungraded Homework:     
+
+                              Homework #1 ;  answer key.      
+
+     Week 3:         
+
+    Thu.,      16 Oct.,  Quiz #1  (answer key  here );
+start Games/Adversarial Search.       
+
+   Read in advance: Textbook
+Chapter 5.1-5.5.            
+
+                             Lecture
+slides: Games/Adversarial Search [ PDF ;  PPT ].      
+
+         
+
+                 Optional
+Cultural Interest:         
+
+                               RoboCup 
+2012 Standard Platform: USA / Germany (Final).    
+
+                                RoboCup    Home Page.       
+
+                 Optional
+URL: “ Complete Map of Optimal Tic-Tac-Toe
+Moves. ”   
+
+         
+
+                 Optional
+Reading:         
+
+                              Campbell, et al., 2002,  Artificial
+Intelligence,  “Deep Blue.”  [ PDF ]     
+
+                                         (URL
+ http://www.sciencedirect.com/science/article/pii/S0004370201001291 )     
+
+                                          Details about the AI system that beat the human chess champion.      
+
+         
+
+                 Tue.,
+21 Oct., finish Games/Adversarial Search.     
+
+   Read in advance: Textbook
+Chapter 5.1-5.5.            
+
+                 Lecture
+slides: Games/Adversarial Search (above).     
+
+         
+
+   Optional     Cultural Interest:         
+
+                             Arthur
+C. Clarke “ Quarantine .”     
+
+                                          A science fiction short story written by a classic master, in 188
+words.      
+
+                                         He
+was challenged to write a science fiction short story that would fit on a
+postcard.       
+
+   Optional Reading:  Chaslot , et al.,
+“ Monte-Carlo
+Tree Search: A New Framework for Game AI ,”     
+
+    in      Proceedings
+of the Fourth Artificial Intelligence and Interactive Digital Entertainment
+Conference,     
+
+    AAAI Press, Menlo Park, pp. 216-217, 2008.          
+
+                  An interesting combination of Local Search (Chapter 4) and Game
+Search (Chapter 5).      
+
+   Optional URL:  “Everything
+Monte Carlo Tree Search” website.      
+
+                  Optional  Ungraded Homework:     
+
+                              Homework #2 ;  answer key .       
+
+    Week
+4:    
+
+                  Thu.,    23 Oct.,    start Constraint Satisfaction.      
+
+                               (Lecture by
+Mahdi Tehrani.)       
+
+   Read in advance: Textbook
+Chapter 6.1-6.4, except 6.3.3.     
+
+                             Lecture
+slides: Constraint Satisfaction Problems [ PDF ;
+ PPT ].         
+
+         
+
+                  Optional  Cultural Interest:     
+
+                              Google Goggles    
+
+       
+
+                     Tue.,
+28 Oct., finish Constraint Satisfaction.     
+
+                             Read
+in advance: Textbook Chapter 6.1-6.4, except 6.3.3.     
+
+                             Lecture
+slides: Constraint Satisfaction Problems [ PDF ;
+ PPT ].     
+
+       
+
+                  Optional  Cultural Interest:     
+
+                              Tesla Model S P85D AWD and
+auto-pilot demo      
+
+                              Google Car: It Drives Itself
+- ABC News      
+
+                              [Part 1/3] The Evolution of Self-Driving
+Vehicles      
+
+                              [Part 2/3] How Google's
+Self-Driving Car Works                           
+
+                              [Part 3/3] Google's
+Self-Driving Golf Carts      
+
+                              DARPA Urban Challenge
+Highlights      
+
+                              DARPA Urban Challenge: Ga
+Tech hits curb      
+
+                              DARPA Urban Challenge - Sting
+ Racing  crash      
+
+                              [DARPA] Team Oshkosh attempts
+forced Entry to Main Exchange      
+
+                              [DARPA] Alice's Crash
+(spectator view)      
+
+                              [DARPA] Alice's Crash
+(road-finding camera)  [different view of above; long]      
+
+                              DARPA Urban Challenge Crash
+Cornell MIT      
+
+                              DARPA Urban Challenge - robot
+car wreck  [different view of above]        
+
+                 Optional
+Reading:     
+
+                              Autonomous car - Wikipedia,
+the free encyclopedia      
+
+                              “ Autonomous
+Driving in Traffic: Boss and the Urban Challenge ” (2009).      
+
+         
+
+      Week 5:  
+
+                  Thu.,  30 Oct.,    Quiz #2  (answer key  here );
+start Propositional Logic.         
+
+                             Read
+in advance: Textbook Chapter 7.1-7.4.         
+
+                             Lecture
+slides: Propositional Logic A [ PDF ;  PPT ].  
+ 
+
+         
+
+                  Optional Cultural Interest (Happy Halloween!      snakes ,
+spiders, and a talking head!):      
+
+                             “ Snake Robot Climbs a Tree ”     
+
+                             “ Asterisk - Omni-directional
+Insect Robot Picks  Up  Prey # DigInfo  ”
+     
+
+                             “ Freaky AI robot, taken from
+Nova science now ”   
+
+         
+
+                 Optional
+Ungraded Homework:         
+
+                              Homework #3 ;  answer key .   
+
+         
+
+                 Tue.,
+4 Nov., finish Propositional Logic.         
+
+                             Read
+in advance: Textbook Chapter 7.5 (optional: 7.6-7.8).         
+
+                             Lecture
+slides: Propositional Logic B [ PDF ;  PPT ].   
+
+                                         Additional
+Discussion lecture slides [ PDF ].     
+
+         
+
+                 Optional
+Cultural Interest:         
+
+                              “High-Speed
+Robot Hand”        
+
+                               “ Janken 
+(rock-paper-scissors) Robot with 100% winning rate”         
+
+                               “ CubeStormer  II”     
+
+     
+
+    Week 6:    
+
+       
+
+                  Thu.,  6 Nov.,  Catch-up, Review for Mid-term Exam.          
+
+   Read in advance: Textbook
+Chapters 1-7 (only sections assigned above).   
+
+                             Lecture
+slides: Catch-up, Review,  Question&amp;Answer  [ PDF ;  PPT ].     
+
+         
+
+                 Optional
+Cultural Interest:     
+
+                             “ Quadrocopter  Pole Acrobatics”     
+
+                             “ Nano   Quadcopter  Robots swarm
+video”     
+
+                             The
+Stanford Autonomous Helicopter performing an aerobatic airshow under computer
+control:     
+
+                                         “ Stanford Autonomous
+Helicopter - Airshow #1 ”     
+
+                                         “ Stanford Autonomous
+Helicopter - Airshow #2  Redux  ”     
+
+         
+
+                 No
+homework --- study for the Mid-term Exam.       
+
+         
+
+                 Tue.,
+11 Nov.,  Veteran’s
+Day Holiday.    Thank you, Vets!!      
+
+    Week
+7:    
+
+                  Thu.,  13 Nov.,  Mid-term Exam  (answer key  here ).   
+
+   Read in advance: Textbook
+Chapters 1-7 (only sections assigned above).   
+
+                             Lecture
+slides: Catch-up, Review,   Question &amp;Answer 
+(above).      
+
+         
+
+               
+ Optional Cultural Interest:     
+
+                             “  hitchBOT   | Making my way across
+Canada, one ride at a time.”     
+
+                             “ Canada's
+ hitchBOT  travels 4,000 miles to test human-robot
+bonds --- LA Times. ”     
+
+           
+
+                 Tue.,
+18 Nov., Review Mid-term Exam; start First Order Logic          
+
+   Read in advance: Textbook
+Chapter 8.1-8.2.   
+
+                             Lecture
+slides: First Order Logic Syntax [ PDF ;  PPT ].     
+
+     
+
+                 Optional
+Reading:    
+
+                              Cyc  is a large-scale knowledge-engineering project:     
+
+                                         “ CYC: A Large-Scale
+Investment in Knowledge Infrastructure ,”  Lenat ,
+1995   
+
+                                         “ Searching for
+Commonsense: Populating  Cyc  from the Web ,”  Matuszek  et al, AAAI 2005   
+
+                                            Cyc    home page.           
+
+                                           Cyc  -
+Wikipedia, the free encyclopedia .   
+
+         
+
+                 Optional
+Ungraded Homework:         
+
+                              Homework #4 ;  answer key     .     
+
+    Week
+8:  
+
+                  Thu.,  20 Nov., finish First Order Logic; Knowledge
+Representation.   
+
+   Read in advance: Textbook
+Chapter 8.3-8.5.   
+
+                             Lecture
+slides (two parts):   
+
+   (1) First Order Logic
+Semantics [ PDF ;
+ PPT ];
+and   
+
+   (2) First Order Logic
+Knowledge Representation [ PDF ;
+ PPT ].     
+
+         
+
+                 Optional
+Lecture slides: First Order Logic Inference [ PDF ;  PPT ].          
+
+   Read in advance: Textbook
+Chapter 9.1-9.2, 9.5.1-9.5.5.        
+
+         
+
+                Optional
+Cultural Interest:    
+
+                             “ Evolution ”
+by R. H. Lathrop.     
+
+         
+
+                  Tue., 25 Nov.,  Quiz
+#3  (answer key  here );
+Probability, Uncertainty, Bayesian Networks.         
+
+                               (Lecture by
+Robert Hasselbeck.)     
+
+   Read in advance: Textbook
+Chapters 13, 14.1-14.2.   
+
+                             Lecture
+slides (two parts):     
+
+                                         (1)
+Reasoning  Under  Uncertainty [ PDF ;
+ PPT ].
+     
+
+                                         (2)
+    Bayesian Networks  [ PDF ;
+ PPT ].      
+
+         
+
+                 Optional
+Cultural Interest:         
+
+                              Video of Judea Pearl’s 2011 Turing Award lecture.          
+
+                              The Mechanization of Causal
+Inference: A “mini” Turing Test and Beyond.            
+
+                 Optional
+URL: “ Peter  Norvig 
+12.  Tools of AI: from logic to probability   .”         
+
+                 Optional
+Cultural Interest:     
+
+                             “ Flexible Muscle Based
+Locomotion for Bipedal Creatures ” --- video     
+
+                              “ Flexible
+Muscle-Based Locomotion for Bipedal Creatures ” --- paper.    
+
+     
+
+    Week 9:    
+
+       
+
+                Thu,
+27 Nov.,  Thanksgiving
+Holiday.    Give thanks!     
+
+     
+
+                 Tue.,
+2 Dec., start Learning from Examples.          
+
+   Read in advance: Textbook
+Chapter 18.1-18.4.   
+
+                             Lecture
+slides: Intro to Machine Learning [ PDF ;  PPT ].     
+
+     
+
+                 Optional
+Reading:           
+
+    Ferrucci     , et al., 2010, “ Building
+Watson: An Overview of the  DeepQA  Project ”        
+
+                             “ Machine learning ”
+- Wikipedia, the free encyclopedia     
+
+                             “ Data mining ” -
+Wikipedia, the free encyclopedia     
+
+                 Optional
+URL: “ Google
+reveals it is developing a computer so smart it can program ITSELF. ”   
+
+                 Optional
+Ungraded Homework:   
+
+                              Homework #5 ;  answer key .       
+
+       
+
+    Week
+10:  
+
+                  Thu.,  4 Dec., finish Learning from Examples.          
+
+   Read in advance: Textbook
+Chapter 18.5-18.12, 20.1-20.3.2.   
+
+                             Lecture
+slides:   
+
+                                          Learning Classifiers [ PDF ;  PPT ].      
+
+         
+
+                 Optional
+Lecture slides: Viola &amp; Jones, Learning, Boosting, Vision [ PDF ;  PPT ]
+(read the two papers immediately below)         
+
+                             Optional
+Reading: Viola &amp; Jones, 2004, “ Robust Real-Time
+Face Detection ”   
+
+                             Optional
+Reading: Freund &amp;  Schapire , 1999, “ A Short Introduction
+to Boosting ”   
+
+                 Optional
+Reading:  Danziger , et al., 2009, “ Predicting
+Positive p53 Cancer Rescue Regions Using Most Informative Positive (MIP) Active
+Learning ”    
+
+         
+
+                 Optional
+Ungraded Homework:   
+
+                              Homework #6 ;  answer key     .     
+
+         
+
+                  Tue., 9 Dec.,    Quiz #4  (answer key  here );
+ Clustering (unsupervised learning) and Regression
+(statistical numeric learning).            
+
+   Read in advance: Textbook
+Chapter 18.6.1-2, 20.3.1.   
+
+                             Lecture
+slides:   
+
+                                         Clustering
+(Unsupervised Learning) [ PDF ;  PPT ].  
+ 
+
+                                          Linear Regression [ PDF ;  PPT ].      
+
+     
+
+                 Optional
+Cultural Interest:         
+
+                             “ IBM
+simulates 530 billon neurons, 100 trillion synapses on supercomputer ”   
+
+                             “ Speech Recognition
+Breakthrough for the Spoken, Translated Word ”   
+
+         
+
+    Week
+11:      
+
+                  Thu.,  11 Dec..,      Catch-up, Review for Final Exam.   
+ 
+
+   Read in advance: Textbook,
+review all assigned reading.    
+
+                             Lecture
+slides: Review, Catch-up,  Question&amp;Answer  [ PDF ;  PPT ]  .     
+
+           
+
+         
+
+    Final Exam:    
+
+         
+
+                 Tue.,
+16 Dec., 7:00-9:00pm. ( answer  key  here )     
+
+     </strong> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     </strong> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+    Projects:        
+
+    Connect-K Game.       
+ This project corresponds to Game Search (Chapter 5 in your book). Your
+job is to write an AI agent that can beat you at Connect-K, i.e., to write the
+adversarial search (game search) controller for a video game world. Shells will
+be available in C++ and Java.    I
+expect to be able to run a tournament within which your AI controllers will
+compete against each other for Bonus Points. Everyone’s AI will be
+entered in the tournament automatically; the bonus points are simply free,
+based on how many games your AI wins against other AIs.        
+
+         
+
+   The Project Report template
+is available here [ Word ;  PDF ].     
+
+         
+
+   An  example
+dumb game is available ; an  example
+smart game is available ; a  Project Specification
+is available ; a Report Template is available [ Word ;  PDF ]; a
+collection of  student coding
+resources is available .      
+
+         
+
+   The coding resources
+include:     
+
+   (1) A Java shell.     
+
+   (2) A C++ shell.     
+
+   (3) A tournament shell,
+which will let you play different versions of your AI against themselves to
+refine your evaluation function.     
+
+   (4) Three example AIs,
+which you or your AI can play against: a good AI, an average AI, and a poor AI.     
+
+   (5) The “ DummyAI ” source code, which your cleverness and
+ingenuity will make smart.     
+
+   (6) Several readme*.txt
+files: readme.txt, readme-cPlusPlus.txt,  readme -tournament.txt.     
+
+   (7)  ConnectK 
+hints, caveats, and heuristics.     
+
+   (8) A changelog.txt.     
+
+         
+
+   Note: We'll run the
+tournament on SGE or a lab machine. The C++ target platform should be x86. You
+should write your code to run on any x86  machine . The
+OS is CentOS 6. We most likely will need to compile your code with CentOS 6
+(RHEL 6) x86_64. Machines in the openlab.ics.uci.edu (family-guy.ics.uci.edu)
+are CentOS 6.     
+
+         
+
+   Several of my various
+CS-171 projects were written by former CS-171 students who became interested in
+AI and signed up for CS-199 in order to pursue their interest and write
+interesting AI project shells.  
+ Please let me know if this is of interest to you (CS-171 grade of A- or
+better required).        
+
+     </strong> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           
+
+    Sudoku:       This project corresponds      to Constraint Satisfaction Problems
+(Chapter 6 in your book). Your job is to write an AI agent that can solve
+“Monster Sudoku” better than you can.       
+
+         
+
+   Standard Sudoku is
+played on a 9x9 grid subdivided into nine 3x3 boxes. Every row, column, and box
+must contain the digits 1 through 9 exactly once. Monster (or Mega) Sudoku is
+similar, but the grid and boxes are bigger. 12x12 puzzles are played with the
+numbers 1 to 12 (or 1 to 9 and A, B, and C) in each row, column, and 3x4 box.
+16x16 puzzles are played with 1 to 16 (or 1 to 9 and the letters A to G) in
+each row, column, and 4x4 box. In general,  NxN 
+puzzles are played with the numbers 1 to N (or 1 to 9 and the letters A to Z)
+and  pxq  boxes, where N =   pq  . Sometimes zero is added to the digits. The Sudoku
+community has developed many clever variants and encodings based on this
+general idea.     
+
+         
+
+    See for example:      
+
+     http://www.dailysudoku.com/sudoku/archive.shtml?type=monster       
+
+     http://www.universaluclick.com/games/sudokumonster       
+
+     http://www.knightfeatures.com/KFWeb/content/features/kffeatures/puzzlesandcrosswords/KF/Sudoku/Sudoku_Monster/sudoku_monster.html       
+
+     http://www.conceptispuzzles.com/index.aspx?uri=puzzle/sudoku/mega       
+
+     or        just do a Web search for      Monster (or Mega) Sudoku.           
+
+           
+
+    A previous offering of CS-171 coded a
+Sudoku solver using the Constraint Satisfaction Problem (CSP) methods we will
+study, but the methods proved to be too powerful for Sudoku and even the basic
+methods could solve hard Sudoku puzzles easily.    I hope Monster Sudoku will provide more
+of a challenge.      
+
+       
+
+   The coding resources
+include:      
+
+   (1)  A Java shell 
+(I do not yet have a shell in any other language; but would like to).     
+
+   (2)  A Project
+Specification.      
+
+   (3)  Shell
+documentation  (incomplete).     
+
+         
+
+   A former CS-171 student
+wrote the shell in Spring Quarter, 2014, so it has not yet been tested
+“in action.” I will give Bonus Points to students who find and fix
+bugs. He ran out of time in the quarter before he finished the documentation. I
+will give Bonus Points to students who improve the documentation.     
+
+         
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           
+
+   Maze
+Solver:      
+ This project corresponds to Informed Search Problems (Chapter 3 in your
+book). Your job is to write an AI agent that can find paths through a maze better
+than you can.   
+
+         
+
+   You are employed by a company that
+makes interactive video games. The game's 2D world has a large number of fixed
+polygonal obstacles of various shapes and sizes on the screen. You are assigned
+to write the controller for one of the moving figures on the screen. Whenever a
+gold coin appears on the screen, your figure is to walk to the coin as rapidly
+as possible, avoiding all obstacles. Input is the screen locations of your
+figure, the gold coin, and the locations and shapes of all obstacles. Output is
+to be the path your figure will follow to the coin. [ Click
+here for solved examples. ]     
+
+         
+
+   This is the same basic problem as
+robot navigation through a crowded workspace without colliding with any objects
+in the workspace. In general, this problem is representative of a whole class
+of related planning and navigation problems.     
+
+         
+
+   Demonstrate, benchmark, and compare
+Breadth-First, Depth-First, Uniform Cost, Bidirectional (using Uniform-Cost),
+Iterative Deepening, Greedy Best First, and A* search on this route-finding
+problem.     
+
+         
+
+   The coding resources include:     
+
+   (1)  A Java shell .     
+
+   (2)  A C++ shell .     
+
+   (3)  An example game .     
+
+   (4)  Examples
+of maze agents in mazes .     
+
+   (5) Test mazes (to appear soon).    I will give Bonus Points to students who
+contribute difficult mazes (should be harder than the mazes here).     
+
+         
+
+   It is easy to prove to yourself that
+the shortest path through a maze must be a sequence of straight line segments
+from polygon corner to polygon corner (apply the Triangle Inequality). The
+shell is set up to facilitate finding such a solution.     
+
+         
+
+   Clever students have discovered that
+the  isVisible  function is buggy, in the sense that it
+is only correct for polygon corners, and sometimes allows a search path to
+“tunnel through” a polygon if a candidate point is placed in the
+interior of a polygon ( example 1 ;  example 2 ).    Such paths are not considered valid
+solutions.    I will give Bonus Points
+to students who find and fix such bugs (must be an efficient bug fix, i.e., not
+slow things down too much).     
+
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    Study Guides --- Previous CS-171 Quizzes,
+Mid-term, and Final exams:        
+
+  Previous
+CS-171 Quizzes, Mid-term exams, and Final exams are available here as study
+guides.    
+
+       
+
+  As an
+incentive to study this material, at least one question from a previous Quiz or
+Exam will appear on every new Quiz or Exam. In particular, questions that many
+students missed are likely to appear again. If you missed a question, please
+study it carefully and learn from your mistake --- so that if it appears again,
+you will understand it perfectly.     
+
+       
+
+  Also, a
+student has recommended ‘quizlet.com’ as a good online study
+resource. While I cannot vouch for it, apparently it contains several good
+study aids for your textbook.        
+
+       
+
+   Fall Quarter 2014:     
+
+   Quiz
+#1  and  key .    
+
+   Quiz
+#2  and  key .    
+
+   Quiz
+#3  and  key .    
+
+   Quiz
+#4  and  key .    
+
+    Mid-term Exam    and  key .     
+
+    Final Exam    and  key .     
+
+         
+
+   Winter Quarter 2014:     
+
+   Quiz
+#1  and  key     
+
+   Quiz
+#2  and  key     
+
+   Quiz
+#3  and  key     
+
+   Quiz
+#4  and  key     
+
+   Mid-term
+Exam  and  key     
+
+   Final
+Exam  and  key         
+
+       
+
+   Fall Quarter 2013:         
+
+   Quiz
+#1  and  key   
+
+   Quiz
+#2  and  key     
+
+   Quiz
+#3  and  key     
+
+   Quiz
+#4  and  key         
+
+   Mid-term
+Exam  and  key     
+
+   Final
+Exam  and  key   
+
+     
+
+   Fall Quarter 2012:         
+
+   Quiz
+#1  and  key   
+
+   Quiz
+#2  and  key   
+
+   Quiz
+#3  and  key   
+
+   Quiz
+#4  and  key   
+
+   Mid-term
+Exam  and  key   
+
+   Final
+Exam  and  key     
+
+     
+
+   Winter Quarter 2012:         
+
+   Quiz
+#1  and  key   
+
+   Quiz
+#2  and  key   
+
+   Quiz
+#3  and  key   
+
+   Quiz
+#4  and  key   
+
+   Mid-term
+Exam  and  key   
+
+   Final
+Exam  and  key   
+
+       
+
+   Spring Quarter 2011:         
+
+   Quiz
+#1  and  key   
+
+   Quiz
+#2  and  key   
+
+   Quiz
+#3  and  key   
+
+   Quiz
+#4  and  key 
+  
+
+   Quiz
+#5  and  key 
+  
+
+   Mid-term
+Exam  and  key   
+
+   Final
+Exam  and  key     
+
+       
+
+   Spring Quarter 2004:         
+
+   Quiz #1
+key   
+
+   Quiz #2
+key   
+
+   Quiz #3
+key   
+
+   Quiz #4
+key   
+
+   Quiz #5
+key    
+
+   Quiz #6
+key     
+
+       
+
+   Spring Quarter 2000:         
+
+   Quiz #1
+key   
+
+   Quiz #2
+key   
+
+   Quiz #3
+key   
+
+   Quiz #4
+key    
+
+   Quiz #5
+key   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   Final Exam
+key   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    Online
+Resources:         
+
+   Additional Online
+Resources may be posted as the class progresses.   
+
+   Textbook website for   Artificial Intelligence: A
+Modern Approach  (AIMA).    
+
+                   AIMA  page for additional online
+resources.                   
+
+     
+
+   Website for  American
+Association for Artificial Intelligence  (AAAI).       
+
+                 AAAI page of  AI Topics .     
+
+                 AAAI  AI in the News .     
+
+                 AAAI
+ Digital Library  of more
+than 10,000 AI technical papers.     
+
+                  AAAI  AI Magazine .      
+
+                  AAAI  Author Kit  .     
+
+                 AAAI  Student
+Resources .   
+
+                 AAAI  Classic
+Papers .   
+
+                 AAAI  Annual
+AAAI Conference .     
+
+                 AAAI  Innovative
+Applications of Artificial Intelligence Conference .   
+
+       
+
+  
+
+   
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    Academic Honesty:         
+
+   Academic dishonesty is unacceptable
+and will not be tolerated at the University of California, Irvine. It is the
+responsibility of each student to be familiar with UCI's current academic
+honesty policies. Please take the time to read the current  UCI
+Senate Academic Honesty Policies  and the  ICS
+School Policy on Academic Honesty .   
+
+   The
+policies in these documents will be adhered to scrupulously. Any student who
+engages in cheating, forgery, dishonest conduct, plagiarism, or collusion in
+dishonest activities, will receive an academic evaluation of ``F'' for the
+entire course, with a letter of explanation to the student's permanent file.
+The  ICS Student Affairs
+Office  will be involved at every step of the process. Dr. Lathrop seeks to
+create a level playing field for all students.   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+     
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+</body> 

@@ -1,0 +1,279 @@
+ Pregelix<body>
+ 
+      
+ 
+       
+                   
+             
+	     
+                   
+             
+             
+				   
+						 
+							 
+					 
+				   
+	 
+	 
+             
+
+
+ 
+       Overview  
+        
+          Download  
+	  Performance  
+        
+          News  
+          Publications  
+	  Talks       
+          Team  
+          Sponsors  
+          Contact  
+      
+ 
+     
+    	
+        
+          
+
+ 
+   Performance 
+ 
+   Benchmark Setup  
+   Execution Time  
+   Scalability  
+   Throughput  
+   Physical Flexibility  
+   Single Machine Performance  
+
+
+  Benchmark Setup  
+ 
+We ran the benchmark on a 32-node Linux IBM x3650 cluster with one
+additional master machine of the same configuration. Nodes are connected with
+a Gigabit Ethernet switch.  Each node has one Intel Xeon processor E5520
+2.26GHz with four cores, 8GB of RAM, and two 1TB, 7.2K RPM hard disks.  
+ 
+
+ 
+In our benchmark, we leverage two real-world graph-based datasets.  The
+first is the Webmap dataset taken from a crawl of the web in the
+year 2002.  The second is the BTC
+dataset, which is a
+undirected semantic graph converted from the original Billion Triple Challenge 2009 RDF
+dataset.  
+We run PageRank using the Webmap datasets and run SSSP (single source shortest paths) and CC (connected components) using the BTC datasets.
+The following tables show statistics for these graph datasets, including the full dataset as well as several down-samples and scale-ups.
+ 
+
+
+
+    Name  
+    Size  		
+    #Vertice  
+    #Edge  
+    Avg. Degree  
+    Large  
+     71.82GB  		
+     1,413,511,390  
+     8,050,112,169  
+     5.69  
+    Medium  
+     31.78GB  
+     709,673,622  
+     2,947,603,924  
+     4.15  
+    Small  
+     14.05GB  
+     143,060,913  
+     1,470,129,872  
+     10.27  
+   X-Small 
+    9.99GB 
+    75,605,388 
+    1,082,093,483 
+    14.31 
+   Tiny 
+    2.93GB 
+    25,370,077 
+    318,823,779 
+    12.02 
+   Statistics of the Webmap datasets</strong>
+  
+
+   Name 
+   Size          
+   #Vertice 
+   #Edge 
+   Avg. Degree 
+   Large 
+   66.48GB              
+   690,621,916 
+   6,177,086,016 
+   8.94 
+   Medium 
+   49.86GB 
+   517,966,437 
+   4,632,814,512 
+   8.94 
+   Small 
+   33.24GB 
+   345,310,958 
+   3,088,543,008 
+   8.94 
+   X-Small 
+   16.62GB 
+   172,655,479 
+   1,544,271,504 
+   8.94 
+   Tiny 
+   7.04GB 
+   107,706,280 
+   607,509,766 
+   5.64 
+   Statistics of the BTC datasets</strong> 
+  
+
+ 
+Below  are the steps we used to run:
+
+ GraphLab  (confirmed by  Dr. Joseph Gonzalez )
+ GraphX 
+ 
+
+  Execution Time  
+ 
+   
+
+ 
+  
+
+ 
+  
+
+ 
+  
+
+ 
+  
+
+ 
+  
+ 
+ 
+The above figures show that while Pregelix scales to out-of-core workloads, Giraph fails to run
+the three algorithms once the relative dataset size exceeds 0.15, even with its out-of-core
+setting enabled.
+
+When the computation has sufficient memory, Pregelix offers comparable
+execution time to Giraph for message-intensive workloads like PageRank (up to 2x slower on small datasets but up to 2x faster on large datasets) and CC (similarly fast for all cases). Pregelix default plan offers
+3.5x overall speedup and 7x per-iteration speedup over Giraph for
+message-sparse workloads like SSSP.  All figures show that for in-memory workloads (when the relative dataset size is less than 0.15), Giraph has steeper (worse) scaling curves than Pregelix. 
+GraphLab, GraphX, and Hama even fail earlier than Giraph, with even steeper scaling curves. GraphLab has the best average-iteration time on small datasets (e.g., 0.85--5x faster than Pregelix, 0.76--12x faster than Giraph, on Webmap-Tiny and BTC-Tiny), but performs worse than Giraph and Pregelix on larger datasets. GraphX fails to load BTC-Tiny, therefore its results for SSSP and CC are missing.
+ 
+
+
+  Scalability  
+ 
+ 
+  
+
+ 
+  
+
+
+ 
+  
+
+ 
+ 
+The parallel speedup is done on the dataset Webmap-X-Small.
+The parallel speedup of Pregelix is very close to the ideal line where there is no network communication, while Giraph, GraphLab, GraphX all exhibit
+even better speedup than the ideal line. The apparent super-liner parallel speedup of Giraph, GraphLab, and GraphX
+is consistent with the fact that they perform super-linearly worse 
+when the data volume assigned to each slave machine increases.
+Hama can only run the smallest dataset on the largest cluster, so we cannot measure its parallel speedup.
+ 
+
+  Throughput    
+ 
+
+ 
+  
+
+ 
+  
+
+ 
+  
+
+ 
+  
+ 
+
+ 
+we compare the job throughput of Hama, GraphLab, GraphX, Giraph, and Pregelix in a concurrent usage setting.
+We ran PageRank jobs on the 32-machine cluster using four different samples of the Webmap dataset (X-Small, Small, Medium, and Large)
+with various levels of job concurrency.  The above figures report
+how the number of completed jobs per hour ( jph</strong>) changes with the number of concurrent jobs.
+ 
+
+
+  Physical Flexibility  
+ 
+We ran the two join plans  for the three Pregel graph algorithms. 
+As one can see in the following figures,  for message-sparse algorithms like SSSP, the left outer join Pregelix plan is much faster than the full outer join
+plan. However, for message-intensive algorithms like PageRank, the full outer join plan is the winner. 
+The CC algorithm's execution starts with intensive messages but the volume of messages decreases significantly in the last few of supersteps, and hence the two join plans
+result in similar performance.
+The fourth figure compares GraphLab, GraphX, Giraph, Hama, and Pregelix's left outer join plan, as shown in the figure, SSSP on Pregelix can be up to  15x</strong> faster than on Giraph for the 
+average per-iteration execution time, and even faster than other systems. 
+ 
+
+ 
+
+ 
+  
+
+ 
+  
+
+  
+  
+  
+ 
+
+
+
+  Single Machine Performance  
+ 
+For the PageRank algorithm, when the input dataset size relative to the machine's RAM size is less than 2.5, Pregelix offers better performance; otherwise, GraphChi is more efficient when both systems are limited to one machine. This is to be expected given that GraphChi focuses on fast (single machine) secondary storage access methods and does not have the overhead introduced by the network stack.For the PageRank algorithm, when the input dataset size relative to the machine's RAM size is less than 2.5, Pregelix offers better performance; otherwise, GraphChi is more efficient when both systems are limited to one machine. This is to be expected given that GraphChi focuses on fast (single machine) secondary storage access methods and does not have the overhead introduced by the network stack.
+ 
+
+ 
+
+ 
+  
+
+ 
+
+      
+    
+              
+       
+           
+     
+     
+         © pregelix.ics.uci.edu 2014. Design by  Free CSS Templates   
+     
+     
+           
+           
+     
+       
+
+
+ 
+</body> 

@@ -1,0 +1,175 @@
+ 
+  Class Simulator
+<body>
+  
+ 
+  Class Simulator
+ 
+ 
+java.lang.Object
+   |
+   +----Simulator
+ 
+    public class  Simulator 
+    extends Object
+   
+A generic simulation class.
+  subclass this class to customize a simulator
+ 
+    
+ 
+    
+      globalClock  
+     
+        timeSlice  
+     
+   
+    
+      Simulator  ()
+     
+   
+    
+      addEvent  (SimEvent)
+     insert a future event in the event queue
+
+        addEventGenerator  (EventGenerator)
+     add a event generator to this simulator
+ 
+        addRelativeEvent  (SimEvent)
+     insert a future event in the event queue
+  the time specified in the event is relative to the global time
+
+        getNetwork  ()
+     override this method to access the Network object
+
+        getTime  ()
+     
+  
+        processEvent  (SimEvent)
+     override this method to see all events that pass through the simulator
+
+        queueElements  ()
+     
+        removeEvent  (SimEvent)
+     
+        removeEvents  (Object)
+     
+        setStopTime  (int)
+     
+        start  ()
+     call this method to start the simulation
+
+        stop  ()
+     override this method to perform some action when
+  the simulation has stopped
+
+    
+ 
+    
+   
+ globalClock 
+ 
+ public float globalClock
+ 
+   
+ timeSlice 
+ 
+ public float timeSlice
+ 
+  
+ 
+    
+  
+   
+ Simulator 
+ 
+ public Simulator()
+ 
+  
+ 
+    
+   
+  addEventGenerator  
+ 
+ public void addEventGenerator( EventGenerator  eg)
+ 
+   add a event generator to this simulator
+ 
+        Parameters: 
+       eg - the EventGenerator to add
+        See Also: 
+        EventGenerator 
+     
+     
+  addEvent  
+ 
+ public void addEvent( SimEvent  e)
+ 
+   insert a future event in the event queue
+ 
+      
+  addRelativeEvent  
+ 
+ public void addRelativeEvent( SimEvent  e)
+ 
+   insert a future event in the event queue
+  the time specified in the event is relative to the global time
+ 
+      
+  removeEvent  
+ 
+ public  SimEvent  removeEvent( SimEvent  e)
+ 
+   
+  removeEvents  
+ 
+ public void removeEvents(Object o)
+ 
+   
+  queueElements  
+ 
+ public Enumeration queueElements()
+ 
+   
+  processEvent  
+ 
+ public void processEvent( SimEvent  e)
+ 
+   override this method to see all events that pass through the simulator
+ 
+      
+  getNetwork  
+ 
+ public  Network  getNetwork()
+ 
+   override this method to access the Network object
+ 
+      
+  start  
+ 
+ public void start()
+ 
+   call this method to start the simulation
+ 
+      
+  stop  
+ 
+ public void stop()
+ 
+   override this method to perform some action when
+  the simulation has stopped
+ 
+      
+  getTime  
+ 
+ public float getTime()
+ 
+      Returns: 
+       the current global time
+     
+    
+  setStopTime  
+ 
+ public void setStopTime(int t)
+ 
+</body> 

@@ -1,0 +1,540 @@
+ The News about Jon<body>
+
+ The News about Jon... 
+ Reflections on the Wizard of TPs; and other Network News 
+ By Rohit Khare 
+
+  October 19, 1998, Aboard United #163  -- The last time I was flying into Los Angeles, I was also facing a blank screen entitled  Seventh Heaven . Two months ago, though, I relied on a fellow passenger to help me frame the twenty-five year design history of the Simple Mail Transfer Protocol (SMTP) into a neat evolutionary tale -- its author, Jon Postel. I never quite got around to accepting his invitation to drop by ISI and set to documenting the further (technical) history of Internet protocol design. Someday, I thought, the "DNS Wars" will be over, a rechartered IANA born, and all the time in the world (or at least the interminable horizon of a doctoral program!) to listen to the old  griot 's tales of Transfer Protocols.  
+ Well, the founding articles for the International Corporation for Assigned Names and Numbers were signed October 5 th , and the Wizard of TPs took off in his hot air balloon to domains unregistered forthwith. 
+ Up here is about as close as you can get to cyberspace: an indefinite feeling of being  between  places. It's an appropriate place to meditate, not just on Jon's life and good works, but upon the very notion of grief for the loss of a man I arguably never knew. Elsewhere in this issue, you'll read testimonials from his friends and colleagues. I am neither -- I am his  student . And so, let me take a moment to survey his works... 
+ To date, this column has dissected Telnet, FTP, and SMTP, all of which Jon edited himself -- along with TCP, IP, and ICMP, to boot! As we continue to reconstruct the evolution of application-layer protocols, such as this month's Network News Transfer Protocol (NNTP), we will move on to other designers' work, but always in Jon's shadow: the theory of error/reply codes, the RFC style of documentation, the careful identification of reliability and security risks, the very gestalt of simplicity and interoperability can be traced to Jon as RFC Editor and Internet Architecture Board member.  
+ "His taste in design was by and large extraordinary. And yet he did it in a way that you were only barely conscious that he was nudging you toward better design. As the rest of the Internet unfolds, we're going to discover that Jon isn't there to remind us what  good taste  means." -- Vint Cerf, Internet Society Chairman 
+
+ The Wizard of TPs 
+ While Jon was already on the UCLA programming team at the installation of IMP#1, and proceeded to document the ARPANET's low-level protocols in the "70s, his role at the application layer bloomed during the changeover to TCP/IP on January 1, 1983. He took the lead in consciously reengineering several ARPANET services to work on the new Internet: separating MTP from FTP-1, FTP from Telnet, debugging services at the packet (control message) and upper layers (STDs 5-10, 20-26), and arranging gateways to translate back and forth to the new style of addressing. Even so, Table 1 omits further work on managing the transition (see #771, #773, and #801).  
+ That's not to say that Jon was done, having cleaned the Big Three Augean stables. His interest in formats ranging from a single byte (#128) to structured digital audio (#978) informed his foresight for multimedia mail (#805, #807) to a little-known unified messaging architecture proposal (#759). His design sense inspired other protocols, some literally patterned on his precedent, others through his influence on the process. Why isn't there an Internet equivalent of Mach-like interprocess communication by mailboxes and datagrams? "... Jon did have one button you plain didn't want to push: the one labeled "reliable datagram.' Push it and you risk an immediate charge of heresy," quoth Greg Finn, a colleague of Jon's for two decades. 
+ Sometimes the influence of man and institution are hopelessly intertwingled. IANA is well-known for its controversial role at the apex of domain name and network number registries, but it is also responsible for a laundry list of other application parameters. Many protocols' extensibility strategies relied explicitly on Jon's good taste as gatekeeper for the options in Table 2. 
+ The Domain Name System, then, is the ultimate example of a technical artifact predicated on a Postel. He took the lead in organizing a replacement for the centrally updated and manually distributed  HOSTS.TXT . His colleague Paul Mockapetris' protocol funnels trust upward to a set of high-fidelity root servers -- coordinated by a (presumably) benign central authority. 
+
+ "[Jon] replied that starting a company to profit from his activities would have amounted to what he called a "violation of public trust.'" --  New York Times  
+
+ Building an Internet without Jon 
+ Santayana aside, what's the virtue of dredging through sheaves of old RFCs? Rather than repeat history -- or, equivalently, extrapolate linearly, as with rumblings of scaled-up Interplanetary IP -- we are liberated to invent a  new  network: one that radically  decentralizes  control. 
+ The application protocols we have today are  distributed , to be sure: multiple actors reading from the same script, enacting a single algorithm in many places. A truly paranoid network, though, doesn't trust routing and naming subsystems blindly. Today, email messages are handed off in an adminstratively-determined pathway represented in DNS MX records. That's why mail to the user next door goes cross-country three times up and down the corporate ladder. Alternatively, a hybrid mail/news/web message relay would discover its neighbors, seal trust relationships, and be introduced to colleagues' relays to build a personal net, without relying on a global grid. 
+ It's a minor contribution to automate humans out of the loop for a billion Internet PCs -- but mandatory for trillions of cellular nanocomputers. They may never swap IP packets, but their engineering will owe as much to Jonathan Postel as to Boole, Babbage, and Hollerith. 
+  "He leaves a legacy of edited documents that tell our collective Internet story, including not only the technical but also the poetic and whimsical as well." -- #2468 (as in "Who do we appreciate?") 
+
+  "I heard the news today, oh boy..." 
+ I found out about Jon's passing a few hours before boarding from Dave Farber's  Interesting-People  mailing list. That same message was reforwarded back and forth across a half-dozen lists I belong to over the next day, tracing its propagation in my mailbox headers like a mighty oak's growth rings. Why was the same message -- the same bag of bits -- burst out to so many readers one-by-one, rather than broadcast once to entire networks? The technology for flood-fill delivery exists, and I'd like to discuss its origins, how it works across the connected Internet, and the increasingly separate fortunes of the institution and its protocol. 
+ Netnews began as an outgrowth of multiuser systems' banner announcements. In late 1979, UNC replicated its newsgroups as shared Unix-to-Unix CoPy (UUCP) directories with Duke. Originally targeted for 1-2 messages per day, primarily bug reports, USENET "grew to over 100 sites and 25 articles per day within a year" (Salus,  Casting the Net , p.135). 
+
+ How it works 
+ Since the user interface was based on Seventh Edition UNIX Mail, its posting format followed suit -- roughly. The earliest storage format (See Table 3) used  Title:  and  Article-ID:  headings; an early transfer format even used positional syntax (i.e. posts began with the letter "A' and the fifth line was assumed to be the  Subject:  and so on).  
+ By the time the first formal specification for USENET was mooted, it could normatively define its behavior as extensions to the ARPA Internet Text Message Format (See Table 4). Rather than listing email addresses in the  To:  and  Cc:  headings, several  Newsgroups:  indicated the topic addressed. Upon detection of a new message (article posting was an out-of-band operation as yet), a server would notify each of its "neighbors' who were interested in at least one of those  Newsgroups: , within the regions listed in  Distribution: , and had not already seen it (per the  Path:  register) to offer to transfer a copy.  
+ Those commands, however, were multiplexed into the data stream.  Control  messages looked like regular USENET traffic, but were directed to other relays. The commands in Table 5 are sent in  Control:  headings (or prefixed with  cmsg  in a  Subject: ). An entire day's traffic was typically batched up ( # -delimited, length-encoded) or mailed (enveloped as  N -prefixed lines) to the sysadmin's map of neighbor relays.  
+ Replacing UUCP with NNTP 
+ With the rise of the connected Internet, though, it made sense to separate command traffic onto an interactive channel to reduce duplicate traffic, decrease latency, and improve access for servers  and  newsreaders. Brian Kantor (UCSD) and Phil Lapsley (UCB) merged control messages with the still-novel experience of SMTP to create NNTP. As today's NNTP-Extensions Working Group reconstructed it:  
+
+ [NNTP] was designed to do two things for the "netnews" computer conferencing system:
+ 1. Provide access to the netnews article database on a network server for "reader" client programs.
+ 2. Provide the means for interactive server to server article transfer over the Internet.
+ 
+
+ The trick is in NNTP's  statefulness : the conversation implictly maintains a "current-article-pointer' as new groups and articles are selected. While it does have a mode for atomic access to messages a la SMTP  MAIL  or HTTP  GET , NNTP is designed for users and servers alike to browse an entire message store. While modern implementations can partially pipeline some commands from Table 6, the spec's synchronous steps reveal its roots in an era where round-trip-times were proportional to transmission times.  
+ By definitively adopting source quenching, NNTP reduced reliance on "complete' graphs of USENET servers. This correspondingly reduced the power of the "backbone cabal', since it was a snap to integrate several news feeds, like adding the rebel  alt.*  hierarchy. Note that creating or destroying groups, or the 1984 innovation of moderation are technically straightforward steps; their politics foreshadowed latter-day dilemmas over new DNS top-level domains and registration criteria. In contrast, the Internet Relay Chat specification (#1459) spent considerable effort on policy guidelines for channel creation and admission.  
+ The latest proposals for NNTP add a capability-extensibility mechanism modeled on ESMTP's naming and registry model. The WG is using that to promulgate standardized editions of vendor enhancements for searching and matching group names, header contents, and bodies, as well as authentication and batch-commands with lower latency (e.g.  OVER ).  
+ USENET's place in a Web-Wise World 
+ The "Imminent Death of USENET' has been forecast almost since its birth, for technical, economic, "acceptable use', and political reasons. Better-organized communities found homesteads on the Web instead -- evacuating their FAQs and expertise as the post-1994 spam barbarians crashed the gates. Exponential growth in readership also weakened community bonds, in favor of (closed) social mailing lists. Massive USENET archives, treading in to a copyright and privacy morass, make it easier to dip in for a quick answer without ever subscribing to a community. Finally, newsreading tools haven't advanced as far as Web browser interfaces have. MIME formatting, even of text, is still rare. 
+ At the same time, the ease of typing in  news:  URLs has fragmented the notion of a single USENET. "Forums" and "Discussion Servers" are lightly warmed over NNTP products, but without any article exchange between hosts:  news islands . And for intranet access, within a secured set of known users, Interactive Message Access Protocol (IMAP) public folders integrate even more cleanly with Mail tools, further eclipsing News. 
+ The Future of Broadcast Messaging 
+ Compared to our other push technology, Mail, News introduces the notion of a virtual recipient: a distributed newsgroup. Combined with distribution limits, it made group messaging possible  without  enumerating the group in advance. Rather than tracing the MX hierarchy, its traffic flooded across a directed graph of peered News servers. Once upon a time, bandwidth was genuinely dear enough, and interest widely shared enough, for the community to support this alternative. Today, even with its dramatic per-recipient connection overhead and error resolution bugs, mailing lists are making a comeback for immediate notification to ever-more fragmented communities. In turn, News distribution looks more and more like the Web cache update problem...  
+   Site of the Month: NORMOS.org, a Canadian mirror and index for RFCs and, soon, other standards like W3C's. 
+ Next issue: HTTP, particularly its caching and extensibility model 
+
+  Table 1: Postel's Greatest Hits.  
+ A few highlights from Jon's   200   career RFCs. (Joyce Reynolds, also of ISI, co-authored almost a fifth -- 37 in all) 
+   
+   RFC  
+ 
+   Date  
+ 
+   Title and Comments  
+   
+ 2400 
+STD 1  
+ 
+ 24 Sep 1998 
+-- Dec 1988  
+ 
+   Internet Official Protocol Standards 23 rd  edition of IETF standards process; and status of every proposal    
+   
+ 2278 
+BCP 19  
+ 
+  29 Jan 1998  
+  
+ 
+   IANA Charset Registration Procedures Open registry for 1-1 coded sets as well as multi-octet encodings  
+   
+ 2223  
+ 
+ 16 Oct 1997 
+-- Nov 1982  
+ 
+   Instructions to RFC Authors 4 th  edition of format, style, and legal rules; the essence of Jon's taste  
+   
+ 2048 
+BCP 13  
+ 
+ 30 Nov 1996  
+ 
+   MIME Part 4: Registration Procedures Disclosure rules for new media types, access methods, and encodings  
+   
+ 2014  
+ 
+ 17 Oct 1996  
+ 
+   IRTF Research Group Guidelines and Procedures Policy and principles for IETF's parallel long-term investigative arm  
+   
+ 1818 
+BCP 1  
+ 
+ 4 Aug 1995  
+ 
+   Best Current Practices Inaugurating a new series of less formal, non-binding documents  
+   
+ 1796  
+ 
+ 25 Apr 1995  
+ 
+   Not All RFCs are Standards ...though Internet-Drafts are the  real  requests for comment today  
+   
+ 1692  
+ 
+ 17 Aug 1994  
+ 
+   Transport Multiplexing Protocol (TMux) Combines many small packets aimed at a single interactive host  
+   
+ 1591  
+ 
+ 3 Mar 1994  
+ 
+   Domain Name System Structure and Delegation Laid out principles for operating Top Level Domain (TLD) registrars  
+   
+ 1480  
+ 
+ 28 Jun 1993  
+ 
+   The US Domain Exemplar operations of the .us registry: states, counties, cities, &amp;c  
+   
+ 1211  
+ 
+ 22 Mar 1991  
+ 
+   Problems with the Maintenance of Large Mailing Lists Experience from ietf@ietf.org re: error messages, delays, loops...  
+   
+ 1121  
+ 
+ 1 Sep 1989  
+ 
+   Act one -- the poems Light verse on the occasion of the ARPANET's 20 th  birthday  
+   
+ 959 
+STD 9  
+ 
+ 1 Oct 1985  
+ 
+   File Transfer Protocol Still accounted for the largest share of Internet traffic until April 96  
+   
+ 920  
+ 
+ 1 Oct 1984  
+ 
+   Domain Requirements Others led the development of DNS protocols, but Jon lit the fuse  
+   
+ 862-8 
+STDs 20-26  
+ 
+ 1 May 1983  
+ 
+   Time, Daytime, Active Users, Quote of the Day Protocol,  
+Character Generator, Discard, and Echo Protocols Part of the basic Host Requirements, mainly for debugging  
+   
+ 854-861 
+STD 8  
+ 
+ 1 May 1983  
+ 
+   Telnet and  List, Timing Mark, Status, Suppress Go Ahead, Echo, Binary, and Negotiation Options  The very first Internet application protocol; options are STDs 27-32  
+   
+ 821 
+STD 10  
+ 
+ 1 Aug 1981  
+ 
+   Simple Mail Transfer Protocol Classic design; conscious reengineering of existing Mailbox protocol  
+   
+ 793 
+STD 7  
+ 
+ 1 Sep 1981  
+ 
+   Transmission Control Protocol 10 th  revision of a reliable host-to-host connection, with interrupts   
+   
+ 792 
+STD 5  
+ 
+ 1 Sep 1981  
+ 
+   Internet Control Message Protocol Status/error messages from interior gateways/routers back to hosts  
+   
+ 791 
+STD 5  
+ 
+ 1 Sep 1981  
+ 
+   Internet Protocol 7 th  revision of IP for Cerf's "catenet"; with options and fragments  
+   
+ 768 
+STD 6  
+ 
+ 28 Aug 1980  
+ 
+   User Datagram Protocol Jon's one hot button: the U stands just as much for  Unreliable   
+   
+ 759  
+ 
+ 1 Aug 1980  
+ 
+   Internet Message Protocol A tantalizing evolutionary cul-de-sac: a universal multimedia message envelope relayed between Message Processing Modules  
+   
+ 706  
+ 
+ 8 Nov 1975  
+ 
+   On the junk mail problem 20 years early, Jon proposed mail relays track, block offending sites  
+   
+ 346  
+ 
+ 30 May1972  
+ 
+   Satellite considerations Everything old is new again: IP-in-the-sky is now  worth billions     
+   
+ 204  
+ 
+ 5 Aug 1971  
+ 
+   Sockets in use  
+"I would like to collect information on the use of socket numbers..."   
+   
+ 45  
+ 
+ 14 Apr 1970  
+ 
+   New Protocol Is Coming Jon's first RFC, promising "a clean version of the Network Protocol"  
+   Table 2: Selected Application-Layer parameters maintained by IANA 
+   
+   Access-Types  
+ 
+ Retrieval methods for MIME bodies (e.g. FTP, mail robots)  
+   
+   Character Sets  
+ 
+ Registry of various national and linguistic character coding tables  
+   
+   Directories  
+ 
+ Keywords for presenting X.500:   C  ommon N ame,   O  rganization U nit, &amp;c  
+   
+   GSSAPI/SASL  
+ 
+  Secured application Ids (e.g. Kerberos tickets for  ftp  or  nfs  privileges) 
+  
+   
+   HTTP   
+ 
+ Content-Encodings:  gzip ,  compress ,  deflate ,  chunked  (in 1.1)  
+   
+   Languages  
+ 
+ Lists of (human) language codes beyond the ISO set, e.g.  i-navajo   
+   
+   Media Types  
+ 
+ Documentation of content types under  text/ ,  image/ ,  video/ , etc...  
+   
+   Ports  
+ 
+ Well-Known (0-1023); Registered (1-48K); and Dynamic/Private (48-64K)   
+   
+   Telnet Options  
+ 
+ Standards-track options; as well as their parameters like Terminal Types  
+   
+   URL Schemes  
+ 
+ Registry and references for  ftp: ,  http: ,  uuid: ,  data: ,  rtsp: , etc.   
+   Table 3: USENET News Transfer Standards 
+   
+   RFC  
+ 
+   Date  
+ 
+   Title and Comments  
+   
+ 850  
+ 
+ June 1983  
+ 
+   Standard for Interchange of USENET Messages Initially tackled the  format  and  protocol  and  algorithm  all at once  
+   
+ 977  
+ 
+ Feb 1986  
+ 
+   Network News Transfer Protocol An interactive, stream-oriented news access and exchange protocol  
+   
+ 1036  
+ 
+ Dec 1987  
+ 
+   Standard for Interchange of USENET Messages Minor revisions to 850 which tracked latest release of BNews 2.11   
+   
+   Draft  
+ 
+ March 1998  
+ 
+   Network News Transfer Protocol [Base] 
+Updates 977; adds ESMTP-like extensions, security, wildcard matches  
+   
+   Draft  
+ 
+ July 1998  
+ 
+   Common NNTP Extensions Reclassifies transport, newsreader, security commands as extensions  
+   
+   Draft  
+ 
+ July 1998  
+ 
+   NNTP Full-text Search Extension From IMAP4's wildcarded  SEARCH  command on headers and body  
+   
+   Draft  
+ 
+  Aug 1998 
+  
+ 
+   An NNTP Extension for Dynamic Feed Adjustment  LIST   DONTSEND  criteria which exclude by size, group, distributions  
+   Table 4: USENET News Posting Headings 
+ Boldface entries are required. 
+     
+ 
+   Heading  
+ 
+   Interpretation  
+   
+   Memo  
+ 
+    Date 
+    
+ 
+ Originally known as  Posted . Used  getdate(3)  format, now Y2K-OK   
+   
+     Subject  
+ 
+ "Re:" does not imply threading; only  References  can.  
+   
+   Keywords 
+Summary 
+Lines  
+ 
+ Metadata headers which can be downloaded without the whole body  
+Especially recommended for followups 
+Used to limit bandwidth and bulk quoting in followups  
+   
+   Origin  
+ 
+     From  
+ 
+ Putative creator's email address; any comment must be the real name  
+   
+   Sender  
+ 
+  Responsible posting agent; used when delegated to person or program 
+  
+   
+     Path  
+ 
+ Delivery chain in !-notation; used to suppress delivery of duplicates  
+   
+   Organization  
+ 
+ Since "host names are often cryptic enough"  
+   
+   Destinations  
+ 
+     Newsgroups  
+ 
+ Comma-separated list for "cross-posting" to several topics  
+   
+   Distribution  
+ 
+ List of "regions" to limit delivery further; used with wildcarding  
+   
+   Expires  
+ 
+ Should only be set in rare cases to override local policies (e.g. FAQs)  
+   
+   Thread  
+ 
+     Message-ID  
+ 
+ Globally-unique ID for threading and articles yet to be downloaded  
+   
+   Followup-To  
+ 
+ Newsgroup(s) for group replies;  poster  means "reply directly"  
+   
+   Reply-To  
+ 
+  Email address for individual replies 
+  
+   
+   References  
+ 
+ Message-IDs of articles this follows up (often the whole thread)  
+   
+   Control  
+ 
+   Control  
+ 
+ Presence defines a USENET control message between hosts; Table 5   
+   
+   Approved  
+ 
+ Authorizing email address, for a moderated newsgroup or control msg  
+   Table 5: USENET Control messages 
+   
+   ihave  &lt;msgid&gt;[&lt;sys&gt;] 
+sendme &lt;msgid&gt;[&lt;sys&gt;] 
+   
+ 
+ Check before exchanging one article (or many, listed in the body). Sent in  to.&lt;sys&gt;  queues before NTTP  
+   
+   cancel &lt;message-id&gt;  
+ 
+   From: or  Sender : of revocation must match original. 
+If canceled, the request must be rebroadcasted further  
+   
+   newgroup &lt;name&gt; [mod]  
+ 
+ Can be  moderated ; descr. in body; rebroadcasted  
+   
+   rmgroup  
+ 
+ Should have trusted  Approved  header; rebroadcasted  
+   
+   sendsys  
+ 
+ Enumerate all neighbors and their subscription feeds  
+   Table 6: NNTP Commands and typical reply codes 
+An NNTP session proceeds as Greeting, Capability Discovery, Authentication, Article Selection, Article Retrieval, Article Upload, and Conclusion. (Required commands are in boldface. New commands discussed in the NNTP-EXT Working Group are in italic.) 
+   
+   Command  
+ 
+   Action &amp; Reply  
+   
+   &lt;initial connect&gt; 
+   
+ 
+   200 OK;  201 Posting OK ;  205 Authenticate   
+   
+     MODE READER  
+ 
+ Optionally notes client is interactive;  200 ,  201 ,  205  replies  
+   
+   SLAVE  
+ 
+ Notes client serves many users [Obsolete];  202 Noted   
+   
+   LIST   EXTENSIONS    
+ 
+   202 Supported Extensions followed, one per line  
+   
+     AUTHINFO USER name 
+AUTHINFO PASS pass  
+ 
+   350 Continue with PASS    A cleartext password system; hence  snews:  over SSL
+ 
+   
+     AUTHINFO GENERIC ...  
+ 
+  Arbitrary auth procedure:  250 Accepted ;  452 Rejected  
+  
+   
+   LIST  [ACTIVE [wild]]   
+ 
+ For all, active, or only matching group names, list:  &lt;group&gt; &lt;last&gt; &lt;first&gt; &lt;post?&gt;  ( y es/ n o/ m od)  
+   
+   LIST  DISTRIBUTIONS   
+ 
+   215 lists &amp; describes valid "regions" at this server   
+   
+   LIST  NEWSGROUPS wild   
+ 
+   215    lists one-line descriptions of all or matching groups
+ 
+   
+     LISTGROUP [ggg]  
+ 
+   211 lists all articles by number; resets pointer to first  
+   
+     OVER [range]  
+ 
+   224 returns all headers cached in a news overview dbase  
+   
+     PAT hdr range|ID pat  
+ 
+   221    lists headers of specified articles with matching values 
+ 
+   
+   NEWGROUPS  time dist  
+ 
+   [YY]YYMMDD HHMMSS [GMT|UTC]   ; and distribution limits
+ 
+   
+   NEWNEWS gs time dist  
+ 
+   230 lists article-IDs in group(s) -- wildcard matching is OK  
+   
+   GROUP ggg  
+ 
+   211 &lt;est-num&gt; &lt;first&gt; &lt;last&gt; &lt;group&gt; selected [Sets current-article-pointer to first message of this group]  
+   
+   NEXT  
+ 
+ Advances current-article-pointer (skips "holes')  
+   
+   LAST  
+ 
+ Advances current-article-pointer to end of group  
+   
+   ARTICLE[&lt;msgid&gt;|nnn] 
+HEAD   [&lt;msgid&gt;|nnn] 
+BODY   [&lt;msgid&gt;|nnn]  
+ 
+ Send current [or specified] article's headers, body, or both  
+Specifying an article-number advances the current-article  220 &lt;art-num&gt; &lt;art-ID&gt; head or body follows   
+   
+   STAT   [&lt;msgid&gt;|nnn]  
+ 
+ Check if current [or specified] article is still valid; no data  
+   
+   POST  
+ 
+   340 Send article;  240 Received OK  (for clients)  
+   
+   IHAVE   &lt;msgid&gt;  
+ 
+   345 Transfer article;  435 Not Wanted  (for servers)  
+  </body> 

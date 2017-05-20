@@ -1,0 +1,116 @@
+ Third Homework<body>
+  
+ 
+          
+ 
+ We're all back together this week; everyone
+will do the same thing.  This assignment is due on Friday, January 24.   
+ 
+  (a)  In Chapter 3 of the Goodrich and
+Tamassia book, do these problems:   
+  
+ R-3.8.  Unless you have already completed
+this by hand, use a spreadsheet to help with the calculations; Excel is
+available on the machines in the lab.  Every computer scientist should have
+some spreadsheet experience, so take this opportunity.  
+   
+ C-3.1.  A sentence or two is all that's
+required here; numerical examples or pictures are also welcome.  
+   
+ P-3.1.  Treat the linear-log scale as extra
+credit.  Also for some extra credit, plot your results as a chart in Excel
+(which does allow log scales if you poke around the various options).  
+  
+  (b)   Look at Alex Thornton's Project
+#1 from ICS 22, available on the web at    http://www.ics.uci.edu/~thornton/ics22/LabManual/Money/   
+.   
+ 
+  (b.1)   Code the problem as specified.
+ The coding here should be pretty easy, but pay particular attention to
+the discussion about testing and to designing and carrying out a thorough
+test plan.  
+ 
+  (b.2)   Change the program to handle
+dollars and cents rather than just integer dollars.  As the write-up points
+out, this is tricky because floating-point numbers (floats and doubles in
+Java) aren't exact (think of 1/3 or 2/7) and that inexactness can be
+compounded in repeated calculations.    
+ 
+ The right way to handle this is to treat each
+balance as an integer number of cents.  You then have two problems:  How
+to print the quantities with a decimal point and two digits to the right,
+and how to let the user specify dollar-and-cents quantities.  
+ 
+ For the output, you'll want to write a
+method called   toCurrencyString  
+that takes an integer and returns a string including a decimal point, so
+that   toCurrencyString(12345)  
+would return   "123.45"  .
+ The algorithm for this isn't hard if you use both division and the
+mod (remainder) operator (  %  --so
+that   12345 % 100  
+is   45  )
+to extract the dollars, dimes and cents.  
+ 
+ For the input, you may do it the easy but
+clumsy way:  Prompt the user separately for the dollars and for the cents,
+combining them in your program.  For a little extra credit, parse the input
+string containing a decimal point.  
+ 
+ Redraft (and re-apply) your test plan to include
+tests of dollars-and-cents amounts (thinking carefully about what those
+amounts can look like).  
+ 
+  (b.3)   For some extra credit, try one
+or more of these:  
+  
+ Allow each person to have a collection of
+accounts (creating an AccountCollection class that you could implement as
+an array, or even as a linked list).  You'd probably want to give each
+account a number and think about what interface changes you'd need.  
+   
+ Have (at least) two subclasses of accounts,
+Checking and Savings; each class could have a different associated interest
+rate (that applies to every account of that class, not one for each instance),
+and allow each person's account collection to include any combination
+of accounts.  (A clever thing to do would be to use a static field in the
+Account class so that every new account, of whatever type, gets a unique
+account number.)  
+   
+ The "Additional Challenges" listed
+in Alex Thornton's write-up.  
+   
+  What to turn in:     
+ 
+ For part  (a) , paste all your answers
+into a single Word document and submit it via Checkmate.  (If you'd
+prefer another format besides Word, let us know and we'll see about
+alternate arrangements.  Likewise, if you already completed this part before
+reading about the Excel requirement, you may turn in a paper version in
+class on Tuesday.)  
+ 
+ For part  (b) , turn in via Checkmate
+a Word document containing your test plan and a Java file for each class
+from part  (b.2) .  As indicated by Checkmate, turn in the main, required
+part separately from any enhanced, extra credit version from  (b.3) .
+  
+  
+ Written by David G. Kay, Winter 2003 to build
+on "Money (That's What I Want)," an ICS 22 lab by Alex Thornton.  
+  
+ 
+  
+  
+  David G. Kay ,
+ 406B Computer Science
+   University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --     (949) 824-5072   
+ --  Fax    (949) 824-4056   
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Saturday, January 18, 2003 -- 11:01 AM  
+</body> 

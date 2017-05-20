@@ -1,0 +1,98 @@
+ Pregelix<body>
+ 
+      
+ 
+       
+                   
+             
+	     
+                   
+             
+             
+				   
+						 
+							 
+					 
+				   
+	 
+	 
+             
+
+
+ 
+       Overview  
+        
+          Download  
+	  Performance  
+        
+          News  
+          Publications  
+	  Talks       
+          Team  
+          Sponsors  
+          Contact  
+      
+ 
+     
+    	
+        
+         
+          
+ What is Pregelix? 
+ Pregelix is an open-source implementation of the bulk-synchronous vertex-oriented programming model ( Pregel API ) for large-scale graph analytics. Pregelix is based on an iterative dataflow design that is better tuned to handle both in-memory and out-of-core workloads efficiently. Pregelix supports a variety of physical runtime choice which can fit different sorts of graph algorithms, datasets, and clusters. Our motto is  "Big Graph Analytics Anywhere!"</strong> --- from a single laptop to large enterprise clusters. 
+
+
+   Quick example: 
+ 
+  
+  public class PageRankVertex extends Vertex&lt;VLongWritable, DoubleWritable, FloatWritable, 
+		DoubleWritable&gt; {
+    ........
+    @Override
+    public void compute(Iterator&lt;DoubleWritable&gt; msgIterator) {
+        .......
+        sum = 0;
+        while (msgIterator.hasNext()) {
+          sum += msgIterator.next().get();
+        }
+        setVertexValue((0.15 / getNumVertices()) + 0.85 * sum);
+        sendMsgToAllNeighbors(vertexValue / getEdges().size());
+        ....
+    }
+  }
+ 
+
+ The above code is the  PageRank</strong> implementation on Pregelix. 
+
+
+   Performance: 
+ 
+We have compared Pregelix with several popular Big Graph Analytics platforms, including Giraph, Hama, GraphLab, and GraphX. The figures below demonstrate
+the performance (i.e., end-to-end execution time and average iteration time) of the single source shortest paths algorithm (SSSP) on a 32-machine cluster using different platforms.
+ Here  contains more details.
+ 
+
+ 
+   
+   
+ 
+ Pregelix can perform comparably to Giraph for memory-resident message-intensive workloads (like PageRank), can outperform Giraph by  15x</strong>  for memory-resident message-sparse workloads (like the single source shortest paths algorithm), can scale to out-of-core workloads, can sustain multi-user workloads, and can outerpform GraphLab, GraphX, and Hama by more than an order of magnitude for various workloads. Checkout more details  here .
+ 
+ 
+    
+              
+       
+           
+     
+     
+         © pregelix.ics.uci.edu 2014. Design by  Free CSS Templates   
+     
+     
+           
+           
+     
+       
+
+
+ 
+</body> 

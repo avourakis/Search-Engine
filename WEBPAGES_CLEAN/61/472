@@ -1,0 +1,76 @@
+ user.websites.chimera2.concepts.views<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Views  
+
+ Conceptually, a view is a pairing of a  viewer 
+and an  object . A view can only be created if
+the viewer supports the MIME type of the object. Typically, a view will
+manifest as a graphical depiction of the object on the user's display. For
+instance, below is a view of a JPEG file as presented by an image program. 
+
+     
+
+ These views will be found within a viewer's window, and the viewer will
+provide access to hypermedia services via some form of user-interface widget.
+For instance, the viewer might create a pull-down menu containing commands
+such as  Create_Anchor  or  Traverse_Link , or these
+commands may be presented as a pop-up menu on the view itself. Alternatively,
+the viewer may hide specific access to commands from the user, and instead
+invoke hypermedia commands based on a user's actions within the view. For
+instance, drawing a rectangle on an image can automatically create an  anchor  which represents the rectangle within Chimera's
+ hyperweb . 
+
+ Developer Information 
+
+ The available operations on views are listed below. For more information
+see the  on-line documentation . 
+
+      activeView(viewer, view)  
+ Notifies the Chimera server that the specified view is actively being displayed
+by the viewer.     createAnchor(view)  
+ Creates a new anchor on the specified view. This anchor is considered  view-specific .     createView(viewer, object)  
+ Creates a new view in the active hyperweb. In order for this operation to
+succeed, the specified viewer must support the MIME-type of the specified
+object.     deleteView(view)  
+ Delete's the specified view from the active hyperweb. Note, this operation
+also deletes any anchors associated with the view (which, in addition, updates
+any links which contained them).     getAnchors(view)  
+ Returns a list of anchors associated with the specified view in the active
+hyperweb.     getObject(view)  
+ Returns the view's object.     getView(viewer, object)  
+ Returns the view which contains the specified viewer and object.     getViewer(view)  
+ Returns the view's viewer.     getViews()  
+ Returns all of the views for the active hyperweb.     getViewsWith(viewer) 
+getViewsWith(object)  
+ Returns all of the views containing the specified viewer or object.     inactiveView(viewer, view)  
+ Informs the Chimera server that the specified view is no longer being displayed
+by the viewer.     numberOfAnchors(view)  
+ Returns the number of anchors associated with the specified view.     numberOfViews()  
+ Returns the number of views contained in the active hyperweb.     numberOfViewsWith(viewer) 
+numberofViewsWith(object)  
+ Returns the number of views which contain the specified viewer or object.     viewExists(viewer, object)  
+ Checks to see if the specified view exists in the active hyperweb.         Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

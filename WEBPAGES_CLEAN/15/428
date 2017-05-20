@@ -1,0 +1,154 @@
+   
+  Class c2.framework.FIFOPort
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.FIFOPort
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Port 
+           |
+           +----c2.framework.FIFOPort
+ 
+    public class  FIFOPort 
+    extends  Port 
+   
+The simplest kind of communication ports is one that handles 
+incoming and outgoing messages on a first-in-first-out (FIFO) basis.
+    See Also: 
+        Port 
+     
+ 
+    
+      in_messages  
+     Incoming message queue.
+        out_messages  
+     Outgoing message queue.
+   
+    
+      FIFOPort  ()
+     
+        FIFOPort  (Brick)
+     
+   
+    
+      className  ()
+     Accesses the name of the class.
+        classType  ()
+     Accesses the class itself.
+        receive  (Message)
+     Receives a message by adding it to the port's incoming queue and 
+notifying its brick.
+        selectNextIncomingMessage  ()
+     Selects the next message from the incoming queue.
+        selectNextOutgoingMessage  ()
+     Selects the next message from the outgoing queue.
+        send  (Message)
+     Sends a message by taking it off the port's outgoing queue and
+transfering it to its link's incoming queue.
+        toString  ()
+     Displays the messages currently in the port's two queues.
+    
+ 
+    
+   
+ in_messages 
+ 
+  protected  Vector  in_messages
+ 
+   Incoming message queue.
+     
+ out_messages 
+ 
+  protected  Vector  out_messages
+ 
+   Outgoing message queue.
+    
+ 
+    
+  
+   
+ FIFOPort 
+ 
+  public FIFOPort()
+ 
+   
+ FIFOPort 
+ 
+  public FIFOPort( Brick  b)
+ 
+  
+ 
+    
+   
+  className  
+ 
+  protected static  String  className()
+ 
+   Accesses the name of the class.
+      Returns: 
+       Port class name.
+         
+  classType  
+ 
+  public static  Class  classType()
+ 
+   Accesses the class itself.
+      Returns: 
+       Port class.
+         
+  receive  
+ 
+  public void receive( Message  msg)
+ 
+   Receives a message by adding it to the port's incoming queue and 
+notifying its brick.
+      Parameters: 
+       msg - Received message.
+        Overrides: 
+        receive  in class  Port 
+         
+  send  
+ 
+  public void send( Message  msg)
+ 
+   Sends a message by taking it off the port's outgoing queue and
+transfering it to its link's incoming queue.
+      Parameters: 
+       msg - Message to send.
+        Overrides: 
+        send  in class  Port 
+         
+  selectNextIncomingMessage  
+ 
+  public  Message  selectNextIncomingMessage()
+ 
+   Selects the next message from the incoming queue.  Does so in a FIFO
+fashion.
+      Overrides: 
+        selectNextIncomingMessage  in class  Port 
+         
+  selectNextOutgoingMessage  
+ 
+  public  Message  selectNextOutgoingMessage()
+ 
+   Selects the next message from the outgoing queue.  Does so in a FIFO
+fashion.  No messages are removed off the queue if the port is not
+linked to another.
+      Overrides: 
+        selectNextOutgoingMessage  in class  Port 
+         
+  toString  
+ 
+  public  String  toString()
+ 
+   Displays the messages currently in the port's two queues.  Used for
+debugging.
+      Overrides: 
+        toString  in class  Port 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

@@ -1,0 +1,434 @@
+ Support for Highly Scalable Big Data Systems 
+
+ 
+
+         Language,
+Compiler, and Runtime System Support for Efficient, Scalable, and Adaptive Big
+Data Processing      
+
+  
+
+   
+
+   About     
+
+       
+
+  Modern computing has
+entered the era of Big Data. Developing systems that can scale to massive
+amounts of data with relatively small amounts of resources is a key challenge
+faced by both researchers and practitioners.   Conventional wisdom
+about scalability is that the performance of a system should increase
+proportionally with the increase of any kind of resource (e.g., CPU, memory, or
+network bandwidth). However, we believe this is not sufficient. An important
+yet ignored aspect of scalability is that if the amount of resource of  some  kind decreases, the performance of
+the system should  not  be reduced
+proportionally. In other words, the system should be designed in a way so that
+resources of  other  kinds can be
+exploited to remedy the performance reduction resulting from the lost resource.
+Driven by this insight, our group has made a number of attempts towards
+building highly-adaptive Big Data systems that can automatically adapt their
+behaviors to the amount of available resources.    
+
+       
+
+   (1) Facade: A compiler and runtime system for (almost)
+object-bounded Big Data applications     
+
+  A managed Big Data application often suffers from large space
+overhead and GC cost due to extremely large numbers of objects and references
+in the heap. A key observation is that, in a scalable system, the number of
+heap objects representing data items cannot grow proportionally with the
+dataset cardinality. We develop Facade, a Java-based compiler and  runtime, that  can statically bound the number of heap
+objects that represent data items. Facade advocates  to store
+data items in native memory and create  objects as facades to represent
+data items. It uses a new execution model that dynamically establishes a
+many-to-one mapping between an unbounded set of data items in native memory and
+a statically bounded set of objects in the heap, thereby reducing significantly
+the number of objects, their associated space overhead (i.e., pointers and
+headers), as well as the GC cost. Please read our  ASPLOS  '  15
+paper  for details.    
+
+       
+
+   (2) Interruptible Task: Treating memory pressure as interrupts for
+highly scalable data parallel programs       
+
+  Real-world data-parallel programs commonly suffer from great
+memory pressure, especially when they are executed to process large datasets.
+Memory problems lead to excessive GC effort and out-of-memory errors,
+significantly hurting system performance and scalability. This paper proposes a
+systematic approach that can help data-parallel tasks survive memory pressure,
+improving their performance and scalability without needing any manual effort
+to tune system parameters. Our approach advocates interruptible task ( ITask ), a new type of data-parallel tasks that can be
+interrupted upon memory pressure---with part or all of their used memory
+reclaimed---and resumed when the pressure goes away. To support  ITasks , we propose a novel programming model and a runtime
+system, and have instantiated them on two state-of-the-art platforms Hadoop and
+ Hyracks . A thorough evaluation demonstrates the
+effectiveness of  ITask : it has helped real-world
+Hadoop programs survive 13 out-of-memory problems reported on  StackOverflow ; a second set of experiments with 5 already
+well-tuned programs in  Hyracks  on datasets of
+different sizes shows that the  ITask -based versions
+are 1.5--3x faster and scale to 3--24x larger datasets than their regular
+counterparts. Please read our  SOSP  '  15 paper  for details.     
+
+       
+
+   (3)     Semantics-aware
+graph simplification     
+
+  Real-world graphs
+(such as the Yahoo  webgraph  and the twitter graph)
+are extremely large and often need a cluster of machines to process. To support
+efficient test and debugging, it is important to generate, from real-world
+graphs, a small subset of vertices and edges that retain interesting properties
+in the original graphs. Existing techniques focused primarily on graph sampling
+that uses statistical methods to sample a large graph so that the generated
+graph follows the same distribution. However, all of these techniques are
+semantics-agnostic, meaning that they prune graph without considering what each
+application is interested in. For example, page rank is interested in edge
+density while maximal clique cares more about the sizes of the cliques in the
+graph. We are in the process of developing novel algorithms that intelligently
+prune a graph based on the user's specifications of interesting properties.
+More details will be reported here.     
+
+       
+
+   (4)     Speculative
+region-based memory management     
+
+  Most real-world Big
+Data systems are written in managed languages. These systems suffer from severe
+memory problems due to the massive volumes of objects created to process input
+data. Allocating and deallocating a sea of objects puts a severe strain on the
+garbage collector, leading to excessive GC efforts and/or out-of-memory
+crashes. Region-based memory management has been recently shown to be effective
+to reduce GC costs for Big Data systems. However, all existing region-based
+techniques require significant user annotations, resulting in limited
+usefulness and practicality. This paper reports an ongoing project, aiming to
+design and implement a novel speculative region-based technique that requires
+only minimum user involvement. In our system, objects are allocated
+speculatively into their respective regions and promoted into the heap if
+needed. We develop an object promotion algorithm that scans regions for only a
+small number of times, which will hopefully lead to significantly improved
+memory management efficiency. We are currently in the process of implementing this
+idea in  OpenJDK . Details can be found in our  PLOS'15  paper.    
+
+       
+
+   (5)     I/O Efficient
+disk-based graph processing     
+
+  Disk-based   graph
+processing systems often need to load a large amount of data  repeatedly
+(in each computational iteration)  although much of the (edge) data may
+not be necessary for vertex computation. To improve graph processing
+efficiency, our group has been working on two related projects:  GraphQ  and  DynaGraph .     
+
+       
+
+   GraphQ    is a scalable querying framework for
+very large graphs, built upon a key insight that many interesting graph
+properties -- such as finding cliques of a certain size, or finding vertices
+with a certain page rank -- can be effectively computed by exploring only a
+small fraction of the graph, and traversing the complete graph is  an overkill . The centerpiece of our framework is the novel
+idea of abstraction refinement, where the very large graph is represented as
+multiple levels of abstractions, and a query is processed through iterative
+refinement across graph abstraction levels. As a result,  GraphQ 
+enjoys several distinctive traits unseen in existing graph processing systems:
+query processing is naturally budget-aware, friendly for out- ofcore  processing when ``Big Graphs`` cannot entirely fit
+into memory, and endowed with strong correctness properties on query answers.
+With  GraphQ , a wide range of complex analytical
+queries over very large graphs can be answered with resources affordable to a
+single PC, which complies with the recent trend advocating single machine-based
+Big Data processing. Experiments show  GraphQ  can
+answer queries in graphs 4-6 times bigger than the memory capacity, only in
+several seconds to minutes. In contrast,  GraphChi , a
+state-of-the-art graph processing system, takes hours to days to compute a
+whole-graph solution. An additional comparison with a modified version of  GraphChi  that terminates immediately when a query is
+answered shows that  GraphQ  is on average 1.6-13.4x
+faster due to its ability to process partial graphs. For details, please read
+our  USENIX ATC  '  15  paper.    
+
+       
+
+   DynaGraph    is another attempt that tries to reduce
+I/O costs by using  dynamic partitions .
+Existing disk-based graph systems use  static
+partitions  that are created before processing starts. These partitions have
+static layouts and are loaded entirely into memory in every single iteration
+despite that much of the edge data is not changed in  many
+iterations  and these unchanged edges have zero new impact on the
+computation of vertex values. We propose an optimization that targets this I/O
+inefficiency for a general class of disk-based graph algorithms whose
+computation functions are distributive over aggregation. Our optimization
+advocates dynamic partitions whose layouts are dynamically adjustable. A
+dynamic partition only contains edges that will make new contributions and is
+thus much smaller than its static counterpart. Loading dynamic partitions is
+much faster and has much lower I/O costs. To support dynamic partitions, we
+propose a novel accumulation-based programming/execution model that expresses computation
+in terms of contributions flowing through edges. As a proof of concept, we have
+implemented this optimization in  GraphChi , a popular
+disk-based graph processing system. Our experiments show that dynamic
+partitions yield speedups of up to  2.8x  (on average
+1.8x) over static partitions on five large graphs. Please read our  USENIX ATC'16  paper for details.    
+
+       
+
+   (6)     Yak: A High-Performance
+Big-Data-Friendly Garbage Collector     
+
+  Most ``Big Data   ``    systems are written in managed
+languages, such as Java, C#, or Scala. These systems suffer from severe memory
+problems due to the massive volume of objects created to process input data.
+Allocating and deallocating a sea of data objects puts a severe strain on
+existing garbage collectors (GC), leading to high memory management overheads
+and reduced performance. This paper describes the design and implementation of
+Yak, a ``Big Data`` friendly garbage collector that provides high throughput
+and low latency for all JVM-based languages. Yak divides the managed heap into
+a control space (CS) and a data space (DS), based on the observation that a
+typical data-intensive system has a clear distinction between a control path
+and a data path. Objects created in the control path are allocated in the CS
+and subject to regular tracing GC. The lifetimes of objects in the data path
+often align with epochs creating them. They are thus allocated in the DS and
+subject to region-based memory management. Our evaluation with three large
+systems shows very positive results. Please read our  OSDI'16 paper  for details.    
+
+       
+
+   (7) Correct, Efficient, and Scalable Processing of Very Large
+Evolving and Streaming Graphs       
+
+  Real-world graphs
+constantly change. Evolving graph processing involves repeating analyses, which
+are often iterative, over multiple snapshots of the graph corresponding to
+different points in time. Since the snapshots of an evolving graph share a
+great number of vertices and edges, traditional approaches that process these
+snapshots one at a time without exploiting this overlap contain much wasted
+effort on both data loading and computation, making them extremely inefficient.
+In this article, we identify major sources of inefficiencies and present two
+optimization techniques to address them. First, we propose a technique for
+amortizing the fetch cost by merging fetching of values for different snapshots
+of the same vertex. Second, we propose a technique for amortizing the
+processing cost by feeding values computed by earlier snapshots into later
+snapshots. We have implemented these optimizations in two distributed graph
+processing systems, namely,  GraphLab  and ASPIRE. Our
+experiments with multiple real evolving graphs and algorithms show that, on
+average fetch amortization speeds up execution of  GraphLab 
+and ASPIRE by 5.2x and 4.1x, respectively. Amortizing the processing cost
+yields additional average speedups of 2x and 7.9x, respectively.  For details, please read our  TACO'16  paper.       
+
+       
+
+  Another type of changing
+graphs is streaming graph in which edge updates are constantly applied. Continuous
+processing of a streaming graph iteratively maintains an approximate result of
+the computation on a recent version of the graph. Upon a user query, the
+accurate result on the current graph can be quickly computed by feeding the
+approximate results to the iterative computation -- a form of incremental computation
+that corrects the (small amount of) error in the approximate result. Despite
+the effectiveness of this approach in processing growing graphs, it is not
+generally applicable when edge deletions are present -- existing approximations
+can lead to either incorrect results (e.g., for monotonic algorithms the
+computation terminates at an incorrect minima/maxima) or poor performance
+(e.g., with approximations, convergence takes longer than performing the
+computation from scratch). In this paper we present   KickStarter   , that,  for a
+general class of monotonic graph algorithms, is able to trim the approximations
+to a subset of vertex values whose use preserves correctness of results and yet
+allows a majority of existing approximations to be directly used for
+efficiency. Our experiments with four streaming algorithms on five real-world
+graphs demonstrate that trimming not only produces correct results but also
+accelerates these algorithms by 8.5 -- 23.7x. Our  ASPLOS'17 paper  documents the details of
+the project.    
+
+  
+
+   
+
+   Papers     
+
+       
+
+   o   
+     A bloat-aware design for Big Data
+applications ,    
+
+   Yingyi Bu, Vinayak Borkar, Guoqing (Harry) Xu,
+and Michael J. Carey.       
+
+   ISMM'13: ACM
+SIGPLAN International Symposium on Memory Management   .    
+
+  [ Slides ]    
+
+       
+
+   o   
+     Facade: A compiler and
+runtime system for (almost) object-bounded Big Data applications ,    
+
+   Khanh Nguyen, Kai
+Wang, Yingyi Bu, Lu Fang,  Jianfei  Hu, and Guoqing
+(Harry) Xu.       
+
+   ASPLOS'15: 20th International Conference on
+Architectural Support for Programming Languages and Operating Systems,       
+
+  [ Slides ]    
+
+       
+
+   o   
+      GraphQ : 
+Graph query processing with abstraction refinement --- scalable and
+programmable analytics over very large graphs on a single PC  ,    
+
+  Kai Wang, Guoqing (Harry) Xu,  Zhendong  Su, and Yu David Liu,    
+
+   ATC'15: 2015 USENIX Annual Technical Conference,       
+
+  [ Slides ]    
+
+       
+
+   o   
+     Interruptible tasks:
+Treating memory pressure as interrupts for highly scalable data-parallel
+programs ,    
+
+  Lu Fang, Khanh Nguyen, Guoqing (Harry) Xu, Brian
+Demsky, and Shan Lu,    
+
+   SOSP'15: 25 th  ACM Symposium on
+Operating Systems Principles,       
+
+  [ Slides ]    
+
+       
+
+   o   
+     Speculative region-based memory
+management for Big Data systems ,    
+
+  Khanh Nguyen, Lu Fang, Guoqing (Harry) Xu, and
+Brian Demsky,    
+
+   PLOS'15: 8 th  International Workshop
+on Programming Languages and Operating Systems,       
+
+  [ Slides ]    
+
+       
+
+   o   
+     Load the edges you need: A
+generic I/O optimization for disk-based graph processing ,    
+
+  Keval Vora, Guoqing (Harry) Xu, and Rajiv Gupta,    
+
+   ATC'16: 2016 USENIX Annual Technical Conference,       
+
+  [Slides]      
+
+       
+
+   o   
+     Synergistic
+Analysis of Evolving Graphs ,    
+
+  Keval Vora, Rajiv Gupta, and Guoqing (Harry) Xu,    
+
+   TACO    '    16: ACM Transactions on Architecture and Code Optimization   ,   Vol. 13, No. 4, Article
+32.       
+
+       
+
+   o   
+     Yak:
+A High-Performance Big-Data-Friendly Garbage Collector ,    
+
+  Khanh Nguyen, Lu Fang, Guoqing (Harry) Xu, Brian
+Demsky, Shan Lu, and Onur  Mutlu ,    
+
+   OSDI'16: 2016 USENIX Symposium on Operating
+System Design and Implementation,       
+
+  [ Slides ]    
+
+       
+
+   o   
+     KickStarter   : Fast and Accurate Computations on Streaming
+Graphs via Trimmed Approximations,    
+
+  Keval Vora, Rajiv Gupta, and Guoqing (Harry) Xu,    
+
+   ASPLOS'17: 20th International Conference on
+Architectural Support for Programming Languages and Operating Systems,       
+
+  [ Slides ]    
+
+       
+
+  
+
+   
+
+   People     
+
+       
+
+   o   
+     Lu Fang     
+
+   o   
+     Khanh Nguyen     
+
+   o   
+     Keval Vora     
+
+   o   
+     Kai Wang     
+
+   o   
+     Yingyi Bu     
+
+   o   
+     Sanaz     Alamian     
+
+   o   
+     Harry Xu     
+
+   o   
+     Brian Demsky  (our EECS
+collaborator)    
+
+   o   
+     Shan Lu  (our  UChicago  collaborator)    
+
+   o   
+     Onur  Mutlu   (our ETH collaborator)    
+
+       
+
+  
+
+   
+
+   Support       
+
+         
+
+  This research is funded in part by NSF under grants CNS-1321179,
+CCF-140982, and CNS-1613023, and by ONR under grants  N00014-14-1-0549
+and N00014-16-1-2913.      
+
+  
+
+   
+
+     main  page           
+
+ 
+
+</body> 

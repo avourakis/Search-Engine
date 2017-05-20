@@ -1,0 +1,107 @@
+ VHDL Reference Guide - Component Declaration<body>  This is Google's cache of  http://www.vdlande.com/VHDL/compdec.html . It is a snapshot of the page as it appeared on Oct 15, 2009 21:31:13 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Component Declaration  
+        Declaration 
+ ---- used in ----&gt; 
+ Architecture Package 
+            Syntax        
+  
+
+ 
+      component  component_name
+     generic  (generic_list);	
+     port  (port_list);
+ end component ;
+  
+    
+
+ 
+See LRM sections 4.5, 1.1.1.1 and 1.1.1.2
+
+         Rules and Examples        
+  
+
+ 
+    The port list must define the name, the mode (i.e.direction) and the
+type of each port on the component. component HALFADD
+  port(A,B : in bit;
+       SUM, CARRY : out bit);
+end component;
+  
+    
+
+ 
+    A component declaration does not define the entity-architecture pair
+to be bound to each instance, or even the ports on the entity. These are
+defined by the  configuration 
+ 
+    
+  
+
+ 
+    In an architecture, components must be declared before the
+ begin  statement: architecture STRUCTURAL of FULLADD is
+  -- (local signal declarations here)
+  component ORGATE
+    port (A,B : in  bit;
+            Z : out bit);
+  end component;
+  -- (other component declarations)
+begin
+  -- the architecture contents
+end STRUCTURAL;
+  
+    
+
+ 
+    A component declared in a package is visible in any architecture
+which uses the package, and need not be declared again. 
+    
+
+ 
+    For a component with generics, these must be declared before the
+ports. They do not have a mode, as by definition they can only pass
+information into the entity: component PARITY
+  generic (N : integer);
+  port    (A : in  std_ulogic_vector
+                       (N-1 downto 0);
+         ODD : out std_ulogic);
+end component;
+  
+    
+
+
+
+ 
+         Synthesis Issues        
+  
+
+ Component  declarations are supported for synthesis, providing the
+port types are acceptable to the logic synthesis tool. Usually, only
+generics of type integer are supported. Whether a synthesis tool will
+"flatten through" a component, treat is as a "black box", or recognise
+it as a primitive is usually under the user's control.
+
+ 
+         Whats New in '93        
+
+In  VHDL -93., an entity-architecture pair can be instantiated directly.
+In this case a component declaration is not required. This is more
+compact, but does not allow the flexibility of configuration.
+  
+In  VHDL -93, the component name may be followed by the keyword  is ,
+for clarity and consistancy. also the keywords  end component  may
+be followed by a repetition of the component name:  component component_name is
+	port (port list);
+end component component_name;
+ 
+
+ 
+
+  </body> 

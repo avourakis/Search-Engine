@@ -1,0 +1,83 @@
+ Computational Vision | ICS | UC Irvine  
+   
+     Computational Vision at UC Irvine    
+   
+   
+       home  
+        projects  
+        people  
+        publications  
+        datasets  
+        events  
+        courses  
+        contact  
+        links  
+      
+
+   
+     Strong Geometric Context for Scene Understanding 
+     Raul Diaz 
+     
+       
+      Humans are able to recognize objects in a scene almost effortlessly. Our visual system
+can easily handle ambiguous settings, like partial occlusions or large variations in viewpoint.
+One hypothesis that explains this ability is that we process the scene as a global instance.
+Using global contextual reasoning  (\eg a car sits on a road, but not on a building facade)
+can constrain interpretations of objects to plausible, coherent precepts.
+This type of reasoning has been explored in Computer Vision using weak 2D context, mostly
+extracted from monocular cues. In this thesis, we explore the benefits of strong
+3D context extracted from multiple-view geometry. We demonstrate strong ties between
+geometric reasoning and object recognition, effectively bridging
+the gap between them to improve scene understanding.
+
+In the first part of this thesis, we describe the basic principles of
+structure from motion, which provide strong and reliable
+geometric models that can be used for contextual scene understanding.
+We present a novel algorithm for camera localization that leverages
+search space partitioning to allow a more aggressive filtering of
+potential correspondences. We exploit image covisibility using a
+coarse-to-fine, prioritized search approach that can recognize scene
+landmarks rapidly. This system achieves state of the art results in large-scale camera
+localization, especially in difficult scenes with frequently repeated structures.
+
+In the second part of this thesis, we study how to exploit
+these strong geometric models and localized cameras to improve recognition. We introduce
+an unsupervised training pipeline to generate scene-specific object detectors.
+These classifiers outperform state of the art and can be used when
+the rough camera location is known. When precise camera pose is available,
+we can inject additional geometric cues into novel re-scoring framework to
+further improve detection. We demonstrate
+the utility of background scene models for false positive pruning, akin to
+video-surveillance background subtraction strategies. Finally, we observe that the
+increasing availability of mapping data stored in Geographic Information Systems (GIS)
+provides strong geo-semantic information that can be used when cameras are located
+in world coordinates. We propose a novel contextual reasoning pipeline that
+uses lifted 2D GIS models to quickly retrieve precise geo-semantic priors.
+We use these cues to to improve object detection and image semantic segmentation, providing a
+successful trade-off of false positives that boosts average precision over baseline detection models.
+
+     
+     
+       Download:  pdf  
+       Text Reference 
+Raul Diaz.
+ Strong Geometric Context for Scene Understanding .
+PhD thesis, University of California, Irvine, 10 2016.  BibTeX Reference 
+@phdthesis{Diaz_THESIS_2016, 
+    author = "Diaz, Raul", 
+    title = "Strong Geometric Context for Scene Understanding", 
+    booktitle = "PhD Thesis", 
+    school = "University of California, Irvine", 
+    year = "2016", 
+    month = "10" 
+}  
+   
+   
+     
+       Computational Vision  |
+       School of Information and Computer Sciences  |
+       UC Irvine 
+     
+     © 2007-2016 UC Irvine 
+   
+   </body> 

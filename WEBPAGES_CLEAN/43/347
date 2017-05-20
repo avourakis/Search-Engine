@@ -1,0 +1,56 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ David J. Fiander  (  davidf@worf.mks.com  )  Wed, 29 May 1996 13:05:16 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   David J. Fiander: "Re: Versions and configurations" 
+    Previous message:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+
+    
+&gt; I'm not denigrating versioning in any way, and I'm not even suggesting
+&gt; replacing the versioning concept with this configuration concept.  I'm
+&gt; just more interested in this level above versioning and am wondering
+&gt; if that concept should be included in the discussions.
+
+I tend to agree.  Getting rev. 1.5 of a page, without finding the
+graphics in it, or the pages that it links to, at the right
+revision, is not as effective as "surfing into the past".
+However, I also think that we need to start small, and work our
+way up.  Given that "version=foo" can take /anything/ acceptable
+to the underlying VCS, those systems that support labelling
+revisions, like RCS, can easily support a basic form of CM.
+Smartening up the client and switching from decorated URLs to a
+(remembered) Content-Version header would allow for links without
+version information to (client-side) default to an old version of
+the page.
+
+This is, I think, stuff that we want to talk about, but not until
+we've nailed down the basic standards about what URL decorations
+we're going to describe, if any, the semantics of existing HTTP
+methods in the face of Content-Version headers or decorated URLs,
+and any additional HTTP methods we find necessary.
+
+As an aside, I noticed that my last, long message wasn't
+necessarily as clear on one point as it probably should have
+been.  Right now, MKS uses URL decorations for everything.  In
+the future, we will be tracking the work of this group, and
+converting from URL decorations to HTTP methods, for those things
+that logically are methods.  Of course, we'll still end up
+supporting our existing decorations for a while, since we have
+product in the field that understands them, and people may have
+pages that contain links to them.
+
+- David
+ 
+
+  
+     Next message:   David J. Fiander: "Re: Versions and configurations" 
+    Previous message:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+
+  </body> 

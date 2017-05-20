@@ -1,0 +1,363 @@
+ Computational Statistics: Clustering<body>
+
+
+ 
+  
+
+
+  ICS 280, Spring 1999: 
+Computational Statistics  
+
+ Clustering 
+
+ Clustering  refers to several related problems: partitioning a set
+of input points into a fixed number of "closely related" subsets;
+finding a small number of representative center points;
+or matching the point distribution to a family of overlapping continuous
+distributions.
+This multiplicity of definitions can actually be helpful, as some major
+clustering algorithms (particularly K-means) work by going back and forth
+between the partition and representative-point view of the problem.
+
+ Data Models 
+
+There are a couple different ways of finding a data model for clustering.
+
+ Most naturally, perhaps, the model can be like that for
+ single point estimation :
+there are some number  k  of actual data points,
+which the data model chooses among.
+The noise model then adds errors to these points, and we should
+estimate their locations by partitioning them somehow and then applying
+a single point estimation method to each subset.
+
+  Alternatively, the data model can be that there are  k 
+different overlayed random distributions of points (such as Gaussians),
+the noise model merely samples random points from each distribution,
+and the clustering task is to infer the distributions' parameters.
+The difference with this second model is that it no longer makes
+sense to sharply classify which point is part of which cluster;
+the best one can do is estimate the likelihood that a given point
+belongs to a given cluster.
+For instance, if the data form two crossed Gaussians,
+a point in the central crossing region might be equally likely to belong
+to either distribution.
+
+  Despite these principles, however, many clustering algorithms use ad
+hoc ideas of choosing a partition that optimizes some functional or
+other, without regard for how it fits into a data model.  Even
+principled approaches such as K-means (which can be viewed as based on
+max likelihood ideas) can't be proven to converge to the correct
+clusters or even to find the global max likelihood solution.
+
+  How many clusters to use? 
+
+This is a hard question. For now let's just say that the number of
+clusters is given as input.  There has been some work (Smyth?) on
+automatically inferring the correct number of clusters; some
+K-means-like clustering methods can merge or split clusters and
+hopefully converge on something; alternatively, the problem of
+hierarchical clustering can be viewed as simultaneously solving
+clustering for each possible number of clusters.
+
+  K-means  
+
+The most commonly used clustering method can be seen as a Bayesian
+(max likelihood) approach to the point model of clustering.
+It is an iterative hill-climbing technique that is not guaranteed
+to find any global maximum likelihood solution, and about which
+little can be said theoretically, but works well in practice
+and can be adapted to various different noise models.
+
+ The basic idea is to maintain two estimates:
+an estimate of the center locations for each cluster,
+and a separate estimate of the partition of the data points
+according to which one goes into which cluster.
+Then, one estimate can be used to refine the other.
+
+  If we have an estimate of the center locations,
+then (with reasonable prior assumptions) the max likelihood solution
+is that each data point
+should belong to the cluster with the nearest center.
+Here "nearest" should be measured according to a distance
+determined by the noise model, as in  single
+point estimation , but in practice is always Euclidean distance.
+Therefore, from a set of center locations we can compute a new partition:
+form the  Voronoi diagram  of the centers,
+that is, a partition of space into the regions nearest each center,
+and make a cluster from the set of points in each Voronoi cell.
+
+  Conversely, if we have a partition of the data points into clusters,
+the max likelihood estimate of the center locations reduces
+to  k  independent single point estimation problems;
+if likelihood is related to variance, the max likelihood estimator is just the centroid.
+
+  Therefore the K-means algorithms proceeds by a sequence of phases in
+which it alternates between moving data points to the cluster of the
+nearest center, and moving center points to the nearest centroid.
+There are variants depending on whether points are moved one at a time
+or in batches; Kanungo et al.
+[ KMNPSW99 ]
+have looked at applying computational geometry data structures
+to speed up each iteration of the algorithm.
+
+   Optimal Solutions for Few Centers  
+
+When the number of problems and the problem's dimension
+are both small, clustering may become amenable to an exact algorithmic
+approach.  The general type of problem considered in this area
+is to partition the points into (usually) two subsets,
+in order to minimize some function of the subsets.
+
+ For example, the two-center problem
+seeks to find a partition into two subsets that minimizes the maximum
+circumradius.  One can come up with models for which this is a
+max-likelihood solution (e.g. the noise model is that the points may be
+moved arbitrarily within a bounded but unknown radius, with larger radii
+being less likely than smaller ones) but this seems to be working in the
+wrong direction: one should start with a noise model and derive
+algorithms, not vice versa.
+Since each point may safely be clustered with its nearest circumradius,
+the optimal partition is formed by the Voronoi diagram of the two points,
+which is just a line.
+Early two-center algorithms found the optimal partition by testing all
+O(n 2 ) ways of dividing the data points by a line.
+More recently, it has been discovered that the problem can be solved
+in time O(n polylog(n)) by more sophisticated geometric searching
+algorithms
+[ E97 ].
+
+  The problem of minimizing the sum of distances from each point to its
+center is known as the 2-median, since it generalizes the one-dimensional
+median problem (which minimizes the sum of distances to the single center).
+Again, the optimal partition is by a line, so a fast algorithm exists.
+ther problems for which such a line partition works, and therefore
+fast exact algorithms are known
+include minimizing the sum (or any monotone combination)
+of the circumradii
+[ E92 ].
+
+  The problem of finding a partition that minimizes the sum of intra-cluster distances (or, equivalently, maximizes the sum of inter-cluster distances)
+is known as the "Euclidean max cut".
+The partition is always formed by a circle [Schulman?]
+and so the optimal solution can be found in polynomial time by testing
+all O(n 3 ) ways of dividing the data points by a circle.
+
+  Other two-center-like problems for which efficient algorithms are
+known include finding partitions which minimize the maximum radius,
+enclosing square size, or
+enclosing rectangle area, perimeter, or diameter
+[ HS91 ],
+minimize the sum of the two cluster diameters
+[ H92 ],
+and minimizing the maximum width of the two clusters
+[ AS94 ,
+ GKS98 ].
+This last problem can be thought of as one of clustering the data along
+two lines rather than two points (with the L infinity  criterion
+used within each cluster).
+
+   Approximation and NP-hardness  
+
+Most or all of the problems discussed above are NP-hard when the number
+of clusters is variable
+[ BE96 ].
+Further,
+it is often not possible even to approximate the function being optimized
+(e.g. the maximum cluster radius) arbitrarily well, unless P=NP.
+However, there exist simple greedy approximation algorithms
+that get within a constant factor; e.g.
+repeatedly choosing a new cluster center at the data point farthest
+from previously chosen centers, and then grouping all unchosen points at
+their nearest center, will approximate the radius within a factor of two.
+Unfortunately, it is difficult or impossible to say much about
+approximating the actual cluster locations rather than merely
+approximating the criterion used to find the clusters.
+
+ Overlayed Distributions 
+
+ I vaguely recall that Smyth has done some work on the problem of
+inferring the parameters of a set of overlayed Gaussians, using some
+kind of Bayesian approach.  References and details?
+
+  There are several ways of defining the problem formally.
+From the Bayesian point of view, one should attempt to find the set
+D of
+distributions that maximizes the log-likelihood
+  
+    log Prior[D] + sum(log Prob[x i  | D])
+ 
+where the (log Prior) term represents the a priori assumptions on which
+distributions are more likely, and may be omitted (null hypothesis).
+Alternatively, one could attempt to minimize the discrepancy
+ 
+    max S  measure(S) - (# points in S)/(total # points)
+ 
+where S is maximized over some simple class of functions e.g. halfspaces.
+
+ One important application of the overlayed distribution model is in
+the belief-propagation approach to coding theory: one assumes that
+message bits that are sent out as signals with two discrete values (0
+and 1) come back as values drawn from two random distributions.  One
+needs to estimate these distributions in order to derive beliefs
+(Bayesian probabilities) about which measurements are 0's and 1's; the
+beliefs are then modified by a belief network to perform error
+correction.  This problem fits very well into the discrete algorithmic
+approach, since the number of data points (message length) is high, and
+(at least in the simplest cases) one only needs to find two clusters in
+one-dimensional data.  However, I don't know of any theoretical-CS work
+on this sort of problem.
+
+  The work mentioned above on finding a clustering that minimizes the
+maximum cluster width can be also be viewed as a problem in which the
+answer consists of overlayed distributions (two infinite strips that
+together cover the point set).
+
+   Geometric Sampling  
+
+One way to view sampling is as a way of finding a representative subset
+of the data. It may be ok (or even desired) that a large cluster in the
+actual data be represented by several centers in the cluster output,
+but it should not be possible for a large cluster of data points to be
+missing a representative.
+This can be formalized with the terminology of geometric sampling,
+an area originally developed by statisticians but one that has been
+used extensively within computational geometry as a technique for
+deriving deterministic algorithms from randomized ones, since the
+cluster centers derived from the theory behave in many ways like random
+samples.
+
+ Define a  range space  to consist of a "universe" U of objects
+(often but not always points in  R  d ) together with a
+family F of subsets of U (for instance, halfspaces of  R  d ).
+We'll call a set R in F a "range".  
+For any finite set S (not necessarily in F),
+and any positive value epsilon,
+define an
+ epsilon-net  for S to be a subset N of S such that,
+for any range R,
+  
+if |R intersect S| &gt; epsilon|S|,
+then R intersect N must be nonempty.
+ 
+In other words, N touches all large ranges in S.
+Similarly, define an
+ epsilon-approximation  to be a subset A of S such that,
+for any range R,
+ 
+-epsilon &lt; |S intersect R|/|S| - |A intersect R|/|A| &lt; epsilon.
+ 
+In other words, R covers approximately the same fraction of A as it does
+of S.
+Any set S is always an epsilon-approximation for itself, and any
+epsilon-approximation is always an epsilon-net.
+But the important result about these range spaces is that,
+for many important geometric examples, one can find much smaller
+epsilon-nets and epsilon-approximations.  In fact, the size
+of a net or approximation can be made to be a constant independent of S.
+
+ Specifically, let F S  denote the family of sets formed
+by intersecting ranges with S,
+and define the "scaffold dimension" of a range space
+to be the maximum of
+  
+log |F S | / log |S|
+ 
+maximized over all finite sets S in U.
+For instance, consider sets of points in the plane, with closed halfspace ranges.
+For any halfspace containing more than one point of S,
+pass through some pair of the points in the range.
+So, if S contains n points
+the size of F S  can be at most
+n(n-1) + n + 1; with a little more care one can see that there are fewer
+than n 2  such sets.  Therefore, the scaffold dimension of this
+range space is st most two.  In general, it is safe to think of the scaffold
+dimension as being roughly the number of points needed to determine a range,
+so the scaffold dimension of circles would be three, and the scaffold
+dimension of ellipses would be five.
+(There is also an alternate definition of the dimension of a range space
+called the "Vapnik-Chervonenkis dimension", but this is bounded iff the
+scaffold dimension is bounded, and most proofs involving VC dimension 
+can be expressed more directly in terms of the scaffold dimension.)
+
+  Theorem:  For any set S in a range space with scaffold
+dimension d, there exists an epsilon-net with size
+O(d/epsilon log(d/epsilon)) and an epsilon-approximation
+with size O(d/epsilon 2  log(d/epsilon)).
+
+  The proof begins by observing that a
+random sample of size O(1/epsilon log |F S |)
+or O(1/epsilon 2  log |F S |) is with
+constant probability
+an epsilon-net or epsilon-approximation respectively.
+Also, an epsilon/2-approximation of an epsilon/2-approximation
+is itself an epsilon-approximation.
+So, by induction, one can assume that there is a small epsilon/2-approximation,
+take a random sample of it, and get (with constant probability)
+an even smaller epsilon-approximation.
+Then once the result for epsilon-approximations is proven,
+one can take a random sample of a small epsilon-approximation to get a
+small epsilon-net.
+Although the above construction is randomized,
+there exist deterministic algorithms for constructing epsilon-nets
+and epsilon-approximations, with time bounds of the form O(n)
+whenever d and 1/epsilon are bounded by O(1)
+[citation to be filled in later].
+
+  It would be reasonable to use an epsilon-net for the range space of
+disks (or ellipses) as a form of clustering: the definitions above
+would imply that every disk-shaped or elliptical cluster
+of more than epsilon*n points would have a representative.
+
+  As I mentioned above, epsilon-nets and epsilon-approximations
+have been used extensively in geometric algorithms.  As an example
+of a statistical application, consider the regression depth problem:
+the appropriate range space is the family of double wedges bounded by one
+vertical and one non-vertical hyperplane.  The regression depth
+of a given hyperplane (measured as a fraction of the size of the overall data
+set) is within epsilon of the regression depth of the hyperplane
+relative to an epsilon-approximation of the data.  Therefore,
+after linear-time preprocessing (computing an epsilon-approximation),
+we can compute good approximations to the regression depth in constant time.
+Further, the deepest plane with respect to the approximation
+must be within epsilon of the deepest plane for the overall data set,
+so we can approximate the depth of the deepest plane to within any (1-epsilon)
+factor in linear total time
+[ SW98 ].
+
+   Other Types of Clustering Problems  
+
+There has been recent interest in problems of "robust separation":
+after you have partitioned the points into two clusters somehow
+(or maybe a binary classification is already given as input),
+how quickly
+can you find a boundary plane that separates one side from the other
+in a way that maximizes the distance of any point from the boundary?
+This is equivalent to finding the closest pair of points in the convex
+hulls of the two sides (note this is not the same as the closest pair of
+data points) since the separating plane is the perpendicular bisector of
+the segment between these two points.
+The problem can be solved in linear time by LP-type methods
+[ G95 ]
+similar to those used for the  smallest
+enclosing ball .
+I am not aware of any implementation of these ideas, but perhaps
+Gärtner's miniball code [ G99 ]
+could be adapted to this problem.
+
+ Another clustering-like problem is to find a single cluster among a
+set of points, ignoring other less tightly clustered points.
+Essentially, we discussed this already
+under  robust single-point estimation ,
+but the emphasis is different (here we might allow many more
+than n/2 outliers) so algorithmically one can optimize for the case
+when the number of points in the cluster is small.
+
+   NEXT: Hierarchical Clustering  
+
+  
+ David Eppstein ,
+ Theory Group ,
+ Dept. Information &amp; Computer Science ,
+ UC Irvine .  Last update:  
+ </body> 

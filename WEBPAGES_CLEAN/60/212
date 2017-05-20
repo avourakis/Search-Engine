@@ -1,0 +1,459 @@
+ #!/usr/bin/env python
+
+"""
+Egypt -- command line Egyptian fraction generator
+D. Eppstein, UC Irvine, 5 Mar 2004
+"""
+
+from __future__ import division
+
+from optparse import OptionParser
+from random import randint
+import operator
+import sys
+import math
+
+# ======================================================================
+#   Basic utility subroutines
+# ======================================================================
+
+def count(n = 0):
+    """
+    Generate successive integers starting with n.
+    Just like itertools.count except that n can be a long.
+    """
+    while True:
+        yield n
+        n += 1
+
+def intString(x):
+    """
+    String for integer x, obeying options.factor.
+    """
+    if x  1:
+            out.append("%d^%d" % (p,e))
+        else:
+            out.append(str(p))
+    return ".".join(out)
+
+def unitFractionString(dd):
+    """
+    Construct string for 1/dd.
+    """
+    if dd == 1:
+        return "1"
+    else:
+        return "1/" + intString(dd)
+
+def egyptianFractionString(xx):
+    """
+    Construct string for Egyptian fraction formed by list of denominators in xx.
+    """
+    return " + ".join(map(unitFractionString,xx))
+
+
+# ======================================================================
+#   Backtracking search structure
+# ======================================================================
+
+def ok(xx,dd):
+    """
+    Test whether we can extend Egyptian fraction xx by appending dd.
+    Checks for duplications and violations of constraints in command-line options.
+    Returns True if dd can be appended, False otherwise.
+    """
+    if dd = options.length:
+        return False
+    if options.maxden and dd &gt; options.maxden:
+        return False
+    if options.minden and dd &gt;sys.stderr, "Trying", egyptianFractionString(xx), \
+            "+", intString(nn)+"/"+intString(dd)
+    if options.length:
+        if len(xx) + estimatedLength(nn,dd) &gt; options.length:
+            return noSolutions()
+        if len(xx) + 2 == options.length and method == egypt_greedy:
+            return egypt_reduce(xx,nn,dd)   # speed up without changing solution set
+        if len(xx) + 1 == options.length:
+            if nn != 1 or not ok(xx,dd):
+                return noSolutions()
+            return singleSolution(xx+(dd,))
+    return method(xx,nn,dd)
+
+def mustBeEven():
+    """
+    Generate a warning message for methods unable to produce only odd numbers.
+    """
+    if options.odd:
+        print "Method is incompatible with odd restriction."
+        sys.exit(0)
+
+def mustBeSmall(n):
+    """
+    Generate a warning message for methods unable to handle large numbers.
+    """
+    print "Unable to handle inputs &gt;=",n,"with these settings."
+    sys.exit(0)
+
+def estimatedLength(nn,dd):
+    """
+    Generate a conservative underestimate of the number of terms
+    needed in any Egyptian fraction expansion of nn/dd.
+    The idea is to let 1/u be the nearest unit fraction greater than nn/dd,
+    and generate a greedy expansion that reaches a number in the
+    half-open interval [nn/dd,1/u).  Note that the terms of this expansion
+    depend only on u; the inputs nn and dd are used only to compute u and
+    to terminate the expansion (when it sums to at least nn/dd).
+    """
+    if nn d&gt;1:                
+                return [d,n//d]
+    return [n]    # failure to factor
+    
+def gcd(a,b):
+    """
+    Euclid's algorithm for integer greatest common divisors.
+    """
+    while b:
+        a,b = b,a%b
+    return a
+
+def millrab(n, max=30):
+    """
+    Miller-Rabin primality test as per the following source:
+    http://www.wikipedia.org/wiki/Miller-Rabin_primality_test
+    Returns probability p is prime: either p = 0 or ~1,
+    """
+    if not n%2: return 0
+    k = 0
+    z = n - 1
+
+    # compute m,k such that (2**k)*m = n-1
+    while not z % 2:
+      k += 1
+      z //= 2
+    m = z
+
+    # try tests with max random integers between 2,n-1
+    ok = 1
+    trials = 0
+    p = 1
+    while trials  24:
+        qlen = int(math.log(n)/math.log(2)+0.999) &gt;&gt; 2
+        x = (isqrt(n &gt;&gt; (qlen &gt; 1
+            if y &gt;= x:
+                return x
+            x = y
+    elif n &gt; 15:
+        return 4
+    elif n &gt; 8:
+        return 3
+    elif n &gt; 3:
+        return 2
+    elif n &gt; 0:
+        return 1
+    else:
+        return n and None
+
+
+# ======================================================================
+#   Divisor-based methods
+# ======================================================================
+
+def egypt_divisor(xx,nn,dd):
+    """
+    Generate expansions of nn/dd in which each term divides dd.
+    """
+
+    def submethod(xx,nnn,ddd):
+        """
+        Handle recursive method calls after the first call to egypt_divisor.
+        Reuse the same list of divisors and require denominators to increase.
+        """
+        # check that remaining divisors are enough to solve the problem
+        if not options.repeat:
+            target = nnn*do//ddd
+            if totals[xx[-1]] = xx[-1]:
+                for zz in tryUnit(xx,nnn,ddd,div):
+                    yield zz
+
+    # replace method for recursive calls
+    global method
+    oldmethod = method
+    method = submethod
+    
+    # find divisors and try each one of them
+    do = dd*options.multiplier
+    divs = [d for d in divisors(do) if ok(xx,d)]
+    
+    # precompute info for submethod pruning step
+    if not options.repeat:
+        divs.sort()
+        totals = {}
+        prefixsum = 0
+        for i in range(len(divs)):
+            totals[divs[-i-1]] = prefixsum
+            prefixsum += do//divs[-i-1]
+        if prefixsum  1:
+        options.length -= 1
+    ulimit = options.unitlimit
+    if ulimit  options.maxden:
+            return
+        if ulimit and den &gt; ulimit:
+            return
+        if den % dd == 0:
+            continue	# skip duplicate denominator
+        oldden = options.maxden
+        if oldden &gt; 0:
+            options.maxden //= dd
+        for zz in egypt_divisor((),nn*den-dd,den):
+            options.maxden = oldden
+	    yield tuple([den,]+[dd*ee for ee in zz])
+            oldden = options.maxden
+            if options.maxden:
+		options.maxden //= dd
+
+        options.maxden = oldden
+
+    if options.length &gt; 1:
+	options.length += 1
+
+# ======================================================================
+#   Base conversion based methods
+# ======================================================================
+
+def egypt_mersenne(xx,nn,dd):
+    """
+    Generate expansions in which each term is a power of two or a difference
+    of two such powers, by finding the cyclic structure of the binary
+    representation of nn/dd.
+    """
+    mustBeEven()
+    if nn &gt;= dd:
+        mustBeSmall(1)
+    powers = {}
+    xx = list(xx)
+    power = 0
+    num = nn
+    while num not in powers:
+        powers[num] = power
+        num = (num*2) % dd
+        power += 1
+    replen = power - powers[num]
+
+    power = 1
+    while nn != num or power = dd:
+            nn -= dd
+            xx.append(1L= dd:
+            xx.append((1L options.maxden:
+            return  # blown limit
+        if options.length and (options.length-len(xx))*dd  divisor and (dd*newden) % divisor == 0:
+            units.append((newden,(dd*newden) // divisor))
+    units.sort()    # try smaller remaining denominators first
+    for u in units:
+        for zz in tryUnit(xx,nn,dd,u[1]):
+            yield zz
+
+def egypt_engel(xx,nn,dd):
+	"""Generate expansions in which each successive denominator
+	is an integer multiple of the previous one. In a proper Engel
+	expansion, the factors by which these denominators are multiplied
+	form a nondecreasing sequence; instead, we generate all possible
+	expansions of this type, but the proper Engel expansion is
+	generated first.
+	
+	This will generate infinitely many expansions unless limited
+	somehow, so only use -a in conjunction with -d or -l.
+	"""
+	prev = 1
+	if xx:
+		prev = xx[-1]
+	y = (((dd+nn-1)//nn + prev - 1)//prev)*prev
+	while 2*dd &gt; nn*y:
+		for zz in tryUnit(xx,nn,dd,y):
+			yield zz
+		y += prev
+
+# ======================================================================
+#   Output filters
+# ======================================================================
+
+def filter_first(stream):
+    """
+    Filter stream of Egyptian fractions, returning only the first one found.
+    """
+    for x in stream:
+        x = list(x)
+        x.sort()
+        yield tuple(x)
+        return
+
+def filter_all(stream):
+    """
+    Filter stream of Egyptian fractions, returning each distinct solution.
+    """
+    already_found = {}
+    for zz in stream:
+        zz = list(zz)
+        zz.sort()
+        zz = tuple(zz)
+        if zz not in already_found:
+            yield zz
+        already_found[zz] = True
+
+def filter_minlen(stream):
+    """
+    Filter stream of Egyptian fractions, returning only the shortest ones.
+    """
+    sols = []
+    for sol in stream:
+        sols.append(sol)
+        if options.length:
+            options.length = min(options.length,len(sol))
+        else:
+            options.length = len(sol)
+    return [sol for sol in sols if len(sol) = minden")
+
+parser.add_option("-l", "--length", dest="length",
+                  action="store", type="int",
+                  help="limit expansions to given length (0=shortest possible)")
+
+parser.add_option("-x", "--multiplier", dest="multiplier",
+                  action="store", type="int", default=1,
+                  help="additional factor for divisor methods")
+
+parser.add_option("-v", "--verbose", dest="verbose",
+                  action="store_true", help="display partial results of search")
+
+parser.add_option("-f", "--factor", dest="factor",
+                  action="store_true", help="display expansions in factored form")
+
+parser.add_option("-m", "--method", dest="method",
+                  action="store", type="string", default="greedy",
+                  help="method to use for finding expansions")
+
+parser.add_option("-M", "--method2", dest="method2",
+                  action="store", type="string", default="reduce",
+                  help="fallback method for prime and one-mult methods")
+
+parser.add_option("-u", "--unit", dest="unitlimit",
+                  action="store", type="int", default=-1,
+                  help="max 1st step in unit-divisor (default=dd, 0=no limit)")
+
+def set_method():
+    """Parse method option and set method subroutine from it."""
+    global method
+    try:
+        method,msg = methods[options.method]
+    except KeyError:
+        matches = [k for k in methods if k.startswith(options.method)]
+        if len(matches) != 1:
+            raise KeyError(options.method)
+        method,msg = methods[matches[0]]
+
+def create_output_stream(nn,dd):
+    """Make stream of solutions after options have been parsed."""
+    stream = method((),nn,dd)
+    
+    if options.combine:
+        if options.split:
+            raise ValueError("Combine and split options are incompatible.")
+        options.repeat = True
+        stream = filter_combine(stream)
+    
+    if options.split:
+        options.repeat = True
+        stream = filter_split(stream)
+    
+    if options.maxden == 0:
+        stream = filter_minmaxden(stream)
+    
+    if options.length == 0:
+        stream = filter_minlen(stream)
+        
+    return stream
+
+
+# ======================================================================
+#   Subroutine interface
+# ======================================================================
+
+def EgyptianFraction(nn, dd, **keywords):
+    """
+    Generate a sequence of egyptian fraction expansions of nn/dd.
+    Keywords are similar to the command-line options for this package,
+    and include (with defaults as shown):
+        method="greedy"
+        repeat=False, combine=False, split=False
+        odd=False, square=False
+        maxden=None, minden=None
+        length=None, multiplier=1
+    """
+    global options
+    options,ignore = parser.parse_args([])  # set defaults
+    for keyword,value in keywords.iteritems():
+        setattr(options,keyword,value)
+    set_method()
+    return create_output_stream(nn,dd)
+
+
+# ======================================================================
+#   Command line interface
+# ======================================================================
+
+def bad_usage():
+    """
+    Complain about unrecognized command line syntax.
+    """
+    print &gt;&gt;sys.stderr, "Unrecognized command line syntax, use --help for input documentation"
+    sys.exit(0)
+
+if __name__ == '__main__':
+    options,args = parser.parse_args()
+    if len(args)  2:
+        bad_usage()
+    try:
+        parts = args[0].split('/')
+        if len(parts) == 1:
+            nn,dd = parts[0],"1"
+        else:
+            nn,dd = parts
+        nn = int(nn)
+        dd = int(dd)
+        g = gcd(nn,dd)
+        nn,dd = nn//g, dd//g
+    except:
+        bad_usage()
+        
+    if len(args) == 2:
+        options.method = args[1]
+    
+    try:
+        set_method()
+    except:
+        bad_usage()
+    
+    if options.square and nn/dd &gt; math.pi**2/6 - 1:
+        mustBeSmall("pi^2/6 - 1")
+    
+    if options.odd and dd % 2 == 0:
+        print &gt;&gt;sys.stderr, "Impossible to find odd expansion for even denominator."
+        sys.exit(0)
+
+    if options.combine:
+        if options.split:
+            print &gt;&gt;sys.stderr, "Combine and split options are incompatible."
+            sys.exit(0)
+
+    stream = create_output_stream(nn,dd)
+    if not options.all:
+        stream = filter_first(stream)
+    else:
+        stream = filter_all(stream)
+
+    nsols = 0
+    for sol in stream:
+        print egyptianFractionString(sol)
+        nsols += 1
+    
+    if not nsols:
+        print "No expansions found."
+ 

@@ -1,0 +1,69 @@
+ 3.12.1 Constructors<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12 OELibaryGen 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.2 AddStartingMaterial 
+   
+
+
+  
+3.12.1 Constructors 
+ 
+   
+OELibraryGen()
+   
+Default constructor.
+
+ 
+    
+OELibraryGen(const char *smirks, bool strictSmirks=true)
+    
+Initialize an  OELibraryGen  instance with a SMIRKS pattern.
+Success of initialization can be tested using the  operator bool 
+method.  The second constructor argument is used to specify whether
+the SMIRKS string should be interpreted using strict SMIRKS semantics.
+If the default value of true is used, the SMIRKS string must have
+corresponding reaction mapped reactant and product atoms.  Mapped
+product atoms that do not have corresponding mapped reactant atoms are
+considered invalid SMIRKS and will result in a failure to initialize
+the  OELibraryGen  instance.  Strict SMIRKS also requires
+unmapped reactant atoms to be destroyed in the reaction.  Passing a
+boolean value of false to the second method argument will relax both
+of the strict SMIRKS restrictions.
+
+  
+    
+OELibraryGen(const OELibraryGen &amp;rhs)
+    
+Copy constructor.  Constructs a copy of the  OELibraryGen 
+instance given as the argument to the constructor.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12 OELibaryGen 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.2 AddStartingMaterial 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

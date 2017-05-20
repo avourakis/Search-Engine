@@ -1,0 +1,68 @@
+ Multifragment Heuristic for Rectilinear Max-TSP<body>
+  Test of Closest Pair Data Structures  
+ Multifragment Heuristic for Rectilinear Max-TSP 
+
+    
+     Brute Force 
+     Neighbors 
+     Quadtree 
+     Conga Line 
+     MultiConga 
+     FastPair     n  = 250 
+      2.01s  
+      1.11s  
+      0.15s  
+      0.12s  
+      0.11s  
+       0.05s      500 
+      16.39s  
+      9.05s  
+      0.80s  
+      0.54s  
+      0.48s  
+       0.23s      1000 
+      142.45s  
+      81.25s  
+      3.72s  
+      2.42s  
+      2.29s  
+       1.11s      2000 
+      2188.29s  
+      1026.55s  
+       
+      10.65s  
+      15.49s  
+       8.04s      4000 
+       
+       
+       
+      45.48s  
+      47.44s  
+       22.55s      8000 
+       
+       
+       
+      186.98s  
+      231.70s  
+       115.40s      16000 
+       
+       
+       
+      887.51s  
+      1093.41s  
+       533.92s      32000 
+       
+       
+       
+       
+       
+       2449.55s      A traveling salesman tour was formed by starting with fragments 
+consisting of isolated points, and repeatedly choosing the longest edge 
+combining a pair of fragments. Points were placed 
+uniformly at random in the unit square. Times include only the construction of the closest pair data structure 
+and algorithm execution (not the initial point placement) and are averages 
+over ten runs.  The quadtree data structure was only run on data sets of 
+1000 or fewer points due to its high storage requirements.  Code was 
+written in C++, compiled and optimized by Metrowerks Codewarrior 10, and 
+run on a 200MHz PowerPC 603e processor (Apple Powerbook 3400c).
+ </body> 

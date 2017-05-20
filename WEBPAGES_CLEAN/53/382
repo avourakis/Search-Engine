@@ -1,0 +1,187 @@
+  """Sudoku.py
+
+PADS-based command-line application for generating and solving Sudoku puzzles.
+These puzzles are given as a 9x9 grid of cells, some of which are filled with
+digits in the range 1-9.  The task is to fill the remaining cells in such a
+way that each row of the grid, each column of the grid, and each of nine 3x3
+squares into which the grid is partitioned, all have one copy of each of the
+nine digits.
+
+A proper Sudoku puzzle must have a unique solution, and it should be possible
+to reach that solution by a sequence of logical deductions without trial and
+error.  To the extent possible, we strive to keep the same ethic in our
+automated solver, by mimicking human rule-based reasoning, rather than
+resorting to brute force backtracking search.
+
+D. Eppstein, July 2005.
+"""
+
+import random
+import sys
+from optparse import OptionParser
+from BipartiteMatching import imperfections
+from StrongConnectivity import StronglyConnectedComponents
+from Repetitivity import NonrepetitiveGraph
+from Wrap import wrap
+from Not import Not
+from TwoSatisfiability import Forced
+from SVG import SVG
+
+class BadSudoku(Exception): pass
+    # raised when we discover that a puzzle has no solutions
+
+# ======================================================================
+#   Bitmaps and patterns
+# ======================================================================
+
+digits = range(1,10)
+
+class group:
+    def __init__(self, i, j, x, y, name):
+        mask = 0
+        h,k = [q for q in range(4) if q != i and q != j]
+        for w in range(3):
+            for z in range(3):
+                mask |= 1  min(census):
+            continue    # block already filled, can't use this row now
+        FullPlacementGraph[node][node|b] = 1 1:
+                        that = "would leave too few remaining cells" \
+                               " to place those digits."
+                    if expls:
+                        expls[-1] += ','
+                        if force == forces[-1]:
+                            expls[-1] += ' and'
+                    forcedigs = [str(x) for x in force]
+                    forcedigs.sort()
+                    forcemask = 0
+                    for dig in force:
+                        for cell in force[dig]:
+                            forcemask |= 1 2;
+            # in this case multiple cycles go through the same edge
+            # and cell must be filled with the digit labeling that edge.
+            # But for simplicity's sake we ignore that possibility;
+            # it doesn't happen very often and when it does the repetitive
+            # cycle rule will find it instead.
+            mask = 1 1:
+            for d in grid.choices(cell):
+                T[(cell,d)] = [Not((cell,e))
+                                for e in grid.choices(cell)
+                                if d != e]
+                T[Not((cell,d))] = []
+    
+    # If a cell has value d, its neighbors can't have the same value
+    for cell in range(81):
+        if len(grid.choices(cell)) &gt; 1:
+            for neighbor in range(81):
+                if cell != neighbor and (1")
+    for a in range(3):
+        print("  ")
+        for b in range(3):
+            print("  ")
+            for c in range(3):
+                print(" ")
+                for d in range(3):
+                    row = 3*a+c
+                    col = 3*b+d
+                    cell = 9*row+col
+                    if grid.contents[cell]:
+                        print(' %d ' % grid.contents[cell])
+                    else:
+                        print('  ')
+                print(" ")
+            print("  ")
+        print(" ")
+    print("")
+    return False
+
+def svg_format(grid):
+    svg = SVG(274+274j,sys.stdout)
+    svg.group(style={"fill":"none", "stroke":"black", "stroke-width":"1.5"})
+    svg.rectangle(2+2j,272+272j)
+    for i in [3,6]:
+        pos = 30*i+2
+        svg.segment(2+pos*1j,272+pos*1j)
+        svg.segment(pos+2j,pos+272j)
+    svg.ungroup()
+    svg.group(style={"fill":"none", "stroke":"black", "stroke-width":"0.5"})
+    for i in [1,2,4,5,7,8]:
+        pos = 30*i+2
+        svg.segment(2+pos*1j,272+pos*1j)
+        svg.segment(pos+2j,pos+272j)
+    svg.ungroup()
+    svg.group(style={"font-family":"Times", "font-size":"24", "fill":"black",
+                     "text-anchor":"middle"})
+    for row in range(9):
+        for col in range(9):
+            cell = row*9+col
+            if grid.contents[cell]:
+                svg.text(str(grid.contents[cell]),30*col+17+30j*row+25j)
+    svg.ungroup()
+    svg.close()
+    return False
+
+output_formats = {
+    "text": text_format,
+    "txt": text_format,
+    "t": text_format,
+    "numeric": numeric_format,
+    "num": numeric_format,
+    "n": numeric_format,
+    "html": html_format,
+    "h": html_format,
+    "svg": svg_format,
+    "s": svg_format,
+}
+    
+# ======================================================================
+#   Backtracking search for all solutions
+# ======================================================================
+
+def all_solutions(grid, fastrules = True):
+    """Generate sequence of completed Sudoku grids from initial puzzle."""
+    while True:
+        # first try the usual non-backtracking rules
+        try:
+            while step(grid,fastrules): pass
+        except BadSudoku:
+            grid.log("A contradiction was found,"
+                     " so this branch has no solutions.")
+            return  # no solutions
+    
+        # if they finished off the puzzle, there's only one solution
+        if grid.complete():
+            grid.log("A solution to the puzzle has been found.")
+            yield grid
+            return
+        
+        # find a cell with few remaining possibilities
+        def choices(c):
+            ch = grid.choices(c)
+            if len(ch)  1 and c or []
+
+    while True:
+        try:
+            while not grid.complete():
+                d,c = random.choice([(d,c) for c in range(81)
+                                           for d in choices(c)])
+                grid.place(d,c)
+                while step(grid,True): pass
+                puzzle.append((d,c))
+                if generate_symmetric:
+                    c = 80-c
+                    ch = grid.choices(c)
+                    if not ch:  # avoid IndexError from random.choice
+                        raise BadSudoku("Placement invalidated symmetric cell")
+                    d = random.choice(ch)
+                    grid.place(d,c)
+                    while step(grid,True): pass
+                    puzzle.append((d,c))
+        except BadSudoku:
+            puzzle = []
+            grid = Sudoku()
+            continue
+        break
+    
+    # find redundant information in initial state
+    q = 0
+    while q  

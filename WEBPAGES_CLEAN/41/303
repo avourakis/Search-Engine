@@ -1,0 +1,101 @@
+ FLAMINGO Package (Approximate String Matching) Release 1.0 
+
+   
+   
+  
+ FLAMINGO Package (Approximate String Matching) 
+ Release 1.0 (April 17, 2007) 
+ Department of Computer Science, UC Irvine 
+ This version is outdated. Our most recent release is  here . 
+    Contributors 
+   Chen Li  (Faculty)
+  Yiming Lu (Ph.D. Student)
+   Rares Vernica  (Ph.D. Student)
+  Liang Jin, graduated from UC Irvine in 2005.
+    « Back to Flamingo Main Page 
+
+ This release (in C++) includes the source code of several
+algorithms for approximate string matching.  They include algorithms
+of our recently published papers, an algorithm of our ongoing work, 
+and an algorithm invented by Microsoft Researchers
+in a paper published in VLDB 2006.
+
+  The motivation of this research is to efficiently answer the
+following two types of approximate string queries:
+
+    Search : Given a collection of strings and a single string,
+how to find those strings in the collection that are "similar to" the
+given string?
+
+   Join : Given two collections of strings (possibly the same
+collection), how to find those pairs of strings that are "similar to"
+each other?
+   There are various string similarity functions, such as 
+ edit
+distance , jaccard, and cosine.  The following is the list of
+algorithms corresponding to the source directory structure:
+
+    MAT-Tree : MAT-tree is an indexing structure to support
+queries on data with an approximate string predicate and a numeric
+predicate.  A typical query is: "Find employee records whose name is
+similar to Speilberg and whose age is close to 45."  The indexing
+structure is proposed in the following paper: "Indexing Mixed Types
+for Approximate Retrieval," Liang Jin, Nick Koudas, Chen Li, Anthony
+K.H. Tung, VLDB 2005, Trondheim, Norway.
+
+   SEPIA : This technique solves the problem of estimating the
+selectivity of an approximate string predicate.  It can answer
+questions such as: "From a collection of strings, how many of them
+have an edit distance within 3 to a given string?".  Such information
+can be used in optimizing queries of approximate string matching.  The
+technique was published the paper: "Selectivity Estimation for Fuzzy
+String Predicates in Large Data Sets," Liang Jin and Chen Li, VLDB
+2005, Trondheim, Norway.
+
+   StringMap : This algorithm maps strings from the
+edit-distance metric place to a high-dimensional Euclidean space, and
+uses a multi-dimensional indexing structure to answer approximate
+queries.  The algorithm is published in the paper: "Efficient Record
+Linkage in Large Data Sets," by Liang Jin, Chen Li, and Sharad
+Mehrotra, in 8th International Conference on Database Systems for
+Advanced Applications (DASFAA) 2003, Kyoto, Japan.
+
+   FilterTree : This is a new algorithm we are
+developing to support approximate string queries using a tree
+structure.
+
+   PartEnum : This algorithm is published in the paper:
+"Efficient Exact Set-Similarity Joins," Arvind Arasu, Venkatesh Ganti,
+Raghav Kaushik, VLDB 2006.  We implemented the algorithm to
+support approximate selection queries.
+
+  
+
+In addition, we have provided some commonly used functions in the
+"util" directory.
+
+ 
+
+       Name               Parent Directory         docs/         download/         src/         README.txt           Acknowledgements : This release is partially
+supported by the
+NSF  CAREER 
+Award, No. IIS-0238586, the
+NSF-funded  RESCUE  project, a
+Google Research Award, and a fund
+from  CalIt2 .
+
+    License Agreement : Permission to use, copy,
+modify, and distribute the implementations of MAT-Tree, SEPIA,
+StringMap, and FilterTree is permitted under the terms of the GNU
+Public License (GPL). The implementation of the PartEnum algorithm
+invented by Microsoft researchers is limited to non commercial use,
+which would be covered under the royalty free covenant that Microsoft
+made public.
+
+   For any questions regarding this release, please send email to
+flamingo AT ics.uci.edu
+
+     
+
+
+ </body> 

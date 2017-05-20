@@ -1,0 +1,115 @@
+ Pregelix<body>
+ 
+      
+ 
+       
+                   
+             
+	     
+                   
+             
+             
+				   
+						 
+							 
+					 
+				   
+	 
+	 
+             
+
+
+ 
+       Overview  
+        
+          Download  
+	  Performance  
+        
+          News  
+          Publications  
+	  Talks       
+          Team  
+          Sponsors  
+          Contact  
+      
+
+     
+         
+
+ Here are our steps to run GraphLab:
+ 
+
+ 1. Download: we use version 2.2,  from v2.2 tag from the github  repo .
+ 
+
+ 
+2. Installation: compile it using GCC 4.4.7
+
+
+  
+./configure
+cd release/toolkits/graph_analytics
+make -j4
+ 
+
+
+ 
+3. The MPICHI-2.1 system is installed on our cluster.
+ 
+
+ 
+4. To start the MPI, we use command below:
+
+
+  
+mpdboot -n $nmachines -f machinefile
+ 
+
+  
+$nmachines is the number of machines, machinefile is the configuration file contains the hostname of each computation node.
+
+
+ 
+5. To run the GraphLab for PageRank, SSSP, ConnectedComponent and TriagleCounting, we use the already compiled toolkit exe under: 
+
+release/toolkits/graph_analytics
+
+pagerank, sssp, connected_component, simple_undirected_triangle_count
+ 
+
+ 
+6. The script to run algorithms can be found  here :
+	
+For example, if we want to run the Pagerank, we will use the following cmd:
+
+  
+cmd="$toolkit_path/pagerank --graph $input --format adj --ncpus $ncores --iteration 5 
+--saveprefix ${output_folder}_pagerank"
+eval "time mpiexec -machinefile $fmachines -n $nmachines env CLASSPATH=`$hadoop_home/bin/hadoop classpath`
+ $cmd"
+ 
+
+
+$fmachines is the same file with the mpdboot command and  $nmachines  is just the number of machines. 
+
+We let $ncores be $(($nmachines * 4)) because each of our worker machine has 4 cores.
+
+
+ 
+
+              
+       
+           
+     
+     
+         © pregelix.ics.uci.edu 2014. Design by  Free CSS Templates   
+     
+     
+           
+           
+     
+       
+
+
+ 
+</body> 

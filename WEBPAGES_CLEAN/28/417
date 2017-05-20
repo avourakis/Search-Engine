@@ -1,0 +1,81 @@
+ 
+  Class TaskEvent
+<body>
+  
+ 
+  Class TaskEvent
+ 
+ 
+java.lang.Object
+   |
+   +---- SimEvent 
+           |
+           +----TaskEvent
+ 
+    public class  TaskEvent 
+    extends  SimEvent 
+   
+A task event.
+ 
+     See Also: 
+        Task 
+     
+ 
+    
+      TaskEvent  (Object, EventDestination, float, long)
+      Constructs a task event.
+   
+    
+      equals  (Object)
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+        getTaskId  ()
+      Returns the global task identifier of destination task.
+    
+ 
+    
+  
+   
+ TaskEvent 
+ 
+ public TaskEvent(Object from,
+                  EventDestination to,
+                  float time,
+                  long taskId)
+ 
+   Constructs a task event.
+ 
+        Parameters: 
+       from - sender of event.
+      to - receiver of event.
+      time - time stamp.
+      taskId - global task identifier of destination task.
+        
+    
+ 
+    
+   
+  getTaskId  
+ 
+ public long getTaskId()
+ 
+   Returns the global task identifier of destination task.
+ 
+        Returns: 
+       the global task identifier of destination task.
+     
+     
+  equals  
+ 
+ public boolean equals(Object o)
+ 
+   Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+ 
+        Overrides: 
+        equals  in class  SimEvent 
+     
+  </body> 

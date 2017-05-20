@@ -1,0 +1,61 @@
+ Next couple weeks:
+Binary search tree like data structures
+
+Today:
+Motivation and preliminaries
+
+Binary search in sorted list
+    test existence of search key, but better to use hash table
+    nearest neighbor classification -- can't be done by hash table
+
+What about nearest neighbor classification with dynamic data?
+    adding into array and preserving sorted order not possible quickly
+    need more complex data structures
+
+
+Second example: plane sweep
+Test whether any two line segments in input intersect, if so find a crossing
+    (plane sweep approach, 33.2)
+    - single crossing:
+	sort list of endpoints by x-coordinates
+	initialize sorted list of segments in order by y-coord of sweep point
+	for each endpoint in input:
+		if it's a left endpoint:
+			insert in sorted list
+			test for crossing with pred and with succ
+		else if it's a right endpoint:
+			remove from sorted list
+			test for pred-succ crossing
+
+    - list all crossings, y-coords of sweep points change order @ cross
+        make priority queue of event points, ordered by x-coord
+	initialize queue with all segment endpoints
+	for each priority queue event:
+		if it's a left endpoint:
+			insert in sorted list
+			add potential crossing event w/pred and succ
+			remove potential pred-succ crossing event
+		else if it's a right endpoint:
+			remove from sorted list
+			remove potential crossings w/pred and succ
+			add potential pred-succ crossing
+		else if it's a crossing event:
+			report it
+			swap order in event queue
+			remove two and add two potential crossings
+
+Data structures:
+    (1) event queue: priority queues from last time
+    (2) y-ordered crossing points: data structure w/ins,del,succ,pred
+
+
+Basic binary search tree structure
+    representation: item in each node; left and right children (no parents)
+	(will later see trees with additional info per node)
+
+    search for largest item  x:
+			return search(T.left, x)
+		elif T.item  bounds on length of unsuccessful search;
+	   high probability bounds on max height of tree
+	(both O(log n))
+ 

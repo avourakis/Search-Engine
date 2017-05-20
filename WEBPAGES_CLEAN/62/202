@@ -1,0 +1,29 @@
+ LOCK / UNLOCK<body>
+
+  LOCK / UNLOCK  
+      Need lock on both reference and target to prevent surprises
+ 
+     Default: LOCK on direct reference locks target
+ 
+  Rules of good citizenship prevent surprise changes to reference
+  Consistent with typical behavior of methods on direct references
+       Default: LOCK on redirect reference locks reference
+ 
+  Avoids 302 responses when operating on a collection
+  302 would make it impossible to lock collections that contain redirect references       
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+     Notes: </strong> 
+       
+Even if you lock both the reference and its target, you can�t prevent all surprises.  If there is a reference embedded in the URL, you would have to lock that, too.  But then you would be preventing anyone from working in that collection, an unacceptable situation especially for configuration management.  So since we can�t prevent surprises, let�s do what�s consistent with most other default behavior: pass the LOCK request through to the target.
+  
+There�s a debate about what ref 2518 requires -- what would we have to say to be consistent with it?
+  
+In versioning: The resource that a reference points to is determined not just by the reference, but by a computation on the reference + Workspace or Revision-Name header.  Locking the reference in this situation would not give the right result.
+  
+Geoff: Do you want to say we should NEVER allow the reference to be locked? We should forbid No-Passthrough on a LOCK request?
+  
+For redirects, revisit the question whether it�s ok to prevent any LOCKing of collections that contain redirect references.  That would be the effect of having 302 responses.  Yaron seems to think this is ok. </body> 

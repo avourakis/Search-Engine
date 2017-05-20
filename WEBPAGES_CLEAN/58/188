@@ -1,0 +1,116 @@
+ VHDL Reference Guide - Block Statement<body>  This is Google's cache of  http://www.vdlande.com/VHDL/blocks.html . It is a snapshot of the page as it appeared on Sep 9, 2009 16:09:14 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Block Statement  
+        Concurrent Statement 
+ ---- used in ----&gt; 
+ Architecture 
+            Syntax        
+  
+
+ 
+    
+ label:  block  (optional_guard_condition)
+	declarations
+ begin 
+	concurrent statements
+ end block  label;
+  
+    
+
+ 
+See LRM section 9.1
+
+         Rules and Examples        
+  
+
+ 
+    The label is compulsory
+ CONTROL_LOGIC: block
+begin
+  U1: CONTROLLER_A
+    port map (CLK,X,Y,Z);
+  U2: CONTROLLER_A
+      port map (CLK,A,B,C);
+end block CONTROL_LOGIC;
+
+DATA_PATH: block
+begin
+  U3: DATAPATH_A port map
+    (BUS_A,BUS_B,BUS_C,Z);
+  U4: DATAPATH_B port map
+    (BUS_A,BUS_C,BUS_D,C);
+end block DATA_PATH;
+  
+    
+
+ 
+    Without a guard condition a block is a grouping together of
+concurrent statements within an architecture. It may have local signals,
+constants etc. declared. 
+    
+
+ 
+    Blocks may contain further blocks, implying a form of
+hierarchy within a single architecture. 
+    
+
+ 
+    A Block may contain any of the declarations possible for an
+architecture. Items declared within a block are only visible inside it. 
+    
+
+ 
+    IF an optional guard condition is included, the block becomes a
+ guarded block . the  guard condition  must return a boolean
+value, and controls  guarded signal assignments  within the block.
+If the guard condition evaluates to false, the drive to any  guarded
+signals  from the block is "switched off". Such signals must be
+declared to be guarded signals of a resolved type. Guarded signals can
+be declared by adding the words  bus  or  register  after the
+name of the type of the signal. The difference between bus and register
+signals is that if all drivers to a bus signal are "switched off", it
+requires a resolution function to provide a value for the signal but a
+register signal retains its last driven value after all drivers to it
+have been switched off.
+ 
+architecture BLKS of TRISTATE is
+  signal INT: std_logic bus;
+begin
+  DRIVER_1: block (EN = '1')
+  begin
+    INT &lt;= guarded DATA_1;
+  end block DRIVER_1;
+end BLKS;
+ 
+ 
+    
+
+ 
+         Synthesis Issues        
+  
+
+Unguarded  block  statements are usually ignored by logic synthesis
+tools (i.i. all blocks within an architecture are "flattened").  Guarded block  statements are  not  usually supported for
+synthesis.
+ 
+Sequential (i.e. flip-flop and register) behaviour can be modelled using
+guarded blocks, but again for synthesis and readability it is better
+described using "clocked" processes.
+
+  
+         Whats New in '93        
+
+In  VHDL -93 the keyword  block  (or the guard condition, if there is
+one), may be followed by the keyword  is , for consistancy.:   label:  block  (optional guard_condition)  is 
+ -- etc
+ 
+
+ 
+
+  </body> 

@@ -1,0 +1,190 @@
+ Types, Interfaces, Classes<body>
+
+ 
+
+ 
+Types, Interfaces, Classes
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+ Interfaces are types 
+
+ 
+An interface is a type in Java. 
+It specifies which objects can be used
+as values of which variables or parameters. 
+ 
+
+ 
+An interface lists the methods that objects implementing the interface have,
+giving each method's  signature 
+(name, parameter types, and return type). 
+ 
+
+
+ Classes are types plus implementations 
+
+ 
+A (non-abstract) class is a type plus an implementation: 
+it lists the method signatures,
+but also gives implementations
+for each method,
+one or more constructors for objects of the class,
+fields,
+and static methods and fields. 
+A class name can be used as the type for a variable or parameter,
+but implies not only what methods are present
+but what implementations are used for them. 
+ 
+
+ 
+A class may be defined to implement one or more interfaces,
+so that objects of the class
+are also of the types defined by all those interfaces. 
+ 
+
+ 
+A class may also be defined to  extend  exactly one other class
+(its superclass). 
+It inherits the members (fields and methods)
+and implementations of its superclass. 
+Each class may have at most one superclass,
+but may implement any number of interfaces. 
+ 
+
+
+
+ Abstract classes are sort of in between 
+
+ 
+Intermediate between an interface (a type)
+and a class (a type plus an implementation)
+is an  abstract  class,
+which lists all the method signatures
+but does not necessarily provide an implementation
+for every method. 
+The methods for which no implementation is given
+are  abstract  methods. 
+ 
+
+
+ Comparisons and contrasts 
+
+ 
+Syntactically,
+an interface begins with the keyword  interface ,
+a class with  class ,
+and an abstract class with  abstract class . 
+Abstract method signatures of an abstract class
+have the keyword  abstract  before the return type. 
+ 
+
+ 
+Each of these three (interface, abstract class, class)
+has certain restrictions. 
+ 
+
+ 
+An interface must be  public 
+and not  static 
+(except in certain restricted situations)
+and all its methods must be  public . 
+If no access modifier is given,
+ public  is assumed. 
+A class or abstract class need not be  public ,
+nor need its methods be  public . 
+ 
+
+ 
+A class (abstract or not) may  implement  one or more interfaces. 
+An interface may  extend  one or more interfaces. 
+A class (abstract or not) may  extend 
+at most one other class. 
+ 
+
+ 
+An interface may contain no fields, except for fields that are
+ static ,  public , and  final . 
+ 
+
+
+    Characteristic  interface  abstract class  class 
+     Can  extend  one or more interfaces 
+       yes 
+       no 
+       no 
+     Can  extend  a single class 
+       no 
+       yes 
+       yes 
+     Can  implement  one or more interfaces 
+     Can have method signatures without bodies 
+       yes 
+       yes 
+       no 
+     Can have method implementations with bodies 
+       no 
+       yes 
+       yes 
+     Can be  protected  or  private  
+     Can have  protected  or
+           private  members 
+     Can have constructors 
+     Can have  sta tic methods 
+     Can have  static  fields
+          (other than  public final  ones) 
+     Can have  public static final  fields 
+       yes 
+       yes 
+       yes 
+      
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Sep23We10:12 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

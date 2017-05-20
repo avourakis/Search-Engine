@@ -1,0 +1,107 @@
+ /*
+  $Id: clusters.h 5767 2010-10-19 05:52:31Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#ifndef _clusters_h_
+#define _clusters_h_
+
+#include "src/sample.h"
+#include "src/ppdtable/ppdtable.h"
+#include "cluster.h"
+
+typedef enum {LEXIC, MEDOIDS, MEDOIDS_IMP} ClusterType;
+
+typedef enum {ALL_RAND, CLOSE_LEX, CLOSE_RAND, CLOSE_UNIQUE} SampleType;
+
+class QueryVect
+{
+public:
+  unsigned query;
+  SimVect vect;
+  QueryVect() {}
+  QueryVect(unsigned query, SimVect vect): query(query), vect(vect) {}
+
+  bool operator==(const QueryVect &amp;q) const {
+    return this == &amp;q || (query == q.query &amp;&amp; vect == q.vect); }
+
+  friend ostream&amp; operator&gt;(istream&amp; in, QueryVect&amp; qv);
+};
+
+typedef multimap ContQueryPivot;
+
+class Clusters 
+{
+protected:
+  const vector *data;
+  const unsigned clusterNo;
+  const SampleType sampleType;
+  const unsigned samplePer;
+  const unsigned queueSize, uniqueNo;
+  VectCluster *clusters;
+  PPDTable *ppdtable;
+  ContQueryPivot *queryPivot;
+
+public:
+  Clusters(const vector *d, unsigned clusterNo, 
+           SampleType sampleType, unsigned samplePer,
+           unsigned queueSize, unsigned uniqueNo);
+
+  virtual void buildClusters() {};
+  void buildFTables();
+  void buildPPDtable();
+
+  void readClusters(const string &amp;filename);
+  void writeClusters(const string &amp;filename) const;
+
+  void readPPDtable(const string &amp;filename);
+  void writePPDtable(const string &amp;filename) const;
+
+  Clusters(const Clusters &amp;cs);
+  virtual ~Clusters();
+
+  Clusters&amp; operator=(const Clusters &amp;cs);
+  bool operator==(const Clusters &amp;c) const;
+
+  const size_t sizeCluster() const { return clusters-&gt;size(); }
+  const size_t sizeEntries() const;
+  const Cluster&amp; getCluster(unsigned i) const { return (*clusters)[i]; }
+  PPDTable&amp; getPPDtable() const { return *ppdtable; }
+  ContQueryPivot&amp; getQueryPivot() const { return *queryPivot; }
+
+  void push_backCluster(const Cluster &amp;c) { this-&gt;clusters-&gt;push_back(c); }
+
+  const VectClusterIt beginCluster() const { return clusters-&gt;begin(); }
+  const VectClusterIt endCluster() const { return clusters-&gt;end(); }
+
+  const ContPPDEntryIt beginPPDtable() const { return ppdtable-&gt;beginTable(); }
+  const ContPPDEntryIt endPPDtable() const { return ppdtable-&gt;endTable(); }
+  const ContPPDEntryIt findPPDtable(const PPDEntry &amp;e) const { 
+    return ppdtable-&gt;findTable(e); }
+  const ContPPDEntryIt lower_boundPPDtable(const PPDEntry &amp;e) const {
+    return ppdtable-&gt;lower_boundTable(e); }
+  const ContPPDEntryIt upper_boundPPDtable(const PPDEntry &amp;e) const {
+    return ppdtable-&gt;upper_boundTable(e); }
+
+  bool isPivot(unsigned idx) const;
+  void insert(unsigned idx);
+  void erase(unsigned idx);
+
+  void hist(ostream &amp;out, const vector &amp;data) const;
+  void stat(ostream &amp;out, const vector &amp;data) const;
+  ostream&amp; info(ostream &amp;out);
+
+  friend ostream&amp; operator&gt;(istream &amp;in, Clusters &amp;cs);
+};
+
+ostream&amp; operator&gt;(istream &amp;in, ContQueryPivot &amp;cont);
+
+#endif
+ 

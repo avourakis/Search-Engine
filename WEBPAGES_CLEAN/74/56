@@ -1,0 +1,60 @@
+ /*
+** match - linear time string match algorithm
+** David Eppstein / Columbia University / 29 Jan 1988
+*/
+
+#include "match.h"
+#include 
+
+// Make copy of string in a safe place
+const char * save_string(const char * s, int slen = -1)
+{
+    if (s == 0) return 0;
+    if (slen  0 clause).
+
+static int * make_retarget(const char * target)
+{
+    if (target == 0) return 0;
+    int * retarget = new int[strlen(target)+1];
+    if (retarget == 0) return 0;
+    retarget[0] = -1;		// set up for loop below; unused by match()
+
+    for (int i = 0; target[i] != '\0'; i++) {
+	retarget[i + 1] = retarget[i] + 1;
+	while (retarget[i + 1] &gt; 0 &amp;&amp;
+	       target[i] != target[retarget[i + 1] - 1])
+	    retarget[i + 1] = retarget[retarget[i + 1] - 1] + 1;
+    }
+    return retarget;
+}
+
+
+// Construct matcher
+
+string_match::string_match(const char * t, int tlen = -1)
+{
+    target = save_string(t, tlen);
+    retarget = make_retarget(target);
+    index = 0;
+}
+
+
+// Do the search
+
+int
+string_match::match(char c)
+{
+    if (retarget == 0) return 0;
+
+    while (c != target[index]) {
+	if (index == 0) return 0; // fell all the way back, have to give up
+	index = retarget[index]; // more positions to fall back to, keep trying
+    }
+    if (target[++index] != '\0') return 0;	// partial match
+    else {
+	index = retarget[index]; // full match, but keep going
+	return 1;
+    }
+}
+
+ 

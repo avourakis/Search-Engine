@@ -1,0 +1,118 @@
+  <body>  This is Google's cache of  http://www.vdlande.com/VHDL/aggregat.html . It is a snapshot of the page as it appeared on Oct 24, 2009 06:11:23 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  aggregat       
+
+
+VHDL Reference Guide - Aggregates 
+   Aggregates  
+       Expression 
+ ---- used in ----&gt; 
+ Entity Architecture Package Package Body 
+          Syntax       
+  
+
+ 
+   (value_1, value_2, ...) 
+   
+  
+
+ 
+   (element_1 =&gt; value_1, element_2 =&gt; value_2, ...) 
+   
+ 
+See LRM sections 7.3.2
+
+        Rules and Examples       
+  
+
+ 
+   
+Aggregates are a grouping of values to form an array or record expression.
+The first form is called  positional association , where the values are associated
+with elements from left to right:
+ 
+signal Z_BUS : bit_vector (3 downto 0);
+signal A_BIT, B_BIT, C_BIT, D_BIT : bit;
+...
+Z_BUS 
+  
+   
+
+ 
+   
+Equivalent Assignments
+ 
+Z_BUS(3) 
+  
+   
+
+ 
+   Aggregates may be used as the targets of assignments 
+   
+
+   
+   The second form is  named association , where elements are explicitly
+referenced and order is not important:
+ 
+signal Z_BUS : bit_vector (3 downto 0);
+signal A_BIT, B_BIT, C_BIT, D_BIT : bit;
+...
+Z_BUS  B_BIT, 1 =&gt; C_BIT, 0 =&gt; D_BIT, 3 =&gt; A_BIT);
+ 
+ 
+   
+
+ 
+     
+With positional association, elements may be grouped together using the | symbol or a range. 
+The keyword  others  may be used to refer to all elements not already mentioned:
+ 
+signal B_BIT : bit;
+signal BYTE : bit_vector (7 downto 0);
+...
+BYTE '1', 5 downto 1 =&gt; '1', 6 =&gt; B_BIT, others =&gt; '0');
+ 
+ 
+   
+
+ 
+  
+   Assignment to a whole record must be done using an aggregate. Positional or named association may be used
+ 
+type T_PACKET is record
+	BYTE_ID : std_ulogic;
+	PARITY  : std_ulogic;
+	ADDRESS : integer range 0 to 3;
+	DATA    : std_ulogic_vector (3 downto 0);
+end record
+signal TX_DATA : T_PACKET;
+...
+TX_DATA   
+   
+
+ 
+  
+   An aggregate containing just  others  can assign a value to all elements of an array, regardless of size:
+ 
+type NIBBLE is array (3 downto 0) of std_ulogic;
+type MEM is array (0 to 7) of NIBBLE;
+variable MEM8X4: MEM := (others =&gt; "0000");
+variable D_BUS : std_ulogic_vector(63 downto 0) := (others =&gt; 'Z');
+ 
+ 
+   
+
+ 
+        Synthesis Issues       
+  
+
+Logic synthesis tools may not support named association fully. 
+Also, record assignments using aggregates may not be supported.
+
+ 
+        Whats New in '93       
+
+Aggregates have not changed in  VHDL -93.
+
+  
+
+  </body> 

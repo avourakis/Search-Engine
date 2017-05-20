@@ -1,0 +1,118 @@
+ VHDL Reference Guide - Variable Assignment<body>  This is Google's cache of  http://www.vdlande.com/VHDL/var_ass.html . It is a snapshot of the page as it appeared on Sep 8, 2009 11:07:22 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Variable Assignment  
+        Sequential Statement 
+ ---- used in ----&gt; 
+ Process Procedure Function 
+            Syntax        
+  
+
+ 
+     variable_name := expression;  
+    
+  
+
+ 
+See LRM section 8.4
+
+         Rules and Examples        
+  
+
+ 
+    Assignments may be made from signals to variables and vice-versa,
+providing the types match:
+ process (A, B, C, SEL)
+  variable X : integer range 0 to 7;
+begin
+  if SEL = '1' then
+    X := B;
+  else
+    X := C;
+  end if;
+    Z &lt;= A + X;
+end process;  
+    
+  
+
+ 
+    A variable assignment takes effect immediately:
+ architecture EX1 of V is
+  signal A,B,Y,Z : integer;
+begin
+  process (A, B) 
+    variable M, N : integer;
+  begin
+    M := A;
+    N := B;
+    Z &lt;= M + N;
+    M := 2*A;
+    Y &lt;= M + N;
+  end process;
+end EX1;  
+     
+ An equivalent architecture with concurrent signal assignments architecture EX2 of V is
+  signal A,B,Y,Z:integer;
+begin
+  Z &lt;= A + B;
+  Y &lt;= 2*A + B;
+end EX2;  
+   A variable assignment may not be given a delay. 
+    
+  
+
+ 
+    A variable in a process can act as a register, if it is read before
+it has been written to, since it retains its value between sucessive
+process activations.
+ process (CLK)
+   variable Q : std_ulogic;
+begin
+  if CLK'event and CLK='1' then
+    PULSE &lt;= D and not(Q);
+    Q := D;
+    -- PULSE and Q act as registers
+  end if;
+end process;  
+    
+  
+
+ 
+         Synthesis Issues        
+  
+
+ 
+    Variable assignments are generally synthesisable, providing they use
+types and operators acceptable to the synthesis tool.
+ 
+In a "clocked process", each variable which has its value read before it
+has had an assignment to it will be synthesised as the output of a
+register.
+  
+In a "combinational process", reading a variable before it has had an
+assignment may cause a latch to be synthesised.
+  
+Variables declared in a subprogram are synthesised as combinational
+logic.
+  
+    
+  
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, a variable assignment may have a label:
+  label: variable_name := expression; 
+ VHDL -93 supports  shared variables  which may be accessed by more
+than one process.However, the language does not define what happens if
+two or more processes make conflicting accesses to a shared variable at
+the same time. 
+
+ 
+
+  </body> 

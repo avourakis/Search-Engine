@@ -1,0 +1,69 @@
+ Exponential Algorithms: Homework 1<body>
+
+  ICS 280, Fall 2000:
+Exponential Algorithms  
+Homework Assignment 1
+ 
+
+  Think of a problem in NP. Describe carefully the input, the possible
+solutions, and why it is easy to check whether a solution is correct.
+Specific application-type problems preferred to abstract theory-type
+ones.  If you're feeling uninspired, try  the
+compendium of NP optimization problems  or some of the puzzles
+from my page of
+ complexity
+theory for games and puzzles .
+
+ It's ok if your problem does not meet the strict definition of being
+in NP, as long as it has the same form: a yes/no problem such that a yes
+answer means that there is some kind of solution which can be quickly
+checked for correctness, even though it might be difficult to find the
+solution. 
+
+  Describe how to translate instances of your problem into instances
+of one of the problems described in class: constraint satisfaction,
+maximum independent set, or traveling salesman.
+
+ (Note that this is the opposite direction of translation from what you
+would use to prove your problem NP-complete.) 
+
+  What is (are) the natural measure(s) of problem size for your problem?
+What size instances does your translation produce, as a function of the
+input size?  If the constraint satisfaction (or maximum independent set) problem takes time c^n
+to solve, how much time would it take to solve your original problem
+using this translation and a CSP (or MIS) algorithm?
+   Sample answers: 
+
+  Finding  moving patterns in Conway's Game of
+Life .
+
+ Input: numbers W,L,S,P. 
+Output: "yes" if there exists a pattern that repeats itself
+P generations after the start, shifted over by S steps, and
+that fits within a W*L rectangle. 
+
+ To check a solution, simply compute the evolution of the pattern for
+P steps, and compare the result with a shifted copy of the original
+pattern.  (This problem is not actually in NP, because the input size is
+so small that even writing down a solution is exponential in
+the input size.) 
+
+  We translate to an instance of CSP.
+
+ Form a binary variable for each pair (c,t), where c is a cell in the W*L
+rectangle and t is a time step from 0 to P-1.  Form a constraint for
+each such variable, saying that the variable should match the result of
+evolving the nine neighboring cells in time step (t-1), or (if t=0)
+that it should match the result of evolving the nine cells
+surrounding the point S steps away from its position in step P-1.  Also add
+one more constraint, that at least one cell is nonempty. 
+
+  The natural measures are simply the numbers W, L, and P.
+The translated CSP has W*L*P variables, so the time would be
+c^{W*L*P}.
+   Due  by email 
+Monday, Oct. 9, 11:59PM. 
+
+Please  do not send MS Word  or other proprietary formats.
+Plain text, TeX, HTML, or PDF are all acceptable.
+</body> 

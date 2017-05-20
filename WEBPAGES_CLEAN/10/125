@@ -1,0 +1,1820 @@
+ XSLT<body>
+
+ 
+
+ 
+XSL Transformations (XSLT)
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ Table of contents 
+
+ 
+    Introduction and context  
+    Some weaknesses of XSLT  
+    Nodes  
+    Stylesheets and the  stylesheet  element  
+    Matching templates  
+    Defining a template to match to a node  
+    Patterns for matching nodes  
+    Producing output from a template  
+    Literal template contents  
+     copy   
+    Attribute value templates  
+     attribute   
+     element   
+     text   
+     comment   
+    Computing text with  value-of   
+    Computing nodes with  copy-of   
+    Example of producing output from a template  
+    Recursively applying templates  
+    Template modes  
+    Which template is applied?  
+    Built-in templates  
+    Whitespace handling  
+    Named templates  
+    Variables and parameters  
+     for-each   
+    Numbering things in the output  
+     sort   
+    If and when  
+    Including and importing stylesheets  
+    Output method  
+    Not here, but in XSLT  
+    References  
+  
+
+
+ Introduction and context 
+
+ 
+XSLT is a language for transforming XML documents. 
+The result can be another XML document, an HTML document,
+or any text document. 
+The transformation is done by matching
+  templates  
+in an XSLT stylesheet
+against an XML document. 
+Each template defines the output produced when it is matched. 
+If desired,
+each template can use other templates recursively
+to produce parts of its output. 
+ 
+
+ 
+This document summarizes the basic features of XSLT. 
+For more information see the  W3C recommendation 
+that defines XSLT. 
+ 
+
+ 
+XSLT is a part of XSL, which is a general XML stylesheet language
+that also handles how an XML file is presented
+(like CSS for HTML). 
+XSLT is the part of XSL that deals with transformations of XML files. 
+ 
+
+ 
+The XSLT output of the examples in this document
+was generated automatically using
+ xalan . 
+ 
+
+ 
+XSLT element and attribute names made from two words
+have a hyphen between the words
+(for example
+  value-of   and
+  preserve-space  ). 
+This is in contrast to analogous
+ XML Schema  element and attribute names,
+in which the second word is capitalized
+and catenated to the first one
+(for example,
+  simpleType   and
+  normalizedString  ). 
+ 
+
+
+ Some weaknesses of XSLT 
+
+ 
+Because XSLT stylesheets are XML files,
+and elements of XML files have to be correctly nested,
+it is not possible to write a stylesheet
+that produces the beginning of an element in one template
+and the end in another; 
+an element must be entirely written
+from one template. 
+ 
+
+ 
+XSLT does not have strong facilities for
+modularizing a stylesheet,
+so complex transformations are difficult to manage. 
+It is easy for an XSLT stylesheet to get out of hand
+and become incomprehensible to its creator. 
+ 
+
+
+ Nodes 
+
+ 
+    Figure 1.  Node tree for example
+   
+ 
+
+ 
+XSLT considers an XML file to consist of
+a tree of  nodes ,
+in which each element, attribute, and string of text contained in an element
+is a node. 
+Each attribute of an element
+is a child node of that element's node; 
+each child element is also a child node of that element's node. 
+If the element's contents are text only,
+the element's node has a single child node for that text; 
+if the element contains elements and text mixed,
+then its node has a child node for each segment of text
+and each child element. 
+Each node of an input XML document
+is processed by a template and can produce output. 
+The nodes are most commonly traversed in pre-order
+(parent node first, followed by child nodes in sequence, recursively),
+but XSLT provides ways of processing nodes in almost any order,
+as will be seen later. 
+ 
+
+ 
+Figure 1 shows the node tree for this XML element: 
+ 
+
+ 
+  &lt;body&gt;
+    &lt;p class='sum'&gt;Total Amount: &lt;xsl:value-of select='expense-report/total'/&gt;&lt;/p&gt;
+  &lt;/body&gt;
+ 
+
+
+ Stylesheets and the  stylesheet  element 
+
+ 
+An XSLT stylesheet is an XML file containing a  stylesheet  element,
+as in this example: 
+ 
+
+ 
+  &lt;?xml version='1.0'?&gt;
+  &lt;xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+    ...
+  &lt;/xsl:stylesheet&gt;
+ 
+
+ 
+The  xsl:  prefix is commonly used for XSLT elements,
+but any prefix can be used if it is
+defined in the  xmlns  attribute. 
+Each prefix used in the stylesheet
+must be declared in the   stylesheet   element
+as an  xmlns:  attribute
+(as  xsl:  has been above, in the  xmlns:xsl  attribute). 
+ 
+
+ 
+  stylesheet   may have an
+ exclude-result-prefixes  attribute
+whose value is a list of namespace prefixes
+that are not to be automatically given
+to output nodes. 
+Each such prefix must have been declared as an  xmlns:  attribute. 
+ 
+
+
+ Matching templates 
+
+ Defining a template to match to a node 
+
+ 
+A  template  element can be set up to match a node
+ pattern ,
+as in the example below. 
+The pattern is given in the  match  attribute. 
+The template expression can match no nodes, one node, many nodes, or all nodes. 
+ 
+
+ 
+  &lt;xsl:template  match='item' &gt; &lt;!-- Matches an item child of the context node --&gt;
+    ... &lt;!-- See  below  for contents of a template --&gt;
+  &lt;/xsl:template&gt;
+ 
+
+ 
+See also  named templates . 
+ 
+
+
+ Patterns for matching nodes 
+
+ 
+XSLT uses a subset of  XPath  expressions as patterns
+to match against XML nodes. 
+Expressions can be absolute
+(beginning with  /  for the root element)
+or relative to a  context node ,
+the current location. 
+Here is a list of example expressions
+(many adapted from examples in
+[ XSLT ] and
+[ XPath ]). 
+ 
+
+    /  matches the root element
+   
+     .  matches the context node
+   
+     ..  matches the parent of the context node
+   
+     *  matches any child element of the context node
+   
+     para  matches any  para  child element
+    of the context node
+   
+     chapter|appendix  matches any
+    child element of the context node
+    that is either
+    a  chapter  or an  appendix 
+   
+     /olist  matches any  olist  element
+    that is a child of the root element
+   
+     //olist  matches any  olist  element
+    that is a descendant of the root element
+    (i.e. anywhere in the document)
+   
+     olist/item  matches any  item  element
+    that is a child of an  olist  element
+    that is a child of the context node
+   
+     appendix//para  matches any  para  element
+    that is a descendant of an  appendix  element
+    that is a child of the context node
+   
+     *[1]  matches
+    any element that is the first child element of the context node
+   
+     para[1]  matches any  para  element
+    that is the first  para  child element of the context node
+   
+     para[position() &amp;gt; 1]  matches any  para  element
+    that is the second or later  para  child element of
+    the context node
+    ( &lt;  and  &gt;  must be represented by
+     &amp;lt;  and  &amp;gt;  in attribute values)
+   
+     para[last()]  matches any  para  element
+    that is the last  para  child element of the context node
+   
+     para[last()=1]  matches any  para  element
+    that is the only  para  child element of the context node
+    (the last child is the first)
+   
+     para[position()=2 and last()=3]  matches
+    any  para  element
+    that is the second of three  para  child elements of the context node
+   
+     para[position() mod 2 = 1] 
+    matches any  item  element that is
+    the 1st or 3rd or 5th or ... child of the context node
+   
+     chapter[@title='Appendix']  matches any  chapter 
+    child element of the context node
+    that has a  title  attribute whose value is 'Appendix'
+   
+     div[@class]//p  matches any  p  element
+    with a  div  ancestor element that has
+    a  class  attribute
+    and is a child of the context node
+   
+     *[position()=last() or @title!='Appendix']  matches
+    any child element of the context node
+    that is the last child element
+    or has a  title  attribute whose value is not 'Appendix'
+   
+     @*  matches any attribute of the context node
+    (not any element that has an attribute)
+   
+     @class  matches any  class  attribute
+    of the context node
+    (not any element that has a  class  attribute)
+   
+     text()  matches any text node
+    that is the child of the context node,
+    for example the simple content of an element
+   
+     node()  matches any child element of the context node
+   
+  
+A name may be
+ 
+
+  
+    a  localname  such as  item 
+    with no namespace prefix,
+    corresponding to the
+      xs:NCName   predefined type; 
+    or
+   
+   
+    a  qualified name  or  qname   such as  xs:QName 
+    with a namespace prefix,
+    corresponding to the
+      xs:QName   predefined type. 
+    The prefix must have been defined in an
+      xmlns:*   attribute
+    such as  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+    of the current element or a parent element. 
+   
+  
+Localnames only match elements and attributes in an XML file
+with no default namespace. 
+Qnames only match elements and attributes
+whose default namespace or explicit prefix corresponds to
+the namespace for the qname. 
+ 
+
+ 
+In summary:
+ 
+
+   names represent element names
+   
+    names preceded by @ represent attribute names
+   
+    / and // constrain an element match by matching on the element's
+    parent or ancestor elements
+   
+    .. matches a parent node
+   
+    [] encloses a condition that further constrains an element match,
+    or an integer expression such as  1  or  last() 
+    that is shorthand for the condition
+     position=1  or  position=last() 
+   
+    [] may constrain any element in a / or // chain
+   
+    expressions beginning with / are absolute
+   
+    all other expressions are relative to the context node
+   
+  Producing output from a template 
+
+ 
+A   template   element can contain
+text, non-XSLT elements, and XSLT elements. 
+When a template matches an input element or attribute,
+the text and non-XSLT elements it contains are written as output
+(with whitespace  compressed or stripped 
+and  attribute value templates  expanded). 
+XSLT elements it contains are replaced by their own output. 
+ 
+
+  Table 1.  Ways to produce output from XSLT 
+   If you want to:
+       
+       Put in the template:
+       
+      produce fixed output (other than
+      XSLT elements and  &lt;!-- --&gt;  comments)
+       
+        the fixed output itself
+       
+      produce a copy of the context node
+       
+          copy  
+       
+      compute the value of an attribute
+       
+        an  attribute value template 
+       
+      compute the name of an attribute
+       
+          attribute  
+       
+      compute the name of an element,
+            or output an XSLT element
+       
+          element  
+       
+      compute text in an element
+       
+         value-of  
+       
+      produce a set of copies of input nodes
+       
+          copy-of  
+       
+      produce a  &lt;!-- --&gt;  comment
+        in the output
+       
+          comment  
+       
+      control output whitespace exactly
+        and/or produce newlines in the output
+       
+          text  
+       
+      
+XSLT produces XML output by default
+(with an XML header),
+but can be changed to output HTML or text
+using the  method  attribute of the
+  output   element. 
+ 
+
+ 
+See Examples
+ 1  (  copy  ),
+ 2 
+( attribute value templates ),
+and
+ 3  (many ways of producing output) below
+for examples of templates. 
+ 
+
+
+ Literal template contents 
+
+ 
+The simplest way to produce text and non-XSLT elements in the output
+is just to put them in the contents of the template. 
+This always works if the text and elements are fixed
+and you are not particular about whitespace
+(see  Whitespace handling ). 
+ 
+
+ 
+See  Example 2  below for an example
+of literal contents in a template. 
+ 
+
+
+  copy  
+
+ 
+If a copy of the input node is desired in the output,
+the   copy   element may be used in the template. 
+  copy   creates an element or attribute
+with the same name as the context node
+(but does not create its child elements or attributes if any —
+see   copy-of   for that). 
+The contents of the   copy   element
+are expanded to become the contents of the output element or attribute. 
+ 
+
+    Example 1.  Copying elements and attributes
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='xml'/&gt;
+
+  &lt;xsl: template  match='para'&gt;
+    &lt;paraNest&gt;
+      &lt;xsl: copy &gt;&lt;xsl: apply-templates  select=' @* '/&gt;Contains '&lt;xsl:apply-templates
+        select=' text() '/&gt;'.&lt;/xsl:copy&gt;
+    &lt;/paraNest&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl: template  match='@depth'&gt;
+    &lt;xsl: copy /&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+       
+     Input
+       
+       
+ 
+&lt;para depth='1'&gt;woo-woo!&lt;/para&gt; 
+       
+     Output
+       
+       
+ 
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;paraNest&gt;&lt;para depth='1'&gt;Contains 'woo-woo!'.&lt;/para&gt;&lt;/paraNest&gt; 
+       
+      Attribute value templates 
+
+ 
+Attribute values in non-XSLT elements
+of a   template  
+may contain  attribute value templates  enclosed in  {} ,
+which are expanded
+when output is produced for the   template  . 
+An attribute value template is an
+XPath expression (such as a  pattern ),
+possibly extended with
+ XSLT variable or parameter references  
+( $x  where  x  is the name of the variable or parameter)
+and additional functions and extensions
+described in [ XSLT ]. 
+The  context node  for the attribute value template
+is the node matched by the   template  . 
+ 
+
+ 
+Any  pattern  that can be used for matching nodes
+can also be used in an attribute value template: 
+ 
+
+    {href}  is replaced by the (simple) contents of
+    child element  href  of the matched element; 
+    if there is more than one  href  child element,
+    the contents of the first one are used
+   
+     {@width}  is replaced by
+    the value of attribute  width 
+    of the matched element
+   
+     {size/@width}  is replaced by
+    the value of attribute  width 
+    of the  size  child element of the matched element
+   
+     {../@width}  is replaced by
+    the value of attribute  width 
+    of the parent of the matched element
+   
+  
+But there are additional  XPath  expressions
+that can be used as well,
+of which a few are: 
+ 
+
+    {'href'}  is replaced by
+    the literal string  href . 
+   
+     {$image-dir}  is replaced by the value of
+    XSLT  variable or parameter 
+     image-dir . 
+   
+     {local-name(.)}  is replaced by
+    the local name of the first node its argument matches. 
+    Any  pattern  can be used in place of '.'. 
+   
+     {substring('abc', 2, 1)}  is replaced by
+    the substring of 'abc' beginning at the 2nd character (1-origin)
+    of length 1 (in other words, by 'b'). 
+    If the length parameter is omitted the substring extends
+    to the end of the string. 
+   
+     {substring-after('abcde', 'bc')}  is replaced by
+    the substring of 'abcde'
+    following the first appearance of 'bc'
+    (in other words, by 'de'). 
+    The  substring-before  function is analogous. 
+   
+  
+To include a  {  or  }  in an attribute,
+double it. 
+For example,
+ {{$image-dir}}  represents the literal string
+ {$image-dir} . 
+Otherwise,  {  or  }  are not allowed inside
+the enclosing  {}  of an attribute value template. 
+ 
+
+ 
+The values of certain XSL attributes
+such as  select  and  name 
+are assumed to be attribute value templates —
+templates in these attributes' values
+should not be enclosed in  {} ,
+and literal strings in these values
+must be quoted (with single quotes  'x' 
+if the attribute's value is double-quoted as usual). 
+These attributes are listed at the end of the document
+in  Table 3 . 
+(They are distinguished in
+[ XSLT ]'s syntax summary of each element
+by having an expression type,
+or being enclosed in  {} .) 
+For example: 
+ select=''href''  selects the literal string  href ,
+while
+ select='href'  selects the child  href  element
+of the context node. 
+ 
+
+    Example 2.  Attribute value templates in a
+          template  
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='html'/&gt;
+
+  &lt;xsl: variable  name='image-dir'&gt;/images&lt;/xsl:variable&gt;
+
+  &lt;xsl: template  match='photograph'&gt;
+    &lt;img src='{ $image-dir }/{ href }' width='{ size/@width }'/&gt;
+    &lt;xsl: text &gt;
+&lt;/xsl:text&gt;&lt;!--  outputs a newline  --&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+       
+     Input
+       
+       
+ 
+&lt;photograph&gt;
+  &lt;href&gt;headquarters.jpg&lt;/href&gt;
+  &lt;size width='300'/&gt;
+&lt;/photograph&gt;
+ 
+       
+     Output
+       
+       
+ 
+&lt;img width='300' src='/images/headquarters.jpg'&gt;
+ 
+       
+       attribute  
+
+ 
+An attribute and its value can be produced in the output
+by an   attribute   element
+in an   element   child element of the template; 
+this allows production of an attribute with a computed name. 
+The   attribute  's
+ name  gives the output attribute's name,
+and the contents of the   attribute   element
+give its value. 
+ 
+
+ 
+Unless the attribute's name is computed,
+or it is part of an output element produced with
+  element  ,
+it is simpler and just as effective to
+put the attribute literally in the template and
+use an  attribute value template 
+in its value if necessary,
+rather than use   attribute  . 
+ 
+
+ 
+Example: 
+This   attribute   element outputs
+an attribute of an  img  element. 
+The attribute's name is
+the value of the  src-attribute  variable or parameter,
+and the attribute's value is the contents of the
+context node's  href  child element. 
+ 
+
+ 
+  &lt;xsl: element  name='img'&gt;
+    &lt;xsl: attribute  name='{$src-attribute}'&gt;
+      &lt;xsl: value-of  select='{href}'/&gt;
+    &lt;/xsl:attribute&gt;
+  &lt;/xsl:element&gt;
+ 
+
+
+  element  
+
+ 
+An element can be produced in the output
+by an   element   element
+in the template; 
+this is used to output an element with a computed name or attribute,
+or to output an XSLT element. 
+The   element  's  name  attribute
+gives the output element's name,
+  attribute   child elements
+give the output element's attributes, and
+other contents of the element
+give the content of the output element. 
+ 
+
+ 
+Unless the output element's name is to be computed,
+the output is to be an XSLT element,
+or the name of one of its attributes must be computed
+(see   attribute  ),
+it is simpler and just as effective to put the element literally in the template
+rather than use   element  . 
+ 
+
+ 
+Example: 
+This   element   element
+outputs an element whose name is
+the value of the  photo-element  variable or parameter. 
+The output element has a single attribute
+ src='headquarters.jpg' ,
+and no child elements or text content. 
+ 
+
+ 
+  &lt;xsl:  element   name='{$photo-element}'&gt;
+    &lt;xsl:  attribute   name='src' select='headquarters.jpg'/&gt;
+  &lt;/xsl:element&gt;
+ 
+
+
+  text  
+
+ 
+Text in a   template   is
+written as output when the template matches,
+usually with   whitespace collapsed and stripped  . 
+However,
+the text contents of a   text   child
+of a   template   element
+are written unchanged. 
+This lets you put newlines, tabs, and strings of spaces
+into the output. 
+ 
+
+ 
+  text   can't be used to write output elements. 
+ 
+
+ 
+Unless the text must contain newlines or consecutive whitespace,
+it is simpler and just as effective to put the text literally in the template
+rather than use   text  . 
+ 
+
+ Example: 
+This  text  element outputs a single newline. 
+ 
+
+ 
+  &lt;xsl:  text  &gt;
+  &lt;/xsl:text&gt;
+ 
+
+
+  comment  
+
+ 
+A  &lt;!-- --&gt;  comment can be produced in the output
+with the   comment   element. 
+The content of the   comment   element
+is used as the contents of the output comment. 
+Literal comments in a   template  
+are assumed to be a comment for the XSLT stylesheet,
+and are ignored,
+so a comment in the output can't be produced that way. 
+ 
+
+ 
+Example: 
+This   comment   element outputs
+ &lt;!-- A comment in the output --&gt; . 
+ 
+
+ 
+  &lt;xsl:  comment  &gt; A comment in the output &lt;/xsl:comment&gt;
+ 
+
+
+ Computing text with  value-of  
+
+ 
+A   value-of   element
+of a   template  
+outputs text based on an
+ attribute value template . 
+The expression is given as the value of
+the   value-of   element's
+ select  attribute,
+and is just like an ordinary  attribute value template 
+except that it is not enclosed in  {} . 
+  value-of   lets you
+put the same kind of computed text in the text of an element
+that an  attribute value template 
+lets you put in an attribute value. 
+ 
+
+ 
+Example: 
+This   value-of   element
+puts the value of the  photo-element  variable or parameter
+into the contents of an output comment. 
+ 
+
+ 
+  &lt;xsl:  comment  &gt;photograph becomes
+    &lt;xsl:  value-of   select='$photo-element'/&gt;
+  &lt;/xsl:comment&gt;
+ 
+
+
+ Computing nodes with  copy-of  
+
+ 
+The   copy-of   element
+produces a set of copies of input nodes. 
+It is analogous to   value-of  
+except that its  select  attribute
+may expand to anything, rather than just to a string. 
+ 
+
+
+ Example of producing output from a template 
+
+ 
+This example shows the use of
+  value-of  ,
+  text  ,
+  element  ,
+  attribute  , and
+  comment  . 
+(It also shows
+  variable  ,
+which has not been discussed yet.) 
+Notice how whitespace is collapsed or stripped
+except within the   text   element,
+which is used to begin a new line in the output. 
+ 
+
+    Example 3. 
+    Template containing
+      value-of  ,
+      text  ,
+      element  ,
+      attribute  ,
+      comment  , and
+      variable  
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='html'/&gt;
+
+  &lt;xsl: variable  name='photo-element'&gt;img&lt;/xsl:variable&gt;
+  &lt;xsl: variable  name='src-attribute'&gt;src&lt;/xsl:variable&gt;
+
+  &lt;xsl: template  match='photograph'&gt;
+    &lt;xsl: comment &gt;photograph becomes &lt;xsl: value-of  select=' $photo-element '/&gt;
+    &lt;/xsl:comment&gt;
+    &lt;xsl: text &gt;
+&lt;/xsl:text&gt;&lt;!--  outputs a newline  --&gt;
+    &lt;xsl: element  name='{ $photo-element }'&gt;
+      &lt;xsl: attribute  name='{ $src-attribute }'&gt;&lt;xsl: value-of  select=' href '/&gt;&lt;/xsl:attribute&gt;
+      &lt;xsl: apply-templates  select=' height|width '/&gt;
+    &lt;/xsl:element&gt;
+    &lt;xsl: text &gt;
+&lt;/xsl:text&gt;&lt;!--  outputs a newline  --&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl: template  match='height|width'&gt;&lt;xsl: copy /&gt;&lt;/xsl:template&gt;
+
+  &lt;/xsl:stylesheet&gt; 
+       
+     Input
+       
+       
+ 
+&lt;photograph width='2cm'&gt;
+  &lt;href&gt;headquarters.jpg&lt;/href&gt;
+&lt;/photograph&gt;
+ 
+       
+     Output
+       
+       
+ 
+&lt;!--photograph becomes img--&gt;
+&lt;img src='headquarters.jpg'&gt;
+ 
+       
+      Recursively applying templates 
+
+ 
+A   template   element
+may use other templates
+to produce part of its output
+by including an   apply-templates  
+child element. 
+ 
+ 
+The  select  attribute
+of   apply-templates  
+controls which templates are applied. 
+If  select  is not present,
+  apply-templates  
+applies templates to each of the current node's child nodes,
+in sequence from first to last. 
+If the attribute is given,
+its value must be an  XPath  expression
+(see the  examples )
+that can match nodes; 
+then templates are applied to every node that matches the expression. 
+ 
+
+ 
+Example: 
+ (under construction) 
+ 
+
+
+ Template modes 
+
+ 
+If there is more than one template that could be applied to a node,
+these template may each be given a different   mode  
+in order to control which one is applied. 
+Templates with modes also allow an input element to be processed several times
+with different templates, each one selected by a mode. 
+ 
+
+   If   apply-templates  
+    has a  mode  attribute,
+    only templates with the same  mode  attribute will be applied. 
+   
+    If   apply-templates  
+    has no  mode  attribute,
+    only templates with no  mode  attribute will be applied. 
+   
+  
+The  mode  attribute of
+  template   and
+  apply-templates  
+takes a   QName   value
+( [_A-Za-z][-_:.A-Za-z0-9]* , with at most one colon). 
+A   template  
+with a  mode  attribute
+must also have a  match  attribute. 
+(See also  named templates .) 
+ 
+
+
+ Which template is applied? 
+
+ 
+What if there is more than one template that could be applied? 
+ 
+
+   If some of the templates have lower
+     import precedence ,
+    they are eliminated from consideration. 
+   
+    If some of the templates have lower
+    priority,
+    they are eliminated from consideration. 
+    Each template may be given an explicit priority
+    by its  priority  attribute,
+    whose value must be an integer (positive, negative, or zero). 
+    Templates without a  priority  attribute
+    are given a default priority
+    that for all child element or attribute value templates is 0; 
+    see [ XSLT ]
+    for the default priority of more unusual expressions.
+   
+  
+If more than one applicable template remains,
+it is an error. 
+ 
+
+
+ Built-in templates 
+
+ 
+XSLT processors use built-in templates
+that provide the most common default processing,
+namely to recursively apply templates to each node
+and to copy text through to the output. 
+These built-in templates are treated as though they were
+imported and given the lowest import precedence,
+so that every template provided from other sources overrides
+whichever built-in template might apply. 
+ 
+
+ 
+In effect, there is no built-in processing of
+element nodes with no child nodes or text,
+or of attribute nodes,
+because these built-in templates do nothing for them. 
+ 
+
+ 
+  &lt;!-- Built-in template for element nodes --&gt;
+  &lt;xsl:  template   match='*|/'&gt;
+    &lt;xsl:  apply-templates  /&gt;
+  &lt;/xsl:template&gt;
+ 
+
+ 
+  &lt;!-- A built-in template is imported for each mode --&gt;
+  &lt;xsl:  template   match='*|/' mode='m'&gt;
+    &lt;xsl:  apply-templates   mode='m'/&gt;
+  &lt;/xsl:template&gt;
+ 
+
+ 
+  &lt;!-- Built-in template for text nodes --&gt;
+  &lt;xsl:  template   match='text()|@*'&gt;
+    &lt;xsl:  value-of   select='.'/&gt;
+  &lt;/xsl:template&gt;
+ 
+
+ 
+In order to prevent built-in processing of an element,
+define a template that matches it but does nothing,
+as in the example below: 
+ 
+
+ 
+  &lt;!-- Template that does nothing for boofle elements ---&gt;
+  &lt;xsl:  template   match='boofle'/&gt;
+ 
+
+
+ Whitespace handling 
+
+ 
+Whitespace in input or template text is ordinarily collapsed to single spaces,
+and text nodes consisting only of whitespace
+ordinarily are stripped out before processing,
+so that they are not matched and result in no output. 
+The only exception is   text  
+elements of an XSLT file,
+whose whitespace is preserved by default. 
+The default whitespace processing for
+  text   elements and other nodes
+can be changed in several ways: 
+the xml:  space   attribute
+of input or XSLT elements; 
+the   preserve-space   element
+of XSLT stylesheets,
+which adds elements to the list of those whose whitespace is preserved; 
+and
+the   strip-space   element
+of XSLT stylesheets,
+which is not discussed here. 
+ 
+
+ 
+The   xml:space   attribute can be given
+to any XML element in the input or XSLT. 
+Text nodes that are descendants of
+an element with the  xml:space=preserve  attribute
+are neither compressed nor stripped; 
+descendants of an element with  xml:space=default 
+are compressed and stripped. 
+The default is, not surprisingly,  xml:space=default . 
+If a text node has an ancestor with  xml:space=preserve 
+and an ancestor with  xml:space=default ,
+the closest ancestor prevails. 
+ 
+
+ 
+An XSLT stylesheet may contain
+  preserve-space   elements. 
+The  elements  attribute of
+  preserve-space   elements lists
+input elements whose whitespace is neither compressed nor stripped. 
+By default,
+whitespace is preserved for   text   elements only. 
+ 
+
+
+ Named templates 
+
+ 
+We have seen that a template may have a
+  match   attribute,
+and be applied using   apply-templates  . 
+A template may also have a  name  attribute
+and be called using   call-template  . 
+Names must be unique among templates. 
+  call-template   has a required
+ name  attribute,
+and calls the   template   with that name,
+regardless of its  match ,  mode ,
+and  priority  (if any). 
+ 
+
+
+ Variables and parameters 
+
+ 
+XSLT allows variables and parameters to be defined
+for stylesheets and for templates. 
+A variable or parameter may be given
+any value that an  expression  can return. 
+A second value cannot later be given to either a variable or parameter. 
+ 
+
+ 
+A   variable   element defines a named value; 
+its name is given by its  name  attribute,
+and its value is given either by
+its  select  attribute
+or the element contents. 
+ 
+
+ 
+A   param   element defines a named value
+associated with the   template  
+containing the definition. 
+Its name is given by its  name  attribute,
+and its default value is given either by
+its  select  attribute
+or the element contents. 
+ 
+
+ 
+The final value of a   parameter  
+is set by the contents of a
+   with-param    element
+(if present)
+in   call-template   or
+  apply-templates  . 
+If the
+  call-template   or
+  apply-templates  
+does not contain a   with-param   element
+for a parameter,
+the default value set in the
+  parameter   definition is used. 
+ 
+
+ 
+Except that   parameters   may be passed in,
+  parameters   and
+  variables   behave the same
+and are referenced in the same way: 
+by a  $name  expression in an
+  attribute value template  . 
+ 
+
+    Example 3. 
+          Variables  ,
+          parameters  , and
+          call-template  
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='html'/&gt;
+
+  &lt;xsl: variable  name='title'&gt;Paragraph&lt;/xsl:variable&gt;
+
+  &lt;xsl: template  name='paragraph'&gt;
+    &lt;xsl: param  name='number'&gt;* &lt;/xsl:param&gt;
+    &lt;xsl: param  name='numberStyle' select=' '' '/&gt;
+    &lt;xsl: param  name='class'/&gt;
+    &lt;p class='{ $class }' title='{ $title }'&gt;
+      &lt;span style='{ $numberStyle }'&gt;&lt;xsl: value-of  select=' $number '/&gt;&lt;/span&gt;
+      &lt;xsl: value-of  select=' . '/&gt;
+    &lt;/p&gt;
+    &lt;xsl: text &gt;
+&lt;/xsl:text&gt;&lt;!--  outputs a newline  --&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl: template  match='document'&gt;
+    &lt;xsl: call-template  name='paragraph'&gt;
+      &lt;xsl: with-param  name='numberStyle'&gt;bold&lt;/xsl:with-param&gt;
+      &lt;xsl: with-param  name='class' select=' 'indented' '/&gt;
+    &lt;/xsl:call-template&gt;
+    &lt;!--
+      Template is called with values for 'numberStyle' and 'class' parameters,
+      but not for 'number', which will be given the default value
+      set in the 'param' element for it.
+      --&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+       
+     Input
+       
+       
+ 
+&lt;document&gt;
+  &lt;paragraph number='1'&gt;Paragraph contents.&lt;/paragraph&gt;
+&lt;/document&gt; 
+       
+     Output
+       
+       
+ 
+&lt;p title='Paragraph' class='indented'&gt;
+&lt;span style='bold'&gt;* &lt;/span&gt;
+  Paragraph contents.
+&lt;/p&gt;
+ 
+       
+       for-each  
+
+ 
+The   for-each   element
+selects a set of nodes
+and then produces output for each node in the set. 
+The contents of the  for-each  element
+are expanded for each selected node,
+using that node as the current node. 
+ 
+
+ 
+The set of nodes is specified as a   pattern  
+in the   for-each   element's
+ select  attribute. 
+ 
+
+ 
+See  Example 4  for an example of its use. 
+ 
+
+
+ Numbering things in the output 
+
+ 
+The   number   element outputs a number
+based on the sequence of nodes in the input node tree. 
+Its output is controlled by a large number of attributes,
+of which these three are the most useful: 
+ 
+
+  Table 2.   number  attributes 
+   Attribute
+       
+       Effect
+       
+      count 
+       
+     A  pattern  matching the nodes to be counted. 
+      If absent, the current node's name is used. 
+       
+      level 
+         
+       
+          
+             level=single ,
+            in which case the number counts the context node's
+            preceding siblings that also match the  count  pattern; 
+            or
+           
+           
+             level=all ,
+            in which case the number counts
+            all nodes that match the  count  pattern
+            and precede the context node,
+            at any level in the input tree. 
+           
+           
+             level=multiple ,
+            in which case the number gives an outline-style number
+            counting all nodes that match the  count  pattern
+            and precede the context node,
+            at any level in the input tree. 
+           
+          
+     format
+       
+       The sequences used for numbering, and possibly (for  level=multiple )
+        the number separators (a dot is the default but can be changed). 
+            1  indicates arabic numbering
+            ( 1 ,  2 ,  3 , ...). 
+           
+             01  indicates a leading zero up to 10
+            ( 01 ,  02 , ... ,  09 ,
+             10 , ...); 
+             001  indicates leading zeroes up to 100, etc. 
+           
+             A  indicates
+             A ,  B ,  C , .... 
+           
+             a  indicates
+             a ,  b ,  c , .... 
+           
+             I  indicates Roman numbering
+             I ,  II ,  III ,  IV , .... 
+           
+             i  indicates Roman numbering
+             i ,  ii ,  iii ,  iv , .... 
+           
+            The interpretation of any other letters or numbers in the
+             format  value is not defined, so do not use them. 
+            Non-alphanumeric characters are copied literally as separators. 
+           
+          
+         Example 4. 
+        Numbering
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='xml'/&gt;
+
+  &lt;xsl: template  match='/'&gt;
+    &lt;Numbered&gt;
+
+      &lt;xsl: text &gt;
+All paragraphs in the input numbered within their chapters:
+&lt;/xsl:text&gt;
+      &lt;xsl: for-each  select=' //paragraph '&gt;
+        &lt;xsl: text &gt;  &lt;/xsl:text&gt;
+        &lt;xsl: copy &gt;&lt;xsl: number  level='single'/&gt;&lt;xsl: text &gt;. &lt;/xsl:text&gt;
+          &lt;xsl: apply-templates  select=' text() '/&gt;&lt;/xsl:copy&gt;
+        &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+      &lt;/xsl:for-each&gt;
+
+      &lt;xsl: text &gt;
+All paragraphs in the entire input numbered in sequence:
+&lt;/xsl:text&gt;
+      &lt;xsl: for-each  select=' //paragraph '&gt;
+        &lt;xsl: text &gt;  &lt;/xsl:text&gt;
+        &lt;xsl: copy &gt;&lt;xsl: number  level='any' format='i. '/&gt;
+          &lt;xsl: apply-templates  select=' text() '/&gt;&lt;/xsl:copy&gt;
+        &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+      &lt;/xsl:for-each&gt;
+
+      &lt;xsl: text &gt;
+All paragraphs in the input outline-numbered (by chapter) in sequence:
+&lt;/xsl:text&gt;
+      &lt;xsl: for-each  select=' //paragraph '&gt;
+        &lt;xsl: text &gt;  &lt;/xsl:text&gt;
+        &lt;xsl: copy &gt;&lt;xsl: number  level='multiple' count='chapter|paragraph'
+          format='[I:a.] '/&gt;
+          &lt;xsl: apply-templates  select=' text() '/&gt;&lt;/xsl:copy&gt;
+        &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+      &lt;/xsl:for-each&gt;
+
+    &lt;/Numbered&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+       
+     Input
+       
+       
+ 
+&lt;book&gt;
+  &lt;chapter&gt;
+    &lt;paragraph&gt;First.&lt;/paragraph&gt;
+    &lt;paragraph&gt;Second.&lt;/paragraph&gt;
+  &lt;/chapter&gt;
+  &lt;chapter&gt;
+    &lt;paragraph&gt;First in second chapter.&lt;/paragraph&gt;
+  &lt;/chapter&gt;
+&lt;/book&gt; 
+       
+     Output
+       
+       
+ 
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;Numbered&gt;
+All paragraphs in the input numbered within their chapters:
+  &lt;paragraph&gt;1. First.&lt;/paragraph&gt;
+  &lt;paragraph&gt;2. Second.&lt;/paragraph&gt;
+  &lt;paragraph&gt;1. First in second chapter.&lt;/paragraph&gt;
+
+All paragraphs in the entire input numbered in sequence:
+  &lt;paragraph&gt;i. First.&lt;/paragraph&gt;
+  &lt;paragraph&gt;ii. Second.&lt;/paragraph&gt;
+  &lt;paragraph&gt;iii. First in second chapter.&lt;/paragraph&gt;
+
+All paragraphs in the input outline-numbered (by chapter) in sequence:
+  &lt;paragraph&gt;[I:a.] First.&lt;/paragraph&gt;
+  &lt;paragraph&gt;[I:b.] Second.&lt;/paragraph&gt;
+  &lt;paragraph&gt;[II:a.] First in second chapter.&lt;/paragraph&gt;
+&lt;/Numbered&gt; 
+       
+       sort  
+
+ 
+  apply-templates   and
+  for-each  
+process the input nodes they match
+in the order those nodes appear in the input,
+unless one or more   sort   elements are used
+to specify a different order. 
+The   sort   element(s),
+if present,
+must be the first child element(s) of the
+  apply-templates   or
+  for-each  . 
+The   sort   element's
+ select  attribute is an
+ attribute value expression 
+that is evaluated for each node matched by the
+  apply-templates   or
+  for-each  ; 
+the resulting value is used as a key for that input node. 
+ 
+
+ 
+There are a variety of text functions
+available with which the keys may be derived
+from attribute values and text contents —
+see [ XSLT ] for these. 
+ 
+
+ 
+Additional attributes of   sort  
+control how the sorting is done: 
+ 
+
+  
+    Keys are sorted as text by default,
+    but the  data-type='number'  attribute
+    causes them to be sorted numerically instead. 
+   
+   
+    The keys are sorted in ascending order
+    unless the  order=descending  attribute is present. 
+   
+   
+    Text keys are sorted with uppercase first
+    unless the  case-order='lower-first'  attribute is present. 
+   
+     Example 5. 
+        Sorting
+       
+     XSLT
+       
+       
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl: stylesheet  xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+  &lt;xsl: output  method='xml'/&gt;
+
+  &lt;xsl: template  match='twelveDays'&gt;
+    &lt;xsl: copy &gt;&lt;xsl: comment &gt; Sorted lexicographically &lt;/xsl:comment&gt;
+        &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+      &lt;xsl: for-each  select=' day '&gt;
+        &lt;xsl: sort  select=' text() '/&gt;
+        &lt;xsl: text &gt;  &lt;/xsl:text&gt;&lt;xsl: copy &gt;&lt;xsl: apply-templates /&gt;&lt;/xsl:copy&gt;
+        &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+      &lt;/xsl:for-each&gt;
+    &lt;/xsl:copy&gt;
+    &lt;xsl: text &gt;
+&lt;/xsl:text&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+       
+     Input
+       
+       
+ 
+&lt;twelveDays&gt;
+  &lt;day&gt;A partridge in a pear tree&lt;/day&gt;
+  &lt;day&gt;Two turtledoves&lt;/day&gt;
+  &lt;day&gt;Three French hens&lt;/day&gt;
+&lt;/twelveDays&gt;
+ 
+       
+     Output
+       
+       
+ 
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;twelveDays&gt;&lt;!--  Sorted lexicographically  --&gt;
+  &lt;day&gt;A partridge in a pear tree&lt;/day&gt;
+  &lt;day&gt;Three French hens&lt;/day&gt;
+  &lt;day&gt;Two turtledoves&lt;/day&gt;
+&lt;/twelveDays&gt;
+ 
+       
+      If and when 
+
+ 
+There are two ways to do things conditionally in an XSLT stylesheet. 
+ 
+
+   An   if   element's contents
+    are expanded if its  test  attribute is true. 
+   
+    A   choose   element contains
+    a sequence of   when   elements
+    possibly followed by
+    an   otherwise   element. 
+      
+        The contents of the first   when   element
+        whose  test  attribute is true
+        are expanded. 
+       
+       
+        If no   when  's  test  is true,
+        the contents of the
+          otherwise   element (if present)
+        are expanded. 
+       
+  
+  
+The  test  attribute's value is an
+  attribute value pattern  
+or other  XPath  expression
+such as: 
+ 
+
+    contains('abcd','bc') 
+    is true if the first string contains the second
+    (in this case, it is true). 
+   
+     starts-with('abcd','bc') 
+    is true if the first string starts with the second
+    (in this case, it is false). 
+   
+  
+A value of the  test  attribute
+that is not a condition is true if it is a
+non-zero number,
+non-empty string, or
+non-empty lists of nodes. 
+Zero, the empty string, and the empty node-list
+are all false. 
+ 
+
+ 
+Example: 
+ 
+
+ 
+&lt;?xml version='1.0'?&gt;
+&lt;xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'&gt;
+
+  &lt;xsl:template match='block'&gt;
+
+    &lt;xsl:if test='@depth'&gt;&lt;!-- if the context node has a depth attribute --&gt;
+      &lt;xsl:value-of select='@depth'/&gt;
+    &lt;/xsl:if&gt;
+
+    &lt;xsl:choose&gt;
+      &lt;xsl:when test='0 &amp;lt; @depth'&gt;&lt;xsl:value-of select='@depth'/&gt;&lt;/xsl:when&gt;
+      &lt;xsl:when test='0 = @depth'&gt;Zero&lt;/xsl:when&gt;
+      &lt;xsl:otherwise&gt;Bad Depth&lt;/xsl:otherwise&gt;
+    &lt;/xsl:choose&gt;
+
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+ 
+
+
+ Including and importing stylesheets 
+
+ 
+An   include   element
+includes another XSLT stylesheet,
+named by the  href  attribute. 
+ 
+
+ 
+An   import   element
+includes another XSLT stylesheet,
+named by the  href  attribute,
+but the templates in the imported stylesheet
+have a lower  import precedence .
+Import precedence affects
+ which template is applied 
+if more than one matches. 
+ 
+
+ 
+(If you import a stylesheet that imports other stylesheets,
+see [ XSLT ] for
+its more complex but exact definition of
+import precedence.) 
+ 
+
+ 
+  include   and
+  import  
+may only appear as  top-level  elements. 
+ 
+
+
+ Output method 
+
+ 
+The   output   element controls a number of aspects of
+the production of output by an XSLT processor. 
+ 
+
+  
+    The  method  attribute
+    may have the value  xml ,  html , or  text ,
+    controlling whether XML, HTML, or text output is produced. 
+       XML output begins with an  xml  declaration
+        and produces a properly nested tree of XML elements. 
+       
+        HTML output doesn't produce end-tags for empty elements
+        such as  img 
+        (see [ XSLT ] for a complete list); 
+        doesn't turn  &lt;  in attribute values
+        into  &amp;lt; ; 
+        terminates processing instructions with  &gt; 
+        rather than  ?&gt; ; 
+        outputs character entities for characters that have them; 
+        and in general produces correct HTML output. 
+        See [ XSLT ] for details. 
+       
+        Text output just produces the text. 
+        No   element   elements are allowed
+        in the XSLT stylesheet in this case. 
+       
+      
+   
+    The   version  atttribute
+    controls which version of the XML or HTML output methods are used. 
+   
+   
+    The  indent  atttribute
+    (value  yes  or  no )
+    controls whether the output method
+    attempts to indent the XML or HTML output automatically
+    based on nesting depth. 
+   
+   
+    The  omit-xml-declaration  atttribute
+    (value  yes  or  no )
+    controls whether an XML declaration is produced
+    by the XML method. 
+   
+   
+    The  doctype-system  and
+     doctype-public  atttributes
+    give the identifiers to be used in the document type declaration. 
+   
+  Not here, but in XSLT 
+
+ 
+See [ XSLT ] for a discussion of these less-needed aspects. 
+ 
+
+   Processing instruction nodes, produced by your XSLT stylesheet
+    and then processed again later. 
+   
+    The  disable-output-escaping  attribute of
+      text   and
+      value-of  . 
+   
+     strip-space ,
+    which opposes   preserve-space  
+    in a non-simple manner. 
+   
+      sort  's
+     from ,  grouping-separator ,
+     grouping-size ,  lang ,  letter-value ,
+    and  value  attributes. 
+   
+    Keys. 
+   
+    The  lang  attribute,
+    which can be important if the text being processed is not English. 
+   
+    Top-level   parameters  . 
+    These are allowed,
+    and are associated with the   stylesheet  ,
+    but XSLT provides no way to pass values in to
+    the   stylesheet  
+    so use a top-level   variable   instead. 
+   
+  
+Erratum: 
+[ XSLT ] sometimes puts
+ &lt;  or  &gt; 
+in attribute value expressions; 
+you must put  &amp;lt;  or  &amp;gt;  instead,
+because attribute values cannot contain  &lt;  or  &gt; . 
+ 
+
+  Table 3.  Attributes interpreted as XPath expressions 
+   Element
+       
+       Attributes with expression value
+       
+     apply-templates
+       
+       select
+       
+     attribute
+       
+       name, namespace
+       
+     element
+       
+       name, namespace
+       
+     for-each
+       
+       select
+       
+     number
+       
+       lang, format, letter-value, grouping-separator, grouping-size
+       
+     sort
+       
+       select, lang, data-type, order, case-order
+       
+     value-of
+       
+       select
+       
+      References 
+
+  [XPath] 
+      XML Path Language (XPath) . 
+    W3C Recommendation. 
+     
+   [XSLT] 
+      XSL Transformations (XSLT) . 
+    W3C Recommendation. 
+     
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010May16Su21:42 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

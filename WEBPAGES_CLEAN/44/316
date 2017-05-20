@@ -1,0 +1,287 @@
+ Course Library Installation/Use in Eclipse/C++ Instructions<body>
+
+ 
+ Course Library Installation and Use for Eclipse/C++ Instructions
+     
+ 
+  
+  
+These instructions explain how to install the course library folder
+  ( courselib ) in Eclipse/C++.
+Then they explain how to create a project that uses the library.
+At various times during the quarter you may be asked to replace various
+   .hpp  or  .cpp  files and recompile the library.
+  
+   Courselib Installation 
+  Download and unzip the
+        courselib.zip   file;
+    the result is a  courselib  folder.
+ 
+
+   Locate the workspace folder 
+      (typically  C:\Users\ yourname \workspace )
+      and put the  courselib  folder you downloaded and unzipped into
+      this workspace folder.
+    The  courselib  folder contains course-specific C++  .hpp  and
+       .cpp  files that are usable in all C++ projects in Eclipse.
+ 
+
+   Select  File  |  New  |  C++ Project  as follow.
+     
+       
+
+   Create a new C++ Static Library  project in the
+       C++ Project  popup window.
+     Project Name  is  courselib .
+        There will be a warning at the top:
+          "Directory with specified name already exists".
+      Specify  Project type:  by disclosing  Static Library  and
+          selecting  Empty Project .
+      Specify  Toolchains:  by selecting  MinGW GCC 
+      The  C++ Project  popup window should appear as follows.
+     
+       
+       Click  Finish .
+     
+
+   Right-click the  courselib  icon in the  Project Explorer  tab.
+     
+      
+
+   Select  Properties  which appears as the bottom as follows.
+     
+       
+
+   In the  Properties for courselib  popup window
+    Under  type filter text , disclose  C/C++ Build  and
+        Select  Settings .
+      Under the  Tool Settings  tab, under  GCC C++ Compiler 
+          select  Miscellaneous .
+      In the  Other flags  textbox, type  -std=gnu++11  at the end.
+      The  Properties for courselib  popup window should appear as shown
+          below.
+     
+       
+       Click  OK .
+     
+
+   Either click the  Hammer  icon   or 
+      right-click the  courselib  icon in the  Project Explorer  tab
+      and select  Build Project .
+    The Console window should show the following.
+     
+       
+
+   If you disclose the main icons under the  courselib  icon in the
+        Project Explorer  tab you will see the following.
+     
+       
+    You can also look in the  Debug/src  and  src  folders to see
+      their  .o  and  .hpp/.ccp  files respectively.
+    Future projects will refer to the  courselib  folder, to find the
+      templated  .hpp  files in the top  src  folder, and the
+       libcourselib.a  file in the  Debug  folder.
+    Later in the quarter you will be asked to study the code in the
+       .hpp/.cpp  files here for your programming assignments.
+    If/when you are done looking now, elide all these icons leaving just the
+       courselib  icon.
+  
+   
+In the future, you may be asked to download new or improved/corrected
+   .hpp/.cpp  files into this  courselib  project, and then build a
+  new  libcourselib.a  file, for use in existing/future projects.
+ 
+   
+
+  Courselib Use: Creating a Project that Uses the Courselib 
+  Select  File  |  New  |  C++ Project  (as shown in step 3
+      above) to create a new project: either from an empty one or one from a
+       downloaded/unzipped folder.
+    In this example create an empty one.
+ 
+   Create a new C++ Executable  project in the  C++ Project  popup
+       window.
+     Project Name  is  test_set .
+      Specify  Project type:  by disclosing  Executable  and
+          selecting  Empty Project  (probably the defaults).
+      Specify  Toolchains:  by selecting  MinGW GCC 
+      The  C++ Project  popup window should appear as follows.
+     
+       
+       Click  Finish .
+     
+
+   Right-click the  test_set  icon in the  Project Explorer  tab
+      (as shown in step 5 above).
+ 
+
+   Select  Properties  (as shown in step 6 above).
+ 
+
+   In the  Properties for test_set  popup window
+    Under  type filter text , disclose  C/C++ Build  and
+        Select  Settings .
+      Under the  Tool Settings  tab, under  GCC C++ Compiler 
+          select  Miscellaneous .
+      In the  Other flags  textbox, type  -std=gnu++11  at the end.
+      The  Properties for test_set  popup window should appear as shown
+          below.
+     
+       
+       Click  Apply .
+      Under the  Tool Settings  tab, under  GCC C++ Compiler 
+          select  Includes .
+          In the  Include paths (-I)  pane,
+                click the  add  icon  .
+            In the  Add directory path  popup window,
+                click the  Workspace...  button.
+            In the  Folder selection  popup window,
+                disclose  courselib  and select the  src  folder.
+            The popup windows should appear as follows
+             
+               
+             Click  OK  in the  Folder selection  popup window.
+            The  Add directory path  popup window should appear as
+                 follows
+             
+               
+             Click  OK  in the  Add directory path  popup window.
+            The  Properties for test_set  popup window should appear as
+                follows.
+             
+               
+
+             Click  Apply .
+      Under the  Tool Settings  tab, under  MinGW C++ Linker 
+          select  Libraries .
+          In the  Libraries (-l)  pane,
+                click the  add  icon  .
+            In the  Enter Value  popup window,
+                enter  courselib  in the textbox.
+            Click  OK  in the  Enter Value  popup window.
+           
+             In the  Library search path (-L)  pane,
+                click the  add  icon  .
+            In the  Add directory path  popup window,
+                click the  Workspace...  button.
+            In the  Folder selection  popup window,
+                disclose  courselib  and select the  Debug  folder.
+            The popup windows should appear as follows
+             
+               
+             Click  OK  in the  Folder selection  popup window.
+            The  Add directory path  popup window should appear as
+                 follows
+             
+               
+             Click  OK  in the  Add directory path  popup window.
+            The  Properties for test_set  popup window should appear as
+                follows.
+             
+               
+             Click  Apply .
+          Click  OK .
+        
+
+   Right-click the  test_set  icon in the  Project Explorer  tab
+      and select  New | Source Folder  which appears as as follows.
+     
+       
+
+   In the  Folder name:  textbox of the  New Source Folder  popup
+      window, type  src  which appears as follows.
+     
+       
+    Click  Finish 
+
+
+   Disclose the  test_set  icon in the  Project Explorer , which
+      appears as follows.
+     
+       
+
+   Right-click the  src  icon in the  test_set  icon in the
+        Project Explorer  tab and select  New | Source File  which
+       appears as as follows.
+     
+       
+
+   In the  Source File:  textbox of the  New Source File  popup
+      window, type  driver.cpp  which appears as follows.
+     
+       
+    Click  Finish 
+
+   Disclose the the comment in the  driver.cpp  editor tab
+        and copy/paste the following code starting
+      on line 9.
+  #include "driver_set.hpp"
+
+int main() {
+  ics::DriverSet d;
+  return 0;
+}  
+The  driver.cpp  editor tab appears as follows
+     
+       
+Right click in the editor window and  Save  this file.
+The   should dissapear from the editor tab.
+   
+
+   Either click the  Hammer  icon   or 
+      right-click in the  test_set  icon in the  Project Explorer 
+      tab and select  Build Project .
+    The Console window should show the following.
+     
+       
+
+
+
+   Right-click in the  driver.cpp  editor tab and select
+        Run As | 1 Local C/C++ Application  illustrated below.
+    You can run this application in the future by clicking the 
+       Run  icon  .
+       
+    The program should begin running and the Console window should show the
+      following.
+      
+       
+    You can enter commands to test the  sets  (a topic we will cover soon).
+      
+    You can also either click the  Debug  icon
+        or right-click in the  driver.cpp 
+      editor tab and select select
+      select  Debug As | 1 Local C/C++ Application  to run this program
+      under the Eclipse debugger.
+  
+
+   To simplify the edit/build-recompile/debug loop, perform the following
+      operation: after completing it, clicking  Build  or  Run  will
+      automatically save the contents of any edited file before the program is
+      rebuilt and run.
+      Select  Window  |  Preferences .
+        In the  Preferences  popup window disclose  General  and
+           select  Workspace .
+        Click "Save automatically before build" checkbox, as follows..
+       
+         
+         Click  Apply .
+       
+         In the  Preferences  popup window disclose  Run/Debug  and
+           select  Launching .
+        In the "Save required dirty editors before launching" section click
+           the  Always  radio button as follows.
+       
+         
+         Click  Apply .
+        Click  OK .
+      
+    On your home machine you will never have to peform this step again; in the
+      lab must peform it every time that you log on.
+  
+Practice all these steps a few times so that you are familiar with creating
+  new projects that use the course library.
+ 
+   
+
+ </body> 

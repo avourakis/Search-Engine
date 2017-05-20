@@ -1,0 +1,2410 @@
+ Objects, Using Class Libraries/JavaDoc<body>
+
+ 
+ Objects, Using Class Libraries/Javadoc 
+ 
+  Introduction to Computer Science I-III
+ 
+ICS-21/-22/-23
+ 
+ 
+  
+
+
+
+
+        Introduction  
+ 
+  In this lecture we will begin our study of object-oriented programming (OOP).
+  We start by generalizing the concepts of variables and operators for
+      the  String  class, which is a special example of a reference type.
+  In doing so, we will examine four important technical terms (class, object,
+    variable, and reference) and highlight the relationships among them.
+  We also begin discussing the  new  operator, which returns a reference
+    to a new object constructed from any specified class.
+   
+  Next we will learn how to recognize and use the three fundamental features
+    of classes (constructors, methods, and fields) to construct and
+    manipulate a wide variety of objects.
+  We will also learn how to read the Javadoc (documentation) for classes,
+    which includes detailed and cross-indexed information about the use and
+    meaning of each feature available in a class.
+  We will examine a sampling of classes from Sun's standard Java library and
+    from ICS-21/22/23's Java library, learning how to manipulate objects
+    constructed from these classes in interesting ways.
+    
+  Finally, we will examine two more classes, which perform file input/output,
+     in detail:  TypedBufferReader  and  TypedBufferWriter .
+  We will reinforce the material covered earlier and learn useful patterns for 
+    file input and output using these classes, including more about exception
+    handling, which was briefly discussed in the previous lecture.
+    
+  Each object is a small tool that we can use/manipulate to help us perform
+    some part of a programming task.
+  There are libraries of classes from which we can construct all the tools
+    that we need to make it easier for us to solve programming problems.
+   We will also learn how to build our own tools by learning how to write our
+     own classes.
+  
+    
+       Reference Types: Classes and Objects  
+ 
+  Every Java type is either a primitive type or a reference type.
+  We have already learned a lot about the primitive types ( int ,
+     double ,  boolean , and  char ) and about their literals,
+    operators, and methods (in the  Math  and  Prompt  classses).
+  Now we will begin learning about reference types, which are richer (there
+    are thousands in the standard Java library) and more powerful (but a bit
+    more complicated to use).
+   
+  A reference type is most simply the name of a class; these names are just
+    Java identifiers, which by convention start with a capital letter.
+  In fact, we have already learned a bit about one reference type: the
+     String  class.
+  Before exploring this class in more detail, let's discuss the fundamental
+    relationship between classes and objects.
+  Read and reread the following paragraphs until they make good sense; think
+    of other examples, discuss this material with friends, and talk to the
+    staff about it.
+    
+  Generally, a class is like a blueprint.
+  We can construct new objects from a class by using Java's  new 
+    operator, which acts like a skilled worker who can read any blueprint
+    and construct objects from them.
+  Each object stores its own special state (information about that object),
+    which may be the same or different than other objects constructed from
+    the same class.
+    
+  In Java,  new  is a unary prefix operator, which takes as an operand the
+    name of any class (following the class name, inside parentheses, is any
+    information that the class requires to specify the initial state of the
+    object being constructed).
+  We illustrate objects by ovals; each is labelled by its class name and each
+    encloses its current state.
+  Methods can examine and change the state of an object.
+    
+  For example, we might have the blueprints (class) for constructing a certain
+    model of a Sony radio.
+  We can construct as many radios (objects) as we want from the same blueprint
+    (class).
+  The state of one radio (object) might be turned off; the state of two others
+    might be turned on, playing 89.5 FM at volume level 2; the state of yet
+    another  might be playing 503 AM at volume level 3.
+  The four objects just described might be pictured informally as follows.
+  
+        &amp;nbsp 
+ 
+  Now, let's return to the  String  class, which is part of the standard
+    Java library; the state of an object constructed from this class is just
+    a sequence of characters.
+  What makes this class unique is that it is the only one that has
+    literals: of course, all primitive types have literals, but no other
+    classes do.
+  When we write a  String  literal in our code, Java automatically
+    constructs a new object from the  String  class with the literal
+    as its contents.
+  But, to construct objects from ANY OTHER CLASS in Java, we need to use the
+     new  operator.
+  To get into this habit, we will redundantly write  new String("...") 
+    in this lecture whenever we want to construct a new object from the 
+     String  class (even though writing just  "..."  in our
+    code would accomplish almost exactly the same result -I say ALMOST because
+    there is still one missing detail that is too complicated to explain here).
+   
+  Thus,  new String("...")  is an expression that has a value: it tells
+    Java to apply the  new  operator to the  String  class.
+  The result returned (all operators return results) is a reference to a newly
+    constructed object from the  String  class.
+  The object itself, represented by a labelled oval) stores the sequence of
+    characters; we can then store the reference to that object inside a
+    variable that is declared to be of type  String .
+  References always appear as ARROWS: their tail is INSIDE the variable's box
+    and their head POINTS TO an object (its arrow head touches the oval).
+  In summary the  new  operator has two aspects to its behavior.
+     It constructs an object from a class and initializes its state.
+      It returns as a result a reference to the object that it constructs.
+     
+  Note: objects have classes but DO NOT have names.
+  Reference variables, which have names and types, store references that refer
+    to objects.
+  The type of a reference variable must always be compatible with the
+    class of the object to which it refers.
+  For simple object-oriented programming, the type will be the same as the 
+   class.
+  But, once we begin examining interfaces and and class hierarchies, the
+    relationship between variable types and object classes will become 
+    richer and more powerful, but more complicated too.
+    
+  For now, we will keep things simple: the type of a variable will always be
+    the same as the class of the object that it refers to.
+  Putting all these ideas together, we can illustrate the declaration
+     String s = new String("Java");  by
+  
+        &amp;nbsp 
+ 
+  Here, we declare the variable  s  to be of type  String  (meaning
+    it can refer to  String  objects); in addition, we initialize this
+    variable to store the reference that  new  returns as a result of
+    constructing the  String  object whose state is initialized to
+     "Java" .
+  Thus, there are really two initializations: the state of the object is
+    initialized to  "Java  and the state of the variable is initialized
+    to a reference that refers to this object.
+ 
+    
+       Declaring Reference Variables  
+ 
+  Thus, we can use the standard Java syntax for declarations to declare (and
+     initialize) reference variables.
+  For refrence variables, we have three different choices: we can declare the
+    variable and
+     not initialize it
+       initialize it to the value  null 
+         (a keyword, indicating that it refers to no object)
+       initialize it to refer to some object
+         (either a  new ly constructed object or an
+           object that has already been constructed
+    
+  We illustrate each of these three possibilites in the code and picture below.
+ 
+        &amp;nbsp 
+ 
+  We say that a reference variable is uninitialized, stores  null , or
+    stores a reference to an object.
+  We will rarely see  null  literals in the early part of ICS-21, but
+    we will see them at the end, when we start discussing arrays.
+  We we will use  null  frequently in ICS-22 and ICS-23, once we start
+    learning about using self-referential classes to construct linked lists.
+   
+  We say that the  String  variable  s3  stores a reference to a
+     String  object (the object is constructed by  new , which
+    returns a reference to the object it constructed) whose state is
+    initialized to  "abc" ;
+  Say this sentence out loud a few times; get a feeling for these words,
+    which we will use over and over again, always in the  same technical sense.
+  Finally, we frequently talk about the state of an object (what information
+    it stores); we will soon learn about methods that can examine and change
+    the state of an object.
+  
+        &amp;nbsp 
+ 
+  All variables, primitive and reference, store state.
+  But with reference variables, we speak of two states: the standard state of
+    the variable (the one reference it stores) and in addition the state of the
+    object (all the information it stores).
+    A variable (box) stores its state (one value); if this value is a
+        non- null  reference, it refers to an object
+      That object (oval) stores its state (which can comprise many values
+          mixing together a variety of types).
+    
+  So, we must distinguish the state of the variable (a reference) from
+    the state of the object it refers to (in this case, a sequence of
+    characters).
+  We did not have this complexity with primitive variables: they stored
+     just their (single value) state directly.
+  We can use reference variables to do more interesting things; but there is
+    no free lunch: the penalty for usefulness is extra complexity.
+   
+  Finally, we will also use the word  instance  as a synonym for object;
+    each  object is an instance of the class from which it was constructed.
+  Recall that we construct instances from a class by using the  new 
+     opererator, with the name of that class and the information specifying
+     the initial state of the newly constructed object.
+  So, in the picture above, we can also say that the variable  s3  refers
+    to an instance of the  String  class; one whose state is initialized
+    to  "abc" .
+  
+    
+       Constructing new objects; sharing old objects; the meaning of = for references  
+ 
+  We will now explore two different code fragments, and gain insight into
+    the semantics of the  =  operator when applied to variables that
+    store references.
+  First, examine the following two declarations.
+ 
+        &amp;nbsp 
+ 
+  Here we declare two variables.
+  Into each we place a reference to a  new  object: recall that the
+    expression  new String("...")  ALWAYS constructs a new object (an
+    instance of the  String  class) and returns a result that is a
+    reference to that object.
+  The Java declarations specify to store the reference to each of these
+    objects into its associated variable.
+  Although each object stores the same state (the characters inside it), Java
+    constructs new, distinct objects in each declaration.
+  Ignore the red boxes for now.
+   
+  Let's contrast this situation with the following two declarations
+   (followed by an expression statement: we could have combined the
+    second declaration and expression statement, and equivalently written
+    just the declaration  String s2 = s1; ).
+  
+        &amp;nbsp 
+ 
+   Here, we also declare two variables; but we construct only one  new 
+     object.
+   The variable  s2  originally is uninitiallized (note the  ? ).
+   Then  s1 's reference (the value stored in that variable) is stored
+     into  s2  as well (in the statement  s1 = s2 ;) we cross out
+     the  ?  as well.
+   So in this case,  s1  and  s2  now both refer to the same object;
+     we also say that  s1  and  s2   share  an object.
+   
+  Note that a reference (arrow) always leads from a variable's box to an
+    object's oval; it never leads to a another variable's box!    
+    
+  One of the most important things that you will learn this quarter is the
+    semantics of the  =  operator on references.
+  Its use will arise, over and over again, in more and more complex
+    circumstances.   
+    
+   We store/copy a reference into a variable by making that variable refer
+       to the same object that the reference refers to .
+    
+  Because  s1  stores a reference to the object shown, we store that
+    reference into  s2  by making  s2  refer to the same object.
+  I cannot overemphasize how important it is for budding object-oriented
+    programmers to memorize these semantics.
+  Repeat the boldfaced sentence aloud a few times; it must become part of you.
+    
+  
+    
+       Operators and Methods on Objects  
+ 
+  We have already learned that one of the overloaded prototypes of the
+     +  operator takes as operands two  String  operands.
+  Now we fill in some details: it takes two references to  String 
+    objects as operands and returns a result that is a reference to a new
+     String  object whose state is the catenation of the state of its
+    two operands (without changing the state of either operand).
+  We can illustrate this behavior with the following code and picture.
+ 
+        &amp;nbsp 
+ 
+  Thus, operators can also construct new objects implicitly.
+  The  +  operator implicitly constructs a new object whose state is
+    determined by the states of its operand objects; it returns a reference to
+    this new object that it constructs.
+  In the code above, the reference to this object is stored into  s3  as
+     an initialization in its declaration.
+   
+  Now lets discuss generalizing method calls for reference types.
+  The notation that we will discuss is the most important notational aspect of
+    Object-Oriented Programming.
+  We will use an analogy to discuss calling methods on the objects referred to
+     by variables.
+  We might say using English syntax, "John, stand up" to get the object
+    referred to by the name of "John" to change his state by standing up.
+  In Java syntax we would write this as the expression statement,
+      john.standUp(); 
+    
+  Likewise, we might say, "John, drink a glass of milk."
+  In Java syntax we would write this as the expression statement,
+     john.drink(glassOfMilk);  where  glassOfMilk  refers to some
+    other object (the glass of milk that John is supposed to drink): by
+    performing this method, the state of the milk glass object becomes empty,
+    while John's state becomes full.
+    
+  Generally, we use a variable name to specify which object to call a
+    method on (the object it refers to); the method is like a verb telling the
+    object what to do, and the information (if any) provided in the
+    parentheses corresponds to direct objects related to the verb (if it is
+    a transitive verb).
+    
+  Syntactically we write the name of the variable, followed by a
+    period (a separator), followed by the name of 
+    the method, all followed by a pair of open/close parentheses
+    (separators/delimiters).
+  If there are any operands to the method (like direct objects in English), we
+    list them inside the parentheses, separated by commas (separators).
+  If there are no operands, we still MUST include the open/close parentheses.
+    
+  Let's take a look at the syntax and semantics of the  toUpperCase 
+     method: it is called in the form  
+&amp;nbsp &amp;nbsp  object-reference  .toUpperCase()  
+    and returns as a result a reference to a newly constructed
+     String  object whose state is the upper-case version of the state of
+    the object to which   object-reference  refers.
+  We can illustrate this behavior with the following code and picture.
+  
+        &amp;nbsp 
+ 
+  The  toUpperCase  method is called on the object referred to by the
+    variable  s1 ; this method implicitly constructs a new object whose
+    state is determined solely by the state of its  object-reference 
+    (there are no other operands between the parentheses); it returns a
+    reference to this new object.
+  The reference to this object is stored into  s2  as an initialization
+    in its declaration.
+   
+  Instead, we might have written the code shown below.
+  
+        &amp;nbsp 
+ 
+   
+  Here, when the  toUpperCase  method returns its result (a reference
+    to a new object), it is stored back into variable  s1 .
+  Because a variable may store  only one  reference at a time, we cross
+    out the other (previously stored) reference.
+  What happens to the original object when, as is the case here, there are no
+    references to it?
+  Java can reclaim it (the storage it occupies) for use later: when
+     new  has to construct another object.
+  This concept is called  automatic garbage collection  and we 
+    will continue to discuss it in increasing depth throughout the 
+    ICS-21//22/23 sequence.
+    
+  Conceptually, this declaration and assignment is similar to
+     int i = 5; i = -i; , because the variable first stores  5  and
+    then the value of the  int  variable is used to compute another value
+   ( -5 ) which is stored back into the variable.
+  Whether a variable stores a primitive value or reference, it can store only
+    one values at a time; storing a new value in a variable means replacing 
+    (and totally forgetting about) the  old value.
+    
+  Let's take a look at the syntax and semantics of the  replace 
+     method: it is called in the form  
+&amp;nbsp &amp;nbsp  object-reference  .replace(  old character  ,  new character  )  
+    and returns as a result a reference to a newly constructed  String 
+    object whose state is almost the same as the state of the
+     object-reference , but with each occurence of  old character 
+    replaced by  new character .
+  We can illustrate this behavior with the following code and picture.
+  
+        &amp;nbsp 
+ 
+  The  replace  method is called on the object referred to by the
+    variable  s1 ; this method implicitly constructs a new object whose
+    state is determined by the state of its  object-reference  and its
+    two operands (between the parentheses); it returns a reference to this new
+    object.
+  The reference to this object is stored into  s2  as an initialization in
+   its declaration.
+   
+  The  String  class contains many many more methods for examining and
+    creating new objects.
+  For example, after the above declarations, writing  s2.length() 
+    returns as a result the  int  value  7 .
+  In fact, since the  replace  method itself returns a reference to a
+     String , we can write the more complicated expression
+     String s2 = s1.replace('d','p').toUpperCase();  
+  This is known as a  cascaded method call  (they are left associative).
+  It is similar to the composition of functions in mathematics  g(f(x)) ,
+    which is right associative.
+  When  replace  is called on the object  s1  refers to, it returns
+    a reference to its result (another  String  object); at that point,
+    the  toUpperCase  method is called on the reference to that object,
+    which returns a reference to its result: another  String  object whose
+    state is  "CANPIPE" .
+   
+  Note that the result here is the same as calling
+         String s2 = s1.toUpperCase().replace('D','P');  
+    which reverses the order of the method calls, and also changes the operands
+    of  replace  to appear in upper case.
+  We will discuss more  String  methods (and cascaded method calls)
+    later in this lecture.
+ 
+    
+       The == and != Operators  
+ 
+  We have now seen how the  +  operator and  toUpperCase  and
+    replace  methods work on references to  String  objects, and
+   how the  =  operator works on references in general.
+   
+  Now we will discuss the semantics of the  ==  and  !=  operators
+    when applied to any and all references.
+  If we compare two references (typically each is stored in a variable) with
+     == , the result is  true  when both refer to the same object
+    (both variables store the same reference).
+  We call  ==  the "object identity" operator, because it determines
+    whether or not two references refer to the same object.
+  This comparision DOES NOT DEPEND ON THE STATE stored inside the objects; it
+    depends only on the identity of the objects.
+    
+  Thus, in the red box in the first picture in the previous section,
+     s1==s2  returns a result of  false , because these variables
+    store different references; i.e., refer to different objects. 
+  It make NO DIFFERENCE to  ==  that the states of these two different
+    objects are the same.
+  Likewise, in the red box in the second picture,  s1==s2  returns a
+    result of  true , because these variables do store the same reference;
+    i.e., they each refer to the same object.
+    
+  As you would suspect, the  !=  operator performs the same kind of
+    comparison, but returns the opposite value:  true  if they are
+    different objects and  false  if they are the same object.
+    
+  The next section discusses how we can test something different, whether the
+    STATES stored inside two objects are the same.
+  
+    
+       The equals Method  
+ 
+  Finally, there is an alternative way to test whether two  String 
+    objects store the same STATE.
+  It uses the  equals  method.
+  As illustrated in the red boxes in the pictures above, both calls to this
+    method return  true : the first asks the object referred to by
+     s1  to check whether its STATE is the same as the state of the
+    object referred to by  s2 ; although the two objects are different,
+    their STATES are the same.
+  The second call asks the object referred to by  s1  to check
+    whether its STATE is the same as the state of the object referred to by
+     s2 ; here,  s1  and  s2  refer to the same object, so
+    it is asking one object to see whetherh its STATE is the same as itself,
+    which is always  true .
+   
+ In fact, here is a Java theorem:  s1 == s2  implies
+      s1.equals(s2) .
+  But, if   s1.equals(s2)  evaluates to  true , we cannot know
+    whether or not  s1 == s2  also evaluates to  true .
+  Thus, the  ==  operator is testing a stronger property than the 
+     equals  method.
+    
+  In the examples above, we could also write either  s1.equals(s2)  or
+     s2.equals(s1)  to test for identical states (the object doing the
+    testing and the object being tested are interchangable).
+  Both method calls always produce the same result.
+    
+  Recall that with a reference variable and object, two things are stored: the
+    variable stores its state (a reference), and the reference refers to an
+    object that stores its state (some information).
+  It is logical that we need two different ways to compare these two different
+    states for equality.
+  Thus,  ==  checks whether the variables store the same state;
+      s1.equals(s2)  (and  s2.equals(s1) ) checks whether the objects
+     they refer to (they may or may not be the same) store the same state.
+    
+   It is reasonable to require two different ways to check these two different
+    forms of equality, but it causes lots of confusion for students just
+    learning object-oriented programming.
+  Try to reread this material until it becomes intuitive; we will certainly
+    see many examples of their use.
+  Whenever you think about testing equality, a little light should go off in
+    your head that makes you pause and ask which of the two forms of equality
+    to check.
+  If  s1  and  s2  store references to  String  objects, you are
+    much more likely ask whether they are  equals  than whether they
+    are  ==  (and the same is true for other classes).
+    
+   In ICS-21, you almost always want to use  .equals  to check
+       for  String  equality .
+  Forgetting this fact will cause you to waste hours debugging your programs.
+  
+    
+       == vs equals (one last time)  
+ 
+When comparing for equality, which must specify which equality: that of the
+    ==  operator or that of the  equals  method.
+We can use a simple analogy to differentiate between these two possibilities.
+ 
+Imagine a house full of people and TVs.
+Each person represents a reference variable; each TV represents an object; the
+  channel to which the TV is tuned represents the state of the TV.
+Just as each reference variable refers to an object, each person is watching
+   a TV.
+  
+Assume we declare and intialize the variables  johnsTV  and  bobsTV .
+We might want to know whether John and Bob are watching the same TV: that is
+  analogous to evaluating  johnsTV == bobsTV .
+We might want to know whether John and Bob are watching the same channel: that
+   is analogous to evaluating  johnsTV.equals(bobsTV)  or
+    bobsTV.equals(johnsTV) , because we don't care which TV they are
+   watching (which object they are referring to), we care only whether their
+   TVs are on the same channel (their objects store the same state).
+  
+Of course, if John and Bob are watching the same TV ( johnsTV == bobsTV )
+   then we know for sure that they must be watching the same channel
+   ( johnsTV.equals(bobsTV)  or  bobsTV.equals(johnsTV) ) too.
+  
+    
+       Class Terminology  
+ 
+  We will now begin a more systematic examination of Java classes.
+  Our focus is still on learning about classes by reading them, and using
+    the knowledge that we gain to write programs that correctly construct
+    and manipulate objects from these classes.
+  We will identify and discus a large number of technical terms that help
+    us talk precisely about classes; we will use these terms repeatedly
+    during the quarter.
+   
+  A class defines and documents three kinds of  members .
+      Constructors : used by  new  to create objects 
+       Methods : operations we can apply to objects to examine/change
+            their state
+       Fields : variables inside objects that represent its state
+    
+  We will also further classify methods (which are by far the most interesting
+     members) as either
+     accessors/queries : examine, but DO NOT change the state of
+             objects
+       mutators/commands&amp;nbsp : change the state of objects
+     
+  Likewise, we will classify fields as either
+     instance variables : each object -an instance of a class-
+             stores its own instance variables
+       static fields : all objects constructed from the same class
+             share the same common static fields
+     
+  Also of paramount importance when reading/using classes is the concept of
+     access modifiers .
+  Each member specifies its own access modifier(s), which control(s) how
+    programmers can access/use it.
+  In this lecture we will study the  public ,  private ,
+      static , and  final  access modifiers (which are all Java
+     keywords). 
+     A member with a  public  access modifier can be used by any
+          programmer.
+        Typically, most constructors and methods use the  public  access
+           modifier.
+      A member with a  private  access modifier can be used only by the
+          programmer writing the class (not by a programmer using the class).
+        Typically, most instance variables use the  private  access
+           modifier.
+      A member with a  static  access modifier is shared by every object
+           in the class.
+      A member with a  final  access modifier is in some sense
+            unchangable ; for fields, this simply means that once the
+           they are initialized, they may not be stored into again (just like
+           the inclusion of  final  when declaring local variables).
+        So, the Java compiler will detect and report an error if we try to
+          use a state-change operator to store into a  final  field
+          that has already been initialized.
+   
+  For programmers reading a class (to understand how to use it) only
+     public  members are important (mostly constructors and methods).
+  A programmer implementing (or maintaining the implementation of) a class must
+    also understand its  private  members (mosty instance variables, 
+    but sometimes constructors and methods too).
+ 
+           EBNF of Members  
+ 
+  We will now examine the EBNF rules governing how members are defined in
+    classes.
+  When we learn how to write our own classes, we will be guided by these same
+    rules.
+  Because there are so many, first we will look at rules describing the
+     big picture.
+   
+&amp;nbsp &amp;nbsp  access-modifiers  &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp public| private ] [ static ] [ final ] 
+&amp;nbsp &amp;nbsp  member-definition  &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbspconstructor-definition |  method-definition  |  field-definition  
+&amp;nbsp &amp;nbsp  full-member-definition  access-modifiers  member-definition    
+  Access modifiers can actually appear in any order; but for consistency,
+    we show the standard ordering here.
+  We will learn about more access modifiers later, and augument this EBNF rule.
+    
+  Next we examine the details of the constructor and method definitions; they
+    are very similar and share many EBNF rules.
+  They also look a lot like the definitions of prototypes.
+    
+&amp;nbsp &amp;nbsp  parameter  &amp;nbsptype  identifier  
+
+&amp;nbsp &amp;nbsp  parameters  parameter{, parameter }]) 
+
+&amp;nbsp &amp;nbsp  return-type  type | void  
+
+    
+&amp;nbsp &amp;nbsp  constructor-definition  identifier  parameters  
+&amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp
+  [ throws   exception-types ]   
+
+&amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp
+       block-statement   
+
+&amp;nbsp &amp;nbsp  method-definition  &amp;nbsp &amp;nbsp &amp;nbsp
+      return-type  identifier   parameters  
+&amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp
+ [ throws   exception-types ]  
+
+&amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp
+       block-statement 
+    
+  The only difference in last two EBNF rules is that a
+     method-definition  must specify a  return-type  (which can be
+       void , meaning returns nothing),
+   while the  constructor-definition   cannot specify a
+      return-type .
+  In addition, as a syntax constraint, the  identifier  naming the
+    constructor MUST have the SAME NAME as the class in which it is defined.
+    
+  Notice that these definitions look a lot like prototypes
+    (especially in regards to the  parameters  rule; the only difference
+    is that the parameters here have names and types, not just types)
+    and each is ended by a  block-statement  indicating how to
+    execute its code (when we learn how to write classes, we will focus on
+    the statements inside these blocks).
+    
+  Finally, the EBNF rules for the third member, a field definition, looks just
+    like a local variable definition.
+    
+  &amp;nbsp &amp;nbsp  field-definition  type  identifier  [=  expression ];
+  
+           Static Classes: Methods and Fields  
+ 
+  Members declared with the  static  access modifier are very special.
+  Such members are common in very simple classes, such as  Math  and
+     Prompt , which define ALL their members to be  static .
+  They are much rarer in the more interesting classes that we will spend most
+    of our time reading and writing this quarter.
+  But, classes with  static  members are very important for writing even
+    tiny programs, so we describe how to use  static  members first.
+   
+  What is most special about  static  members is how we refer to them:
+    the standard way is by its class name, followed by a period, followed by 
+    the member's name.
+  Thus, unlike all the  String  methods that we discussed, we do not
+    construct objects from these classes and call methods on the objects!
+    
+  So, for example, the  Math  class defines the the following members
+    (among  many many others)
+    public static double sqrt    (double a)    {...}
+  public static int    max     (int a, int b){...}
+  public static double random  ()            {...}
+
+  public static final double PI = 3.14159265358979323846; 
+ 
+  Notice that all these members are  public , so we can access/refer to
+    them.
+  They are also all  static , so we will refer to these members as
+     Math.sqrt ,  Math.max ,  Math.random , and  Math.PI .
+  (I have elided the blocks of the three methods: we are concerned here only
+     with how to call these methods, not what code is executed when we do.)
+  Furthermore, the  sqrt  method returns a  double ; it has one
+     double  parameter named  a ;
+    the  max  method returns an  int ; it has two  int 
+     parameter named  a  and  b .
+    the  random  method returns a  double ; it has no parameters.
+    
+  From this point onward, we will use the term  parameter  to specify
+    the variable names appearing inside the parentheses defining methods
+    (sometimes we call them  parameter variables ).
+  When we call such a method, we will now use the term  arguments  to
+    describe the values that are transmitted to the method (we will still use
+    the term  operand  when discussing operators).
+  So, in the expression  Math.max(x,7)  we say that the arguments to
+    the  Math.max  method are  x  and  7 .
+      
+  Note that when we call a method, Java first evaluates its arguments; then
+    it transmits these values to the method by storing them into the method's
+    parameters; this is how parameters are initialized.
+  So, the number of arguments in a method call must match the number of
+    parameters in one of its definition (there may be many definitions,
+    because the method name may be overloaded).
+  Typically the statements in the elided block refers to the values stored in
+    the parameters, when performing its computation.
+    
+  So, if we write the expression  Math.sqrt(25.) , we are calling
+    the  static sqrt  method in the  Math  class and passing
+    it the argument  25. ; this value is stored in the parameter
+     a ; the method then computes and returns a result of  5. 
+    
+  Likewise, if we have declared  int x = 5;  and write the expression
+     Math.max(x+4,7)  we are calling the  static max  method
+    in the  Math  class and passing it the arguments  9  (the
+    value of  x+4 ) and  7 ; these values are stored in the
+    parameters  a  and  b  respectively; then, the method computes
+    and returns a result of  9 .
+    
+  Because the method  random  has no parameters, we must call it without
+    any arguments; but, we still must include the parentheses.
+  The code fragment below  prints 10 random numbers.
+    for (int i=1; i&lt;=10; i++)
+    System.out.println(Math.random());  
+    
+  Finally, we can use the field  Math.PI  in any statement, except one
+    that attempts to change its value (recall that it is declared with a
+     final  access  modifier).
+  Thus, for example, we can write  area = Math.PI*r*r  but not
+     Math.PI = 3.0;  (in the latter case, the Java compiler will detect
+    and report an error).
+  By convention, identifiers specifying  static  fields, like  PI 
+    are completely capitalized, with different words separated by the
+    underscore character; but this convention is not as widely followed as
+    the others we have seen (for variable/method names and class names).
+    
+  Likewise, the  Prompt  class appears in the course library (not
+    standard Java library).
+  It also defines all its members to be  static ; some are
+  
+  public static int forInt (String message)                   {...}
+  public static int forInt (String message, int low, int high){...} 
+ 
+  Notice that these definitions overload the method name  forInt ,
+    but as required the two signatures (parameter structures) are different.
+  We might use these methods as follows
+  
+  int primeCheck = Prompt.forInt("Enter number to check for primality");
+  int selection  = Prompt.forInt("Enter selection,1,10);  
+    
+  Java knows the first use of  forInt  refers to the first definiition,
+    the one with a single  String  parameter, to match the single
+     String  argument in the parenthesis.
+ Java knows the second use of  forInt  refers to the second definiition,
+    the one with one  String  parameter followed by two  int 
+    parameters, to match the one  String  argument followed by two
+     int arguments in the parenthesis.
+  
+           Reading the DiceEnsemble Class  
+ 
+  We are now ready to switch our attention back to the more common and
+    interesting classes in Java: classes having constructors and whose
+    methods are not  static .
+  When discussing these classes, we will carefully examine their  public 
+    constructors and methods; but because their fields are all  private , 
+    we will not discuss these members in detail here (but we will, when we
+    learn how to write our own classes and methods).
+   
+  We will use the definition of members in the  DiceEnsemble  class as
+    our primary example in this section.
+  This class is a computer model of a collection of dice.
+  The objects constructed from this class perform intuitively, but the class
+    is complicated enough to illustrate most interesting aspects of classes.
+    
+  There can be any number of dice in an ensemble, and the dice can have
+     any number of sides; but in this model, all the dice must have the same
+     number of sides.
+  The model focuses on the operations of rolling the dice and reading the 
+     number of pips showing (the number of dots on the top face of a die).
+  These are the typical things we do with dice in the real world.
+  We cannot ask for the weight of the dice, nor their color, nor a variety
+    of other properties that physical dice exhibit.
+  On the other hand, we can ask any dice ensemble object how often it has
+    been thrown; that part of the model exceeds what we can do with physical
+    dice.
+    
+  First, let's overview the definitions of all thirteen members in this class.
+  There are (in order) two constructors, eight methods (one mutator/command and
+    seven accessors/queries), and three instance variables.
+  Verify that each definition matches one of the EBNF rules presented above.
+  
+     
+  public DiceEnsemble () 
+  {...}
+
+  public DiceEnsemble (int numberOfDice, int sidesPerDie)
+    throws IllegalArgumentException
+  {...}
+
+  public DiceEnsemble roll ()
+  {...}
+
+  public int getNumberOfDice ()
+  {...}
+
+  public int getSidesPerDie ()
+  {...}
+
+  public int getPips (int dieIndex)
+    throws IllegalArgumentException,IllegalStateException
+  {...}
+
+  public int getPipSum ()
+    throws IllegalStateException
+  {...}
+
+  public int getRollCount ()
+  {...}
+
+  public boolean allSame ()
+   throws IllegalStateException
+  {...}
+
+  public String toString ()
+  {...}
+    
+  private int   sidesPerDie;
+  private int   rollCount;
+  private int[] pips;   
+  
+    &amp;nbsp 
+ 
+  Recall that the two constructors (the first two members) specify no
+     return-type  and are named by the class name,  DiceEnsemble ;
+    because there are two definitions, the constructor for this class is
+    overloaded.
+   
+  The seven methods are named  roll ,  getNumberOfDice ,
+     getSidesPerDie ,  getPips ,  getPipSum ,
+     getRollCount , and  toString  - a very specially named method.
+  Accessor/query methods are often called "getters" and their names often start
+    with  get , as most of these do; they get information about the
+    state of the object that is otherwise inaccessible (see the  private 
+    fields below).
+    
+  The three fields ( sidesPerDie ,  rollCount , and  pips ) are
+    all  private  instance variables; this means that each object stores
+    its own state in these variables, but users of objects constructed from
+    this class cannot access the values of these variables directly by their
+    names.
+    
+  Now, let's individually explore the constructors and methods in more detail.
+  
+           Using Constructors  
+ 
+  Recall from our discussion of  String  that we use the  new  
+   operator to construct new objects from a class.
+  We can now say more precisely that what actually follows the  new 
+    operator is a constructor for the class (which, as you recall, must have
+    the same name as the class).
+  The information inside its parentheses are the arguments that the constructor
+    needs to initialize the state of the object.
+  The number, order, and types of the argument(s) must match the number, order,
+    and types of the parameter(s) of a constructor; each argument is evaluated
+    and transmitted to its matching parameter in the constructor, where its
+    value is used to initialize the state of the object.
+   
+  The  DiceEnsemble  class has two constructors (so construction is
+    overloaded).
+  As required, they have different signatures: no parameters or two  int 
+    parameters.  
+  They appear as
+  
+  public DiceEnsemble () 
+  {...}
+
+  public DiceEnsemble (int numberOfDice, int sidesPerDie)
+    throws IllegalArgumentException
+  {...}  
+  Generally, constructors are easy to locate when scanning the members of a
+     class, because they have the same name as the class and have no return
+     types.
+  Pragmatically, constructor definitions typically appear first in a class
+    (although in another popular style, fields appear first and constructors
+    appear second).
+  The first constructor, which has no parameters, is designed always to
+    return a reference to an object representing an ensemble of two,
+    six-sided dice.
+    
+  The second constructor allows the programmer to specify the number and
+    sides of the dice.
+  It will fail to construct an object (and instead throw
+     IllegalArgumentException ), if it is given bad arguments for either
+    its  numberOfDice  or  sidesPerDie  parameter.
+  (We discuss the details later, but it certainly wouldn't make sense to have
+     -2  dice in an ensemble).
+    
+  The following examples illustrate a few different ways to construct
+     DiceEnsemble  objects.
+  In each case, the signature of one of the constructors is followed: no
+    parameters or two  int  parameters.  
+    DiceEnsemble d1 = new DiceEnsemble(2,6);    //2 dice, each 6-sided
+  DiceEnsemble d2 = new DiceEnsemble();       //Same as above; see Javadoc
+  DiceEnsemble d3 = new DiceEnsemble(1,4096); //1 die with 4096 sides!
+  DiceEnsemble d4 = new DiceEnsemble(10,2);   //10 dice, each 2-sided  
+  After construction, each  DiceEnsemble  variable stores a reference
+    to a different object whose state has been initialized by the constructor.
+  For example, here is a picture for variable  d1  and the object that it
+    refers to.
+  
+        &amp;nbsp 
+ 
+  In this picture we show the  private  instance variables for an object
+    constructed from  DiceEnsemble :  sidesPerDie ,  rollCount ,
+    and  pips .
+  It is the purpose of the constructor to initialize these variables.
+  We show such instance variables just like other variables: as a labelled
+     box; so here there are three of them comprising the state of the object.
+   
+  You can see that one constructor argument, the one stored in the parameter
+     sidesPerDie , is stored directly in an instance variable with the
+    same name.
+  Another instance variable,  rollCount , is always initialized to
+     0 .
+  Finally, the last instance variable,  pips , refers to an array of
+    length two: it stores the number of pips on each die (shown as  0 
+    here, because the dice have not been rolled yet).
+  What determines the size of that array? The argument transmitted to the
+     numberOfDice  parameter.
+  We will cover the details of arrays soon, learning that they are just a
+    special kind of object, with their own instance variables pictured above.
+    
+  So, instance variables are just that: variables stored locally in each 
+    instance of a class (i.e., in each object).
+  While every object has the same instance variables, their values depend
+    on which constructor was called and which arguments it was sent.
+  To further illustrate this point, here is a picture for variable  d4 
+    and the object it refers to.
+  
+        &amp;nbsp 
+ 
+  Notice that this object has exactly the same instance variables, but their
+    values are different because the constructor was passed different
+    arguments.
+  This object represents a dice ensemble with ten, two-sided dice.
+ 
+           Using Methods  
+ 
+  Recall from our discussion of  String  that once we have constructed
+    an object, and stored a reference to it in a variable, we can use the
+    variable's name to make the object do some useful work for us by calling
+    one or more of its methods.
+  Let's examine what some individual methods do and finally put a bunch of
+    method calls together, with some control structures, to perform some
+    interesting task.
+  It might seem surprising, but most of the methods that we discuss are
+    parameterless; actually, this happens more often than not in
+    object-oriented programming.
+   
+  First, the following methods are simple accessors/queries.
+  
+  public int getNumberOfDice ()
+  {...}
+
+  public int getSidesPerDie ()
+  {...}  
+  Each returns some never-changing part of the state of the object: the number
+    of dice in the ensemble and the number of sides on each die in the
+    ensemble.
+  Calling  d4.getNumberOfDice()  returns a result of  10 ;
+    calling  d4.getSidesPerDie()  returns a result of  2 .
+  Thus, we can always query a  DiceEnsemble  object for this information.
+    
+  For any of the other methods to make sense, we must first examine the
+     roll  method.
+  I could have made the return type of this method  void  (and sometimes
+    I wish I had).
+  In the discussion below, I will assume that  void  is in fact its return
+    type, but I will tell to the truth about this method at the end of this
+    section (when we use the return type for casecaded method calls).
+    
+  The  roll  method has the following definition (pretend).
+  
+  public void roll ()
+  {...}  
+  Because its return type is  void  (keep pretending), we can guess that
+    this method is a mutator/command: it returns no result, but instead changes
+    the state of an object.
+  So how does this class model rolling a dice ensemble: first it increments
+     rollCount  and then it generates random numbers and uses them to
+    change the values in the  pips  array to correspond to the number of
+    pips showing on each die.
+  For example, if we called  d1.roll();  the state of the object might
+    be changed (refer to the picture above for the "before" picture) to one
+    where the dice show  5  and  3  as pips.
+  
+        &amp;nbsp 
+ 
+  The following methods are also accessors/queries.
+  But they return information based on the state of
+    a  DiceEnsemble  object that  roll  can change:
+    the  rollCount  and  pips  instance variables.
+    public int getRollCount ()
+  {...}
+
+  public int getPipSum ()
+    throws IllegalStateException
+  {...}
+
+  public boolean allSame ()
+   throws IllegalStateException
+  {...}
+
+  public int getPips (int dieIndex)
+    throws IllegalArgumentException,IllegalStateException
+  {...}  
+  The first method just returns the current value stored in the
+     rollCount  instance variable.
+  Recall that this instance variable is declared  private .
+  Thus, a programmer cannot access this variable directly; but, the
+     getRollCount  method, which a programmer can access because it
+    is  public , returns whatever value is stored there.
+  So, the constructor initializes this instance variable to  0 ;
+    the  roll  method increments it; and the  getRollCount 
+    method returns its current value.
+  If we call  getRollCount  before calling  roll , it would return
+     0 .
+   
+  The next method is the accessor/query  getPipSum .
+  Generally, it returns the sum of the pips on all the dice.
+  But, if we have not yet rolled the dice, this method cannot return
+    a reasonable result, so it throws the  IllegalStateException ,
+    indicating that the object is in a bad state for calling
+     getPipSum .
+    
+  The  allSame  method works similarly.
+  Generally, it returns whether or not (a  boolean ) all the pips show
+    the same value (for two dice, this means we rolled a double).
+  But, if we have not yet rolled the dice, this method cannot return
+    a reasonable result either, so it also throws the same
+     IllegalStateException , indicating that the object is in a bad state
+    for calling  allSame 
+    
+  The  getPips  accessor/query method is a bit more interesting, because
+    it defines a parameter.
+  This class numbers the dice from one up to the number of dice in the
+     ensemble; this method allows a programmer to specify the index of the
+     die he/she is interested in, and it returns the number of pips on that
+     die.
+  Once again, if we have not yet rolled the dice, this method cannot return
+    a reasonable result either, so it also throws the same
+     IllegalStateException .
+    
+  But, we might also specify a bad  dieIndex : a number smaller than one
+    or greater than the number of dice in the ensemble; in either case,
+    this method cannot return a reasonable result; in this case it is not
+    the state of the object that is bad, but the value of the argument, so
+    this method instead throws the  IllegalArgumentException .
+  Note that if we were using a  try-catch  statement, we might be able
+    to recover from this exception by calling  getPips  again, but with
+    a different argument for  dieIndex .
+  But, we cannot recover from the  IllegalStateException  by doing so:
+    in this case we would have to call  roll  before doing anything else.
+  Thus, having different exceptions for different problems seems reasonable.
+     
+  Finally, every class should have a parameterless  toString  method that
+    returns a  String  representing the state of an object.
+  We use this method  mostly for debugging purposes: for printing the state
+    of objects while our program executes.
+  If, after rolling the  d1 , we called
+        System.out.println("d1 = " + d1.toString());  
+   Java would print (based on the state shown in the picture above)
+        d1 = DiceEnsemble[sidesPerDie=6,rollCount=1,pips=[5,3]]  
+   Many  toString  methods return their result in a standard form, as
+    this one does:  the class name of the object, followed by a backeted list
+    of all its instance variables and their values, separated by commas.
+  What is truly special about this method is that Java calls it, implicitly,
+    if it ever needs to convert an object into a  String .
+  So, we can instead write just
+        System.out.println("d1  " + d1);  
+    and Java would still print the same thing: it will implicitly call
+     toString  on  d1  to convert it into its  String 
+    representation, so that it can apply the catenate operator.
+    
+  Now let's write some more complicated and interesting code using combinations
+    of these methods.
+  First,  getPipSum  is a very useful method, but we can compute its
+    value with our own code, using other available methods
+   (here, we do so for the object that  d1  refers to):
+    int pipSum = 0;
+  for (int i=1; i&lt;=d1.getNumberOfDice(); i++)
+    pipSum += d1.getPips(i);  
+  For a final example, we can use the following code fragment to roll and
+    print a sequence of dice rolls; the code prompts the user to enter the
+      number of rolls to perform.
+    DiceEnsemble dice        = new DiceEnsemble(2,6);
+  int          timesToRoll = Prompt.forInt("Enter # of times to roll dice");
+  for (;;) {
+    dice.roll();
+    if (dice.getRollCount() &gt; timesToRoll)
+      break;
+    System.out.print(dice.getPipSum() + " ");  //put in a space separator
+  }  
+    
+  If we wanted to, we could have prompted the user for the number of dice and
+    and the number of sides per die too, and used these values when
+    constructing the dice ensemble.
+  OK, time to tell the truth abot  roll .
+  The  roll  method actually does not return  void , but instead
+    returns a reference to a  DiceEnsemble  object; in fact, it return
+    a reference to the exact same  DiceEnsemble  object that it is called
+    on (although the state of that object has been changed by  roll 
+    before it returns its reference).
+  This method now is a bit of a hybrid: it is a mutator/command, but it also
+    returns a result just like an accessor/query.
+    
+  How does this change affect what we have said?
+  First, all the above code is perfectly legal.
+  We can still write a  d1.roll()  as a legal expression statement; we
+    just elect not to do anything with the reference tht this method returns.
+  It still satisfies all the syntax constraints of an expression statement.
+    
+  But, now we can do something that we couldn't do with a  void  method:
+    we can cascade method calls.
+  For example, we can replace the last two statements in the loop above with
+    the single statement  System.out.print(dice.roll().getPipSum()); 
+  Here we call the  roll  method on the object to which  dice 
+    refers; this method changes the state of that object and then returns as a
+    result a reference to THE SAME OBJECT; this reference is immediately used 
+    to call the  getPipSum  method on the new state of that object.
+    
+  Generally, we can always take a  void  method and make it return a
+    reference to the object that it was called on.
+  Doing so will allow cascaded method calls, which might make our code easier
+    to write.
+  In fact, now we can rewrite this code fragment equivalently as:
+    DiceEnsemble dice        = new DiceEnsemble(2,6);
+  int          timesToRoll = Prompt.forInt("Enter # of times to roll dice");
+  for (;;) {
+    if (dice.roll().getRollCount() &gt; timesToRoll)
+      break;
+    System.out.print(dice..getPipSum() + " ");  //put in a space separator
+  }  
+or even using a  for  loop.
+    DiceEnsemble dice = new DiceEnsemble(2,6);
+  for (int timesToRoll = Prompt.forInt("Enter # of times to roll dice");
+       dice.roll().getRollCount()   
+  Is this a good or bad thing?
+    
+  Let's examine the semantics of a local reference variable declared
+     final .
+  Recall that a local primitive variable decalared  final  must be
+    initialized and cannot have its value changed.
+  This rule is exactly the same one for reference variables, but because they
+    store state (references that refers to objects that have state), we must
+    look at it a bit more closely.
+    
+  Using  final  with a reference type variable DOES mean that once we
+    initialize it, it always refers to the same object
+  It DOES NOT mean that the state of the object remains unchanged: we can still
+     call mutator/command methods on a  final  variable, changing not its
+     state but the the state of the object it refers to. 
+  So, if we declare  final DiceEnsemble d = new DiceEnsemble(2,6);  we
+     CAN write  d.roll(); , but we CANNOT write
+      d = new DiceEnsemble(1,6);  which attempts to change the reference
+     stored in the  final  variabls  d ).
+   Again, the difference between what is stored in a variable (a reference)
+     and what is stored in the object it refers to (the object's state) is
+     crucial to understanding this distinction.
+    
+  Finally, if a variable stores  null , it refers to no object.
+  So calling a method on that variable cannot ever work correctly: when Java
+     uses the variable to find the object it refers to (so that it can call the
+     method using the state of that object), it fails to find any object at
+     all, so it automatically throws a  NullPointerException ; it should
+     really be called a null "reference" exception, because we don't use the
+     word "pointer" in Java; that is a C/C++ word.
+  
+    
+       Fields  
+ 
+  Because most fields are instance variables, and most instance variables are
+    defined to be  private , we do not really need to know anything about
+    them to understand how to use a class: only the person writing the class
+    can use its  private  members.
+  Later, when we learn how to write our own classes, we will investigate and
+    manipulate such  private  fields thoroughly.
+   
+  If we did declare a field to be  public  (and programmers rarely do;
+    and if they do, they are most likely to declare it  final  as
+    well), say  public int sidesPerDie; , and if variable  d 
+    referred to a  DiceEnsemble  object, then we could write
+     System.out.println(d.sidesPerDie);  to access the value of that
+      member (not too bad) or  d.sidesPerDie = -2;  to store into that
+      member (terrible; it will stop all the other methods from working).
+  Thus, by the class-writer declaring this instance variable to be 
+     private , he/she has guaranteed that instances of the class cannot
+    be corrupted by incompetent or malicious programmers.
+    
+  When  private  instance variables were first introduced in programming
+    languages (the early 1970s), there was a big debate as to whether they
+    were good or bad.
+  Many famous computer scientists argued about the advantages and disadvantage
+    of hiding information from programmers.
+  It was a hot topic.
+  But now, in the 21st century, there is almost complete agreement that
+    information hiding is good, and that features like  private  instance
+    variables should be used whenever possible.
+  We will return to this discussion when we learn how to write classes.
+  At that point, we will learn more formally how  private  instance
+    variables help programmers who write classes ensure that all objects obey
+    certain class invariants, no matter how the objects are used by other
+    programmers.
+  
+    
+       OOP Summary  
+ 
+  So, what is object-oriented programming (OOP) about?
+  Much of it concerns finding useful classes for the problems that we need to
+    solve, constructing objects from these classes, and calling methods on
+    these objects to help solve our problems.
+  We have certainly discussed a large number of technical terms that help
+    us talk precisely about what we are doing -but the code that we actually
+    have to write in our programs is quite simple.
+   
+  Let's return to our analogy one last time.
+  A class is like a blueprint; the  new  operator is like a skilled
+    worker who can read any blueprints and construct objects from them.
+  Because objects don't themselves have names, we store references to
+    objects in variables names.
+  Sometimes a program constructs just one object from a class; sometimes more
+     than one.
+  Each constructed object is similar to the others from its class: each has
+    the same instance variables (locations to store state), and each can be
+    used to call the same methods.
+  We use the arguments to a constructor to initialize the state of an object
+    once it is built.
+  Depending on which methods we call, the values of the instance variables
+     might change.
+    
+  A common mistake for beginners is to confuse the name of a class with the
+    name of a variable that refers to an object constructed from that class.
+  What really makes the problem insidious, is this second form is exactly 
+    what we use when calling  static  methods!
+  So, for example, writing  DiceEnsemble.roll();  is meaningless:
+     DiceEnsemble  is the name of a class, not the name of a variable that
+     refers to an object constructed from that class;  roll  is the
+     name of a method, but it is not a  static  method.
+  If we declared  DiceEnsemble d = new DiceEnsemble(2,6);  then writing
+     d.roll();  is fine.
+  And, writing  Math.max(3,7)  is fine too, because  max  is the
+    name of a  static  method defined in the  Math  class.
+  Learn to distinguish between these two confusing cases.
+    
+  We can think of the period ( . ) as an operator: the member selector
+    operator.
+  Each period is prefixed by the name of a class (or a reference to an object
+    constructed from that class) and suffixed by the member name selected from
+    the relevant class.
+  In fact, we can augment our precedence table with this operator (level 15)
+    and the  new  operator (level 13); for completeness, I have also
+    included  ?  and  :  (the operators for
+     conditional expression  when used in combination, which have very
+    low precedence, at level 2).
+    
+       Operator  Name  Precedence  Associativity 
+         . ++ --    member selector postfix increment/decrement  15  left none: all unary 
+       + - ! ++ --    unary plus/minus/negate prefix increment/decrement  14  none: all unary 
+       new (type) expression   constructor operator casting (see below)  13  left 
+       * / %    multiply divide remainder  12  left 
+       + -    add, subtract  11  left 
+        &gt;=   instanceof     inequality relational  9  left 
+       == !=    equality relational  8  left 
+       &amp;&amp;    logical and  4  left 
+       ||    logical or  3  left 
+       ?:    conditional expression  2  none 
+       = += -= *= /= %=    state change  1  right 
+  
+      
+Note that in the cascaded call  dice.roll().getRollCount(); 
+  first  roll  is called on  dice , and then  getRollCount 
+  is called on the result that  roll  returns (a reference to 
+   dice  with its state updated).
+This is because period ( . ) is left associative.
+  
+           Importing Classes from Packages  
+ 
+  Large software systems, like the standard Java library, comprise thousands
+    of different classes.
+  Programmers often need some way to organize these classes, and Java
+    provides a  package  mechanism for this purpose.
+  In this section we will learn how to access classes that declared in
+    packages.
+  First, we have the following EBNF rule that describes package names.
+   
+  &amp;nbsp &amp;nbsp  package-name  identifier{. identifier }
+    
+  For example,  java.lang  is one important package name for anyone
+    using Java;  edu.uci.ics.pattis.introlib  is an important package
+    name for anyone IN THIS COURSE using Java (that is the package in which
+    the  Prompt  class is declared).
+  Package names must be unique; one way to guarantee uniqueness is by using a
+    variant of an internet address (pattis@ics.uci.edu) which are guaranteed 
+    (by the people runing the internet) to be unique.
+    
+  The Javadoc for a class tells us in which package it is declared.
+  We can always use the  full name  of a class, prefacing the class name
+    with its package name.
+  Thus, we could refer to the  BigInteger  class by
+     java.math.BigInteger  and the  Prompt  class by
+     edu.uci.ics.pattis.introlib.Prompt ; OK, it is pretty obvious we need
+    a shortcut.
+    
+  To be able to write a class name by itself, we must import it with an
+     import-declaration , whose EBNF rule appears below ( import 
+    is a keyword).
+  Once a class is imported, we can use the class name by itself, without
+    its package name as a prefix.
+    
+  &amp;nbsp &amp;nbsp  import-declaration  import  package-name .*; &amp;nbsp | &amp;nbsp  import   package-name . identifier ;
+    
+  The first alternative imports ALL classes declared in a package; the second
+    imports just the single class in that package named by  identifier .
+  I prefer writing the pair of imports
+       import edu.uci.ics.pattis.introlib.Prompt;
+  import edu.uci.ics.pattis.introlib.DiceEnsemble;  
+  instead of the shorter and equivalent
+      import edu.uci.ics.pattis.introlib.*;  
+  because it explicitly identifies the names of all the classes that I am using
+    from a package.
+  By commenting-out one of these imports, the compiler will generate errors in
+    every statement where that class is used (it is sometimes very useful to
+    know all the places in your code where a class is used).
+   
+  Here is another interesting facet of package and class names.
+  The standard Java library declares a class named  Timer  in its
+     java.util  package.
+  Without knowing about this class, I wrote a  Timer  class in my  
+     edu.uci.ics.pattis.introlib  package, which does something very
+    different.
+  If I want to use only one of these classes, in a program, I just import it.
+  But if I want to use both, I cannot import both: the compiler will detect
+    and report an error if I try to import the same class name from two
+    different packages.
+  What I can do is import one class (say, the one I use most often)
+    and then just refer to the other class by its full name.
+  So long as package names are different, even if class names are the same,
+    there is a way to specify to Java exactly what we want to do (although
+    it might be a bit verbose).
+    
+  Note that both the  Math  and  String  classes are declared in the
+     java.lang  package.
+  What makes this package so special, is that we never have to import its
+    classes explicitly; they are automatically available.
+  It is as if every program implicitly contains  import java.lang.*; 
+      
+       JavaDoc  
+ 
+  One of the foremost reasons that I like teaching Java is Javadoc.
+  Javadoc is a system for documentation that was developed at the same
+    time as Java; it is included with the standard Java distribution.
+  The thousands of classes in the standard Java library are all documented
+    using Javadoc.
+  In this lecture we learn about Javadoc as consumers: how to read the output
+    of Javadoc, so that we can learn how to explore and use prewritten classes.
+  In a later lecture we will learn more about Javadoc, as producers: how to
+    write the input to Javadoc, so that we can document the classes that we
+    write.
+   
+  Java was one of the first languages developed after the popularization of
+    web browsers.
+  In a dramatic departure from the past, where there were few documentation
+    systems -much less official ones- for languages, Java and Javadoc were
+    developed together synergistically.
+  The Javadoc system takes as input annotated (with special comments, tags,
+    and links) Java classes and produces easy-to-read web pages documenting
+    them.
+  Their format, always the same, is designed to include a tremendous amount
+    of useful information about each class and all its members.
+  Javadoc also automatically highlights and cross-indexes information about
+    the use and meaning of each member available in a class.
+    
+  In this section, we will discuss most aspects of browsing Javadoc, using the
+    the  Math  and  DiceEnsemble  classes as examples.
+  To start, let's examine the web page that first appears for the
+     
+    Javadoc of Sun's API .
+  It will be useful for you to click this link now, so you can follow
+    (dynamically on the web) along with the static screen-shots presented in
+    this document
+   (if you are like me, you are going to try to click them and get really
+     frustrated:).
+  You should see the following.
+  
+        &amp;nbsp 
+ 
+Use the small upper-left hand (Package) pane for selecting from which package
+  you want to see the classes: it determines what information is displayed in
+  the narrow lower-left hand (Class) pane, which is a list -in alphabetical
+  order- of all the classes in the selected package.
+Initially, the package pane has  All Classes  selected, which appears at
+  its top, selected.
+You can try clicking other packages (e.g.,  java.awt ,  java.io ,
+   java.lang ,  java.util , etc.), but
+  before continuing, make sure  All Classes  is selected.
+ 
+The big (Documentation) pane on the right initially overviews (see the word
+   Overview  highlighted in the header of this pane) information about
+  the packages available; but, as we will soon see, it mostly is used to
+  display the documentation for specific classes and interfaces.
+To display the documentation for the  Math  class, scroll the
+  class pane so that the  Math  link is visible, and then click it.
+(another way to find this link is to click inside the lower left window,
+  then type  control f  and then type in the  Find  window
+  the word  Math  and then click  Next ).
+You should see
+  
+        &amp;nbsp 
+ 
+Now the word  Class  is highighted in the header and the rest of this
+  pane shows the documentation of the  Math  class.
+Right under the header it shows in bold-face the package that this class comes 
+  from ( java.lang ), followed by the word  Class  and the name of
+  the class ( Class Math ) in a big bold-face font.
+The information directly underneath is related to the class-hierarchy -
+  the ancestors of this class is  java.lang.object : when we learn about
+  inheritance, we will study Javadoc again and return to this section for a
+   more detailed study.
+ 
+Directly underneath the line, Javadoc displays information that is used to
+  define the basic features of a class.
+When we learn about writing classes, interfaces, and inheritance, we will
+  study Javadoc again and return to this section for a more detailed study.
+This information is followed by an textual overview of the class.
+  
+Scroll down in the actual Javadoc window (the window on this web page is
+  just a picture: you cannot scroll it) you will see the  Since 
+  information, which identifies the release of Java when this class was added
+   to the standard Java library.
+  
+The rest of this web page is divided into two major sections:  Summary 
+  and  Detail .
+We will start by examining the summary information.
+Scroll down on the documentation pane until you see
+  
+        &amp;nbsp 
+ 
+The summary section normally includes tables for fields, constructors, and
+  methods.
+But, because every member of this class is  static , there is no need
+  for a constructor, so that table is omitted.
+These tables display information for all the  public  members defined in
+   the class, and only the  public  members.
+Note, you won't see the access modifier  public  appearing in any summary
+  box on the left, because these boxes display only  public  members;
+  if a member is declared  private , it doesn't appear in these tables.
+ 
+Let's start at the field summary.
+First of all, these members always appear in alphabetical order.
+Each field is described in a horizontally split box: it displays, on the
+  left, some of its access modifiers (not all) and its type; on the right it
+  displays its name and a one sentence description of the field.
+  
+Likewise for the method summary (which also appear in alphabetical order).
+Each method is described in a horizontally split box: it displays, on the
+  left, some of its access modifiers and its return type; on the right it
+  displays its signature and a one sentence description of the method (the
+  same one from the  Summary .
+As is the case with fields, each method name is hyperlinked to a more detailed
+  description of that member that appears in the  Detail  section.
+For now, scroll to the end of the  Summary  section until you see the
+  following (or, alternatively, click the  E  in the field summary
+  and scoll up a bit).
+  
+        &amp;nbsp 
+ 
+This part of the page starts by displaying the summary of the  toDegrees 
+  method, and the  ulp  method ends the  Summary  section.
+Next it shows a small box headed by a hyperlink to the class that this one
+  extends; its contents contain hyperlinks to all the methods in that class.
+Again, when we learn about writing classes, interfaces, and inheritance, we
+  will study Javadoc again and return to this section for a more detailed
+  study.
+ 
+Finally, the  Detail  sections start: first for fields, then for
+  constructors (but there aren't any in this class), and finally for methods.
+Each field's name is displayed in a big bold-face font, followed by all
+  the fields's access modifiers and its name again, followed by a more
+  detailed description of the field.
+The description always starts with the one sentence appearing in the summary;
+  because the fields in the  Math  class are so simple, there is no more
+  detail in their descriptions.
+Finally, at the bottom of this page, the  Detail  section for the
+  methods start.
+Scroll down again, until you see
+  
+        &amp;nbsp 
+ 
+Each method is easily reachable via a hyperlink from its listing in the
+   Summary  section.
+As you scroll down, you will notice that these methods DO NOT appear in 
+  alphabetical order; instead they appear in the same order as the
+  methods were defined in the  .java  file from which this Javadoc
+  was created.
+If a programmer clusters together related methods in the  .java  file,
+  these methods will be clustered in the  Detail  section of Javadoc too;
+   of course, if these methods appear in alphabetical order in the file, they
+   will appear in alphabetical order here too: the programmer chooses
+   (recall the  Summary  section always alphabetizes its members)
+ 
+Each methods's name is displayed in a big bold-face font, followed by all
+  the method's access modifiers and its signature, followed by a more
+  detailed description of the method.
+The description always starts with the one sentence that appears in the 
+ summary, which acts as the "topic sentence" for the larger descritioon hear
+After this description is a section of highlighted information including
+  short descriptions of the method's  Parameters , what exceptions it
+   Throws  (none here), and what value it  Returns .
+  
+I encourage you to explore the web page for this class; you might also
+  want to examine the web pages for the  StringTokenizer  and
+   BigInteger  classes, which we will discuss soon; both are defined
+  and documented in the standard Java library.
+Scroll to the top or bottom of the page and click the  Package ,
+   Tree ,  Index , and  Help  links to see other
+  interesting views of this library.
+  
+Next, lets examine web page that first appears for the 
+     
+    Javadoc of Course API .
+Click this link and you should see the following.
+  
+        &amp;nbsp 
+ 
+This page has a similar layout; it is simpler because it documents just
+  one packages, comprising about a dozen classes.
+Click the  DiceEnsemble  link and you should see.
+ 
+        &amp;nbsp 
+ 
+Notice the standard features shown for all classes: their package name, the
+  class name, and the prose description.
+This class has no  public  fields, so the  Summary  section
+  includes just constructor and method tables.
+Examine the constructor summary: each entry includes its signature and a one
+  sentence description.
+Look further down to the methods table: recall that these appear
+  in alphabetical order.
+Now, click the hyperlink for the second, overloaded version of the
+   DiceEnsemble  constructor.
+You should see
+ 
+        &amp;nbsp 
+ 
+Each constructor's name (they all have the same name!) is displayed in a big
+  bold-face font, followed by all its access modifiers and its signature;
+  notice how multiple parameters are displayed, and notice the
+   throws IllegalArgumentException  after the signature.
+This is followed by a more detailed description of the constructor.
+The description always starts with the one sentence appearing in the summary,
+  but can be much longer.
+After this description is a section of highlighted information including
+  short descriptions of the constructor's  Parameters  and what
+   exceptions it  Throws .
+ 
+I encourage you to explore the web page for this class and others.
+If you want run a driver program for this class, and experiment
+  calling its methods, download, unzip, and run the
+   Dice Demo  project folder.
+You might also want to examine the web pages for the  Prompt  class,
+  which we have used extensively, and the  Timer  class, which we will
+   discuss soon;; both are defined and documented in the course library.
+Suppose you are interested in exactly what  IllegalArgumentException 
+  is -it is another class is the standard Java Library; just click on its
+   hyperlink (whoops, for some reason there isn't a hyperlink to it! I'll try
+   to fix this, meanwhile look up  IllegalArgumentException  in the
+   standard Java Library -the same way we located the  Math  class)
+   and you should see
+    
+        &amp;nbsp 
+ 
+Now you know that this is a class in the  java.lang  package (the one
+  that every program automatically imports).
+It has lots of ancestor classes.
+There is some information about interfaces and subclasses (we will cover
+  these later in the quarter).
+At the bottom is the  Summary  section for constructors.
+Note that many entries on this page are hyperlinked, so you can click
+  them to get more information, exploring the Javadoc for the standard
+  Java library further.
+ 
+Well, that completes our first tour of Javadoc.
+The ability to read Javadoc easily is one of those skills that is
+  tough to acquire, but doing so will pay for itself many times
+  over.
+Whenever I am programming in Java, I always immediately open a 
+  Javadoc browser to help me.
+In subsequent sections we will discuss more Java classes.
+Please examine their Javadoc while reading this material.
+In addition, use Javadoc to check out the many features of the  String 
+  class.
+  
+    
+       Programming by Contract  
+ 
+  In this section we discuss the idea of preconditions and postconditions,
+    and how they relate to constructors and methods.
+  When we learn how to write classes, we will also discuss data invariants,
+    which is a related topic.
+   
+  We say that a constructor has a  precondition  if some properties
+    must be true of its arguments.
+  We say that a constructor has a  postcondition  if it guarantees
+    that some property is true about the object's state after the object is
+    constructed  (assuming that all its arguments satisfy their preconditions).
+    
+  We say that a method has a  precondition  if some properties
+    must be true of the object it is called on and its arguments.
+  We say that a method has a  postcondition  if it guarantees
+    that some property is true about the returned value and the object's
+    states after the method returns (assuming that all its arguments satisfy
+    their preconditions).
+    
+  In  DiceEnsemble  constructor, there is a precondition that the
+    arguments matching the  numberOfSides  and  sidesPerDie 
+    parameters must be at least 1: it doesn't make sense for 0 or negative
+    numbers to be transmitted to these parameters.
+  The constructor checks these preconditions first: if it determines that
+    either precondition fails, it cannot construct the required object;
+    instead, it throws an  IllegalArgumentException .
+    
+  Likewise, the  getPips  method has a precondition that the dice have
+    been rolled at least once, and the  dieIndex  parameter actually
+    specifies one of the dice in the ensemble.
+  If this method is called before the  roll  method is called, it throws
+    an  IllegalStateException : the state of the object is not correct for
+    returning the values of any pips, if it has not been rolled yet.
+  Likewise, if this method is called with an argument for  dieIndex  that
+    is not in the correct range, it throws an  IllegalArgumentException .
+    
+  In the real world, for example, a microwave oven may beep at you (indicating
+    an illegal operation in the current state) if you try to start it when the
+    door is open. 
+    
+  By understanding this form of stylized documentation, we can view every
+     method as making a contract with the programmer: if the programmer calls
+     the method on an object whose state satisfies the required
+     preconditions, and with arguments that satisfy the required preconditions,
+     then the method will work correctly, producing a result that satisfies its
+     postcondition.
+  If the object's state or argument values fail to satisfy their preconditions,
+    the method will mostly likely discover this fact, and throw an exception,
+    although in such cirumstances it is allowed to return a result that does
+    not satisfy the postcondition.
+  Certainly, it is better for a method to throw an exception when it knows it
+    cannot satisfy its postcondition, than to return an incorrect answer
+    (with no indication that it is incorrect).
+  But in a contract, if the the preconditions aren't satisfied, anything
+    is allowable.
+    
+  If you gave a task to a person who couldn't perform it,would you rather have
+    that person say, "I cannot do it," or instead botch the job?
+  Likewise, would you rather someone answer a question with, "I don't know",
+    or give you a wrong answer?
+  
+    
+       Other Useful Class  
+ 
+In this section we will examine a few other classes from both the standard
+  Java library and the course library.
+We focus on the standard OOP approach: constructing objects and then calling
+  methods on them to perform interesting operations.
+ 
+First, you should use Javadoc to examine the  Prompt  class in
+  the course library and the  String  class in the standard
+  Java library.
+You are already familiar with these classes: the former has all  static 
+  methods for prompting the user on the console screen, and the later
+  has very many methods for operating on strings.
+Note that the  String  class has no mutator/command methods; every
+  method is an accessor/query.
+Such a class is called  immutable .
+Once the state of an object is initialized by a constructor from an immutable
+  class, it can never change.
+But methods can return new objects whose state is based on old objects
+  (e.g., the  toUpperCase  and  replace  methods).
+  
+While examining the  String  class, look at methods like  charAt ,
+   endsWith ,  indexOf ,  lstIndexOf ,  length ,
+   startsWith ,  subsequence ,  toLowerCase ,
+   toUpperCase ,  trim 
+  
+        StringTokenizer  
+ 
+Now let's examine some interesting code that uses the  StringTokenizer 
+  class, from the standard Java library (in the  java.util  package).
+This class has three constructors and six methods, although the most
+  interesting and generally useful members are defined by
+    public StringTokenizer(String str){...}
+
+  public int     countTokens  ()                               {...}
+  public boolean hasMoreTokens()                               {...}
+  public String  nextToken    () throws NoSuchElementException {...}  
+Here is a typical example of how we can coordinate these to solve a 
+  simple task: finding the average length of all the words in a sentence.
+    String          sentence   = Prompt.forString("Enter sentence");
+  StringTokenizer st         = new StringTokenizer(sentence);
+  int             numTokens  = st.countTokens();
+  int             numLetters = 0;
+  while (st.hasMoreTokens())
+    numLetters += st.nextToken().length();
+  System.out.println("In the sentence: " + sentence + "\n" +
+                     "Average word length = " + numLetters/numTokens);  
+For the input  To be or not to be , the calculated output is  2 
+ (thirteen letters in six words:  13/6 ).
+Notice that  sentence  is used only as an argument in the constructor to
+   StringTokenizer  and in the final output: it never changes its state.
+It is  st  that is manipulated from that point onwards.
+ 
+First, we use the  countTokens  methods to count and store the number of
+  tokens initially in  st : here, whitespace separates tokens
+  (it DOES NOT use the technical definition of Java tokens).
+Then a loop continues so long as  st  still has more tokens to process;
+  if so, the next token is taken out of  st  by calling  nextToken 
+  (a mutator/command that also returns a copy of the  String  token that
+  it extracts); then a cascaded call to  length  on the returned
+   String  returns an  int  that is accumulated in  numLetters .
+  
+Eventually, there will be no more tokens remaining in  st , so the
+  loop terminates and the result is calculated and printed.
+Note that if we call  st.countTokens()  after the loop terminates, it will
+  return  0 , because this method returns the number of tokens that
+  ARE STILL in  st ; at the end, no tokens remain.
+  
+Note that  if we ever try to call  nextToken  when  hasMoreTokens 
+  returns  false  (or equivalently,  countTokens  returns  0 ),
+  this method throws  NoSuchElementException : there is no next value
+  to return.
+We can use this behavior, along with our knowledge of  try-catch , to
+  write an equivalent loop to process all the tokens and then terminate.
+    String          sentence   = Prompt.forString("Enter sentence");
+  StringTokenizer st         = new StringTokenizer(sentence);
+  int             numTokens  = st.countTokens();
+  int             numLetters = 0;
+  for (;;)
+    try {
+      numLetters += st.nextToken().length();
+    }
+    catch (NoSuchElementException nsee){break;}
+  System.out.println("In the sentence: " + sentence + "\n" +
+                     "Average word length = " + numLetters/numTokens);  
+Generally, programmers would prefer the former code, which explicitly
+  checks for  hasMoreTokens , but you should certainly understand
+  the  for / try-catch  code above.
+  
+Finally, examine the following code closely, which is supposed to accomplish
+  the same task as above.
+ IT DOES NOT WORK CORRECTLY  and it is important for you to determine why
+  by hand simulting the code.
+    String          sentence   = Prompt.forString("Enter sentence");
+  StringTokenizer st         = new StringTokenizer(sentence);
+  int             numTokens  = st.countTokens();
+  int             numLetters = 0;
+  for (int i=0; i&lt;st.countTokens(); i++)
+    numLetters += st.nextToken().length();
+  System.out.println("In the sentence: " + sentence + "\n" +
+                     "Average word length = " + numLetters/numTokens);  
+Hand simulate this code (slowsly and carefully) on a  String  with five or
+  six tokens in it and be ready to answer a question about this code in class.
+  
+When using a  StringTokenizer  prefer a loop calling  hasMoreTokens 
+  explcitly (to check whether your code should be callling  nextToken 
+  and not "obvious" -but often wrong- counting code).
+  
+        Timer  
+ 
+Now let's examine some interesting code that uses the  Timer 
+  class, from my course library.
+This class allows us to use its objects like stopwatches, to time various
+  parts of code.
+It has one parameterless constructor and four methods (besides
+   toString )
+    public Timer(){...}
+
+  public void   start()      {...}
+  public void   stop()       {...}
+  public void   reset()      {...}
+  public double getElapsed() {...}  
+See Javadoc for a detailed explanation of what these members do.
+Here is a typical example of how we can coordinate these to solve a 
+  simple task: finding the the time it takes for the user to enter an
+  answer to a question.
+    Timer answerTimer = new Timer();
+  answerTimer.start();
+  Prompt.forString("What is big and red and eats rocks?");
+  answerTimer.stop();
+  System.out.println("Time = " + answerTimer.getElapsed() + " seconds");  
+It actually doesn't matter whether the user gets the right or wrong answer
+  to the question: the returned  String  is not checked; all we are
+  interested in here is the time it took to answer this question.
+ 
+All newly constructed timers have the same state: they are turned off, with 0
+  elapsed seconds recorded.
+When the  start  method, a mutator/command, is called the timer is turned
+  on (just like a stopwatch).
+When the  stop  method, also a mutator/command, is called the timer is
+  turned off (ditto; note that both of these methods return  void ).
+When the  getElapsed  method, an accessor/query, is called the timer
+  returns the total number of seconds that elapsed while the timer was on; this
+  value is is accurate to 1 millisecond.
+We can call this method whether the  Timer  object is current turned on
+  or off.
+  
+We can turn the timer on and then off as many times as we want; it accumulates
+  time only when it is on (of course, we can call the  reset  method also,
+  to reset the timer to its initial  state of being off and having zero elapsed
+  seconds).
+We can use objects from the  Timer  class to time any computer activity
+  that takes at least 1 millisecond, such as how long it takes to execute
+  some complicated loop in a program.
+  
+        BigInteger  
+ 
+Finally, let's examine some interesting code that uses the  BigInteger 
+  class, from the standard Java library (in the  java.math  package).
+This class allows us to compute with integers of an arbitrary size (not limited
+  to the size of  int  values).
+The operations on  BigInteger  objects are are all specified via method
+  calls (not operators).
+And the class, like  String  is immutable: all method calls do not change
+  the state any existing objects, but they can produce new  BigInteger 
+  objects whoses states are based on the state of the objects used to call the
+   methods.
+ 
+This class has three public fields (representing the  BigInteger 
+  constants 1, 10, and 0), many constructors, and many many methods that
+  act like operators on  int  values), although we need only the following
+   members for our application below.
+  
+  public static final BigInteger ONE = new BigInteger("1");
+
+  public BigInteger(String val) throws NumberFormatException {...}
+
+  public BigInteger multiply(BigInteger val){...}
+  public String     toString()              {...}  
+  
+Here is a typical example of how we can coordinate these to solve a 
+  simple task: finding the factorial of a large  int  value; say
+  something like  1000!  (which has tens of thousands of digits).
+The following simple code works for inputs up to about 10, but after that 
+   result  gets too big to store as an  int .
+That's the bad news; but the good news is that we can take this code and
+  easily generalize it for  BigInteger  results..
+    int x      = Prompt.forInt("Enter x for x!");
+  int answer = 1;
+  for (int i=2; i  
+Now, let's do the generalization.
+The important thing to know about the main constructor for  BigInteger 
+  is that it takes a  String  parameter that stores an optional plus or
+  minus, followed by all the digits in the  BigInteger  we want; if it
+  contains any other characters, this constructor throws the
+   NumberFormatException .
+So, we could write  new BigInteger("1000000000000")  to construct
+  the  BigInteger  value one-trillion (which is not representable as
+  an  int ; this is peanuts compared to the thousands of digits in
+   1000! ).
+  
+Hint, here is an important  idiom : if  i  is declared to be an
+    int  and stores an  int  value, then the expression  ""+i 
+   stores a  String  representation of that  int :  ""+10  is
+    "10" ; so if we want to construct a  BigInteger  from an
+    int , we use the constructor on the  int  catenated with the
+   empty string.
+  
+Finally, the  multiply  method multiplies two  BigInteger s
+  producing a third, whose state is the product of the states of its
+  arguments.
+Note that we must call this method using object notation.
+Remember the  .equals  method (which was like a binary operator)?
+   multiply  is simlar: called as  x.multiply(y) .
+  
+Now, let's change our code to use  BigInteger s only where needed: to
+  accumulate the huge product.
+  
+  int        x      = Prompt.forInt("Enter x for x!");
+  BigInteger answer = BigInteger.ONE;
+  for (int i=2; i  
+Notice that Java calls the  toString  method implicitly, when it needs to
+  convert  answer  into a  String  for catenation in the final
+  output.
+It might be interesting to use a  Timer  to see how long this process
+  takes for large values of  x .
+  
+Briefly examine the Javadoc for  BigInteger , it includes arithmetic
+  operations as  methods  (e.g.,  add ,  subtract ,
+   multiply ,  divide ,  remainder ) which parallel the
+   arithmetic  operators  for  int  values.
+Also briefly examine methods like  abs ,  max ,  min ,
+  and  gcd , which could be, but are NOT, static methods in  Math 
+  class (the methods in the  Math  class operate on primitive types only).
+  
+Finally, examine the  compareTo  method which takes the place of all
+  the different relational operators (recall the Law of Trichotomy, because
+  what happens here is similar).
+If we declare  BigInteger x,y;  and initialize these values, calling
+   x.compare(y)  returns an  int  with the following properties:
+  the value is &lt; 0 if  x  is less than  y ;
+  the value is = 0 if  x  is the same as  y ;
+  the value is &gt; 0 if  x  is greater than  y .
+So, to check whether  x  is less than or equal to   y ,
+  we would write the boolean expression  x.compareTo(y) &lt;= 0 .
+Note the arithmetic law:  x.compareTo(y) = -y.compareTo(x) 
+Can you explain why it is true using the Law of Trichotomy.
+  
+Also, see the  compareTo  and  compareToIgnoreCase  methods in the
+   String  class: they also return an  int  value with the same
+  semantics: comparing two  String s according to their order in an
+  alphabetized dictionary.
+  
+We have now learned members in about a half-dozen interesting class in Java,
+  seeing how to construct objects and call methods on them to get interesting
+  tasks done.
+I hope that you have also examined the Javadoc for all these classes, so
+  that you feel comfortable using this documentation system.
+Feel free to cut/paste the code here into the  Application.java  
+  file of some project; remember, though, to add the correct  import 
+  statements to your code.
+  
+You can also download, unzip, and run
+ Craps Statistics  (uses
+   DiceEnsemble  and  Timer ).
+
+Finally, you can download, unzip, and run
+   Class Examples  project folder,
+  which has short snippets of code using a dozen different classes.
+These examples show that it is easy to experiment with these (and other)
+  classes in any Java libraries.
+  
+           Java File I/O  
+ 
+  There are dozens of classes that handle file I/O in Java; using various 
+    combination of these classes, we can efficiently achieve many kinds of
+    interesting  behavior: buffered vs. non-buffered;
+    binary vs. text-files; sequential vs. random access; etc.
+  I have written the  TypedBufferReader  and  TypedBufferWriter 
+    classes (using classes in the standard Java library) to present a simple,
+    easy to understand and use, interface to the concept of file processing.
+  These classes are powerful enough for use in all the programs in this course.
+   
+  After we are more familiar with reading/using classes (including
+     inheritance), we will
+       overview the standard Java classes for file I/O
+        re-examine the code that implements the  TypedBufferReader  and 
+             TypedBufferWriter  classes.
+      
+  By the end of the course, you will have the skills needed to investigate
+    fancier file I/O by yourself.
+ 
+           Simple File Input Patterns  
+ 
+  Reading a sequence of values from a file (until there are no more) is a
+    simple and useful operation.
+  This section shows a standard file input pattern to accomplish this task,
+    and applies it twice, without much variation, to files containing
+    different kinds of information.
+   
+  Note that the contructor for the  TypedBufferReader  class requires a
+     String , but this  String  DOES NOT SPECIFY the name of the file
+    to be read.
+  Instead, it specifies how the user is to PROMPTED to enter a file name.
+  In fact, the constructor will continually reprompt the user with this
+    message until he/she enters a valid file name.
+  Of course, this information -and more- is all in its Javadoc.
+  I encourage you to browse the appropriate page while reading the rest of
+    this lecture.
+    
+  Once we construct a  TypedBufferReader  object, we call methods on
+    it to attempt to read information from the file.
+  Again we follow standard OOP practice: construct an object and call its
+     methods to aid in performing some complicated task.
+    
+  For a simple example, let us assume that we want to add together all the
+     int  values in a file.
+  The relevant method in the  TypedBufferReader  class is
+      public int readInt() throws EOFException,NumberFormatException  
+  We can use the following code to process this file according to these
+    specifications.
+     TypedBufferReader inputFile = new TypedBufferReader("Enter file name ");
+  int sum = 0;
+  for (;;)
+    try {
+      int value = inputFile.readInt();  //or just the single line
+      sum += value;                     //sum += inputFile.readInt();
+    }
+    catch (EOFException eofe) {break;}
+
+  inputFile.close();
+  System.out.println("Sum = " + sum);  
+  Notice that the  try-catch  is the single statement inside the
+      for  loop.
+  This code works as follows:
+  In each iteration, the first statement in the  try  block attempts to
+    read an  int  from the file.
+  If it is successful, that value is stored into  value  and then added
+     to  sum ; the  try-catch  is finished, and the  for  loop
+     executes it again.
+   
+  But, if there are no more values in the file, the  readInt  method
+    throws  EOFException .
+  Then, the  try  block is abandoned and the  catch  clause for this
+    exception is found; its matching block contains a  break-statement ,
+    which terminates the loop.
+  Now the  for  loop is finished, so Java continues by executing the
+    remaining statements after it: the first closes the file (that has had all
+    its values read) and the second prints the answer.
+    
+  Now, let's examine very similar code that solves a more complicated problem.
+  Imagine that a file contains many lines, each of which contains a name,
+    three scores, and boolean telling whether the name and average of the
+    scores should be printed.
+  Such a file might look like      Fred    20  23  19 true
+  Barney  24  22  20 false
+  Wilma   21  24  25 false
+  Betty   23  19  22 true  
+  and when processed should print the following (note that only  Fred 
+   and  Betty  specify that the average is to be printed)
+     Fred has average 20
+  Betty has average 21
+  4 values processed (some might not be printed)  
+  We can use the following code to process this file according to these
+    specifications.
+    TypedBufferReader inputFile = new TypedBufferReader("Enter file name");
+  int count = 0;
+  for (;;)
+    try {
+      String  name    = inputFile.readString();
+      int     s1      = inputFile.readInt();
+      int     s2      = inputFile.readInt();
+      int     s3      = inputFile.readInt();
+      boolean printIt = inputFile.readBoolean();
+      count++;
+      if (printIt)
+        System.out.println(name + " has average " + (s1+s2+s3)/3); 
+    } 
+    catch (EOFException eofe) {break;}
+
+  inputFile.close();
+  System.out.println(count + " values processed (some might not be printed");  
+  Although this code has more complicated processing within the  try 
+     block, it is essentially the same pattern that we used before: continue
+     reading values until the  EOFException  is thrown, which breaks out
+     of the reading loop.
+ 
+           A Simple File Output Pattern  
+ 
+  In this section, we will combine the previous code with some more code that
+    writes output  files.
+  We construct a  TypedBufferWriter  object, which requires a
+     String  parameter specifying the name of a file.
+  Note the difference in the use of the parameter for the constructor between
+    this class and the  TypedBufferReader .
+  In the larger code fragment below, we could write
+    TypedBufferWriter outputFile 
+  = new TypedBufferWriter( Prompt.forString("Enter output file name") );  
+  to promput the user for the file name; but instead we automatically derive
+    the output file name from the input file name.
+   
+  Once we have a variable refering to this object, we can use all the
+     print  and  println  methods that we have used with
+     System.out .
+  Most important are the methods that print a  String , because we
+    frequently use this type as a by-product of catenating many values
+    together.
+     TypedBufferReader inputFile 
+    = new TypedBufferReader("Enter name of file ");
+  TypedBufferWriter outputFile 
+    = new TypedBufferWriter(inputFile.getFileName()+".output"));
+  int count = 0;
+  for (;;)
+    try {
+      String  name    = inputFile.readString();
+      int     s1      = inputFile.readInt();
+      int     s2      = inputFile.readInt();
+      int     s3      = inputFile.readInt();
+      boolean printIt = inputFile.readBoolean();
+      count++;
+      if (printIt)
+        outputFile.println(name + " has average " + (s1+s2+s3)/3); 
+    } 
+    catch (EOFException eofe) {break;}
+
+  inputFile.close();
+  outputFile.close();
+  System.out.println(count + " values processed (see " + 
+                     outputFile.getFileName() + " for contents");  
+  Here, the name of the output file is constructed automatically, by catenating
+    together the name of the input file (retrieved through the
+     getFileName  accessor/query) and the  ".output"  literal.
+  Inside the loop, the information that was originally printed on
+     System.out  is now printed to the output file.
+  Finally, like the input file, the output file is also closed after
+    everything is written in it.
+  Note too that the summary output still appears on the  user's console;
+    if we wanted to, we could have also printed this information into the file.
+   
+  IMPORTANT: if you do not close an output file, it may lose the last few
+    lines sent to it.
+  To be safe, always close any input and output files whenever you are done
+    using them.
+  This also stop further informtion from being read from/written to the file.
+  
+           Error Detection in Input Files  
+ 
+  All the file reading code up to this point has assumed that files had the
+     correct type of data in them.
+  In this section and the next, we will begin to explore simple ideas in error
+    detection and recovery when reading input files.
+  We are just scratching the surface of this topic in this discussion; a more
+    complete discussion is beyond the scope of this course.
+   
+  If we call a method to read some type of information out of a file, but a
+     value of that type is not there in the next position to be read, then the
+     method throws a  NumberFormatException  (even if what we are
+     trying to read is not a number, for uniformity).
+  The simplest thing to do in this case is abandon reading the file and process
+    whatever information has been already read correctly.
+  The following code implements this goal.
+     TypedBufferReader inputFile = new TypedBufferReader("Enter name of file ");
+  int count = 0;
+  for (;;)
+    try {
+      String  name    = inputFile.readString();
+      int     s1      = inputFile.readInt();
+      int     s2      = inputFile.readInt();
+      int     s3      = inputFile.readInt();
+      boolean printIt = inputFile.readBoolean();
+      count++;
+      if (printIt)
+        System.out.println(name + " has average " + (s1+s2+s3)/3); 
+    } 
+    catch (EOFException eofe) {break;}
+    catch (NumberFormatException noe) {
+      System.out.println("  Error reading file " + inputFile.getFileName() +
+                         " on line " + inputFile.getLineNumber() +
+                         "; problem token: " + inputFile.getLastTokenUntyped());
+      System.out.println("Processed all earlier file entries");
+      break;
+    }
+
+  inputFile.close();
+  System.out.println(count + " values processed");  
+  Here, the exception thrown by failure to read the correct type of
+    information,  NumberFormatException  is caught; in this case, it
+    prints an error message, but then executes a  break  and continues
+    with the rest of the code following the loop (so only the earlier values
+    are correctly processed).
+ 
+           Error Recovery in Input Files  
+ 
+  We can go one step further and not only detect the error, but try to recover
+    from it.
+  Recovery means ignoring the bad line of input and continuing to process
+    those after it.
+  The following code implements this goal.
+    TypedBufferReader inputFile = new TypedBufferReader("Enter name of file ");
+  int count = 0;
+  for (;;)
+    try {
+      String  name    = inputFile.readString();
+      int     s1      = inputFile.readInt();
+      int     s2      = inputFile.readInt();
+      int     s3      = inputFile.readInt();
+      boolean printIt = inputFile.readBoolean();
+      count++;
+      if (printIt)
+        System.out.println(name + " has average " + (s1+s2+s3)/3); 
+    } 
+    catch (EOFException eofe) {break;}
+    catch (NumberFormatException nfe) {
+      System.out.println("  Error reading file " + inputFile.getFileName() +
+                         " on line " + inputFile.getLineNumber() +
+                         "; problem token: " + inputFile.getLastTokenUntyped());
+      inputFile.ignoreRestOfLine();
+      System.out.println("  Ignoring this line");
+    }
+
+  inputFile.close();
+  System.out.println(count + " values processed");  
+  Here, the exception thrown by failure to read the correct type of information
+    is caught; in this case it prints an error message, but then does not
+     execute a  break ; instead it calls a method that skips the rest of
+     the information on the current line being read.
+  So, the  for  loop  does not terminate, but continues reading and
+    processing values from the next line: it terminates the loop only when the
+     EOFException  is thrown.
+   
+  This code, and one file to test it on (you can edit the file to create your
+    own tests) is available in 
+    the  File Input  project folder.
+  Note the declaration  import java.io.EOFException; 
+  Unlike most of the other exceptions that we have seen
+   (e.g.,  NumberFormatException ,  IllegalArgumentException ,
+     IllegalStateException ) this exception is not in the  java.lang 
+    package, from which classes are implicitly imported into every program.
+  So, we must use it a bit differently;
+  We could omit the import but write the exception handler as
+       catch (java.io.EOFException eofe) {break;}  
+  but this approach would soon lead to very verbose code; better to import
+    this class explicitly.
+   
+  
+           Buffering  
+ 
+  In this section we will explore how the term  buffer  applies to file
+    I/O.
+  Typically a file that we are reading or writing (big or small) is stored on
+    a hard disk.
+  As a memory device, a hard disk has two key properties
+    It takes a large amount of time to read/write a small amount of
+          information to a hard disk (when compared to accessing a 
+          computer's memory).
+      It takes only a bit more time to read/write a large amount of
+          information to a hard disk.
+    
+  That is, it takes an appreciable amount of time to find the place to get/put
+    the information on the disk, but it can quickly get/put lots of information
+     once this place has been found.
+   
+  Let's examine the implications fo these properites when applied to output.
+  We often write small amounts of information into a file repeatedly.
+  If every time we write (even a small amount of) information to a file it
+     goes immediately to the  hard disk, the process will go quite slowly.
+    
+  Instead we can use a buffer.
+  A buffer is a medium-sized block of memory that we use to collect output for
+     a file; a typical buffer can contain thousands of characters.
+  Then, instead of writing output directly into the file, it is more quickly
+     put into the memory buffer.
+  But typically not all the information going to the file can fit in such a
+    buffer (typically we use a buffer smaller than the ultimate file size).
+  When the buffer is full, the computer senses this fact and then writes all
+    the information currently in the buffer into the output file; now that the
+    buffer is empty, we can continue putting more information into it.
+    
+  Using such a buffer minimizes the number of times information is written to
+    a file; each time information is written, a large amount is written
+    (which takes just a bit more time than writing a small amount; and
+     much less time than repeatedly writing a small amount).
+  Note also that such an output buffer might be partially filled when a
+    program terminates: in this case the information is lost: it never makes
+    it from the buffer to the output file.
+  But, if the program executres the  close  method on an output file, it
+    knows to force the remaining contents of the buffer to be written into the
+    otuput file (which is why it is important to close all output files).
+    
+  Likewise, when an input file is read, a large part of it is transferred to
+    the memory buffer, where subsequent reading gets information, until all the
+    information in the buffer is read.
+  At this point, another large part of the file is transferred into the buffer
+    from the file, for the next batches of reads.
+  
+           Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a CA, a Tutor,
+    or any other student.
+     Draw the picture resulting from the following declarations.
+  
+  String s1 = new String("ABC");
+  String s2 = new String("XYZ");
+  String s3 = new String("abc");
+  String s4 = s1;
+  String s5 = new String("XYZ");
+  s2 = new String("ABC");
+  
+        Give the resulting picture from problem 1, determine the result of the
+            following tests:
+               s1==s1 , 
+               s1==s2 , 
+               s1==s4 , 
+               s1.equals(s4) , 
+               s1.equals(s2) , 
+               s1.equals(s3) , 
+               s1.equalsIgnoreCase(s3) , 
+               s1==s5 , and
+               s1.equals(s5)  
+
+       
+         Describe what it means for two objects to be identical, such that  ==  (the
+           object identity operator) has a result of  true .
+          Explain what value is produced by writing:  (new String("abc")) == (new String("abc")) 
+       
+
+        We defined an EBNF rule for access modifiers as
+      
+        access-modifiers  
+     How many different access modifiers (combinations of these words) are legal?
+       
+
+        Write the result that each code fragment below prints. Drawing pictures is invaluable.
+    DiceEnsemble dice = new DiceEnsemble();
+  dice.roll();                                    //or dice.roll().roll();
+  dice.roll();
+  System.out.println(dice.getRollCount());
+
+
+  DiceEnsemble dice = new DiceEnsemble();
+  dice.roll();
+  dice = new DiceEnsemble();
+  dice.roll();
+  System.out.println(dice.getRollCount());
+
+
+  DiceEnsemble dice1 = new DiceEnsemble();
+  dice1.roll();
+  DiceEnsemble dice2 = dice1;
+  dice2.roll();
+  System.out.println(dice1.getRollCount());  
+      
+
+        What is wrong with each of the following code fragments? Will the compiler detect
+           and report either error?
+    DiceEnsemble dice;
+  dice.roll();
+
+
+  DiceEnsemble dice = null;
+  dice.roll();  
+     
+
+       
+    Browse the Javadoc for the  BigInteger  class.
+    Assume that we have declared  BigInteger x,y; 
+      and initialized these variables to refer to appropriate objects.
+        Examine the  abs  method in this class.
+            Assume  x  refers to a  BigInteger  with a negative
+              value.
+            If we write  x.abs() , explain why  x  does not refer
+              to a  BigInteger  with a positive value.
+            Show how to accomplish this task.
+             
+           Examine the  min  method in this class.
+            Show how to write a declaration for a third  BigInteger 
+              named  z , and how to initialize this variable to refer
+              to an object that is the bigger of  x  and  y .
+            After  z  is initialized, does it share an object with
+              either  x  or  y ?
+             
+           Examine the  compareTo  method in this class.
+            Show how to write a  boolean  expression that evaluates to
+               true  if  x.
+            Note that the relational operators do not work on any reference
+              types.
+          
+
+       
+      Extend the file-reading code above so that after reading each name, it processes any number of scores 
+        for that student (the list of scores is ended by a sentinel of -1).
+     This time, if any score is not an integer, just ignore it (don't increment the running count 
+        or sum) but keep processing other scores.
+     You will need nested control structures.
+
+     
+       What does the following code print when it reads a file containing:  1 2 3 x x 4 5 6 ?
+        Do this hand simulation carefully, paying close attention to the details of exception processing.
+    for (;;)
+    try {
+      int a = inputFile.readInt();
+      int b = inputFile.readInt();  
+      System.out.print(a + "" + b);
+    }catch (NumberFormatException nfe ) {System.out.print("B");}
+     catch (EOFException          eofe) {System.out.print("E"); break;}
+  System.out.println("D");  
+
+     
+       
+      Modify the error detection code so that it prints a special message if it discovers an end of file
+        while trying to read any data but the  String  information (meaning that the last set of values 
+        in the input file is not complete).
+       
+
+       
+      Modify the error recovery code so that it will also terminate the loop (printing an appropriate
+        message), if more than ten  NumberFormatException s occur.
+       
+
+       
+      Modify the error recovery code so that it will also terminate the loop (printing an appropriate
+        message), if more than ten  NumberFormatException s occur  in a row ; this means ten
+        occur on ten consecutive lines in the file, without reading one line in the file correctly.
+       
+   
+Read the Javadoc for the  Random  class (in the standard Java library)
+  and write a code fragment that prints 100 random numbers between  0 
+  and  10  inclusive.
+ 
+   
+Read the Javadoc for the  ModularCounter  class (in the course Java
+  library) and rewrite the following code fragment (which we we have
+  studied before), declarations and all, which uses primitive types.
+Describe why the just-written code fratment in simpler.
+    int minute; //in the range [0,59] inclusive
+  int hour;   //in the range [0..23] inclusive
+  ...
+  minute++;
+  if (minute == 60} {
+    minute = 0;
+    hour++;
+    emitBeeps(hour);
+    if (hour == 24)
+      hour = 0;
+    if (minute != 59)
+      minute++;
+  }  
+
+   
+   </body> 

@@ -1,0 +1,36 @@
+ #ifndef DRIVER_STACK_HPP_
+#define DRIVER_STACK_HPP_
+
+#include 
+#include 
+#include 
+#include "ics46goody.hpp"
+#include "ics_exceptions.hpp"
+#include "array_stack.hpp"
+
+
+namespace ics {
+
+typedef ics::ArrayStack StackType;
+
+class DriverStack {
+  public:
+    DriverStack(){process_commands("");}
+
+  private:
+    StackType s;
+
+    StackType prompt_stack(std::string preface, std::string message = "  Enter element for s2") {
+      StackType s2;
+      for (;;) {
+        std::string e = ics::prompt_string(preface + message + "(QUIT to quit)");
+        if (e == "QUIT")
+          break;
+        s2.push(e);
+      }
+
+      return s2;
+    }
+
+    std::string menu_prompt (std::string preface) {
+      std::cout  

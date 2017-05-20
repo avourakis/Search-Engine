@@ -1,0 +1,354 @@
+   
+  Class System.TMWCategory
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class System.TMWCategory
+ 
+ 
+ java.lang.Object 
+   |
+   +----System.TMWCategory
+ 
+    public class  TMWCategory 
+    extends  Object 
+   
+Perform manipulations on Teamware objects at the Category level. 
+Categories contain parent/child relationships, maintain information
+including behavior, messaging, and state information for Specifications
+and Instances.  This includes Message handling and execution,
+Field definition including share, single or multiple element fields,
+and grouping of fields into Families.
+    See Also: 
+        TMWFoundation ,  TMWTypes ,  TMWValue ,  TMWStateVariable ,  TMWMessage ,  TMWMessageHandler 
+     
+ 
+    
+      CPL  
+     
+        ClassCategory  
+     
+        Families  
+     
+        Multi  
+     
+        Shared  
+     
+        Single  
+     
+   
+    
+      TMWCategory  ()
+     
+   
+    
+      AddFieldFamily  (Integer, String, String, String)
+     Add a field family which can be based on a previously defined
+field family.
+        AddHandler  (Integer, String, String)
+     Add both a message and handler to an object.
+        AddMultiElementField  (Integer, String, String)
+     Add a Field whose value is a list of values.
+        AddSharedElementField  (Integer, String, String)
+     Add a Field whose values are shared across all Specifications
+and instances based on the Category.
+        AddSingleElementField  (Integer, String, String)
+     Add a Field whose value is a single value.
+        AssignFieldFamily  (Integer, String, Vector)
+     Assign a field family to contain the desired fields.
+        ChangeHandlerFormat  (Integer, String, String)
+     Currently doesn't do anything; to be used for changing description
+of handler implementation (python, java, tcl, ada).
+        GetAllCategories  ()
+     Get the list of Category names.
+        GetAllFieldFamilies  (Integer)
+     Get a list of all families associated with this object.
+        GetAllFields  (Integer)
+     Get all the fields from all field families and return the names of each.
+        GetCategoryName  (Integer)
+     Get the Category name.
+        GetHandlers  (Integer)
+     Get a list of all the handlers associated with this object.
+        NewCategory  (Integer)
+     Create a new Category based on a parent category and insert it
+into the inheritance hierarchy.
+        RemoveFieldFamily  (Integer, String)
+     Remove a field family from an object.
+        RemoveHandler  (Integer, String)
+     Removes both the message and the handler from the object.
+        RemoveMultiElementField  (Integer, String)
+     Remove a Mutli element field.
+        RemoveSharedElementField  (Integer, String)
+     Remove a Shared element field.
+        RemoveSingleElementField  (Integer, String)
+     Remove a Single element field.
+        RetrieveFieldFamily  (Integer, String)
+     Retrieve the values of a field family.
+        SetCategoryName  (Integer, String)
+     Set the Category name.
+    
+ 
+    
+   
+ Shared 
+ 
+  public final static  String  Shared
+ 
+   
+ Single 
+ 
+  public final static  String  Single
+ 
+   
+ Multi 
+ 
+  public final static  String  Multi
+ 
+   
+ Families 
+ 
+  public final static  String  Families
+ 
+   
+ ClassCategory 
+ 
+  public final static  String  ClassCategory
+ 
+   
+ CPL 
+ 
+  public final static  String  CPL
+ 
+  
+ 
+    
+  
+   
+ TMWCategory 
+ 
+  public TMWCategory()
+ 
+  
+ 
+    
+   
+  NewCategory  
+ 
+  public static  Integer  NewCategory( Integer  Parent)
+ 
+   Create a new Category based on a parent category and insert it
+into the inheritance hierarchy.
+      Parameters: 
+       Parent - is the object id of the parent to base the new object on.
+         
+  SetCategoryName  
+ 
+  public static void SetCategoryName( Integer  Obj,
+                                      String  Name)
+ 
+   Set the Category name.
+      Parameters: 
+       Obj - is the object id
+      Name - is the new name of the Category.
+          
+  GetCategoryName  
+ 
+  public static  String  GetCategoryName( Integer  Obj)
+ 
+   Get the Category name.
+      Parameters: 
+       Obj - is the object id
+        Returns: 
+       s the name of the Category.
+         
+  GetAllCategories  
+ 
+  public static  Vector  GetAllCategories()
+ 
+   Get the list of Category names.
+      Returns: 
+       s a list of all the Category names.
+         
+  AddSharedElementField  
+ 
+  public static void AddSharedElementField( Integer  Obj,
+                                            String  FieldName,
+                                            String  TType)
+ 
+   Add a Field whose values are shared across all Specifications
+and instances based on the Category.  Similar to a static
+variable.  Currently shared fields only support single values.
+      Parameters: 
+       Obj - is the object id
+      FieldName - is the name of the shared field to add.
+      TType - is the name of the shared field to add.
+           
+  AddSingleElementField  
+ 
+  public static void AddSingleElementField( Integer  Obj,
+                                            String  FieldName,
+                                            String  TType)
+ 
+   Add a Field whose value is a single value.
+      Parameters: 
+       Obj - is the object id.
+      FieldName - is the name of the field to add.
+      TType - is the name of the field to add.
+           
+  AddMultiElementField  
+ 
+  public static void AddMultiElementField( Integer  Obj,
+                                           String  FieldName,
+                                           String  TType)
+ 
+   Add a Field whose value is a list of values.
+      Parameters: 
+       Obj - is the object id.
+      FieldName - is the name of the field to add.
+      TType - is the name of the field to add.
+           
+  RemoveSharedElementField  
+ 
+  public static void RemoveSharedElementField( Integer  Obj,
+                                               String  FieldName)
+ 
+   Remove a Shared element field.
+      Parameters: 
+       Obj - is the object id.
+      FieldName - is the name of the shared field to remove.
+          
+  RemoveSingleElementField  
+ 
+  public static void RemoveSingleElementField( Integer  Obj,
+                                               String  FieldName)
+ 
+   Remove a Single element field.
+      Parameters: 
+       Obj - is the object id.
+      FieldName - is the name of the single field to remove.
+          
+  RemoveMultiElementField  
+ 
+  public static void RemoveMultiElementField( Integer  Obj,
+                                              String  FieldName)
+ 
+   Remove a Mutli element field.
+      Parameters: 
+       Obj - is the object id.
+      FieldName - is the name of the multiple field to remove.
+          
+  GetAllFields  
+ 
+  public static  Vector  GetAllFields( Integer  Obj)
+ 
+   Get all the fields from all field families and return the names of each.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s a list of the names of all the fields.
+         
+  AddHandler  
+ 
+  public static void AddHandler( Integer  Obj,
+                                 String  Name,
+                                 String  Event)
+ 
+   Add both a message and handler to an object.
+      Parameters: 
+       Obj - is the object id.
+      Name - is the name of the event.
+      Event - is the name of the handler, usually same as name.
+           
+  RemoveHandler  
+ 
+  public static void RemoveHandler( Integer  Obj,
+                                    String  EventName)
+ 
+   Removes both the message and the handler from the object.
+      Parameters: 
+       Obj - is the object id.
+      EventName - is the name of the event to remove.
+          
+  ChangeHandlerFormat  
+ 
+  public static void ChangeHandlerFormat( Integer  Obj,
+                                          String  EventName,
+                                          String  TType)
+ 
+   Currently doesn't do anything; to be used for changing description
+of handler implementation (python, java, tcl, ada).
+     
+  GetHandlers  
+ 
+  public static  Vector  GetHandlers( Integer  Obj)
+ 
+   Get a list of all the handlers associated with this object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s A list of handler names.
+         
+  AddFieldFamily  
+ 
+  public static void AddFieldFamily( Integer  Obj,
+                                     String  FamilyName,
+                                     String  BasedOn,
+                                     String  ParentFamilyName)
+ 
+   Add a field family which can be based on a previously defined
+field family.
+      Parameters: 
+       Obj - is the object id.
+      FamilyName - is the name of the family to add.
+      BasedOn - is the parent Category that the family is based on
+or TMWNullValue if none.
+      ParentFamilyName - is the family or TMWNullValue if none.
+            
+  RemoveFieldFamily  
+ 
+  public static void RemoveFieldFamily( Integer  Obj,
+                                        String  FamilyName)
+ 
+   Remove a field family from an object.
+      Parameters: 
+       Obj - is the object id.
+      FamilyName - is the name of the family to remove.
+          
+  RetrieveFieldFamily  
+ 
+  public static  Vector  RetrieveFieldFamily( Integer  Obj,
+                                            String  FamilyName)
+ 
+   Retrieve the values of a field family.  Each value that is returned
+is the name of an internal variable of the object.
+      Parameters: 
+       Obj - is the object id.
+      FamilyName - the name of the family to retrieve.
+         Returns: 
+       s a list of the fields within the named family.
+         
+  AssignFieldFamily  
+ 
+  public static void AssignFieldFamily( Integer  Obj,
+                                        String  FamilyName,
+                                        Vector  Values)
+ 
+   Assign a field family to contain the desired fields.
+      Parameters: 
+       Obj - is the object id.
+      FamilyName - is the name of the family to assign to.
+      Values - are the list of field names that belong to the family.
+           
+  GetAllFieldFamilies  
+ 
+  public static  Vector  GetAllFieldFamilies( Integer  Obj)
+ 
+   Get a list of all families associated with this object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s a listing of all field families within the object.
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

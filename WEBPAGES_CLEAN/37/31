@@ -1,0 +1,372 @@
+ CHEM.Web.cgibin.reaction.MechanismExplorerWeb.MechanismExplorerWeb<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Web  ::
+         Package cgibin  ::
+         Package reaction  ::
+         Module MechanismExplorerWeb  ::
+        Class MechanismExplorerWeb
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class MechanismExplorerWeb    
+            BaseWeb.BaseWeb --+    
+                              |    
+BaseReactionWeb.BaseReactionWeb --+
+                                  |
+                                  MechanismExplorerWeb</strong>
+ 
+
+   
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Constructor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           action_default ( self )  
+      User tried to submit a mechanism diagram. 
+           
+            
+            
+           
+           
+     
+         
+      
+             action_renderReaction ( self )  
+      In all cases, render the reaction mechanism steps (but maybe with 
+      some blanks) 
+           
+            
+            
+           
+           
+     
+         
+      
+             __renderReactionDetailTable ( self ,
+         reactantSmiList ,
+         reagent_id )  
+      Reproduce the reaction prediction using the starting reactant and 
+      reagent information, then extract out and render the info on the 
+      detailed steps used. 
+           
+            
+            
+           
+           
+     
+         
+      
+           action_renderSubmittedStepsTable ( self )  
+      Render an HTML table representing all of the mechanism steps the 
+      user has submitted, including "incorrect" ones. 
+           
+            
+            
+           
+           
+     
+         
+      
+           viewLinkHiddenField ( self ,
+         reactionStep )  
+      Generate the hidden field HTML to store reaction step information. 
+           
+            
+            
+           
+           
+     
+         
+      
+           viewLinkJavaScriptCall ( self ,
+         reactionStep ,
+         formIdentifier = "0" )  
+      Utility function for other classes to call to generate the javascript link to this page. 
+           
+            
+            
+           
+           
+     
+         
+      
+             lastField ( self )  
+      Name of the last hidden field generated 
+           
+            
+            
+           
+           
+     
+      Inherited from  BaseWeb.BaseWeb  :
+       action_uploadFiles ,
+       addHandler ,
+       clearHandlers ,
+       errorResponse ,
+       getTemplateFilename ,
+       handleRequest ,
+       maintainParams ,
+       optionTagsFromField ,
+       optionTagsFromList ,
+       printTemplate ,
+       replaceWhitespace ,
+       response ,
+       setTemplateFilename 
+       
+     
+      
+   
+        Static Methods  
+          [ hide private ]  
+         
+   
+         
+      
+             viewLinkJavaScriptDefinition ( cgibinDir = ".." ,
+         ignoreSelfReactions = True ,
+         scriptExt = "psp" )  
+      Utility function for other classes to include to generate standard
+      Javascript function to use the respective view links. 
+           
+            
+            
+           
+           
+     
+      Inherited from  BaseWeb.BaseWeb  :
+       javascriptString ,
+       quoteFilepath ,
+       quoteSmiles ,
+       unquoteSmiles 
+       
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+           iLink  =  0 
+     
+     
+         
+      
+         aReactionProcessor  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchin ...  
+     
+     
+         
+      
+         submittedMechanismStepSmiSet  =  &lt;CHEM.DB.rdb.search.NameRxnPatt ...  
+     
+     
+         
+      
+         submittedMechanismStepSkeletonSet  =  &lt;CHEM.DB.rdb.search.NameRx ...  
+     
+     
+         
+      
+         lastSubmittedMechanismStepSmi  =  &lt;CHEM.DB.rdb.search.NameRxnPat ...  
+     
+     
+      Inherited from  BaseWeb.BaseWeb  :
+       FILE_FIELD_SUFFIX ,
+       OPTIONS_FIELD_SUFFIX ,
+       OPTION_TAG ,
+       SELECT_FIELD_SUFFIX ,
+       TEMPLATE_SUFFIX ,
+       UPLOAD_FILE_CMD ,
+       disableResponse ,
+       mForm ,
+       mHandlers ,
+       mTemplateDict ,
+       mTemplateFilename ,
+       req ,
+       requestData 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Constructor.  Just some initializations such as addition of default 
+  mTemplateDict values.  Be sure the subclasses call this method in their 
+  own __init__!
+    Overrides:
+       BaseReactionWeb.BaseReactionWeb.__init__ 
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     action_default ( self ) 
+   
+     
+     
+    
+  
+  User tried to submit a mechanism diagram. Calculate the results of the
+  supplied arrow pushings and render accordingly. Indicate which ones are 
+  correct vs. incorrect.
+        
+  
+ 
+   
+     
+     action_renderSubmittedStepsTable ( self ) 
+   
+     
+     
+    
+  
+  Render an HTML table representing all of the mechanism steps the user 
+  has submitted, including "incorrect" ones.  Offers the 
+  opportunity to explore and keep track of different possibilities, even if
+  they don't match the intended mechanism pathway.
+        
+  
+ 
+   
+     
+     viewLinkHiddenField ( self ,
+         reactionStep ) 
+   
+     
+     
+     
+Generate the hidden field HTML to store reaction step information.
+
+reactionStep:  Should be a list / tuple of size 3 representing
+    the reactants (list), reagent (model) and products of the reaction to view details for.
+
+ 
+        
+  
+ 
+   
+     
+     viewLinkJavaScriptCall ( self ,
+         reactionStep ,
+         formIdentifier = "0" ) 
+   
+     
+     
+     
+Utility function for other classes to call to generate the javascript link to this page.
+
+reactionStep:  Should be a list / tuple of size 3 representing
+    the reactants (list), reagent (model) and products of the reaction to view details for.
+formIdentifier: How to identify the form that will contain the links and hidden fields.
+    Defaults to forms[0], the first form found in the document.
+
+ 
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   aReactionProcessor 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   submittedMechanismStepSmiSet 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   submittedMechanismStepSkeletonSet 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   lastSubmittedMechanismStepSmi 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:32 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

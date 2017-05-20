@@ -1,0 +1,70 @@
+ ;;;;;;;; RESTAURANT DATABASE PROGRAM
+;;;;;;;; ICS H21 -- UC Irvine ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; David G. Kay
+
+;;;;;;;; Top-level Application Routines ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(define Restaurants                        ; Main "driver" routine; call in
+   (lambda ()                              ;   interpreter by (Restaurants)
+      (let((collection (make-collection))) 
+        (handle-commands collection)
+      (write-line "Thank you.  Good-bye."))))
+
+(define handle-commands                   ; Repeatedly handle menu requests
+  (lambda (C)
+   (let ((response (get-menu-response)))  ; Get a response from the user
+     (case response                       ; 'case' is like 'cond' but it
+       ((q) C)                            ; matches values, not boolean expressions
+       ((a) (handle-commands (collection-add C (Rrant-get-info))))
+       ((r) (handle-commands (collection-remove C (test-to-match-name))))
+       ((p) (begin (print-collection C) (handle-commands C)))
+       ((s) (begin (search-collection C) (handle-commands C)))
+       (else (begin (invalid-command response) (handle-commands C)))))))
+
+(define  get-menu-response                ; Print the menu and get an answer
+   (lambda ()
+      (newline)
+      (write-line "Restaurant Collection Program --- Choose one:")
+      (write-line "   a:  Add a new restaurant to the collection")
+      (write-line "   r:  Remove a restaurant from the collection")
+      (write-line "   s:  Search the collection for selected restaurants")
+      (write-line "   p:  Print all the restaurants")
+      (write-line "   q:  Quit")
+      (read)))
+
+(define invalid-command                       
+   (lambda (response)                                 
+      (write-line "Sorry; '" response "' isn't a valid command.  Please try again.")))
+
+(define test-to-match-name     ; This routine returns a PROCEDURE (a lambda     
+  (lambda ()                   ; expression); that's what's needed by the
+    (let ((deletion            ; 'remove' command.
+            (get-it "name of the restaurant to delete")))
+      (lambda (R)
+        (equal? deletion (Rrant-name R))))))
+
+(define print-collection       ; The (lambda(x)#t) below matches every restaurant
+  (lambda (collection)         ; in the collection, so this call essentially gives
+    (for-each Rrant-print      ; us a Lisp list of each Rrant in the collection.
+                 (collection-select collection (lambda (x) #t)))))                  
+
+(define search-collection
+  (lambda (collection)
+    (let ((name (get-it "name of the restaurant to search for")))
+        (for-each Rrant-print
+                          (collection-select collection
+                                             (lambda (R)
+                                               (equal? name (Rrant-name R))))))))
+
+
+											   
+											   
+											  
+;  Here's another routine that the program here doesn't call;
+;  it's a good exercise, though.
+
+(define cheap-dishes          ; What restaurants are cheap?
+   (lambda (C)
+     (let ((threshhold ((get-it "the cut-off price"))))
+       (for-each Rrant-prin
+                 (collection-select C (lambda (R) ( 

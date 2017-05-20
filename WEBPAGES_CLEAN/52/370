@@ -1,0 +1,117 @@
+ 32.9.3 Molecule parameters<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.9.2 Parameter files 
+ Up:   32.9 Types of Parameters 
+ Next:   32.10 Parameter Ranges and 
+   
+
+
+  
+32.9.3 Molecule parameters 
+ 
+
+ 
+Parameters holding objects of type  OEChem::OEGraphMol  and
+ OEChem::OEMol  are supported by OEInterface, but they require that
+the function OESystem::RegisterMolParameters() be called before OEConfigure
+is called.  (Note that OESystem::RegisterMolParameters() is defined in the
+OEChem public headers).
+
+  
+ Chapter 32 - Example 12 : cpp file 
+    #include "oeplatform.h"
+#include "oesystem.h"
+
+//RegisterMolParameters is defined here
+#include "oechem.h"
+
+//Defines static const unsigned char* array InterfaceData
+#include "ch32-12.itf"
+
+using namespace OEPlatform;
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+int main(int argc, char** argv)
+{
+  OEInterface itf;
+  RegisterMolParameters();
+  OEConfigure(itf,InterfaceData);
+  if (OECheckHelp(itf,argc,argv)) return 0;
+  OEParseCommandLineLW(itf,argc,argv);
+
+  oeout &lt;&lt; "Molecule has " &lt;&lt; itf.Get&lt;OEGraphMol&gt;("-mol").NumAtoms() &lt;&lt; " atoms " &lt;&lt; oeendl;
+
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+ Chapter 32 - Example 12 : OEConfigure txt configuration file 
+    !PARAMETER -mol
+  !TYPE OEGraphMol
+  !KEYLESS 1
+  !REQUIRED yes
+  !BRIEF Molecule to count atoms off
+!END
+ 
+ 
+ Download as text. 
+ 
+   
+If we have a molecule file hexane.smi with the following contents
+
+  
+    CCCCCC
+    
+This program returns the following
+
+  
+    &gt; ch32-12 hexane.smi
+Molecule has 6 atoms
+&gt;
+    
+Note that every time the OEInterface  Get  command is called it returns a copy
+of the requested object or POD, not a reference.  In this example program the
+ Get  function was integrated into the output stream line.  Since we only
+needed to access this object once this is not inefficient, however if we wished
+to accesses it multiple times it would have been more efficient to make a local
+copy and access it several times.
+
+  
+Also not that this method of loading a molecule will only every return the first
+molecule in a file.  If you wish to load multiple molecules from a file you should
+use the OEChem molstream's.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.9.2 Parameter files 
+ Up:   32.9 Types of Parameters 
+ Next:   32.10 Parameter Ranges and 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

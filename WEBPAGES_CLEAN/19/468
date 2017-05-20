@@ -1,0 +1,66 @@
+ SEAL - Savasana<body>
+ 
+    
+
+
+ Savasana: Adaptation Consistency via Code Analysis 
+
+ 
+Savasana is the first white-box approach that uses code analysis for reasoning about consistency of adaptation.
+ 
+
+ Approach Overview 
+ 
+ Savasana consists of two parts: Static Code Analysis runs on the system's code and Run-time Control manages the corresponding running system. 
+
+   
+    We realized Savasana's code analysis capabilities on top of  Soot . Soot is a Java optimization framework, which can also be used for static analysis. We used Soot for the implementation of Dependency Extractor and Model Analyzer.
+
+    We implemented Savasana's runtime control capabilities on top of the  Spring  framework. For implementing
+the Monitor component, we used Spring's extensive support for aspect-oriented programming, and for the Adapter component, we relied on Spring's dynamic (re)con.figuration facilities.
+ 
+
+ Implementation 
+ Savasana project source code is available  here . 
+ 
+
+ Evaluation 
+
+ 
+We examine Savasana's behavior by measuring two properties:
+ 
+  
+        Reachability: the amount of time it takes for fulfilling the adaptation request.
+     
+     
+        Disruption: the amount of time that application threads are suspended for adaptation.
+     
+  
+There are two factors that impact these properties:
+ 
+  
+        The internal structure of root transactions (i.e., scenarios).
+     
+     
+        The level of concurrency in the system.
+     
+  
+The experiments are conducted on a software system called Emergency Deployment System (EDS), which is intended for the deployment and management of personnel in emergency response scenarios. 
+ 
+EDS source code is available  here .
+  
+We applied Savasana in three scenarios, each one is adopted from one of EDS's main tasks, namely: Strategy Analysis, Deployment Advising, and Resource Estimation. Inter-component dependency of these scenarios are depicted in the following figure.
+ The evaluation results are available  here . 
+
+ 
+
+
+
+   
+               
+ 
+ 
+               
+ 
+ 
+</body> 

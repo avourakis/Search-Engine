@@ -1,0 +1,52 @@
+ Euler's Formula<body>
+     
+  Euler's Formula,
+Proof 1: Interdigitating Trees
+ 
+
+ For any connected embedded planar graph G define the  dual graph  G* by
+drawing a vertex in the middle of each face of G,
+and connecting the vertices from two adjacent faces by a curve e* through
+their shared edge e.  Note that G**=G.
+Any cycle in G disconnects G* by the Jordan curve theorem.
+Any acyclic subgraph F of G is a forest and does not disconnect G*
+(you can get from any face to any other face by detouring around
+trees in F).  So connectedness and acyclicity are dual to each other.
+This duality forms the basis of the following proof: 
+
+ 
+Choose any spanning tree T in G; this is by definition a connected
+acyclic subgraph.  The dual edges of its complement, (G-T)*,
+form an acyclic connected subgraph of G* which is therefore also
+a spanning tree.
+The two trees together have (V-1)+(F-1) edges.
+ 
+
+ This is my favorite proof, and is the one I use when teaching graph theory.
+ Sommerville  attributes it to  Von Staudt .
+It fits in well with other topics of planar duality such as the fact that
+every planar graph with all faces even is bipartite (by duality from Euler tours).
+Several other proofs of the Euler formula have two versions, one
+in the original graph and one in its dual, but this proof is self-dual
+as is the Euler formula itself. 
+
+   
+
+ The idea of decomposing a graph into interdigitating trees has proven
+useful in a number of algorithms, including work of myself and others on
+ dynamic
+minimum spanning trees  as well as work of Goodrich and Tamassia
+on point location.  It also has obvious connections to power-ground
+routing in VLSI design and to watershed analysis. 
+    
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

@@ -1,0 +1,160 @@
+ 5.7 Looping over subsets of Atoms or Bonds<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5.6 Looping over the 
+ Up:   5. Traversing the Atoms, 
+ Next:   6. Properties of Atoms 
+   
+
+
+  
+5.7 Looping over subsets of Atoms or Bonds 
+ 
+
+ 
+It can sometimes be useful to loop over a subset of the atoms or bonds of a
+molecule.  Traditionally this can be done with "if" statements inside a
+loop, but it can sometimes be cleaner and more convenient to subset the
+members being looped over inside the iterator.  To do this, many of
+OEChem's iterator generation functions (such as  OEMolBase::GetAtoms )
+can take an argument which determines which subset of the object to loop
+over (these functions are called predicates as detailed in the chapter
+"Predicate Functions" below).  The details of these functions are not
+important here.  Instead, a programmer can simply use the predefined
+functors to control their loops.
+
+  
+The following example shows the use of the predicate  OEHasAtomicNum() 
+to loop over only carbon atoms in a molecule.
+
+  
+    #include "oechem.h"
+#include &lt;iostream&gt;
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+int main()
+{
+  OEMol mol;
+  OEParseSmiles(mol, "c1cc(O)c(O)cc1CCN");
+
+  OEIter&lt;OEAtomBase&gt; atom;
+  cerr &lt;&lt; "Carbon Atoms:" &lt;&lt; endl;
+  for (atom=mol.GetAtoms(OEHasAtomicNum(6));atom;++atom)
+  {
+    cerr &lt;&lt; "Atom: " &lt;&lt; atom-&gt;GetIdx() &lt;&lt; " ";
+  }
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+Some of the common predefined functors in OEChem are listed below.
+Predicate functions can be trivial, such as  OEIsHydrogen() , or quite
+complex, such as  Match(const char*) , which returns atoms which match
+the SMARTS string passed to the constructor.  For a complete listing,
+please see the chapter on predicate functions or the API manual.  Many
+predicates take intuitive construction arguments.  For instance,
+ OEHasAtomName  has a  const char*  argument which is the atom's
+name ( e.g.    mol.GetAtoms(OEHasAtomName("CA")) ).
+
+  
+ Atoms 
+    OEHasAtomName(const char *)
+OEHasAtomicNum(unsigned int)
+OEIsHalogen
+OEIsAromaticAtom
+OEAtomIsInRing
+OEIsChiralAtom
+OEHasResidueNumber(unsigned int)
+OEMatchFunc(const char*)
+    Bonds 
+   OEHasBondIdx(unsigned int)
+OEHasOrder(unsigned int)
+OEBondIsInRing
+OEIsRotor
+    Conformers 
+   OEHasConfIdx(unsigned int)
+    
+These predicates can be particularly helpful when used in conjunction with
+functions which take OEIters as arguments as seen in the example below.
+This use of predicates allows factorization of the loop in a way not easily
+possible with  if  statements.
+
+  
+    #include "oechem.h"
+
+#include &lt;iostream&gt;
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+void PrintAtoms(OEIter&lt;OEAtomBase&gt; &amp;atom,const char *title)
+{
+  cerr &lt;&lt; title &lt;&lt; ":" &lt;&lt; endl;
+  for (atom.ToFirst();atom;++atom)
+  {
+    cerr &lt;&lt; atom-&gt;GetIdx() &lt;&lt; " ";
+  }
+  cerr &lt;&lt; endl;
+}
+
+int main()
+{
+  OEMol mol;
+  OEParseSmiles(mol, "c1c(O)c(O)c(Cl)cc1CCCBr");
+
+  OEIter&lt;OEAtomBase&gt; atom;
+  atom = mol.GetAtoms(OEAtomIsInRing());
+  PrintAtoms(atom,"Ring Atoms");
+
+  atom = mol.GetAtoms(OEHasAtomicNum(8));
+  PrintAtoms(atom,"Oxygens");
+
+  atom = mol.GetAtoms(OEIsHalogen());
+  PrintAtoms(atom,"Halogens");
+
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+While this introduction can help you get some use from predicates, details
+on more complex predicates and how to write your own predicates can be
+found in the chapter entitled  Predicate Functions  (see below).
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5.6 Looping over the 
+ Up:   5. Traversing the Atoms, 
+ Next:   6. Properties of Atoms 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,133 @@
+  Chimera Concepts - Viewers<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Viewers  
+
+      
+ Example Viewers include...    Viewers are the fundamental components of the Chimera universe. Without
+viewers, users are unable to access Chimera's services. Viewers generate
+the graphical displays of  objects . These  views  allow users to browse and, in some cases, edit
+the underlying information. It is within these views that  anchors 
+reside. An anchor is a logical "end-point", a hook if you will,
+for Chimera's  links . 
+       ... Document Processors,...       
+ Viewers are typically focused beasts. They often can display only one type
+of information. They are completely responsibile for the creation, manipulation,
+and persistence of the information within their domain. Chimera makes no
+assumptions about the format or storage of a viewer's data. Rather, Chimera
+depends on the viewer to provide the bridge between its information and
+Chimera's hypermedia services.     ... Image Manipulators, ...     Viewers are responsible for the display of anchors within their views. They
+transform the logical abstraction of an anchor into a specific region or
+widget within their user-interface. In addition, a viewer is responsible
+for providing a user with access to hypermedia operations which allow them
+to create and delete anchors. Operations for adding anchors to links and
+initiating traversal should also be provided. An advanced viewer will provide
+functions to search  hyperwebs , create and select
+links, and modify existing anchors. 
+       ... and Database Managers.     It is important to separate the notion of viewers from the related notion
+of  clients . Clients are executable programs which
+contain viewers. Typically, a client contains only a single viewer. This
+one-to-one relationship often leads to confusion between the two. However,
+there is nothing preventing a client from harboring two or more viewers
+within itself. As an example, consider a client such as Microsoft Excel.
+Excel contains viewers which manipulate and display worksheets, macros,
+charts, and other data types. Each viewer within Excel has to fulfill viewer
+responsibilities while Excel as a whole must fulfill  client
+obligations . By working together, the client and its associated viewers
+provide the user with a hypermedia-enabled application. 
+
+ In addition to the responsibilities discussed above, a viewer must fulfill
+the following   obligations: 
+
+  Register itself with the Chimera server.
+    Register the MIME types of the objects it displays.
+    Register its (in)ability to handle multiple views at once.
+    Register interest in the set of Chimera events it handles.
+    Notify the Chimera server when it is active within its client.
+    Notify the Chimera server of the views it is displaying.
+   All of the these responsibilities will be highlighted in the  Chimera 2.0 tutorial . However, the notion
+of multiple views deserves further consideration. Chimera supports a form
+of traversal known as  delayed link traversal . A delayed link traversal
+occurs when the Chimera server determines that a link traversal event must
+be sent to a viewer which is currently not available. In this situation,
+the server stores the link traversal event and invokes the desired viewer.
+Once the viewer has initialized, the Chimera server forwards the delayed
+event to it and the link traversal finally completes. The rules for determing
+when a viewer is unavailable are closely related to whether a viewer supports
+multiple views. The rules are as follows: 
+
+  Determine if an active viewer is displaying the destination view of
+  the link traversal. If so, send the event to that viewer.
+    Determine if a viewer which can display the destination view is active.
+  If so, check to see if it has any active views. If not, send the event
+  to that viewer. If so, only send the event to the viewer if it supports
+  multiple views.
+    Repeat step two for all such potential viewers until the event is sent.
+    If all potential active viewers have been exhausted, delay the event
+  and invoke the desired viewer.
+   The upshot of these rules is to underscore the importance of a viewer
+indicating whether or not it can display multiple views. Viewers which can
+support multiple views improve the overall efficiency of the system since
+operating system resources are saved from the burden of invoking multiple
+instances of the same viewer. 
+
+ Developer Information 
+
+ The available operations on views are listed below. For more information
+see the  on-line documentation . 
+
+       activeViewer(viewer)  
+ Informs the Chimera server that the specified viewer is active within its
+client.     addMIMEtype(viewer, String)  
+ Adds the specified MIME type to the list of MIME types the specified viewer
+supports.     createViewer(String)  
+ Creates a new viewer with the specified name in the active hyperweb.     deleteViewer(viewer)  
+ Delete's the specified viewer from the active hyperweb. Note, the Chimera
+server proactively maintains the consistency of the Chimera hyperweb, thus
+this operation will also remove any views which contain the specified viewer,
+which in turn will delete any anchors associated with those views, etc.     deregisterInterest(viewer, event)  
+ Informs the Chimera server that the specified viewer is no longer interested
+in the specified event.     getMIMEtypes(viewer)  
+ Returns a list of the MIME types supported by the specified viewer.     getViewer(String)  
+ Returns the viewer with the specified name.     getViewer(viewer)  
+ Returns the viewer with the specified viewer id.     getViewerName()  
+ Returns the name of the specified viewer.     getViewers()  
+ Returns all of the viewers for the active hyperweb.     inactiveViewer  
+ Informs the Chimera server that the specified viewer is no longer active
+within its client.     numberOfViewers()  
+ Returns the number of viewers contained in the active hyperweb.     registerInterest(viewer, event)  
+ Informs the Chimera server that the specified viewer is interested in the
+specified event.     setMultipleViews(viewer, boolean)  
+ Indicates to the Chimera server whether or not the specified viewer can
+support the display of more than one view at a time.     supportsMultipleViews(viewer)  
+ Returns an indication of whether or not the specified viewer can support
+the display of more than one view at a time.     supportsType(viewer, String)  
+ Returns whether or not the specified viewer supports the specified MIME
+type.     viewerExists(String)  
+ Checks to see if a viewer exists with the specified name.     viewerExists(viewer)  
+ Checks to see if a viewer exists with the specified viewer id.    
+
+      Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

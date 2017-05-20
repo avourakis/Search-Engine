@@ -1,0 +1,69 @@
+ // KBest - Data structure for selecting k best objects from a set of n
+// David Eppstein, UC Irvine, 5 June 1999
+//
+// We maintain a value k, and a list of Objects, subject to the following two operations:
+//
+// put(Object,key): Add the item to the list, with the given keys
+//
+// Object get(): If the list is empty or k=0, return null. Otherwise, find one of the k
+//    smallest keys in the list, remove it, decrement k, and return the object we found.
+//
+// The amortized expected time per operation is O(1), and the space used is O(k).
+
+public class KBest {
+	static private final int LOAD_FACTOR = 3;
+		// Keep 3k objects in working set.
+		// Higher load factors would make the calls from puts() to cut() more likely to succeed
+		// and have a bigger expected number of items cut.  However this would not help much,
+		// because the expected fraction of items cut per call converges to 1/2, and anyway
+		// the unsuccessful cuts increase nSmall, either speeding future cuts or leading to
+		// a future free cut depending on whether new puts are greater or less than smallPivot.
+
+	KBest(int kk) {
+		int aSize = (int) (LOAD_FACTOR * kk);
+		k = kk;
+		objs = new Object[aSize];
+		keys = new int[aSize];
+		nObjs = nSmall = nEq = smallPivot = 0;
+	}
+	
+	public final void put(Object o, int key) {
+		if (k = k) {						// already have enough small values?
+			if (key &gt;= smallPivot) return;	// yes, and this one is too big
+			objs[nSmall - nEq] = o;
+			keys[nSmall - nEq] = key;
+			if (nEq &gt; 0) nEq--;					// can make room in nSmall by dropping one from nEq?
+			else {
+				nObjs++;								// nSmall overflowed k, reset to zero
+				nSmall = nEq = 0;
+			}
+			return;
+		}
+		
+		if (nSmall == 0 || key &gt; smallPivot) {
+			objs[nObjs] = o;						// big key, add to end of object list
+			keys[nObjs] = key;
+		} else {
+			objs[nObjs] = objs[nSmall];		// small key, add between small and eq
+			keys[nObjs] = keys[nSmall];			// after shifting what was there out of the way
+			objs[nSmall] = objs[nSmall - nEq];
+			keys[nSmall] = keys[nSmall - nEq];
+			objs[nSmall - nEq] = o;
+			keys[nSmall - nEq] = key;
+			nSmall++;
+			if (key == smallPivot) nEq++;
+			if (nSmall == k) nObjs = k;		// if nSmall grows to k, flush unneeded big objs
+		}
+		nObjs++;
+	}
+	
+	public final Object get() {
+		if (nObjs  0) nEq--;
+		if (--k = all nSmall values and = k) nObjs = firstEqual; // easy case: &gt;=k items =pivot
+		else {									// harder case: = k) {
+				nObjs = nSmall = k;			// if kth item is =pivot, both cut and adjust nSmall
+				nEq = k - firstEqual;
+			}
+			else {
+				nSmall = firstGreater;		// = pivot) end--;
+			if (start  

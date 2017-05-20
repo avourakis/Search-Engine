@@ -1,0 +1,416 @@
+ #ifndef ARRAY_QUEUE_HPP_
+#define ARRAY_QUEUE_HPP_
+
+#include 
+#include 
+#include 
+#include 
+#include "ics_exceptions.hpp"
+
+
+namespace ics {
+
+
+template class ArrayQueue {
+  public:
+    //Destructor/Constructors
+    ~ArrayQueue();
+
+    ArrayQueue          ();
+    explicit ArrayQueue (int initial_length);
+    ArrayQueue          (const ArrayQueue&amp; to_copy);
+    explicit ArrayQueue (const std::initializer_list&amp; il);
+
+    //Iterable class must support "for-each" loop: .begin()/.end()/.size() and prefix ++ on returned result
+    template 
+    explicit ArrayQueue (const Iterable&amp; i);
+
+
+    //Queries
+    bool empty      () const;
+    int  size       () const;
+    T&amp;   peek       () const;
+    std::string str () const; //supplies useful debugging information; contrast to operator 
+    int enqueue_all (const Iterable&amp; i);
+
+
+    //Operators
+    ArrayQueue&amp; operator = (const ArrayQueue&amp; rhs);
+    bool operator == (const ArrayQueue&amp; rhs) const;
+    bool operator != (const ArrayQueue&amp; rhs) const;
+
+    template
+    friend std::ostream&amp; operator &amp; q);
+
+
+
+    class Iterator {
+      public:
+        //Private constructor called in begin/end, which are friends of ArrayQueue
+        ~Iterator();
+        T           erase();
+        std::string str  () const;
+        ArrayQueue::Iterator&amp; operator ++ ();
+        ArrayQueue::Iterator  operator ++ (int);
+        bool operator == (const ArrayQueue::Iterator&amp; rhs) const;
+        bool operator != (const ArrayQueue::Iterator&amp; rhs) const;
+        T&amp; operator *  () const;
+        T* operator -&gt; () const;
+        friend std::ostream&amp; operator ::Iterator&amp; i) {
+          outs ::begin () const;
+        friend Iterator ArrayQueue::end   () const;
+
+      private:
+        //If can_erase is false, current indexes the "next" value (must ++ to reach it)
+        int            current;
+        ArrayQueue* ref_queue;
+        int            expected_mod_count;
+        bool           can_erase = true;
+
+        //Called in friends begin/end
+        Iterator(ArrayQueue* iterate_over, int initial);
+    };
+
+
+    Iterator begin () const;
+    Iterator end   () const;
+
+
+  private:
+    T*  queue;          //Circular array with data stored in indexes front to rear-1
+    int length    =  1; //Physical length of array: must be strictly &gt; .size()
+    int front     =  0; //Array index of front in queue
+    int rear      =  0; //Array index ONE BEYOND rear in queue
+    int mod_count =  0; //For sensing concurrent modification
+
+    //Helper methods
+    int  erase_at         (int i);
+    void ensure_length    (int new_length);
+    void ensure_length_low(int new_length);
+    bool is_in            (int i) const;
+  };
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//ArrayQueue class and related definitions
+
+//Destructor/Constructors
+
+template
+ArrayQueue::~ArrayQueue() {
+  delete[] queue;
+}
+
+
+template
+ArrayQueue::ArrayQueue() {
+  queue = new T[length];
+}
+
+
+template
+ArrayQueue::ArrayQueue(int initial_length)
+: length(initial_length) {
+  if (length 
+ArrayQueue::ArrayQueue(const ArrayQueue&amp; to_copy)
+: length(to_copy.length)  {
+  queue = new T[length];
+  front = 0;
+  rear  = to_copy.size();
+  for (int i=0; i
+ArrayQueue::ArrayQueue(const std::initializer_list&amp; il)
+: length(il.size()) {
+  queue = new T[length];
+  for (const T&amp; q_elem : il)
+    enqueue(q_elem);
+}
+
+
+template
+template
+ArrayQueue::ArrayQueue(const Iterable&amp; i)
+: length(i.size()) {
+  queue = new T[length];
+  for (const T&amp; v : i)
+    enqueue(v);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Queries
+
+template
+bool ArrayQueue::empty() const {
+  return front == rear;
+}
+
+
+template
+int ArrayQueue::size() const {
+  return rear &gt;= front ? rear-front : length-(front-rear);
+}
+
+
+template
+T&amp; ArrayQueue::peek () const {
+  if (this-&gt;empty())
+    throw EmptyError("ArrayQueue::peek");
+
+  return queue[front];
+}
+
+
+template
+std::string ArrayQueue::str() const {
+  std::ostringstream answer;
+  answer is_in(i))
+        answer 
+int ArrayQueue::enqueue(const T&amp; element) {
+  this-&gt;ensure_length(this-&gt;size()+1);
+  queue[rear] = element;
+  rear = (rear+1)%length;
+  ++mod_count;
+  return 1;
+}
+
+
+template
+T ArrayQueue::dequeue() {
+  if (this-&gt;empty())
+    throw EmptyError("ArrayQueue::dequeue");
+
+  T answer = queue[front];
+  front = (front+1)%length;
+  this-&gt;ensure_length_low(this-&gt;size());
+  ++mod_count;
+  return answer;
+}
+
+
+template
+void ArrayQueue::clear() {
+  front = 0;
+  rear  = 0;
+  this-&gt;ensure_length_low(0);
+  ++mod_count;
+}
+
+
+template
+template
+int ArrayQueue::enqueue_all(const Iterable&amp; i) {
+  int count = 0;
+  for (const T&amp; v : i)
+     count += enqueue(v);
+
+    return count;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Operators
+
+template
+ArrayQueue&amp; ArrayQueue::operator = (const ArrayQueue&amp; rhs) {
+  if (this == &amp;rhs)
+    return *this;
+
+  front = 0;
+  rear = rhs.size();
+  this-&gt;ensure_length(rear);
+  for (int i=0; i
+bool ArrayQueue::operator == (const ArrayQueue&amp; rhs) const {
+  if (this == &amp;rhs)
+    return true;
+
+  int used = this-&gt;size();
+  if (used != rhs.size())
+    return false;
+
+  ArrayQueue::Iterator rhs_i = rhs.begin();
+  for (int i=0; i
+bool ArrayQueue::operator != (const ArrayQueue&amp; rhs) const {
+  return !(*this == rhs);
+}
+
+
+template
+std::ostream&amp; operator &amp; q) {
+  outs 
+auto ArrayQueue::begin () const -&gt; ArrayQueue::Iterator {
+  return Iterator(const_cast*&gt;(this),front);
+}
+
+
+template
+auto ArrayQueue::end () const -&gt; ArrayQueue::Iterator {
+  return Iterator(const_cast*&gt;(this),rear);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Private helper methods
+
+template
+int ArrayQueue::erase_at(int i) {
+  int shift_count = (rear &gt;= i ? rear-i-1: length-(i-rear))-1;
+  int to   = i;
+  int from = (to+1)%length;
+  for (int i=0; iensure_length_low(this-&gt;size());
+  ++mod_count;
+  return 1;
+}
+
+
+template
+void ArrayQueue::ensure_length(int new_length) {
+  //length must be &gt; new_length; remember requirement of length at least size()+1
+  if (length &gt; new_length)
+    return;
+  T*  old_queue  = queue;
+  int old_length = length;
+  int used = this-&gt;size(); //must precede length change; see computation of size()!
+  length = 1+std::max(new_length,2*(length-1));
+  queue  = new T[length];
+  for (int i=0; i
+void ArrayQueue::ensure_length_low(int new_length) {
+  //length must be &gt; new_length; remember requirement of length at least size()+1
+  if (length-1 size(); //must precede length change!
+  length = 1+2*new_length;
+  queue  = new T[length];
+  for (int i=0; i
+bool ArrayQueue::is_in(int i) const {
+  return  rear &gt;= front ? (i&gt;=front &amp;&amp; i=front || i
+ArrayQueue::Iterator::Iterator(ArrayQueue* iterate_over, int initial)
+: current(initial), ref_queue(iterate_over), expected_mod_count(ref_queue-&gt;mod_count) {
+}
+
+
+template
+ArrayQueue::Iterator::~Iterator()
+{}
+
+
+template
+T ArrayQueue::Iterator::erase() {
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::erase");
+  if (!can_erase)
+    throw CannotEraseError("ArrayQueue::Iterator::erase Iterator cursor already erased");
+  if (!ref_queue-&gt;is_in(current))
+    throw CannotEraseError("ArrayQueue::Iterator::erase Iterator cursor beyond data structure");
+
+  can_erase = false;
+  T to_return = ref_queue-&gt;queue[current];
+  ref_queue-&gt;erase_at(current);
+  expected_mod_count = ref_queue-&gt;mod_count;
+  return to_return;
+}
+
+
+template
+std::string ArrayQueue::Iterator::str() const {
+  std::ostringstream answer;
+  answer str() 
+auto ArrayQueue::Iterator::operator ++ () -&gt; ArrayQueue::Iterator&amp; {
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator ++");
+
+  if (current == ref_queue-&gt;rear)
+    return *this;
+
+  if (can_erase)
+    current = (current+1)%ref_queue-&gt;length;
+  else
+    can_erase = true;  //current already indexes "one beyond" deleted value
+
+  return *this;
+}
+
+
+template
+auto ArrayQueue::Iterator::operator ++ (int) -&gt; ArrayQueue::Iterator {
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator ++(int)");
+
+  if (current == ref_queue-&gt;rear)
+    return *this;
+
+  Iterator to_return(*this);
+  if (can_erase)
+    current = (current+1)%ref_queue-&gt;length;
+  else
+    can_erase = true;  //current already indexes "one beyond" deleted value
+
+  return to_return;
+}
+
+
+template
+bool ArrayQueue::Iterator::operator == (const ArrayQueue::Iterator&amp; rhs) const {
+  const Iterator* rhsASI = dynamic_cast(&amp;rhs);
+  if (rhsASI == 0)
+    throw IteratorTypeError("ArrayQueue::Iterator::operator ==");
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator ==");
+  if (ref_queue != rhsASI-&gt;ref_queue)
+    throw ComparingDifferentIteratorsError("ArrayQueue::Iterator::operator ==");
+
+  return current == rhsASI-&gt;current;
+}
+
+
+template
+bool ArrayQueue::Iterator::operator != (const ArrayQueue::Iterator&amp; rhs) const {
+  const Iterator* rhsASI = dynamic_cast(&amp;rhs);
+  if (rhsASI == 0)
+    throw IteratorTypeError("ArrayQueue::Iterator::operator !=");
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator !=");
+  if (ref_queue != rhsASI-&gt;ref_queue)
+    throw ComparingDifferentIteratorsError("ArrayQueue::Iterator::operator !=");
+
+  return current != rhsASI-&gt;current;
+}
+
+
+template
+T&amp; ArrayQueue::Iterator::operator *() const {
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator *");
+  if (!can_erase || !ref_queue-&gt;is_in(current)) {
+    std::ostringstream where;
+    where front
+          rear;
+    throw IteratorPositionIllegal("ArrayQueue::Iterator::operator * Iterator illegal: "+where.str());
+  }
+
+  return ref_queue-&gt;queue[current];
+}
+
+
+template
+T* ArrayQueue::Iterator::operator -&gt;() const {
+  if (expected_mod_count != ref_queue-&gt;mod_count)
+    throw ConcurrentModificationError("ArrayQueue::Iterator::operator -&gt;");
+  if (!can_erase || !ref_queue-&gt;is_in(current)) {
+    std::ostringstream where;
+    where front
+          rear;
+    throw IteratorPositionIllegal("ArrayQueue::Iterator::operator -&gt; Iterator illegal: "+where.str());
+  }
+
+  return &amp;ref_queue-&gt;queue[current];
+}
+
+}
+
+#endif /* ARRAY_QUEUE_HPP_ */
+ 

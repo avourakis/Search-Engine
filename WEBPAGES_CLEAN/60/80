@@ -1,0 +1,46 @@
+ """BucketQueue.py
+
+A simple priority queue with integer priorities. Use like:
+    Q = BucketQueue()
+    Q[item] = priority
+    del Q[item]
+    for item in Q: ...
+
+The time to find and return each item in the queue is proportional
+to the difference (current priority - previous priority), or O(1) if
+this difference is non-positive. In particular when the minimum priority
+is non-negative and non-decreasing (as in Dijkstra's algorithm) or when
+its decreases are bounded (as in graph degeneracy) the total time for a
+sequence of operations is proportional to the number of operations plus
+the maximum priority.
+
+D. Eppstein, July 2016.
+"""
+
+class BucketQueue:
+    def __init__(self):
+        """Create a new empty integer priority queue."""
+        self._D = {}        # map from items to priorities
+        self._Q = {}        # map from priorities to buckets
+        self._N = None      # lower bound on min priority
+
+    def __getitem__(self,item):
+        """Look up the priority of an item."""
+        return self._D[item]
+
+    def __delitem__(self,item):
+        """Remove an item from the priority queue."""
+        priority = self._D[item]
+        del self._D[item]               # remove from map of items =&gt; priorities
+        self._Q[priority].remove(item)  # remove from bucket
+        if not self._Q[priority]:
+            del self._Q[priority]       # remove empty bucket
+
+    def __setitem__(self,item,priority):
+        """Add an element to the priority queue with the given priority."""
+        if not isinstance(priority,int):
+            raise TypeError("Priority must be an integer")
+        if item in self._D:
+            del self[item]
+        self._D[item] = priority        # add to map of items =&gt; priorities
+        if not self._Q or priority  

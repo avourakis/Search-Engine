@@ -1,0 +1,46 @@
+ Vectors of Vectors<body>
+  
+  
+ 
+ ;; reset-first-n-pixels: vector number color
+-&gt; side effect, changing vector  
+ 
+ ;; Set the first n pixels in the vector
+to the specified color  
+ 
+ (define reset-first-n-pixels  
+ 
+    (lambda (line n color)  
+ 
+       (cond  
+ 
+          ((&lt;= n 0)
+'return-whatever-we-are-done)  
+ 
+          (else (begin  
+ 
+               
+      (vector-set! line (sub1 n) color)   
+ 
+               
+      ; The sub1 allows for zero-based indexing  
+ 
+               
+      (reset-first-n-pixels line (sub1 n) color))))))  
+  
+ 
+  
+  
+  David G. Kay ,
+  406B Computer Science
+    University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --    (949) 824-5072  
+ --  Fax   (949) 824-4056  
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Monday, December 6, 2004 -- 6:57 AM  
+</body> 

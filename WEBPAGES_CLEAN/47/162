@@ -1,0 +1,123 @@
+ Source Code | Grid Code<body>
+
+ 
+             
+
+ "Grid" Source Code 
+
+ Last updated: 2/13/2013  
+
+ Introduction 
+
+
+ 
+
+Our  "Grid"  code is a very fast and efficient implementation of a classic problem of handling continuous range queries on top of s large number of moving objects. Even though the code has been implemented some time ago, we are unaware of any other solution that is faster.  
+In the setup of the problem, the assumption is that one or multiple servers track the locations of moving-objects. 
+The number of objects can be very high, e.g., millions. The users issue on top of 
+the spatial domain a large number of  continuous  (monitoring) queries. 
+Unlike one-time queries, continuous queries are executed over a certain period of time, 
+updating their results as the situation changes and objects move. For location-based serves, 
+continuous  range  query (CRQ) is one of the most important query types. 
+The main challenge is to develop an  efficient  and  scalable  CRQ solution.  
+The traditional approach for processing CRQs is to build an index on the objects (data) 
+and utilize it for the query processing. In a moving object environment that approach 
+suffers from the need for frequent index updates and thereby often results in poor performance.  
+To solve the efficiency and scalability challenges of the problem, we have proposed a 
+novel algorithmic technique called Query Indexing (QI). Query Indexing relies on reversing 
+the role of queries and data. Namely, a spatial index (QIndex) is built on the continuous queries, 
+and no index is built on the objects (data). The query results are computed by issuing 
+point-queries (i.e., the object locations) to the QIndex and finding matches between objects and queries.  
+We have realized that the CRQ problem can (and should) be solved in-memory for moving objects. 
+This is since by keeping only the necessary info in main memory and the rest on disk, 
+the data fits into the memory of an average workstation.  We have showed that very different 
+types of indexes perform better in memory. Specifically, we have developed the  Grid  indexing 
+techniques for processing queries in moving object databases, resulting in 
+orders of magnitude of improvement over competing strategies. 
+Nowadays, of course, many research efforts use in-memory grid-based solutins as the norm.  
+An interesting aspect of our solution is that, unlike many other techniques, it does not 
+impose many of the common constraints, such as restriction on object speeds and trajectories, 
+making it of much wider applicability.
+ 
+
+ How to Cite 
+When using our code please cite it as:    
+       Main memory evaluation of monitoring queries over moving objects.   Dmitri V. Kalashnikov , S. Prabhakar, and S. Hambrusch. 
+      In   Distributed and Parallel Databases , An International Journal (DAPD) , 15(2):117-135, March 2004 
+      [ Download Paper ]    
+       Efficient evaluation of continuous range queries on moving objects.   Dmitri V. Kalashnikov , Sunil Prabhakar, Susanne Hambrusch, and Walid Aref. 
+      In  Proc. of Int'l Conf. on Database and Expert Systems Applications ( DEXA ) ,
+      Sep 2-6, 2002. 
+      [ Download Paper ]     
+The above publications describe our Grid-based approach in detail. BibTeX entries for these publications are:
+
+ 
+@article{DAPD04::dvk,
+   author    = {Dmitri V. Kalashnikov and Sunil Prabhakar and Susanne Hambrusch},
+   title     = {Main memory evaluation of monitoring queries over moving objects},
+   journal   = {Distributed and Parallel Databases, An International Journal},
+   volume    = 15, number = 2, pages = {117--135}, month = mar, year = 2004
+} 
+
+@inproceedings{DEXA02::dvk,
+   author    = {Dmitri V. Kalashnikov and Sunil Prabhakar and 
+                Susanne Hambrusch and Walid Aref},
+   title     = {Efficient Evaluation of Continuous Range Queries on Moving Objects},
+   booktitle = {Proc. of Int'l Conf. on Database and Expert Systems 
+                Applications (DEXA 2002)},
+   year      = {2002}, month = {September 2--6}, address = {Aix en Provence, France}
+}
+ 
+
+ Downloading Code 
+ The code can de downloaded from here: 
+	[ Grid_code.zip ] 
+	[ License ] 
+	  The solution is implemented in C++. 
+	 The code is designed for UNIX in general.  
+	 The code has been tested under Solaris, Linux, Mac OS X. 
+	 GCC has been used to compile the code (last tested with GCC 4.7).  
+	 We recommend using the latest version of GCC C++, as it is often generates faster code. 
+	 The code is single-threaded and could be sped up by implementing a parallel multi-threaded version. 
+	 The code will report the  cycle time  on each iteration.  
+	 The cycle time is the time needed to move all the objects and process all the queries. 
+	 The idea is to minimize the cycle time.  
+ Compiling Code 
+ Unzip  Grid_code.zip  file. The code is inside  Code  folder. The main file is  test.cpp . 
+	  Code  folder and its subfolders will contains  ./mak  batch files
+	  Edit those  ./mak  files: change the path of GCC's C++ compiler ( g++ ) to where it is located in your system.   
+	 To compile, run  ./mak  inside  Code  folder. 
+	 Compilation will produce executable file called  index . 
+
+            
+ Running Code 
+            
+ ./index nXcell nYcell query_perc query_sz skewed num_point num_query navq_sz nav_stepX 
+
+            
+ Options 
+    nXcell  
+		 The number of cells per X-dimension (nXcell by nYcell grid). Good values to try are: 100, 200, 500, 1000. 
+	    nYcell  
+		 The number of cells per Y-dimension (nXcell by nYcell grid). Good value is  nYcell=nXcell . 
+	    query_perc  
+		 Not used, unless the moving-query part is uncommented in code. Needed to specify the percentage of queries that will move on each iteration. Set it to 0 (zero). 
+	    query_sz  
+		 Specifies query size, e.g., when it is set to 0.01, all queries will be of size 0.01 x 0.01.  
+	    skew  
+		 Parameter  skew  can be set to 0, 1, or 2 to mean (see papers above for the exact meaning):    
+			 0  - uniform: code will generate points and queries that are distributed uniformly in [0,1].  1  - normal : code will generate points and queries that are distributed normally in [0,1].  2  - hyper-skew: code will generate points and queries that are hyper-skewed in [0,1].
+		 
+	    num_point  
+		 The number of points to generate in thousands, e.g. 25 means 25,000. 
+	    num_query  
+		 The number of queries to generate in thousands, e.g. 15 means 15,000. 
+	    navq_sz  
+		 Not used, unless the moving-query part is uncommented in code. Needed to specify the size of the navigational (i.e., moving) query. Set it to 0.01. 
+	    nav_stepX  
+		 Not used, unless the moving-query part is uncommented in code. Needed to specify the step each navigational (i.e., moving) query makes. Set it to 0.001. 
+	   Examples 
+1) Running the code for 1 Million moving objects and 100,000 continuos range queries of size 0.01x0.01 each using 1000x1000 grid.   ./index 1000 1000 0 0.01 0 1000 100 0.001 0.0001     
+2) Running the code for 500,000 moving objects and 25,000 continuos range queries of size 0.01x0.01 each using 100x100 grid.   ./index 100 100 0 0.01 0 500 25 0.001 0.0001     Back to Kalashnikov's homepage 
+     Copyright © 2013 Dmitri V. Kalashnikov. All Rights Reserved.  
+    </body> 

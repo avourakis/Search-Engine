@@ -1,0 +1,326 @@
+ Cygwin Toolset Download and Installation Instructions<body>
+
+ 
+ Cygwin Toolset Download and Installation 
+ 
+  
+  
+ Download/Install the Cygwin Toolset 
+  
+ Cygwin  is a collection of GNU and Open Source tools that provide a
+     Linux-like environment for Windows: using it we can install and
+     use  llvm  (which includes the  GCC  compilers),
+      Clang  (which includes  Clang  compilers),
+      GDB  (a debugger used by both compilers),
+     and  make / cmake  (tools that which we use to specify how to
+     build -compile and link- C++ programs).
+   Cygwin and it toolset occupy about 1.7 GB on disk.
+  
+In this handout you will download and install the Cygwin toolset; in the
+  next you will download a version of  CLion , an Integrated Development
+  Environment (IDE) for using these tools (or you can choose to use these
+  tools via a command-line).
+  
+You may want to print these instructions before proceeding, so that you can
+  refer to them while downloading and installing Cygwin and its toolset.
+Or, just keep this document in your browser.
+You should read each step completely, before performing the action that it
+  describes.
+  
+   Cygwin Toolsest 
+ 
+  Downloading and Installing 
+  Click
+        
+     Cygwin64 
+     
+    The following  Cygwin 
+      home page should appear in your browser.
+      
+       
+
+   Click the  setup-x86_64.exe  link on that page, which downloads that
+       executable file: executing this file will install the 64-bit version of
+       Cygwin.
+     
+    On some browswers the following pop-up window will appear on your screen.
+        
+          
+    If you see this window, click its  Save File  button.
+      
+
+    After downloading this file, its icon will appear on your screen as
+      follows. 
+        
+          
+    Save this file for future use, in case you need to install more Cygwin
+      tools: on my system I stored this file as
+      C:\ZData\Installed Software\setup-x86_64.exe 
+  
+
+   Double-click the  setup-x86_64.exe  file.
+     
+    When run, the following  Open File - Security 
+      pop-up window  might  appear on your screen.
+      
+       
+
+   If the window above appears, click the  Run  button on this window.
+     
+    The following  User Account Control 
+      pop-up window  might  appear on your screen.
+      
+       
+
+   If the window above appears, click the  Yes  button on this window.
+     
+    The following  Cygwin Setup 
+      pop-up window should appear on your screen.
+      
+       
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Choose Installation Type 
+      pop-up window should appear on your screen.
+      
+       
+    Ensure the  Install from Internet  radio button is pushed
+      (the default).
+  
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Choose Installation Directory 
+      pop-up window should appear on your screen.
+      
+       
+    For simplicity and consistency, ensure the  Root Directory  is
+        C:\cygwin64  (the default); the  All Users (RECOMMENDED) 
+       radio button should be pushed (the default).
+  
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Select Local Package Directory 
+      pop-up window should appear on your screen.
+      
+       
+    This is a temporary directory in which Cygwin will create folders that it
+      downloads files into; it will delete the files/folders here before
+      finishing.
+    For simplicity and consistency, use the default
+      Local Package Directory .
+  
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Select Connection Type 
+      pop-up window should appear on your screen.
+      
+       
+    Ensure the  Direct Connection  radio button is pushed (the default).
+
+  
+   Click the  Next&gt;  button on this window.
+     
+    A progress window might temporarily flash on the screen.
+    The following  Cygwin Setup - Choose Download Site(s) 
+      pop-up window should appear on your screen.
+      
+       
+    There are many sites from which Cygwin can be downloaded.
+    I would leave the top one ( http://cygwin.mirror.constant.com )
+      selected (the default).
+  
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+    You may want to midimize this window so that it does not fill your screen.
+      
+    Notice that the  Search  textbox is empty.
+    In the steps below you enter tool names and will specify installing
+       Devel ment for each.
+    At the end of this process, after selecting all packages, you will
+      click the  Next&gt;  button.
+      
+
+       Type  llvm  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the word  Devel  click the word
+           Default , which should change from  Default  to
+           Install .
+        By clicking the word to the right of  Devel  multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+   
+       Type  clang  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the word  Devel  click the word
+           Default , which should change from  Default  to
+           Install .
+        By clicking the word to the right of  Devel  multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+   
+       Type  gdb  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the word  Devel  click the word
+           Default , which should change from  Default  to
+           Install .
+        By clicking the word to the right of  Devel  multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+   
+       Type  make  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the word  Devel  click the word
+           Default , which should change from  Default  to
+           Install .
+        By clicking the word to the right of  Devel  multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+   
+   
+       Type  cmake  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the word  Devel  click the word
+           Default , which should change from  Default  to
+           Install .
+        By clicking the word to the right of  Devel  multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+     
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+
+      
+    Cygwin automatically installs the  vim  text editor.
+        If you would like to install the  emacs  editor
+     
+    Type  emacs  into the textbox; the possible tools related to this
+          name will appear in the window.
+        When they do, to the right of just the words  Devel  and
+           Editors click the word  Default , which should change from
+           Default  to  Install .
+        By clicking the word to the right of either of these multiple times, it
+          cycles through all its possible values (default, install, reinstall,
+          uninstall).
+      
+    The following  Cygwin Setup - Select Packages 
+      pop-up window should appear on your screen.
+      
+       
+      
+       
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup - Resolving Dependencies 
+      pop-up window should appear on your screen.
+      
+       
+
+   Click the  Next&gt;  button on this window.
+     
+    The following  Cygwin Setup  progress
+      pop-up window should appear on your screen.
+      
+       
+    It will cycle through the Downloading, Installing, and Running tasks.
+    Downloading itself might take minutes (depending on your connection
+      speed); Installing and Running can also take minutes.
+    On my machine, with a fast connection speed, the entire process took about
+      10 minutes; sometimes it will pause for a few seconds (often with
+       0%  progress showing on the window: let it finish).
+      
+    Eventually this window will be replaced by the following
+       Cygwin Setup - Installation Status and Create Icons  
+      window on your screen.
+      
+       
+    I recommend that you leave checked the  Create icon on Desktop 
+      checkbox, and uncheck the  Add icon to Start Menu  checkbox.
+    Place the  
+     (Cygwing64 Terminal icon) on your
+      desktop in convenient place (especially if you plan to use this Cygwin
+      toolset with a Command Line instead of CLion).
+
+   Click the  Finish  button on this window.
+ 
+   
+
+   
+Finally, place  C:\cygwin64\bin  on the  Path , so that the
+   Cygwin  toolset is available for use.
+      Click  Start 
+      Click  Control Panel 
+      Click  System and Security 
+      Click  System 
+      Click  Advance system settings 
+     
+       
+    The following  System Properties 
+      pop-up window should appear on your screen.
+     
+       
+       Click  Enviroment Variables... 
+     
+       
+    Something like the following  System Properties 
+      pop-up window should appear on your screen.
+     
+       
+       In the  System variables  (lower) part, scroll to line starting
+           with  Path  and click that line (which should become
+           highlighted).
+         
+         IMPORTANT: Even though you see a highlighted PATH in the User
+             variables (top part) look for Path (not CLASSPATH) in the lower
+             part to change it. 
+         
+     
+       Click  Edit... 
+     
+       Copy the text  C:\cygwin64\bin; 
+          (include everything from  C  to  ; ) and then paste
+          it at the very start of the  Variable Value  text entry.
+         
+        When done, the  Edit System Variable  pop-up window should look
+          something like
+      
+       
+       Click  OK  for each of the pop-up windows above, to terminate them
+          (3  OK s total), and delete ( X ) the  System  window.
+         
+
+The Cygwin toolset (all the necessary programming tools) are now installed.
+You are now ready to install the  CLion IDE 
+  
+  </body> 

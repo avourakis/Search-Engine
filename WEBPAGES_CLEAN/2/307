@@ -1,0 +1,56 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: High-level capabilities<body> Re: High-level capabilities 
+ Larry Masinter  (  masinter@parc.xerox.com  )  Fri, 07 Jun 1996 00:24:32 PDT 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Fabio Vitali: "Re: Version identifier in URL" 
+    Previous message:   Larry Masinter: "Re: Versioning Thoughts (in HTML)" 
+    Maybe in reply to:   Jim Whitehead: "High-level capabilities" 
+
+    Next in thread:   David J. Fiander: "Re: High-level capabilities" 
+
+    
+&gt; 1. Retrieval of a stated version of an entity: Any given revision of an
+&gt; entity should be accessible, thus supporting links to stated revisions of
+&gt; entities.  (This capability is provided by the ";version={opaque version
+&gt; id}" capability we have been discussing.)
+
+I don't really have time to review carefully the details of what you
+wrote, but I'll warn you that the "resource"/ "entity" terminology
+nearly killed the HTTP working group; in the end, what survived is
+that the "entity" is the actual specific version of a document
+instance, and the only thing that has "revisions" is a resource. (Well,
+a variant can have revisions.)
+
+So, before I can read what you wrote, I have to translate:
+
+# 1. Retrieval of a stated version of a resource: Any given revision of
+# a resource should (?) be accessible... etc.
+
+Now that I read it, I don't really go along with your requirements;
+I'd like to see something like:
+
+
+  IF a server is providing access to a sytem with underlying version
+  management capability
+
+  THEN the accessible versions of a resource should be named with
+    URLs of the following style.
+
+You might want to add warning messages or errors, e.g., VERSION NOT
+AVAILABLE, but provide a (stylized?) link to the latest(?) version,
+also to provide some mechanism for querying available versions, etc.
+
+regards,
+
+Larry
+ 
+
+  
+     Next message:   Fabio Vitali: "Re: Version identifier in URL" 
+    Previous message:   Larry Masinter: "Re: Versioning Thoughts (in HTML)" 
+    Maybe in reply to:   Jim Whitehead: "High-level capabilities" 
+
+    Next in thread:   David J. Fiander: "Re: High-level capabilities" 
+
+  </body> 

@@ -1,0 +1,27 @@
+ Architecture Implementation<body>
+
+  Architecture Implementation  
+      Memory history buffer
+ 
+  FIFO buffer to record recently missed memory address
+  Predict only when there is a hit in the buffer
+  Miss stride can be calculated by the relative position of consecutive miss for the same address
+  The size of the buffer determines the number of  predictions
+       Prefetch buffer (On-chip)
+ 
+  Store the contents of prefetched memory address
+  The size of the buffer determines how much we can tolerate the variation of miss stride
+       Prefetch scheduler
+ 
+  Select a right time to prefetch
+  Avoid collision
+       Prefetcher
+ 
+  prefetch the contents of miss address into on-chip prefetch buffer
+       
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

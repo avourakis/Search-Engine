@@ -1,0 +1,79 @@
+ 21. OEQMols and Queries in OEChem<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20.5 Calculating Molecular Weight 
+ Up:   OEChem - C++ Theory 
+ Next:   22. Predicate Functors 
+   
+
+
+  
+21. OEQMols and Queries in OEChem 
+ 
+
+ 
+By this point, the use of OEMols and OEGraphMols should be familiar subjects.
+If they are not, please review the
+section entitled  Getting Started with OEChem Molecule  found in the
+introductory chapter as well as the chapter entitled  OEMols and
+OEGraphMols .
+
+  
+It is not uncommon in chemical informatics to consider the equivalence of
+the graph which represents a molecule and the graph which represents a
+substructure query.  Indeed the simplest of queries are molecules themselves.
+If one considers each node (or atom) as a potentially complex atom query,
+even highly complex queries can be represented as molecules.
+
+  
+In OEChem, this concept of a query as a molecule is represented by the
+OEQMolBase abstract base-class.  An OEQMolBase contains OEQAtomBase and
+OEQBondBase atom and bond representations.  These versions of OEChem atoms
+and bonds manage the atom and bond matches which comprise the query.
+
+  
+OEChem defines a the concrete OEQMol class which provides a programmer access
+to the API defined by the OEQMolBase class.
+This is analogous to the way in which OEMols and OEGraphMols, provide
+concrete
+access to the OEMCMolBaseT and OEMolBase APIs.
+
+  
+    Simplistic OEChem inheritance scheme:
+                OEBase
+                  |
+                  |
+                OEMolBase ---------------- OEGraphMol
+                  |
+                  |
+                OEQMolBase --------------- OEQMol
+&lt;- indicates inheritance
+-- indicates API correspondence without inheritance
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20.5 Calculating Molecular Weight 
+ Up:   OEChem - C++ Theory 
+ Next:   22. Predicate Functors 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

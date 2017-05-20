@@ -1,0 +1,25 @@
+ 1. I'm looking for something like the following:
+
+    Q = new priority queue for the elements of X, prioritized by sort
+    key
+    while Q is not empty:
+        find and remove the element x of Q with minimum key
+        output x
+
+There are a lot of other possibilities (e.g. to collect the elements
+into a list and then to return it instead of using an output statement)
+but the important parts are that it should include a statement where the
+priority queue is initialized and a statement that finds and removes the
+minimum element (or these can be separate operations).
+
+
+2. Let Phi = n log_2 n, where n is the number of elements currently in
+the tree.
+
+Then when an element is inserted, the actual time is O(log n), and Phi
+changes from n log_2 n to (n+1) log_2 (n+1); the difference between
+these two values is O(log n). So the total amortized time for an
+insertion is O(log n) + O(log n).
+
+When an element is deleted, Phi changes from (n+1) log_2 (n+1) to
+n log_2 n; the difference is  

@@ -1,0 +1,224 @@
+   
+  Class c2.framework.Component
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Component
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +----c2.framework.Component
+ 
+    public class  Component 
+    extends  Brick 
+   
+System functionality is encapsulated into   components  .  Components
+communicate with one another by passing messages via   connectors
+ .  Messages come in two flavors:  
+     Requests  denote requests for functionality.  They are sent from
+     components that are located below the component.
+    Notifications  denote change of component state.  They are
+     sent from components that are located above the component. 
+   
+To declare a new component, inherit from Component and override the the
+handle() methods.  Use send() to send Requests or Notifications to other
+components.
+Inherit from ComponentThread if you want the component to run in its own
+thread of control.  
+  
+	class MyComponent extends Component {
+	    protected void handle(Request r) {
+		  // process a request
+	    }
+	    protected void handle(Notification n) {
+		  // process a notification
+	    }
+	}
+ 
+To use a component, create an instance of it and call the start() method:
+ 
+	MyComponent c = new MyComponent("Test", FIFOPort.classType());
+	c.start();
+	...
+ 
+See the Request and Notification classes for details on messages.  
+     See Also: 
+        Request ,  Notification ,  ComponentThread ,  start 
+     
+ 
+    
+      bottom  
+     
+        top  
+     
+   
+    
+      Component  ()
+     Creates an uninitialized instance of the component.
+        Component  (String, Class)
+     Creates and initializes an instance of the component.
+   
+    
+      bottomPort  ()
+     Returns the bottom port of the component
+        create  (String, Class)
+     Initializes the component.
+        handle  (Notification)
+     This method is invoked when the component receives a   notification  
+from a component below it.
+        handle  (Request)
+     This method is invoked when the component receives a   request  
+from a component below it.
+        newMessage  (Port)
+     This method is invoked when the component receives a new request or
+notification.
+        send  (Notification)
+     Call this method to send a notification to a component below your
+component.
+        send  (Request)
+     Call this method to send a request to a component above your
+component.
+        topPort  ()
+     Returns the top port of the component
+        toString  ()
+     Returns a String representation of the Component, including the 
+component's type, name, top and bottom ports.
+    
+ 
+    
+   
+ top 
+ 
+  protected  Port  top
+ 
+   
+ bottom 
+ 
+  protected  Port  bottom
+ 
+  
+ 
+    
+  
+   
+ Component 
+ 
+  public Component()
+ 
+   Creates an uninitialized instance of the component.  Use the create()
+method to initialize the component.  This constructor exists so that
+components can be dynamically loaded using Class.newInstance()
+      See Also: 
+        Class 
+         
+ Component 
+ 
+  public Component( String  name,
+                    Class  portClass)
+ 
+   Creates and initializes an instance of the component.  
+       Parameters: 
+       name - the name of the component
+      portClass - the Class of the port to use.  The port processes
+  all incomming and outgoing messages into and out of the component.
+         See Also: 
+        Port 
+        
+ 
+    
+   
+  create  
+ 
+  public void create( String  name,
+                      Class  portClass)
+ 
+   Initializes the component.
+NOTE: Only call this method once, and only if you used the empty
+constructor. 
+       Parameters: 
+       name - the name of the component
+      portClass - the Class of the port to use.  The port processes
+  all incomming and outgoing messages into and out of the component.
+         See Also: 
+        Port 
+         
+  topPort  
+ 
+  public  Port  topPort()
+ 
+   Returns the top port of the component
+     
+  bottomPort  
+ 
+  public  Port  bottomPort()
+ 
+   Returns the bottom port of the component
+     
+  handle  
+ 
+  protected synchronized abstract void handle( Request  r)
+ 
+   This method is invoked when the component receives a   request  
+from a component below it.  Override this method to process requests.
+      Overrides: 
+        handle  in class  Brick 
+         
+  handle  
+ 
+  protected synchronized abstract void handle( Notification  n)
+ 
+   This method is invoked when the component receives a   notification  
+from a component below it.  Override this method to process notifications.
+      Overrides: 
+        handle  in class  Brick 
+         
+  send  
+ 
+  protected void send( Request  r)
+ 
+   Call this method to send a request to a component above your
+component.
+      Overrides: 
+        send  in class  Brick 
+        See Also: 
+        Request 
+         
+  send  
+ 
+  protected void send( Notification  n)
+ 
+   Call this method to send a notification to a component below your
+component.
+      Overrides: 
+        send  in class  Brick 
+        See Also: 
+        Notification 
+         
+  newMessage  
+ 
+  protected void newMessage( Port  p)
+ 
+   This method is invoked when the component receives a new request or
+notification.  By default, it invokes the appropriate handle() method.
+Override this function only if you need to do special processing on
+incomming messages.
+      Overrides: 
+        newMessage  in class  Brick 
+        See Also: 
+        handle 
+         
+  toString  
+ 
+  public  String  toString()
+ 
+   Returns a String representation of the Component, including the 
+component's type, name, top and bottom ports.
+      Overrides: 
+        toString  in class  Brick 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

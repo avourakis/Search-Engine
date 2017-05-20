@@ -1,0 +1,94 @@
+ /*
+** filter file based on keyword argument
+** David Eppstein / UC Irvine / 14 Oct 1995
+**
+** calling convention: filter key 
+
+void bad()
+{
+    printf("Content-type: text/html\n\n");
+    printf("Bad filter input\n");
+    printf("\nBad input to keyword filter program,\n");
+    printf("unable to process request.\n\n");
+    exit(0);
+}
+
+main(ac,av)
+int ac;
+char **av;
+{
+    int c;
+    int copying = 1;
+    char * keyptr = 0;
+    enum {
+	text, dot, bracket, newline, keytest, comment, backslash
+    } state = newline;
+
+    if (ac != 2) bad();
+
+    while ((c = getchar()) != EOF) switch(state) {
+     case text:			/* in middle of line */
+	if (copying) putchar(c);
+	if (c == '\n') state = newline;
+	break;
+
+     case dot:			/* like text but w/o copying newline itself */
+	if (c == '\n') state = newline;
+	else if (copying) putchar(c);
+	break;
+
+     case bracket:
+	if (c == '\n') {
+	    if (copying) putchar('&gt;');
+	    state = newline;
+	} else if (copying) putchar(c);
+	break;
+
+     case newline:		/* at start of line, test for backslash */
+	if (c == '\\') state = backslash;
+	else {
+	    if (copying) putchar(c);
+	    if (c != '\n') state = text;
+	}
+	break;
+
+     case keytest:		/* testing key and if equal toggling copying */
+	if (c == '\n') {	/* newline marks end of key */
+	    state = newline;
+	    if (keyptr != 0 &amp;&amp; *keyptr == '\0')
+		copying = !copying;
+	} else if (c == '*') {	/* got to a star, found partial match */
+	    state = comment;	/* ignore rest of line and toggle copying */
+	    copying = !copying;
+	}
+	else if (keyptr != 0 &amp;&amp; *keyptr == c) keyptr++;
+	else state = comment;	/* didnt match, ignore rest of line */
+	break;
+
+     case comment:		/* ignoring chars till newline */
+	if (c == '\n') state = newline;
+	break;
+
+     case backslash:
+	switch(c) {
+	 case '\\':		/* send through a backslash */
+	    if (copying) putchar(c);
+	    state = text;
+	    break;
+
+	 case '+':		/* start copying */
+	    copying = 1;
+	    state = comment;
+	    break;
+
+	 case '-':		/* stop copying */
+	    copying = 0;
+	    state = comment;
+	    break;
+
+	 case '.':		/* copy line w/o newline */
+	    state = dot;
+	    break;
+
+	 case '@':		/* protect angle bracket */
+	    if (copying) putchar(' 

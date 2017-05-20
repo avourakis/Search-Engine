@@ -1,0 +1,41 @@
+ Python: module graph<body>
+
+           graph</strong>       index   c:\users\pattis\workspace\courselib\graph.py       #strict on __init__ must have/not have node/edge else exception  
+ 
+         Classes</strong>                  
+     builtins.object 
+   
+    Graph 
+    
+  
+        class  Graph</strong> ( builtins.object )           
+  Implements a  Graph  data type: it can manipulate nodes and 
+  edges and provides many iterators         
+ Methods defined here:     __bool__</strong> (self)   Determine the truth of a graph: non-empty graphs are True       __init__</strong> (self, strict =False , initial_graph =None )    Graph  is constructed to store all the nodes and values in initial_graph 
+  (if it is present) otherwise no nodes and edges; a strict graph does not 
+  allow re-adding edges or values (they must be removed before re-adding); 
+  it will raise more exceptions       __str__</strong> (self)      add_edge</strong> (self, e, value)   Add an edge to the graph 
+In a strict graph, the node must be in the graph and edge must not be in the graph       add_node</strong> (self, n)   Add a node to the graph 
+In a strict graph, it must not already be present       clear</strong> (self)   Clear the graph of any nodes and values       degree</strong> (self, n)   Return the degree (number of edges with this node as their origin or destination) of a node 
+In a strict graph, the node must be in the graph       edge_count</strong> (self)   Return the number of edges in the graph       edge_value</strong> (self, e)   Return the value of an edge in the graph 
+In a strict graph,  both nodes and the edge must be in the graph       edges</strong> (self)   Return an iterator for a copy of all edges in the graph (in no special order)       has_edge</strong> (self, e)   Return whether the graph stores an edge       has_node</strong> (self, n)   Return whether the graph stores a node       in_degree</strong> (self, n)   Return the in-degree (number of edges with this node as their destination) of a node 
+In a strict graph, the node must be in the graph       in_edges</strong> (self, n)   Return an iterator for a copy of all in edges with this node as its destination 
+In a strict graph, the node must be in the graph       in_nodes</strong> (self, n)   Return an iterator for a copy of all in nodes that have an edge with this node as its destination 
+In a strict graph, the node must be in the graph       is_empty</strong> (self)   Return whether the graph is empty (of nodes)       node_count</strong> (self)   Return the number of nodes in the graph       nodes</strong> (self)   Return an iterator for a copy of all nodes in the graph (in no special order)       out_degree</strong> (self, n)   Return the out-degree (number of edges with this node as their origin) of a node 
+In a strict graph, the node must be in the graph       out_edges</strong> (self, n)   Return an iterator for a copy of all in edges with this node as its origin 
+In a strict graph, the node must be in the graph       out_nodes</strong> (self, n)   Return an iterator for a copy of all in nodes that have an edge with this node as its origin 
+In a strict graph, the node must be in the graph       read</strong> (self, file, conv =&lt;function &lt;lambda&gt;&gt; , sep =' ' )   Read a graph from a text file; assume sep is separating the nodes and edge values 
+conv converts the string value of an edge into the appropriate type of value 
+Graphs written by write should be readable by read       remove_edge</strong> (self, e)   Remove an edge from the graph 
+In a strict graph, both nodes and the edge must be in the graph       remove_node</strong> (self, n)   Remove a node from the graph 
+In a strict graph, the node must be in the graph       write</strong> (self, file, conv =&lt;class 'str'&gt; , sep =' ' )   Write a graph into a text file; use sep to separate the nodes and edge values 
+conv converts the value of an edge into the appropriate string (with str the default) 
+Graphs written by write should be readable by read    
+Data descriptors defined here:    __dict__</strong> 
+  dictionary for instance variables (if defined)  
+    __weakref__</strong> 
+  list of weak references to the object (if defined)  
+  
+Data and other attributes defined here:    NodeInfo</strong> = &lt;class 'graph.NodeInfo'&gt;   NodeInfo stores the set of incoming and outgoing edges for every node          
+         Functions</strong>                  
+     connected_components</strong> (g)      make_symmetric</strong> (g)      minimum_spanning_tree</strong> (g)      random_graph</strong> (nodes, percent)     </body> 

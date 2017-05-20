@@ -1,0 +1,54 @@
+ 4.51 OEGetAtomicNum<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.50 OEGetAngle 
+ Up:   4. OEChem Functions 
+ Next:   4.52 OEGetAtomicSymbol 
+   
+
+
+  
+4.51 OEGetAtomicNum 
+ 
+   
+unsigned int OEGetAtomicNum(const char *symb)
+    
+Return the atomic number associated with the specified atomic symbol.
+The specified buffer ``symb'' must contain a string terminated by either
+a space or a NUL,  '\0' , character.  Zero-length strings, strings
+longer than two characters or unrecognized symbols all return the
+value zero.  The comparison is case insensitive, such that the first
+character need not be uppercase, and the second character (if one
+exists) need not be lower case.
+
+  
+This function returns the value 1 for symbols 'H', 'D' and 'T'.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.50 OEGetAngle 
+ Up:   4. OEChem Functions 
+ Next:   4.52 OEGetAtomicSymbol 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

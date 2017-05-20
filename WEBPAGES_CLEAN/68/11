@@ -1,0 +1,491 @@
+ 
+QueryNode
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.QE 
+ 
+Class QueryNode 
+ 
+java.lang.Object
+    Raccoon.QE.QueryNode 
+ 
+   public class  QueryNode  extends java.lang.Object    
+QueryNode : Class of Node in a SQL parse tree: LOCAL_SEL, NEIGHBOR_JOIN and PROJECT
+  
+
+  
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+  boolean   
+    bSelAll   
+
+ 
+            
+    
+ static int   
+    LOCAL_SEL   
+
+ 
+          This kind of node only do the selection
+ local. 
+    
+ static int   
+    NEIGHBOR_JOIN   
+
+ 
+          The kind of node do the join on its left
+ child and its right child. 
+    
+  java.lang.String   
+    nodeName   
+
+ 
+            
+    
+  int   
+    nodeType   
+
+ 
+            
+    
+ static int   
+    PROJECT   
+
+ 
+          The kind if node do the project on the result
+ of its left child. 
+    
+   QueryEngine    
+    qe   
+
+ 
+            
+    
+  java.lang.String   
+    relName   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      QueryNode  ( QueryEngine  newQE) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    AddJoinCondition  ( CONDITION  cond) 
+
+ 
+            
+    
+  void   
+    AddLocalSelAttr  (java.lang.String attrName) 
+
+ 
+            
+    
+  void   
+    AddLocalSelCondition  ( CONDITION  cond) 
+
+ 
+            
+    
+  void   
+    AddProjAttributes  ( RELATTR  attr) 
+
+ 
+            
+    
+  int   
+    Close  () 
+
+ 
+            
+    
+  int   
+    DoIt  () 
+
+ 
+            
+    
+  int   
+    DoJoin  () 
+
+ 
+            
+    
+  int   
+    DoProject  () 
+
+ 
+            
+    
+  int   
+    DoSel  () 
+
+ 
+            
+    
+  int   
+    GetNodeType  () 
+
+ 
+            
+    
+   PVInstance    
+    getResult  () 
+
+ 
+            
+    
+  java.util.Vector   
+    joinVector  (java.util.Vector leftVec,
+           java.util.Vector rightVec) 
+
+ 
+            
+    
+  void   
+    removeDuplicte  (java.util.Vector v) 
+
+ 
+            
+    
+  void   
+    SetLeafNodeName  (java.lang.String nodename) 
+
+ 
+            
+    
+  void   
+    SetLeafRelName  (java.lang.String relname) 
+
+ 
+            
+    
+  void   
+    SetLeftNode  ( QueryNode  node) 
+
+ 
+            
+    
+  void   
+    SetNodeType  (int type) 
+
+ 
+            
+    
+  void   
+    SetProjAttributes  (java.util.Vector selAttr) 
+
+ 
+            
+    
+  void   
+    SetRightNode  ( QueryNode  node) 
+
+ 
+            
+    
+  void   
+    setSelAll  (boolean flag) 
+
+ 
+            
+    
+ static java.util.Vector   
+    SubsetVector  (java.util.Vector v,
+             int[] indexArr) 
+
+ 
+          return a subset of Vector only consisting 
+ index specified in the indexArr. 
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+LOCAL_SEL 
+ 
+public static final int  LOCAL_SEL  
+  This kind of node only do the selection
+ local. They are typically the leaf of 
+ the parse tree.
+ 
+    See Also:    Constant Field Values         
+NEIGHBOR_JOIN 
+ 
+public static final int  NEIGHBOR_JOIN  
+  The kind of node do the join on its left
+ child and its right child.
+ 
+    See Also:    Constant Field Values         
+PROJECT 
+ 
+public static final int  PROJECT  
+  The kind if node do the project on the result
+ of its left child. It is usually the topmost
+ node that finally select the attributes of 
+ the join result.
+ 
+    See Also:    Constant Field Values         
+qe 
+ 
+public  QueryEngine   qe  
+        
+nodeType 
+ 
+public int  nodeType  
+        
+relName 
+ 
+public java.lang.String  relName  
+        
+nodeName 
+ 
+public java.lang.String  nodeName  
+        
+bSelAll 
+ 
+public boolean  bSelAll  
+      
+    
+ Constructor Detail   
+     
+QueryNode 
+ 
+public  QueryNode ( QueryEngine  newQE) 
+    
+    
+ Method Detail   
+     
+setSelAll 
+ 
+public void  setSelAll (boolean flag) 
+     
+     
+SetLeafNodeName 
+ 
+public void  SetLeafNodeName (java.lang.String nodename) 
+     
+     
+SetLeafRelName 
+ 
+public void  SetLeafRelName (java.lang.String relname) 
+     
+     
+SetNodeType 
+ 
+public void  SetNodeType (int type) 
+     
+     
+AddJoinCondition 
+ 
+public void  AddJoinCondition ( CONDITION  cond) 
+     
+     
+AddProjAttributes 
+ 
+public void  AddProjAttributes ( RELATTR  attr) 
+     
+     
+SetProjAttributes 
+ 
+public void  SetProjAttributes (java.util.Vector selAttr) 
+     
+     
+AddLocalSelCondition 
+ 
+public void  AddLocalSelCondition ( CONDITION  cond) 
+     
+     
+AddLocalSelAttr 
+ 
+public void  AddLocalSelAttr (java.lang.String attrName) 
+     
+     
+SetLeftNode 
+ 
+public void  SetLeftNode ( QueryNode  node) 
+     
+     
+SetRightNode 
+ 
+public void  SetRightNode ( QueryNode  node) 
+     
+     
+DoIt 
+ 
+public int  DoIt ()
+         throws java.sql.SQLException,
+                 PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+DoProject 
+ 
+public int  DoProject ()
+              throws java.sql.SQLException,
+                      PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+DoSel 
+ 
+public int  DoSel ()
+          throws java.sql.SQLException,
+                  PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+DoJoin 
+ 
+public int  DoJoin ()
+           throws java.sql.SQLException,
+                   PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+getResult 
+ 
+public  PVInstance   getResult () 
+     
+     
+joinVector 
+ 
+public java.util.Vector  joinVector (java.util.Vector leftVec,
+                                   java.util.Vector rightVec) 
+     
+     
+Close 
+ 
+public int  Close () 
+     
+     
+GetNodeType 
+ 
+public int  GetNodeType () 
+     
+     
+removeDuplicte 
+ 
+public void  removeDuplicte (java.util.Vector v) 
+     
+     
+SubsetVector 
+ 
+public static java.util.Vector  SubsetVector (java.util.Vector v,
+                                            int[] indexArr) 
+  return a subset of Vector only consisting 
+ index specified in the indexArr.
+ 
+     
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

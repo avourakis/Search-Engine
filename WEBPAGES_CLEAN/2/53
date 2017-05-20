@@ -1,0 +1,140 @@
+ ICS 31 Lab 7<body>
+  ICS 31 • DAVID G. KAY • UC IRVINE • FALL 2016  
+   Lab Assignment 7   
+ 
+ This assignment is due at 10:00 p.m. on Friday, November 11. This is a university holiday; no classes meet and the labs will be closed, so if you won't be on campus, arrange with your partner to complete it on Thursday. 
+ Choose a partner for this 
+
+assignment, someone you haven't worked with already. 
+ 
+ Some of the recent lab problems have gotten a little harder.
+Not longer, but more sophisticated, requiring a little more
+thought and design. That's normal and appropriate for this
+point in the course.  But it does require that you approach
+them thoughtfully and deliberately.  Do not rush to type in some code, any code; before you write code, there's a lot to do: Read the problem more
+than once to be sure you understand precisely what your
+code is supposed to do.  Come up with some examples that
+show the code's behavior, inputs or arguments and their
+expected results.  (These will become your assertions or
+other tests.)  Follow the  design recipe :  Provide annotations of
+the types of the parameters and the return value,
+docstring comments to give a brief "purpose statement",
+assertions or other tests.  The TAs and tutors won't be
+able to help you unless and until you can show them
+these things.
+ 
+ As problems get more sophisiticated, more people will have to work a little harder and may have more trouble finishing on time. You should turn in whatever you have correct and working as of the due date. If you want to work beyond that, that's great and you'll learn more as a result; if you want to get more credit for working past the deadline, check with your own TA to see if that will be possible. But never turn in the work of another student (besides your official partner on the assignment) and never give another student (besides your partner) an electronic or paper copy of your code. Every quarter we detect cases where this happens and it's very uncomfortable for everyone invoved. Everyone should read again the  guidelines for collaboration and independent work —read the whole thing, all the way to the end. Missing a few functions on one assignment may not even change your assignment score, and one low assignment score won't have a major effect on your grade. But getting no credit for violating the academic honesty policies, that costs a lot. 
+   
+   Preparation</strong>  (Do this part individually, before coming to lab): 
+
+ Read sections 4.3 and 5.1 through 5.6 in the Perkovic text and do the practice problems (except 5.11, which is totally optional). These sections fill out our coverage of control structures; most of this material we've seen in one form or another. Also try exercises 5.12, 5.18, 5.23, 5.24, 5.25, and 5.26. Everyone should be able to do these independently; they will be good review for the midterm. 
+   
+   Lab Work</strong>  (Do this part with your partner in lab) 
+  (a)</strong> Choose a partner for this assignment and register your partnership using the  partner app , ideally by Monday. Remember that you'll choose a different partner for each lab assignment, so you'll work with this partner only this week. Make sure you know your partner's name (first and last) and contact information (Email or cellphone or whatever) in case one of you can't make it to lab. 
+  (b)</strong> Prepare your  lab7.py  file as in previous labs, including a line like this:  
+ 
+#  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab asst 7.
+ 
+  (c)</strong> Suppose we download from the EEE gradebook the names, IDs, and scores of everybody in ICS 31. And suppose we've hired some students to write a Python program that will produce a variety of graphs and statistics from this data. Of course these students will need realistic data to test their program. But do you want them to see  your  scores in this class? Even if your scores are high, you have a right to privacy in your educational records; even if you don't really care, federal law prohibits us from disclosing your information to anybody outside of the teaching staff without your permission. This kind of situation isn't unique to education; there are very strict privacy laws affecting health care information, for example. Yet there, too, researchers need access to realistic data. The problem is that the data contains information that identifies the data subjects, such as their names and ID numbers. 
+ How do we resolve this? Actual ID numbers can be replaced with new, randomly generated numbers; that's not hard, because there's not much meaning in ID numbers. But if we randomly generate names, we'd like those names to  look like names  (that is, human names and not just random strings like Jjoeq Btfsplk). And that's what we're going to do. 
+ A quick internet search finds lists of common surnames (family names, last names) in America, common female given names (first names), and common male given names. We have three such files available for you to download: 
+  Surnames:   http://www.ics.uci.edu/~kay/surnames.txt   
+   Female names:   http://www.ics.uci.edu/~kay/femalenames.txt   
+   Male names:   http://www.ics.uci.edu/~kay/malenames.txt   
+  [In your downloaded copies, keep the filenames  surnames.txt ,  femalenames.txt , and  malenames.txt ; changing them interferes with accurate grading.] 
+ The original source of this data was   names.mongabay.com  . You can compare the data there with the contents of the three files above. You'll see that we've cleaned up and regularized the data quite a bit for you, but we've also left some of the processing for you to do. Partly that's because a theme of this week's lab is text and file processing. But it's also an extraordinarily practical computing skill to be able to take data in one form (e.g., as might be found on the internet) and manipulate or "massage" it into a form that's convenient to process (e.g., as a list in a Python program). More computing effort than you might think is devoted to this kind of mechanical but vital activity. 
+ So our goal is to generate strings of the form  "Lastname, Firstname"  where the last name is randomly chosen from the surnames list and the first name is randomly chosen from either the female names list or the male names list.  
+  (c.1)</strong> Write a function called  random_names  that takes an integer and returns a list of that many strings, with each string a randomly generated name as described above. 
+ This function is the ultimate goal of part (c) of this lab assignment. If you  and your partner feel comfortable designing a solution without further guidance, go right ahead; you'll learn the most that way (because you learn the most from making false starts, backing up, and trying again). But if you'd like a little more guidance, that's also fine. The remaining subparts of part (c) break the task down and give you some hints and approaches (though they still leave some of the work for you). 
+  (c.2)</strong> To start, you'll need to read the three files of names into your program. You'll also notice that there's more data on each line of the name files than just the name. The first line of the surnames file, for example, is  "SMITH	1.006	2,501,922	1" , which means that the surname Smith accounts for 1.006% of the surnames in America, which is an estimated 2,501,922 people, ranking number 1 (i.e., the first-most-popular surname). 
+ For this assignment, you can get by with just extracting the name and fixing its capitalization. You might at least think about how you'd store the other information, though. (We're just going to pick from the 1000 surnames randomly, but we might have chosen to use the frequency percentages to pick more common names more often, which would have been more realistic.) 
+  (c.3)</strong>
+Your function  random_names  should call a function to generate a single random name—a random surname, a random choice of male or female, and a random first name chosen from that list.  It will be most convenient for your single-random-name function to call a function that takes one of the three name lists as a parameter and returns a name chosen at random from that list. 
+ To save you from looking it up, generating random integers requires importing the random library ( from random import randrange ).  The  randrange  function takes two arguments, the lower bound and upper bound of the range of the random number.  Like other number ranges in Python, the ending value  randrange  expects is   one greater than the top item of the range (i.e., the roll of a six-sided die would be  randrange(1,7) ).
+ 
+  (d)</strong> You might be surprised to know that the Caesar cipher
+  we've been working with—one key for the whole message,
+  spaces and punctuation unchanged—is pretty easily breakable  by hand  with messages as short as one moderate-length
+  sentence.  People even do it for fun: Google the term  cryptogram</strong>,
+  which is the name of that kind of puzzle.
+ 
+  (d.1)</strong> Now we're going to do some cryptanalysis of our own.
+  Write a function called  Caesar_break 
+  that takes a ciphertext string (encrypted using a Caesar cipher
+  as we did last week) and returns the plaintext for
+  that string,  without having the key .
+ 
+ We'll take a "brute force" approach:   
+  There are 26 possible keys; we'll generate
+    a decryption alphabet for each of these 26 
+  keys. 
+   We'll "decrypt" the ciphertext
+  using each of the 26 alphabets.  (Only one of these attempted decryptions will be the correct plaintext message, of course. But we don't know which one in advance. Trying all the possibilities is what we mean when we call this a "brute force" approach.) 
+   For each of the 26
+    possibly-decrypted messages, our program needs to figure out whether it "looks like English" instead of encrypted gibberish. Here's how: We'll take each word in the possibly-decrypted message and look it up in a dictionary (a list of English words). If the word is in the dictionary, then it's an English word; if there are a lot of English words in this possibly-decrypted message, it's likely that this message is the correct decrypted plaintext. (If very few words in the message are in the dictionary, then this message isn't the English plaintext.) So we need to
+    count up how many of the words in each possibly-decrypted message we find in the dictionary, saving
+    that total along with the message that produced it.
+   
+   Once we're done with all 26 possible decryptions, we should expect that the
+    possibly-decrypted message that had the most
+    "hits" in the dictionary is in fact the correctly
+    decrypted plaintext, and that's the message we
+    return.
+   
+  To get the dictionary, download the file  http://www.ics.uci.edu/~kay/wordlist.txt  onto your machine and read it in to your program. Remove newline characters if necessary. 
+ [Here are some other suggestions and hints. Don't automatically read them; use them just as needed. Trying to think out the solution yourself is what builds the new neural pathways in your brain (i.e., that's how you learn). (i) Use your rotated-alphabet function from last week to help in making your list of 26 encryption/decryption tables. (ii) Choose a few sentences, encrypt them with your  Caesar_encrypt  function from last week, and use them to test your  Caesar_break  function. (iii) At some point you'll want to break your possibly-decrypted string into words, removing white space and punctuation, so you can look each word up in the dictionary. But also hang on to the original possibly-decrypted string with the spaces and punctuation, because that's the version you'll want to return if it's identified as the plaintext.] 
+  (d.2)</strong> Each partner should do this part independently: Make up a message without telling your partner what it is. Encrypt the message with a key of your choosing. Copy the encrypted message into an Email message and send it to your partner,  without including the key . When you receive the Email your partner sent you, decrypt it using the  Caesar_break  function. 
+  (e)</strong> This Python code copies a file, line by line.  It presumes that the input and output files will be in the same directory (folder) as the code itself. (This is a restriction we could relax by using libraries that let us navigate around file systems and use the operating system's standard file dialog boxes. But those are topics for another day.)
+   infile_name = input("Please enter the name of the file to copy: ")
+infile = open(infile_name, 'r')
+outfile_name = input("Please enter the name of the new copy:  ")
+outfile = open(outfile_name, 'w')
+for line in infile:
+    outfile.write(line)
+infile.close()
+outfile.close() 
+ 
+   (e.1)  Copy this code into your  lab7.py  file on
+  your own system (or, temporarily, into a separate file if that makes it easier for you to experiment).  Package it into a function called  copy_file  that takes no parameters and returns no value (because it does all its work by prompting the user and reading and writing files). Test it out by copying a short text file. 
+ Then download the Project
+  Gutenberg version of  The Adventures of Sherlock Holmes  from   http://www.gutenberg.org/cache/epub/1661/pg1661.txt   (Project Gutenberg is a wonderful resource for non-copyright-protected texts).
+  Call your file-copying function to make a copy of this
+  file.  [Some problems have been reported with reading Project Gutenberg files. If you run into messages saying that Python can't decode a character, open the file with  open(infile_name, 'r', errors='ignore') .] 
+  (e.2)  Modify your  copy_file  function to take one parameter, a string.  If the parameter is  'line numbers' , the copied file includes line numbers at the start of each line : 
+      1: Project Gutenberg's The Adventures of Sherlock Holmes, by Arthur Conan Doyle
+    2: 
+    3: This eBook is for the use of anyone anywhere at no cost and with
+...
+13052: subscribe to our email newsletter to hear about new eBooks.  
+ If the parameter is anything else, the function just copies the file as before. 
+ Note that the line number is formatted and right-justified
+  in a five-character field. You did this task last week, so 
+  you should be able to reuse most of last week's solution.
+ 
+  (e.3)</strong> If you examine the file from Project Gutenberg,
+    you see that it contains some "housekeeping" information at the
+    beginning and at the end.  You'll also see that the text itself starts
+    after a line beginning with  "*** START"  and ends just before a line
+    beginning with  *"*** END" .
+    Modify your  copy_file  function so that if its parameter is  'Gutenberg trim' 
+    it will copy only the body of a Project Gutenberg
+file, omitting the "housekeeping" material at the front and end. (You may assume—you don't have to check—that if this parameter is specified, there will be a  "*** START"  line and an  "*** END"  line in the file.) 
+ For this problem, you might find it more convenient to read the entire file into memory at once—perhaps into a list of lines—but it isn't strictly necessary.
+ 
+   (e.4)  Modify your  copy_file  function so that if its parameter is  'statistics'  it will copy the file as before but also provide these statistics (which should be familiar) about the text in the file, following the formatting shown: 
+  16824   lines in the file
+   483   empty lines
+    53.7 average characters per line
+    65.9 average characters per non-empty line 
+ Your program should provide these statistics in two places: written at the end of the copied file and printed to the Python console using  print() . Try to do both of these tasks without duplicate code. That is, don't do the same calculation two times or have two copies of the same constants (e.g.,  "lines in the file" ). [Hint: The  format()  method returns a string that may be saved and used in two places.] 
+  (f)</strong> Remember that each partner must complete a partner evaluation form and submit it individually. Do this using the  partner app . Make sure you know your partner's name, first and last, so you can evaluate the right person.
+  
+Please complete your evaluation by the end of the day on Friday, or Saturday morning at the latest. It only takes a couple of minutes and not doing it hurts your participation score. 
+  What to turn in:</strong> Submit via Checkmate your   lab7.py  file containing your solutions to parts (c), (d), and (e). Remember what we've said in previous labs about rereading the assignment and rerunning your Python files. 
+ Also remember that each student must complete a partner evaluation form; these evaluations contribute to your class participation score.  
+   
+  Written by David G. Kay in Fall 2012 for ICS 31, based in part on assignments from ICS H21 and Informatics 41. Modified by David G. Kay, Winter 2013  Fall 2013, Winter 2014, Fall 2014, Winter 2015, Fall 2015, Fall 2016.  
+    David G. Kay ,  kay@uci.edu      
+Friday, November 11, 2016 8:45 PM
+  
+</body> 

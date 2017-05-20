@@ -1,0 +1,46 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: RE: Seiwald Q &amp; A -- "GET for EDIT" cookies<body> RE: Seiwald Q &amp; A -- "GET for EDIT" cookies 
+ Christopher Seiwald  (  seiwald@perforce.com  )  Fri, 30 Aug 1996 17:41:48 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Daniel W. Connolly: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Yaron Goland: "RE: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+    
+| From: Yaron Goland &lt; yarong@microsoft.com &gt;
+|
+| Sure you do a check out on the document and the system records on the 
+| Server the existence of the check out. Then you do a check in on the 
+| document and the server knows who has the document checked out. Either way 
+
+How does the server connect your checkin with the original checkout, so
+that it can clear the checkout state?  It must use some information - some
+token or set of tokens to bridge the two.
+
+Clearly the URL is not sufficient: multiple users can be working on the
+same document.
+
+URL+username might be better, but I can easily imagine a case where the
+same named user (or the same user) is working on a single document from
+two different places.
+
+URL+username+hostname?  Maybe.  I can think of times, tho, when I
+myself have been editing the same source file on the same machine
+in two different places (and fully expecting the SCM system to keep
+track of it).
+
+I don't think we can define what information is sufficient for all
+version-aware Web servers to be able to join a checkin with its
+corresponding checkout.  At a certain point, you're going to have to
+concede that it has to be a token of the server's choice.
+
+Christopher
+ 
+
+  
+     Next message:   Daniel W. Connolly: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Yaron Goland: "RE: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+  </body> 

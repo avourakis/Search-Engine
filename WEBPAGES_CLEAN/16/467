@@ -1,0 +1,234 @@
+ 26.1 Daylight SMILES<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   26. SMILES Line Notation 
+ Up:   26. SMILES Line Notation 
+ Next:   26.2 Extensions to Daylight 
+   
+
+
+  
+26.1 Daylight SMILES 
+ 
+
+ 
+Unfortunately, there are a number of ambiguities in the original paper
+describing the Daylight SMILES syntax, that have led to different
+SMILES being accepted or rejected by independent SMILES parser
+implementations.
+
+  
+  
+     
+ Daylight 
+ Corina 
+ Corina 
+ Concord 
+ COBRA 
+ Synopsis 
+ OEChem 
+   SMILES 
+ 4.41 
+ 1.6 
+ WWW 
+ 3.2.1 
+ 3.21A 
+ 4.0 
+ 1.0B 
+   C1.C1 
+ Y 
+ Y 
+ Y 
+ N 
+ N 
+ Y 
+ Y 
+   C%00CC%00 
+ Y 
+ Y 
+ Y 
+ N 
+ N 
+ N 
+ Y 
+   C(C.C)C 
+ Y 
+ Y 
+ Y 
+ N 
+ N 
+ Y 
+ Y 
+   C(C)1CC1 
+ Y 
+ N 
+ N 
+ N 
+ Y 
+ N 
+ Y 
+   C(.C) 
+ Y 
+ Y 
+ Y 
+ N 
+ N 
+ Y 
+ Y 
+   C() 
+ Y 
+ Y 
+ N 
+ Y 
+ Y 
+ Y 
+ Y 
+   (CO)=O 
+ N 
+ N 
+ N 
+ N 
+ N 
+ Y 
+ N 
+   (C) 
+ N 
+ N 
+ N 
+ N 
+ N 
+ Y 
+ Y 
+   .C 
+ N 
+ N 
+ N 
+ Y 
+ Y 
+ N 
+ Y 
+   C..C 
+ N 
+ Y 
+ N 
+ Y 
+ Y 
+ N 
+ Y 
+   C. 
+ N 
+ Y 
+ Y 
+ Y 
+ Y 
+ Y 
+ Y 
+   C=(O)C 
+ N 
+ Y 
+ N 
+ N 
+ Y 
+ N 
+ N 
+   C((C)) 
+ N 
+ Y 
+ N 
+ Y 
+ N 
+ Y 
+ Y 
+   C.(C) 
+ N 
+ Y 
+ N 
+ Y 
+ N 
+ N 
+ Y 
+   C1CC(=1) 
+ N 
+ Y 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   C1CC(1) 
+ N 
+ N 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   C(C.) 
+ N 
+ Y 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   C==C 
+ N 
+ Y 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   C(1CC1) 
+ N 
+ N 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   C(1)CC1 
+ N 
+ N 
+ N 
+ N 
+ N 
+ N 
+ Y 
+   
+
+ 
+The OEChem SMILES parser actually has two modes.  The default is
+relaxed which produces the results above and enables the SMILES
+extensions described in the next section.  It also has a  strict  mode
+that may be used for validating SMILES strings that is far less
+forgiving about dubious SMILES strings.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   26. SMILES Line Notation 
+ Up:   26. SMILES Line Notation 
+ Next:   26.2 Extensions to Daylight 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

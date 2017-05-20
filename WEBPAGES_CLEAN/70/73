@@ -1,0 +1,115 @@
+ VHDL Reference Guide - Signal Declaration<body>  This is Google's cache of  http://www.vdlande.com/VHDL/sig_dec.html . It is a snapshot of the page as it appeared on Oct 15, 2009 21:46:38 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Signal Declaration  
+        Declaration 
+ ---- used in ----&gt; 
+ Architecture 
+            Syntax        
+  
+
+ 
+     signal signal_name : type;  
+    
+  
+
+ 
+     signal signal_name : type := initial_value;  
+    
+  
+
+ 
+See LRM section 4.3.1.2
+
+         Rules and Examples        
+  
+
+ 
+     signal SUM, CARRY1, CARRY2 : bit;
+signal COUNT : integer range 0 to 15;
+signal CLK, RESET : std_ulogic := '0';
+signal ALARM_TIME : T_CLOCK_TIME := (1,2,0,0);
+signal CONDITION : boolean := false;
+  
+    
+  
+
+ 
+    During elaboration, eacg signal is set to an initial value. If a
+signal is not given an explicit initial value, it will default to the
+leftmost value ( 'left ) of its declared type:
+ signal I : integer range 0 to 3;
+-- I will initialise to 0
+signal X : std_logic;
+-- X will initialise to 'U'  
+    
+  
+
+ 
+    A signal which is driven by more than one process,
+concurrentstatement or component instance, must be declared with a
+ resolved type , e.g.std_logic or std_logic_vector:
+ architecture COND of TRI_STATE is
+  signal TRI_BIT: std_logic;
+begin
+  TRI_BIT &lt;= BIT_1 when EN_1 = '1'
+        else 'Z';
+  TRI_BIT &lt;= BIT_2 when EN_2 = '1'
+        else 'Z';
+end COND;  
+    
+  
+
+ 
+    Signals may not be declared in a processor subprogram (except as
+formal parameters). 
+    
+  
+
+ 
+    Ports declared in an entity are accessible as signals within the
+associated architecture(s) and do not need to be redeclared. 
+    
+  
+
+ 
+    A signal of a  resolved type  may be declared as a  guarded
+resolved  signal. This is required if all drivers to a signal may be
+turned off, through guarded assignments.
+ 
+signal signal_name : resolved_type signal_kind;
+  
+The "signal kind" keyword may be  register  or  bus . Guarded
+resolved signals of kind  register  retain their current value when
+drive is turned off, whereas signals of kind  bus  rely on the
+resolution function to provide a "no-drive" value.  
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+Signals are supported for synthesis, providing they are of a type
+acceptable to the logic synthesis tool.
+ 
+The signal kinds  register  of  bus  are usually ignored.
+  
+Only certain resolved signal types are supported. Most tools recognise
+the  std_logic_1164  types.
+
+  
+         Whats New in '93        
+
+Signal Declarations have not changed in  VHDL -93.
+
+  
+
+  </body> 

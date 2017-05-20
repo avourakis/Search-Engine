@@ -1,0 +1,75 @@
+ Chimera 2.0 Tutorial: Chimera CLASSPATH setup for Solaris<body>
+ 
+
+ Setting CLASSPATH on Solaris to include chimera2b2.jar 
+
+  
+This section contains an example of appending chimera2b2.jar to the CLASSPATH 
+environment variable.
+The chimera2b2.jar file contains the server programs needed to run
+Chimera 2.0 beta 2.  There are a number of packages which Chimera 2.0 uses 
+in order to perform.  These packages should 
+be in your CLASSPATH.  Your CLASSPATH should end up including:
+ 
+
+  the path to swing 1.0.1 (See  
+	Preparing your System for Chimera  )
+	 
+	Note: swing 1.0.1 is included in JFC 1.1 which is included in JDK 1.2 beta 3.
+
+      the path to JSDK 1.0.1 (See  
+	Preparing your System for Chimera  )
+	 
+	Note: swing and JSDK are included in JDK 1.2.
+
+      the path to HTTPClient 0.3 (See  
+	Preparing your System for Chimera  )
+
+      the path to Rivendell 0.6 (See  
+	Preparing your System for Chimera  )
+
+      the path to MSXML 1.8 (See  
+	Preparing your System for Chimera  )
+
+      
+
+      the path to chimera2b2.jar
+   
+Note: The example below uses the tcsh shell.
+ 
+
+ Setting the CLASSPATH to chimera2b2.jar 
+
+  There are a number of commands you can use to append your environment 
+variable.  To set the CLASSPATH variable to include the path to chimera.jar,
+you may use any technique which will append the path to chimera.jar to
+your CLASSPATH.  The following is one way you could change your CLASSPATH.
+ 
+
+  You should have your chimera2b2.jar file somewhere you have access to it.
+In the screen-shot below, the file is in the directory /home/yuzok/classes
+on the testor's machine.
+ 
+
+   
+
+  You can use the setenv command in the following way when you
+want to append to the CLASSPATH value. The command will look like this:
+  setenv CLASSPATH $CLASSPATH': path_to_chimera.jar ' 
+ 
+Note: For tcsh, the two ' are needed to quote the colon symbol : which
+would otherwise be interpreted by the tcsh shell.
+The meaning of the command is -- set CLASSPATH to the previous 
+value of CLASSPATH plus all
+the characters from the first ' to the last '.
+The screen-shot below displays the appending using setenv command.
+ 
+
+   
+
+
+  You now have the chimera2b2.jar file for Chimera 2.0 in the 
+CLASSPATH. (Chimera 2.0 beta 2 is contained in the chimera2b2.jar file)
+ 
+
+</body> 

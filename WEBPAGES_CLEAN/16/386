@@ -1,0 +1,229 @@
+ Second Homework<body>
+  
+ 
+          
+ 
+ This assignment is due at the start of your
+discussion section on Friday, January 17.   
+ 
+  (a)    [only for students who did
+not take ICS H21]   Now it's time to play with the Restaurants program
+we passed out in class.  The code is available on the web at    http://www.ics.uci.edu/~kay/courses/h21/restaurants.txt   .
+ You won't be able to do all of this part until after Tuesday's
+lecture, but the first few subparts are accessible now.  
+ 
+  (a.1)   Make your own copy of this file
+and open it in DrScheme.  Evaluate it by clicking the green arrow.  Remember
+that you'll need to use at least the Pretty Big version of Scheme. 
+Then, in the interactions (lower) window, type      (Restaurants)   
+to run the program, typing commands to add, remove, print, and search for
+restaurants.  
+ 
+ [For simplicity, the Restaurants program asks
+users to enter nonnumeric information as Lisp lists (i.e., in parentheses).
+ Scheme does have strings; it makes better sense enter non-numeric information
+enclosed in double-quotes instead of parentheses.  This doesn't require
+any change in the code, other perhaps than changing the prompt to the user.]  
+ 
+  (a.2)   Modify the code so that the
+command for adding a new restaurant is '     n   '
+instead of '     a   '.
+ (This should require a change in two places.)  
+ 
+  (a.3)   When you print the collection
+of restaurants, it would be nice to have a blank line separating the information
+on each restaurant.  Modify the program to achieve this.  (You only need
+to add one procedure call--     (newline)   --in
+one place.)  
+ 
+  (a.4)   Modify the program code so that
+it gives the user an additional menu choice:    
+ 
+  e:  Remove (erase) all the restaurants from the
+collection   
+ 
+ When the user types '     e   ',
+the program should remove all the restaurants from the collection (so that,
+for example, if the next command were '     p   ',
+nothing would be printed).  
+ 
+ [This will require modifications or additions
+in a few places.  You can do the main part of the work very easily indeed,
+with a single procedure call.  The key is to think functionally, not of
+changing values but of describing or creating the new value.]  
+ 
+  (a.5)   Modify the program so that it
+adds another menu item:    
+ 
+  a:  Adjust prices for the dishes served   
+ 
+ When the user types '     a   ',
+the program should ask the user for an amount (positive or negative) representing
+a percentage change in price (so that 100 would double a price and -50 would
+cut it in half).  Then it should apply that price change to the prices for
+all the restaurants in the collection.    
+ 
+ [Here are some hints on how to approach this.
+ If you want to be cool, you can postpone looking at them.  You might approach
+this first by writing a   change-price  
+procedure that takes a restaurant and a percentage change number, as above,
+and returns a restaurant that has all the same information, except that
+the price is changed appropriately.  Next you might write a call to   collection-change  
+that uses   change-price  
+and changes the prices in all the restaurants in the collection.  Finally,
+you can incorporate these calls into the main program, adding the appropriate
+command handling and so on.]  
+ 
+  (a.6)   (extra credit; this is rather
+tough at this point)  The search command currently allows the user to search
+only for restaurants by name.  We can see that      collection-select   
+allows much more flexible searching, however.    
+ 
+ Modify the      search-collection   
+routine in the main program to give the user a choice of searching by name
+or by cuisine.  If the user chooses to search by cuisine, prompt for the
+type of cuisine and perform the requested search with appropriate calls
+to      collection-select   .
+  [Hint:  Consider using some of the code on the second page of the "Notes
+on Scheme" handout.]  
+ 
+ Be sure you're comfortable with the overall
+organization and operation of this program; some day you might be asked
+about it.    
+ 
+  (b)   [only for students who took
+ICS H21]      We'll build a rudimentary
+telephone book.  From now on, you should follow the conventional Java practice
+of writing each class in its own file whose file name is the same as the
+class name (so your Person class would be in the file   Person.java  --be
+sure the spelling and capitalization are identical).  To compile all the
+classes in a given directory, say "  javac
+*.java  " and to run the code, say
+"  java X  "
+where X is the name of the class containing the main function.  
+ 
+  (b.1)   First, create a class PhoneNumber
+that has four integer fields:  areaCode, exchange, number, and extension,
+so that for the phone number (949) 824-5072 ext. 1000, 949 is the areaCode,
+824 is the exchange, 5072 is the number, and 1000 is the extension.  (The
+extension field may be zero for numbers without an extension.)  Of course
+you need a constructor and getter methods; you should also have a toString
+method that produces the number in the format given above and a promptUser
+method that takes a BufferedReader as a parameter and returns a newly constructed
+PhoneNumber, asking the user to enter the number's components one by
+one.   
+ 
+  (b.2)   Modify your Person class from
+last week's assignment to include, along with the name and age fields,
+a phone field that contains a PhoneNumber object.    
+ 
+  (b.3)   Create a class called Phonebook;
+it should contain zero or more objects of the Person class.  You should
+implement the Phonebook in an array whose maximum size (defined as a constant,
+i.e., a   static final int  )
+is 1000.    
+ 
+ Aside from a constructor to create an empty
+People class, your class should have these methods:  
+ 
+ int size()   --returns
+the number of Person objects in the class (initially, zero)   
+ 
+ void add(Person P)  --adds
+the specified person to the class (in no particular order).  If the Phonebook
+is already full, you should print an error message and not add the Person.  
+ 
+ Person lookup(String n)  --returns
+the Person object whose name matches the parameter.  You may return the
+first Person who matches (so you don't have to check for multiple entries
+of the same name).  If the name isn't found, return null.  
+ 
+ void remove(String n)  --removes
+from the Phonebook the Person whose name matches the parameter.  Again,
+you don't have to check for duplicate names.  
+ 
+ void print()  --prints
+all the Persons in the class, in some compact format.  You should rely on
+the toString method of the Person class.  
+ 
+ double averageAge()  --returns
+the average age of all the Persons in the Phonebook (or zero, if the Phonebook
+is empty)  
+ 
+  (b.4)   Create a PhonebookTest class
+that contains statements to exercise all the operations of your class and
+demonstrate to a critical reader that they work properly.  For some good
+advice about testing, read the two sections on testing in Alex Thornton's
+ first ICS 22 lab 
+at (   http://www.ics.uci.edu/~thornton/ics22/LabManual/Money/   ).
+ One thing to think about his how to test your program's behavior when
+the array is full.  Typing 1001 names isn't feasible; what other approach
+could you take?  
+ 
+  (b.5)   For extra credit, you may enhance
+your program in one or more of the following ways, but remember that you
+should never start on extra credit until all the required parts are working
+perfectly.  
+  
+ Enhance the promptUser method of the PhoneNumber
+class to allow the user to type in a whole phone number in some form, parsing
+that string to extract its components.  (This is not so easy; this probably
+shouldn't be the first extra credit you attempt.)  
+   
+ Check for duplicate names and prohibit them
+(or treat the attempt to add a duplicate name as an update of the name's
+other field values).  Or, return not a single Person but a new Phonebook
+containing all the matching people.  
+   
+ Add a reverseLookup method that takes a PhoneNumber
+and returns the Person in the Phonebook whose PhoneNumber matches.  
+   
+ Add a partialLookup method that takes a string
+and returns (in a new Phonebook) all the Persons whose name starts with
+that string.  (You'll need to look up the methods on the String class
+to find one to help you with this comparison.)  
+   
+  What to turn in:     
+ 
+ The Checkmate system (checkmate.ics.uci.edu)
+is now up and running.  Go to that site and follow the instructions to associate
+yourself with ICS H22.  
+ 
+ For part  (a) , turn in one file via
+Checkmate containing all your modified Restaurants code.  
+ 
+ For part  (b) , turn in a Java file for
+each class; Checkmate guides you through this.  
+ 
+ We don't anticipate any problems with
+the Checkmate system, which has been used successfully for three quarters.
+ But if some trouble or confusion should arise, follow this procedure: 
+First, wait an hour and try again.  Then, if the issue isn't resolved,
+send us Email.  Nobody's grade will suffer because of Checkmate problems,
+so long as you have done everything you can do.  
+  
+ Based in part on ICS H22 assignments by David
+G. Kay from Winter 2000 and earlier; modified by David G. Kay, Winter 2001.  
+ 
+ Based in part on ICS H21 assignments by David
+G. Kay from Fall 2002 and earlier.  
+ 
+ Modified by David G. Kay, Winter 2003, including
+some logistical information from the ICS 22 Lab Manual by Alex Thornton.  
+  
+ 
+  
+  
+  David G. Kay ,
+ 406B Computer Science
+   University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --     (949) 824-5072   
+ --  Fax    (949) 824-4056   
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Friday, January 17, 2003 -- 12:46 PM  
+</body> 

@@ -1,0 +1,200 @@
+   
+  Class c2.framework.Port
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Port
+ 
+ 
+ java.lang.Object 
+   |
+   +----c2.framework.Port
+ 
+    public class  Port 
+    extends  Object 
+   
+Components and connectors in an architecture exchange messages through
+communication ports.  A port cannot exist independently of a brick
+(component or connector) and can be linked to at most one other port. 
+NOTE: This class should not be used directly.  Use either
+FIFOPort or one of its derived classes.  
+     See Also: 
+        Component ,  Connector ,  FIFOPort 
+     
+ 
+    
+      belongs_to  
+     Component or connector to which the port belongs.
+        link  
+     Component or connector to which the port is linked.
+   
+    
+      Port  ()
+     
+        Port  (Brick)
+     
+   
+    
+      belongsTo  ()
+     Accesses the brick to which the port belongs.
+        belongsTo  (Brick)
+     (Re)assigns a port to a brick.
+        className  ()
+     Accesses the name of the class.
+        classType  ()
+     Accesses the class itself.
+        debugPrint  (String)
+     Prints a string to System.err.
+        debugPrintln  (String)
+     Prints a string to System.err.
+        Link  ()
+     Accesses the port to which the port is linked.
+        receive  (Message)
+     Receives a message and notifies its brick.
+        selectNextIncomingMessage  ()
+     Selects a message from the incoming queue.
+        selectNextOutgoingMessage  ()
+     Selects a message from the outgoing queue.
+        send  (Message)
+     Sends a message if the port is attached to another port.
+        toString  ()
+     Displays information about the port.
+        weld  (Port)
+     Welds this port to another port.
+    
+ 
+    
+   
+ belongs_to 
+ 
+  protected  Brick  belongs_to
+ 
+   Component or connector to which the port belongs.
+     
+ link 
+ 
+  protected  Port  link
+ 
+   Component or connector to which the port is linked.
+    
+ 
+    
+  
+   
+ Port 
+ 
+  public Port()
+ 
+   
+ Port 
+ 
+  public Port( Brick  b)
+ 
+  
+ 
+    
+   
+  className  
+ 
+  protected static  String  className()
+ 
+   Accesses the name of the class.
+      Returns: 
+       Port class name.
+         
+  classType  
+ 
+  public static  Class  classType()
+ 
+   Accesses the class itself.
+      Returns: 
+       Port class.
+         
+  Link  
+ 
+  public  Port  Link()
+ 
+   Accesses the port to which the port is linked.
+      Returns: 
+       Port to which this port is linked.
+         
+  belongsTo  
+ 
+  public  Brick  belongsTo()
+ 
+   Accesses the brick to which the port belongs.
+      Returns: 
+       Brick to which the port belongs.
+         
+  belongsTo  
+ 
+  public void belongsTo( Brick  b)
+ 
+   (Re)assigns a port to a brick.
+      Parameters: 
+       brick - Brick to which the port is assigned.
+         
+  weld  
+ 
+  public void weld( Port  p)
+ 
+   Welds this port to another port.
+param p Port to which this port is welded.
+     
+  receive  
+ 
+  public void receive( Message  msg)
+ 
+   Receives a message and notifies its brick.
+      Parameters: 
+       msg - Received message.
+         
+  send  
+ 
+  public void send( Message  msg)
+ 
+   Sends a message if the port is attached to another port.
+      Parameters: 
+       msg - Message to be sent.
+         
+  selectNextIncomingMessage  
+ 
+  public abstract  Message  selectNextIncomingMessage()
+ 
+   Selects a message from the incoming queue.  Not implemented in this
+class.
+     
+  selectNextOutgoingMessage  
+ 
+  public abstract  Message  selectNextOutgoingMessage()
+ 
+   Selects a message from the outgoing queue.  Not implemented in this
+class.
+     
+  toString  
+ 
+  public  String  toString()
+ 
+   Displays information about the port.  Used for debugging.
+      Overrides: 
+        toString  in class  Object 
+         
+  debugPrintln  
+ 
+  public void debugPrintln( String  s)
+ 
+   Prints a string to System.err.  See debugPrintln in Brick.
+      See Also: 
+        Brick 
+         
+  debugPrint  
+ 
+  public void debugPrint( String  s)
+ 
+   Prints a string to System.err.  See debugPrintln in Brick.
+      See Also: 
+        Brick 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

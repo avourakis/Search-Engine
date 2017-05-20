@@ -1,0 +1,184 @@
+ 5. OEChem Functors<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.157 OEWriteXYZFile 
+ Up:   1 OEChem Library 
+ Next:   5.1 OEHasIdx 
+   
+
+
+  
+5. OEChem Functors 
+ 
+
+ 
+Functors are C++ equivalents of function pointers in C.  However, functors
+can also maintain state, be copied, created and destroyed.  For details,
+please see the OEChem C++ theory manual.  All of the functors here are derived
+from  template&lt;class Arg&gt; class OESystem::OEUnaryPredicate  or
+ template&lt;class Arg1,class Arg2&gt; class OESystem::OEBinaryPredicate .
+
+  
+All of the functors will have a  virtual bool operator() const  function
+which takes an argument of type const Arg&amp;, where Arg is the their template
+argument.  Many of the functors also have a constructor which generates the
+state critical to the evaluation of their operator().
+
+  
+All functors also contain three other functions which will be covered once
+here and not duplicated in each section.
+
+  
+    
+OESystem::OEUnaryFunction&lt;class Arg,bool&gt; *CreateCopy() const
+    
+CreateCopy is a virtual constructor.  It returns a copy of the functor
+itself with its correct internal state.  This function allows a user to
+copy functors even if they only have a pointer or reference to the base
+class.
+
+  
+
+      Subsections</strong> 
+
+   5.1 OEHasIdx 
+   5.1.1 Constructor 
+   5.1.2 operator() 
+   5.1.3 Typedefs 
+     5.2 OEHasAtomName 
+   5.2.1 Constructor 
+   5.2.2 operator() 
+     5.3 OEHasChainID 
+   5.3.1 Constructor 
+   5.3.2 operator() 
+     5.4 OEHasResidueNumber 
+   5.4.1 Constructor 
+   5.4.2 operator() 
+     5.5 OEHasFragmentNumber 
+   5.5.1 Constructor 
+   5.5.2 operator() 
+     5.6 OEHasMapIdx 
+   5.6.1 Constructor 
+   5.6.2 operator() 
+     5.7 OEHasAtomicNum 
+   5.7.1 Constructor 
+   5.7.2 operator() 
+     5.8 OEIsRGroup 
+   5.8.1 Constructor 
+   5.8.2 operator() 
+     5.9 OENthAtom 
+   5.9.1 Constructor 
+   5.9.2 operator() 
+     5.10 OEMatchFunc 
+   5.10.1 Constructor 
+   5.10.2 operator() 
+   5.10.3 typedefs 
+     5.11 OEIsHydrogen 
+   5.11.1 Constructor 
+   5.11.2 operator() 
+     5.12 OEIsHeavy 
+   5.12.1 Constructor 
+   5.12.2 operator() 
+     5.13 OEIsPolar 
+   5.13.1 Constructor 
+   5.13.2 operator() 
+     5.14 OEIsPolarHydrogen 
+   5.14.1 Constructor 
+   5.14.2 operator() 
+     5.15 OEIsCarbon 
+   5.15.1 Constructor 
+   5.15.2 operator() 
+     5.16 OEIsCAlpha 
+   5.16.1 Constructor 
+   5.16.2 operator() 
+     5.17 OEIsNitrogen 
+   5.17.1 Constructor 
+   5.17.2 operator() 
+     5.18 OEIsOxygen 
+   5.18.1 Constructor 
+   5.18.2 operator() 
+     5.19 OEIsHalogen 
+   5.19.1 Constructor 
+   5.19.2 operator() 
+     5.20 OEIsSulfur 
+   5.20.1 Constructor 
+   5.20.2 operator() 
+     5.21 OEIsPhosphorus 
+   5.21.1 Constructor 
+   5.21.2 operator() 
+     5.22 OEIsAromaticAtom 
+   5.22.1 Constructor 
+   5.22.2 operator() 
+     5.23 OEAtomIsInRing 
+   5.23.1 Constructor 
+   5.23.2 operator() 
+     5.24 OEIsChiralAtom 
+   5.24.1 Constructor 
+   5.24.2 operator() 
+     5.25 OEHasAtomStereoSpecified 
+   5.25.1 Constructor 
+   5.25.2 operator() 
+     5.26 OEHasAlphaBetaUnsat 
+   5.26.1 Constructor 
+   5.26.2 operator() 
+     5.27 OEAtomIsInResidue 
+   5.27.1 Constructor 
+   5.27.2 operator() 
+     5.28 OEHasOrder 
+   5.28.1 Constructor 
+   5.28.2 operator() 
+     5.29 OEBondIsInRing 
+   5.29.1 Constructor 
+   5.29.2 operator() 
+     5.30 OEIsRotor 
+   5.30.1 Constructor 
+   5.30.2 operator() 
+     5.31 OEIsChiralBond 
+   5.31.1 Constructor 
+   5.31.2 operator() 
+     5.32 OEHasBondStereoSpecified 
+   5.32.1 Constructor 
+   5.32.2 operator() 
+     5.33 OEIsAromaticBond 
+   5.33.1 Constructor 
+   5.33.2 operator() 
+     5.34 OEGetNbrAtom 
+   5.34.1 Constructor 
+   5.34.2 operator() 
+     5.35 OEPartPred 
+   5.35.1 Constructor 
+   5.35.2 SelectPart 
+   5.35.3 operator() 
+     5.36 OEIsMember 
+   5.36.1 Constructors 
+   5.36.2 operator() 
+     5.37 OEIsMemberPtr 
+   5.37.1 Constructors 
+   5.37.2 operator() 
+   5.37.3 CreateCopy() 
+     
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.157 OEWriteXYZFile 
+ Up:   1 OEChem Library 
+ Next:   5.1 OEHasIdx 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

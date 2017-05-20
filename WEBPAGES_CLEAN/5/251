@@ -1,0 +1,136 @@
+ 32.5 Parameter Categories<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.4 Command line help 
+ Up:   32. OpenEye Command Line 
+ Next:   32.6 Ordering parameters and 
+   
+
+
+  
+32.5 Parameter Categories 
+ 
+
+ 
+Parameters can be separated into different categories.  This is done
+using the !CATEGORY keyword in the text configuration file (see the
+OEConfigure API documentation) as in the following example.
+
+  
+ Chapter 32 - Example 7 : cpp file 
+    #include "oeplatform.h"
+#include "oesystem.h"
+
+//Defines static const unsigned char* array InterfaceData
+#include "ch32-7.itf"
+
+using namespace OEPlatform;
+using namespace OESystem;
+
+int main(int argc, char** argv)
+{
+  OEInterface itf;
+  OEConfigure(itf,InterfaceData);
+  if (OECheckHelp(itf,argc,argv)) return 0;
+  OEParseCommandLine(itf,argc,argv);
+  OEWriteSettings(itf,oeout,true);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+ Chapter 32 - Example 7 : txt configuration file 
+    !CATEGORY Variables
+  !BRIEF Category for variables
+
+  !PARAMETER -x
+    !TYPE float
+    !DEFAULT 0.0
+    !BRIEF First variable
+  !END
+
+  !PARAMETER -y
+    !TYPE float
+    !DEFAULT 0.0
+    !BRIEF Second variable
+  !END
+
+!END
+
+!CATEGORY operator
+
+  !PARAMETER -op
+    !TYPE string
+    !BRIEF Operation to perform on x and y
+    !DETAIL
+      The operation performed is
+
+        x &lt;-op&gt; y
+
+      So if -op is 'add' the operation is
+
+        x + y
+  !END
+
+!END
+ 
+ 
+ Download as text. 
+ 
+   
+Running this program gives the following results
+
+  
+    &gt; ch32-7 -x 1.0 -y 1.0 -op add
+#Interface settings
+
+#Variables : Category for variables
+    -x  1.000000
+    -y  1.000000
+
+#operator :
+    -op  add
+    
+Where the variables are now broken up into two different categories.
+
+  
+Categories can be nested inside other categories, and there
+is no limit to the amount of nesting ( i.e. , you can have categories
+inside categories inside categories, etc...).
+
+  
+ Note : Creating a category adds a child OEInterface to the
+base OEInterface class.  As a practical matter, however, this only
+affects how the parameters appear when outputted to the screen by
+one of the free functions.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.4 Command line help 
+ Up:   32. OpenEye Command Line 
+ Next:   32.6 Ordering parameters and 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,335 @@
+ Life Search Programs<body>
+      Life Search Programs  
+
+      It is possible to find small but interesting patterns
+    in Life just by trying random seed patterns, or by manually
+    setting up glider crashes, etc. But many lifenthusiasts have
+    written search programs to aid in finding larger patterns. It
+    may be more productive to write your own programs than to run
+    the ones listed here, since that way you're more likely to find
+    something nobody else could have found. But, sometimes there's
+    already an available tool for what you want, and anyway it's
+    hard to be original without knowing what's already been
+    done.  
+
+      This page is intended as a catalog of these search
+    programs: who wrote them, how do they work, what can they find,
+    and how can one obtain them? I'm including even unobtainable
+    programs here, for historical purposes and since it may be
+    useful to have a description of their design
+    principles.  
+
+       Bays  
+
+         Author:   Carter Bays   Requirements:  Unknown  Availability:  Unknown  Description:  Forms seed patterns by setting cells on
+      or off randomly within a small rectangular block in a larger
+      field. If evolution of a seed reaches the field boundary, the
+      resulting pattern is recentered and evolved again. Patterns
+      that reach the boundary a second time are saved as possible
+      gliders. Used by Bays to find gliders in several
+      three-dimensional and triangular-lattice cellular
+      automata.  
+
+        catalyst  
+
+         Author:   Gabriel
+      Nivasch   Requirements:  Platform-independent C++  Availability:   Freeware,
+      on web   Description:  Places still-life catalysts to react
+      with a given pattern. The program uses an exhaustive
+      depth-first traversal of all possibilities. It only places a
+      catalyst at the moment that it will react with the pattern,
+      using a data structure to make sure that the placement will
+      not interfere with previous steps of the
+      reaction.  
+
+        dr  
+
+         Author:   Dean
+      Hickerson   Requirements:  Platform-independent C  Availability:  Contact author  Description:  Searches for patterns consisting of a
+      small perturbation "drifting" across a still-life background.
+      Takes as input the perturbation and part of the background.
+      Depth-first; simulates the evolution of the perturbation,
+      making a choice whenever it needs the value of an unknown
+      background cell, and backtracking whenever it finds an
+      inconsistency in the background or the perturbation grows too
+      large. Useful for finding high-period billiard-table
+      oscillators, circuitry consisting of signals moving through
+      static wires and components, and custom eaters.  
+
+        gencols  
+
+         Author:  Paul Callahan  Requirements:  Platform-independent C  Availability:   Freeware,
+      on web   Description:  Enumerates collisions between patterns
+      (e.g. gliders and still lifes). Includes output filters to
+      detect oscillators, spaceships, or successful eating of one
+      pattern by another. Life evolution rule is hardcoded as a
+      sequence of bit-parallel integer operations (so it's possible
+      to change but not easy).  
+
+        gfind  
+
+         Author:   David
+      Eppstein   Requirements:  Platform-independent C  Availability:   Freeware, on
+      web   Description:  Breadth first search for low-period
+      spaceships. Extends partial patterns a row at a time, keeping
+      track of rows in all phases of the pattern. Finds successor
+      rows using a bit-parallel graph path computation; hash table
+      eliminates redundant search branches; uses depth first
+      iterated deepening, garbage collection, and row width
+      reduction (triggered by excess depth in iterated deepening
+      stages) to limit the breadth first queue size. Includes modes
+      for finding symmetric patterns. For more details see my paper
+       "Searching for
+      Spaceships"  .  
+
+        Glue  
+
+         Author:  Paul Chapman  Requirements:  MS-Windows  Availability:  In development  Description:  Searches for slow-salvo constructions in
+      Life (patterns that can be formed by starting from a blinker
+      or block and colliding a single glider at a time into a
+      previously constructed pattern, as described in Nicholas
+      Gotts' paper "Self-Organized Construction in Sparse Random
+      Arrays of Conway's Game of Life"). Takes a given starting
+      pattern and generates and catalogs every possible collision
+      between it and a glider.  
+
+        gsearch  
+
+         Author:   David
+      Eppstein   Requirements:  Platform-independent C. Memory
+      intensive  Availability:   Freeware, on
+      web   Description:  Performs a brute force search of all
+      patterns fitting within a small rectangle (4x7 taking a day
+      or two). Evolves each such pattern for a specified number of
+      generations or until it repeats, grows too large, or matches
+      a previously seen pattern. Recognizes spaceships,
+      oscillators, unstable oscillators (such as Life queen bee and
+      p90), replicators, and some puffers. Includes modes for
+      finding symmetric patterns.  
+
+        Hersrch  
+
+         Author:  Karel Suhajda  Requirements:  Windows  Availability:   C++ source and executable   Description: 
+      Searches for open or closed Herschel tracks in Conway's Game of Life,
+      using a database of known static and periodic track components.
+      Backtracking search, pruning the search tree when the pattern exceeds
+      given size bounds or when a self-overlapping sequence of
+      components is detected (using an Aho-Corasick string matching automaton
+      on a predefined list of impossible sequences).  
+
+        Holzwart  
+
+         Author:  Hartmut Holzwart  Requirements:  Unknown  Availability:  Unknown  Description:  Another search program similar to LS and
+      lifesrc. Limited by machine precision to patterns with width
+      at most 31. Used by Holzwart to find many variant c/2 and c/3
+      spaceships in Life, and related patterns including the
+      "spacefiller" in which four c/2 spaceships stretch the
+      corners of a growing diamond shaped still life.  
+
+        knight  
+
+         Author:   Tim
+      Coe   Requirements:  Platform-independent C. Memory
+      intensive  Availability:  Contact author  Description:  Breadth first search for low-period
+      spaceships. Extends partial patterns a row at a time in one
+      phase only; checks that evolving the pattern through a period
+      results in the same rows. Uses a fixed amount of depth-first
+      lookahead per node to limit the breadth first queue size.
+      Includes modes for finding symmetric patterns. Life evolution
+      rule is hardcoded as a sequence of bit-parallel integer
+      operations, multiple times throughout 25 pages of uncommented
+      C (so not really possible to change without rewriting the
+      whole program).  
+
+        LifeLab  
+
+         Author:   Andrew
+      Trevorrow   Requirements:  Macintosh  Availability:   Shareware, on
+      web   Description:  This is a general purpose CA
+      viewing/editing system, but it also includes a brute force
+      search of all patterns fitting within a small rectangle.
+      Evolves each such pattern for a specified number of
+      generations or until it repeats. Recognizes spaceships,
+      oscillators, still lifes, and methusalahs. Not very
+      fast.  
+
+        lifesrc  
+
+         Author:   David
+      Bell   Requirements:  Platform-independent C  Availability:   
+      C source  ,  Windows
+      executable   Description:  Depth-first backtracking search for
+      low-period spaceships, oscillators, still lifes, puffers, or
+      predecessors of a given pattern. Maintains the state of each
+      phase of each cell in a specified region as unknown, live,
+      dead, or don't care; recursively tries setting each unknown
+      cell to live or dead and propagating the consequences to
+      neighboring cells in neighboring generations. Includes modes
+      for finding symmetric patterns.  
+
+        LS  
+
+         Author:   Dean
+      Hickerson   Requirements:  Apple IIe  Availability:  Still exists on a 5 1/4" floppy
+      somewhere  Description:  Depth-first backtracking search for
+      low-period oscillators, spaceships, and predecessors of a
+      given pattern, similar to lifesrc. The name is short for
+      "Life search". Written in 1989 using a combination of 6502
+      assembler and Basic; mentioned by  Mark
+      Niemiec  as the first program to search for oscillators.
+      Described in more detail in the file "ORIGIN" included in
+      some lifesrc distributions.  
+
+        new4  
+
+         Author:   Keith Amling   Requirements:  Windows-specific C++  Availability:  Contact author  Description:  Depth first search for low-period
+      spaceships. Extends partial patterns a column at a time,
+      keeping track of columns in a single phase of the pattern. At
+      each level of search, tries all possible choices for the next
+      column, and for each choice performs the evolution rule p
+      times on the last 2p+1 columns (where p is the desired
+      period). If the result of the evolution matches a shifted
+      copy of the original middle column, the search continues
+      recursively. Stops and outputs a successful spaceship when
+      the result of the evolution matches not just the middle
+      column but also all later columns. Life evolution rule is
+      hardcoded but only in a small number of easy to change
+      lines.  
+
+        Niemiec  
+
+         Author:   Mark
+      Niemiec   Requirements:  Unknown  Availability:  Unknown  Description:  This is described by  Achim
+      Flammenkamp  as an improved version of Raynham's still
+      life enumerator, written in 1989, capable of finding all
+      still lifes with up to 20 live bits. Design principles
+      unknown. Niemiec apparently also wrote a brute force search
+      program, which finds all oscillators or spaceships that fit
+      in a given area (5x5 taking a few days as of 1994) based on a
+      principle attributed by him to Raynham of simultaneously
+      running two copies, one twice as fast as the other, and
+      detecting when both reach the same state. (The same principle
+      has been discovered by many other workers in other areas e.g.
+      the Pollard rho factoring algorithm.).  
+
+        ofind  
+
+         Author:   David
+      Eppstein   Requirements:  Platform-independent C  Availability:   Freeware, on
+      web   Description:  Breadth first search for low-period
+      oscillators. Similar to gfind, but extends patterns in all
+      phases simultaneously rather than a single phase at a time,
+      and includes special handling of stator cells. User can
+      specify what spark the oscillator should produce, or how it
+      should interact with neighboring patterns of other
+      periods.  
+
+        polyomino  
+
+         Author:  Paul Callahan  Requirements:  Unknown  Availability:   Contact author   Description:  Enumerates all small polyominos
+      (presumably by a backtracking tree search that tries all ways
+      of adding a cell to each n-polyomino, in such a way that the
+      same (n+1)-polyomino couldn't have been formed in a
+      previously listed way). Simulates the evolution of each
+      polyomino, determining whether it generates a previously
+      known interesting pattern (such as a switch engine, Herschel,
+      or pi) by forming 32-bit words representing the recent
+      history of each cell and comparing against known signature
+      words. Useful for finding small infinite-growth
+      patterns.  
+
+        ptbsearch  
+
+         Author:  Paul Callahan  Requirements:  Platform-independent C  Availability:   Freeware, on
+      web   Description:  Attempts to perturb a starting reaction
+      by adding combinations of eaters or other still lifes, to
+      make a different reaction product without destroying the
+      added patterns. Life evolution rule is hardcoded in source
+      but easy to change. Useful for finding Herschel tracks and
+      glider guns.  
+
+        Random Agar  
+
+         Author:   Gabriel
+      Nivasch   Requirements:  Platform-independent C++  Availability:   Freeware,
+      on web   Description:  This program is intended to look for new
+      Life oscillators, wicks, and agars. It generates random
+      spatially periodic patterns, and runs them until they
+      oscillate. It includes complete support for all possible
+      symmetry types and clever oscillation detection
+      algorithms.  
+
+        Raynham  
+
+         Author:  Peter Raynham  Requirements:  Unknown  Availability:  Unknown  Description:  This is described by  Mark
+      Niemiec  and  Achim
+      Flammenkamp  as the first program to search for still
+      lifes, written in the mid-1970's. Design principles
+      unknown.  
+
+        sngdetect  
+
+         Author:   Gabriel
+      Nivasch   Requirements:  Platform-independent C++  Availability:   Freeware,
+      on web   Description:  Tests interactions of gliders with
+      patterns formed from common still lifes and oscillators. For
+      each interaction, test whether the same pattern reappears,
+      shifted some distance from its original position.  
+
+        stilledit  
+
+         Author:  Paul Callahan  Requirements:  Java-enabled web browser  Availability:   Web
+      applet   Description:  After the user edits a pattern, in which
+      some cells' states are marked as "fixed", this program
+      attempts to find a still life matching those requirements by
+      a hill-climbing approach, in which it toggles the state of
+      unfixed cells to minimize the number of violations of the CA
+      evolution rule, with some randomized variation to avoid
+      getting stuck in local minima. Only works for Life, not other
+      totalistic rules, but Java source code is
+      available.  
+
+        Still Lifes Auto  
+
+         Author:   Gabriel
+      Nivasch   Requirements:  Mac executable  Availability:   Freeware,
+      on web   Description:  Mac port of StillEdit with a few added
+      features.  
+
+        Tooke  
+
+         Author:  Paul Tooke  Requirements:  Unknown  Availability:  Unknown  Description:  Searches for puffers by truncating tails
+      of spaceships (generated by a modified version of gfind) and
+      testing what happens to the resulting patterns.  
+
+        torus  
+
+         Author:   Jason Summers   Requirements:  Platform-independent C  Availability:   Freeware,
+      on web   Description:  Searches for high-period oscillators by
+      testing the evolution of random periodic initial conditions.
+      No user interface; user must change parameters in the source
+      code.  
+
+        tweak  
+
+         Author:   David
+      Bell   Requirements:  Unknown  Availability:  Unknown  Description:  Modifies known puffers or wicktrailers
+      by changing cell values within a small rectangle using a
+      brute force enumeration. Filtering principles
+      unknown.  
+
+        Wechsler  
+
+         Author:  Allan Wechsler  Requirements:  Unknown  Availability:  Unknown  Description:  Developed in 1994, this program
+      attempted to use genetic programming to "breed" spaceships
+      and oscillators of a fixed period, using as a fitness
+      function the similarity between the original pattern and (a
+      shifted copy of) the pattern after evolving the given number
+      of iterations. However, this program was only capable of
+      finding small objects with small periods. Dave Greene tells
+      me he later ran a similar experiment with even less
+      success.  
+       
+        Cellular automata  ,  D. Eppstein  
+     
+  </body> 

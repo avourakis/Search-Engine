@@ -1,0 +1,109 @@
+ /*
+    $Id: appsearch.cc 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 03/16/2007
+    Author: Rares Vernica 
+*/
+
+#include "appsearch.h"
+
+#include 
+
+#include 
+#include 
+
+#include "ed.h"
+#include "input.h"
+#include "misc.h"
+
+const unsigned editdistMin = 1, editdistMax = 3;
+
+string getFilenameQuery(const string pathData, const string nameDataset, 
+                        const unsigned queryCount)
+{
+  return pathData + removeExt(nameDataset) + 
+    ".query." + utosh(queryCount) + ".bin";
+}
+
+string getFilenameAnswer(const string pathData, const string nameDataset, 
+                         const unsigned queryCount, const unsigned editdist)
+{
+  return pathData + removeExt(nameDataset) +
+    ".answer." + utosh(queryCount) + "." + utos(editdist) + ".bin";
+}
+
+
+bool existQuery(const string pathData, const string nameDataset, 
+                const unsigned queryCount)
+{
+  const string filenameQuery = getFilenameQuery(pathData, nameDataset, 
+                                                queryCount);
+  string filenameAnswer[editdistMax - editdistMin + 1];
+  unsigned editdist;
+  for (editdist = editdistMin; editdist  attribAns.st_mtime)
+      return false;
+  }
+  
+  return true;
+}
+
+void genQuery(const vector &amp;data, 
+              const string pathData, const string nameDataset, 
+              const unsigned queryCount)
+{
+  cerr  query;
+  vector queryA(data.size());
+  for (unsigned i = 0; i (&amp;queryA[i]), sizeof(unsigned));
+  }
+  fileQuery.close();  
+
+  // answer
+  for (unsigned editdist = editdistMin; editdist  ans;
+    unsigned e, k = 0;
+    for (vector::const_iterator it = query.begin();
+         it != query.end(); ++it) {
+
+      if (k % 10 == 0) {
+        cerr (&amp;e), sizeof(unsigned));
+      for (vector::const_iterator jt = ans.begin(); jt != ans.end(); ++jt)
+        fileAns.write(reinterpret_cast(&amp;*jt), sizeof(unsigned));
+    }
+    fileAns.close();
+  }  
+
+  cerr  &amp;query,
+               const string pathData, const string nameDataset, 
+               const unsigned queryCount)
+{
+  const string filenameQuery = getFilenameQuery(pathData, nameDataset,
+                                                queryCount);
+  cerr  &gt; &amp;answer,
+                const string pathData, const string nameDataset, 
+                const unsigned queryCount, const unsigned editdist)
+{
+  const string filenameAnswer = getFilenameAnswer(pathData, nameDataset,
+                                                  queryCount, editdist);
+  cerr  ans;
+  unsigned n, e;
+
+  while (true) {
+    fileAnswer.read(reinterpret_cast(&amp;n), sizeof(unsigned));
+    if (fileAnswer.eof())
+      break;
+
+    ans.clear();
+    for (unsigned i = 0; i (&amp;e), sizeof(unsigned));
+      ans.insert(e);
+    }
+
+    answer.push_back(ans);
+  }
+
+  fileAnswer.close();
+}
+ 

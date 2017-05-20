@@ -1,0 +1,64 @@
+ 24.3 oeostream<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.2 oeistream 
+ Up:   24. I/O Utilities 
+ Next:   24.4 oefstream 
+   
+
+
+  
+24.3 oeostream 
+ 
+
+ 
+All of the  oestream  classes that provide output handling derive from
+this class. This class provides efficient implementations of standard output
+stream including:  putbyte, write, flush . Like the standard
+ ostreams , the     operator is overloaded for easy output of data to
+text streams.
+
+  
+This class also provides the framework but not fully functional implementations
+of the  open  and  close  routines. However, if a data buffer already
+exists in memory, an  oeostream  instance can be used to write directly to
+that buffer using the provided  open  and  close  routines.
+
+  
+    char      buffer[13];
+oeostream os;
+
+if (os.open(buffer, 13))
+{
+    os &lt;&lt; "hello world!";
+    os.flush();
+    os.close();
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.2 oeistream 
+ Up:   24. I/O Utilities 
+ Next:   24.4 oefstream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

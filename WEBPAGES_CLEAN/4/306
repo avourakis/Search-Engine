@@ -1,0 +1,33 @@
+ Theory Seminar, 15 Oct 2010<body>
+   
+  CS 269S, Fall 2010: Theory Seminar 
+
+ 
+15 Oct 2010: 
+ A Dynamic Data Structure for Approximate Range Searching 
+ Joe Simons 
+
+ In this paper, we introduce a simple, randomized dynamic
+data structure for storing multidimensional point sets, called
+a quadtreap. This data structure is a randomized, balanced
+variant of a quadtree data structure. In particular, it defines
+a hierarchical decomposition of space into cells, which
+are based on hyperrectangles of bounded aspect ratio, each
+of constant combinatorial complexity. It can be viewed as a
+multidimensional generalization of the treap data structure
+of Seidel and Aragon. When inserted, points are assigned
+random priorities, and the tree is restructured through rotations
+as if the points had been inserted in priority order.
+In any fixed dimension  d , we show it is possible to store a
+set of  n  points in a quadtreap of space O( n ). The height
+ h  of
+the tree is O(log  n ) with high probability. It supports point
+insertion in time O( h ). It supports point deletion in worstcase
+time O( h  2 ) and expected-case time O( h ), averaged over
+the points of the tree. It can answer ε-approximate spherical
+range counting queries over groups and approximate nearest
+neighbor queries in time O( h  + (1/ε)  d  − 1 ). 
+
+ (Based on a paper by David Mount and Eunhui Park at SoCG 2010.) 
+
+</body> 

@@ -1,0 +1,67 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ David J. Fiander  (  davidf@worf.mks.com  )  Thu, 30 May 1996 08:35:42 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Daniel W. Connolly: "Re: Versions and configurations" 
+    Previous message:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+
+    
+&gt; Wait, I didn't see that anyone was proposing to "standardize the
+&gt; syntax of version identifiers across all servers". After all, most
+&gt; servers don't even have versions.
+
+I agree.  Perhaps a better way of describing _my_ motivation is
+that I am attempting to develop standard techniques (I can't
+really use the word methods here right now ;-)) for version
+control and document management on the web.  Now, that's a very
+big can of worms, all of whom are heading in different
+directions, so step one is to standardise a way to refer to
+version identifiers in URLs, thereby allowing servers to
+advertise/export/make available (*) older revisions of pages.
+
+What I want to standardise, in the first step is ";version=opaque
+revision id".  No more, no less.  Once that's out of the way, we
+can start talking about new methods for locking revisions,
+checking in revisions, the semantics of the Content-Version HTTP
+header, and so on.
+
+(*) Terminology question: what does one call it when a server
+finds a URL acceptable and returns a page in response to a GET on
+that URL?  Is the server exporting the page?  It's certainly not
+advertising it, unless there's a link to it from the outside
+world.
+
+&gt; Separate out the problem of
+&gt;   a) construct a URL for a previous version of a resource
+&gt;      given the current version of a resource and information
+&gt;      about the server's versioning system
+&gt;   b) determining from two URLs what their version relationship
+&gt;      might be.
+&gt;
+&gt; I think it's reasonable to use URL-decoration for (a) and not for (b).
+
+I agree entirely, given the caveat that the "construction" may
+not, and probably is not, possible for the client, but almost
+certainly is for the user.  That is, given a URL, a _general
+purpose_ client is not going to be able to create a versioned URL
+with any hope of getting the "right" thing (of course a
+special-purpose client that knows what versioning software is
+running on the server can do better).  Humans on the other hand,
+know exactly how versions work and can type into the "go" dialog
+exactly what they want.
+
+- David
+ 
+
+  
+     Next message:   Daniel W. Connolly: "Re: Versions and configurations" 
+    Previous message:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+
+  </body> 

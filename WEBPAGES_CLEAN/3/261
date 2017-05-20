@@ -1,0 +1,280 @@
+ /*
+  $Id: clusters.cc 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#include "clusters.h"
+#include "ppdtable/allrand.h"
+#include "ppdtable/closelex.h"
+#include "ppdtable/closerand.h"
+#include "ppdtable/closeunique.h"
+
+#include 
+
+ostream&amp; operator&gt;(istream &amp;in, QueryVect &amp;qv)
+{
+  return in &gt;&gt; qv.query &gt;&gt; qv.vect;
+}  
+
+Clusters::Clusters(const vector *d, unsigned clusterNo, 
+                   SampleType sampleType, unsigned samplePer,
+                   unsigned queueSize, unsigned uniqueNo): 
+  data(d), clusterNo(clusterNo), sampleType(sampleType), 
+  samplePer(samplePer), queueSize(queueSize), uniqueNo(uniqueNo), 
+  clusters(new VectCluster), ppdtable(new PPDTable()),
+  queryPivot(new ContQueryPivot())
+{
+}
+
+Clusters::Clusters(const Clusters &amp;cs): 
+  data(cs.data), clusterNo(cs.clusterNo), sampleType(sampleType), 
+  samplePer(samplePer), queueSize(queueSize), uniqueNo(uniqueNo)
+{
+  clusters = new VectCluster;
+  *clusters = *cs.clusters;
+  ppdtable = new PPDTable();
+  *ppdtable = *cs.ppdtable;
+  queryPivot = new ContQueryPivot();
+  *queryPivot = *cs.queryPivot;
+}
+
+Clusters::~Clusters() 
+{
+  delete clusters;
+  delete ppdtable;
+  delete queryPivot;
+}
+
+Clusters&amp; Clusters::operator=(const Clusters &amp;cs) 
+{
+  if (this == &amp;cs)
+    return *this;
+  *clusters=*cs.clusters;
+  *ppdtable=*cs.ppdtable;
+  *queryPivot = *cs.queryPivot;
+  data=cs.data;
+  return *this;
+}
+
+bool Clusters::operator==(const Clusters &amp;c) const 
+{
+  if (this == &amp;c)
+    return true;
+  if (data == c.data &amp;&amp; 
+      clusterNo == c.clusterNo &amp;&amp; 
+      sampleType == c.sampleType &amp;&amp; 
+      samplePer == c.samplePer &amp;&amp; 
+      queueSize == c.queueSize &amp;&amp; 
+      uniqueNo == c.uniqueNo &amp;&amp; 
+      *clusters == *c.clusters &amp;&amp; 
+      *ppdtable == *c.ppdtable // &amp;&amp;
+//    *queryPivot == *c.queryPivot
+    )
+    return true;
+  
+  return false;
+}
+
+const size_t Clusters::sizeEntries() const
+{
+  size_t cntEntries = 0;
+  for (VectCluster::const_iterator it = clusters-&gt;begin();
+       it != clusters-&gt;end(); ++it)
+    cntEntries += it-&gt;getFTable().size();
+  return cntEntries;
+}
+
+void Clusters::buildFTables() 
+{
+  for (VectClusterIt i=clusters-&gt;begin(); i!=clusters-&gt;end(); i++)
+    i-&gt;buildFTable(data);
+}
+
+void Clusters::buildPPDtable() 
+{
+  PPDSample *sampleEngine;
+  switch (sampleType) {
+  case ALL_RAND:
+    sampleEngine = new AllRand(data, this, queryPivot, samplePer);
+    break;
+  case CLOSE_LEX:
+    sampleEngine = new CloseLex(data, this, queryPivot, samplePer, queueSize);
+    break;
+  case CLOSE_UNIQUE:
+    sampleEngine = new CloseUnique(data, this, queryPivot, samplePer, queueSize,
+                                   uniqueNo);
+    break;
+  default: // CLOSE_RAND:
+    sampleEngine = new CloseRand(data, this, queryPivot, samplePer, queueSize);
+    break;
+  }
+
+  unsigned i = 0;
+
+  cerr hasNext()) {
+
+    if (i++ % 1000000 == 0) {
+      cerr next();
+    PPDEntry entry = PPDEntry(triple.vect1, triple.vect2,
+                              SimUpperOrEqual(triple.dist));
+    ppdtable-&gt;insert(entry);   
+  }
+
+  cerr (cs.clusters-&gt;size()) begin(), cs.clusters-&gt;end(), 
+       ostream_iterator(out, "\n"));
+  return out;
+}
+
+istream&amp; operator&gt;&gt;(istream &amp;in, Clusters &amp;cs) 
+{
+  unsigned n;
+  in&gt;&gt;n;
+  for (unsigned i=0; i&gt;cluster;
+    cs.clusters-&gt;push_back(cluster);
+  }
+  return in;
+}
+
+typedef map MapSimDist;
+
+ostream&amp; operatorfirst second  &amp;d) const 
+{
+  MapSimDist globalHist, localHist;
+  for (VectClusterIt cluster = clusters-&gt;begin();
+       cluster!= clusters-&gt;end(); ++cluster) {
+    localHist.clear();
+    unsigned pivot = cluster-&gt;getPivot();
+    for (ContCluster::const_iterator index = cluster-&gt;begin();
+         index != cluster-&gt;end(); ++index) {
+      SimType dist = SimDist(d[pivot], d[*index]);	  
+      ++localHist[SimUpperOrEqual(dist)];
+    }
+
+    for (MapSimDist::const_iterator it = localHist.begin();
+         it != localHist.end(); ++it) 
+      globalHist[it-&gt;first] += it-&gt;second; // / cluster-&gt;size();
+  }
+
+  out  &amp;d) const 
+{
+  float 
+    sumAvg = 0, 
+    sumRad = 0;
+  for (VectClusterIt cluster = clusters-&gt;begin();
+       cluster!= clusters-&gt;end(); ++cluster) {
+    unsigned pivot = cluster-&gt;getPivot();
+    SimType
+      sumDist = 0;
+    for (ContCluster::const_iterator index = cluster-&gt;begin();
+         index != cluster-&gt;end(); ++index) {
+      SimType dist = SimDist(d[pivot], d[*index]);	  
+      sumDist += dist;
+    }
+    SimType
+      avgDist = sumDist / cluster-&gt;size();
+    sumAvg += avgDist;
+    sumRad += cluster-&gt;getRadius();
+  }
+
+  out ::const_iterator it = clusters-&gt;begin(); 
+       it != clusters-&gt;end(); ++it) 
+    if (it-&gt;getPivot() == idx) 
+      return true;
+  return false;
+}
+
+void Clusters::insert(unsigned idx)
+{
+  SimType min = SimDist((*data)[clusters-&gt;begin()-&gt;getPivot()], (*data)[idx]);
+  vector::iterator closest = clusters-&gt;begin();
+  for (vector::iterator it = clusters-&gt;begin() + 1; 
+       it != clusters-&gt;end(); ++it) {
+    SimType crt = SimDist((*data)[it-&gt;getPivot()], (*data)[idx]);
+    if (crt getPivot();
+  SimVect vect2 = SimVect( (*data)[pivot], (*data)[idx]);
+  closest-&gt;insert(idx, vect2);
+
+  SimType dist = vect2.getDist();
+  if (dist &gt; closest-&gt;getRadius()) 
+    closest-&gt;setRadius(dist);
+
+  for (ContQueryPivot::const_iterator it = queryPivot-&gt;find(pivot);
+       it != queryPivot-&gt;end() &amp;&amp; it-&gt;first == pivot; ++it) {
+    SimVect vect1 = it-&gt;second.vect;
+    SimType dist = SimDist((*data)[it-&gt;second.query], (*data)[idx]);
+    PPDEntry entry = PPDEntry(vect1, vect2, SimUpperOrEqual(dist));
+    ppdtable-&gt;insert(entry);
+  }
+}
+
+class CmpDist
+{
+private:
+  const vector *data;
+  string pivotStr;
+public:
+  CmpDist(const vector *data, unsigned pivot): 
+    data(data), pivotStr((*data)[pivot]) {}
+  bool operator()(unsigned i, unsigned j) {
+    return SimDist((*data)[i], pivotStr) ::iterator contain;
+  for (contain = clusters-&gt;begin(); contain != clusters-&gt;end(); ++contain) 
+    if (contain-&gt;find(idx) != contain-&gt;end()) 
+      break;
+  if (contain == clusters-&gt;end()) {
+    cerr getPivot();
+  SimVect vect2 = SimVect((*data)[pivot], (*data)[idx]);
+  contain-&gt;erase(idx, vect2);
+
+  if (contain-&gt;getRadius() == vect2.getDist())
+    // update radius
+    contain-&gt;setRadius(SimDist((*data)[pivot], 
+                               (*data)[*max_element(contain-&gt;begin(), 
+                                                    contain-&gt;end(),
+                                                    CmpDist(data, pivot))]));
+
+  for (ContQueryPivot::const_iterator it = queryPivot-&gt;find(pivot);
+       it != queryPivot-&gt;end() &amp;&amp; it-&gt;first == pivot; ++it) {
+    SimVect vect1 = it-&gt;second.vect;
+    SimType dist = SimDist((*data)[it-&gt;second.query], (*data)[idx]);
+    PPDEntry entry = PPDEntry(vect1, vect2, SimUpperOrEqual(dist));
+    ppdtable-&gt;erase(entry);
+  }
+}
+
+void Clusters::readClusters(const string &amp;filename)
+{
+  ifstream file(filename.c_str(), ios::in);
+  if (!file) {
+    cerr &gt; *this;
+  file.close();
+}
+
+void Clusters::writeClusters(const string &amp;filename) const
+{
+  ofstream file(filename.c_str(), ios::out);
+  if (!file) {
+    cerr &gt; *ppdtable;
+  file.close();
+}
+
+void Clusters::writePPDtable(const string &amp;filename) const
+{
+  ofstream file(filename.c_str(), ios::out);
+  if (!file) {
+    cerr first second &gt;(istream &amp;in, ContQueryPivot &amp;cont) 
+{
+  unsigned sz;
+  in &gt;&gt; sz;
+  for (unsigned i = 0; i &gt; pivot &gt;&gt; qv;
+    cont.insert(std::make_pair(pivot, qv));
+  }
+  return in;
+}
+ 

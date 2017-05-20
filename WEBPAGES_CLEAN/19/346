@@ -1,0 +1,57 @@
+ 3.12.14 SetValenceCorrection<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.13 SetStartingMaterial 
+ Up:   3.12 OELibaryGen 
+ Next:   3.13 OEMatch 
+   
+
+
+  
+3.12.14 SetValenceCorrection 
+ 
+   
+bool SetValenceCorrection(bool)
+    
+The  SetValenceCorrection  method controls the valence correction
+mode setting of an  OELibraryGen  instance.   OELibraryGen 
+instances are constructed by default with the valence correction mode
+set to false.  Valence correction mode can be turned on by passing a
+boolean true value to an  OELibraryGen  instance using this
+method.  When valence correction mode is enabled, the
+ OELibraryGen  instance will attempt to adjust the
+hydrogen count on atoms in the product molecule that are involved in
+the reaction to match the original valence state of the reactant.  For
+product atoms that do not undergo a nuclear reaction (atomic number is
+retained) the hydrogen count is either increased or decreased to match
+the initial valence state of the corresponding reactant atom.  Formal
+charge is taken into account during the hydrogen count adjustment.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.13 SetStartingMaterial 
+ Up:   3.12 OELibaryGen 
+ Next:   3.13 OEMatch 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

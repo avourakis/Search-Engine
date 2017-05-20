@@ -1,0 +1,138 @@
+ Untitled Document 
+		 
+			  Machine Learning  Spring  2009  
+			  Final with answers  
+			  
+			   
+			  Simulation of changing the weights of a RBF kernel in a kernel PCA projection of the Iris dataset.  
+					Source: Darren Davis  
+			   CompSci: 273A 
+					Instructor: Max Welling  
+			  Office hours: Wednedays 4-5pm     
+			  
+					   
+			  Prerequisites  
+			  ICS 270A Intro AI, or with consent of instructor.  
+			  
+					   
+			  Goals:  
+			  The goal of this class is to familiarize you with various stat-of-the-art machine learning techniques for 
+					classification, regression,  clustering  and dimensionality reduction. Besides this, an important aspect 
+					this class is to provide a modern statistical view of machine learning.   
+			  The course will primarily be lecture-based with homework, project and an 
+					exam. Most homework will revolve around the implementation of various 
+					classification algorithms. It is required that you use MATLAB for this coding work.   
+			    Presentation Schedule :</strong> 
+			  The following groups have been scheduled for a presentation on these days:</strong> 
+			  Th. May 28 : Viveck Cadambe Group and Yi Yang Group</strong> 
+			  Tu. June 2: Phitchayaphong Tantikul Group and David Keator</strong> 
+			  Th. June 4: Michael Zeller Group and Ullas Sankhla Group</strong> 
+			  If you are taking the exam but do not find yourself affiliated with one of these groups you should contact me asap to get yourself scheduled. 
+					Presentations can take 30 minutes each with 10 minutes for left for questions. 
+					The presentation should be equally divided among the members of the group. Everyone is required to present a piece. 
+					Note that each invidiual member will also have to write a report of at least 2 pages on his/her contribution to the project 
+					(which will only be due in finals week).</strong> 
+			  
+			  
+					   
+			   Slides:   Week 1/2:   [ Slides: Intro, kNN, Logistic Regression, Overfitting ][ pdf ] [ Slides: Evaluation of Results ][ pdf ]    Week 3/4:   [ Slides: DecisionTrees, Bagging, Boosting ][ pdf ] [ Slides: Nural Networks ] [ pdf ]    Week 5:     [   Lecture-notes Convex Optimization   ][   Slides: support Vector Machines   ] [   pdf   ]    Week 6:     [   Lecture-notes Clustering (ps)   ][   Slides: Unsupervised Learning   ] [   pdf   ][   Lecture-notes Kernel PCA   ]    Week 7:     [   Lecture-notes Kernel &amp; Spectral Clustering   ][   Lecture-notes Fisher LDA   ]    Week 8:     [   Lecture-notes Kernel Canonical Correlation Analysis   ]       
+			    Data Sets and Online Resources:    
+			   Iris Data    There are 5 columns. The first 4 columns are feature values while the last value is the class label (1,2,3).  
+			    Flower dataset.  This dataset is an excellent starting point for a image retrieval system. You can use the one with 17 categories 
+						to test your algorithms on.   Thesis  in Features for Image Retrieval  
+						Suggested Image Features to Check out: 
+						-Color Histograms 
+						-Histograms of Scale Invariant Features (SIFT) 
+						-Histograms of Image Gradients 
+						-Texture Filter Banks / Textons 
+						-Gist Features (Torralba)   Code for Spatial Pyramid   Paper on Spatial Pyramid         
+			   Very fast method for retrieval:      Large Scale Online Learning of Image Similarity Through Ranking   ICML paper on this method    Gal Chechik and Varun Sharma and Uri Shalit and Samy Bengio         Just released  Google image similarity search webpage    
+			   A bunch of images of simulated Tumor growth are be supplied below. 
+							A possible project with some real relevance is to take these images and predict the class of 
+						tumor that generated it.  I have held some test data behind.   
+			              
+			  Train Images Class 1  
+			  Train Images Class 2  
+			  Test Images Class 1&amp;2 (mixed)  
+			  We will do a contest who performs best on test data (wihout labels). 
+					Prize: a bottle of champagne . 
+			    Homework :  (always due the next Tuesday at 11pm)    
+			    Week 1:   Reading: Bishop, Sec 1.1, 2.5.2, 4.3.2.  This paper on Earth Movers Distance  
+							Exercises:  Homework 1 [ pdf ] [ answer sheet HW1 ]    
+			    Week 2:   Reading: Bishop Sec 3.2  This paper on Flower Classification  
+							Exercises:  Homework 2 [ pdf ] [ answer sheet HW2 ]    Week 3/4:   Reading: 
+								Bishop, Sec 14 until (not including) Sec. 14.5. 
+								Bishop, Chapter 5 until (not including) 5.6 
+							This paper on " Bagging Predictors " 
+								This paper on  Convolutional Networks  
+								Exercises:  Homework 3  [ pdf ] [ answer sheet HW3 ]    Week 5:        Reading: 
+								Bishop Chapter 6 
+								This  technical note on convex optimization  
+								This  paper on fast retrieval  
+								These  notes on SVMs  
+								Exercises:  Homework 4  [ pdf ]       [ answer sheet HW4 ]                 Week 6:        Reading: 
+								Bishop Chapter 9 
+								This  classnote on clustering  
+								Exercises:  Homework 5  [ pdf ]       [ answer sheet HW5 ]                Week 7:        Reading: 
+									Bishop Chapter 9 
+								This  classnote on Kernel-PCA  This  classnote on Kernel &amp; Spectral Clustering  
+								Exercises:  Homework 6  [ pdf ]       [ answer sheet HW6 ]             
+			    Week 8:        Reading: 
+								Bishop Chapter 4, section 4.1 only 
+								This  classnote on Fisher-LDA    Exercises:  Homework 7  [ pdf ]       [ answer sheet HW7 ]             
+			    Project:    
+			   Consider the following facts: 
+						1. Search engines now store more images than a human will see in its lifetime 
+						2. Almost everyone carries a digital camera of some sort in his/her pocket  
+						Conclusion 1: there is (or will very soon be) an obvious need for a search tool that searches for information based on 
+						on an uploaded image. There is enough information on the internet to make this feasible.  
+						Now consider this: have you ever been able to upload a picture into some website which then returned 
+						related pictures or information about the objects in that picture? Not me, and I tried. Last year I had a mystery plant 
+						in my garden and people claimed it was poiseness. I took a picture and tried to locate internet services that would 
+						take my image and find webpages on the plant in question. Well, it didn't work. I got lost of red images, but very few plants. 
+						I ended up going to a gardening center with my picture to find out that it was a Castor Bean (yes that is very poiseness). Anyway, 
+						it felt like this information should have been easier to obtain.      
+						Conclusion 2: This problem must be very difficult (if not, it would already exist).  
+						There really are lots of cool applications of such a system. Imagine taking a picture of your kids skin rash and finding 
+						out via this tool what some likely candidates for its possible underlying disease are. Or, imagine a tool for Alzheimer's patients 
+						who are having a hard time recognizing their family friends. Or imagine you are on vacation in Rome and wish to know more about 
+						that building who's name you really don't know.      So here is my challenge to you. Use the knowledge you learn in this class (and more) to build a very simple system of the above 
+						kind. We will think about a nice restricted domain for which we can easily get data (California plants, Cars, Skin diseases, Faces). 
+						We'll think about methods to use (which features to extract, how to build a useful kernel, what classification algorithm to use).  
+						You can break up in groups of 5 students at most and divide the work. You will need to report your work through a presentation. 
+						If we end up with systems that work reasonably well, we can build the actual tool as a demo and run it on a server. We can even 
+						combine more than one system and combine their results using averaging.  
+						Anyway, things are still a big open ended right now, but it will be very instructive and lots of fun!    
+			  
+					   
+			  Syllabus:  (incomplete)   
+			   1   :     introduction: overview, examples, goals, algorithm evaluation, statistics, kNN, logistic regression.   
+			   2   :     classification I: decision trees, random forests, bagging, boosting.   
+			   3   :   clustering &amp; dimensionality reduction:  k-means, expectation-maximization, PCA.    
+			    4   :  neural networks:  perceptron , multi-layer networks, back-propagation.   
+			   5:      classification II: kernel methods &amp; support vector machines.   
+			  required reading on SVM . 
+					Additional background reading   
+			   Practice Final + ansers   
+			  
+					   
+			  Grading Criteria  
+			   
+					Grading will be based on a combination of,    Homework (20%) ,  projects     (30%) and a final exam (50%) . 
+					(This information may change depending on whether a reader will be assigned to this class.)  
+			  
+					   
+			  Textbook  
+			   
+					The textbook that will be used for this course is:  
+			  1. C. Bishop: Pattern Recognition and Machine Learning  
+			   
+					Optional side readings are:  
+			  2. D. MacKay: Information Theory, Inference and Learning Algorithms 
+					3. R.O.  Duda , P.E. Hart, D. Stork: Pattern Classification 
+					4. C.M. Bishop: Neural Networks for Pattern Recognition 
+					5. T.  Hastie , R.  Tibshirani , J.H, Friedman: The Elements of Statistical Learning 
+					6. B.D. Ripley: Pattern Recognition and Neural Networks 
+					7. T. Mitchell: Machine Learning.  (http://www.cs.cmu.edu/~tom/mlbook.html)    
+		 
+	</body> 

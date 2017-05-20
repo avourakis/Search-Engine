@@ -1,0 +1,433 @@
+ 
+PVInstance
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.SE 
+ 
+Class PVInstance 
+ 
+java.lang.Object
+   javax.swing.table.AbstractTableModel
+        Raccoon.SE.PVInstance 
+ 
+   All Implemented Interfaces:     QueryAnswer , java.io.Serializable, javax.swing.table.TableModel 
+    public class  PVInstance  extends javax.swing.table.AbstractTableModel implements java.io.Serializable,  QueryAnswer      
+instances of a relation
+  
+
+  
+    Author:  
+   Qi Zhong 
+  See Also:    Serialized Form     
+
+
+
+
+
+
+
+
+  
+     
+ Constructor Summary   
+      PVInstance  () 
+
+ 
+            
+      PVInstance  (java.util.Vector newColumnNameArr,
+           java.util.Vector newValueArr,
+           java.util.Vector newColumnClassArr) 
+
+ 
+            
+      PVInstance  (java.util.Vector newColumnNameArr,
+           java.util.Vector newValueArr,
+           java.util.Vector newColumnClassArr,
+           int newColumnCount,
+           int newRowCount,
+           int newColumnClassCount) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+   QueryAnswer    
+    add  ( QueryAnswer  another) 
+
+ 
+            
+    
+  java.util.Vector   
+    getAllValues  () 
+
+ 
+            
+    
+  java.lang.String   
+    getAttrClass  (int col) 
+
+ 
+            
+    
+  java.lang.String   
+    getAttrName  (int col) 
+
+ 
+            
+    
+  java.util.Vector   
+    getAttrValue  (int col) 
+
+ 
+            
+    
+  java.lang.String   
+    getAttrValue  (int col,
+             int row) 
+
+ 
+          col and row start from 0; 
+    
+  java.util.Vector   
+    getAttrValue  (java.lang.String attrName) 
+
+ 
+            
+    
+  java.lang.Class   
+    getColumnClass  (int c) 
+
+ 
+            
+    
+  java.util.Vector   
+    getColumnClassArr  () 
+
+ 
+            
+    
+  int   
+    getColumnCount  () 
+
+ 
+            
+    
+  java.util.Vector   
+    getColumnFullNameArr  () 
+
+ 
+            
+    
+  java.lang.String   
+    getColumnName  (int col) 
+
+ 
+            
+    
+  java.util.Vector   
+    getColumnNameArr  () 
+
+ 
+            
+    
+  int   
+    getRowCount  () 
+
+ 
+            
+    
+  javax.swing.table.TableModel   
+    getTableModel  () 
+
+ 
+            
+    
+  java.util.Vector   
+    getTuple  (int row) 
+
+ 
+            
+    
+  java.lang.Object   
+    getValueAt  (int row,
+           int col) 
+
+ 
+            
+    
+  boolean   
+    match  ( PVInstance  inst) 
+
+ 
+            
+    
+  void   
+    printMe  () 
+
+ 
+            
+    
+  void   
+    setColumnFullNameArr  (java.lang.String nodename,
+                     java.lang.String relname) 
+
+ 
+            
+    
+  void   
+    setColumnFullNameArr  (java.util.Vector newColumnFullNameArr) 
+
+ 
+            
+  
+   
+    Methods inherited from class javax.swing.table.AbstractTableModel  
+    addTableModelListener, findColumn, fireTableCellUpdated, fireTableChanged, fireTableDataChanged, fireTableRowsDeleted, fireTableRowsInserted, fireTableRowsUpdated, fireTableStructureChanged, getListeners, getTableModelListeners, isCellEditable, removeTableModelListener, setValueAt  
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+
+
+
+  
+     
+ Constructor Detail   
+     
+PVInstance 
+ 
+public  PVInstance () 
+      
+PVInstance 
+ 
+public  PVInstance (java.util.Vector newColumnNameArr,
+                  java.util.Vector newValueArr,
+                  java.util.Vector newColumnClassArr,
+                  int newColumnCount,
+                  int newRowCount,
+                  int newColumnClassCount) 
+      
+PVInstance 
+ 
+public  PVInstance (java.util.Vector newColumnNameArr,
+                  java.util.Vector newValueArr,
+                  java.util.Vector newColumnClassArr) 
+    
+    
+ Method Detail   
+     
+setColumnFullNameArr 
+ 
+public void  setColumnFullNameArr (java.lang.String nodename,
+                                 java.lang.String relname) 
+     Specified by:     setColumnFullNameArr   in interface   QueryAnswer     
+    
+     
+setColumnFullNameArr 
+ 
+public void  setColumnFullNameArr (java.util.Vector newColumnFullNameArr) 
+     Specified by:     setColumnFullNameArr   in interface   QueryAnswer     
+    
+     
+getColumnFullNameArr 
+ 
+public java.util.Vector  getColumnFullNameArr () 
+     Specified by:     getColumnFullNameArr   in interface   QueryAnswer     
+    
+     
+getColumnCount 
+ 
+public int  getColumnCount () 
+     Specified by:     getColumnCount   in interface   QueryAnswer     
+    
+     
+getRowCount 
+ 
+public int  getRowCount () 
+     Specified by:     getRowCount   in interface   QueryAnswer     
+    
+     
+getColumnClassArr 
+ 
+public java.util.Vector  getColumnClassArr () 
+     Specified by:     getColumnClassArr   in interface   QueryAnswer     
+    
+     
+getColumnNameArr 
+ 
+public java.util.Vector  getColumnNameArr () 
+     Specified by:     getColumnNameArr   in interface   QueryAnswer     
+    
+     
+getAttrClass 
+ 
+public java.lang.String  getAttrClass (int col) 
+     Specified by:     getAttrClass   in interface   QueryAnswer     
+    
+     
+getAttrName 
+ 
+public java.lang.String  getAttrName (int col) 
+     Specified by:     getAttrName   in interface   QueryAnswer     
+    
+     
+getAttrValue 
+ 
+public java.util.Vector  getAttrValue (java.lang.String attrName) 
+     Specified by:     getAttrValue   in interface   QueryAnswer     
+    
+     
+getAttrValue 
+ 
+public java.util.Vector  getAttrValue (int col) 
+     Specified by:     getAttrValue   in interface   QueryAnswer     
+    
+     
+getAllValues 
+ 
+public java.util.Vector  getAllValues () 
+     Specified by:     getAllValues   in interface   QueryAnswer     
+    
+     
+match 
+ 
+public boolean  match ( PVInstance  inst) 
+     
+    
+     
+getAttrValue 
+ 
+public java.lang.String  getAttrValue (int col,
+                                     int row) 
+  col and row start from 0;
+ 
+     Specified by:     getAttrValue   in interface   QueryAnswer     
+    
+      
+getTuple 
+ 
+public java.util.Vector  getTuple (int row) 
+     Specified by:     getTuple   in interface   QueryAnswer     
+    
+     
+getColumnName 
+ 
+public java.lang.String  getColumnName (int col) 
+     Specified by:    getColumnName  in interface  javax.swing.table.TableModel    
+    
+     
+getValueAt 
+ 
+public java.lang.Object  getValueAt (int row,
+                                   int col) 
+     Specified by:    getValueAt  in interface  javax.swing.table.TableModel    
+    
+     
+getColumnClass 
+ 
+public java.lang.Class  getColumnClass (int c) 
+     Specified by:    getColumnClass  in interface  javax.swing.table.TableModel    
+    
+     
+getTableModel 
+ 
+public javax.swing.table.TableModel  getTableModel () 
+     Specified by:     getTableModel   in interface   QueryAnswer     
+    
+     
+printMe 
+ 
+public void  printMe () 
+     Specified by:     printMe   in interface   QueryAnswer     
+    
+     
+add 
+ 
+public  QueryAnswer   add ( QueryAnswer  another) 
+     Specified by:     add   in interface   QueryAnswer     
+    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

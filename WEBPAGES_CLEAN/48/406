@@ -1,0 +1,315 @@
+ WidthTraits_3<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  WidthTraits_3  
+ 
+
+  Definition 
+ 
+
+This concept defines the requirements for traits classes of
+  Width_3 &lt;Traits&gt; .
+  
+
+  Types 
+ 
+
+    
+          WidthTraits_3 :: Point_3 
+         
+              
+    The point type. The (in)equality tests must be
+  available. Access to the point coordinates is done via the  get_.() 
+  functions. Constructing a point is done with the  make_point( ) 
+  operation.
+ 
+
+     
+          WidthTraits_3 :: Plane_3 
+         
+              
+    The plane type. Access to the coefficients of the
+  plane is made via the  get_.()  functions. Constructing a plane is
+  done with the  make_plane()  operation.
+ 
+
+     
+          WidthTraits_3 :: Vector_3 
+         
+              
+    The vector type. There is no need to access the
+  coefficients of a vector; only constructing is required and is done with
+  the  make_vector  operation.
+ 
+
+     
+          WidthTraits_3 ::ChullTraits
+         
+              
+    The traits class for using the convex hull
+  algorithm. It must be a model of the concept  ConvexHullTraits_3 .
+  This class is used only if the width is computed from a set
+  of points.
+ 
+
+     
+          WidthTraits_3 ::RT
+         
+              
+    Ring type numbers. Internally all numbers are treated as
+  ring type numbers, i.e., neither  / -operator nor   sqrt (.)  nor other
+  inexact operations are used. But because the algorithm does not use any
+  divisions, but multiplication instead, the numbers can get really big.
+  Therefore it is recommended to use a ring type number, that provides
+  values of arbitrary length. Furthermore it is assumed that the underlying
+  number type of   Point_3  ,   Plane_3   and   Vector_3   equals
+   RT .
+ 
+
+     
+
+ Notes:  If you want to compute the width of a  polyhedron 
+then you have to make sure that the point type in the traits class and
+the point type in the polyhedron class are the same! The same holds
+for  Traits:: Plane_3   and  Polyhedron:: Plane_3  .
+  
+
+  Creation 
+ 
+
+Only a default constructor is required.
+  
+
+    
+          WidthTraits_3  traits;
+         
+           
+
+   
+
+  Operations Whatever the coordinates of the points are, it is required for the
+width-algorithm to have access to the homogeneous representation of
+points.
+ 
+
+    
+           
+RT
+         
+          
+         
+    get_hx (   Point_3  p)
+         
+                
+    returns the
+  homogeneous  x -coordinate of point  p .
+            
+           
+RT
+         
+          
+         
+    get_hy (   Point_3  p)
+         
+                
+    returns the
+  homogeneous  y -coordinate of point  p .
+            
+           
+RT
+         
+          
+         
+    get_hz (   Point_3  p)
+         
+                
+    returns the
+  homogeneous  z -coordinate of point  p .
+            
+           
+RT
+         
+          
+         
+    get_hw (   Point_3  p)
+         
+                
+    returns the
+  homogenizing coordinate of point  p .
+            
+           
+void
+         
+          
+             
+    get_point_coordinates (     
+      Point_3  p, 
+
+RT&amp; px, 
+
+RT&amp; py, 
+
+RT&amp; pz, 
+
+RT&amp; ph)     
+                
+    returns all homogeneous coordinates
+  of point  p  at once.
+                 
+           
+RT
+         
+          
+         
+    get_a (   Plane_3  f)
+         
+                
+    returns the first
+  coefficient of plane  f .
+            
+           
+RT
+         
+          
+         
+    get_b (   Plane_3  f)
+         
+                
+    returns the second
+  coefficient of plane  f .
+            
+           
+RT
+         
+          
+         
+    get_c (   Plane_3  f)
+         
+                
+    returns the third
+  coefficient of plane  f .
+            
+           
+RT
+         
+          
+         
+    get_d (   Plane_3  f)
+         
+                
+    returns the fourth
+  coefficient of plane  f .
+            
+           
+void
+         
+          
+             
+    get_plane_coefficients (     
+      Plane_3  f, 
+
+RT&amp; a, 
+
+RT&amp; b, 
+
+RT&amp; c, 
+
+RT&amp; d)     
+                
+    returns all four plane coefficients of  f  at once.
+                 
+           
+ Point_3 
+         
+          
+         
+    make_point (  RT hx,  RT hy,  RT hz,  RT hw)
+         
+                
+    returns a point of type
+    Point_3   with homogeneous coordinates  hx ,  hy ,  hz  and  hw .
+            
+           
+ Plane_3 
+         
+          
+         
+    make_plane (  RT a,  RT b,  RT c,  RT d)
+         
+                
+    returns a plane of type   Plane_3  
+  with coefficients  a ,  b ,  c  and  d .
+            
+           
+ Vector_3 
+         
+          
+         
+    make_vector (  RT a,  RT b,  RT c)
+         
+                
+    returns a vector of type   Vector_3   with the four
+  homogeneous coefficients  a ,  b ,  c  and 1.
+            
+
+  Has Models 
+ 
+
+  CGAL::Width_default_traits_3 &lt;K&gt; 
+  
+
+  See Also 
+ 
+
+   
+
+   
+ 
+    
+
+  CGAL::Width_3 &lt;Traits&gt; 
+  
+
+    Next:    Polytope_distance_d&lt;Traits&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

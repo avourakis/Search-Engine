@@ -1,0 +1,198 @@
+ Alpha_status&lt;NT&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Alpha_status&lt;NT&gt;  
+ 
+
+  Definition 
+ 
+
+The class   Alpha_status &lt;NT&gt;  is a small data strructure to store
+the critical alpha values of faces of an alpha shape.
+Each face has three critical alpha values, called
+ alpha_min ,  alpha_mid  and  alpha_max  in increasing order.
+The face will be exterior for any   &lt;   alpha_min ,
+singular for  alpha_min      &lt;   alpha_mid ,
+regular for   alpha_mid      &lt;   alpha_max 
+and interior for  alpha_max       alpha .
+The value  alpha_min  is undefined for faces which are not Gabriel
+faces and therefore do not appear in the alpha complex
+without any of their
+including face. The value  alpha_max  is undefined
+for convex hull faces which can never be interior,
+The data structure also includes two boolean to mark
+if the face is a Gabriel face or a convex hull face.
+  
+
+The class   Alpha_status &lt;NT&gt;  is paremetrized by a number type  NT .
+  
+
+ #include &lt; CGAL/Alpha_shape_cell_base_3.h &gt; 
+  
+
+  Creation 
+ 
+
+    
+          Alpha_status &lt;NT&gt; a;
+         
+              
+    default constructor.
+ 
+
+     
+
+  Modifiers 
+           
+           
+void
+         
+          
+         
+    a.set_is_Gabriel ( bool yesorno)
+         
+                
+    sets Gabriel marker;
+            
+           
+void
+         
+          
+         
+    a.set_is_on_chull ( bool yesorno)
+         
+                
+    sets convex hull marker;
+            
+           
+void
+         
+          
+         
+    a.set_alpha_min ( NT alpha)
+         
+                
+    sets  alpha_min .
+            
+           
+void
+         
+          
+         
+    a.set_alpha_mid ( NT alpha)
+         
+                
+    sets  alpha_mid .
+            
+           
+void
+         
+          
+         
+    a.set_alpha_max ( NT alpha)
+         
+                
+    sets  alpha_max .
+            
+
+  Access Functions 
+           
+           
+bool
+         
+          
+         
+    a.is_Gabriel ()
+         
+          
+    Returns true for Gabriel faces;
+            
+           
+bool
+         
+          
+         
+    a.is_on_chull ()
+         
+          
+    Returns true forconvex hull faces;
+            
+           
+NT
+         
+          
+         
+    a.alpha_min ()
+         
+          
+    Returns the  alpha_min   Precondition:   is_Gabriel()  returns false;
+            
+           
+NT
+         
+          
+         
+    a.alpha_mid ()
+         
+          
+    Returns the  alpha_mid ;
+            
+           
+NT
+         
+          
+         
+    a.alpha_max ()
+         
+          
+    Returns  alpha_max .  Precondition:   is_on_chull()  returns false.
+            
+
+  See Also  AlphaShapeCellBase_3   AlphaShapeVertexBase_3 
+ 
+
+    Next:    WeightedAlphaShapeTraits_3   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

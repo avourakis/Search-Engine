@@ -1,0 +1,2456 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+All graph algorithm papers
+ 
+   Parallel algorithmic techniques for combinatorial computation . 
+D. Eppstein and
+ Z. Galil .  Ann. Rev. Comput. Sci.  3: 233–283, 1988. 
+Invited talk by Z. Galil,
+  16th Int. Coll. Automata, Languages and Programming,  Stresa, Italy, 1989 .  Springer,  Lecture Notes in Comp. Sci.  372, 1989, pp. 304–318 .
+ 
+This survey on parallel algorithms emphasized the use of basic
+subroutines such as prefix sums, Euler tours, ear decomposition, and matrix
+multiplication for solving more complicated graph problems.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL (ARCS)  --
+ ACM DL (ICALP) )
+  
+    Planar orientations with low out-degree and compaction of adjacency matrices .  
+M. Chrobak  and D. Eppstein.   Theor. Comp. Sci.  86 (2): 243–266, 1991 .
+ 
+Describes efficient sequential and parallel algorithms for orienting the edges of
+an undirected planar graph so that each vertex has few outgoing edges.
+From such an orientation one can test in constant time whether a given edge exists.
+One consequence is a parallel algorithm to list all subgraphs isomorphic to K3 or K4.
+More recently this paper has been cited for its applications to
+scheduling update operations in parallel finite element methods.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Equipartitions of graphs . 
+D. Eppstein,
+ J. Feigenbaum , and
+ C.L. Li .  
+ Discrete Mathematics  91 (3): 239–248, 1991 .
+ 
+Considers partitions of the vertices of a graph into equal subsets,
+with few pairs of subsets connected by edges.
+(Equivalently we view the graph as a subgraph of a product in which
+one factor is sparse.)  A random graph construction shows that such a
+factorization does not always exist.
+  ( BibTeX  --
+ Full paper  --
+ CiteSeer  --
+ ACM DL )
+  
+    Fast optimal parallel algorithms for maximal matching in sparse graphs . 
+H. Asuri,  M. Dillencourt , D. Eppstein, 
+ 
+G. Lueker , and M. Molodowitch. 
+Tech. Rep. 92-01, ICS, UCI, 1992.
+ 
+We later discovered that the same results were published
+in a SPAA paper by Greg Shannon.
+  ( BibTeX )
+  
+    Maintenance of a minimum spanning forest in a dynamic plane graph . 
+D. Eppstein, 
+ G.F. Italiano , 
+ R. Tamassia , 
+ R.E. Tarjan ,
+J. Westbrook,
+and M. Yung.  
+ 1st ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1990, pp. 1–11 .  J. Algorithms  13 (1): 33–54, 1992
+(special issue for 1st Symp. Discrete Algorithms). 
+Corrigendum,  J. Algorithms  15: 173, 1993.
+ 
+The complement of a
+ minimum spanning tree  is a maximum spanning tree in
+the dual graph.  By applying this fact we can use a modified form of
+Sleator and Tarjan's dynamic tree data structure to update the MST in
+logarithmic time per update.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Parallel recognition of series parallel graphs . 
+D. Eppstein.   Information &amp; Computation  98: 41–55, 1992 .
+ 
+Characterizes two-terminal series graphs in terms of a
+tree-like structure in their ear decompositions.
+Uses this characterization to construct
+parallel algorithms that recognize these graphs and
+construct their series-parallel decompositions.
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ CiteSeer  --
+ ACM DL )
+  
+    Finding the  k  smallest spanning trees . 
+D. Eppstein.  2nd Scand. Worksh. Algorithm Theory,  Bergen, Norway, 1990. 
+Springer,  Lecture Notes in Comp. Sci.  447, 1990, pp. 38–47.   BIT  32: 237–248, 1992 
+(special issue for 2nd Scand. Worksh. Algorithm Theory).
+ 
+By removing edges not involved in some solution,
+and contracting edges involved in all solutions,
+we reduce the problem to one in a graph with O( k )
+edges and vertices.  This simplification step
+transforms any time bound involving  m  or  n 
+to one involving min( m,   k ) or min( n,   k )
+respectively.  This paper also introduces the geometric
+version of the  k  smallest spanning trees problem
+(the graph version was long known) which it solves using
+order ( k +1) Voronoi diagrams.
+  ( BibTeX  --
+ Citations  --
+ ACM DL (SWAT)  --
+ ACM DL (BIT) )
+  
+    Connectivity, graph minors, and subgraph multiplicity . 
+D. Eppstein. 
+Tech. Rep. 92-06, ICS, UCI, 1992.   J. Graph Th.  17: 409–416, 1993 .
+ 
+It was known that planar graphs have O( n ) subgraphs isomorphic
+to K 3  or K 4 . That is, K 3  and
+K 4  have linear subgraph multiplicity.
+This paper shows that the graphs with linear subgraph multiplicity in
+the planar graphs are exactly the 3-connected planar graphs.
+Also, the graphs with linear subgraph multiplicity in the outerplanar
+graphs are exactly the 2-connected outerplanar graphs.
+  
+More generally, let F be a minor-closed family, and let x be the
+smallest number such that some complete bipartite graph K x,y 
+is a forbidden minor for F. Then the x-connected graphs have linear
+subgraph multiplicity for F, and there exists an
+(x − 1)-connected graph (namely
+K x − 1,x − 1 ) that does not
+have linear subgraph multiplicity.
+When x ≤ 3 or when x = 4 and the minimal
+forbidden minors for F are triangle-free, then the graphs with linear
+subgraph multiplicity for F are exactly the x-connected graphs.
+  
+Please refer only to the journal version, and not the earlier technical
+report: the technical report had a bug that was repaired in the journal
+version.
+  ( BibTeX  --
+ Citations )
+  
+    Efficient sequential and parallel algorithms for
+computing recovery points in trees and paths .  
+M. Chrobak , D. Eppstein, 
+ 
+G.F. Italiano , and M. Yung.  
+ 2nd ACM-SIAM Symp. Discrete Algorithms,  San Francisco, 1991, pp. 158–167 . 
+ALCOM Report 91-74, University of Rome, 1991.
+ 
+Described slightly superlinear algorithms for partitioning a tree into a
+given number of subtrees, making them all as short as possible.
+Frederickson at the same conference
+further improved the sequential time to linear.  There may still be
+something worth publishing in the parallel algorithms.
+  ( BibTeX  --
+ Citations )
+  
+    Arboricity and bipartite subgraph listing algorithms . 
+D. Eppstein.  Tech. Rep. 94-11 , ICS, UCI, 1994.  
+ Inf. Proc. Lett.  51: 207–211, 1994 .
+ 
+For any sparse family of graphs,
+one can list in linear time all
+complete bipartite subgraphs of a graph in the family.
+There are O(n) complete bipartite subgraphs of a graph in the family,
+and the sum of the numbers of vertices in these subgraphs is also O(n).
+  
+Nowadays these results can also be interpreted as a form of
+ formal
+concept analysis . If a set of objects and attributes is sparse
+(e.g., if it is generated by adding objects and attributes one at a
+time, where each newly-added object is given O(1) attributes and each
+newly-added attribute is held by O(1) objects) then the total size of
+all concepts in its concept lattice is linear, and this lattice may be
+generated in linear time.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Offline algorithms for dynamic minimum spanning tree problems . 
+D. Eppstein.  2nd Worksh. Algorithms and Data Structures,  Ottawa, Canada, 1991. 
+Springer,  Lecture Notes in Comp. Sci.  519, 1991, pp. 392–399.  Tech. Rep. 92-04 , ICS, UCI, 1992.  
+ J. Algorithms  17: 237–250, 1994 .
+ 
+Given a sequence of edge insertions and deletions in a graph,
+finds the corresponding sequence of minimum spanning tree changes,
+in logarithmic time per update.
+Similarly solves the planar geometric version of the problem
+(using a novel "mixed MST" formulation in which part of the input
+is a graph and part is a point set) in time
+O(log 2  n ) for the Euclidean metric and
+O(log  n  log log  n ) for the rectilinear metric.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL (JA) )
+  
+    Sparsification--A technique for speeding up dynamic graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and A. Nissenzweig.  33rd IEEE Symp. Foundations of Comp. Sci.,  Pittsburgh, 1992, pp. 60–69. 
+Tech. Rep. RC 19272 (83907), IBM, 1993. 
+Tech. Rep. CS96-11, Univ. Ca' Foscari di Venezia, Oct. 1996.   J. ACM  44 (5): 669–696, 1997 .
+ 
+Uses a divide and conquer on the edge set of a graph, together with the
+idea of replacing subgraphs by sparser certificates, to make various
+dynamic algorithms as fast on dense graphs as they are on sparse graphs.
+Applications include random generation of spanning trees
+as well as finding the  k 
+ minimum weight spanning trees 
+for a given parameter  k. 
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ ACM DL )
+  
+    Improved sparsification . 
+D. Eppstein,
+ Z. Galil , and 
+ 
+G.F. Italiano .  Tech. Rep. 93-20 , ICS, UCI, 1993.
+ 
+Saves a log factor over dynamic graph algorithms in
+" Sparsification "
+and their applications, by dividing vertices instead of edges.
+Merged into the journal version of "Sparsification".
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Separator based sparsification for dynamic planar graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and T. Spencer.   25th ACM Symp. Theory of Computing,  San Diego, 1993, pp. 208–217. 
+ 
+Replaces portions of a hierarchical separator decomposition with smaller
+certificates to achieve fast update times for various dynamic planar graph problems.  Applications include finding the  k 
+ best spanning trees  of a planar graph.
+  
+( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography )
+  
+    Separator based sparsification I:
+planarity testing and minimum spanning trees . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and T. Spencer.  
+ J. Comp. Sys. Sci.  52: 3–27, 1996
+(special issue for 25th STOC) .
+ 
+First half of journal version of
+ Separator based sparsification for dynamic planar graph algorithms .
+  
+( Citations  --
+ ACM DL )
+  
+    Separator based sparsification II: edge and vertex connectivity . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and T. Spencer. 
+Tech. Rep. CS96-13, Univ. Ca' Foscari di Venezia, Oct. 1996.   SIAM
+J. Computing  28 (1): 341–381, 1999 .
+ 
+Second half of journal version of
+ Separator based sparsification for dynamic planar graph algorithms .
+  
+( Citations  --
+ ACM DL )
+  
+    Worst-case bounds for subadditive geometric graphs .  M. Bern 
+and D. Eppstein.   9th ACM Symp. Comp. Geom.,  San Diego, 1993, pp. 183–188. 
+ 
+For many geometric graph problems for points in the unit square,
+such as  minimum spanning trees ,
+ matching , and
+ traveling salesmen ,
+the sum of edge lengths is O(sqrt  n ) and the sum of
+ d th powers of edge lengths is O(log  n ).
+We provide a "gap theorem" showing that if these bounds do not hold
+for a class of graphs, both sums will instead be Omega( n ).
+For traveling salesmen the O(log  n ) bound is tight
+but for some other graphs the sum of
+ d th powers of edge lengths is O(1).
+  ( BibTeX  --
+ Citations  --
+ Preprint of SCG version  --
+ CiteSeer )
+  
+    Clustering for faster network simplex pivots . 
+D. Eppstein.  Tech. Rep. 93-19 , ICS, UCI, 1993.  
+ 5th ACM-SIAM Symp. Discrete Algorithms, 
+Arlington, 1994, pp. 160–166 .  Networks  35 (3): 173–180, 2000.
+ 
+Speeds up the worst case time per pivot for various versions of
+the network simplex algorithm for minimum cost flow problems.
+Uses techniques from dynamic graph algorithms as well as some simple
+geometric data structures.
+  ( BibTeX  --
+ CiteSeer )
+  
+    Finding the  k  shortest paths . 
+D. Eppstein.  35th IEEE Symp. Foundations of Comp. Sci.,  Santa Fe, 1994, pp. 154–165.  Tech. Rep. 94-26 , ICS, UCI, 1994.  
+ SIAM J. Computing  28 (2): 652–673, 1998 .
+ 
+This paper presents an algorithm that finds multiple short paths connecting
+two terminals in a graph
+(allowing repeated vertices and edges in the paths)
+in constant time per path after a preprocessing stage
+dominated by a single-source shortest path computation.
+The paths it finds are the  k  shortest in the graph, where  k  is a
+parameter given as input to the algorithm.
+  
+The  k  shortest paths problem has many important applications for finding
+alternative solutions to geographic path planning problems, network
+routing, hypothesis generation in computational linguistics, and
+sequence alignment and metabolic pathway finding in
+bioinformatics. Although there have been many papers on the
+ k  shortest paths problem before and after this one, it has become
+frequently cited in those application areas.
+Additionally, it marks a boundary in the theoretical study of the problem:
+prior theoretical work largely concerned how quickly the problem could
+be solved, a line of research that was closed off by the optimal time
+bounds of this paper. Subsequent work has focused instead
+on devising efficient algorithms for more complex alternative
+formulations of the problem that avoid the repeated
+vertices and other shortcomings of the alternative paths produced by
+this formulation.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ Graehl implementation  --
+ Jiménez-Marzal implementations  --
+ Shibuya implementation  --
+ Martins implementation  --
+ Cliff OpenStreetMap demo  --
+CiteSeer:
+ TR '94 ,
+ SJC '98  --
+ ACM DL )
+  
+    Subgraph isomorphism in planar graphs and related problems . 
+D. Eppstein.  Tech. Rep. 94-25 , ICS, UCI, 1994.  
+ 6th ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1995, pp. 632–640 .  arXiv:cs.DS/9911003 .   J. Graph
+Algorithms and Applications  3 (3): 1–27, 1999. 
+ 
+Uses an idea of Baker to cover a planar graph with subgraphs
+of low treewidth.  As a consequence, any fixed pattern can
+be found as a subgraph in linear time; the same methods can be used to
+solve other planar graph problems
+including vertex connectivity, diameter, girth, induced subgraph
+isomorphism, and shortest paths.
+A companion paper, " Diameter and treewidth in
+minor-closed graph families ", presents a result announced in the
+conference version of this paper,
+that exactly characterizes the minor-closed graph families for which the
+same techniques apply.
+  ( BibTeX  --
+ Citations  --
+ Citations from MIT hypertext bibliography  --
+ CiteSeer (SODA)  --
+ CiteSeer (JGAA) )
+  
+    Geometric lower bounds for parametric matroid optimization . 
+D. Eppstein.  Tech. Rep. 95-11 , ICS, UCI, 1995.   27th ACM Symp. Theory of Computing,  Las Vegas, 1995, pp. 662–671 .   Disc. Comp. Geom.  20: 463–476, 1998 .
+ 
+Considers graphs in which edge weights are linear functions of time.
+Shows nonlinear lower bounds on the number of different
+ minimum spanning trees  appearing
+over time by translation from geometric problem of lower envelopes of line segments.
+A matroid generalization has a better lower bound coming from many faces
+in line arrangements, and the uniform matroid problem is
+equivalent to the geometric  k -set problem.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ MIT hypertext bibliography )
+  
+    3-Coloring in time O(1.3446  n  ): a no-MIS algorithm .  R. Beigel 
+and D. Eppstein.  
+Tech. Rep. 95-033 , Electronic Coll. Computational Complexity, 1995.  36th IEEE Symp. Foundations of Comp. Sci. , 1995, pp. 444–453.  DIMACS
+Worksh. Faster Exact Solutions for NP-Hard Problems , 2000.
+ 
+Speeds up 3-coloring by solving a harder problem:
+constraint satisfaction in which each variable can take on
+one of three values and each constraint forbids a pair of
+variable assignments.  The detailed solution involves
+several long hairy case analyses.
+Similar methods apply also to 3-list-coloring,
+3-edge-coloring, and 3-SAT.  The 3-SAT algorithm is fixed-parameter tractible in that it is polynomial time when the number of 3-variable clauses is O(log n).
+Merged into
+ 3-coloring in time O(1.3289^n) 
+for the journal version.
+  ( BibTeX  --
+ Citations  --
+ DIMACS
+abstract  and  slides  --
+ CiteSeer )
+  
+    Minimum range balanced cuts via dynamic subset sums . 
+D. Eppstein.  Tech. Rep. 95-10 , ICS, UCI, 1995.  
+ J. Algorithms  23: 375–385, 1997 .
+ 
+Describes data structures for maintaining the solution of a dynamically
+changing subset sum problem, and uses them to find a cut in a graph
+minimizing the difference between the heaviest and lightest cut edge.
+  ( BibTeX  --
+ ACM DL )
+  
+    Representing all minimum spanning trees with applications to
+counting and generation . 
+D. Eppstein.  Tech. Rep. 95-50 , ICS, UCI, 1995.
+ 
+Shows how to find for any edge weighted graph G an equivalent
+graph EG such that the  minimum spanning trees 
+of G correspond one-for-one with the spanning trees of EG.
+The equivalent graph can be
+constructed in time O(m+n log n) given a single minimum spanning tree of
+G.  As a consequence one can find fast algorithms for counting, listing,
+and randomly generating MSTs.
+Also discusses similar
+equivalent graph constructions for
+ shortest paths , minimum cost flows,
+and  bipartite matching .
+  ( BibTeX  --
+ Citations )
+  
+    Finding common ancestors and disjoint paths in DAGs . 
+D. Eppstein.  Tech. Rep. 95-52 , ICS, UCI, 1995.
+ 
+This paper describes algorithms for finding pairs of vertex-disjoint
+paths in a DAG, either connecting two given nodes to a common
+ancestor, or connecting two given pairs of terminals.
+The main results were merged into the journal version of
+" Finding the  k  shortest paths ".
+  ( BibTeX )
+  
+    Using sparsification for parametric minimum spanning tree problems .  
+D. Fernández-Baca ,
+ 
+G. Slutzki , and D. Eppstein.   5th Scand. Worksh. Algorithm Theory,  Reykjavik, 1996 . 
+Springer,  Lecture Notes in
+Comp. Sci.  1097, 1996, pp. 149–160.   Nordic J. Computing 
+3 (4): 352–366, 1996 (special issue for 5th SWAT). 
+ 
+Given a graph with edge weights that are linear functions of a parameter,
+finds the sequence of
+ minimum spanning trees  produced as the parameter varies,
+in total time O(mn log n), by combining ideas
+from " Sparsification "
+and " Geometric lower bounds ".
+Also solves various problems of optimizing the parameter value,
+including one closely related to that in
+" Choosing subsets with maximum weighted average ".
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ ACM DL (SWAT)  --
+ ACM DL (NJC) )
+  
+    Dynamic connectivity in digital images . 
+D. Eppstein.  Tech. Rep. 96-13 , ICS, UCI, 1996.  Inf. Proc. Lett.  62: 121–126, 1997.
+ 
+Any algorithm that maintains the connected components
+of a bitmap image must take Omega(log  n  / log log  n )
+time per change to the image.  The problem can be solved in 
+O(log  n ) time per change using dynamic planar graph techniques.
+We discuss applications to computer Go and other games.
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ CiteSeer  --
+ ACM DL )
+  
+    On the parity of graph spanning tree numbers . 
+D. Eppstein.  Tech. Rep. 96-14 , ICS, UCI, 1996.
+ 
+Any bipartite Eulerian graph, any Eulerian graph with evenly many vertices,
+and any bipartite graph with evenly many vertices and edges, has an even
+number of
+ spanning trees .
+More generally, a graph has evenly many spanning trees if and only if it
+has an Eulerian edge cut.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Dynamic graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+and  G.F. Italiano . 
+Tech. Rep. CS96-11, Univ. Ca' Foscari di Venezia, Oct. 1996.  
+ Algorithms and Theoretical Computing Handbook, 
+M. J. Atallah, ed., CRC Press, 1999, chapter 8 . 
+2nd. ed., CRC Press, 2010, Vol. I: General Concepts and Techniques, chapter 9, pp. 9–1 - 9-28.
+ ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Fast hierarchical
+clustering and other applications of dynamic closest pairs . 
+D. Eppstein.  
+ 9th ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1998, pp. 619–628 .  arXiv:cs.DS/9912014 .   J. Experimental
+Algorithmics  5 (1): 1–23, 2000 .
+ 
+This paper shows how to use my dynamic closest pair data structure
+from " Dynamic Euclidean minimum
+spanning trees " for some non-geometric problems including
+hierarchical clustering,
+ greedy matching ,
+and  TSP heuristics .
+Experiments show variants of my data structures to be faster than
+previously used heuristics.
+  ( Source code and experimental data  -- 
+ BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL  --
+ JEA home page )
+  
+    Geometric thickness of complete graphs .  M. Dillencourt ,
+D. Eppstein, and 
+ 
+D. S. Hirschberg .   6th Int. Symp. Graph Drawing, 
+Montreal, August 1998 . 
+Springer,  Lecture Notes in
+Comp. Sci.  1547, 1998, pp. 102–110.  arXiv:math.CO/9910185 .   J. Graph
+Algorithms and Applications  4 (3): 5–17, 2000 
+(special issue for GD98).
+ 
+We define a notion of geometric thickness, intermediate between the
+previously studied concepts of graph thickness and book thickness: a
+graph has geometric thickness T if its vertices can be embedded in the
+plane, and its edges partitioned into T subsets, so that each subset
+forms a planar straight line graph.  We then give upper and lower bounds
+on the geometric thickness of complete graphs.
+  ( Springer abstract  --
+ BibTeX  --
+ CiteSeer  --
+ Citations  --
+ ACM DL  --
+ GDEA )
+  
+    Diameter and treewidth in minor-closed graph families . 
+D. Eppstein.  arXiv:math.CO/9907126 .  Algorithmica  27: 275–291, 2000
+(special issue on treewidth, graph minors, and algorithms).
+ 
+This paper introduces the  diameter-treewidth
+property  (later known as  bounded local treewidth ): a
+functional relationship between the diameter of its graph and its treewidth.
+Previously known results imply that planar graphs have
+bounded local treewidth; we characterize the
+other minor-closed families with this property. Specifically,
+minor-closed family F has bounded local treewidth if and only if there
+exists an  apex graph  G that is not in F; an apex graph is a graph
+that can be made planar by removing a single vertex.
+The minor-free families that exclude an apex graph (and therefore have
+bounded local treewidth) include the bounded-genus
+graphs (for which, as with planar graphs, we show a linear bound for the
+treewidth as a function of the diameter) and K 3,a -free graphs.  As
+a consequence, subgraph isomorphism for subgraphs of bounded size and
+approximations to several NP-hard optimization problems can be computed
+efficiently on these graphs, extending previous results for planar
+graphs.
+  Some of these results
+were announced in the conference version of
+" subgraph isomorphism for planar graphs and related
+problems " but not included in the journal version. Since its
+publication, there have been many more works on local treewidth. The class of
+problems that could be solved quickly on graphs of bounded local
+treewidth was extended and classified by Frick and Grohe, " Deciding first-order
+properties of locally tree-decomposable structures ",  J. ACM 
+48: 1184–1206, 2001;
+the proof that bounded local treewidth is equivalent to having an
+excluded apex minor was simplified, and the dependence of the treewidth
+on diameter
+improved, by a subsequent paper of Demaine and Hajiaghayi, " Diameter and
+treewidth in minor-closed graph families, revisited ",  Algorithmica 
+40: 211–215, 2004. The concept of local treewidth is the basis for the
+theory of  bidimensionality , a general framework for
+fixed-parameter-tractable algorithms and approximation algorithms in
+minor-closed graph families; for a survey, see Demaine and Hajiaghayi,
+" The
+bidimensionality theory and its algorithmic applications ",  The
+Computer J.  51: 292–302, 2008.
+  ( BibTeX  --
+ Citations )
+  
+    Parametric and kinetic minimum spanning trees .  P. K. Agarwal ,
+D. Eppstein,
+ L. J. Guibas ,
+and
+ M. R. Henzinger .  
+ 39th IEEE Symp. Foundations of Comp. Sci. , 1998, pp. 596–605. .
+ 
+We describe algorithms for maintaining the
+ minimum spanning tree  in a graph
+in which the edge weights are piecewise linear functions of time that
+may change unpredictably.  We solve the problem in time
+O(n 2/3  polylog n)
+per combinatorial change to the tree for general graphs, and in time
+O(n 1/4  polylog n) per combinatorial change to the tree for planar graphs.
+  ( BibTeX  --
+ FOCS '98 talk slides  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Algorithms for coloring quadtrees .  M. Bern ,
+D. Eppstein, and
+B. Hutchings.  arXiv:cs.CG/9907030 .  Algorithmica  32 (1): 87–94, 2002.
+ 
+We consider several variations of the problem of
+ coloring  the squares of a
+ quadtree  so that no two adjacent squares are
+colored alike.
+We give simple linear time algorithms for 3-coloring balanced quadtrees
+with edge adjacency, 4-coloring unbalanced quadtrees with edge
+adjacency, and 6-coloring balanced or unbalanced quadtrees with corner
+adjacency.  The number of colors used by the first two algorithms is
+optimal; for the third algorithm, 5 colors may sometimes be
+needed.
+  ( BibTeX  --
+ Citations )
+  
+    Guest editor's forward to special issue on dynamic graph algorithms . 
+D. Eppstein.  Algorithmica  22 (3): 233–234, 1998.
+ 
+    Setting parameters by example . 
+D. Eppstein.  arXiv:cs.DS/9907001 .   40th
+IEEE Symp. Foundations of Comp. Sci. , 1999, pp. 309–318 .  
+ SIAM J. Computing  32 (3): 643–653, 2003 .
+ 
+We introduce a class of "inverse parametric optimization"
+problems, in which one is given both a parametric optimization problem
+and a desired optimal solution; the task is to determine parameter
+values that lead to the given solution.  We use
+ low-dimensional linear programming 
+and geometric sampling techniques to solve
+such problems for
+ minimum spanning trees ,
+ shortest paths , and
+other optimal subgraph problems, and discuss applications in
+multicast routing, vehicle path planning, resource allocation, and board
+game programming.
+  ( BibTeX  --
+ Citations  --
+ ACM DL (FOCS)  --
+ ACM DL (SJC) )
+  
+    The distribution of cycle lengths in graphical models for iterative decoding .  X. Ge ,
+D. Eppstein, and
+ P. Smyth .  arXiv:cs.DM/9907002 .  Tech.
+Rep. 99-10 , ICS, UCI, 1999.  IEEE Int. Symp. Information
+Theory , Sorrento, Italy, 2000.  IEEE Trans. Information Theory  47 (6): 2549–2553, 2001.
+ 
+We compute the expected numbers of short cycles of each length in certain
+classes of random graphs used for turbocodes, estimate the probability
+that there are no such short cycles involving a given vertex, and
+experimentally verify our estimates.  The scarcity of short cycles may
+help explain the empirically observed accuracy of belief-propagation
+based error-correction algorithms.
+Note, the TR, conference, and journal versions of this paper have
+slightly different titles.
+  ( BibTeX  --
+Citations:  TR/ISIT  --
+ CiteSeer )
+  
+    Graphs for dynamic geometry . 
+D. Eppstein.  Invited talk ,
+Worksh. Dynamic Graph Algorithms, Victoria, Canada, 2000.
+ 
+This talk surveys work on computational geometry algorithms that use
+ dynamic graph  data structures, and the
+different kinds of geometric graph arising in
+this work.
+  
+    3-coloring in time O(1.3289^n) .  R. Beigel 
+and D. Eppstein.  arXiv:cs.DS/0006046 .   J. Algorithms 
+54:2 (2005) 168-204. 
+ 
+Journal paper combining  3-coloring algorithms 
+from our
+ FOCS '95 paper  with improved bounds from our
+ SODA '01 paper .
+  
+( BibTeX  --
+ Citations )
+  
+    Fast approximation of centrality . 
+D. Eppstein and
+ J. Wang .  arXiv:cs.DS/0009005 .  
+ 12th ACM-SIAM Symp. Discrete Algorithms, 
+Washington, 2001, pp. 228–229 .   J. Graph Algorithms &amp; Applications  8 (1): 39–45, 2004 .
+ 
+We use random sampling to quickly estimate, for each vertex in a graph,
+the average  distance  to all other vertices.
+  
+( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer )
+  
+    Improved algorithms for 3-coloring, 3-edge-coloring, and constraint
+satisfaction . 
+D. Eppstein.  arXiv:cs.DS/0009006 .   12th ACM-SIAM Symp. Discrete Algorithms, 
+Washington, 2001, pp. 329–337 .
+ 
+Summarizes recent improvements to
+" 3-Coloring in time
+O(1.3446  n  ): a no-MIS algorithm ".
+Merged with that paper for the
+ journal version .
+  
+( SODA talk slides  --
+ BibTeX  --
+ SODA paper  --
+ CiteSeer )
+  
+    Small maximal independent sets and faster exact graph coloring . 
+D. Eppstein.  arXiv:cs.DS/0011009 .   7th Worksh. Algorithms and Data
+Structures,  Providence, Rhode
+Island, 2001 . 
+Springer,  Lecture Notes in
+Comp. Sci.  2125, 2001, pp. 462–470.   J. Graph
+Algorithms and Applications 
+(special issue for WADS'01) 7 (2): 131–140, 2003 .
+ 
+We show that any graph can be
+ colored  in time O(2.415 n ),
+by a dynamic programming procedure in which we extend partial colorings
+on subsets of the vertices by adding one more color for
+a maximal independent set.  The time bound follows from limiting
+our attention to maximal independent subsets that are small relative to
+the previously colored subset, and from bounding the number of small
+maximal independent subsets that can occur in any graph.
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ WADS talk slides  --
+ ACM DL )
+  
+    Optimal Möbius transformations for information visualization
+and meshing .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0101006 .   7th Worksh. Algorithms and Data
+Structures,  Providence, Rhode
+Island, 2001 . 
+Springer,  Lecture Notes in
+Comp. Sci.  2125, 2001, pp. 14–25.
+ 
+We give linear-time
+ quasiconvex programming 
+algorithms for finding a Möbius transformation of a
+ set of spheres 
+in a unit ball or on the
+surface of a unit sphere that maximizes the minimum size of a
+transformed sphere. We can also use similar methods to maximize the
+minimum distance among a set of pairs of input points. We apply these
+results to vertex separation and symmetry display in spherical
+ graph drawing , viewpoint selection in
+ hyperbolic  browsing, and element size
+control in conformal structured
+ mesh generation .
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ WADS talk slides  --
+ ACM DL )
+  
+    Separating geometric thickness from book thickness . 
+D. Eppstein.  arXiv:math.CO/0109195 .
+ 
+We show that  geometric thickness 
+and book thickness are not
+asymptotically equivalent: for every  t , there exists a graph with
+geometric thickness two and book thickness  &gt;   t . 
+  
+( BibTeX  --
+ Citations  --
+ GDEA )
+  
+    A steady state model for graph power laws . 
+D. Eppstein and
+ J. Wang .  2nd Int.
+Worksh. Web Dynamics , Honolulu, 2002.  arXiv:cs.DM/0204001 .
+ 
+We propose a random graph model that (empirically) appears to have a
+power law degree distribution.  Unlike previous models, our model is
+based on a Markov process rather than incremental growth.  We compare
+our model with others in its ability to predict web graph clustering
+behavior.
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Separating thickness from geometric thickness . 
+D. Eppstein.  arXiv:math.CO/0204252 . 
+10th Int. Symp. Graph Drawing, Irvine, 2002. 
+Springer,  Lecture Notes in
+Comp. Sci.  2528, 2002, pp. 150–161. 
+In  Towards a Theory of Geometric Graphs , AMS, 2004, Contemporary
+Math 342, J. Pach, ed., pp. 75–86.
+ 
+We show that thickness and  geometric thickness 
+are not asymptotically equivalent: for every  t , there exists a graph with
+thickness three and geometric thickness  &gt;   t . 
+The proof uses  Ramsey-theoretic  arguments
+similar to those in
+" Separating book thickness from thickness ".
+  
+( BibTeX  --
+ GD'02 talk slides  --
+ Citations  --
+ ACM DL )
+  
+    Algorithms for media . 
+D. Eppstein and
+ J.-C.
+Falmagne .  arXiv:cs.DS/0206033 .  Int.
+Conf. Ordinal and Symbolic Data Analysis , Irvine, 2003.   Discrete Applied Mathematics  156 (8): 1308–1320, 2008 .
+ 
+Falmagne recently introduced the concept of a
+ medium , a combinatorial
+object encompassing hyperplane arrangements, topological orderings,
+acyclic orientations, and many other familiar structures. We find
+efficient solutions for several algorithmic problems on media: finding
+short reset sequences, shortest paths, testing whether a medium has a
+closed orientation, and listing the states of a medium given a black-box
+description.
+  
+( BibTeX  --
+ Citations  --
+ OSDA talk slides )
+  
+    Dynamic generators of topologically embedded graphs . 
+D. Eppstein.  arXiv:cs.DS/0207082 .  
+ 14th ACM-SIAM Symp. Discrete Algorithms, 
+Baltimore, 2003, pp. 599–608 .
+ 
+We describe a decomposition of graphs embedded on 2-dimensional
+manifolds into three subgraphs: a spanning tree, a dual spanning tree,
+and a set of leftover edges with cardinality determined by the genus of
+the manifold.  This tree-cotree decomposition allows us to find
+efficient data structures for
+ dynamic graphs  (allowing updates
+that change the surface), better constants in bounded-genus graph
+separators, and efficient algorithms for tree-decomposition of
+bounded-genus bounded-diameter graphs.
+  
+( BibTeX  --
+ SODA talk slides  --
+ Citations )
+  
+    Confluent drawings: visualizing non-planar diagrams in a planar way .  M. Dickerson ,
+D. Eppstein,
+ M. T. Goodrich ,
+and
+J. Meng.  arXiv:cs.CG/0212046 . 
+11th Int. Symp. Graph Drawing, Perugia, Italy, 2003. 
+Springer,  Lecture Notes in
+Comp. Sci.  2912, 2004, pp. 1–12.   J. Graph
+Algorithms and Applications 
+(special issue for GD'03) 9 (1): 31–52, 2005 .
+ 
+We describe a new method of
+ drawing graphs , based on allowing the edges to
+be merged together and drawn as "tracks" (similar to train tracks).
+We present heuristics for finding such drawings
+based on my previous  algorithms
+for finding maximal bipartite subgraphs , prove that several
+important families of graphs have confluent drawings, and provide
+examples of other graphs that can not be drawn in this way.
+  
+( BibTeX  --
+ Citations  --
+ GDEA )
+  
+    The traveling salesman problem for cubic graphs . 
+D. Eppstein.  arXiv:cs.DS/0302030 .  8th Worksh. Algorithms and Data
+Structures,  Ottawa, 2003. 
+Springer,  Lecture Notes in
+Comp. Sci.  2748, 2003, pp. 307–318.
+ J. Graph Algorithms and Applications  11 (1): 61–81, 2007.
+ 
+We find improved  exponential-time
+algorithms  for exact solution of the
+ traveling salesman problem 
+on graphs of maximum degree three and four.
+We also consider related problems including counting the number of
+Hamiltonian cycles in such graphs.
+  
+( BibTeX  --
+ WADS talk slides  --
+ Citations )
+  
+    Testing bipartiteness of geometric intersection graphs . 
+D. Eppstein.  arXiv:cs.CG/0307023 .  15th ACM-SIAM Symp. Discrete Algorithms, 
+New Orleans, 2004, pp. 853–861.   ACM Trans. Algorithms  5(2):15, 2009 .
+ 
+We consider problems of partitioning sets of geometric objects into two
+subsets, such that no two objects within the same subset intersect each
+other.  Typically, such problems can be solved in quadratic time by
+constructing the intersection graph and then applying a graph
+bipartiteness testing algorithm; we achieve subquadratic times for
+general objects, and O(n log n) times for balls in R^d or simple
+polygons in the plane, by using geometric data structures, separator
+based divide and conquer, and plane sweep techniques, respectively.
+We also contrast the complexity of bipartiteness testing with that of
+connectivity testing, and provide evidence that for some classes of
+object, connectivity is strictly harder due to a computational
+equivalence with Euclidean
+ minimum spanning trees .
+  
+( BibTeX  --
+ Citations  --
+ SODA talk slides )
+  
+    The geometric thickness of low degree graphs.   C. Duncan ,
+D. Eppstein, and
+ S. Kobourov .  arXiv:cs.CG/0312056 .  20th ACM Symp. Comp. Geom.,  Brooklyn, 2004, pp. 340–346.
+ 
+We show that graphs with maximum degree four have geometric thickness at
+most two, by partitioning them into degree two subgraphs and applying
+simultaneous embedding techniques.
+  
+( BibTeX  --
+ Citations )
+  
+    Single-strip triangulation of manifolds with arbitrary topology.  
+D. Eppstein and
+ M. Gopi .  13th Video Review of
+Computational Geometry, 2004 .  20th ACM Symp. Comp. Geom.,  Brooklyn, 2004, pp. 455–456 (abstract
+for video).  25th Conf. Eur. Assoc. for Computer Graphics (EuroGraphics '04) ,
+Grenoble, 2004 (2nd best paper award).  Eurographics Forum  23 (3): 371–379, 2004.  arXiv:cs.CG/0405036 .
+ 
+We describe a new algorithm, based on
+ graph matching ,
+for subdividing a
+ triangle mesh  (without boundary)
+so that it has a
+ Hamiltonian cycle  of triangles, and prove that
+this subdivision process increases the total number of triangles
+in the mesh by at most a factor of 3/2.  We also prove lower bounds
+on the increase needed for meshes with and without boundary.
+  
+( Graphics
+lab pubs page  --
+ Citations )
+  
+    The effect of faults on network expansion.   A. Bagchi ,
+ A. Bhargava ,
+ A. Chaudhary ,
+D. Eppstein, and
+ C. Scheideler .  arXiv:cs.DC/0404029 .   16th ACM
+Symp. Parallelism in Algorithms and Architectures ,
+Barcelona, 2004, pp. 286–293 .   Theory of
+Computing Systems  39 (6): 903–928, 2006 .
+ 
+Studies the resilience of distributed computation networks against
+adversarial and random fault models; shows that, in both models,
+certain networks can withstand constant fault probabilities and
+still contain a large subnetwork with similar expansion to the original.
+  
+    The lattice dimension of a graph.  
+D. Eppstein.  arXiv:cs.DS/0402028 .   Eur. J. Combinatorics  26 (6): 585–592, 2005 .
+ 
+Describes a polynomial time algorithm for isometrically embedding graphs
+into an integer lattice of the smallest
+possible dimension.  The technique involves
+ maximum matching 
+in an auxiliary graph derived from a
+ partial cube  representation of the input.
+  
+( BibTeX  --
+ Citations )
+  
+    Algorithms for drawing media.  
+D. Eppstein.  arXiv:cs.DS/0406020 .  12th Int. Symp. Graph Drawing , New York, 2004. 
+Springer,  Lecture Notes in Comp. Sci.  3383, 2004, pp. 173–183.
+ 
+We describe two algorithms for finding planar layouts of
+ partial cubes :
+one based on
+ finding the minimum-dimension
+lattice embedding of the graph  and then projecting
+the lattice onto the plane,
+and the other based on representing the graph
+as the planar dual to a weak pseudoline arrangement.
+  
+Due to editorial mishandling there will be no journal version of this
+paper: I submitted it to a journal in 2004, the reviews were supposedly
+sent back to me in 2005, but I didn't receive them and didn't respond to
+them, leading the editors to assume that I intended to withdraw the submission.
+Large portions of the paper have since been incorporated into my
+book  Media Theory , making journal publication moot.
+  
+( GD04 talk slides  --
+ BibTeX  --
+ Citations  --
+ GDEA )
+  
+    Confluent layered drawings . 
+D. Eppstein,
+ M. T. Goodrich ,
+and
+J. Meng. 
+12th Int. Symp. Graph Drawing, New York, 2004. 
+Springer,  Lecture Notes in Comp. Sci.  3383, 2004, pp. 184–194.  arXiv:cs.CG/0507051 .   Algorithmica  47 (4): 439–452 (special issue for Graph Drawing), 2007 .
+ 
+Describes a  graph drawing  technique
+combining ideas of
+ confluent drawing 
+with Sugiyama-style layered drawing.
+Uses a reduction to  graph coloring 
+to find and visualize sets of bicliques in each layer.
+  
+( BibTeX  --
+ Citations  --
+ GDEA )
+  
+    All maximal independent sets and dynamic dominance for sparse
+graphs.  
+D. Eppstein.  arXiv:cs.DS/0407036 .  16th ACM-SIAM Symp. Discrete Algorithms, 
+Vancouver, 2005, pp. 451–459.   ACM Trans. Algorithms  5(4):A38, 2009 .
+ 
+We show how to apply reverse search to list all maximal independent sets
+in bounded-degree graphs in constant time per set, in graphs from minor
+closed families in linear time per set, and in sparse graphs
+in subquadratic time per set.  The latter two results rely on new
+data structures for maintaining a dynamic vertex set in a graph
+and quickly testing whether the set dominates all other vertices.
+  
+( SODA05 talk slides  --
+ BibTeX )
+  
+    The weighted maximum-mean subtree and other bicriterion subtree problems.   J. Carlson
+and D. Eppstein.   arXiv:cs.CG/0503023 .  Proc. 10th Scand. Worksh. Algorithm Theory (SWAT 2006) . 
+Springer,  Lecture Notes in Comp. Sci.  4059, 2006, pp. 397–408.
+ 
+We give a linear time algorithm for pruning a node-weighted tree to maximize
+the average node weight of the pruned subtree; this problem was
+previously studied under the less obvious name "The Fractional
+Prize-Collecting Steiner Tree Problem on Trees".
+  
+( BibTeX )
+  
+    Delta-confluent drawings . 
+D. Eppstein,
+ M. T. Goodrich ,
+and
+J. Meng. 
+13th Int. Symp. Graph Drawing, Limerick, Ireland, 2005. 
+Springer,  Lecture Notes in Comp. Sci.  3843, 2006, pp. 165–176.  arXiv:cs.CG/0510024 .  
+We characterize the graphs that can be drawn confluently
+with a single confluent track that is tree-like except for three-way
+Delta junctions, as being exactly the distance hereditary graphs.
+Based on this characterization, we develop efficient algorithms
+for drawing these graphs.
+  
+( BibTeX  --
+ GD'05 talk slides )
+  
+    Nonrepetitive paths and cycles in graphs with application to Sudoku . 
+D. Eppstein.  arXiv:cs.DS/0507053 .
+ 
+We describe algorithms and hardness results for finding paths in
+edge-labeled graphs such that no two consecutive edges have the same label,
+and use our algorithms to implement heuristics for a program that
+automatically solves and generates Sudoku puzzles.
+  
+( BibTeX  --
+ Citations )
+  
+    Drawings of planar graphs with few slopes and segments.   V. Dujmović ,
+D. Eppstein,
+ M. Suderman ,
+and
+ D. R. Wood .  arXiv:math.CO/0606450 .   Comp.
+Geom. Theory &amp; Applications  38: 194–212, 2007. 
+ 
+We study straight-line drawings of planar graphs with few segments and
+few slopes. Optimal results are obtained for all trees. Tight bounds are
+obtained for outerplanar graphs, 2-trees, and planar 3-trees. We prove
+that every 3-connected plane graph on n vertices has a plane drawing
+with at most 5n/2 segments and at most 2n slopes. We prove that
+every cubic 3-connected plane graph has a plane drawing with three
+slopes (and three bends on the outerface).
+  
+    Cubic partial cubes from simplicial arrangements.  
+D. Eppstein.  arXiv:math.CO/0510263 .   Electronic
+J. Combinatorics  13(1) #R79, 2006 .
+ 
+We show how to construct a cubic partial cube from any simplicial
+arrangement of lines or pseudolines in the projective plane. As a
+consequence, we find nine new infinite families of cubic partial cubes
+as well as many sporadic examples.
+  
+    Single triangle strip and loop on manifolds with boundaries.   A. Bushan ,
+ P. Diaz-Gutierrez ,
+D. Eppstein, and
+ M. Gopi . 
+Tech. Rep. 05-11, UC Irvine, School of Information and Computer Science,
+2005. 
+Proc. 19th Brazilian Symp. Computer Graphics and Image Processing
+(SIBGRAPI 2006), pp. 221–228.
+ 
+This follows on to our previous paper on
+ using graph matching to cover a
+triangulated polyhedral model with a single triangle strip  by
+extending the algorithms to models
+with boundaries. We provide two methods: one is based on using an algorithm
+for the Chinese Postman problem to find a small set of triangles to
+split in order to find a perfect matching in the dual mesh, while the
+other augments the model with virtual triangles to remove the boundaries
+and merges the strips formed by our previous algorithm on this augmented
+model. We implement the algorithms and report some preliminary
+experimental results.
+  
+( Graphics
+lab pubs page )
+  
+    Interconnect criticality driven delay relaxation.   L. Singhal ,
+ E. Bozorgzadeh ,
+and D. Eppstein.  IEEE Trans. CAD  26 (10): 1803–1817, 2007.
+ 
+We consider a problem of assigning delays to components in a circuit so
+that each component is part of a critical path, but the number of edges
+belonging to critical paths is minimized. We show the problem to be
+NP-complete via a reduction from finding independent dominating sets in
+bipartite graphs minimizing dominated edges, and give experimental
+results on heuristics.
+  
+    Upright-quad drawing of st-planar learning spaces.  
+D. Eppstein.  arXiv:cs.CG/0607094 . 
+14th Int. Symp. Graph Drawing, Karlsruhe, Germany, 2006.  Springer,  Lecture Notes in
+Comp. Sci.  4372, 2007, pp. 282–293 .   J. Graph Algorithms and Applications  12 (1): 51–72 , 2008 (special
+issue for GD'06).
+ 
+We consider graph drawing algorithms for learning spaces, a type of
+st-oriented partial cube derived from antimatroids and used to model
+states of knowledge of students. We show how to draw any st-planar
+learning space so all internal faces are convex quadrilaterals with the
+bottom side horizontal and the left side vertical, with one minimal and
+one maximal vertex. Conversely, every such drawing represents an
+$st$-planar learning space.  We also describe connections between these
+graphs and arrangements of translates of a quadrant.
+  
+( GD'06 talk slides )
+  
+    Trees with convex faces and optimal angles.   J. Carlson
+and D. Eppstein.   arXiv:cs.CG/0607113 . 
+14th Int. Symp. Graph Drawing, Karlsruhe, Germany, 2006.  Springer,  Lecture Notes in
+Comp. Sci.  4372, 2007, pp. 77–88 .
+ 
+We consider drawings of trees which, if the leaf edges were extended to
+infinite rays, would form partitions of the plane into unbounded convex
+polygons. For such a drawing the edges may be chosen independently
+without any possibility of edge crossing. We show how to choose the
+angles of such drawings to optimize the angular resolution of the drawing.
+  
+( GD06 talk slides )
+  
+    Choosing colors for geometric graphs via color space embeddings.   M. Dillencourt ,
+D. Eppstein, and
+ M. T. Goodrich .  arXiv:cs.CG/0609033 . 
+14th Int. Symp. Graph Drawing, Karlsruhe, Germany, 2006.  Springer,  Lecture Notes in
+Comp. Sci.  4372, 2007, pp. 294–305 .
+ 
+We show how to choose colors for the vertices of a graph drawing in such
+a way that all colors are easily distinguishable, but such that adjacent
+vertices have especially dissimilar colors, by considering the problem
+as one of embedding the graph into a three-dimensional color space.
+  
+( GD'06 talk slides )
+  
+    Happy endings for flip graphs.  
+D. Eppstein.  arXiv:cs.CG/0610092 .  23rd ACM Symp. Comp. Geom.,  Gyeongju, South Korea, 2007, pp. 92–101.   J. Computational Geometry  1 (1): 3–28, 2010 .
+ 
+We show that the triangulations of a finite point set form a flip graph
+that can be embedded isometrically into a hypercube, if and only if the
+point set has no empty convex pentagon. Point sets of this type include
+convex subsets of lattices, points on two lines, and several other
+infinite families. As a consequence, flip distance in such point sets
+can be computed efficiently.
+  
+    Manhattan orbifolds.  
+D. Eppstein.  arXiv:math.MG/0612109 .   Topology and
+its Applications  157 (2): 494–507, 2009 .
+ 
+We investigate a class of metrics for 2-manifolds in which, except for a
+discrete set of singular points, the metric is locally isometric to an
+L 1  metric, and show that with certain
+additional conditions such metrics are injective. We use this
+construction to find the tight span of squaregraphs and related graphs,
+and we find an injective metric that approximates the distances in the
+hyperbolic plane analogously to the way the rectilinear metrics
+approximate the Euclidean distance.
+  
+    Edges and switches, tunnels and bridges.  
+D. Eppstein,
+ M. van Kreveld ,
+E. Mumford, and
+ B. Speckmann . 
+23rd European Workshop on Computational Geometry (EWCG'07), Graz, 2007.  10th Worksh. Algorithms and Data Structures,  Halifax, Nova Scotia, 2007.  Springer, Lecture Notes in Comp. Sci.  4619, 2007, pp. 77–88.  Tech.
+Rep. UU-CS-2007-042 , Utrecht Univ., Dept. of Information and
+Computing Sciences, 2007.  arXiv:0705.0413 .   Comp.
+Geom. Theory &amp; Applications  42 (8): 790–802, 2009  (special issue
+for EWCG'07).
+ 
+We show how to solve several versions of the problem of casing graph drawings:
+that is, given a drawing, choosing to draw one edge as upper and one
+lower at each crossing in order to improve the drawing's readability.
+  
+( WADS talk slides )
+  
+    On verifying and engineering the well-gradedness of a
+union-closed family . 
+D. Eppstein,
+ J.-C.
+Falmagne , and
+H. Uzun.  arXiv:0704.2919 . 
+38th Meeting of the European Mathematical Psychology Group, Luxembourg, 2007.   J. Mathematical Psychology  53 (1): 34–39, 2009 .
+ 
+We describe tests for whether the union-closure of a set family is
+well-graded, and algorithms for finding a minimal well-graded
+union-closed superfamily of a given set family.
+  
+    Recognizing partial cubes in quadratic time . 
+D. Eppstein.  arXiv:0705.1025 .  19th ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 2008, pp. 1258–1266.   J. Graph
+    Algorithms and Applications  15 (2): 269–293, 2011 .
+ 
+We show how to test whether a graph is a partial cube, and if so embed
+it isometrically into a  hypercube , in time
+O(n 2 ), improving previous O(nm)-time solutions; here n is the
+number of vertices and m is the number of edges. The ideas are to use
+bit-parallelism to speed up previous approaches to the embedding step,
+and to verify that the resulting embedding is isometric using an
+all-pairs shortest path algorithm from " algorithms for media ".
+  
+( slides )
+  
+    Geometry of partial cubes . 
+D. Eppstein. 
+Invited talk at 6th Slovenian International Conference on Graph Theory,
+Bled, Slovenia, 2007.
+ 
+I survey some of my recent results on geometry of partial cubes, including
+lattice dimension, graph drawing, cubic partial cubes, and partial cube
+flip graphs of triangulations.
+  
+( Slides )
+  
+    The Complexity of Bendless Three-Dimensional Orthogonal Graph Drawing . 
+D. Eppstein.  arXiv:0709.4087 .  Proc. 16th Int. Symp. Graph Drawing , Heraklion, Crete, 2008. 
+Springer,  Lecture Notes in Comp. Sci.  5417, 2009, pp. 78–89.   J. Graph Algorithms and Applications  17 (1): 35–55, 2013 .
+ 
+Defines a class of orthogonal graph drawings formed by a point set
+in three dimensions for which
+axis-parallel line contains zero or two vertices, with edges connecting pairs
+of points on each nonempty axis-parallel line. Shows that the existence
+of such a drawing can be defined topologically, in terms of certain
+two-dimensional surface embeddings of the same graph. Based on this
+equivalence, describes algorithms, graph-theoretic properties, and
+hardness results for graphs of this type.
+  
+( Slides from talk at
+U. Arizona, February 2008  --
+ Slides from GD08 )
+)
+  
+    Media Theory: Interdisciplinary Applied Mathematics . 
+D. Eppstein,
+ J.-C.
+Falmagne , and
+S. Ovchinnikov. 
+Springer, 2007, ISBN 978-3-540-71696-9.
+ 
+Many combinatorial structures such as the set of acyclic orientations of
+a graph, weak orderings of a set of elements, or chambers of a
+hyperplane arrangement have the structure of a partial cube, a graph in
+which vertices may be labeled by bitvectors in such a way that graph
+distance equals Hamming distance. This book analyzes these structures
+in terms of operations that change one vertex to another
+by flipping a single bit of the bitvector labelings. It incorporates
+material from several of my papers including " Algorithms for Media ", " Algorithms for Drawing Media ", " Upright-Quad Drawing of st-Planar Learning Spaces ", and
+" The Lattice Dimension of a Graph ".
+  
+( Publisher's
+web site  --
+ Reinhard Suck's
+review in J. Math. Psych.  --
+ Reinhard
+Suck's review in MathSciNet )
+  
+    Learning sequences . 
+D. Eppstein.  arXiv:0803.4030 .  
+How to implement an antimatroid, with applications in computerized education.
+  
+    Principles of Graph Drawing . 
+D. Eppstein.  Talk
+at Inst. for Mathematical Behavioral Sciences , May 2008. 
+Talk at Technical University of Eindhoven, September 2008.
+ 
+    Approximate Topological Matching of Quadrilateral Meshes . 
+D. Eppstein,
+ M. T. Goodrich ,
+ E. Kim ,
+and R. Tamstorf.   Proc. IEEE
+Int. Conf. Shape Modeling and Applications (SMI 2008) , Stony Brook,
+New York, pp. 83–92 .   The Visual Computer 
+  25 (8): 771–783, 2009 .
+ 
+We formalize problems of finding large approximately-matching regions of
+two related but not completely isomorphic quadrilateral meshes, show
+that these problems are NP-complete, and describe a natural greedy
+heuristic that is guaranteed to find good matches when the mismatching
+parts of the meshes are small.
+  
+( Preprint )
+  
+    Succinct greedy geometric routing using hyperbolic geometry . 
+D. Eppstein and
+ M. T. Goodrich .  arXiv:0806.0341 .  Proc. 16th Int. Symp. Graph Drawing , Heraklion, Crete, 2008 
+(under the different title "Succinct greedy graph drawing in the
+hyperbolic plane"), 
+Springer,  Lecture Notes in Comp. Sci.  5417, 2009, pp. 14–25.   IEEE Transactions on Computing  60 (11): 1571–1580, 2011 .
+ 
+Greedy drawing is an idea for encoding network routing tables into the
+geometric coordinates of an embedding of the network, but most previous
+work in this area has ignored the space complexity of these encoded tables.
+We refine a method of R. Kleinberg for embedding arbitrary graphs into
+the hyperbolic plane, which uses linearly many bits to represent each
+vertex, and show that only logarithmic bits per point are needed.
+  
+    Isometric diamond subgraphs . 
+D. Eppstein.  arXiv:0807.2218 .  Proc. 16th Int. Symp. Graph Drawing , Heraklion, Crete, 2008. 
+Springer,  Lecture Notes in Comp. Sci.  5417, 2009, pp. 384–389.  
+We describe polynomial time algorithms for determining whether an
+undirected graph may be embedded in a distance-preserving way into the
+hexagonal tiling of the plane, the diamond structure in three
+dimensions, or analogous structures in higher dimensions. The graphs
+that may be embedded in this way form an interesting subclass of the
+partial cubes.
+  
+( Slides )
+  
+    Studying (non-planar) road networks through an algorithmic lens . 
+D. Eppstein, and
+ M. T. Goodrich .  arXiv:0808.3694 .   Proc. 16th ACM SIGSPATIAL Int. Conf. Advances in Geographic
+Information Systems (ACM GIS 2008) , Article 16  (best paper award). 
+Invited talk at INFORMS 2009, San Diego.
+ 
+We examine US road network data and show that, contrary to the
+assumptions of much past GIS work, these networks are highly nonplanar.
+We introduce a class of "multiscale dispersed" networks that better fit
+the data; these networks are defined by a family of disks of varying
+sizes such that, if a small number of outliers is removed, the remaining
+disks cover each point of the plane a constant number of times.
+As we show, these networks have good graph separators, allowing for
+efficient algorithms for minimum spanning trees, graph Voronoi diagrams,
+and related problems.
+  
+    Linear-time algorithms for geometric graphs with sublinearly many
+crossings . 
+D. Eppstein,
+ M. T. Goodrich , and
+ D. Strash .  arXiv:0812.0893 .   20th ACM-SIAM Symp. Discrete Algorithms, 
+New York, 2009, pp. 150–159 .   SIAM J. Computing  39 (8): 3814–3829, 2010 .
+ 
+If a connected graph corresponds to a set of points and line segments in
+the plane, in such a way that the number of crossing pairs of line
+segments is sublinear in the size of the graph by an iterated-log
+factor, then we can find the arrangement of the segments in linear
+time. It was previously known how to find the arrangement in linear time
+when the number of crossings is superlinear by an iterated-log factor,
+so the only remaining open case is when the number of crossings is close to the
+size of the graph.
+  
+    Finding large clique minors is hard . 
+D. Eppstein.  arXiv:0807.0007 .   J. Graph
+Algorithms and Applications  13 (2): 197–204, 2009 .
+ 
+Proves that it's NP-complete to compute the Hadwiger number of a graph.
+  
+    Area-universal rectangular layouts . 
+D. Eppstein,
+E. Mumford,
+ B. Speckmann , and
+ K. Verbeek .  arXiv:0901.3924 .  25th Eur. Worksh. Comp. Geom. , Brussels, Belgium, 2009.   25th ACM Symp. Comp. Geom.,  Aarhus, Denmark, 2009, pp. 267–276 .
+ 
+A partition of a rectangle into smaller
+rectangles is "area-universal" if any vector of areas for the smaller
+rectangles can be realized by a combinatorially equivalent partition.
+These partitions may be applied, for instance, to cartograms, stylized
+maps in which the shapes of countries have been distorted so that their
+areas represent numeric data about the countries. We characterize
+area-universal layouts, describe algorithms for finding them, and
+discuss related problems. The algorithms for constructing area-universal
+layouts are based on the distributive lattice structure of the set of
+all layouts of a given dual graph.
+  
+Merged with
+" Orientation-constrained rectangular layouts "
+to form the journal version, " Area-universal and constrained rectangular layouts ".
+  
+( SoCG talk slides )
+  
+    The Fibonacci dimension of a graph .  S. Cabello ,
+D. Eppstein, and
+ S. Klavžar .  IMFM Preprint
+1084 , Institute of Mathematics, Physics and Mechanics, Univ. of of
+Ljubljana, 2009.  arXiv:0903.2507 .   Electronic J. Combinatorics  18(1), Paper P55, 2011 .
+ 
+We investigate isometric embeddings of other graphs into Fibonacci cubes,
+graphs formed from the families of fixed-length bitstrings with no two
+consecutive ones.
+  
+    The h-index of a graph and its application to dynamic subgraph statistics . 
+D. Eppstein and
+ E. S. Spiro .  arXiv:0904.3741 . 
+Algorithms and Data Structures Symposium (WADS), Banff, Canada. 
+Springer,  Lecture Notes in Comp. Sci.  5664, 2009, pp. 278–289.   J. Graph
+Algorithms and Applications  16 (2): 543–567, 2012 .
+ 
+We define the h-index of a graph to be the maximum h such that the graph
+has h vertices each of which has degree at least h. We show that the
+h-index, and a partition of the graph into high and low degree vertices,
+may be maintained in constant time per update. Based on this technique,
+we show how to maintain the number of triangles in a dynamic graph in
+time O(h) per update; this problem is motivated by Markov Chain Monte
+Caro simulation of the Exponential Random Graph Model used for
+simulation of social networks. We also prove
+bounds on the h-index for scale-free graphs and investigate the behavior
+of the h-index on a corpus of real social networks.
+  
+( Slides )
+  
+    Orientation-constrained rectangular layouts . 
+D. Eppstein and
+E. Mumford.  arXiv:0904.4312 . 
+Algorithms and Data Structures Symposium (WADS), Banff, Canada. 
+Springer,  Lecture Notes in Comp. Sci.  5664, 2009, pp. 266–277.
+ 
+We show how to find a stylized map in which regions have been replaced
+by rectangles, preserving adjacencies between regions, with constraints
+on the orientations of adjacencies between regions. For an arbitrary
+dual graph representing a set of adjacencies, and an arbitrary set of
+orientation constraints, we can determine whether there exists a
+rectangular map satisfying those constraints in polynomial time. The
+algorithm is based on a representation of the set of all layouts for a
+given dual graph as a distributive lattice, and on Birkhoff's
+representation theorem for distributive lattices.
+  
+Merged with " Area-universal rectangular layouts "
+to form the journal version, " Area-universal and constrained rectangular layouts ".
+  
+( Slides )
+  
+    Combinatorics and geometry of finite and infinite squaregraphs .  H.-J. Bandelt ,
+ V. Chepoi ,
+and D. Eppstein.  arXiv:0905.4537 .   SIAM J. Discrete Math.  24 (4): 1399–1440, 2010 .
+ 
+Characterizes squaregraphs as duals of triangle-free hyperbolic line
+arrangements, provides a forbidden subgraph characterization of them,
+describes an algorithm for finding minimum subsets of vertices that
+generate the whole graph by medians, and shows that they may be
+isometrically embedded into Cartesian products of five (but not, in
+general, fewer than five) trees.
+  
+    Graph-theoretic solutions to computational geometry problems . 
+D. Eppstein.  Invited talk  at the 35th International
+Workshop on Graph-Theoretic Concepts in Computer Science (WG 2009),
+Montpellier, France, 2009. 
+Springer,  Lecture Notes in Comp. Sci.  5911, 2009, pp. 1–16.  arXiv:0908.3916 .
+ 
+We survey problems in computational geometry that may be solved by
+constructing an auxiliary graph from the problem and solving a
+graph-theoretic problem on the auxiliary graph. The problems considered
+include the art gallery problem, partitioning into rectangles, minimum
+diameter clustering, bend minimization in cartogram construction, mesh
+stripification, optimal angular resolution, and metric embedding.
+  
+    Optimal angular resolution for face-symmetric drawings . 
+D. Eppstein and
+ K. Wortman .  arXiv:0907.5474 .   J. Graph
+Algorithms and Applications  15 (4): 551–564, 2011 .
+ 
+We consider drawings of planar partial cubes in which all interior faces are
+centrally symmetric convex polygons, as in my previous
+paper  Algorithms for Drawing Media . Among all
+drawings of this type, we show how to find the one with optimal angular
+resolution. The solution involves a transformation from the problem
+into the parametric negative cycle detection problem: given a graph in
+which the edge weights are linear functions of a parameter λ,
+find the minimum value of λ for which the graph contains no
+negative cycles.
+  
+    Going off-road: transversal complexity in road networks . 
+D. Eppstein,
+ M. T. Goodrich , and
+ L. Trott .  arXiv:0909.2891 .  Proc. 17th ACM
+SIGSPATIAL Int. Conf. Advances in Geographic Information Systems,
+Seattle, 2009, pp. 23–32 .
+ 
+Shows both theoretically and experimentally that the number of times a
+random line crosses a road network is asymptotically upper bounded by
+the square root of the number of road segments.
+  
+    Paired approximation problems and incompatible inapproximabilities . 
+D. Eppstein.  arXiv:0909.1870 .  21st ACM-SIAM Symp. Discrete Algorithms , Austin, Texas, 2010,
+pp. 1076–1086.
+ 
+Considers situations in which two hard approximation problems are
+presented by means of a single input. In many cases it is possible to
+guarantee that one or the other problem can be approximated to within a
+better approximation ratio than is possible for approximating it as a
+single problem. For instance, it is possible to find either a
+(1+ε)-approximation to a 1-2 TSP defined from a graph or a
+n ε -approximation to the maximum independent set of
+the same graph, despite lower bounds showing nonexistence of
+approximation schemes for 1-2 TSP and nonexistence of approximations
+better than n 1 − ε  for independent set.
+However, for some other pairs of problems, such as hitting set and set
+cover, we show that solving the paired problem approximately is no
+easier than solving either problem independently.
+  
+( Slides )
+  
+    Steinitz theorems for orthogonal polyhedra . 
+D. Eppstein and
+E. Mumford.  arXiv:0912.0537 .  26th Eur. Worksh. Comp. Geom. , Dortmund, Germany, 2010.   26th ACM Symp. Comp. Geom.,  Snowbird, Utah, 2010, pp. 429–438 .   J. Computational Geometry  5 (1): 179–244, 2014 .
+ 
+We provide a graph-theoretic characterization of three classes of
+nonconvex polyhedra with axis-parallel sides, analogous to Steinitz's
+theorem characterizing the graphs of convex polyhedra.
+  
+The journal version has the slightly different title "Steinitz theorems
+for simple orthogonal polyhedra".
+  
+( Slides )
+  
+    Ramified rectilinear polygons: coordinatization by dendrons .  H.-J. Bandelt ,
+ V. Chepoi ,
+and D. Eppstein.  arXiv:1005.1721 .   Disc. Comp. Geom. 
+54 (4): 771–797, 2015 .  
+We characterize the graphs that can be isometrically embedded into the
+Cartesian product of two trees (partial double dendrons), and the metric
+spaces obtained as the
+median complexes of these graphs. These spaces include the space of
+geodesic distance in axis-parallel
+polygons in the L 1  plane, hence the title. An algorithm based
+on lexicographic breadth-first search can be used to recognize partial
+double dendrons in linear time.
+  
+    Regular labelings and geometric structures . 
+D. Eppstein.  arXiv:1007.0221 . 
+Invited to 22nd Canadian Conference on Computational Geometry (CCCG 2010). 
+Invited to  Proc. 21st International Symposium on Algorithms and Computation
+(ISAAC 2010) , Jeju, Korea, 2010.  Springer,  Lecture
+Notes in
+Comp. Sci.  6506, 2010, p. 1 .  
+We survey regular labelings for straight-line embedding of planar graphs
+on grids, rectangular partitions, and  orthogonal polyhedra , and the many
+similarities between these different types of labeling.
+  
+( CCCG talk slides )
+  
+    Flows in one-crossing-minor-free graphs .  E. Chambers  and
+D. Eppstein.  arXiv:1007.1484 .  Proc. 21st International Symposium on Algorithms and Computation
+(ISAAC 2010) , Jeju, Korea, 2010.  Springer,  Lecture
+Notes in
+Comp. Sci.  6506, 2010, pp. 241–252 .   J. Graph Algorithms
+and Applications  17 (3): 201–220, 2013 .
+ 
+We show that the maximum flow problem can be solved in near-linear time
+for K 5 -minor-free and K 3,3 -minor-free graphs. The
+same result also holds for H-minor-free graphs when H can be embedded in
+the plane with one crossing and a structural decomposition of the input
+flow graph is given.
+  
+    Listing all maximal cliques in sparse graphs in near-optimal time . 
+D. Eppstein,
+ M. Löffler , and
+ D. Strash .  arXiv:1006.5440 . 
+Workshop on Exact Algorithms for NP-Hard Problems, Dagstuhl, Germany, 2010.  Proc. 21st International Symposium on Algorithms and Computation
+(ISAAC 2010) , Jeju, Korea, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6506, 2010, pp. 403–414 .  
+We describe an algorithm for finding all maximal cliques in a graph, in
+time O(dn3 d/3 ) where n is the number of vertices and d is the
+degeneracy of the graph, a standard measure of its sparsity. This time
+bound matches the worst-case output size for these parameters. The
+algorithm modifies the Bron-Kerbosch algorithm for maximal cliques by
+ordering the vertices by degree in the outer recursive call of the algorithm.
+  
+For the journal version, see " Listing all
+maximal cliques in large sparse real-world graphs in near-optimal
+time ," which combines results from this and a different conference paper.
+  
+    Drawing graphs in the plane with a prescribed outer face and
+polynomial area .  E. Chambers ,
+D. Eppstein,
+ M. T. Goodrich , and
+ M. Löffler .  Proc. 18th Int. Symp. Graph Drawing , Konstanz, Germany, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6502, 2011, pp. 129–140 .  arXiv:1009.0088 .   J. Graph
+Algorithms and Applications  16 (2): 243–259, 2012 .
+ 
+Tutte's method of spring embeddings allows any triangulated planar graph
+to be drawn so that the outer face has any pre-specified convex shape,
+but it may place vertices exponentially close to each other. Alternative
+graph drawing methods provide polynomial-area straight line drawings but
+do not allow the outer face shape to be specified. We describe a drawing
+method that combines both properties: it has polynomial area, and can
+match any pre-specified shape of the outer face, even a shape in which
+some of the vertices have 180 degree angles. We apply our results to
+drawing polygonal schemas for graphs embedded on surfaces of positive genus.
+  
+    Lombardi drawings of graphs .  C. Duncan ,
+D. Eppstein,
+ M. T. Goodrich ,
+ S. Kobourov , and
+ M. Nöllenburg .  Proc. 18th Int. Symp. Graph Drawing , Konstanz, Germany, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6502, 2011, pp. 195–207 .  arXiv:1009.0579 . 
+Invited talk at  7th Dutch Computational Geometry Day , Eindhoven, the
+Netherlands, 2010.   J. Graph
+Algorithms and Applications  16 (1): 85–108, 2012  (special issue
+for GD 2010).
+ 
+In honor of artist  Mark Lombardi , we
+define a Lombardi drawing to be a drawing of a graph in which the edges
+are drawn as circular arcs and at each vertex they are equally spaced
+around the vertex so as to achieve the best possible angular
+resolution. We describe algorithms for constructing Lombardi drawings of
+regular graphs, 2-degenerate graphs, graphs with rotational symmetry,
+and several types of planar graphs. A program for the rotationally
+symmetric case, the  Lombardi
+Spirograph , is available online.
+  
+    Drawing trees with perfect angular resolution and polynomial area .  C. Duncan ,
+D. Eppstein,
+ M. T. Goodrich ,
+ S. Kobourov , and
+ M. Nöllenburg .  Proc. 18th Int. Symp. Graph Drawing , Konstanz, Germany, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6502, 2011, pp. 183–194 .  arXiv:1009.0581 .   Discrete Comput. Geom.  49 (2): 157–182, 2013 .
+ 
+We consider balloon drawings of trees, in which each subtree of the root
+is drawn recursively within a disk, and these disks are arranged
+radially around the root, with the edges at each node spaced equally
+around the node so as to achieve the best possible angular
+resolution. If we are allowed to permute the children of
+each node, then we show that a drawing of this type can be made in which
+all edges are straight line segments and the area of the drawing is a
+polynomial multiple of the shortest edge length. However, if the child
+ordering is prescribed, exponential area might be necessary. We show
+that, if we relax the requirement of straight line edges and draw the
+edges as circular arcs (a style we call  Lombardi drawing ) then even with a prescribed
+child ordering we can achieve polynomial area.
+  
+    Optimal 3D angular resolution for low-degree graphs . 
+D. Eppstein,
+ M. Löffler ,
+E. Mumford, and
+ M. Nöllenburg .  Proc. 18th Int. Symp. Graph Drawing , Konstanz, Germany, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6502, 2011, pp. 208–219 .  arXiv:1009.0045 .   J. Graph Algorithms
+and Applications  17 (3): 173–200, 2013 .
+ 
+We show how to draw any graph of maximum degree three in three
+dimensions with 120 degree angles at each vertex or bend, and any graph of
+maximum degree four in three dimensions with the angles of the diamond
+lattice at each vertex or bend. In each case there are no crossings and
+the number of bends per edge is a small constant.
+  
+    Extended dynamic subgraph statistics using  h -index parameterized
+data structures . 
+D. Eppstein,
+ M. T. Goodrich ,
+ D. Strash , and
+ L. Trott .  Proc. 4th Int. Conf. on Combinatorial Optimization and Applications
+(COCOA 2010) , Hawaii, 2010.  Springer,  Lecture Notes in
+Comp. Sci.  6508, 2010, pp. 128–141 .  arXiv:1009.0783 .   Theor. Comput. Sci. 
+447: 44–52, 2012  (special issue for COCOA 2010).
+ 
+An earlier paper with Spiro at WADS 2009 provided dynamic graph
+algorithms for counting how many copies of each possible type of
+subgraph there are in a larger undirected graph, when the subgraphs have
+at most three vertices. This paper extends the method to directed graphs
+and to larger numbers of vertices per subgraph.
+  
+    Densities of minor-closed graph families . 
+D. Eppstein.  arXiv:1009.5633 .   Electronic J. Combinatorics  17(1), Paper R136, 2010 .
+ 
+For every minor-closed graph family (such as the family of planar
+graphs), there is a constant c such that the maximum number of edges in
+an n-vertex graph in the family is
+ c ( n  +  o ( n ); for instance, for
+planar graphs,  c  = 3. We call  c  the limiting
+density of the family, and we study the set of all limiting densities of
+all minor-closed graph families. We show that this set of limiting
+densities is closed and well-ordered, with order type at least
+ω ω , and we find an exact description of the
+members of this set up to its first two cluster points 1 and 3/2.
+  
+    Listing all maximal cliques in large sparse real-world graphs . 
+D. Eppstein and
+ D. Strash .  10th Int. Symp. Experimental Algorithms , Crete, 2011.  Springer,  Lecture
+Notes in Comp. Sci.  6630, 2011, pp. 364–375 .  arXiv:1103.0318 .
+ 
+We experiment with our  degeneracy-based
+algorithm for listing maximal cliques in sparse graphs  and show that
+it works well on large graphs drawn from several repositories of
+real-world social networks and bioinformatics networks.
+  
+For the journal version, see " Listing all
+maximal cliques in large sparse real-world graphs in near-optimal
+time ", which combines results from this and a different conference paper.
+  
+    Guest editor's foreword . 
+D. Eppstein and
+E. Gansner.   Journal
+of Graph Algorithms and Applications  15 (2): 3–5, 2011 . 
+(Special Issue on Selected Papers from the Seventeenth International
+Symposium on Graph Drawing, GD 2009)
+ 
+    Category-based routing in social networks: membership dimension and the small-world phenomenon . 
+D. Eppstein,
+ M. T. Goodrich ,
+ M. Löffler ,
+ D. Strash , and
+ L. Trott .  Workshop on Graph Algorithms and Applications , Zürich,
+Switzerland, July 2011.  International Conference on Computational
+Aspects of Social Networks (CASoN 2011) , Salamanca, Spain, October
+2011.  arXiv:1108.4675 .   Theor. Comput. Sci.  514: 96–104, 2013 . (Special issue on Graph
+Algorithms and Applications: in Honor of Professor Giorgio Ausiello)  
+We investigate greedy routing schemes for social networks, in which
+participants know categorical information about some other participants
+and use it to guide message delivery by forwarding messages to neighbors
+that have more categories in common with the eventual destination.
+We define the membership dimension of such a scheme to be the maximum
+number of categories that any individual belongs to, a natural measure
+of the cognitive load of greedy routing on its participants.
+And we show that membership dimension is closely related to the small
+world phenomenon: a social network can be given a category system with
+polylogarithmic membership dimension that supports greedy routing if,
+and only if, the network has polylogarithmic diameter.
+  
+    Confluent Hasse diagrams . 
+D. Eppstein and
+ J. Simons .  Proc. 19th Int. Symp. Graph Drawing , Eindhoven, The Netherlands, 2011. 
+Springer,  Lecture Notes in
+Comp. Sci.  7034, 2012, pp. 2–13.  arXiv:1108.5361 .   J. Graph
+Algorithms and Applications  17 (7): 689–710, 2013 .
+ 
+We show that a partial order has a non-crossing upward planar drawing if
+and only if it has order dimension two, and we use the
+Dedekind-MacNeille completion to find a drawing with the minimum
+possible number of confluent junctions.
+  
+    Hardness of approximate compaction for nonplanar orthogonal graph
+drawings .  M. J. Bannister  and
+D. Eppstein.  Proc. 19th Int. Symp. Graph Drawing , Eindhoven, The Netherlands, 2011. 
+Springer,  Lecture Notes in Comp. Sci.  7034, 2012, pp. 367–378.
+ 
+We show that, for several variants of the problem of compacting a grid
+drawing of a graph to use the minimum number of rows or minimum area,
+no good approximation algorithm is possible. We also develop
+fixed-parameter tractable algorithms and approximation algorithms
+showing that some of our inapproximability bounds are tight.
+See the journal
+version, " Inapproximability of
+orthogonal compaction ",
+for some improvements and corrections.
+  
+    Planar and poly-arc Lombardi drawings .  C. Duncan ,
+D. Eppstein,
+ M. T. Goodrich ,
+ S. Kobourov , and
+ M. Löffler .  Proc. 19th Int. Symp. Graph Drawing , Eindhoven, The Netherlands, 2011. 
+Springer,  Lecture Notes in
+Comp. Sci.  7034, 2012, pp. 308–319.  arXiv:1109.0345 .
+ 
+We extend Lombardi drawing (in which each edge is a circular arc and
+the edges incident to a vertex must be equally spaced around it) to
+drawings in which edges are composed of multiple arcs, and we
+investigate the graphs that can be drawn in this more relaxed framework.
+  
+    Randomized speedup of the Bellman–Ford algorithm .  M. J. Bannister  and
+D. Eppstein.  arXiv:1111.5414 .   Analytic Algorithmics and Combinatorics (ANALCO12) , Kyoto, Japan, 2012, pp. 41–47 .
+ 
+The Bellman–Ford algorithm for single-source shortest paths in graphs
+that may have negatively weighted edges but no negative cycles can be
+sped up by a technique of Yen in which the graph is partitioned into two
+directed acyclic subgraphs and edge relaxations alternate between these
+two subgraphs. We show that choosing this partition randomly gains an
+additional factor of 2/3 in running time.
+  
+    Inapproximability of orthogonal compaction .  M. J. Bannister ,
+D. Eppstein, and
+ J. Simons .  arXiv:1108.4705 .   J. Graph Algorithms and Applications  16 (3): 651–673, 2012 . (Special issue for GD 2011.)
+ 
+This is the journal version of " Hardness
+of approximate compaction for nonplanar orthogonal graph drawings ". 
+It has stronger inapproximability bounds, and more variations of the
+compaction problem that are hard to approximate. In addition it includes
+a retraction of a buggy approximation algorithm from the conference version.
+  
+    Area-universal and constrained rectangular layouts . 
+D. Eppstein,
+E. Mumford,
+ B. Speckmann , and
+ K. Verbeek .   SIAM J. Computing  41 (3): 537–564, 2012 .
+ 
+A combined journal version of
+" Area-universal rectangular layouts "
+and
+" Orientation-constrained
+rectangular layouts ".
+  
+( Local copy of article )
+  
+    Solving single-digit Sudoku subproblems . 
+D. Eppstein.  arXiv:1202.5074 .  6th International Conference on Fun with Algorithms (FUN 2012) ,
+Venice, Italy, 2012.  Springer,  Lecture Notes in
+Comp. Sci.  7288, 2012, pp. 142–153 .
+ 
+We find an algorithm for making all possible deductions based on the set
+of candidate locations for a single digit in a Sudoku puzzle; the
+problem is NP-hard, and our algorithm takes exponential time, but the
+mild form of the exponential allows it to be fast for practical problem sizes.
+  
+( Slides )
+  
+    Near-linear-time deterministic plane Steiner spanners and TSP
+approximation for well-spaced point sets .  G. Borradaile  and
+D. Eppstein.  arXiv:1206.2254 .  24th Canadian Conference on Computational Geometry (CCCG 2012) ,
+Prince Edward Island, Canada, 2012, pp. 311–316.   Comp. Geom. Theory
+&amp; Applications  49: 8–16, 2015  (special issue for CCCG 2012).
+ 
+When a planar point set has the property that its Delaunay triangulation
+has no large angles, we show how to connect it by a plane graph (having
+linearly many additional Steiner vertices) in which the distances
+between the original points are approximations to their Euclidean
+distance, and in which the total graph weight is at most a constant
+times the minimum spanning tree weight. The time to construct this graph
+is near-linear, the same as for integer sorting. We use this result to
+approximate the traveling salesman problem, for these point sets, in the
+same time bound.
+  
+    Planar Lombardi drawings for subcubic graphs . 
+D. Eppstein.  arXiv:1206.6142 .  20th Int. Symp. Graph Drawing , Redmond, Washington, 2012.  Springer,  Lecture Notes in Comp. Sci.  7704, 2013, pp. 126–137 .  
+We show that every planar graph of maximum degree three has a planar
+Lombardi drawing and that some but not all 4-regular planar graphs have
+planar Lombardi drawings.
+The proof idea combines circle packings with a form of
+Möbius-invariant power diagram for circles, defined
+using three-dimensional hyperbolic geometry.
+  
+For the journal version, see " A
+Möbius-invariant power diagram and its applications to soap
+bubbles and planar lombardi drawing. ".
+  
+( Slides )
+  
+    Force-directed graph drawing using social gravity and scaling .  M. J. Bannister ,
+D. Eppstein,
+ M. T. Goodrich , and
+ L. Trott .  arXiv:1209.0748 .  20th Int. Symp. Graph Drawing , Redmond, Washington, 2012.  Springer,  Lecture Notes in Comp. Sci.  7704, 2013, pp. 414–425 .  
+We extend force-directed methods of graph drawing by adding a force that
+pulls vertices towards the center of the drawing, with a strength
+proportional to the centrality of the vertex. Gradually scaling up this
+force helps avoid the tangling that would otherwise result from its use.
+  
+    On the density of maximal 1-planar graphs .  F. J. Brandenburg ,
+D. Eppstein,
+A. Gleißner,
+ M. T. Goodrich ,
+K. Hanauer, and
+J. Reislhuber.  20th Int. Symp. Graph Drawing , Redmond, Washington, 2012.  Springer,  Lecture Notes in Comp. Sci.  7704, 2013, pp. 327–338 .  
+A graph is 1-planar if it can be drawn in the plane with at most one
+crossing per edge, and maximal 1-planar if it is 1-planar but adding any
+edge would force more than one crossing on some edge or edges. Although
+maximal 1-planar graphs on  n  vertices may have as many as
+4 n  − 8 edges, we show that there exist maximal
+1-planar graphs with as few as 45 n /17 + O(1) edges.
+  
+    Windows into relational events: data structures for contiguous
+subsequences of edges .  M. J. Bannister ,
+ C. DuBois ,
+D. Eppstein, and
+ P. Smyth .  NIPS 2012 Workshop on Algorithmic and Statistical Approaches for Large
+Social Networks , South Lake Tahoe, California, 2012 (poster and invited talk).   24th ACM-SIAM
+Symp. Discrete Algorithms , New Orleans, Louisiana, 2013,
+pp. 856–864.   arXiv:1209.5791 .
+ 
+We study relational event data in which a collection of actors in a
+social network have a sequence of pairwise interactions. Contiguous
+subsequences of these interactions form graphs, and we develop efficient
+data structures for querying the parameters of these graphs.
+  
+    The graphs of planar soap bubbles . 
+D. Eppstein.  arXiv:1207.3761 .   Proc. 29th ACM Symp. on Computational Geometry , Rio de Janeiro,
+2013, pp. 27–36 .
+ 
+We characterize the graphs of two-dimensional soap bubble clusters as
+being exactly the bridgeless 3-regular planar graphs.
+The proof uses the Möbius invariance of the properties
+characterizing these clusters together with our previous circle packing
+method for constructing Lombardi drawings of graphs.
+  
+For the journal version, see " A
+Möbius-invariant power diagram and its applications to soap
+bubbles and planar lombardi drawing. ".
+  
+( Slides )
+  
+    Antimatroids and balanced pairs . 
+D. Eppstein.  arXiv:1302.5967 .   Order  31 (1): 81–99, 2014 .
+ Erratum (with V. Wiechert) .
+ 
+We generalize the 1/3-2/3 conjecture, according to which every partial
+order should have a pair of items that are nearly equally likely to
+appear in either order in a random linear extension, to antimatroids,
+and we prove it for several specific types of antimatroid.
+  
+    Grid minors in damaged grids . 
+D. Eppstein.  arXiv:1303.1136 .   Electronic J. Combinatorics  21(3), Paper P3.20, 2014 .
+ 
+We give tight bounds on the size of the largest remaining grid minor in
+a grid graph from which a given number of vertices have been deleted,
+and study several related problems.
+  
+    Parameterized complexity of 1-planarity .  M. J. Bannister ,
+ S. Cabello ,
+and D. Eppstein.  arXiv:1304.5591 . 
+13th Int. Symp. Algorithms and Data Structures (WADS 2013), London, Ontario  Springer,  Lecture Notes in Comp. Sci. 8037 , 2013, pp. 97–108 .  
+We show that testing whether a graph is 1-planar (drawable with at most
+one crossing per edge) may be performed in polynomial and
+fixed-parameter tractable time for graphs of bounded circuit rank,
+vertex cover number, or tree-depth. However, it is NP-complete for
+graphs of bounded treewidth, pathwidth, or bandwidth.
+  
+( Slides )
+  
+    Knowledge Spaces: Applications in Education .  J.-C.
+Falmagne ,
+D. Albert,
+C. Doble,
+D. Eppstein, 
+and X. Hu, eds.  Springer, 2013 .
+ 
+This edited volume collects experiences with automated learning systems
+based on the theory of knowledge spaces, and mathematical explorations
+of the theory of knowledge spaces and their efficient implementation.
+  
+    Learning sequences: an efficient data structure for learning spaces . 
+D. Eppstein. 
+In  Knowledge Spaces: Applications in Education ,
+J.-C. Falmagne, D. Albert, C. Doble, D. Eppstein, and X. Hu, eds.  Springer, 2013, pp. 287–304 .
+ 
+We show how to represent a learning space by a small family of learning
+sequences, orderings of the items in a learning sequence that are
+consistent with their prerequisite relations. This representation allows
+for the rapid generation of the family of all consistent knowledge
+states and the efficient assessment of the state of knowledge of a human
+learner.
+  
+    Projection, decomposition, and adaption of learning spaces . 
+D. Eppstein. 
+In  Knowledge Spaces: Applications in Education ,
+J.-C. Falmagne, D. Albert, C. Doble, D. Eppstein, and X. Hu, eds.  Springer, 2013, pp. 305–322 .
+ 
+In another chapter of the same book we used learning sequences to
+represent learning spaces and perform efficient knowledge assessment of
+a human learning. In this chapter we show how to use the same data
+structure to build learning spaces on a sample of the items of a larger
+learning space (an important subroutine in knowledge assessment) and to
+modify a learning space to more accurately model students.
+  
+    A brief history of curves in graph drawing . 
+D. Eppstein. 
+Invited survey talk at Workshop on Drawing Graphs and Maps with Curves,
+Dagstuhl, Germany, April 2013.   Drawing Graphs and
+Maps with Curves (Dagstuhl Seminar 13151)  ,
+S. G. Kobourov, M. Nöllenburg, and M. Teillaud, eds.,
+Dagstuhl Reports 3(4): 40–46, 2013.
+ 
+( Slides )
+  
+    Universal point sets for planar graph drawings with circular arcs .  P. Angelini ,
+D. Eppstein,
+ F. Frati ,
+ M. Kaufmann ,
+ S. Lazard ,
+ T. Mchedlidze ,
+ M. Teillaud , and
+ A. Wolff . 
+HAL-Inria open archive  oai:hal.inria.fr:hal-00846953 .  25th Canadian Conference on Computational Geometry , Waterloo,
+Canada, 2013.   J. Graph Algorithms
+and Applications  18 (3): 313–324, 2014 .
+ 
+For every positive integer  n , there exists a set of  n 
+points on a parabola, with the property that every  n -vertex
+planar graph can be drawn without crossings with its vertices at these
+points and with its edges drawn as circular arcs.
+  
+( Slides )
+  
+    Fixed parameter tractability of crossing minimization of almost-trees .  M. J. Bannister ,
+D. Eppstein, and
+ J. Simons .  arXiv:1308.5741 .  21st Int. Symp. Graph Drawing , Bordeaux, France, 2013.  Springer,  Lecture Notes in Comp. Sci.  8242, 2013, pp. 340–351 .  
+Many real-world graphs are k-almost-trees for small values of k: graphs
+in which, in every biconnected component, removing a spanning tree
+leaves at most k edges. We use kernelization methods to show that in
+such graphs, the 1-page and 2-page crossing numbers can be computed quickly.
+  
+    Superpatterns and universal point sets .  M. J. Bannister ,
+Z. Cheng,
+ W. E. Devanny , and
+D. Eppstein.  arXiv:1308.0403 .  21st Int. Symp. Graph Drawing , Bordeaux, France, 2013.  Springer,  Lecture Notes in Comp. Sci.  8242, 2013, pp. 208–219 . 
+Bannister's talk on this paper won the GD2013 best presentation award.   J. Graph Algorithms &amp; Applications  18 (2): 177–209, 2014   (special issue for GD'13).
+ 
+A superpattern of a set of permutations is a permutation that contains
+as a pattern every permutation in the set. Previously superpatterns had
+been considered for all permutations of a given length; we generalize this
+to sets of permutations defined by forbidden patterns; we show that
+the 213-avoiding permutations have superpatterns half the length of the
+known bound for all permutations, and that any proper permutation
+subclass of the 213-avoiding permutations has near-linear superpatterns.
+We apply these results to the construction of universal point sets, sets
+of points that can be used as the vertices of drawings of all n-vertex
+planar graphs. We use our 213-avoiding superpatterns to construct
+universal sets of size approximately  n  2 /4,
+and we also construct near-linear universal sets for graphs of bounded
+pathwidth.
+  
+   Drawing arrangement graphs in small grids, or how to play
+planarity . 
+D. Eppstein.  arXiv:1308.0066 .  21st Int. Symp. Graph Drawing , Bordeaux, France, 2013.  Springer,  Lecture Notes in Comp. Sci.  8242, 2013, pp. 436–447 .   J. Graph Algorithms &amp;
+Applications  18 (2): 211–231, 2014  (special issue for GD'13).
+ 
+The  planarity game  involves
+rearranging a scrambled line arrangement graph to make it planar.
+We show that the resulting graphs have drawings in grids of area
+ n  7/6 , much smaller than the quadratic size bound for
+grid drawings of planar graphs, and we provide a strategy for
+planarizing these graphs that is simple enough for human puzzle solving.
+  
+    Strict confluent drawing . 
+D. Eppstein,
+ D. Holten ,
+ M. Löffler ,
+ M. Nöllenburg , and
+ B. Speckmann , and
+ K. Verbeek .  arXiv:1308.6824 .  21st Int. Symp. Graph Drawing , Bordeaux, France, 2013.  Springer,  Lecture Notes in Comp. Sci.  8242, 2013, pp. 352–363 .   J. Computational Geometry  7 (1): 22–46, 2016 .
+ 
+A confluent drawing of a graph is a set of points and curves in the
+plane with the property that two vertices are adjacent in the graph if
+and only if the corresponding points can be connected to each other by
+smooth paths in the drawing. We define a variant of
+confluent drawing, strict confluent drawing, in which a smooth path
+between two vertices (if it exists) must be unique.
+We show that it is NP-complete to test whether such drawings exist,
+in contrast to unrestricted confluence for which the complexity remains open.
+Additionally, we show that finding outerplanar drawings (in which the points
+are on the boundary of a disk and the curves are interior to it) with a fixed
+cyclic vertex ordering can be performed in polynomial time.
+We use circle packings to find nice versions of these drawings in which
+all tracks are represented by piecewise-circular curves.
+  
+    Convex-arc drawings of pseudolines . 
+D. Eppstein,
+M. van Garderen,
+ B. Speckmann , and
+ T. Ueckerdt .  21st Int. Symp. Graph Drawing  (poster), Bordeaux, France, 2013. 
+Springer,  Lecture Notes in Comp. Sci.  8242, 2013, pp. 522–523.  arXiv:1601.06865 .  
+We show that every outerplanar weak pseudoline arrangement (a collection
+of curves topologically equivalent to lines, each crossing at most once
+but possibly zero times, with all crossings belonging to an infinite
+face) can be straightened to a hyperbolic line arrangement. As a
+consequence such an arrangement can also be drawn in the Euclidean plane
+with each pseudoline represented as a convex piecewise-linear curve with
+at most two bends. In contrast, for arbitrary pseudoline arrangements, a
+linear number of bends is sufficient and sometimes necessary.
+  
+    Small superpatterns for dominance drawing .  M. J. Bannister ,
+ W. E. Devanny , and
+D. Eppstein.  arXiv:1310.3770 .  Analytic Algorithmics and Combinatorics (ANALCO14) , Portland,
+Oregon, 2014, pp. 92–103  .
+ 
+We construct small universal point sets for dominance drawings of
+classes of acyclic graphs, by finding forbidden patterns in the
+permutations determined by these drawings and proving the existence
+of small superpatterns for the permutations with these patterns forbidden.
+In particular, dominance drawings of the Hasse diagrams of width-2
+partial orders have universal point sets of size
+O( n  3/2 ), derived from superpatterns of the same size
+for the 321-avoiding permutations, and dominance drawings of st-planar
+graphs have universal point sets of size
+O( n  log  n ), derived from superpatterns for
+riffle shuffles.
+  
+    Structures in solution spaces: Three lessons from Jean-Claude . 
+D. Eppstein. 
+Invited talk, Conference on Meaningfulness and Learning Spaces:
+A Tribute to the Work of Jean-Claude Falmagne 
+Irvine, California, 2014.
+ 
+This talk surveys my work on rectangular cartograms, the 1/3-2/3
+conjecture for antimatroids, and flip distance for triangulations of
+point sets with no empty pentagon, and how this line of research
+stemmed from the work of Jean-Claude Falmagne on learning spaces.
+  
+( Slides 
+--  video )
+  
+    Listing all maximal cliques in large sparse real-world graphs in
+near-optimal time . 
+D. Eppstein,
+ M. Löffler , and
+ D. Strash .   J. Experimental
+Algorithmics   18 (3): 3.1, 2013.
+ 
+This paper combines our theoretical results on clique-finding algorithms
+from ISAAC 2010 with our experimental results on the same algorithms
+from SEA 2011.
+  
+    Automated generation of linkage loop equations for planar 1-dof
+linkages, demonstrated up to 8-bar . 
+B. E. Parrish,
+ J. M. McCarthy , and
+D. Eppstein.   Proc. ASME 2014
+International Design Engineering Technical Conferences and Computers
+and Information in Engineering Conference , Vol. 5A:  38th Mechanisms and
+Robotics Conference , Buffalo, New York, USA, August 17-20, 2014, paper
+no. DETC2014-35263 .   J. Mechanisms
+and Robotics   7 (1): 011006, 2015.
+ 
+This paper reports on an implementation of an algorithm for constructing
+the configuration space of two-dimensional linkages with one degree of freedom.
+  
+( eScholarship
+conference version  --
+ eScholarship
+journal version )
+  
+    Planar induced subgraphs of sparse graphs .  G. Borradaile ,
+D. Eppstein,
+and P. Zhu.  arXiv:1408.5939 .  22nd Int. Symp. Graph Drawing , Würzburg, Germany, 2014.  Springer,  Lecture Notes
+in Comp. Sci.  8871, 2014, pp. 1–12.    J. Graph Algorithms &amp;
+Applications  19 (1): 281–297, 2015 .
+ 
+We investigate the number of vertices that must be deleted from an
+arbitrary graph, in the worst case as a function of the number of edges,
+in order to planarize the remaining graph.
+We show that  m /5.22 vertices are sufficient
+and  m /(6 − o(1)) are necessary, and we also give
+bounds for the number of deletions needed to achieve certain subclasses
+of planar graphs.
+  
+    The Galois complexity of graph drawing: why numerical solutions are
+ubiquitous for force-directed, spectral, and circle packing drawings .  M. J. Bannister ,
+ W. E. Devanny ,
+D. Eppstein, and
+ M. T. Goodrich .  arXiv:1408.1422 .  22nd Int. Symp. Graph Drawing , Würzburg, Germany, 2014  Springer,  Lecture
+Notes in Comp. Sci.  8871, 2014, pp. 149–161.    J. Graph Algorithms &amp;
+Applications  19 (2): 619–656, 2015 .
+ 
+We show that many standard graph drawing methods have algebraic
+solutions described by polynomials that can have unsolvable Galois groups,
+and that can have Galois groups whose order is divisible by large prime
+numbers. As a consequence certain models of exact algebraic computation
+are unable to construct these drawings.
+  
+    Crossing minimization for 1-page and 2-page drawings of graphs
+with bounded treewidth .  M. J. Bannister  and
+D. Eppstein.  arXiv:1408.6321 .  22nd Int. Symp. Graph Drawing , Würzburg, Germany, 2014.  Springer,  Lecture
+Notes in Comp. Sci.  8871, 2014, pp. 210–221. 
+ 
+We show how to express in monadic second-order logic the problems of
+drawing a graph with a fixed
+number of crossings on a one or two page book layout.
+By applying Courcelle's theorem, we obtain fixed-parameter tractable
+algorithms for these problems, parameterized by treewidth.
+  
+    Balanced circle packings for planar graphs .  M. J. Alam ,
+D. Eppstein,
+ M. T. Goodrich ,
+ S. Kobourov , and
+ S. Pupyrev .  arXiv:1408.4902 .  22nd Int. Symp. Graph Drawing , Würzburg, Germany, 2014.  Springer,  Lecture
+Notes in Comp. Sci.  8871, 2014, pp. 125–136. 
+ 
+The balanced circle packings of the title are systems of
+interior-disjoint circles, whose tangencies represent the given graph,
+and whose radii are all within a polynomial factor of each other.
+We show that these packings always exist for trees, cactus graphs,
+outerpaths, k-outerplanar graphs of bounded degree when k is at most
+logarithmic, and planar graphs of bounded treedepth.
+The treedepth result uses a new construction of inversive-distance
+circle packings.
+  
+    Flat foldings of plane graphs with prescribed angles and edge lengths .  Z. Abel ,
+ E. Demaine ,
+ M. Demaine ,
+D. Eppstein,
+ A. Lubiw , and
+ R. Uehara .  arXiv:1408.6771 .  22nd Int. Symp. Graph Drawing , Würzburg, Germany, 2014.  Springer,  Lecture
+Notes in Comp. Sci.  8871, 2014, pp. 272–283. 
+ 
+Given a plane graph with fixed edge lengths, and an assignment of the
+angles 0, 180, and 360 to the angles between adjacent edges, we show how
+to test whether the angle assignment can be realized by an embedding of
+the graph as a flat folding on a line. As a consequence, we can
+determine whether two-dimensional cell complexes with one vertex can be
+flattened. The main idea behind the result is to show that each face of
+the graph can be folded independently of the other faces.
+  
+     k -best enumeration . 
+D. Eppstein.   Encyclopedia of Algorithms   (Ming-Yang Kao, ed.), Springer, added 2014.  arXiv:1412.5075 .   Bull. EATCS  115, 2015 .
+ 
+A brief survey of algorithms for finding the  k  shortest paths and
+related  k -best enumeration problems. The arXiv/EATCS version is
+significantly longer and with more references than the Springer version.
+  
+    Minimum forcing sets for Miura folding patterns .  B. Ballinger ,
+ M. Damian ,
+D. Eppstein,
+ R. Flatland ,
+J. Ginepro, and
+ T. Hull .  arXiv:1410.2231 .   26th ACM-SIAM Symp. on Discrete Algorithms , San Diego, 2015, pp. 136–147 .
+ 
+A forcing set for an origami crease pattern is a subset of the folds
+with the property that, if these folds are folded the correct way
+(mountain vs valley) the rest of the pattern also has to be folded the
+correct way. We use a combinatorial equivalence with three-colored grids
+to construct minimum-cardinality forcing sets for the Miura-ori folding
+pattern and for other patterns with differing folds along the same line
+segments.
+  
+( Slides )
+  
+    All-pairs minimum cuts in near-linear time for surface-embedded graphs .  G. Borradaile ,
+D. Eppstein,
+ A. Nayyeri ,
+and  C. Wulff-Nilsen .  arXiv:1411.7055 .  Proc. 32nd Int. Symp. Computational Geometry , Boston, 2016.  Leibniz International Proceedings in Informatics (LIPIcs) 51, pp. 22:1–22:16 .  
+We give the first known near-linear algorithms for constructing
+Gomory–Hu trees of bounded-genus graphs, and we shave a log off
+the time for the same problem on planar graphs.
+  
+    ERGMs are hard .  M. J. Bannister ,
+ W. E. Devanny , and
+D. Eppstein.  arXiv:1412.1787 .  
+ERGMs (exponential random graph models) are used in social science to
+describe probability distributions on graphs that are supposed to mimic
+real-world social networks. However, we show that (with features that
+are standard in the social science application) the distributions given
+by these models can be computationally infeasible to sample from or
+to approximate the probability of seeing a given graph.
+  
+    Contact graphs of circular arcs .  M. J. Alam ,
+D. Eppstein,
+ M. Kaufmann ,
+ S. Kobourov ,
+ S. Pupyrev 
+ A. Schulz , and
+ T. Ueckerdt .  arXiv:1501.00318 . 
+14th Algorithms and Data Structures Symp. (WADS 2015), Victoria, BC.  Springer,  Lecture Notes in Comp. Sci.  9214 (2015), pp. 1–13 .
+ 
+We study the graphs formed by non-crossing circular arcs in the plane,
+having a vertex for each arc and an edge for each point where an arc
+endpoint touches the interior of another arc.
+  
+( Slides )
+  
+    Simple recognition of Halin graphs and their generalizations . 
+D. Eppstein.  arXiv:1502.05334 .   J. Graph Algorithms &amp;
+Applications  20 (2): 323–346, 2016 .
+ 
+We describe and implement a simple linear time algorithm for recognizing
+Halin graphs based on two simplifications of triples of degree-three
+vertices in such graphs. Removing some auxiliary data from the algorithm
+causes it to recognize a broader class of graphs that we call the
+D3-reducible graphs. We study the properties of these graphs, showing
+that they share many properties with the Halin graphs.
+  
+    Rooted cycle bases . 
+D. Eppstein,
+ J. M. McCarthy , and
+B. E. Parrish.  arXiv:1504.04931 . 
+14th Algorithms and Data Structures Symp. (WADS 2015), Victoria, BC.  Springer,  Lecture Notes in Comp. Sci.  9214 (2015), pp. 339–350 .
+ 
+We consider the problem of finding a cycle basis for a graph in which
+all basis cycles contain a specified edge. We characterize the graphs
+having such a basis in terms of their vertex connectivity, we show that
+the minimum weight cycle basis with this constraint can be found in
+polynomial time and is weakly fundamental, and we show that finding a
+fundamental cycle basis with this constraint is NP-hard but
+fixed-parameter tractable.
+  
+( Slides )
+  
+    The parametric closure problem . 
+D. Eppstein.  arXiv:1504.04073 . 
+14th Algorithms and Data Structures Symp. (WADS 2015), Victoria, BC.  Springer,  Lecture Notes in Comp. Sci.  9214 (2015), pp. 327–338 .
+ 
+We consider the minimum weight closure problem for a partially ordered
+set whose elements have weights that vary linearly as a function of a
+parameter. For several important classes of partial orders the number of
+changes to the optimal solution as the parameter varies is near-linear,
+and the sequence of optimal solutions can be found in near-linear time.
+  
+( Slides )
+  
+    Metric dimension parameterized by max leaf number . 
+D. Eppstein.  arXiv:1506.01749 .   J. Graph Algorithms &amp;
+Applications  19 (1): 313–323, 2015 .
+ 
+We prove that when a graph of bounded size has its edges subdivided to
+form a larger graph, it is still possible to find its metric dimension
+by a fixed-parameter tractable algorithm, parameterized by the
+pre-subdivision size of the graph.
+  
+    Structure of graphs with locally restricted crossings .  V. Dujmović ,
+D. Eppstein, and
+ D. R. Wood .  arXiv:1506.04380 .  23rd Int. Symp. Graph Drawing , Los Angeles, California, 2015.  Springer,  Lecture
+Notes in Comp. Sci.  9411 (2015), pp. 87–98 .
+ 
+The Graph Drawing version used the alternative title
+"Genus, treewidth, and local crossing number".
+We prove tight bounds on the treewidth of graphs embedded on low-genus
+surfaces with few crossings per edge, and nearly tight bounds on the
+number of crossings per edge for graphs with a given number of edges
+embedded on low-genus surfaces.
+  
+( Slides )
+  
+    Track layouts, layered path decompositions, and leveled
+planarity .  M. J. Bannister ,
+ W. E. Devanny , and
+ V. Dujmović ,
+D. Eppstein, and
+ D. R. Wood .  arXiv:1506.09145 .  24th Int. Symp. Graph Drawing , Athens, Greece, 2016.  
+We introduce the concept of a layered path decomposition, and show that
+the layered pathwidth can be used to characterize the leveled planar
+graphs. As a consequence we show that finding the minimum number of
+tracks in a track layout of a given graph is NP-complete.
+The GD version includes only the parts concerning track layout,
+and uses the title "Track Layout is Hard".
+  
+    Approximate greedy clustering and distance selection for graph metrics . 
+D. Eppstein,
+ S. Har-Peled , and
+ A. Sidiropoulos .  arXiv:1507.01555 .  
+We provide fast approximation algorithms for the farthest-first
+traversal of graph metrics.
+  
+    Confluent orthogonal drawings of syntax diagrams .  M. J. Bannister ,
+D. A. Brown, and
+D. Eppstein.  arXiv:1509.00818 .  23rd Int. Symp. Graph Drawing , Los Angeles, California, 2015.  Springer,  Lecture
+Notes in Comp. Sci.  9411 (2015), pp. 260–271 .
+ 
+We describe a system for transforming context-free grammars into
+human-readable syntax diagrams, including optimizations that change the
+structure of the grammar to make it more readable without affecting the
+language described by the grammar.
+  
+    Treetopes and their graphs . 
+D. Eppstein.  arXiv:1510.03152 .   27th ACM-SIAM
+Symp. on Discrete Algorithms , Arlington, 2016, pp. 969–984 .  
+We describe a class of polytopes of varying dimensions, whose
+restriction to three dimensions is the class of
+roofless polyhedra (Halin graphs). We call these polytopes treetopes. We
+show that the four-dimensional treetopes are closely related to
+clustered planar graph drawings, and we use this connection to recognize
+the graphs of four-dimensional treetopes in polynomial time.
+  
+( Slides )
+  
+    On the planar split thickness of graphs . 
+D. Eppstein,
+ P. Kindermann ,
+ S. G. Kobourov ,
+ G. Liotta ,
+ A. Lubiw ,
+ A. Maignan ,
+ D. Mondal ,
+ H. Vosoughpour ,
+S. Whitesides, and
+ S. Wismath .  arXiv:1512.04839 .  Proc. 12th Latin American Theoretical Informatics Symposium (LATIN
+2016) , Ensenada, Mexico.  Springer,  Lecture Notes in Comp. Sci.  9644 (2016), pp. 403–415 .
+ 
+We study the problem of splitting the vertices of a given graph into a
+bounded number of sub-vertices (with each edge attaching to one of the
+sub-vertices) in order to make the resulting graph planar.
+It is NP-complete, but can be approximated to within a constant factor,
+and is fixed-parameter tractable in the treewidth.
+  
+( Slides )
+  
+    The computational hardness of  d K-series .  W. E. Devanny ,
+D. Eppstein, and
+B. Tilman.  NetSci2016  poster session, Seoul, Korea.
+ 
+The  d K-series is an extension of the degree sequence of a graph to a 
+ d -dimensional tensor, describing the number of  d -tuples of
+vertices with
+each possible combination of degrees and adjacencies. As we show, it is
+NP-hard to determine whether such a tensor represents a valid graph, for
+any  d  ≥ 3, or for  d  = 2 if the
+number of triangles in the graph is also specified (or constrained to be
+zero).
+  
+    Models and algorithms for graph watermarking . 
+D. Eppstein,
+ M. T. Goodrich ,
+ J. Lam ,
+N. Mamano,
+ M. Mitzenmacher , and
+M. Torres.  arXiv:1605.09425 .  Proc. 19th Information Security Conference (ISC 2016) , Honolulu,
+Hawaii.  Springer,  Lecture Notes in
+Comp. Sci.  9866 (2016), pp. 283–301 .
+ 
+We show how to modify a small number of edges in a large social network
+in order to make the modified copy easy to identify, even if an
+adversary tries to hide the modification by permuting the vertices and
+flipping a much larger number of edges. The result depends on the random
+fluctuation of vertex degrees in such networks, and the ability to
+uniquely identify vertices by their adjacencies to a small number of
+high-degree landmark vertices. This paper won the best student paper
+award at ISC for its student co-authors Lam, Mamano, and Torres.
+  
+     
+ Graph Theory  --
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

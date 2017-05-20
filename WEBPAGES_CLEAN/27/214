@@ -1,0 +1,111 @@
+ ICS 46 Spring 2016, Notes and Examples: Graphs: Topological Ordering<body>
+
+ 
+
+ 
+ICS 46 Spring 2016 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 46 Spring 2016 
+   Notes and Examples: Graphs: Topological Ordering 
+
+ 
+
+ 
+
+  Task networks 
+
+ Graphs are a fairly general data structure, able to represent things and the direct relationships between those things.  For this reason, graphs are used in the solution to many different kinds of real-world problems; understanding graphs and being familiar with some basic graph algorithms is surprisingly useful in practice. 
+
+ Suppose you had a directed acyclic graph, where the vertices represented tasks that needed to be completed, and the edges connecting those vertices represented dependencies between those tasks (i.e., if the edge  v  →  w  is present, the task  w  cannot be started until the task  v  is completed).  Many kinds of real-world problems can be thought of this way, such as the order in which source code is built and/or linked, the order in which instructions can be executed by a processor (somewhat independent of the order in which they're written, a trick that processors play to fill the time waiting for slower instructions to complete), or the order in which programming tasks can be completed by a team developing a software product.  In any case, you might call such a graph a  task network , describing the set of tasks that need to be done and the dependencies between those tasks. 
+
+ For example, consider the directed acyclic graph below, which we'll think of as one of these task networks. 
+
+   
+
+ To clarify what this task network means, we'd say that the task  c  cannot be started until the tasks  a  and  b  are completed, that the task  f  cannot be started until the task  d  is completed, and so on.  Only the tasks  a  and  b  can be started initially; all of the others depend on at least one other. 
+
+ It's important to note that task networks must be directed acyclic graphs: 
+
+  They must be  directed , because the notion of dependency is one-way: If the task  c  is dependent on the task  a , that doesn't make the task  a  dependent on the task  c . 
+   They must be  acyclic , because a circular dependency between tasks simply doesn't make any sense.  The task  a  can't depend on the task  b  while the task  b  simultaneously depends on the task  a ; in that scenario, neither of the tasks could ever be started. 
+  Given a task network, you can answer some interesting questions: 
+
+  In what order could the tasks be done, so that no task is started until all of the ones its dependent on have been finished already? 
+   Are the dependencies reasonable?  For example, does it contain any cycles? 
+   When augmented with additional information specifying how long each task might take, which tasks are on the  critical path ?  In other words, which tasks, if their schedule slips, would cause the entire set of tasks to take longer to complete?  This kind of analysis is done by project management tools, so that the most important tasks can be identified and managed more carefully — assigned to the most experienced people, watched the most keenly for any signs they might slip, and so on. 
+  We'll focus on just the first of these here, which is called a  topological ordering  of the task network. 
+
+ 
+
+ 
+
+  Topological ordering 
+
+ 
+A  topological ordering  of the vertices of a directed acyclic graph is a sequence of its vertices in which each vertex appears exactly once.  For every pair of distinct vertices  v  and  w  in the sequence, if the edge  v  →  w  exists, then  v  appears earlier in the sequence than  w .
+ 
+
+ In other words, if we think of a directed acyclic graph as representing a task network, a topological ordering of a directed acyclic graph is an order in which those tasks could be completed while respecting all of the dependencies between tasks; no task will appear before the tasks on which it depends. 
+
+ There may be more than one valid topological ordering for a directed acyclic graph.  For example, in the graph above, there are a number of valid topological orderings, two of which are  abcedgfh  and  bacdfegh ; there are others, as well. 
+
+ An algorithm for determining a topological ordering 
+
+ A straightforward algorithm for determining a valid topological ordering of a directed acyclic graph follows from the definition of topological ordering. 
+
+  
+FindTopologicalOrdering(DAG g):
+    while g is not empty:
+        let v be a vertex in g with in-degree zero
+        visit(v)
+        remove from the graph, along with all of its outgoing edges
+  
+
+ Run this algorithm on the example graph above and convince yourself that  it works.  What you'll see is that this algorithm is very nice, except for one problem: You can only run it once, because it destroys the graph you run it on.  We could tweak the algorithm to account for this — by simulating the removal of the vertices, rather than removing them outright — but a simpler approach is to lightly modify the depth-first traversal algorithm we've used before. 
+
+ To do this, we'll separate the notion of  reaching  a vertex from the notion of  visiting  it.  We'll mark a vertex as having been reached the first time we see it, but we won't visit it until we're finished with it (i.e., we've already reached all of the vertices it leads to). 
+
+  
+FindTopologicalOrdering(DAG g):
+    for each vertex v in g:
+        v.reached = false
+
+    for each vertex v in g:
+        if not v.reached:
+            TopoDFTr(g, v)
+
+
+TopoDFTr(DAG g, Vertex v):
+    v.reached = true
+
+    for each vertex w such that the edge v → w exists:
+        if not w.reached:
+            TopoDFTr(g, w)
+
+    visit(v)
+  
+
+ Compare this to the depth-first graph traversal algorithm we saw previously and you'll find that it's almost identical; other than a few name changes, the algorithm is identical  except  that the  visit  step has been moved to the end. 
+
+ This algorithm will visit the vertices of a directed acyclic graph in the  reverse  of a topological ordering.  Now run this algorithm on the example graph above and you'll quickly see the key insight behind why this is true: We only visit a vertex when we can't reach another vertex from it that we haven't reached already, all of which will be "downstream" tasks that depend on this one (and which we will have already visited). 
+
+ Note, too, that this algorithm operates under the assumption that the graph has no cycles.  If you weren't already sure about this, you could add the tweaks we learned previously to do cycle-checking simultaneously. 
+
+ Asymptotic analysis 
+
+ The asymptotic analysis here is simply the same one we saw previously when we learned about depth-first traversals:  O ( v   2  ) or  O ( v  +  e ), depending on which graph implementation technique (adjacency matrix or adjacency lists) is being used. 
+
+ 
+
+</body> 

@@ -1,0 +1,44 @@
+ """PartialOrder.py
+
+Various operations on partial orders and directed acyclic graphs.
+
+D. Eppstein, July 2006.
+"""
+
+import unittest
+from DFS import preorder,postorder
+import BipartiteMatching
+
+def isTopologicalOrder(G,L):
+    """Check that L is a topological ordering of directed graph G."""
+    vnum = {}
+    for i in range(len(L)):
+        if L[i] not in G:
+            return False
+        vnum[L[i]] = i
+    for v in G:
+        if v not in vnum:
+            return False
+        for w in G[v]:
+            if w not in vnum or vnum[w]  i] for i in range(16)}
+            
+    def testHypercubeAcyclic(self):
+        self.assert_(isAcyclic(self.cube))
+        
+    def testHypercubeClosure(self):
+        TC = TransitiveClosure(self.cube)
+        for i in range(16):
+            self.assertEqual(TC[i],
+                {j for j in range(16) if i &amp; j == i and i != j})
+
+    def testHypercubeAntichain(self):        
+        A = MaximumAntichain(self.cube)
+        self.assertEqual(A,{3,5,6,9,10,12})
+        
+    def testHypercubeDilworth(self):
+        CD = list(MinimumChainDecomposition(self.cube))
+        self.assertEqual(len(CD),6)
+
+if __name__ == "__main__":
+    unittest.main()   
+ 

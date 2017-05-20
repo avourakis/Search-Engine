@@ -1,0 +1,137 @@
+ /*
+ * Created on Feb 19, 2005
+ * 
+ */
+/**
+ * @author Arthur Asuncion
+ * 
+ * This class provides sound capabilities to the program
+ */
+import java.io.*;
+import javax.sound.sampled.*;
+import java.math.*;
+
+public class Sound {
+	
+	// These are all the fields used by the Sound class:
+	
+	WaveletEffects we1;
+	WaveletEffects we2;
+	
+	Wavelet wavelet;
+	Haar h;
+	Daubechies d;
+	
+	float[] xIndices;
+	float[] xIndicesHalf;
+	
+	File fileIn;	
+	File fileCrossSynthesis;
+	
+	int frame = 0;
+	
+	AudioInputStream audioInputStream;
+	AudioInputStream audioInputStreamMic;
+	AudioFormat format;
+	
+	SourceDataLine line;
+	TargetDataLine lineMic;
+	
+	byte[] audioBytes;
+	byte[] audioBytesCS;
+	
+	float[] crossSynthBuffer;
+	
+	SignalView sv;
+	
+	int numBytes;
+	
+	/** The constructor for the sound file
+	 * 
+	 * @param f Requires a 16-bit wave sound file (could be either mono or interleaved stereo)
+	 */
+	public Sound(String f){
+		String fileName = f;
+
+		we1 = new WaveletEffects(0);
+		we2 = new WaveletEffects(2500);
+		h = new Haar();
+		d = new Daubechies();
+		
+		int totalFramesRead = 0;
+		
+		fileIn = new File(fileName);
+
+		try {
+
+			// The input stream of the primary file
+			audioInputStream = AudioSystem.getAudioInputStream(fileIn);
+			int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
+			
+
+			// The format of the primary file
+			format = audioInputStream.getFormat();
+			
+			// The Speaker line
+			line = null;
+			
+			// The mic line
+			lineMic = null;
+			
+			// Obtain and open the line.
+			try {
+
+				// Open the mic line
+				DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, format);
+				lineMic = (TargetDataLine)AudioSystem.getLine(dataLineInfo);
+				
+				lineMic.open();
+				lineMic.start();
+
+				// Open the speaker line
+				line =  AudioSystem.getSourceDataLine(format);
+				line.open();
+						
+
+			} catch (LineUnavailableException ex) {
+				// Handle the error.
+			}
+			
+			// Gets an AudioInputStream for the mic
+			audioInputStreamMic = new AudioInputStream(lineMic);
+			int bytesPerFrameMic = audioInputStreamMic.getFormat().getFrameSize();
+			
+			System.out.println("Number of channels:" + audioInputStream.getFormat().getChannels());		
+			System.out.println("Bytes Per Frame:" + bytesPerFrame);
+			
+			
+			// Set an arbitrary buffer size.
+			numBytes = 1024 * 8 * bytesPerFrame;
+			
+			crossSynthBuffer = new float[numBytes];
+			
+			// Makes x-Coordinate arrays, needed for display
+			xIndices = new float[numBytes / 2];
+			xIndicesHalf = new float[numBytes / 4];
+			for (int i = 0; i = 0)
+				{
+					
+					sampleByteArray[0] = 0;
+					sampleByteArray[1] = tempSampleArray[0];
+				
+				}
+				
+			}
+			
+			else sampleByteArray = tempSampleArray;
+			
+			b[2 * i] = sampleByteArray[1];
+			b[2 * i + 1] = sampleByteArray[0];
+			
+		}
+		
+		return b;
+	}
+	
+	
+} 

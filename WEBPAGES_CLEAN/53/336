@@ -1,0 +1,137 @@
+ HelpOnLinking - UAI '08 Workshop: Probabilistic Reasoning Systems  
+     
+
+
+ 
+ Search: 
+ 
+
+   Login    
+
+
+   HelpOnLinking  
+  
+
+
+   FrontPage    RecentChanges    FindPage    HelpContents    HelpOnLinking  
+    
+
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+    
+   
+                   
+  Linking Rules 
+    Targets can be:     Local Pages:      either absolute:   a page name </strong> or   main page/sub page </strong>       or relative:   /some sub page </strong> or   ../some sister page </strong>         Interwiki Pages:   OtherWiki:a pagename there </strong>       URLs:   http://server/path </strong>       Pages and URLs may include an anchor (  ...#anchorname </strong>).         Use   [[target]] </strong> if you want to  link  to some target object.       Use   {{target}} </strong> if you want to  transclude  (embed/include/show) some target object (often an image).       Use   target|text </strong> instead of just   target </strong> to make it use the given text (e.g. as link text for links or as alt text for images).       Use   target|text|params </strong> instead of just   target </strong> to give additional params.         Use   target|{{imagetarget}} </strong> if you want to show an image instead of a text.         URLs, interwiki pages, email addresses and  CamelCase  pagenames are recognized as targets even without using brackets.       
+  Quick Reference 
+         Hyperlink</strong>                
+     Syntax</strong>                                  
+     Comment</strong>                   
+      internal link                  
+     WikiName                                     
+    Camel  Case page name           
+      internal free link             
+     [[free link]]                                
+    any page name                   
+      internal link to sub page      
+     /SubPage  or  [[/sub page]]                  
+                                    
+      internal link to sister page   
+     ../SisterPage  or  [[../sister|link text]]    
+                                    
+      internal link with linktext    
+     [[SomePage|some Page]]                       
+                                    
+      link to attachment             
+     [[attachment:a image.png]]                   
+    links to attachment image       
+      external link                  
+     http://example.net                           
+                                    
+      external link with linktext    
+     [[http://example.net|example site]]          
+                                    
+      border of internal link        
+     WikiName``s                     
+    2 backticks - for when a WikiName ends in the middle of a word  
+      avoid an internal link         
+     !WikiName                                    
+    configurable function           
+               Transclusion/Embedding</strong>  
+     Syntax</strong>                                  
+     Comment</strong>                         
+      embed an attached graphics    
+     {{attachment:a image.png}}                   
+    show attachment image                 
+      embed an attached graphics    
+     {{attachment:a image.png|alt text}}          
+    show attachment image, with alt text  
+      embed an attached graphics    
+     {{attachment:a image.png|alt text|align="position"}}    
+    shows attached image, with  position  can be  top</strong>,  middle</strong>,  bottom</strong>,  right</strong> or  left</strong>     
+      external graphics             
+     {{http://example.net/image.png}}             
+    shows target image                    
+      external graphics             
+     {{http://example.net/image.png|alt text}}    
+    shows target image, with alt text     
+      external graphics             
+     {{http://example.net/image.png|alt text|align="position"}}    
+    shows target image, with  position  can be  top</strong>,  middle</strong>,  bottom</strong>,  right</strong> or  left</strong>     
+       
+  Explanations 
+     
+  URLs 
+   If you enter URLs into normal text, there is the problem of detecting what belongs to the URL and what not. There are four ways to force the ending of an URL:      put a space after the URL,      use the  SixSingleQuotes  escaping,      use the double bracketed URL syntax.        The supported URL schemes are:  http ,  https ,  ftp ,  file  and some others. The administrator of your wiki can extend the supported schemes by using the  url_schemas  variable (see  HelpOnConfiguration ).       In addition to the standard schemes, there are  MoinMoin -specific ones:  attachment  and  drawing , these are related to file attachments and are explained on  HelpOnActions/AttachFile .   
+  Spaces 
+   You can always use the double brackets (or double braces) syntax to use page or file names with spaces.       This will even work for interwiki links, if the target wiki understands standard url quoting (space will become %20).       
+  Anchors 
+   To  insert  anchors into a page you need the  Anchor  macro (see  HelpOnMacros ):  &lt;&lt;Anchor(anchorname)&gt;&gt; , where "anchorname" is the actual identifier of the anchor.       To link to an anchor on the same wiki page use  [[#anchorname]]  or  [[#anchorname|label text]] .       To link to an anchor on another wiki page write  [[PageName#anchorname]]  or  [[PageName#anchorname|label text]] , where "Page  Name" is the name of the other page and "anchorname" is the identifier of the anchor on that page.         On some Wikis, a link to the page  RecentChanges  might refer to the same page as this link:  recentchanges . This is especially true for Windows and Mac OS X systems because they are not case-sensitive normally.       
+  Preventing Automatically Generated Links 
+     To keep a word like Page  Name from automatically being turned into a link, use  Page``Name .  (The problem with doing this is that it will prevent a simple search for the word "Wiki  Name" from matching  Wiki``Name  in a page, due to the inserted characters.)       You can also suppress  WikiName  linking by putting an exclamation mark ( bang ) before the  WikiName , i.e.  !WikiName . This is available by default, but can be disabled with the configuration option  bang_meta = False .  Using this method will not interfere with most searches for the escaped  WikiName , with the exception of certain quoted phrases and regular expressions.       To prevent automatic URL linking, use either  `http://...`  or  {{{http://...}}} .       
+  Using link parameters 
+   Sometimes you may want to give additional parameters for a link, influencing how it looks like, how it behaves and how exactly it links to the target - this is what the  params</strong> part of  [[target|text|params]]  is for.       
+  Setting attributes of the &lt;a&gt; tag 
+   Available attributes: class, title, target, accesskey (see some html reference if you want to know what they mean).       Example:  [[http://moinmo.in/|MoinMoin Wiki|class=green dotted,accesskey=1]]        Renders as:  MoinMoin Wiki          Pressing the access key should jump to that link target (for Firefox 2.x and the example above it is Alt-Shift-1).       
+  Creating a query string for the target URL 
+   What is possible for this depends on the target site.       Example:  [[MoinMoin:MoinMoinWiki|MoinMoin Wiki|&amp;action=diff,&amp;rev1=1,&amp;rev2=2]]        Renders as:  MoinMoin Wiki          Please remember:       If you want to give a key=value item for the query string, don't forget the ampersand (&amp;).      Giving query string items does not work when you give a URL as target (but for links to pages or attachments).     If you give a URL as target, you can include a query string directly in that target, no need for params.     You don't need to encode and url_quote the query string stuff, moin does this automatically for you.        
+  Other stuff 
+     For more information on the possible markup, see  HelpOnEditing . For details on how to link to subpages, see  HelpOnEditing/SubPages .              
+  Examples 
+   
+  Markup 
+                                            * http://moinmo.in/
+   * [[http://moinmo.in/]]
+   * [[http://moinmo.in/|MoinMoin Homepage]]
+   * InterWiki
+    * Self:InterWiki
+    * MeatBall:InterWiki
+    * [[MeatBall:InterWiki|InterWiki page on MeatBall]]
+    * [[MoinMoin:page with spaces]] (doesn't exist)
+   * email
+    * user@example.com
+    * mailto:user@example.com?subject=test
+    * [[mailto:user@example.com?subject=test|Email me]]
+   * [[InterWiki|InterWiki page in this wiki]]
+   * [[#anchorname|Link to anchor on this page]]
+   * [[OtherPage#anchorname|Link to anchor on other page in current wiki with label text]]
+   * {{http://moinmo.in/moin_static/common/moinmoin.png}}
+   * {{http://moinmo.in/moin_static/common/moinmoin.png|moinmoin logo}}      
+  Display 
+      http://moinmo.in/         http://moinmo.in/         MoinMoin Homepage         InterWiki         InterWiki         InterWiki         InterWiki page on MeatBall         page with spaces  (doesn't exist)        email       user@example.com         mailto:user@example.com?subject=test         Email me           InterWiki page in this wiki         Link to anchor on this page         Link to anchor on other page in current wiki with label text                        
+  If you used moin before... 
+   Don't worry, it is much easier and better predictable now:      It is always two brackets (for links) or two curly braces (for transclusion/embedding) now.      Because of that, macros use   &lt;&lt;MacroName(...)&gt;&gt; </strong> syntax now.      Use brackets or braces syntax if some target has blanks chars (no _ and no %20 any more!).     Use the pipe char (|) to separate target and text (and params).        wiki: </strong> is gone, just use interwiki without it.         inline: </strong> is now   {{attachment:...}} </strong>.       Interwiki links now only use  WikiName:PageName  ( not:   WikiName/PageName )      It has less magic now (and will just do what you say!):     Underscore (_) is a normal character and different from blank.     If you want an underscore, use an underscore - if you want a blank, use a blank.     If you link to an image, it will just link to an image (not show/embed it!).       For early moin 1.6 users: no quoting with double-quotes any more, use outer double brackets/braces to quote.          This markup is inspired by creole wiki markup standard (and is also quite similar to what mediawiki engine uses).       
+  
+  
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+     MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

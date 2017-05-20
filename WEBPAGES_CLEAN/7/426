@@ -1,0 +1,220 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 11 Jun 1997
+//
+// Evaluation function.
+
+public abstract class Eval {
+	// For which squares does the ability to move there make a piece non-trapped?
+	static final long ACTIVE_SQUARES =		  002503763774774124L;
+
+	// Terms for broken-fortress evaluation
+	static final int ATTACK_WEIGHT = 600;			// value of a successful attack
+	static final int TRAPPED_PIECE_WEIGHT = 100;	// value of a trapped piece
+	static final int CONVERSION_WEIGHT = 35;		// bonus for converting to simpler pos
+	static final int MAX_POSITIONAL_EVAL = 50;	// expected max of next two terms
+	static final int FORWARD_WEIGHT = 10;			// value of a piece in the attacking zone
+	static final int SPACE_WEIGHT = 1;				// penalty for allowing defense liebensraum
+
+	// Terms for eval of relatively even positions
+	static final int PIECE_WEIGHT = 300;			// multiplier for material ratio
+	static final int PIECE_VALUE = 100;				// add this number to ratio of active posn
+	static final int ATTACK_BONUS = 50;				// one side attacking but cant break fort
+	static final int ratios[] = ratios();			// table of precomputed ratios
+	static final int[] ratios() {
+		int[] r = new int[64];
+		r[0] = Integer.MAX_VALUE;
+		for (int i = 1; i &gt;&gt; Bits.SHIFT_VERTICAL) &amp; open) | ((open &gt;&gt;&gt; Bits.SHIFT_VERTICAL) &amp; attackers);
+		long unsafe = (moves &gt;&gt;&gt; Bits.SHIFT_VERTICAL) | (moves &gt;&gt; Bits.SHIFT_HORIZONTAL) &amp; open) | ((open &gt;&gt;&gt; Bits.SHIFT_HORIZONTAL) &amp; attackers);
+		unsafe |= (moves &gt;&gt;&gt; Bits.SHIFT_HORIZONTAL) | (moves &gt;&gt; Bits.SHIFT_SLANT) &amp; open) | ((open &gt;&gt;&gt; Bits.SHIFT_SLANT) &amp; attackers);
+		unsafe |= (moves &gt;&gt;&gt; Bits.SHIFT_SLANT) | (moves &gt;&gt; Bits.SHIFT_BACKSLANT) &amp; open) | ((open &gt;&gt;&gt; Bits.SHIFT_BACKSLANT) &amp; attackers);
+		return unsafe | (moves &gt;&gt;&gt; Bits.SHIFT_BACKSLANT) | (moves &gt;&gt; Bits.SHIFT_VERTICAL) | (s &gt;&gt; Bits.SHIFT_HORIZONTAL) | (s  CAPTURE_DEPTH) return false;	// want a deeper search?
+
+			// Extremely quick and dirty eval
+			if (myPieceCount &gt;= oppPieceCount)
+				b.evaluation = (myPieceCount - oppPieceCount)*(ratios[oppPieceCount]+PIECE_VALUE);
+			else b.evaluation = -(oppPieceCount - myPieceCount)*(ratios[myPieceCount]+PIECE_VALUE);
+			return true;
+		}
+		
+		// Compute attacks by opponent pieces, my active (able to safely move) pieces
+		long oppAttacks = attack(opponentPieces, open);
+		long mySafeMoves = open &amp;~ oppAttacks;
+		long myActive = activity(myPieces,mySafeMoves);
+
+		long attacked = myPieces &amp; oppAttacks;
+		if (myActive == 0 ||								// forced to move into capture or trap
+			 ((attacked &amp; myActive) != attacked) ||	// some attacked pieces are already trapped
+			 (attacked &amp; (attacked - 1)) != 0)		// or too many captures to evade?
+		{
+			if (--myPieceCount == 0) {					// about to lose my last piece?
+				b.evaluation = -(oppPieceCount * Board.WON_POSITION - 4*Board.PLY_DECREMENT);
+				return true;
+			}
+			if (depth &gt; CAPTURE_DEPTH) return false;	// want a deeper search?
+		} else if (attacked != 0) {
+			if (depth &gt; THREAT_DEPTH) return false;
+		}
+
+		// Who controls key squares in each part of the board?
+		// avoid slow conditionals -- ((L-1)&gt;&gt;57) is short for (L?0:127) when hi bits of L clear
+		int control =  (int)( ((opponentPieces &amp; LEFT_CONTROL) - 1) &gt;&gt;&gt; 57 ) -
+						   (int)( ((myPieces &amp; LEFT_CONTROL) - 1) &gt;&gt;&gt; 57 ) +
+						   (int)( ((opponentPieces &amp; CENTER_CONTROL) - 1) &gt;&gt;&gt; 57 ) -
+						   (int)( ((myPieces &amp; CENTER_CONTROL) - 1) &gt;&gt;&gt; 57 ) +
+						   (int)( ((opponentPieces &amp; RIGHT_CONTROL) - 1) &gt;&gt;&gt; 57 ) -
+						   (int)( ((myPieces &amp; RIGHT_CONTROL) - 1) &gt;&gt;&gt; 57 );
+		
+		// Compute opponent active pieces. Count active pieces.
+		long oppSafeMoves = open &amp;~ myAttacks;
+		long oppActive = activity(opponentPieces,oppSafeMoves);
+		int myActivity = Bits.count(myActive);
+		int oppActivity = Bits.count(oppActive);
+		
+		// Quick and dirty eval for even or unclear positions
+		if (myActivity == oppActivity) {
+			myPieceCount += myActivity;		// active pieces count double
+			oppPieceCount += oppActivity;
+			if (myPieceCount &gt;= oppPieceCount)
+				b.evaluation = control + (myPieceCount - oppPieceCount)*ratios[oppPieceCount];
+			else b.evaluation = control - (oppPieceCount - myPieceCount)*ratios[myPieceCount];
+			return true;
+		}
+
+		// Use active piece counts to determine which side is the attacker
+		boolean attacking;
+		long attackingPieces, defendingPieces, stuckDefenders, safeForDefense;
+		int attackingActivity, attackingTrapped, defendingActivity, defendingTrapped;
+		if (myActivity &gt; oppActivity) {
+			attacking = true;
+			attackingPieces = myPieces;
+			attackingActivity = myActivity;
+			attackingTrapped = myPieceCount - myActivity;
+			defendingPieces = opponentPieces;
+			defendingActivity = oppActivity;
+			stuckDefenders = opponentPieces &amp;~ oppActive;
+			defendingTrapped = oppPieceCount - oppActivity;
+			safeForDefense = oppSafeMoves;
+		} else {
+			attacking = false;
+			attackingPieces = opponentPieces;
+			attackingActivity = oppActivity;
+			attackingTrapped = oppPieceCount - oppActivity;
+			defendingPieces = myPieces;
+			defendingActivity = myActivity;
+			stuckDefenders = myPieces &amp;~ myActive;
+			defendingTrapped = myPieceCount - myActivity;
+			safeForDefense = mySafeMoves;
+			control = -control;
+			
+			// switch alpha and beta
+			int x = alpha;
+			alpha = -beta;
+			beta = -x;
+		}
+		
+		// Down to a single defender?  If so almost surely lost.
+		// But make sure no chance of the defender taking down enough attackers to draw.
+		//
+		// We check:
+		//   is there only one defender, and more than one attacker?
+		//   are any attackers trapped, or on bad squares accessible to the defender?
+		if (defendingActivity + defendingTrapped == 1 &amp;&amp;
+			 attackingActivity &gt;= 2 &amp;&amp;
+			 attackingTrapped == 0 &amp;&amp;
+			 (safeForDefense &amp; nextTo(attackingPieces &amp;~ ACTIVE_SQUARES)) == 0 &amp;&amp;
+			 (safeForDefense &amp; nextTo(attackingPieces) &amp; nextTo(defendingPieces)) == 0)
+		{
+			b.evaluation = attackingActivity * Board.WON_POSITION
+						    - (Board.WON_POSITION / 2)
+						    + control;
+			if (!attacking) b.evaluation = -b.evaluation;
+			return true;
+		}
+
+		// Find fortresses and estimate material cost to break them
+		long attackZone = 0, fortress = 0;
+		int fortressStrength = 0;
+		
+		// Large and small left fortresses
+		if ((LG_LEFT_FORT &amp; attackingPieces) == 0 &amp;&amp;
+			 (LG_LEFT_GUARD &amp; defendingPieces) != 0)
+		{
+			fortress = LG_LEFT_FORT &amp; defendingPieces;
+			fortress &amp;= fortress - 1;
+			if (fortress != 0) {
+				fortress &amp;= fortress - 1;
+				fortressStrength = (fortress == 0? 1 : 2);
+				attackZone = LG_LEFT_ATTACK;
+				if ((LG_LEFT_GUARD &amp; stuckDefenders) != 0) {
+					defendingActivity++;
+					defendingTrapped--;
+				}
+			}
+		} else if ((SM_LEFT_FORT &amp; attackingPieces) == 0 &amp;&amp;
+					  (SM_LEFT_GUARD &amp; defendingPieces) != 0)
+		{
+			fortress = SM_LEFT_FORT &amp; defendingPieces;
+			fortress &amp;= fortress - 1;
+			if (fortress != 0) {
+				fortressStrength = 1;
+				attackZone = SM_LEFT_ATTACK;
+				if ((SM_LEFT_GUARD &amp; stuckDefenders) != 0) {
+					defendingActivity++;
+					defendingTrapped--;
+				}
+			}
+		}
+		
+		// Large and small right fortresses
+		if ((LG_RIGHT_FORT &amp; attackingPieces) == 0 &amp;&amp;
+			 (LG_RIGHT_GUARD &amp; defendingPieces) != 0)
+		{
+			fortress = LG_RIGHT_FORT &amp; defendingPieces;
+			fortress &amp;= fortress - 1;
+			if (fortress != 0) {
+				fortress &amp;= fortress - 1;
+				fortressStrength += (fortress == 0? 1 : 2);
+				attackZone |= LG_RIGHT_ATTACK;
+				if ((LG_RIGHT_GUARD &amp; stuckDefenders) != 0) {
+					defendingActivity++;
+					defendingTrapped--;
+				}
+			}
+		} else if ((SM_RIGHT_FORT &amp; attackingPieces) == 0 &amp;&amp;
+					  (SM_RIGHT_GUARD &amp; defendingPieces) != 0)
+		{
+			fortress = SM_RIGHT_FORT &amp; defendingPieces;
+			fortress &amp;= fortress - 1;
+			if (fortress != 0) {
+				fortressStrength++;
+				attackZone |= SM_RIGHT_ATTACK;
+				if ((SM_RIGHT_GUARD &amp; stuckDefenders) != 0) {
+					defendingActivity++;
+					defendingTrapped--;
+				}
+			}
+		}
+
+		// No fortress but significant spatial control, treat as a unit-strength fortress
+		// (this covers many sideways fortress cases)
+		if (fortressStrength == 0)
+			fortressStrength = control &gt;&gt;&gt; 31; // (C 0)
+		{
+			eval = 
+				ATTACK_WEIGHT * (attackingActivity - defendingActivity - fortressStrength) +
+				TRAPPED_PIECE_WEIGHT * (attackingTrapped - defendingTrapped) -
+				CONVERSION_WEIGHT * defendingActivity;
+
+		} else {
+
+			// Attack won't work, make eval similar to even/unclear eval
+			int a = 2*attackingActivity + attackingTrapped;
+			int d = 2*defendingActivity + defendingTrapped;
+			if (a &gt; d) eval = (a-d)*ratios[d];
+			else if (d &gt; a) eval = (d-a)*ratios[a];
+			else eval = 0;
+			eval += control + ATTACK_BONUS;
+		}
+
+		// Do slower low-order eval terms only if near alpha-beta window
+		if (eval + MAX_POSITIONAL_EVAL &gt; alpha &amp;&amp; eval - MAX_POSITIONAL_EVAL  

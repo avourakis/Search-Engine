@@ -1,0 +1,126 @@
+ CS 154 Lab 6: Controller, Complete MIPS CPU 
+
+ 
+
+  Complete MIPS CPU    
+
+  Lab 6    
+
+ The objective of this lab assignment is to design and implement a
+multi-cycle control unit and integrate it with the datapath from lab5 for a
+complete CPU. The CPU consists of the data path, control unit (your design task
+in this lab), and additional logic needed for PC update and ALU control. 
+
+  The control unit should work with the data path you implemented
+in lab 5. Or you can use     this
+one       as reference.   
+
+   Specification     
+
+  
+
+ In this lab you will complete the design of the MIPS CPU by adding
+controller unit to lab 5. 
+
+ The control unit consists of a Moore state machine (FSM) with registered
+output and a combination logic that generates "ALU_opcode". Your
+control unit should be a multi-cycle implementation, in which each step takes 1
+clock cycle. The following figure shows the steps needed to execute major
+instruction classes (except for I-type for ALU ops which you need to add): 
+
+         
+
+   
+Note that the empty entries indicate that particular instruction takes fewer
+than 5 cycles to execute. Also, the branch instruction action shown in step 3
+is only correct for the BEQ instruction.    
+
+ Please turn in a  "bubble
+diagram"  of the FSM for your specification of the control unit. 
+
+  Memory Unit Description:  
+
+ Memory is byte addressable and has a total of 32 words, where words 0-15
+store instructions and words 16-31 store data. Even though lw, sw, and IF
+access the memory, there is no possibility of having multiple memory requests
+in the same clock cycle. An example memory is shown below: 
+
+         
+
+   
+The cell immediately under the field "Final code" shows the bit
+positions (31 downto 0) of each instruction bit.    
+
+  Be careful for memory write instructions. Do not overwrite the
+instructions.    
+
+  Design    
+
+ Your task is to first design
+the control unit ( control.vhd ) and then combine it with
+the data path you built in previous labs to make a CPU.  
+
+ Inside entity "lab6" you need to connect
+the controller with your lab5 datapath.  Then, simulate your design using
+ModelSim. The final top-level entity "lab6" will only have
+2 inputs: clk and reset_N. 
+
+ The  template
+VHDL files  are provided to you. The interface (that is, ports) is already
+defined. You need to add code for functionality in these files to make them
+work. 
+
+ Timing is very important for this lab. The basic idea
+is to start operation at the beginning of each cycle, and write the result to
+various registers on the rising edge that ends this cycle.  
+
+ For example, in fetch stage, start a memory access in the beginning of the
+cycle by generating a pulse on the MemRead signal, also start calculating PC +
+4 in the ALU at the same time. Both memory operation and ALU calculation would
+have some delay, but the result should be ready by the end of the cycle.
+Therefore, at the end of this cycle, on the rising edge of the clock, a new PC
+value (PC+4) is written to the PC register, and a new instruction is written to
+the IR register. 
+
+ Another example, 2 things happen in the decode stage: register access and
+branch target calculation. So at the beginning of this cycle, use rs and rt to
+read the register file. At the same time, calculate the branch target [PC +
+Sign_extend(Immediate &amp; "00") ]. Both operations will have some
+delay, but the result should be ready by the end of the cycle. So, on the
+rising edge that terminates this cycle, register values are written to RegA and
+RegB and at the same time branch target is written to ALUOut. 
+
+ In order to achieve this, the control signals should be stable on the clock
+edge. Especially the write enable signals (PCUpdate, IRWrite, RegWrite). We may
+need to use "after 1 ns" in the signal assignments 
+
+  Verification    
+
+ Use the program segment given above or its subset to test your design. You
+may develop your own program segment(s) for more rigorous testing, but be very
+careful and make sure the opcode and other instruction fields have correct
+values. Test your design in a step-by-step fashion, e.g., make sure that your
+CPU executes the R-format instructions correctly and then addresses the others.
+The program segment to be used during the demo WILL BE different from the one
+above. 
+
+ You need to test the following: 
+
+  Memory access instruction (LW - 5 steps, SW - 4
+     steps)  
+  ALU Computation (I or R type instruction, 4 steps) 
+  Branch Equal/Not Equal. (3 steps) 
+  Jump (J, 3 steps) 
+  Minimal requirement for this lab is a fully functionally correct design, i.e.
+a ModelSim project with the test bench showing that your design satisfies all
+previous requirements: 
+- Correct execution of a given code fragment. 
+- Execution of each instruction in the specified number of steps (defined
+above). The time interval between two consecutive rising edges is 40 ns. 
+
+ Please name your folders and files according to the given   SUBMISSION
+GUIDELINES   .  
+
+ 
+
+</body> 

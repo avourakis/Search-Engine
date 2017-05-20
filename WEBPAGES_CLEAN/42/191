@@ -1,0 +1,76 @@
+ 3.8 OEEuler<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.7.6 OEAbsCanonicalConfTest 
+ Up:   3. OEChem Classes and 
+ Next:   3.9 OEExprBase 
+   
+
+
+  
+3.8 OEEuler 
+ 
+
+ 
+    
+OEEuler : public OETransBase
+    
+This object is one of the molecular transformation base classes which
+derive from  OETransBase  and work with  OETrans .
+
+  
+    
+OEEuler(const double *angles)
+OEEuler(const float *angles)
+OEEuler(double phi, double theta, double psi)
+OEEuler(float phi, float theta, float psi)
+OEEuler &amp;operator = (const double *rhs)
+OEEuler &amp;operator = (const float *rhs)
+    
+This  OETransBase  object represents rotation about 3 Euler angles.
+This objects assumes the angles are ordered phi, theta, psi and have radian
+units.
+
+  
+    
+OETransBase *CreateCopy() const
+
+void GetAngles(double *angles) const
+void GetAngles(float *angles) const
+double GetPhi () const
+double GetTheta() const
+double GetPsi () const
+void SetPhi (double radians)
+void SetTheta (double radians)
+void SetPsi (double radians)
+    
+These methods give access to the angle data.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.7.6 OEAbsCanonicalConfTest 
+ Up:   3. OEChem Classes and 
+ Next:   3.9 OEExprBase 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

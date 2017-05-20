@@ -1,0 +1,52 @@
+ //    Processing educational code
+//    Copyright (C) 2013  Lee Martie
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see .
+
+public class Pebble {
+  PVector friction;
+  PVector location;
+  PVector acceleration;
+  PVector velocity;
+
+  //coeff of friction
+  float c = 0.060;
+  //mass of objects
+  float mass = 2;
+
+  float sizeR = 200.0;
+  float leftX = width/2-sizeR/2;
+  float leftY = height/2-sizeR/2;
+
+
+  //constructor
+  public Pebble(float x, float y) {
+    location = new PVector(x, y);
+    velocity = new PVector(2, 2);
+    acceleration = new PVector(0, 0);
+  }
+
+  //update acceleraction by applying a force
+  void applyForce(PVector force) {
+    PVector f = PVector.div(force, mass);
+    acceleration.add(f);
+  }
+
+  //tests if this bug is in friction zone
+  //probably should be in another class but this is
+  //just an example
+  boolean inFrictionZone() {
+
+
+    if (location.x &gt;= leftX &amp;&amp; location.x = leftY &amp;&amp; location.y  

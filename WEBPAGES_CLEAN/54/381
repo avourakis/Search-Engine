@@ -1,0 +1,123 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 11 Jun 1997
+//
+// Move generation
+//
+// This is implemented by a collection of Move Experts,
+// each of which knows how to construct a bitboard of starting positions
+// for moves of a certain type, and how to perform those moves given
+// a bit representing the starting position.
+
+import java.util.*;
+
+public class MoveGenerator // implements Enumeration	(not really)
+{
+	// The board we're generating moves from and various derived quantities
+	Board board;			// board we are moving from
+	long storedFrom;		// positions we can move from
+	long storedTo;			// positions we can move to
+	
+	long movesV,movesH,movesS,movesB;	// positions we can move to ignoring capturability
+		
+	// what kind of move we're making and which pieces can move that way
+	int moveSetIndex;		// where we are in the list
+	long set;				// set of positions this moveSet is working on
+	
+	// what kind of move is represented by the bits in set
+	int captureType;
+	static final int CAPTURE_FORWARD = 0;
+	static final int CAPTURE_BACKWARD = 1;
+	static final int NO_CAPTURE = 2;
+	static final int PASS = 3;
+	static final int NO_MORE_MOVES = 4;
+	boolean madeCapture;
+	int shift;				// which direction pieces are moving in current move set
+	
+	// The main routine to find sets of moves
+	// nextElement then pulls off the moves from these sets one bit at a time.
+	//
+	// This is really not a subroutine but a coroutine: each time we call it we want
+	// to continue at the statement immediately after the point at which we returned
+	// from the previous call.  Since Java doesn't have coroutines built-in, we use
+	// moveSetIndex as a program counter, with a big switch statement marking all the
+	// different possible entry points, but (unlike the usual switch) falling through
+	// from case to case rather than having any break statements.
+	//
+	private final void findNextSet() {
+		long from = storedFrom;
+		long to = storedTo;
+		long target = board.opponentPieces;
+		switch (++moveSetIndex) {
+			// CASES 0-7: CAPTURES
+			case 0:		// CAPTURE FORWARD VERTICALLY OR BACKWARD -VERTICALLY
+				captureType = CAPTURE_FORWARD;
+				movesV = (from &amp; (to &gt;&gt;&gt; Bits.SHIFT_VERTICAL)) | (to &amp; (from &gt;&gt;&gt; Bits.SHIFT_VERTICAL));
+				if ((set = (movesV &amp; (target &gt;&gt;&gt; 2*Bits.SHIFT_VERTICAL))) != 0) {
+					shift = Bits.SHIFT_VERTICAL;
+					madeCapture = true;
+					return;
+				}
+				++moveSetIndex;	// fall into...
+			case 1:		// CAPTURE FORWARD HORIZONTALLY OR BACKWARD -HORIZONTALLY
+				movesH = (from &amp; (to &gt;&gt;&gt; Bits.SHIFT_HORIZONTAL)) | (to &amp; (from &gt;&gt;&gt; Bits.SHIFT_HORIZONTAL));
+				if ((set = (movesH &amp; (target &gt;&gt;&gt; 2*Bits.SHIFT_HORIZONTAL))) != 0) {
+					shift = Bits.SHIFT_HORIZONTAL;
+					madeCapture = true;
+					return;
+				}
+				++moveSetIndex;	// fall into...
+			case 2:		// CAPTURE FORWARD SLANTLY OR BACKWARD -SLANTLY
+				storedFrom = (from &amp;= Bits.DIAGONAL);
+				movesS = (from &amp; (to &gt;&gt;&gt; Bits.SHIFT_SLANT)) | (to &amp; (from &gt;&gt;&gt; Bits.SHIFT_SLANT));
+				if ((set = (movesS &amp; (target &gt;&gt;&gt; 2*Bits.SHIFT_SLANT))) != 0) {
+					shift = Bits.SHIFT_SLANT;
+					madeCapture = true;
+					return;
+				}
+				++moveSetIndex;	// fall into...
+			case 3:		// CAPTURE FORWARD BACKSLANTLY OR BACKWARD -BACKSLANTLY
+				movesB = (from &amp; (to &gt;&gt;&gt; Bits.SHIFT_BACKSLANT)) | (to &amp; (from &gt;&gt;&gt; Bits.SHIFT_BACKSLANT));
+				if ((set = (movesB &amp; (target &gt;&gt;&gt; 2*Bits.SHIFT_BACKSLANT))) != 0) {
+					shift = Bits.SHIFT_BACKSLANT;
+					madeCapture = true;
+					return;
+				}
+				++moveSetIndex;	// fall into...
+			case 4:		// CAPTURE FORWARD -VERTICALLY OR BACKWARD VERTICALLY
+				captureType = CAPTURE_BACKWARD;
+				if ((set = (movesV &amp; (target &gt;&gt; Bits.SHIFT_VERTICAL);
+			else if ((move &amp; (move &gt;&gt; Bits.SHIFT_HORIZONTAL);
+			else if ((move &amp; (move &gt;&gt; Bits.SHIFT_SLANT);
+			else // if ((move &amp; (move &gt;&gt; Bits.SHIFT_BACKSLANT);
+			storedTo = Bits.ON_BOARD &amp;~ (move | myPieces | b.opponentPieces | b.alreadyVisited);
+			return;
+		} else {	
+			storedFrom = myPieces;
+			storedTo = Bits.ON_BOARD &amp;~ (myPieces | b.opponentPieces);
+			return;
+		}
+	}
+
+	// are there any ungenerated moves?
+	public final boolean hasMoreElements() {
+		if (set == 0) findNextSet();
+		return (captureType != NO_MORE_MOVES);
+	}
+
+	// find next move in sequence by pulling bits out of set
+	public final long nextElement() {
+		if (set == 0) findNextSet();		// make sure we have a move to generate
+		long bit = set;
+		bit &amp;= -bit;							// bit = Bits.lastBit(set)
+		set ^= bit;
+		switch (captureType) {
+			case CAPTURE_FORWARD:
+				long retval = bit | (bit &gt;&gt;= shift;
+				while ((bit &amp; board.opponentPieces) != 0) {
+					retval |= bit;
+					bit &gt;&gt;&gt;= shift;
+				}
+				return retval;
+
+			case NO_CAPTURE:
+				return bit | (bit  

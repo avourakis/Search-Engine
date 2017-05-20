@@ -1,0 +1,154 @@
+ LaTeX tips &amp; tricks - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Differences  
+ 
+
+ 
+
+This shows you the differences between two versions of the page.
+ 
+
+ 
+       
+     wiki:latex_tips_tricks [Thu Aug 28 19:50:59 2014]   david   lineno      
+     
+     wiki:latex_tips_tricks [Fri Dec  4 00:12:49 2015]  (current)  david   detail why you might want the box code      
+       Line 30: 
+ Line 30:                   ===== Internal hyperlinks =====     ===== Internal hyperlinks =====    -   Include this in your preamble:</strong>  +   You should always refer to figures, sections, theorems, etc. by label instead of by number. These labels are created by code like</strong>                -  &lt;code&gt;\usepackage{hyperref}&lt;/code&gt;  +  &lt;code  latex&gt;\begin{theorem} </strong>       +   \label{thm:my-theorem-name} </strong>       +   The statement of the theorem goes here. </strong>       +   \end{theorem}&lt;/code&gt; </strong>       +    </strong>       +   or </strong>       +    </strong>       +   &lt;code latex&gt;\section{Section title} </strong>       +   \label{sec:my-section-name}&lt;/code&gt; </strong>       +    </strong>       +   etc. This helps keep the numbers matching up correctly when things get renumbered, but it can also be used to make internal hyperlinks so that clicking on the name of a thing will take you to the thing. To do this, include this in your preamble: </strong>       +    </strong>       +   &lt;code latex</strong>&gt;\usepackage{hyperref}&lt;/code&gt;                   Then, instead of     Then, instead of                -  &lt;code&gt;Theorem~\ref{thm:name-of-theorem}&lt;/code&gt;  +  &lt;code  latex</strong>&gt;Theorem~\ref{thm:name-of-theorem}&lt;/code&gt;                -  use  +   (which is how you would refer to the label without hyperref), </strong>use                -  &lt;code&gt;\autoref{thm:name-of-theorem}&lt;/code&gt;  +  &lt;code  latex</strong>&gt;\autoref{thm:name-of-theorem}&lt;/code&gt;                -   as </strong>well as  working better when you </strong>change a lemma to a theorem (etc), this produces better hyperlinks: the link covers the whole "Theorem 3" text not just the number.  +   As </strong>well as  making it easier to </strong>change a lemma to a theorem  or "Figure" to "Fig." </strong>(etc), this produces better hyperlinks: the link covers the whole "Theorem 3" text not just the number.  In order to get this to work properly for labels that the package doesn't already know about, you may need additional preamble code like</strong>                -   In order to get this to work properly for labels that the package doesn't already know about, you may need additional preamble </strong>code  like</strong>  +   &lt;</strong>code  latex&gt;\renewcommand{\sectionautorefname}{Section}&lt;/code&gt;</strong>                -   &lt;code&gt;</strong>\ renewcommand{</strong>\ sectionautorefname}{Section}&lt;/code&gt;</strong>  +   Labels also work for the items of an enumeration environment, but you may want to use </strong>\ ref instead of </strong>\ autoref for these, since the type of thing you want to call it (Case, Property, etc) will probably vary from one enumeration to another.</strong>                   ===== Number lines for submissions =====     ===== Number lines for submissions =====    Line 52: 
+ Line 64:       The easy way to do this is to put     The easy way to do this is to put                -  &lt;code&gt;\usepackage{lineno}&lt;/code&gt;  +  &lt;code  latex</strong>&gt;\usepackage{lineno}&lt;/code&gt;                   in the preamble, and to put     in the preamble, and to put                -  &lt;code&gt;\linenumbers&lt;/code&gt; in the document itself, before the abstract.  +  &lt;code  latex</strong>&gt;\linenumbers&lt;/code&gt; in the document itself, before the abstract.                   ===== Less than and greater than signs in text mode=====     ===== Less than and greater than signs in text mode=====       With the default settings, LaTeX turns &lt; and &gt; in text-mode input into ¡ and ¿. This is usually just a minor annoyance (they should probably have been in math mode rather than text mode) but occasionally you really need them to render properly: for instance, when they are part of a DOI in a bibliography reference, where you don't have as much control over how to render them. The following magic code in your preamble causes them to be rendered properly:     With the default settings, LaTeX turns &lt; and &gt; in text-mode input into ¡ and ¿. This is usually just a minor annoyance (they should probably have been in math mode rather than text mode) but occasionally you really need them to render properly: for instance, when they are part of a DOI in a bibliography reference, where you don't have as much control over how to render them. The following magic code in your preamble causes them to be rendered properly:                -  &lt;code&gt;\usepackage[T1]{fontenc}&lt;/code&gt;  +  &lt;code  latex</strong>&gt;\usepackage[T1]{fontenc}&lt;/code&gt;  </strong>       +    </strong>       +   What this does is to change the way fonts are encoded in the output file (it has nothing to do with how TeX reads and processes your input); see [[http://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc|this link]] for more details. </strong>       +    </strong>       +   ===== Warn against bad formatting style and other issues ===== </strong>       +   You may have co-authors who still use outdated latex commands like \it when they should be using \emph, \$\$ ... \$\$ when they should be using backslash-square-bracket, etc. To catch their errors, you can use </strong>       +    </strong>       +   &lt;code latex&gt;\usepackage[l2tabu, orthodox]{nag}&lt;/code&gt; </strong>       +    </strong>       +   It shouldn't change the output, but may produce a lot more warnings in the log file. And regardless of whether you're using this package, check the warnings and clear them up when possible. </strong>       +    </strong>       +   =====Visual vs geometric line breaking===== </strong>       +   Include this in your preamble: </strong>       +    </strong>       +   &lt;code latex&gt;\usepackage{microtype}&lt;/code&gt; </strong>       +    </strong>       +   It makes line breaks visual rather than geometric. That means the pixels don't exactly line up on the same vertical line as each other — the hyphens may hang out a little farther, etc. — but it ends up looking smoother. Also it makes it easier for LaTeX to avoid overfull hboxes. </strong>       +    </strong>       +   See [[http://texblog.net/latex-archive/uncategorized/pdflatex-microtype/|this link]] for details. </strong>       +    </strong>       +   =====Halmos box at the end of proofs===== </strong>       +   Using the amsthm package provides a proof environment that puts a box at the end of each proof, but some documentclasses provide their own proof environment and are incompatible with amsthm. If this environment is missing its box, you can modify it to include the box as follows. </strong>       +    </strong>       +   &lt;code latex&gt;\usepackage{amssymb} </strong>       +   \let\doendproof\endproof </strong>       +   \renewcommand\endproof{~\hfill\qed\doendproof}&lt;/code&gt; </strong>       +    </strong>       +   =====Named math operators===== </strong>       +   If you have a variable or function that you're going to be using throughout much of your paper, it can help make things more readable and more consistent to give it a multi-letter name rather than just a single character. But, you should never be writing sequences of letters directly in math mode. Instead, you can do something like </strong>       +    </strong>       +   &lt;code latex&gt;\DeclareMathOperator{\treewidth}{tw}&lt;/code&gt; </strong>       +    </strong>       +   (in the amsmath package) and then whenever you want to use it do something like </strong>       +    </strong>       +   &lt;code latex&gt;$\treewidth(G)$&lt;/code&gt; </strong>       +    </strong>       +   You can also put text-mode formatting commands in the definition; for instance (for small caps) </strong>       +    </strong>       +   &lt;code latex&gt;\DeclareMathOperator{\outerplanar}{\textsc{outerplanar}}&lt;/code&gt; </strong>       +    </strong>       +   =====Separate bibliography for appendices===== </strong>       +   For conference submissions with a page limit that counts bibliography pages, but an appendix that is not counted against the page limit, it is helpful to have a "References" section that only includes the references from the main text of the paper, and a separate "Additional References" section that lists the references that are from the appendix but not from the main paper text. Here's how. In the preamble, include </strong>       +    </strong>       +   &lt;code latex&gt;\usepackage{multibib} </strong>       +   \newcites{appendix}{Additional References}&lt;/code&gt; </strong>       +    </strong>       +   At the end of the main part of the paper and before the appendices, put your bibliography using the usual coding for it. Then, in the appendix, whenever you want to cite a reference that does not appear in the main part of the paper, use </strong>       +    </strong>       +   &lt;code latex&gt;\citeappendix{GD-Handbook-13,BatEadTam-98,KauWag-01}&lt;/code&gt; </strong>       +    </strong>       +   (Use this only for new references; use the usual cite command for references that are also in the main text. This may mean having a cite and a citeappendix command next to each other.) Finally, at the end of the appendix, add the code </strong>       +    </strong>       +   &lt;code latex&gt;\bibliographystyleappendix{splncs} </strong>       +   \bibliographyappendix{paper}&lt;/code&gt; </strong>       +    </strong>       +   (with splncs replaced by your favorite bibliography style). This will cause a separate appendix.aux to be generated. When the references change, you will need to run </strong>       +    </strong>       +   &lt;code bash&gt;bibtex appendix&lt;/code&gt; </strong>       +    </strong>       +   as well as the usual bibtex command for the main paper. For this extra level of complication in compiling everything it's helpful to use a makefile. </strong>       +    </strong>       +   =====LIPIcs format===== </strong>       +   See http://11011110.livejournal.com/300115.html for some workarounds to issues with the LIPIcs conference format, including getting lineno to work, lemma numbering in appendices, and inability to use \autoref </strong>       +    </strong>       +   =====TeXShop and multiple files===== </strong>       +   If you use TeXShop (a nice OS X graphical user interface front end for LaTeX) and have a project that has been split into multiple files, you should add the line </strong>       +   &lt;code latex&gt;% !TEX root = path/to/root.tex&lt;/code&gt; </strong>       +   to the start of each file. That way, when you have a source file open, and use the command-key shortcut to compile it, it will compile your root file instead of the one you have open. The same code may work on some other front ends. </strong>       +    </strong>       +   =====Stylizing a word===== </strong>       +   To properly define a command that prints a word, perhaps in a different font or style, use  </strong>       +   &lt;code latex&gt;\usepackage{xspace} </strong>       +   \newcommand{\mykeyword}{\emph{my-keyword}\xspace} </strong>       +   &lt;/code&gt; </strong>       +   Without an xspace, the space character between the command \mykeyword and the next word will be ignored.</strong>     
+   
+  
+
+  
+    
+     Trace: 
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/latex_tips_tricks.1409255459.txt.gz · Last modified: Thu Aug 28 19:50:59 2014 by david  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

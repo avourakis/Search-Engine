@@ -1,0 +1,191 @@
+ Seventh Heaven: W* Effect Considered Harmful<body>
+
+   Seventh Heaven  May 10, 1999   
+  W* Effect Considered Harmful 
+    Rohit Khare    �   4K Associates
+    The hegemonic spirit of the age inspires industry slogans of "Windows Everywhere!" "Java Anywhere!" and "AOL Anywhere!" While these are mere market visions as yet, theres one computing paradigm that  has  conquered or co-opted every rival over the last three decades: "IP over Everything!" 
+ The Internet has adapted to radical growth in scale and character. Although TCP/IP 's death has oft been foretold, it has been able to cope with greater congestion, variations in latency, increased bandwidth, link compression, and new security requirements.  
+ The latest challenge is integrating handheld wireless devices into todays wired Internet. These devices have much lower bandwidth, much lower processing power, and much smaller user interfaces than wired devices.  
+ There are two approaches to the integration. The "control hypothesis" is to treat these devices as just another kind of Internet host by tweaking current standardsthat is, by profiling "smarter" TCP over airlinks, "compact" HTML, and "split-proxy" security. 
+ The other approach is to throw everything out and reinvent the entire protocol stack from scratch. And for good measure, sprinkle pixie dust over the whole suite by claiming compatibility with established standards. Phone.com (née Unwired Planet) and its mostly captive Wireless Application Protocol Forum have opted for this approach (    http://www.wapforum.org/)   .
+ In the long run, WAP cannot succeed. 
+    Architectural Visions for Handheld Wireless Internet Access 
+    The choice to "adapt or reinvent" has been mapped onto two different visions of wireless devices. One views them as miniaturized PCs, the other as cellphones-on-steroids. Windows CE, Mobile Network Computers (NCs), and Symbian's EPOC/Psion operating systems are predicated on the formerindeed, only a "real computer" could have an OS onboard. WAP Forums technology aims for the latter by designing a standardized "microbrowser" environment into today's handsets. 
+ This dichotomy extends to the choice of service model: should the device access only the carriers value-added services, or any public Internet resource? WAP Forum and its major backers have proclaimed that handheld Internet access is  not  about surfing, and so they eschewed generic approaches in favor of custom applications hosted by the carrier. There isnt even an escape hatchstandard HTML pages do not map directly onto WML. 
+    WAP Component Technologies 
+    Claiming that "wireless is different," WAP 1.1 rewrites almost every Web standard in the book. All its smarts are built into the WAP Gateway on the carriers premises. To the public Internet, that gateway becomes the termination point; from there to the device, WAP Forums standards take over.  
+ At first glance, WAPs architecture appears cleanly layered, inheriting from the OSI and Internet models. The rub is in their claim that its parallel to the existing Web/TCP/IP stack (see    Figure 1)  . 
+    Insert w3sev01 
+   Figure 1. This WAP Forum slide claims that its W* versions of Internet protocols are equivalent.  
+    The shift from UDP to WDP, TLS to WTLS, HTTP to WTP, HTML to WML, ECMAScript to WMLScript, and so on -- what I term 'the W* Effect' -- is disingenuous at best; and at worst, locks in early WAP adopters to today's lowest common denominator technology.  
+   
+   Concern    
+ 
+   Internet    
+ 
+   WAP    
+ 
+   Divergences    
+   
+  Control   
+ 
+  ICMP   
+ 
+  WCMP   
+ 
+  Replace IP address with pager or cellular device IDs. Error type codes offset by 50.   
+   
+  Datagram   
+ 
+  UDP   
+ 
+  WDP   
+ 
+  Replace IP address with pager or cellular device IDs. Restricts payloads' character sets.    
+   
+  Security   
+ 
+  IPsec, TLS   
+ 
+  WTLS   
+ 
+   Both    packet and stream security. Novel elliptic ciphers rather than RSA. Incompatible Alert codes. 
+   
+  Transaction   
+ 
+  T/TCP   
+ 
+  WTP   
+ 
+  Mixes TCP, T/TCP, MUX, and RPC modes. Transactions must be processed in sequence.   
+   
+  Transport   
+ 
+  HTTP   
+ 
+  WSP   
+ 
+  Mislabeled as 'session'. Custom binary format for HTTP. Adds state between requests. Adds 'Push.'    
+   
+  Presentation   
+ 
+  Text   
+ 
+  WBXML   
+ 
+   Requires DTDs for all XML. Cannot stream data.   
+   
+  Markup   
+ 
+  HTML   
+ 
+  WML   
+ 
+   A screen-drawing program instead of markup.   
+   
+  Graphics   
+ 
+  PNG   
+ 
+  WBMP   
+ 
+   Whiz-bang new format no better than X Bitmaps   
+   
+  Scripting   
+ 
+  ECMA   
+ 
+  WMLScript   
+ 
+  Not compatible; loosens type system, removes libraries.   
+   
+  Numbering   
+ 
+  IANA, ISO   
+ 
+  WINA   
+ 
+  Perpetuates separate ports for X and 'secure version of X'. Renumbers existing registries.   
+   
+  Forum   
+ 
+  IETF   
+ 
+  WAP   
+ 
+  Process closed to paid members only. No public comment. Explicitly addresses WAP 'marketing.'   
+   Table 1: Comparing the W* versions to the 'originals.' 
+   Wireless Control Message Protocol.     Internetworking requires interoperable error reporting -- bedrock standards for signaling erroneous addresses, link congestion, and higher-level protocol errors (for example, a bad port number). Internet Control Message Protocol (ICMP) thus became the very first step in the transformation of ARPAnet into the Internet.
+ WAP specified its equivalent WCMP to operate across widely varying airlink networks. It allows GSM and paging IDs to replace ID numbers, and defines its own error type codes by adding 50 to each ICMP equivalent. 
+ However, because most packet data airlinks include their own error-correction and dropout detection at a lower layer, WCMP is largely irrelevant -- especially since wireless networks rarely interconnect different airlinks.  
+ WCMP was not updated in the current WAP 1.1 revision, although the WAP 1.0 edition is still references as a  should . None of the 20 current airlink adaptations for WDP require it.  
+    Wireless Datagram Protocol.     WDP is roughly equivalent to UDP. In fact, systems running mobile IP to the handset (Cellular Digital Packet Data, Motorola's Integrated Digital Network (iDEN), or circuit-switched Point-to-Point Protocol)  must  use UDP instead. As with WCMP, the rationale for reinventing a parallel format was to accommodate airlink addresses (for example, handset serial number, IP address, and X.25 address) and airlink restrictions on packet size and character sets.
+ WDP's port-numbering strategy is another example of only-partial compliance to external reference standards. WAP Forum correctly placed all of its own service assignments temporarily in the dynamic, private port space, but it hasnt filed for WAP ports in IANA-registered space. Of course, when it does, IANA will likely bounce half the applications right back, because Internet Engineering Steering Group (IESG) policy now discourages allocating parallel port numbers for "secure version of  X. " Basic protocols must now be capable of negotiating security upgrades at the same port. 
+    Wireless Transport Layer Security.       Figure 1   depicts WDP as similar to TCP. This is simply not true. The classic Internet stack offers security at the packet and transport layers using two separate technologiesIPsec and Transport Layer Security, respectively. WTLS applies TLS to  both  individual datagrams and socket connections. 
+ This conflation is only possible because of the assumption that a handset always talks to a single, permanent WAP Gateway (i.e. 'packet' and 'session' traffic are  both  encapsulated in a single TLS-secured tunnel to the Gateway). Otherwise, there wouldnt be an advantage to negotiating a single master secret for these different modes -- and it would be impossible to also buffer against lost, duplicated, and reordered packets (yes, WTLS is assigned TCP's traditional job of segment reassembly!) 
+ Since encrypted data cannot be compressed, WTLS (like TLS) also provides compression services. However, since its below the transport layer, some implementations (Class 2 and 3) run the risk of double compression. Its not just the performance loss of recompressing WML/WTP content, its the possibility of cryptanalytic weakness -- since WAPs upper-layer compression is not just gzip, but a very predictable tokenization (WBXML). 
+ WTLS also specifies the use of Certicoms elliptical curve public key encryption (a Phone.com corporate partner). Elliptic curves are more efficient to compute, but not as broadly implemented as stock RSA; it hasn't been submitted to the IETF standards-track either. Finally, WTLS redefines existing TLS Alert codes and adds new ones, for no clear reason.  
+    Wireless Transaction Protocol.     WTP is the heart of an independent WAP Gateway server project, such as Apions (http://www.apion-tss.com). It's the lowest layer required to connect to WAP-compliant microbrowsers.
+ WTP conflates a mix of transport- and application-layer problems. WTP is roughly equivalent to TCP, but without flow-control or windowing. It adopts several tricks to reestablish connections quickly and minimize handshakes, so it also qualifies as T/TCP-like (IETFs experimental-track Transactional TCP).  
+ Furthermore, rather than simply expose a streams or socket interface, WTP offers three application message models that seem a lot more like RPC or remote method invocation than like the Internet definition of transport: 
+  Class 0  : unreliable invoke message with no result message.  Class 1 : reliable invoke message with no result message.  Class 2 : reliable invoke message with one reliable result message.
+ WTP provides segmentation and reassembly, as well as selective acknowledgement (SACK). At the same time, WTP radically redefines "acknowledgement" to require  explicit  user confirmation. Thats like wiring e-mail user-interface read-receipt semantics into base TCP! 
+ WTP imitates TCP's 16-bit port numbering to differentiate the sorts of applications, outstanding concurrent requests, and direction. WTP also adds individual transaction-ids, but issues them numerically and requires service by id-order, pessimistically forcing strict ordering in the face of missing or delayed segments. 
+    Wireless Session Protocol.     Once again, WAP Forum scrambles accepted definitions of networking terms: WSP is actually intended to replace a  transport , HTTP. The IETF is already investigating 'real' session-layer support over TCP, with the goal of multiplexing several virtual connections over a single real connection. This does  not  include negotiating upper-layer application protocols, data-encoding syntax, or nomadic support for restarting sessions hours later -- all bundled in by WSP. That yokes together session-oriented and nonsession-oriented services, yielding equivalent of a connectionless TCP. (also known as "Reliable UDP," one of the only cardinal sins in Jon Postels book?)
+ Although WSP uses    http:   as its URL scheme, there are many differences from HTTP. 
+
+        WSP recodes existing RFC 822-style request and response messages in WBXML, its own binary tokenization format (in lieu of general-purpose compression). It uses new headers as a covert channel for new requests, such as get-time-of-day.  
+  By treating       PUT   as   POST  , WSP cannot support WebDAV, IETFs proposed standard for distributed authoring over HTTP. 
+  WSP does content negotiation not by     Content-Type:  , but with explicitly deprecated   User-Agent:   comment fields. 
+  WSP turns a stateless protocol into a stateful one by implicitly copying headers from previous requests and replies.   
+  WSP reverses HTTPs fundamental semantics with its "push" mode. The scheme rejects at least three plausible standards-compliant solutions: it neither represents push as an HTTP request (to a virtual server on the handset), manages group subscriptions to an URL, nor represents push messages as valid, but unsolicited, HTTP response messages.  
+  WSP requires support for multiple concurrent downloads; however, wireless devices are not designed for desktop-style browsing, and probably cant exploit this functionality.  
+  WSP introduces new registries managed by their own 'Wireless Interim Naming Authority; (WINA): numbering 40 "core" MIME types, renumbering ISO national language tags, and a header-field registry perpetuating the flawed 'X-' convention.  
+
+
+
+
+    Wireless Binary (Tokenized) XML.     WBXML is a lossless compression format for XML. However, rather than apply HTTPs zip/deflate compression options in WSP, WAP Forum devised a specific algorithm for XML content. WBXML tokenizes normal XML by preparsing it into a tree structure, extracting common text strings, and transmitting it according to a compression state machine at both ends.
+ WBXML requires a public Document Type Definition, even for merely well-formed XML (which doesn't use a DTD). It's encoded in the first payload byte, locking them into a WINA-controlled 255-slot registry for Formal Public Identifiers (instead of, say, using a hash function). It also appears to foreclose other XML schema proposals from W3C that are expected to replace DTDs.  
+ The general concept is that there are 255-slot code pages for tag, attribute name, attribute value, and other XML string tokens. The cram the content model (whether an element can enclose child elements) and presence of attributes into the two high-order bits of a tag, limiting it to 31 tags per code page.  
+ One implementor, Dynamical Systems Research, surveyed four current WAP software development kits and found notable incompatibility in each WBXML encoder for WML (http://www.wap.net/developer) 
+ Phone.com's Peter King argued for W3C's XHTML group to adopt WBXML because "verbose markup 1. Wastes network bandwidth and 2. Wastes cache memory."  
+ W3C's Martin Dürst correctly replied that generic compression should offer comparable or better results without binding the result to a specific DTD, and that cache representation is an entirely implementation-dependent problem. WBXML can't be pipelined or streamed, to boot: since it places a common string table in the preamble, it also wastes the earliest bits to arrive, precisely the ones most significant to user's perceptions of latency. 
+ These factors indicate that WBXML cannot be used as a general-purpose solution in the wider XML community. Furthermore, W3C has chartered an XML Internal Set working group to investigate common in-memory representations, and an XLink working group to consider online-access to remote XML trees. W3C also owns the trademark to XML . . . 
+    Wireless Markup Language.     Phone.coms initial products introduced its Handheld Device Markup Language (HDML), which lives on in XML-ized form as WAP Forums 1.1 release of WML. WML is ideally suited to todays multiline handset displays -- too perfectly.
+ One way to think of WML is as programming 3270 terminal screens with a very simple Basic. An application is delivered to the handset as a deck, which allocates a corresponding pool of storage space for variables. Individual cards   are executed on entry and exit to render the handset screen: they can fill in (shared) variables, rerender on external event notifications (for example, call completed), and bind further actions to a small set of buttons.  
+ WAP Forum explicitly rejected the Web-normative way to handle user-agent and content-specific formatting: WML does not support style sheets.  
+ Instead, the display calls are character-cell oriented with tab alignment and bold, italic, underline, and big and small fonts. Tables, frames, colors, and so on are not supported. Semantic HTML markup like    &lt;ADDRESS&gt;   must be stripped out. Even simple declarative HTML doesnt mean what it used to  &lt;P&gt;   no longer begins a new line! Graphics support is intended mainly for optional icons in place of text menus; no imagemaps, either. WML also uses the   LOWSRC   attribute for image references, a long-discredited approach that  never  became part of standard HTML.
+ A deck defines a program thread, complete with timers. This WML program shares its stack with other decks on the handset, raising security concerns (only partially addressed by the further complexity of lexical scoping). It includes a deck-wide    &lt;template&gt;   element defining default event bindings and variable values -- but can still be overridden by similarly named elements in card-scope, making debugging more difficult.
+ WML also has the ability to parameterize a deck. If, say, the only part of a customer service deck that changes is the name and account number, a WSP server can vend a single resource and let the client substitute those bits of state (though it's unclear why a Web server can't just generate custom decks with CGI scripts like countless sites do today). 
+ WML hijacks the    $   character from  all  other XML and URL escaping rules to denote variable references. Even   $$   is no escape: the dollar sign  must  be coded as   &amp;#24;   -- yet WBXML doesn't accommodate this nonstandard syntax, either. 
+ Even the basic    &lt;A HREF=&gt;   is recast as   &lt;anchor&gt; &lt;go href=""/&gt;&lt;/anchor&gt;  . For a user to traverse a link, a URL must be passed as the argument to a   &lt;go&gt;   task. The equivalent of a   &lt;FORM&gt;   requires executing internal tasks, which escape arguments first in URL, then XML format, to be stored in a   &lt;var&gt;   element for a later submission action. An internal event model for WML browsers executes tasks on first entry, exit, subsequent entry from a card, and after timer intervals. 
+ To explain how a simple pick list control works now takes five pages in WML. Theres inconsistent terminology, to begin with: an    INPUT   variables name is now found in its   KEY   attribute. The state of the pick list is no longer the HTML's list of selected values: it must be computed from an indexed vector by   KEY   and   IKEY  . The descriptive text for the control is not bound to it by HTML4s   &lt;LABEL&gt;   tag, but with a   &lt;FIELDSET&gt;   tag instead. The pick list itself can now be internally chunked, though the   OPTGROUP   attribute is never demonstrated anywhere in the specification.
+ Needless to say, all these features interact with each other. The result is dramatically different from HTML, with little prospect for automatically repurposing existing Web content.  
+    Wireless Bitmapped Images.     WBMP was quietly slipped into Section 6 and Appendix A of the February 17, 1999 revision of the "Wireless Application Environment Overview." WAP Forum created a new image format inspired by (but not interoperable with) W3C- and ISO-standard Portable Network Graphics (PNG). It's limber enough to support multiple bit planes, palettes, animation, and compression algorithms -- though to date it's only defined for Type 0: one-bit, uncompressed icons. That's little more than an X Bitmap (XBM). 
+ Lightweight  vector  graphics ought to be a very useful format for small-scale, variable-geometry displays. There is no mention of W3Cs Scalable Vector Graphics WG or existing standard Computer Graphics Metafile (CGM). Furthermore devices like the Nokia 9110 can already view faxes, but support for ITU-standard Group 3 TIFF bitmaps is conspicuously absent.  
+    WMLScript.     WAP Forums scripting solution is specified in two parts: WMLScript, "[WAPs] lexical and syntactic grammar, its transfer format, and a reference bytecode interpreter," and the Standard Libraries, which include "a language library, a string library, a dialog library, a floating-point library, a browser library and a URL library."
+ Compared to the version of JavaScript formally standardized by the European Computer Manufacturers' Association, the spec states: " WMLScript is based on, but not compliant with, ECMAScript . The standard has been used only as the basis for defining WMLScript language." 
+ The result is no longer formally typed, instead mandating run-time coercion of variables. The detailed list of incompatibilities extends to floating-point (optional for WAP), library functions removed, and even invocation. WAP Forum bends URI semantics to allow special fragment-identifiers to represent WMLScript function calls instead of Web addresses.  
+ At the same time, basic DOM functions for global navigation history and browser-control were swept into WML instead. 
+    Wireless Telephony Services.     For a network operators, the microbrowser metaphor presents a consistent look and feel to value-added information services. WTA brings the same consistency to handset-based telephony services. A carrier could publish common WML decks for initiating calls, transferring calls, answering or forwarding calls, arranging conference calls, checking voice mail, and two-way paging for its entire subscriber base, reducing customer support costs for all its supported handsets. 
+ WTA provides telephony-specific extensions for call control features, call-logging, paging, address book, and phone book services, all using the underlying call signaling of various airlink protocols. WTA services were the true motivation for much of the complexity added by 'push' delivery to WSP and 'event' handling to WML. 
+    WAP Everywhere? 
+    Numerous IETF working groups are addressing the challenges of high-latency, low-bandwidth networks (known there as "long, thin networks"). W3C has it working groups on XML and HTTP and its Mobile Access Interest Group. As first-mover, though, WAP rolls onward. 
+ The commercial demand for WAP has proved sufficient to implement most of its technologies. Ironically, it's easier to reshuffle functionality between layers since WAP redefined the  entire  stack. WAP Forum is issuing conformance statements (and, eventually, branding), Phone.com has established a WAP interoperability laboratory, and carriers are signing contracts with integrators. WAP is already a success for the near term.  
+ Phone.com also expects to cash in impressively. A close reading of their SEC S-1 IPO filing pinpoints their hopes for a profitable future: sticking it to carriers and users for the blades once they've got the manufacturers hooked on free razors. Furthermore, rather than risk limited consumer acceptance of WAP services, Phone.com's WAP gateway is sold to carriers based on their  total  number of subscribers -- not just those who activate WAP features. 
+ But if you think that "IP Everywhere" will falter on handheld wireless devices, consider the latest move by Microsoft, which seemingly ignored WAP until joining May 10. Their $600 million investment in Nextel to develop wireless services for MSN eclipsed a prior alliance between Nextel, Netscape, and Phone.com -- and heralds the development of a competing standards-based, XML-centric microbrowser architecture. 
+ WAP should be adopted cautiously. It is simply not the long-term answer, and the more it is seen as immediately inevitable, the longer it will take the wireless-data industry to dig out from that hole. 
+       Sidebar:      Origins and Status of WAP Forum
+    Unwired Planet (now Phone.com) was founded in May of 1995 to develop handset-based access to the Internet. By December, it had codified its "insights" as U.S. Patent 5,809,415: "Method and architecture for an interactive two-way data communication network." AT&amp;T Wireless PocketNet was their most visible early adoptera commercial disappointment that could send e-mail and fetch stock quotes. 
+   Table A. WAP Timeline. 
+ May 1995 Unwired Planet founded 
+ June 1997 WAP public launch 
+ September 1997 WAP 1.0 specs published 
+ December 1997 WAP Forum incorporated 
+ January 1998 Membership opened up 
+ April 1998 WAP 1.0 ratified  
+ March 1999 WAP 1.1 drafts published 
+ From the beginning, Phone.coms strategy has been to give away its client. As its recent S-1 IPO filing states, "we license our UP.Browser software to wireless telephone manufacturers free of per-unit royalties and provide maintenance and support services for an annual flat fee." With that lure, UP convinced Nokia, Ericsson, and Motorola to join in launching WAP Forum, which quickly rubber-stamped a slightly reworked edition of UPs then-current product. 
+ Soon after WAP Forum opened to further industry members under the leadership of Chairman Charles Parrish (a Vice President of Phone.com). By now there are 91 member firms at $27,500 per year. Member manufacturers represent 90 percent of global handset shipments; those committed to shipping some "WAP-enabled products" represent 75 percent. Member carriers have 100 million subscribers. They work together in dozens of internal working groups, including several devoted to WAP marketing alone. 
+ WAPs business proposition varies for several membership sectors. Carriers are searching for value-added services to increase airtime sold. Infrastructure manufacturers are trying to jumpstart sales by avoiding fragmentation at any cost. Independent WAP Gateway developers expect niches for multiple vendors, if for no other reason than telecommunications politics. Content providers expect lucrative partnership contracts from the degree of integration and custom development required.  </body> 

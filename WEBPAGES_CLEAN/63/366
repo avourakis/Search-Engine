@@ -1,0 +1,40 @@
+ Description of CFTP<body>
+  
+  Home  &gt;   MRFLearning  &gt; CFTP.m 
+
+
+
+ CFTP
+ 
+
+   PURPOSE     
+  Exact sampling for Ising models with positive interactions</strong> 
+
+   SYNOPSIS     
+  function samples = CFTP( model,numSamples,rep01 ) </strong> 
+
+   DESCRIPTION     
+   Exact sampling for Ising models with positive interactions
+ using the CFTP algorithm described in [Propp &amp; Wilson, '96]
+ INPUTS:
+           model:(1 X 1) struct array with fields
+                       N: number of nodes
+                       w: (N X N) matrix of interactions
+                       b: (N X 1) vector of biases
+           numSamples: Number of samples to generate
+           rep01     : the representation - 
+                       1 if nodes take values from {0,1}
+                       0 if nodes take values from {-1,+1}
+ RETURNS:
+           samples: (numSamples X N) array of samples
+
+ NOTE: WE MIGHT BE ABLE TO IMRPOVE THE CODE A LOT BY STORING JUST THE RANDOM GENERATOR 
+       STATES AT TIMES T=2^k, INSTEAD OF THE ACTUAL NUMBERS!  
+
+
+   CROSS-REFERENCE INFORMATION     
+This function calls:
+  
+This function is called by:
+    Generated on Wed 28-Sep-2005 04:10:02 by   m2html </strong> © 2003 
+</body> 

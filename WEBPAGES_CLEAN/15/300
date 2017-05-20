@@ -1,0 +1,133 @@
+ 
+  Class TaskSynchronization
+<body>
+  
+ 
+  Class TaskSynchronization
+ 
+ 
+java.lang.Object
+   |
+   +----TaskSynchronization
+ 
+    public class  TaskSynchronization 
+    extends Object
+   
+Task synchronization monitor.
+  Task synchronization monitors in the same job should always
+ be disjoint.</strong>
+ 
+    
+ 
+    
+      TaskSynchronization  (Task, Task[])
+      Constructs a task synchronization monitor.
+   
+    
+      hasCommonTasks  (TaskSynchronization)
+      Tests if this monitor has any tasks in common with the
+ given one.
+        involves  (Task)
+      Tests if the given task is involved in this synchronization.
+        joinWith  (TaskSynchronization)
+      Joins this monitor with the given one.
+        size  ()
+      Returns the number of involved tasks.
+        synchronize  (Task, Simulator)
+      Synchronizes the given task.
+        toString  ()
+      Returns a string representation of this object.
+    
+ 
+    
+  
+   
+ TaskSynchronization 
+ 
+ public TaskSynchronization( Task  task,
+                             Task  syncTasks[])
+ 
+   Constructs a task synchronization monitor.
+ 
+        Parameters: 
+       task - requesting task.
+      syncTasks - tasks to synchronize with.
+      
+    
+ 
+    
+   
+  size  
+ 
+ public int size()
+ 
+   Returns the number of involved tasks.
+ 
+        Returns: 
+       the number of involved tasks.
+     
+     
+  involves  
+ 
+ public boolean involves( Task  task)
+ 
+   Tests if the given task is involved in this synchronization.
+ 
+        Parameters: 
+       task - a task.
+        Returns: 
+        true  if task is involved in this
+ synchronization;  false  otherwise.
+     
+     
+  synchronize  
+ 
+ public boolean synchronize( Task  task,
+                             Simulator  simulator)
+ 
+   Synchronizes the given task.
+ 
+        Parameters: 
+       task - a task.
+      simulator - a simulator.
+         Returns: 
+        true  if all tasks have been synchronized
+ after this;  false  otherwise.
+     
+     
+  hasCommonTasks  
+ 
+ public boolean hasCommonTasks( TaskSynchronization  ts)
+ 
+   Tests if this monitor has any tasks in common with the
+ given one.
+ 
+        Parameters: 
+       ts - a task synchronization monitor.
+        Returns: 
+        true  if this monitor has any tasks in
+ common with the given one;  false  otherwise.
+     
+     
+  joinWith  
+ 
+ public void joinWith( TaskSynchronization  ts)
+ 
+   Joins this monitor with the given one.
+ 
+        Parameters: 
+       ts - a task synchronization monitor.
+     
+     
+  toString  
+ 
+ public String toString()
+ 
+   Returns a string representation of this object.
+ 
+        Returns: 
+       a string representation of this object.
+        Overrides: 
+        toString  in class Object
+     
+  </body> 

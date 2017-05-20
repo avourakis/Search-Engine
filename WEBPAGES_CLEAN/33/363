@@ -1,0 +1,638 @@
+ CHEM.Web.cgibin.BaseWeb.BaseWeb<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Web  ::
+         Package cgibin  ::
+         Module BaseWeb  ::
+        Class BaseWeb
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class BaseWeb   
+Common base class for web interface modules to supply some standard 
+  setup, parameter extraction, file upload processing methods, etc.    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Constructor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           addHandler ( self ,
+         commandName ,
+         methodName )  
+      Tells this controller class to look for requests that include a 
+      form field named 'commandName.' If found, the handleRequest method 
+      will invoke the method named 'methodName' on this instance. 
+           
+            
+            
+           
+           
+     
+         
+      
+           clearHandlers ( self )  
+      Clear any previously added handlers. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handleRequest ( self ,
+         form = None ,
+         req = None )  
+      Primary execution method, finds an appropriate command method to 
+      execute based on the contents of the form which is an instance of 
+      cgi.FieldStorage. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __handleRequest ( self ,
+         form = None ,
+         req = None )  
+      Private version that does most of the work. 
+           
+            
+            
+           
+           
+     
+         
+      
+           maintainParams ( self )  
+      Normal behavior, store all request parameters back into the 
+      templateDict for maintenance across page views. 
+           
+            
+            
+           
+           
+     
+         
+      
+             errorResponse ( self ,
+         exc )  
+      If an Exception (exc) was thrown during the request handling 
+      process, respond to the client with this method instead of the 
+      standard response method. 
+           
+            
+            
+           
+           
+     
+         
+      
+           response ( self )  
+      Deliver response after a handleRequest. 
+           
+            
+            
+           
+           
+     
+         
+      
+           printTemplate ( self )  
+      Standard end result of web script. 
+           
+            
+            
+           
+           
+     
+         
+      
+             setTemplateFilename ( self ,
+         filename )  
+           
+            
+            
+           
+           
+     
+         
+      
+           getTemplateFilename ( self )  
+      If template filename has been manually set by user, then just 
+      return that. 
+           
+            
+            
+           
+           
+     
+         
+      
+           optionTagsFromList ( self ,
+         valueList ,
+         textList ,
+         selectedValue = None )  
+      Generate and return the HTML &lt;option 
+      value="%value"&gt;%text&lt;/option&gt; tags for a given 
+      list of values and respective text labels. 
+           
+            
+            
+           
+           
+     
+         
+      
+             optionTagsFromField ( self ,
+         fieldname ,
+         selected = None )  
+      Shorthand for optionTagsFromList with default options and selected
+      value. 
+           
+            
+            
+           
+           
+     
+         
+      
+           action_uploadFiles ( self )  
+      Look for all fields whose name ends with file suffix 
+      "File" and loads those file contents into the field 
+      respectively named by that field's prefix. 
+           
+            
+            
+           
+           
+     
+         
+      
+             replaceWhitespace ( self ,
+         value )  
+      Look for specific whitespace description sequences and replace 
+      them with the real special characters. 
+           
+            
+            
+           
+           
+      
+   
+        Static Methods  
+          [ hide private ]  
+         
+   
+         
+      
+             quoteSmiles ( smiles )  
+      Quote out (convert to escape sequences) SMILES strings so that 
+      they may be passed around as request parameters without losing 
+      special characters like / and \, etc. 
+           
+            
+            
+           
+           
+     
+         
+      
+             unquoteSmiles ( quotedSmiles )  
+      Undo the quoteSmiles function 
+           
+            
+            
+           
+           
+     
+         
+      
+             javascriptString ( value )  
+      Given a string value, replace certain special characters with 
+      placeholders so that the string can be in turn be used as a 
+      JavaScript string for subsequent dynamic manipulation. 
+           
+            
+            
+           
+           
+     
+         
+      
+           quoteFilepath ( filepath )  
+      Neutralize any special characters for use as a filepath, including
+      '/' which could be a SMILES character. 
+           
+            
+            
+           
+           
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+           UPLOAD_FILE_CMD  =  "uploadFiles" 
+     
+     
+         
+      
+           FILE_FIELD_SUFFIX  =  "File"  
+      Standard suffix expected for corresponding web templates
+     
+     
+         
+      
+           TEMPLATE_SUFFIX  =  ".htm"  
+      Format string for option tags
+     
+     
+         
+      
+         OPTION_TAG  =  '&lt;option value="%(value)s"%(selected)s&gt;%(text)s&lt;/ ...  
+     
+     
+         
+      
+           SELECT_FIELD_SUFFIX  =  "Select" 
+     
+     
+         
+      
+           OPTIONS_FIELD_SUFFIX  =  "Options" 
+     
+     
+         
+      
+         mHandlers  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Se ...  
+     
+     
+         
+      
+         mForm  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Search ...  
+     
+     
+         
+      
+         mTemplateDict  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingMode ...  
+     
+     
+         
+      
+         mTemplateFilename  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatching ...  
+     
+     
+         
+      
+         requestData  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel. ...  
+     
+     
+         
+      
+         req  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSe ...  
+     
+     
+         
+      
+           disableResponse  =  False 
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Constructor.  Just some initializations such as addition of default 
+  mTemplateDict values and command handlers (e.g. File uploads).  Be sure 
+  the subclasses call this method in their own __init__!
+        
+  
+ 
+   
+     
+     addHandler ( self ,
+         commandName ,
+         methodName ) 
+   
+     
+     
+    
+  
+  Tells this controller class to look for requests that include a form 
+  field named 'commandName.' If found, the handleRequest method will invoke
+  the method named 'methodName' on this instance.
+ 
+ &gt;&gt;&gt;  web = ExampleWeb()
+ &gt;&gt;&gt;  web.addHandler( "submit" ,ExampleWeb.doSubmit.__name__) 
+        
+  
+ 
+   
+     
+     clearHandlers ( self ) 
+   
+     
+     
+    
+  
+  Clear any previously added handlers.  Mostly pointless, except when 
+  caller wishes to clear the default handlers.
+        
+  
+ 
+   
+     
+     handleRequest ( self ,
+         form = None ,
+         req = None ) 
+   
+     
+     
+    
+  
+  Primary execution method, finds an appropriate command method to 
+  execute based on the contents of the form which is an instance of 
+  cgi.FieldStorage.  Normal case is to just call this method as below, 
+  letting the cgi module take care of all of the parameter parsing and 
+  construction.
+ 
+ &gt;&gt;&gt;  web.handleRequest( cgi.FieldStorage() ) 
+   If no form parameter is given, will default to cgi.FieldStorage() 
+   For mod_python based calls, can add additional request object 
+  parameter, useful for reporting additional debug information. 
+  Note:  With the given structure, it is possible for a single form 
+  request to invoke multiple command methods, the form just has to contain 
+  the commandName field for multiple recognized handlers.  The order that 
+  these are executed will depend on the order in which the command handlers
+  were added via the addHandler method.
+        
+  
+ 
+   
+     
+     __handleRequest ( self ,
+         form = None ,
+         req = None ) 
+   
+     
+     
+    
+  
+  Private version that does most of the work. Separate as, depending on 
+  logger level, may or may not want to print out full error stack 
+  trace.
+        
+  
+ 
+   
+     
+     maintainParams ( self ) 
+   
+     
+     
+     Normal behavior, store all request parameters back into the 
+  templateDict for maintenance across page views. Exception is file 
+  parameters.  Don't want to store "value" because that would be 
+  entire file contents.  Instead, maintain the "filename" 
+  attribute. 
+  Another exception is select boxes (drop lists).  Name of parameter 
+  passed in is different than the option tag text that must be output to 
+  represent that selection.
+        
+  
+ 
+   
+     
+     response ( self ) 
+   
+     
+     
+    
+  
+  Deliver response after a handleRequest.  By default, just do a 
+  printTemplate, substituting in specified parameters in the requestData.  
+  Subclasses may override this method however to do something different, 
+  such as redirecting to another page or outputting binary data.
+        
+  
+ 
+   
+     
+     printTemplate ( self ) 
+   
+     
+     
+    
+  
+  Standard end result of web script.  Print the template html file out, 
+  replacing any parameters in the file based on what's been filled in the 
+  requestData attribute
+        
+  
+ 
+   
+     
+     getTemplateFilename ( self ) 
+   
+     
+     
+    
+  
+  If template filename has been manually set by user, then just return 
+  that.  Otherwise, build the standard template filename given the instance
+  class's name.
+        
+  
+ 
+   
+     
+     optionTagsFromList ( self ,
+         valueList ,
+         textList ,
+         selectedValue = None ) 
+   
+     
+     
+     Generate and return the HTML &lt;option 
+  value="%value"&gt;%text&lt;/option&gt; tags for a given list of
+  values and respective text labels. Each value printed will be compared to
+  the selectedValue. If so, the option will also be 
+  "selected." 
+   To allow for multiple selections, if selectedValue is found to be an 
+  instance of a sets.Set object, then, instead of a direct comparison, each
+  value will be searched for as a key in the set.  If found, each of those 
+  options will be "selected". 
+  Note that this does NOT write the containing 
+  &lt;select&gt;&lt;/select&gt; tags, giving the caller control to define 
+  any properties / styles on that tag.
+        
+  
+ 
+   
+     
+     action_uploadFiles ( self ) 
+   
+     
+     
+     Look for all fields whose name ends with file suffix "File" 
+  and loads those file contents into the field respectively named by that 
+  field's prefix. 
+  For example, given an input field of type file named 
+  "smilesFile", if the contents of that field are non-empty, copy
+  the contents into the field (templateDict value) named 
+  "smiles"
+        
+  
+ 
+   
+     
+     quoteFilepath ( filepath ) 
+      Static Method 
+   
+     
+     
+    
+  
+  Neutralize any special characters for use as a filepath, including '/'
+  which could be a SMILES character. Additional issue on Windows systems: 
+  File names are NOT case-sensitive. This is a problem for SMILES strings 
+  where upper vs. lowercase atom labels is necessary to distinguish 
+  aromatic vs. aliphatic atoms.
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   OPTION_TAG 
+  
+      Value: 
+           
+'&lt;option value="%(value)s"%(selected)s&gt;%(text)s&lt;/option&gt;'
+     
+       
+  
+ 
+   
+   mHandlers 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   mForm 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   mTemplateDict 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   mTemplateFilename 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   requestData 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   req 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:32 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

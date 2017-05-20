@@ -1,0 +1,72 @@
+ System Implemenation Information<body>
+                
+         
+             
+                  
+                 Implementation: System Implementation Materials 
+                                 
+                     
+                        
+                           Babel  
+                              Mass2Structure                          
+                              MolInfo  
+                              MSFragment  
+                              Pattern Count Screen  
+                              Pattern Match Counter  
+                              Smi2Depict  
+                              Reaction Processor  
+                                                                                                    
+                     
+                        
+                           Chemical Search  
+                              COSMOS  
+                              Reaction Explorer  
+                              Reaction Predictor                          
+                              Virtual Chemical Space  
+                          
+                    
+                  Home    Implemenation  
+             
+
+             Database Schema 
+                 
+                     
+                           Source :
+                                Vendors and other sources of chemical information.
+                               ChemicalMix :
+                                Individual records available from sources. These may
+                                not be individual chemicals, but rather a mixture of chemicals
+                                available as a unit.
+                               Source2ChemicalMix :
+                                Resolution table between sources and chemical mixes.
+                                This accounts for multiple sources providing the same
+                                chemical mixtures, without storing redundant data.
+                               Annotation :
+                                High-level chemical annotations that the sources
+                                provide, likely extracted from SD Tags of the SDF molecule
+                                files the source data came from. These are the secondary
+                                annotations which vary depending on the source.
+                               Chemical :
+                                Individual chemical components of chemical
+                                mixes that cannot be further resolved into components.
+                                These include the derived primary annotations which are pre-computed
+                                and stored in the database to facilitate future searches and
+                                computations.
+                               MixtureComponent :
+                                Similar to Source2ChemicalMix, resolution
+                                table between ChemicalMix and Chemical, to avoid
+                                storage of redundant Chemical information.
+                               Isomer3d :
+                                Stereochemistry specific chemical representations with
+                                predicted 3D structural information / atom coordinates.
+                                Multiple 3D conformation records may exist here for any
+                                single record in the Chemical table, one for every
+                                possible isomeric configuration the chemical can exist in.
+                           
+                   Sources 
+                     Abbreviation 
+     Name 
+     URL 
+     
+     
+</body> 

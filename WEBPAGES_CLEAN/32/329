@@ -1,0 +1,55 @@
+ 3.34.6 GetFragmentNumber<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.34.5 GetChainID 
+ Up:   3.34 OEResidue 
+ Next:   3.34.7 GetInsertCode 
+   
+
+
+  
+3.34.6 GetFragmentNumber 
+ 
+
+ 
+    
+int GetFragmentNumber() const
+    
+Return the fragment number property of a residue.  Fragment numbers
+are integer indices that define connected components of a
+macromolecule.  When reading from a PDB file, the first atom is placed
+in fragment number 1.  Each time a ``TER'', ``END'' or ``ENDM'' record is
+encountered within a single connection table, the fragment number is
+incremented.  Similarly, when writing a PDB file, a TER record is
+written between any consecutive pair of atoms with different fragment
+numbers.  The fragment number property may be set using the
+OEResidue::SetFragment number property.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.34.5 GetChainID 
+ Up:   3.34 OEResidue 
+ Next:   3.34.7 GetInsertCode 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

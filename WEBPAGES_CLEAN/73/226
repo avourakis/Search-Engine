@@ -1,0 +1,53 @@
+ Applet Interactions<body>
+
+     Local Site Map 
+   Overview  
+  Architecture      Client Interactions  
+  Applet Interactions     
+
+     
+
+  Typical Interaction of a Chimera Java Applet  
+
+ This section demonstrates the interactions of various elements of Chimera's
+architecture in supporting an applet's access to a Chimera hyperweb. 
+
+           Step one.  A Web browser accesses a Web page which contains a Java
+applet.          Step two.  The Web server retrieves the applet and sends it to the
+Web browser. In order to connect to Chimera, the applet requires a username.
+Since Java restrictions prevent the applet from determining this information
+automatically, the applet must query the user for the information. Alternatively,
+this information could be conveyed to the applet using an applet parameter.
+However in order to be sufficiently general, this approach implies that
+the Web page which hosts the applet is generated dynamically by the Web
+server. This, in turn, implies that the Web server has, in some fashion,
+previously determined the user's name (e.g., via an HTML form).          Step three.  The applet contacts the hyperweb manager on the site
+from which it was downloaded and requests the contact information of a Chimera
+server running on the site. The hyperweb manager, which tracks this information,
+returns the hostname and port number of an active Chimera server.          Step four.  The applet contacts the Chimera server. Note: due to Java
+security restrictions, the Web server, hyperweb manager, and Chimera server
+must all execute on the same machine in order for the applet to communicate
+with them.           Step five.  The applet supplies the Chimera server with the URL
+of a Chimera-enhanced website which it then contacts. The Chimera server
+requests the contact information for the site's hyperweb server. The hyperweb
+manager returns this information. 
+
+ In the diagram above, the Chimera server is shown contacting the hyperweb
+manager on the same site. However it could just as easily contact some other
+website. The Chimera server is running as an application and does not have
+the same network restrictions as the applet. In this manner, the applet
+can access any Chimera-enhanced website since it is the Chimera server which
+does the actual connections.           Step six.  Having retrieved the contact information for the hyperweb
+server, the Chimera server establishes a connection to it. At this point,
+the Chimera server requests a list of the hyperwebs contained on the site
+from the hyperweb manager. It can then present this list to the applet.          Step seven.  Once the applet has selected a hyperweb, the hyperweb
+server loads it into memory and it is now accessible for manipulation.         Local Site Map 
+   Overview  
+  Architecture      Client Interactions  
+  Applet Interactions     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

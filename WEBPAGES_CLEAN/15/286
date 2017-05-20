@@ -1,0 +1,144 @@
+ Seventh Heaven<body>
+
+ Seventh Heaven 
+ Whats in a Name? Trust. 
+ Internet-Scale Namespaces, Part II 
+ Rohit Khare * 4K Associates * October 25, 1999 
+ 
+ A renowned programming pioneer quipped  "Any problem in computer science can be solved with another layer of indirection."  In fact, I just did! Indirect, that is  not that I authored that aphorism. I deferred the problem of actually looking up the speaker by binding it to the local symbol "a renowned programming pioneer." 
+ Now that youve come through the looking-glass which is my column, youre just going to have to trust me. Like Humpty-Dumpty, "When I use a word, it means just what I choose it to mean --- neither more nor less." So when you challenge me to resolve that reference into an actual person, youll have to trust my sources in turn.  
+ Would you trust the score of Web pages I can search up which simply cite it as  Anon. , lost to the mists of ancient computing history? Or an MIT professor who pointed me to the legendary wit of Alan Perlis, founder of Carnegie Mellons computer science program? Or, as I long assumed, the professor who taught it to me in the first place, Butler Lampson?  
+ In fact, my "resolution function" for this namespace was a PDF file at Microsoft Researchs web site. Prof. Lampsons own Turing Lecture slides correctly attributed it to David Wheeler, chief programmer for the EDSAC project in the early 50s. 
+ Resolving "renowned programming pioneer" to "David Wheeler" seems nothing like resolving    w3.org   to   18.29.0.27  ; the former process weighs human relationships, history, and judgment, while the latter mechanically queries a Domain Name System (DNS) database. Dig deeper, though, I believe they're seem more similar than not. Every decision to name something is a trust decision, resolvable only in the context of some community that agrees to that namespace. 
+  Why We Name 
+  Perhaps it makes more sense in reverse: why do we name objects in the first place? We use names to abstract away details: of location, of authorization, of human-readability. Every namespace interposes a new fulcrum for administrative leverage: to redirect the binding, extract rents, and implement other social policies. 
+ In the last issues dissection of the  Anatomy of a URL , I made the further claim that namespaces can be unwrapped in layers, with each layers address becoming the next lower layers name. With explicit reference to Ray &amp; Charles Eames fim  Powers of Ten , we zoomed in from the visible surface of a Web browser to domain names, IP addresses, Ethernet MAC station IDs, modem numbers, and so on.  
+ To help classify namespaces, I tried collect some figures of merit on each: the number of entries, the density of possible entries, their lifetime, the lifetime of the binding, its organizational authority, user presentation, and so on. Resolution was characterized as a function from the domain of names to the range of addresses, allowing us to note injectivity (a one-to-one mapping), surjectivity (that every address has a name), computability, and invertibility.  
+ All of these mathematical properties have political consequences. Injectivity, for example, creates scarcity, since "united.com" can only point to the airline or the van line. Economics govern the allocation of scarce resources, leading directly to the politics surrounding domain name system reform. Less marketable identifiers such as Ethernet IDs are simply sold in bulk.  
+ Surjectivity is another political problem: can any government compel every citizen to use a unique Social Security Number? Is every citizen addressable through the postal service? (@@a US Federal judge served the first e-mail subpoena this year, on an overseas defendant). There are related privacy fears: we assume unlisted phone numbers will remain uncomputable by name; and that a phone number wont be invertible to a person. 
+ Mobility is an example of an overall property that depends on several features. Cellular phone roaming, for example, requires very low latency updates, while assigning or transferring domain names can take up to three days to propagate across the Internet  but soon, dialup users will expect to acquire a Dynamic DNS name in seconds. 
+ Reaching in the opposite direction, we can ease resolution at the expense of mobility by weakening our names to function as locators. Consider a hypothetical URN (Uniform Resource Name) such as    RFC:2616   and its transformation into    http://info.internet.isi.edu/in-notes/rfc/files/rfc2616.txt   , an explicit path to one of the thousands of copies of the HTTP specification on the Internet. IP addresses strike a similar compromise between the topologically consistent network prefix, and the host-specific suffix.
+ The example of IP, in turn, introduces an archetypal feature supporting Internet-scale: explicit delegation and reservation within a namespace. Both the political structure and protocol design of DNS parse    www.united.com   as a hierarchical cascade of authority from ICANN (the Internet Corporation for Assigned Names and Numbers) to several .com registrars, to the legal owner of united.com and its sysadmins. Other parts of a namespace might be explicitly excluded from such authority, such as IP network prefix   10   for private use disconnected from the public Internet, or   X-   experimental message headers.
+ Just as the original film  Powers of Ten  surveyed everything from cosmology to quantum mechanics, while underscoring that the  same  physical rules applied everywhere, the point of our tour is to identify more of these scale-invariant design rules for Internet-scale namespaces. 
+  Zooming in: the HTTP transaction 
+  We resume our journey as browser uses its carefully constructed connection to the Web server to send an actual HTTP transaction (See Listing 1). There are several more namespaces at work here, such as the Method and Version number Ive boldfaced in the request. Only IETF RFCs can formally define new methods and HTTP revisions.   
+   
+  GET  /PICS/DSig/Overview  HTTP/1.1 
+Host: www.w3.org  
+   
+ HTTP/1.1  200 OK 
+Date: Wed, 18 Aug 1999 21:22:41 GMT
+Server:  Apache/1.3.6  (Unix) PHP/3.0.11
+Content-Location: Overview.html
+Vary: negotiate
+Last-Modified: Mon, 06 Apr 1998 20:24:44 GMT
+ ETag : "2def30-a2e-35293a0c;35293a2f"
+Accept-Ranges: bytes
+Content-Length: 2606
+ Content-Language : en-us
+ Content-Type : text/html;  charset =iso-8859-1
+
+ &lt;! DOCTYPE  HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"&gt;
+&lt;META http-equiv="PICS-Label" content='( PICS-1.1  " http://www.gcf.org/v2.5 "
+ by "John Doe" labels  for "http://www.w3.org/PICS/DSig/Overview" 
+ extension (optional "http://www.w3.org/TR/1998/REC-DSig-label/resinfo-1_0"
+    ("http://www.w3.org/TR/1998/REC-DSig-label/ MD5-1_0 " "cdc43463463=" 
+              "1997-02-05T08:15-0500"))
+ extension (optional "http://www.w3.org/TR/1998/REC-DSig-label/sigblock-1_0" 
+    ("AttribInfo" ("http://www.w3.org/PICS/DSig/X509-1_0" "efe64685685=")
+         ("http://www.w3.org/PICS/DSig/ X509-1_0 " 
+          "http://SomeCA/Certs/ByDN/ CN=PeterLipp,O=TU-Graz,OU=IAIK ")
+         ("http://www.w3.org/PICS/DSig/ pgpcert-1_0 " "ghg86807807=")
+         ("http://www.w3.org/PICS/DSig/pgpcert-1_0" 
+          "http://pgp.com/certstore/ plipp@iaik.tu-graz.ac.at "))
+    ("Signature" "http://www.w3.org/TR/1998/REC-DSig-label/ RSA-MD5-1_0 " 
+         ("byKey" (("N" "aba212412412=")  ("E" "3jdg93fj")))
+         ("on" "1996-12-02T22:20-0000") ("SigCrypto" "3j9fsaJ30SD=")))
+        on "1994.11.05T08:15-0500"
+        ratings ( suds  0.5  density  0  color  1))'&gt;   
+    Listing 1. An HTTP transaction, including an HTML response body with an embedded PICS rating and digital signature within a    &lt;META&gt;   tag. 
+ The response body cites some more complex namespaces. Since interoperability requires, at minimum, effective error notification, its easier to merely register a new  reply code  with IANA than to negotiate a full standards-track RFC. The  product token  is a completely malleable, private name which is nonetheless structured by a slash and useful for logging purposes (technographic data, as the jargon goes). 
+ To expedite future cache validation, its useful to have an absolutely unique identifier for the entity (payload) thats included here. The  entity-tag  is an opaque string in a namespace maintained exclusively by the server, which must only guarantee its uniqueness. If the Etag hasnt changed, its still a fresh copy.  
+   The entity itself is also described: its length, its last-modified date, and so on. It also has a  content-type , selected from the set of IANA-registered MIME media types, a two-level hierarchy divided into broad capabilities ( image ,  text ,  application , etc). The  character set  is specified by a text string registered by IANA, but ultimately defined by ISO, as is the  content-language , a combination of ISO-639 language abbreviations and optional ISO-3166 country codes. 
+  Zooming in: Digital Signatures  
+  At our maximum magnification, we are finally inspecting the very object of our desires, namespaces within the actual HTML document. Theres an SGML-mandated prologue defining the particular  document type , both by an ISO-registered Formal Public Identifier (FPI) and a URL. Within the namespace of HTML tags, META has a hybrid ability to specify an HTTP header. We find a parenthesis-delimited s-expression in its attributes, parseable only within its own  Platform for Internet Content Selection  (PICS) syntax.  
+ And indeed, the first thing the PICS label declares is that it delegates its ultimate meaning to the Good Clean Fun ratings scheme; thats the organization that sets the metrics for the suds/density/color rating vector in the final line. In between, we see several extension blocks that represent a digital signature of the label itself.  
+ First, there is an  algorithm identifier  for the hash function used to vouchsafe the particular document text John Doe will rate. Then it specifies the  signing keys , and finally the actual signature algorithm and cryptographic result.  
+  Zooming out: Human Identity 
+  Ultimately, though, we need to link those prime numbers back to an actual, legal, human. And so the whole picture falls apart Now we zoom out, beyond the Internet connection, beyond the browser, beyond even the PC, to take in whole organizations and nations. We have fallen off the edge of technology and into society. 
+ We need larger-scale namespaces to identify the signing principal. The lifetime of this name is much longer than an individual Web transaction. The social scope of this name should identify him or her to a wider community than just the immediate counterparties. And that name is typically used across multiple applications, for multiple purposes.  
+ Any resolution function over a domain of humans and incorporated organizations raises critical non-technical questions. Privacy, for one: will the function be known to all, prohibiting anonymity? Or conversely, could it be so weak that it is overwhelmed by ephemeral pseudonyms? Will the binding be legally trustworthy, valid enough to strike contracts?  And as we mentioned before, mightnt injectivity create a scarcity, in the rush to claim "Joe Doaks" rather than "Joe Doaks, the short, fat one who lives in a van down by the river"? Or raise the totalitarian scepter of surjection, compelling universal IDs and absolute traceability? What about billion-citizen nations where enumeration seems utterly impossible?  
+  X.500: Trust Your Superiors 
+  The engineers first resort, then, is to divide and conquer, to hide behind hierarchy. Thats the rationale behind the dominant international standard, the X.500 directory schema and X.509 signed certificate. In Listing 1, the first key identifier uses X.500, qualifying the Common Name (CN) "PeterLipp" by his Organization (O), the Technical University of Graz, Austria and Organizational Unit (OU) within it. There are a few other attributes in the standard schema: Country (C), Locality/Region (L), State/Province (ST), and Address (STREET). Taken together, the whole record is known as a Distinguished Name (DN).  
+ We can have faith in such DNs because each component within it can be a Certification Authority. That is, the same hierarchical structure used to narrow down the particular individual we have in mind requires a pyramid of trusted delegations going back up  a top-heavy structure indeed! 
+ If I were to have a certificate issued to "cn=Rohit Khare, ou=Information and Computer Science, l=Irvine o=University of California, st=CA, c=US", Id end up with the statement "Rohits key is 37", co-signed by me, my department chair, my chancellor, the president of the UC system, the Governor, and the President (or their delegees). And if anyone of those were missing  say, the chancellors  I wouldnt be able to go sailing. Thered be no least common ancestor between the athletic department and ICS, and Id be booted out like the rest of the unwashed masses. 
+ When it does work, though, its beautiful engineering. I can walk into the UCLA library and authenticate myself against our common faith in the UC system, or even with other California corporations. Of course, theres the little detail that the upper reaches of this system must be commonly trusted by millions  if not billions  of people to work at Internet-scale. Who, after all, can authenticate US citizens abroad? The UN? Or thousands of pairwise national cross-certifications? 
+  PGP: Trust No One 
+  Or, for that matter, identities that just dont happen to neatly fit into this global political hierarchy? The FoRK mailing list is a slippery, transnational community that still needs to authenticate its members to each other. What Id use here is Pretty Good Privacy (PGP) for its implementation of a Web of Trust instead. 
+ Id begin with a fresh keypair, self-signed by the string    FoRK@XeNT.com  . It is born without meaning, without value of its own. But I like it, and I will also sign it, as   Rohit@4K-Associates.com  . Ill call up my friend Ron in Brazil and read him off a few digits of the new FoRK key, and hell sign it too. Now anyone who wants to join the club who happens to know me and trust me  or perhaps knows both me and Ron and trusts us both a little bit  has reason to believe in the FoRK keys security. Over time, the whole community looks like a crazy mesh constructed by six degrees of separation rather than any central FoRK passport office, and perhaps thats how it should be.
+ Or perhaps not. When I try to go sailing again, and I happen to know the attendants brother, should he let me in? He may certainly believe Im    Rohit@4K-Associates.com  , but that doesnt prove Im a student at UC Irvine and to be entrusted with a boat. Its critical to know  why  you trust an assertion. Pretty much the only thing PGP is guaranteed useful for is verifying email addresses. [If youd like to read much more on the philosophy of trust management, consult  Weaving a Web of Trust  at    http://www.4K-Associates.com/Library/trust   ] 
+ And finally, its not clear that this model achieves Internet-Scale either. In real life, I may know hundreds of people and PGP will suffice to secure my personal communications. But the whole beauty of the Internet  indeed, of public-key cryptography broadly  is the ease of spontaneous communication. When I get e-mail from a stranger, I need to go rummage through my keyring to construct some trusted pathway from my friends to this fellow. Ironically, for such a decentralized trust calculus, the PGP community depends on Brian LaMacchias absolutely centralized Keyserver. The critical difference, though, is that unlike an X.509 CA, nobody has to trust Dr. LaMacchia; its just a cache of signed keys, take it or leave it, some bogus or not. 
+ In this sort of ultimately existential universe, names truly are relative. As far as you know, dear reader, there isnt any Dr. LaMacchia at all; its just "Rohits Brian" until proven otherwise. Self-centered naming is also the key insight of Ron Rivest and Prof. Lampsons Simple Distributed Security Infrastructure (SDSI) proposal, and inspires the charter of the IETF Simple Public Key Infrastructure (SPKI) working group (theres also a more mature Public Key Infrastructure for X.509 (PKIX) working group). 
+  Ontology in Angle Brackets 
+  If such semiotic confusion attends merely finding each other, imagine actually saying anything! In our original example, I was firing up my browser to purchase an airplane ticket. The promise of XML is that I should be able to automatically extract minutia like the airfare from my pretty pages and plop it directly into my expense report.  
+   &lt;B&gt; Total: &lt;FARE  currency=usd basis=R&gt;$6010&lt;/FARE&gt;&lt;/B&gt; 
+   In order to add this new tag to my vocabulary, I need to look up Uniteds definition. The central tenet of the XML Namespaces facility is that a tag name can really be a URL. 
+   &lt;HEAD  xmlns:u=http://united.com/schemas/fares&gt; 
+&lt;u:FARE u:currency=usd u:basis=R&gt; $6010 &lt;/FARE&gt; 
+   Thats all well and good if 4K Associates has a private agreement with United for its expense reporting (and happens to win the lottery to be buying R-class supersonic seats :-). How can we compare airlines fares in our expense reporting application? 
+ The nifty Internet-scale solution is that the URIs can directly reflect the scope of the community sharing that ontology. Over time, if other airlines adopt the same tag, the namespace prefix could migrate to    iata.int/fareschema    same tag, wider ratification. The same approach scales down, too, to indicate very private or very experimental features. 
+ Of course, there will be fundamental ontological mismatches. The airline, hotel, and car rental industry &lt;DAY&gt; tags are inherently incommensurable. XML namespaces also accurately flag such conflicts.   
+ XML and RDF-driven metadata technology will lead to a sort of Cambrian explosion of new Internet-scale namespaces, especially as real-world categorizations move online. Table 1 is just a selection of the kinds of namespaces that may get extended onto the Internet. Imagine what it would be like to plug in a new laser printer, and find that the list of printer profiles wasnt tied to a directory listing of the 100 most popular files your OS vendor shipped  some obscure directory youre going to have to manually put the PPD file you searched far and wide for  and instead was tied to a namespace maintained by Adobe, always up to date. Or what if, instead of maintaining separate lists of usernames for UNIX logins, NT logins, Web server logins, and so on, you could use a single namespace you trusted yourself? Not just directory server vendor hype, but to genuinely merge the meaning of those identities? The UN-sponsored Electronic Data Interchange (EDIFACT) standards rely on a little-known universal serial number for every corporation on the planet, a registry run by Dun &amp; Bradstreet, Inc. I dont think thats really responsive to Internet-Scale demand.  
+   
+  Dublin Core   
+ 
+  Library of Congress classifications   
+ 
+  Yahoo! Categories   
+   
+  ISBN / ISSN numbers 
+http://isbn.nu/&lt;isbn&gt; - try it!   
+ 
+  UPC product bar codes   
+ 
+  GPS coordinates (?)   
+   
+  RFCs &amp; Internet-Drafts   
+ 
+  User &amp; Group profiles   
+ 
+  Printer Descriptions (PPDs)   
+   
+  Video Codecs   
+ 
+  Fonts   
+ 
+  Colorspaces   
+   
+  Java class files   
+ 
+  Hashes &amp; GUIDs (globally unique IDs)   
+ 
+  Social Security Numbers   
+   
+  DUNS business ID number   
+ 
+  XML elements   
+ 
+  MIME Media Types   
+     Table 1: A diverse sampling of Internet-scale namespaces, above and beyond the common Domain Name. 
+   Recurring Internet-Scale Issues 
+  Namespace management at Internet scale requires more than scalable lookup algorithms alone. Internet scale is additionally about scaling across time, space, and organizations -- raising unique issues of longevity, latency, and liability, respectively. 
+ Well need names to get a handle on phenomena of widely varying lifetimes, from a name for the digital camera you just placed within infrared range of your laptop, to millennia-old lyric poems. Even within the human lifetime of major software systems, well need to maintain machine  and  human readability. If you think IP address space is in crisis, the international air traffic transponder standard is only now migrating from Mode C 12-bit flight IDs to digital Mode S 24-bit permanent airframe IDs. Just imagine how much complexity in the current ATC system is sheer resynchronization of per-region flight IDs upon handoff. All general-aviation traffic in the US, for example, is forced onto a single code, 1200. 
+ This shift from hours-long flight numbering to decades-long airframe numbering illustrates the sorts of reengineering more mundane internal applications will have to adapt to as these systems are woven together with your business partners across the Internet. Something as simple as an employee-number ID field can be blown away when redeployed into a joint-venture subsidiary. Human-readable identifiers are one way to gracefully re-integrate such ontological mismatches. 
+ By the time you read this, Y2K will be right around the corner. Take the long view and think about how your application might evolve over the years. How many of those character-string part-names and color fields might be replaced by URIs? Thats a big dollop of indirection, allowing later users wide latitude to move, merge, replace, enlarge, translate, visualize, or replace that parameter namespace. 
+ At the same time, this move illustrates the importance of building upon firm Internet standards. Longevity requires security and reliability of the resolution function itself, not just the naming policy. Mobility and agility, on the other hand, emphasize celerity.  
+ Second, relying on names across space requires explicitly coping with latency, nomadic connectivity, and geography. Nameservices requiring online resolution and instantaneous updating will have to gracefully distribute between machines separated by not just 30ms on the LAN or 300ms across the Internet, but by days or weeks of disconnected use by nomadic users. How will your system trace the consequences of an expired digital certificate? How can we resolve "Rohits Brian" in physically decentralized form? What about a network where    united.com   will mean different businesses depending on where I am? Why not local resolution to local ticket offices? Conversely, why the heck should a few inconsequential miles of private highway outside UCI hog up the planet-wide domain name   tollroad.com  ?
+ Third, Internet scale demands solutions that work across organizations. The very essence is that it is  not  a large LAN under some mythical central control, no matter how we strive to maintain a single globally consistent name table or network map. Explicit multilaterality is critical to the success of a namespace on the Internet. Look for explicit delegation of portions of a namespace, as well as a separate dimension for explicit commitment (private, experimental, public, etc).  
+ When we really get serious about electronic commerce, liability will accrue around these boundaries. Who authorized overnight shipping? Why doesnt this color match the named swatch? Whose accounting rules forgot to mention the pension liability? Conversely, anonymity and pseudonymity are also solutions for legal liability when freedom of speech, or simply efficient auction markets, are at stake? 
+  Postmodernist Networking 
+  By now, dear reader, you must imagine Im simply over the deep end. Let me close by refounding my arguments on some basic human truths. If we are really going to see a world with trillions of computers, if we are really going to establish information and communication as fundamental human rights, we will fully recapitulate human society on that network. David Gelernter at Yale envisioned it thus in his book  Mirror Worlds :  
+  A Mirror World is some huge institution's moving, true-to-life mirror image trapped inside a computer --- where you can see and grasp it whole. The thick, dense, busy subworld that encompasses you is also, now, an object in your hands...   
+  It behooves us to ask how humans name the world in the first place. People, for one, dont have globally unique names. Most people arent even "visible" to each other. The UN just declared WP6B day last month: World Population Six Billion. We cant even enumerate the set of people (to say nothing of devices!). And yet, people arguably manage stable, self-organizing, extremely trustworthy namespaces. In the ancient days of UUCP and Fidonet, even our computers got by in this patchwork fashion. 
+ Someday, DNS, IP, Ethernet, and the whole lot of centrally controlled namespaces will rot and topple over. Perhaps the new bottom turtle will be thousands of bits of private key, infinitely messier than even IPv6 routing, because itll be as random and as unique as DNA. But someday, it must be possible for new node on the network to be born free, switched on and still make a name for itself. If Mother Nature doesnt need a directory server 
+ In other words, in the computer networks of the future, therell be a whole lotta schmoozin goin on!  </body> 

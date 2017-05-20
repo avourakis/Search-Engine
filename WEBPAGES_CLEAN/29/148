@@ -1,0 +1,80 @@
+ 3.35.1 Constructors<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.35 OESubSearch 
+ Up:   3.35 OESubSearch 
+ Next:   3.35.2 operator = 
+   
+
+
+  
+3.35.1 Constructors 
+ 
+
+ 
+    
+OESubSearch()
+    
+Default constructor.
+
+  
+    
+OESubSearch(const char *smarts, bool reorder=true)
+    
+Construct an instance of an  OESubsearch  object using a SMARTS
+pattern.  The SMARTS pattern is passed as the first argument to the
+constructor.
+The Boolean reorder flag determines the match order of the query
+atoms and bonds.  If reorder is set to true then the atoms and bonds will be
+matched in an arbitrary order.  If false, atoms and bonds will be
+matched using the input order of the SMARTS pattern.
+
+  
+    
+OESubSearch(const OEQMolBase &amp;qmol, bool reorder=true)
+    
+Construct an instance of an  OESubSearch  object using a query
+molecule ( OEQMolBase ).  The query molecule is passed as the first
+argument to the constructor.  Query molecules must have atom and bond
+expressions (see  OEQMolBase::BuildExpressions ) built for the
+entire molecule before being passed to this constructor.  Failure to do
+so will result in the  OESubSearch  instance being constructed as
+uninitialized.  The Boolean reorder flag determines the match order of
+the query atoms and bonds.  If reorder is set to true then the atoms and
+bonds will be matched in an arbitrary order.  If false, atoms and bonds
+will be matched in the order that they appear in the query molecule.
+
+  
+    
+OESubSearch(const OESubSearch &amp;ss)
+    
+Copy constructor.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.35 OESubSearch 
+ Up:   3.35 OESubSearch 
+ Next:   3.35.2 operator = 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

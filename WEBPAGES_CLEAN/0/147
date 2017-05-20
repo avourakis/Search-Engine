@@ -1,0 +1,604 @@
+ Contents  
+
+ 
+
+ OPERATING SYSTEMS PRINCIPLES 
+
+ Lubomir F. Bic, Alan C. Shaw 
+
+ Contents  
+
+ 1 Introduction 
+
+  1.1 The Role of Operating Systems     
+
+  1.1.1 Bridging the Hardware/ Application Gap    
+
+  1.1.2 Three Views of Operating Systems    
+
+  1.2 Organization of Operating Systems    
+
+  1.2.1 Structural Organization    
+
+  1.2.2 The Hardware Interface     
+
+  1.2.3 The Programming Interface     
+
+  1.2.4 The User Interface     
+
+  1.2.5 Runtime Organization.     
+
+  1.3 Operating System Evolution and Concepts    
+
+  1.3.1 Early Systems     
+
+  1.3.2 Batch Operating Systems     
+
+  1.3.3 Multiprogramming Systems.     
+
+  1.3.4 Interactive Operating Systems     
+
+  1.3.5 Personal Computer and Workstation Operating Systems    
+
+  1.3.6 Real-Time Operating Systems    
+
+  1.3.7 Distributed Operating Systems    
+
+ Part One Process Management and Coordination  
+
+ 2 Basic Concepts: Processes and Their Interactions  
+
+  2.1 The Process Notion     
+
+  2.2 Defining and Instantiating Processes     
+
+  2.2.1 Precedence Relations Among Processes     
+
+  2.2.2 Implicit Process Creation. 44     
+
+  2.2.3 Explicit Process Creation with fork and join     
+
+  2.2.4 Process Declarations and Classes     
+
+  2.3 Basic Process Interactions     
+
+  2.3.1 Competition: The Critical Section Problem     
+
+  2.3.2 Cooperation.     
+
+  2.4 Semaphores     
+
+  2.4.1 Semaphore Operations and Data     
+
+  2.4.2 Mutual Exclusion with Semaphores     
+
+  2.4.3 Semaphores in Producer/Consumer Situations     
+
+  2.5 Event Synchronization    
+
+ 3 Higher-Level Synchronization and Communication 
+
+ 3.1 Shared Memory Methods 
+
+ 3.1.1 Monitors  
+
+ 3.1.2 Protected Types  
+
+ 3.2 Distributed Synchronization
+and Communication 
+
+ 3.2.1 Message-Based
+Communication 
+
+ 3.2.2 Procedure-Based
+Communication 
+
+ 3.2.3 Distributed Mutual
+Exclusion 
+
+ 3.3 Other Classic
+Synchronization Problems 
+
+ 3.3.1 The Readers/Writers
+Problem 
+
+ 3.3.2 The Dining Philosophers
+Problem 
+
+ 3.3.3 The Elevator Algorithm 
+
+ 3.3.4 Event Ordering with
+Logical Clocks 
+
+ 4 The Operating System Kernel: Implementing Processes and Threads 
+
+  4.1 Kernel Definitions and Objects    
+
+  4.2 Queue Structures     
+
+  4.2.1 Resource Queues in an Operating System    
+
+  4.2.2 Implementations of Queues    
+
+  4.3 Threads    
+
+  4.4 Implementing Processes and Threads    
+
+  4.4.1 Process and Thread Descriptors    
+
+  4.4.2 Implementing Operations on Processes    
+
+  4.4.3 Operations on Threads    
+
+  4.5 Implementing Synchronization and Communication
+Mechanisms    
+
+  4.5.1 Semaphores and Locks    
+
+  4.5.2 Monitor Primitives    
+
+  4.5.3 Clock and Time Management    
+
+  4.5.4 Communication Primitives    
+
+  4.6 Interrupt Handling    
+
+ 5 Process and Thread Scheduling 
+
+  5.l Organization of Schedulers     
+
+  5.1.1 Embedded and Autonomous Schedulers    
+
+  5.1.2 Priority Scheduling    
+
+  5.2 Scheduling Methods    
+
+  5.2.1 A Framework for Scheduling    
+
+  5.2.2 Common Scheduling Algorithms    
+
+  5.2.3 Comparison of Methods    
+
+  5.3 Priority Inversion    
+
+  5.4 Multiprocessor and Distributed Scheduling    
+
+ 6 Deadlocks 
+
+  6.1 Deadlock with Reusable and Consumable Resources    
+
+  6.1.1 Reusable and Consumable Resources    
+
+  6.1.2 Deadlocks in Computer Systems    
+
+  6.2 Approaches to the Deadlock Problem    
+
+  6.3 A System Model    
+
+  6.3.1 Resource Graphs    
+
+  6.3.2 State Transitions    
+
+  6.3.3 Deadlock States and Safe States    
+
+  6.4 Deadlock Detection     
+
+  6.4.1 Reduction of Resource Graphs    
+
+  6.4.2 Special Cases of Deadlock Detection    
+
+  6.4.3 Deadlock Detection in Distributed Systems    
+
+  6.5 Recovery from Deadlock    
+
+  6.5.1 Process Termination     
+
+  6.5.2 Resource Preemption    
+
+  6.6 Dynamic Deadlock Avoidance    
+
+  6.6.1 Claim Graphs    
+
+  6.6.2 The Banker's Algorithm    
+
+  6.7 Deadlock Prevention    
+
+  6.7.1 Eliminating the Mutual-Exclusion Condition    
+
+  6.7.2 Eliminating the Hold-and-Wait Condition    
+
+  6.7.3 Eliminating the Circular-Wait Condition    
+
+ Part Two Memory Management 
+
+ 7 Physical Memory 
+
+  7.1 Preparing a Program for Execution    
+
+  7.1.1 Program Transformations    
+
+  7.1.2 Logical-to-Physical Address Binding    
+
+  7.2 Memory Partitioning Schemes    
+
+  7.2.1 Fixed Partitions    
+
+  7.2.2 Variable Partitions    
+
+  7.2.3 The Buddy System    
+
+  7.3 Allocation Strategies for Variable Partitions    
+
+  7.3.1 Measures of Memory Utilization    
+
+  7.4 Managing Insufficient Memory    
+
+  7.4.1 Memory Compaction    
+
+ 8 Virtual Memory 
+
+  8.1 Principles of Virtual Memory    
+
+  8.2 Implementations of Virtual Memory    
+
+  8.2.1 Paging    
+
+  8.2.2 Segmentation    
+
+  8.2.3 Paging with Segmentation    
+
+  8.2.4 Paging of System Tables    
+
+  8.2.5 Translation Look-Aside Buffers    
+
+  8.3 Memory Allocation in Paged Systems    
+
+  8.3.1 Global Page Replacement Algorithms    
+
+  8.3.2 Local Page Replacement Algorithms    
+
+  8.3.3 Load Control and Thrashing    
+
+  8.3.4 Evaluation of Paging    
+
+ 9 Sharing of Data and Code in Main Memory 
+
+  9.1 Single-Copy Sharing     
+
+  9.1.1 Reasons for Sharing    
+
+  9.1.2 Requirements for Sharing    
+
+  9.1.3 Linking and Sharing    
+
+  9.2 Sharing in Systems without Virtual Memory    
+
+  9.3 Sharing in Paging Systems    
+
+  9.3.1 Sharing of Data     
+
+  9.3.2 Sharing of Code     
+
+  9.4 Sharing in Segmented Systems    
+
+  9.4.1 Sharing of Code and Data     
+
+  9.4.2 Unrestricted Dynamic Linking    
+
+  9.5 Principles of Distributed Shared Memory    
+
+  9.5.1 The User's View of Distributed Shared Memory    
+
+  9.6 Implementations of Distributed Shared Memory    
+
+  9.6.1 Implementing Unstructured Distributed Shared Memory    
+
+  9.6.2 Implementing Structured Distributed Shared Memory    
+
+ Part Three File Systems and Input/Output 
+
+ 10 File Systems 
+
+  10.1 Basic Functions of File Management    
+
+  10.2 Hierarchical Model of a File System    
+
+  10.3 The User's View of Files     
+
+  10.3.1 File Names and Types     
+
+  10.3.2 Logical File Organization    
+
+  10.3.3 Other File Attributes    
+
+  10.3.4 Operations on Files    
+
+  10.4 File Directories    
+
+  10.4.1 Hierarchical Directory Organizations    
+
+  10.4.2 Operations on Directories    
+
+  10.4.3 Implementation of File Directories    
+
+  10.5 Basic File System    
+
+  10.5.1 File Descriptors     
+
+  10.5.2 Opening and Closing Files    
+
+  10.6 Device Organization Methods    
+
+  10.6.1 Contiguous Organization    
+
+  10.6.2 Linked Organization    
+
+  10.6.3 Indexed Organization    
+
+  10.6.4 Management of Free Storage Space    
+
+  10.7 Principles of Distributed File Systems    
+
+  10.7.1 Directory Structures and Sharing    
+
+  10.7.2 Semantics of File Sharing    
+
+  10.8 Implementing Distributed File System    
+
+  10.8.1 Basic Architecture     
+
+  10.8.2 Caching    
+
+  10.8.3 Stateless Versus Stateful Servers    
+
+  10.8.4 File Replication     
+
+ 11 Input/Output Systems 
+
+  11.1 Basic Issues in Device Management    
+
+  11.2 A Hierarchical Model of the Input/Output System    
+
+  11.2.1 The Input/Output System Interface    
+
+  11.3 Input/Output Devices    
+
+  11.3.1 User Terminals    
+
+  11.3.2 Printers and Scanners    
+
+  11.3.3 Secondary Storage Devices    
+
+  11.3.4 Performance Characteristics of Disks    
+
+  11.3.5 Networks    
+
+  11.4 Device Drivers    
+
+  11.4.1 Memory-Mapped Versus Explicit Device Interfaces    
+
+  11.4.2 Programmed Input/Output with Polling    
+
+  11.4.3 Programmed Input/Output with Interrupts    
+
+  11.4.4 Direct Memory Access    
+
+  11.5 Device Management    
+
+  11.5.1 Buffering and Caching     
+
+  11.5.2 Error Handling     
+
+  11.5.3 Disk Scheduling    
+
+  11.5.4 Device Sharing     
+
+ Part Four Protection and Security 
+
+ 12 The Protection and Security Interface 
+
+  12.1 Security Threats    
+
+  12.1.1 Damage Types     
+
+  12.1.2 Vulnerable Resources    
+
+  12.1.3 Attack Types     
+
+  12.2 Functions of a Protection System    
+
+  12.2.1 External Safeguards    
+
+  12.2.2 Verification of User Identity    
+
+  12.2.3 Communication Safeguards    
+
+  12.2.4 Threat Monitoring    
+
+  12.3 User Authentication    
+
+  12.3.1 Approaches to Authentication    
+
+  12.3.2 Passwords    
+
+  12.4 Secure Communication     
+
+  12.4.1 Principles of Cryptography    
+
+  12.4.2 Secret-Key Cryptosystems     
+
+  12.4.3 Public-Key Cryptosystems     
+
+ 13 Internal Protection Mechanisms 
+
+  13.1 The Access Control Environment    
+
+  13.2 Instruction-Level Access Control    
+
+  13.2.1 Register and Input/Output Protection    
+
+  13.2.2 Main Memory Protection    
+
+  13.3 High-Level Access Control    
+
+  13.3.1 The Access Matrix Model    
+
+  13.3.2 Access Lists and Capability Lists    
+
+  13.3.3 A Comprehensive Example: Client/Server Protection    
+
+  13.3.4 Combining Access Lists and Capability Lists    
+
+  13.4 Information Flow Control    
+
+  13.4.1 The Confinement Problem    
+
+  13.4.2 Hierarchical Infon1lation Flow    
+
+  13.4.3 The Selective Confinement Problem    
+
+ Part Five Programming Projects 
+
+ I �  Process/Thread Synchronization 
+
+  1 Project Overview    
+
+  2 Setting Up a Race Condition     
+
+  3 Solutions to the Critical Section Problem    
+
+  3.1 Solution Using Mutex Locks    
+
+  3.2 Software Solution    
+
+  4 Implementing General Semaphores    
+
+  4.1 Solution Using Mutex Locks and Condition Variables    
+
+  4.2 Software Solution     
+
+  5 Bounded Buffer     
+
+  6 Summary of Specific Tasks    
+
+  7 Ideas for Additional Tasks    
+
+ II �  Process and Resource Management 
+
+  1 Project Overview     
+
+  2 Basic Process and Resource Manager    
+
+  2.1 Process States    
+
+  2.2 Representation of Processes    
+
+  2.3 Representation of Resources    
+
+  2.4 Operations on Processes and Resources    
+
+  2.5 The Scheduler    
+
+  2.6 The Presentation Shell    
+
+  3 Extended Process and Resource Manager    
+
+  3.1 Timeout Interrupts     
+
+  3.2 Input/Output Processing    
+
+  3.3 The Extended Shell     
+
+  4 Summary of Specific Tasks    
+
+  5 Ideas for Additional Tasks    
+
+ III �  Main Memory Management 
+
+  1 Project Overview    
+
+  2 The Memory Manager    
+
+  2.1 Main Memory    
+
+  2.2 The User Interface    
+
+  3 The Simulation Experiment    
+
+  3.1 Generating Request Sizes    
+
+  3.2 Gathering Performance Data    
+
+  3.3 Choosing a Block to Release    
+
+  4 Summary of Specific Tasks    
+
+  5 Ideas for Additional Tasks    
+
+ IV �  Page Replacement Algorithms 
+
+  1 Project Overview    
+
+  2 Global Page Replacement Algorithms    
+
+  3 Local Page Replacement Algorithms    
+
+  4 Generating Reference Strings    
+
+  5 Performance Evaluations    
+
+  6 Summary of Specific Tasks     
+
+  7 Ideas for Additional Tasks    
+
+ V �  File System  
+
+  1 Project Overview     
+
+  2 The Input/Output System    
+
+  3 The File System    
+
+  3.1 Interface Between User and File System    
+
+  3.2 Organization of the File System    
+
+  3.3 The Directory    
+
+  3.4 Creating and Destroying a File    
+
+  3.5 Opening and Closing a File    
+
+  3.6 Reading, Writing and Seeking in a File    
+
+  3.7 Listing the Directory    
+
+  4 The Presentation Shell    
+
+  5 Summary of Specific Tasks    
+
+  6 Ideas for Additional Tasks    
+
+ Other Programming Projects 
+
+  1 Timer Facility    
+
+  2 Process Scheduling    
+
+  3 The Banker's Algorithm    
+
+  4 Disk Scheduling Algorithm    
+
+  5 Stable Storage    
+
+ Glossary 
+
+ Bibliography 
+
+ Author Index 
+
+ Subject Index     
+
+ 
+
+</body> 

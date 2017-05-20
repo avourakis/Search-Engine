@@ -1,0 +1,161 @@
+ RapID<body>
+
+ 
+ 
+RapID
+ 
+ 
+
+
+ 
+ 
+  Home  
+ 
+ 
+  Research  
+ 
+ 
+  Software  
+ 
+ 
+  Publications  
+ 
+ 
+  Industry  
+ 
+ 
+  Resume  
+ 
+ 
+  Flashback!  
+ 
+ 
+
+ 
+ Rapid Information Dissemination 
+  
+ :: Usage 
+ 
+RapID is a P2P application that provides for scalable distribution of
+data. A network of machines form a RapID overlay network. A sender machine
+can then send data/content to all the other machines in a fast, scalable fashion.
+Currently, the most popular use around, seems to be that of viewing large
+video files simultaneously on many machines :)
+ 
+RapID is agnostic of the content being disseminated. It can be used to distribute
+any file. The file to be disseminated is input at a command line. The file is broken
+into chunks and 'swarmed' into the overlay. On the receiving end, the chunks are
+collected in the 'right-order' (using a 'sliding window') and sent to STDOUT.
+The output can be piped into another program or redirected into a file (to be stored)
+as per the users wish.
+ 
+
+
+ :: Preliminaries 
+  RapID is built using
+  ICE   middleware.  Currently, the implementation
+is in Java but a C++ version (executables on Windows and MacOS-X) is in the works. Java runtime 5.0
+  J2SE 5.0  
+IS required to run RapID (sorry if you have to download this, but templates make life much easier for me :).
+ 
+The zip bundle contains the required Java class files to run RapID. They also
+contain the jar files of ICE. However, please visit the ICE download site
+to make sure that you have the latest binaries.
+ 
+The source files for RapID are available and are licensed as per
+  GNU-GPL  . Please
+send me an e-mail (deshpanm at uci edu) for the source-files and I'll
+be glad to send them to you.
+ 
+
+ :: Quick Outline on Download and Installation (On Windows) 
+(Rapid works on Linux too, but I'm guessing you can easily figure out how to
+run it without needing step-by-step instructions :)
+  
+(1) Download the zip file and unzip it into any directory of your choosing
+(say 'C:\temp\rapid'). You should see the files "rapid.jar" and "Ice.jar"
+present in the directory now.
+ 
+(2) Open a command prompt window:
+ 
+Start-&gt;run-&gt;"cmd"
+ 
+(3) Go into RapID's directory:
+ 
+C:\&gt; cd C:\temp\rapid
+ 
+(4) Now, if you know about Java's classpath you can set it so that it can see the jar files
+in the directory, or else :
+ 
+
+ :: Running RapID (On Windows) 
+ 
+RapID can be started in two different ways: (1) Lonely mode and (2) Friendly mode.
+ 
+(5) In Lonely-mode, RapID is started with the following simple command:
+ 
+C:\temp\rapid&gt; java RapidPeer
+ 
+The above works if your CLASSPATH variable is set correctly. If not, then
+you can try this:
+ 
+C:\temp\rapid&gt; java -cp "Ice.jar;rapid.jar" RapidPeer
+ 
+By default, RapID binds to port 20787
+ 
+(First 5 digits of transcendental number: i^i)  of the machine it is running on.
+If you want to change this, you can pass the alternate port number on the command line, like this:
+(java RapidPeer [port-number]).
+ 
+(6) In friendly mode, it is assumed that you already know another machine's IP (and port)
+on which RapID is already running. Then, you can join 'into the RapID network' by starting
+RapID like this:
+ 
+C:\temp\rapid&gt; java RapidPeer [local-port] [remote-ip] [remote-port]
+ 
+
+ :: Having Fun with RapID 
+ 
+Download Mplayer and install it such that it is accessible from the command line.
+Then RapID can be used to stream video/audio files in a simple way:
+ 
+java RapidPeer [local-port] [remote-ip] [remote-port] | mplayer -cache 1024 -
+ 
+The last "-" for mplayer is to instruct it to read bytes of the STDIN. The cache option
+is needed to make mplayer work correctly. You can play around with the cache option but
+1024 seems to do the job. Visit the
+ mplayer page 
+for more command line options.
+ 
+
+ :: DISCLAIMER 
+ 
+ 
+RapID is still 'toy' software and carries no guarantee of any kind. It is
+primarily intended for research purposes.
+Development to add more features and make it more robust is continually in progress.
+One feature that will soon be added is to make it possible to disseminate multiple
+files without reinitializing the system.
+ 
+ 
+
+ 
+  Download  
+ 
+ RapID Software 
+ 
+  Dependencies  
+ 
+  Java5.0 Runtime 
+   ICE for Java 
+ 
+  After Download  
+ 
+  Mplayer  
+ 
+ 
+
+ 
+     HTML  •  CSS  •  508  
+
+  </body> 

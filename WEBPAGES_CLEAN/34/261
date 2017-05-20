@@ -1,0 +1,68 @@
+ Chimera 2.0 Tutorial: Jimage CLASSPATH setup for Unix<body>
+ 
+
+ Setting CLASSPATH in Unix to include jimage 
+
+  
+This section will explain how to set the CLASSPATH environment variable
+to include jimage.
+ 
+
+ 
+Note: The example below uses the tcsh shell.
+ 
+
+ displaying the CLASSPATH 
+
+ 
+To display your current CLASSPATH type the command echo $CLASSPATH.  This
+command asks your shell to display the string associated with the
+CLASSPATH environment variable. (This command is available on the csh
+and tcsh.)
+ 
+
+   
+
+ 
+Note: The CLASSPATH has the paths of the swing 0.7 files.
+ 
+
+ Setting the CLASSPATH to jimage 
+
+  There are a number of different means you can use to alter your environment 
+variable in Unix.  
+You may use any technique which will append the path to jimage to
+your CLASSPATH.  The following is one way you could change your CLASSPATH.
+ 
+
+  You should have jimage somewhere you have access to it.
+In the screenshot below, the jimage is in the directory /home/yuzok/classes.
+ 
+
+   
+
+  You can use the setenv command in the following way when you
+want to append to the CLASSPATH value. The command will look like this:
+  setenv CLASSPATH $CLASSPATH':/home/yuzok/classes' 
+ 
+Note: For tcsh, the two ' are needed because : is interpreted by the shell.
+The ' quotes all the characters between then so tcsh won't interpret the :.
+The meaning of the command is -- set CLASSPATH to the previous 
+value of CLASSPATH plus all
+the characters from the first ' to the last '.
+The screenshot below displays the appending using setenv and the resulting 
+environment variable displayed by the echo command.
+ 
+
+   
+
+  Note: You have appended CLASSPATH with the path the directory
+above the jimage directory.
+The Java interpretor will look for the .class files for jimage under 
+the jimage directory.  
+ 
+
+  You now have the jimage in the CLASSPATH.
+ 
+
+</body> 

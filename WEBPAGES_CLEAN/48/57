@@ -1,0 +1,103 @@
+ user.websites.chimera2.concepts.clients<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Clients  
+
+ Clients play an integral role in the Chimera architecture. They provide
+users access to Chimera's hypermedia services. While clients typically contain
+only one viewer, Chimera places no restrictions on the number of viewers
+a client can contain. This strict separation between the notion of client
+and the notion of viewer allows Chimera to efficiently model a wide variety
+of application architectures ranging from single-threaded single-purpose
+clients to multi-threaded commercial applications. 
+
+ The   responsibilities of a client are distinct
+from the  responsibilities  of a viewer.
+These responsibilities are: 
+
+  Establishing and maintaining a connection with the Chimera server.
+  This includes notifying viewers of changes in the state of the connection.
+    Activating viewers as appropriate in response to a user's actions.
+  For instance, requesting a chart be generated from a range of spreadsheet
+  data will necessitate the invocation of a chart viewer.
+    Routing hypermedia events to the appropriate viewer. Hypermedia events
+  arrive from the Chimera server tagged for a particular viewer. It is the
+  client's responsibility to see that the event is delivered to the correct
+  viewer.
+   Developer Information 
+
+ The operations used by clients are listed below. The type  concept 
+used in some of the operations below indicates that these operations are
+available on all of the previous hypermedia concepts (viewers, objects,
+views, anchors, and links). For more information see the  on-line
+documentation . 
+
+       connect(String)  
+ Establishes a connection to a Chimera server. The string specifies the name
+of the client. The name of the client is currently unused by the system.
+It is here to serve as a placeholder for potential future use by the system.
+(In particular, since clients can contain multiple viewers, it must be possible
+to map viewer names to their associated client name in order to invoke the
+appropriate client during a delayed link traversal.)     connectApplet(String, String, String)  
+ Establishes a connection to a Chimera server in the case where the client
+is a Java applet. Due to the security restrictions on applets additional
+information is required. In particular, the first string specifies the name
+of the host from which the applet was downloaded, the second string specifies
+the name of the applet's user (which the applet may have to query its user
+for), while the third string specifies the name of the client, as before.     connectHyperwebManager(String)  
+ Once you are connected to a Chimera server, the viewer needs to connect
+to a Chimera 2.0 website in order to access Chimera 2.0 hyperwebs. This
+routine connects the Chimera server to the website specified by a URL passed
+as a string to this routine. Note, all of a user's clients share the same
+Chimera server, thus this routine determines which site is accessed by all
+of a user's clients. Thus, this operation will generate an activeSite event
+to all of the user's other clients informing them of the change.     disconnect()  
+ Disconnects the client from its Chimera server.     disconnectHyperwebManager()  
+ Disconnects the Chimera server from its currently active Chimera 2.0 website.
+This will generate an activeSite event to all of the user's other clients
+informing them of the change.     clearWeb()  
+ Deselects the currently active hyperweb. All of the user's other clients
+will be informed of the change via an activeWeb event.     getWeb()  
+ Returns the name of the currently active hyperweb.     getWebs()  
+ Returns the names of the available hyperwebs for the active Chimera 2.0
+website. These names can then be used to select hyperwebs for manipulation
+via the  setWeb()  operation.     isHwmConnected()  
+ Returns  TRUE  if the client is connected to a Chimera 2.0 website.     lockConcept(concept)  
+ A client must lock a concept before performing an operation which would
+change its state. This prevents two different clients from modifying the
+concept at the same time. This operation is non-blocking. It will either
+lock the concept and return  TRUE  or it will return  FALSE .
+If the latter, the client must enter a polling loop to determine when the
+concept is available for locking.  The inadequacy of this locking mechanism
+is well known by its developers. This mechanism is one of the primary targets
+for improvement in the Chimera 2.0 beta release.      locked(concept)  
+ Returns  TRUE  if the specified concept is locked.     setWeb(String)  
+ Activates the specified hyperweb. All of a user's clients may now manipulate
+this hyperweb. The user's other clients will be notified of the change by
+an activeWeb event.     unlockConcept(concept)  
+ Unlocks the specified concept.    
+
+      Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

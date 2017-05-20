@@ -1,0 +1,188 @@
+ 32.4 Command line help<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.3.2 OEParseCommandLineLW 
+ Up:   32. OpenEye Command Line 
+ Next:   32.5 Parameter Categories 
+   
+
+
+  
+32.4 Command line help 
+ 
+
+ 
+The OEInterface object can has a significant amount of information,
+default values, text descriptions etc, about the parameters it holds.
+This information can be made accessible from the command line using
+the OECheckHelp function.  This function is described in detail in
+the API documentation, but in general is simply check if the first
+argument on the command line (argv[1]) is "   help", and if it
+is I supplies instructions on how to access the various help functions.
+If no help is requested ( i.e. ,  argv[1]  isn't "   help)
+the function is a no-op.
+
+  
+Given the following program
+
+  
+ Chapter 32 - Example 6 : cpp file 
+    #include "oeplatform.h"
+#include "oesystem.h"
+
+//Defines static const unsigned char* array InterfaceData
+#include "ch32-6.itf"
+
+using namespace OEPlatform;
+using namespace OESystem;
+
+int main(int argc, char** argv)
+{
+  OEInterface itf;
+  OEConfigure(itf,InterfaceData);
+  if (OECheckHelp(itf,argc,argv)) return 0;
+  OEParseCommandLine(itf,argc,argv);
+  OEWriteSettings(itf,oeout,true);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+and text configuration file
+
+  
+ Chapter 32 - Example 6 : txt configuration file 
+    !PARAMETER -x
+  !TYPE float
+  !DEFAULT 0.0
+  !VISIBILITY simple
+  !BRIEF First variable
+!END
+
+!PARAMETER -y
+  !TYPE float
+  !DEFAULT 0.0
+  !BRIEF Second variable
+!END
+
+!PARAMETER -op
+  !TYPE string
+  !BRIEF Operation to perform on x and y
+  !DETAIL
+    The operation performed is
+
+      x &lt;-op&gt; y
+
+    So if -op is 'add' the operation is
+
+      x + y
+  !VISIBILITY normal
+!END
+ 
+ 
+ Download as text. 
+ 
+   
+Calling the program with "   help" as the first argument gives and no further
+arguments gives the following.
+
+  
+    &gt; ch32-6 --help
+Help functions:
+  ch32-6 --help simple      : Get a list of simple parameters
+  ch32-6 --help all         : Get a complete list of parameters
+  ch32-6 --help defaults    : List the defaults for all parameters
+  ch32-6 --help &lt;parameter&gt; : Get detailed help on a parameter
+  ch32-6 --help html        : Create an html help file for this program
+
+&gt;
+    
+The specific help function return the following output
+
+  
+    &gt; ch32-6 --help simple
+Simple parameter list
+    -x : First variable
+    -y : Second variable
+
+&gt; ch32-6 --help all
+Complete parameter list
+    -op : Operation to perform on x and y
+    -x : First variable
+    -y : Second variable
+
+&gt; ch32-6 --help defaults
+Default settings
+    -op : add
+    -x : 0.000000
+    -y : 0.000000
+
+&gt; ch32-6 --help -x
+Contents of parameter -x
+    Type : floatDefault : 0.000000
+    Simple : true
+    Required : false
+    Brief : First variable
+
+&gt; ch32-6 --help -y
+Contents of parameter -y
+    Type : floatDefault : 0.000000
+    Simple : true
+    Required : false
+    Brief : Second variable
+
+&gt; ch32-6 --help -op
+Contents of parameter -op
+    Type : string
+    Simple : false
+    Required : false
+    Brief : Operation to perform on x and y
+    Detail
+            The operation performed is
+
+              x &lt;-op&gt; y
+
+            So if -op is 'add' the operation is
+
+              x + y
+
+&gt; ch32-6 --help html
+Creating 'ch32-6_help.html'
+    
+The difference between the  simple  and  all  help is that
+all lists every parameter with a visibility setting of "simple" or
+"normal", while simple only lists parameters with a visibility setting
+of "simple".  "simple" is the default visibility if !VISIBILITY isn't
+specified.  Calling the  html  help creates an html file with all
+the available help content from the OEInterface.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.3.2 OEParseCommandLineLW 
+ Up:   32. OpenEye Command Line 
+ Next:   32.5 Parameter Categories 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

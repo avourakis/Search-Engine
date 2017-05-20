@@ -1,0 +1,66 @@
+ Kai Wang's Homepage<body>
+     
+   Kai Wang's Homepage
+   
+         
+  
+    Ph.D. Student    Computer Science Department    Donald Bren School of Computer and Information Sciences    University of California, Irvine    
+Email: wangk7  at  uci.edu 
+Office: Donald Bren Hall 3243       About me 
+ I am currently a fourth-year Ph.D. student at University of California, Irvine. My advisor is Prof.  Guoqing(Harry) Xu . Before coming to UC Irvine, I completed my Master's degree in CS at  Institute of Computing Technology ,  Chinese Academy of Sciences 
+I completed my undergraduate degree in CS at  Huazhong Unversity of Science&amp;Technology .
+ It's really a brand-new journey. Enjoy! :)
+ 
+  Research Interests  
+ Programming Language, Program Analylsis, Graph Systems, Big Data Systems 
+
+
+  News  
+ * 12/2016 We will present a  tutorial  in ASPLOS'17, which will introduce our Big Data perspectives on program analysis scalability. 
+
+ * 11/2016 Our Graspan paper accpeted to ASPLOS'17. 
+
+ * 03/2015 Our GraphQ paper accpeted to USENIX ATC'15. 
+
+ * 11/2014 Our Facade paper accpeted to ASPLOS'15. 
+  Current Projects  
+ 
+     1 Graspan: A single-machine, disk-based graph system for interprocedural static analyses of large-scale systems code      
+
+  There is more than a decade-long history of using static analysis to find bugs in systems such as Linux. Most of the existing static analyses developed for these systems are simple checkers that find bugs based on pattern matching. Despite many sophisticated interprocedural analyses, few of them have been employed to improve checkers for systems code due to their complex implementations and their poor scalability and parallelizability. In this paper, we revisit the scalability problem of interprocedural static analysis from a ``Big Data`` perspective. That is, we turn Big Code analysis into Big Data analytics and leverage novel data processing techniques to solve this traditional programming language problem. We develop Graspan, a disk-based parallel graph system that uses an edge-pair centric computation model to compute dynamic transitive closures on large program graphs. We implement fully context-sensitive pointer/alias and dataflow analyses on Graspan. An evaluation of these analyses on large codebases such as Linux shows that their Graspan implementations scale to millions of lines of code and are much simpler than their original implementations. Moreover, we show that these analyses can be used to augment existing checkers; these augmented checkers uncovered 132 new NULL pointer bugs and 1308 unnecessary NULL tests, as well as reported 401 fewer false positives in Linux 4.4.0-rc5, PostgreSQL 8.3.9, and Apache httpd 2.2.18.    
+
+
+
+   The paper is accepted by ASPLOS'17.     
+
+    2 GraphQ: Graph query processing with abstraction refinement     
+
+  GraphQ is a scalable querying framework for very large graphs. GraphQ is built on a key insight that many interesting graph properties --- such as finding cliques of a certain size, or finding vertices with a certain page rank --- can be effectively computed by exploring only a small fraction of the graph, and traversing the complete graph is an overkill. The centerpiece of our framework is the novel idea of abstraction refinement, where the very large graph is represented as multiple levels of abstractions, and a query is processed through iterative refinement across graph abstraction levels. As a result, GraphQ enjoys several distinctive traits unseen in existing graph processing systems: query processing is naturally budget-aware, friendly for out-of-core processing where ``Big Graphs'' can not entirely fit into memory, and endowed with strong correctness properties on query answers. With GraphQ, a wide range of complex analytical queries over very large graphs can be answered with resources affordable to a single PC, which is in compliant with the recent trend that advocates single-machine-based Big Data processing.      
+
+   The paper is accepted by USENIX ATC'15.     
+
+
+   3 Facade: A compiler and runtime system for (almost)
+object-bounded Big Data applications     
+
+  A managed Big Data application often suffers from large space overhead and GC cost due to extremely large numbers of objects and references in the heap. A key observation is that, in a scalable system, the number of heap objects representing data items cannot grow proportionally with the dataset cardinality. We develop Facade, a Java-based compiler and  runtime, that  can statically bound the number of heap objects that represent data items. Facade advocates  to store data items in native memory and create  objects as facades to represent data items. It uses a new execution model that dynamically establishes a many-to-one mapping between an unbounded set of data items in native memory and a statically bounded set of objects in the heap, thereby reducing significantly the number of objects, their associated space overhead (i.e., pointers and headers), as well as the GC cost.    
+
+   The paper is accepted by ASPLOS'15.     
+  Publications  
+    1    Kai Wang , Aftab Hussain, Zhiqiang Zuo, Guoqing(Harry) Xu and Ardalan Amiri Sani.  "Graspan: A Single-machine Disk-based Graph System for Interprocedural Static Analyses of Large-scale Systems Code", 22nd International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS), Xi'an, China, April 8-12, 2017. (Acceptance rate:  56/321, 17.4% )
+[ PDF ]
+
+
+      2    Kai Wang , Guoqing(Harry) Xu, Zhendong Su, and Yu David Liu. "GraphQ: Graph Query Processing with Abstraction Refinement -- Programmable and Budget-Aware Analytical Queries over Very Large Graphs on a Single PC", 2015 USENIX Annual Technical Conference (USENIX ATC), Santa Clara, CA, July 2015. (Acceptance rate:  35/221, 15.8% ) [ PDF ]
+
+
+
+     3  Khanh Nguyen,  Kai Wang , Yingyi Bu, Lu Fang, Jianfei Hu, and Guoqing(Harry) Xu. "Facade: A Compiler and Runtime for (Almost) Object-Bounded Big Data Applications", 20th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS), Istanbul, Turkey, March 14-18, 2015. (Acceptance rate:  48/278, 17% ) [ PDF ] 
+
+
+  Personal Interests  
+ 
+Music, Movies, Skiing.
+ 
+
+  </body>        

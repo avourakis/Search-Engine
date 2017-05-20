@@ -1,0 +1,39 @@
+ /*
+  $Id: predicate.h 5767 2010-10-19 05:52:31Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#ifndef _predicate_h_
+#define _predicate_h_
+
+#include 
+
+#include "simfunc/simdist.h"
+
+using namespace std;
+
+class Predicate 
+{
+public:
+  string query;
+  SimType dist;
+  unsigned freq;
+
+  Predicate(): query(""), dist(SIM_TYPE_MIN) {}
+  Predicate(const string &amp;q, SimType d): query(q), dist(d) {}
+
+  friend ostream&amp; operator&gt;(istream &amp;in, Predicate &amp;p);
+};
+
+typedef vector VectPredicate;
+typedef VectPredicate::iterator VectPredicateIt;
+
+istream&amp; operator&gt;&gt;(istream &amp;in, VectPredicate &amp;v);
+ostream&amp; operator 

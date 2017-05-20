@@ -1,0 +1,28 @@
+ Python: module goody<body>
+
+           goody</strong>       index   c:\users\pattis\workspace\courselib\goody.py       # These names are meant to be imported like: 
+#   from goody import irange 
+# or 
+#   import goody 
+#     which would be used as goody.irange  
+ 
+         Functions</strong>                  
+     frange</strong> (*args)   Returns a float range: e.g., for i in range(0.1, 1.0, 0.1): print(i) 
+  prints the numbers .1, .2, .3, ... .9, 1.: 0.1 through 1.0 inclusive 
+Use it like range/irange (with 1, 2, or 3 arguments).       irange</strong> (*args)   Returns an inclusive range: e.g., for i in range(1,10): print(i) 
+  prints the numbers 1 through 10 inclusive 
+Use it like range (with 1, 2, or 3 arguments), but with irange the stop 
+  value is in the range       leading</strong> (text, c =' ' , extra =0 )   Returns a string of all c, whose length is the # of c's at the front of text 
+  e.g., length('xxxyy','x') returns 'xxx'       read_file_values</strong> (file, sep =None , conversions =None )   Iterator for reading values sequentially from a file, regardless of 
+  where they appear on lines. 
+If conversion is None, the string token is returned; if it is a list 
+  of conversion functions, then they they are applied (circularly) to 
+  each read string. 
+Example  read_file_values (file,conversions=[str,int,int] will read/return 
+  a string, an int, an int, a string, an int, an int, a string, ....       safe_open</strong> (prompt_text, mode, error_message, default ='' )   Prompts the user for a file (openable in mode) with and error message 
+  to display if opening the file in that mode fails) 
+If mode=='w', and the file exists, the user will be prompted whether to overwrite it 
+If default is supplied, it will appear in the prompt and be the file 
+  opened if the user just presses enter       type_as_str</strong> (x)   Returns the type of x as a nice string 
+For example: type(a) returns "&lt;class 'xxxxxxxx'&gt;; this function extracts the 
+  'xxxxxxx' part: the first ' is at index 8; the last ' is at index -2      </body> 

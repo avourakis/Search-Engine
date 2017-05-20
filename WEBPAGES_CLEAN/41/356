@@ -1,0 +1,580 @@
+ 
+JFMFileSystem
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.localFileSystem 
+ 
+Class JFMFileSystem 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.localFileSystem.JFMFileSystem 
+ 
+   Direct Known Subclasses:     JFMLocalFilesystem  
+     public abstract class  JFMFileSystem   extends java.lang.Object    
+This class represents the base class for all filesystems.
+  
+
+  
+    Author:  
+   sergiu 
+   
+
+
+
+  
+     
+ Constructor Summary   
+      JFMFileSystem  () 
+
+ 
+          Empy constructor. 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  boolean   
+    canRead  ( JFMFile  file) 
+
+ 
+          Tests whether the application can read the file denoted by the
+ abstract pathname. 
+    
+  boolean   
+    canWrite  ( JFMFile  file) 
+
+ 
+          Tests whether the application can modify to the file denoted by the
+ abstract pathname. 
+    
+ static  JFMFileSystem    
+    createFileSystem  (java.lang.String name) 
+
+ 
+          This method searches through the registered filesystems, loads and returns the requested one. 
+    
+ abstract  boolean   
+    createNewFile  ( JFMFile  parent,
+              java.lang.String name) 
+
+ 
+          Atomically creates a new, empty file named by the abstract pathname if
+ and only if a file with that name does not yet exist. 
+    
+  boolean   
+    delete  ( JFMFile  file) 
+
+ 
+          Deletes the file or directory denoted by the abstract pathname. 
+    
+  boolean   
+    exists  ( JFMFile  file) 
+
+ 
+          Tests whether the file or directory denoted by the abstract pathname
+ exists. 
+    
+ abstract   JFMFile    
+    getDefaultRootDirectory  () 
+
+ 
+          The default root directory in the case of filesystems with more than one root directories (like windows) 
+    
+ abstract   JFMFile    
+    getFile  (java.lang.String pathName) 
+
+ 
+          This method returns an JFMFile object based on the pathname provided 
+    
+ abstract  char   
+    getPathSeparator  () 
+
+ 
+          The system-dependent path-separator character. 
+    
+  java.lang.String   
+    getPathSeparatorString  () 
+
+ 
+          The system-dependent path-separator character, represented as a string
+ for convenience. 
+    
+ static java.util.Hashtable&lt;java.lang.String,java.lang.String&gt;   
+    getRegisteredFilesystems  () 
+
+ 
+            
+    
+   JFMFile    
+    getRootDriveFile  ( JFMFile  file) 
+
+ 
+          This method returns the root directory of the filesystem of witch the supplied file belongs to. 
+    
+ abstract  char   
+    getSeparator  () 
+
+ 
+          The system-dependent default name-separator character. 
+    
+  java.lang.String   
+    getSeparatorString  () 
+
+ 
+          The system-dependent default name-separator character, represented as a
+ string for convenience. 
+    
+ abstract   JFMFile    
+    getStartDirectory  () 
+
+ 
+          This method returns the start directory for this filesystem 
+    
+  boolean   
+    isLocal  () 
+
+ 
+          Tells us if the filesystem is local. 
+    
+ abstract   JFMFile []   
+    listFiles  ( JFMFile  rootFile) 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname. 
+    
+ abstract   JFMFile []   
+    listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+          Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter. 
+    
+ abstract   JFMFile []   
+    listRoots  () 
+
+ 
+          List the available filesystem roots. 
+    
+ abstract  boolean   
+    mkdir  ( JFMFile  parent,
+      java.lang.String name) 
+
+ 
+          Creates the directory named by the abstract pathname denoted by the parameter. 
+    
+ static void   
+    registerFilesystems  () 
+
+ 
+          This method searches the java path and the plugins directory (a subdirectory of the current directory)
+ for jar's that contain a filesystem plugin. 
+    
+ abstract  boolean   
+    setLastModified  ( JFMFile  file,
+                long time) 
+
+ 
+          Sets the last-modified time of the file or directory named by the
+ abstract pathname. 
+    
+ abstract  boolean   
+    setReadOnly  ( JFMFile  file) 
+
+ 
+          Marks the file or directory named by the abstract pathname so that
+ only read operations are allowed. 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+JFMFileSystem 
+ 
+public  JFMFileSystem () 
+  Empy constructor.
+ 
+     
+    
+ Method Detail   
+     
+getRegisteredFilesystems 
+ 
+public static java.util.Hashtable&lt;java.lang.String,java.lang.String&gt;  getRegisteredFilesystems () 
+     
+     
+registerFilesystems 
+ 
+public static void  registerFilesystems () 
+  This method searches the java path and the plugins directory (a subdirectory of the current directory)
+ for jar's that contain a filesystem plugin.
+ A jar that contains a filesystem plugin, is a jar file that has in its root directory a file named filesystem.xml
+ in which it describes the filesystem class used and its friendly name (to be shown in the menu)
+ 
+     
+      
+createFileSystem 
+ 
+public static  JFMFileSystem   createFileSystem (java.lang.String name) 
+  This method searches through the registered filesystems, loads and returns the requested one.
+ Fielsystems are represented in the vector as full qualified names of the class that represents them.
+ 
+     Parameters:    name  - The name of the requested filesystem, or null if you accept the default one
+   Returns:   The requested filesystem instance   
+      
+getDefaultRootDirectory 
+ 
+public abstract  JFMFile   getDefaultRootDirectory () 
+  The default root directory in the case of filesystems with more than one root directories (like windows)
+ 
+     Returns:   The default root directory   
+      
+getPathSeparator 
+ 
+public abstract char  getPathSeparator () 
+  The system-dependent path-separator character.  This field is
+ initialized to contain the first character of the value of the system
+ property  path.separator .  This character is used to
+ separate filenames in a sequence of files given as a  path list .
+ On UNIX systems, this character is  ':' ; on Microsoft Windows systems it
+ is  ';' .
+ 
+     
+      
+getPathSeparatorString 
+ 
+public java.lang.String  getPathSeparatorString () 
+  The system-dependent path-separator character, represented as a string
+ for convenience.  This string contains a single character, namely
+    getPathSeparator()   .
+ 
+     
+      
+getSeparator 
+ 
+public abstract char  getSeparator () 
+  The system-dependent default name-separator character.  This field is
+ initialized to contain the first character of the value of the system
+ property  file.separator .  On UNIX systems the value of this
+ field is  '/' ; on Microsoft Windows systems it is  '\' .
+ 
+     
+      
+getSeparatorString 
+ 
+public java.lang.String  getSeparatorString () 
+  The system-dependent default name-separator character, represented as a
+ string for convenience.  This string contains a single character, namely
+    getSeparator()   .
+ 
+     
+      
+listRoots 
+ 
+public abstract  JFMFile []  listRoots () 
+  List the available filesystem roots.
+ 
+     See Also:    File.listRoots()    
+      
+listFiles 
+ 
+public abstract  JFMFile []  listFiles ( JFMFile  rootFile) 
+  Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname.
+
+   If this abstract pathname does not denote a directory, then this
+ method returns  null .  Otherwise an array of
+  File  objects is returned, one for each file or directory in
+ the directory.  Pathnames denoting the directory itself and the
+ directory's parent directory are not included in the result.
+
+    There is no guarantee that the name strings in the resulting array
+ will appear in any specific order; they are not, in particular,
+ guaranteed to appear in alphabetical order.
+  
+     Returns:   An array of abstract pathnames denoting the files and
+          directories in the directory denoted by this abstract
+          pathname.  The array will be empty if the directory is
+          empty.  Returns  null  if this abstract pathname
+          does not denote a directory, or if an I/O error occurs.
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkRead(java.lang.String)  
+          method denies read access to the directory   
+      
+listFiles 
+ 
+public abstract  JFMFile []  listFiles ( JFMFile  rootFile,
+                                    java.io.FilenameFilter filter) 
+  Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter.  The behavior of this method is the
+ same as that of the   #listFiles()   method, except
+ that the pathnames in the returned array must satisfy the filter.
+ If the given  filter  is  null  then all
+ pathnames are accepted.  Otherwise, a pathname satisfies the filter
+ if and only if the value  true  results when the
+   FilenameFilter.accept(java.io.File, java.lang.String)   method of the filter is
+ invoked on this abstract pathname and the name of a file or
+ directory in the directory that it denotes.
+ 
+     Parameters:    filter  - A filename filter
+   Returns:   An array of abstract pathnames denoting the files and
+          directories in the directory denoted by this abstract
+          pathname.  The array will be empty if the directory is
+          empty.  Returns  null  if this abstract pathname
+          does not denote a directory, or if an I/O error occurs.
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkRead(java.lang.String)  
+          method denies read access to the directory   
+      
+mkdir 
+ 
+public abstract boolean  mkdir ( JFMFile  parent,
+                              java.lang.String name) 
+  Creates the directory named by the abstract pathname denoted by the parameter.
+ 
+     Parameters:    parent  - The parent file that denotes the abstract pathname  name  - The name of the new dir
+    Returns:    true  if and only if the directory was
+          created;  false  otherwise
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkWrite(java.lang.String)  
+          method does not permit the named directory to be created   
+      
+delete 
+ 
+public boolean  delete ( JFMFile  file) 
+  Deletes the file or directory denoted by the abstract pathname.  If
+ this pathname denotes a directory, then the directory must be empty in
+ order to be deleted.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file or directory is
+          successfully deleted;  false  otherwise
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkDelete(java.lang.String)   method denies
+          delete access to the file   
+      
+createNewFile 
+ 
+public abstract boolean  createNewFile ( JFMFile  parent,
+                                      java.lang.String name)
+                               throws  FSException  
+  Atomically creates a new, empty file named by the abstract pathname if
+ and only if a file with that name does not yet exist.  The check for the
+ existence of the file and the creation of the file if it does not exist
+ are a single operation that is atomic with respect to all other
+ filesystem activities that might affect the file.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if the named file does not exist and was
+          successfully created;  false  if the named file
+          already exists
+   Throws: 
+    FSException   - If an filesystem error occurred
+  java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkWrite(java.lang.String)  
+          method denies write access to the file    
+      
+setLastModified 
+ 
+public abstract boolean  setLastModified ( JFMFile  file,
+                                        long time) 
+  Sets the last-modified time of the file or directory named by the
+ abstract pathname.
+
+   All platforms support file-modification times to the nearest second,
+ but some provide more precision.  The argument will be truncated to fit
+ the supported precision.  If the operation succeeds and no intervening
+ operations on the file take place, then the next invocation of the
+   org.jfm.md.filesystems.JFMFile#lastModified   method will return the (possibly
+ truncated)  time  argument that was passed to this method.
+  
+     Parameters:    file  - The file that denotes the abstract pathname  time  - The new last-modified time, measured in milliseconds since
+               the epoch (00:00:00 GMT, January 1, 1970)
+    Returns:    true  if and only if the operation succeeded;
+           false  otherwise
+   Throws: 
+   java.lang.IllegalArgumentException  - If the argument is negative
+  java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkWrite(java.lang.String)  
+          method denies write access to the named file    
+      
+setReadOnly 
+ 
+public abstract boolean  setReadOnly ( JFMFile  file) 
+  Marks the file or directory named by the abstract pathname so that
+ only read operations are allowed.  After invoking this method the file
+ or directory is guaranteed not to change until it is either deleted or
+ marked to allow write access.  Whether or not a read-only file or
+ directory may be deleted depends upon the underlying system.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the operation succeeded;
+           false  otherwise
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkWrite(java.lang.String)  
+          method denies write access to the named file   
+      
+canRead 
+ 
+public boolean  canRead ( JFMFile  file) 
+  Tests whether the application can read the file denoted by the
+ abstract pathname.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file specified by this
+          abstract pathname exists  and  can be read by the
+          application;  false  otherwise
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkRead(java.lang.String)  
+          method denies read access to the file   
+      
+canWrite 
+ 
+public boolean  canWrite ( JFMFile  file) 
+  Tests whether the application can modify to the file denoted by the
+ abstract pathname.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file system actually
+          contains a file denoted by this abstract pathname  and 
+          the application is allowed to write to the file;
+           false  otherwise.
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkWrite(java.lang.String)  
+          method denies write access to the file   
+      
+exists 
+ 
+public boolean  exists ( JFMFile  file) 
+  Tests whether the file or directory denoted by the abstract pathname
+ exists.
+ 
+     Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file or directory denoted
+          by this abstract pathname exists;  false  otherwise
+   Throws: 
+   java.lang.SecurityException  - If a security manager exists and its   SecurityManager.checkRead(java.lang.String)  
+          method denies read access to the file or directory   
+      
+getRootDriveFile 
+ 
+public  JFMFile   getRootDriveFile ( JFMFile  file) 
+  This method returns the root directory of the filesystem of witch the supplied file belongs to.
+ For example:   If the active filesystem is the local filesystem and is an Windows filesystem, this
+ method should return the drive letter of the drive that this file belongs to. On Unix filesystems it will always return
+ '/'. On other filesystems .... it will return whatever the one that imlements it wants to.
+  
+     Parameters:    file  - JFMFile the file  whoses root we want to find out.
+   Returns:   JFMFile the root drive (it cannot be null). It can be the same file that was passed as an argument.   
+      
+getStartDirectory 
+ 
+public abstract  JFMFile   getStartDirectory () 
+  This method returns the start directory for this filesystem
+ 
+     Returns:   JFMFile the start directory (for example, on the local filesystem it will be the user directory)   
+      
+getFile 
+ 
+public abstract  JFMFile   getFile (java.lang.String pathName) 
+  This method returns an JFMFile object based on the pathname provided
+ 
+     Parameters:    pathName  - String
+   Returns:   JFMFile   
+      
+isLocal 
+ 
+public boolean  isLocal () 
+  Tells us if the filesystem is local. This information may be used for some optimizations in some cases
+ 
+     Returns:   true is the filesystem is a local filesystem (hard-disk) false otherwise (a network one)   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

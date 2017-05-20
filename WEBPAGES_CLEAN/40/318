@@ -1,0 +1,77 @@
+ Asterix Ecosystem<body>
+ 
+      
+ 
+       
+                   
+             
+	     
+                   
+             
+             
+				   
+						 
+							 
+					 
+				   
+	 
+	 
+             
+
+
+ 
+       Overview  
+        
+          Download  
+	  Performance  
+        
+          News  
+          Publications  
+	  Talks       
+          Team  
+          Sponsors  
+          Contact  
+      
+
+     
+    	
+        
+         
+			 Asterix Ecosystem 
+			
+                ASTERIX Big Data Management System   	
+			 The growing popularity of Hive and Pig for parallel data analysis shows the importance of high-level data langugages: they can greatly reduce development time and make data analysts' lives much easier. We are developing the ASTERIX query processor on top of the Hyracks runtime. This includes the AQL (ASTERIX Query Language) compiler, algebra, and optimizer. AQL queries are compiled to cost-efficient Hyracks jobs. If you want to analyze large scale semi-structured data in parallel, plan to try AQL when it becomes available. 
+			
+			   Hyracks Data-Parallel Platform   
+			 Hyracks is a generalized alternative to infrastructures such as MapReduce (Hadoop) and Dryad for solving data-parallel problems. It balances the need for expressiveness beyond MapReduce while providing out-of-the-box support for commonly occurring communication patterns and operators for data-oriented tasks. If you have use cases involving massive amounts of data and thus requiring parallelism, be sure to check out the Hyracks project. 
+
+               Pregelix   
+             Pregelix is an open-source implementation of the bulk-synchronous vertex-oriented programming model ( Pregel API ) for large-scale graph analytics, which scales to very large clusters and very large graphs. Internally, we use the Hyracks data-parallel execution engine to execute Pregelix. Pregelix benefits from Hyracks operators which have been designed to make efficient use of available main memory to produce results quickly. At the same time, the operators gracefully spill data to disk when running in memory-constrained situations. This property allows Pregelix to perform computations on very large amounts of graph data regardless of the size of the cluster being used. 
+
+			   HiveQL Relational Query Processor Plug-in   	
+			 Given the data-model-agnostic ASTERIX algebra layer, we are able to easily layer a relational query processor such as Hive on top of the Hyracks runtime. In this project, Hive runtime plans are translated to ASTERIX algebra plans, but all functions, expression evaluators, metadata, intermediate data formats, and input/output formats in Hive are reused. If you are a Hive user, please check-out this project as a way to get better performance without any changes in your HiveQL queries. 
+
+			   Hyracks-to-Hadoop Compatibility Layer   
+             Given that many data analysts are adopting the Hadoop platform, we believe that ASTERIX must provide an easy migration path for existing Hadoop projects in order to attract new users and support clusters running a mix of old and new use cases. In that spirit, we have built a Hadoop compatibility layer on top of Hyracks so that existing Hadoop programs can be executed using Hyracks. If you are a Hadoop user, please check out this aspect of the Hyracks project if you would like speed up your job execution in a low-cost and seamless fashion. 
+
+			  
+        
+    
+    	  
+     
+     
+       
+           
+     
+     
+         © pregelix.ics.uci.edu 2014. Design by  Free CSS Templates   
+     
+     
+           
+           
+     
+       
+
+
+ 
+</body> 

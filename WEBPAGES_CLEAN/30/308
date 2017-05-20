@@ -1,0 +1,56 @@
+ 10.17 OEStringToNumber<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.16 OEStringTokenizeQuoted 
+ Up:   10. OESystem Functions 
+ Next:   10.18 OEStringTranslate 
+   
+
+
+  
+10.17 OEStringToNumber 
+ 
+   
+bool OEStringToNumber(const std::string &amp;str, short          &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, unsigned short &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, int            &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, unsigned int   &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, OELongLong     &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, OEULongLong    &amp;val, int b = 10)
+bool OEStringToNumber(const std::string &amp;str, float          &amp;val)
+bool OEStringToNumber(const std::string &amp;str, double         &amp;val)
+    
+These functions attempt to convert the specified string ( str ) into a
+numerical value in the specified base ( b ) and store the generated value
+in the format appropriate to the passed parameter ( val ). The function
+returns whether or not this conversion was successful. If the function fails,
+ val  is set to 0.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.16 OEStringTokenizeQuoted 
+ Up:   10. OESystem Functions 
+ Next:   10.18 OEStringTranslate 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

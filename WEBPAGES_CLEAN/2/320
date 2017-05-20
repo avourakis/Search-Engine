@@ -1,0 +1,65 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 11 Jun 1997
+//
+// Code for showing current state of the board
+
+import java.awt.*;
+import java.awt.image.*;
+import java.util.*;
+
+class BoardDisplayRow {
+	public int top, bottom, left, right;
+	public BoardDisplayRow(int t, int b, int l, int r) { top = t; bottom = b; left = l; right = r; }
+	public boolean containsRow(int row) { return row &gt;= top &amp;&amp; row = 9) return 0;
+				return Bits.at(i,j);
+			}
+		return 0;
+	}
+	
+	// handle mouse events. mouse down just stores info for later mouse up.
+	public boolean mouseDown(Event e, int x, int y) {
+		if (!game.humanToMove()) {
+			mouseDown = 0;
+			return true;
+		}
+		mouseDown = translateMouse(x, y);
+		return true;
+	}
+
+	// mouse up tries to find a move matching the clicked pieces
+	public boolean mouseUp(Event e, int x, int y) {
+		if (mouseDown == 0 || !game.humanToMove()) return false;
+		long mouseUp = translateMouse(x, y);
+		if (mouseUp == 0) return true;
+		long bits = mouseDown | mouseUp;
+		
+		Board board = game.getBoard();
+		MoveGenerator mg = new MoveGenerator(board);
+		Board newBoard = null;
+		if (!mg.hasMoreElements()) {
+			showMessage("Game over, no more moves available", false);
+			return true;
+		}
+		while (mg.hasMoreElements()) {
+			long changed = mg.nextElement();
+			if ((bits &amp; changed) == bits) {
+				if (newBoard != null) {
+					if (mouseDown == mouseUp)
+						showMessage("Ambiguous move; click and drag a piece to a new location", false);
+					else showMessage("Ambiguous move; drag your piece onto a piece you wish to eat", false);
+					return true;
+				}
+				newBoard = new Board(board,changed);
+			}
+		}
+		if (newBoard == null) showMessage("Illegal move", false);
+		else {
+			if (game.mustPass(newBoard)) newBoard = new Board(newBoard,0); // forced pass?
+			game.setBoard(newBoard);								// make move (and forced pass)
+			if (newBoard.midCapture())
+				showMessage("Continue eating with the same piece, or pass", true);
+		}
+		return true;
+	}
+}
+ 

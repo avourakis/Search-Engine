@@ -1,0 +1,133 @@
+ Efficient Parallel Set-Similarity Joins Using
+      MapReduce<body>
+     
+       
+         
+           Efficient Parallel Set-Similarity Joins Using
+          MapReduce 
+           
+             
+               
+                 Rares
+                Vernica 
+               
+               
+                 Michael
+                J. Carey 
+               
+               
+                 Chen Li 
+               
+             
+            Department of Computer Science  University of
+            California, Irvine
+           
+         
+         
+           Abstract 
+           In this paper we study how to efficiently perform
+            set-similarity joins in parallel using the popular
+            MapReduce framework.  We propose a 3-stage approach for
+            end-to-end set-similarity joins. We take as input a set of
+            records and output a set of joined records based on a
+            set-similarity condition. We efficiently partition the
+            data across nodes in order to balance the workload and
+            minimize the need for replication. We study both self-join
+            and R-S join cases, and show how to carefully control the
+            amount of data kept in main memory on each node. We also
+            propose solutions for the case where, even if we use the
+            most fine-grained partitioning, the data still does not
+            fit in the main memory of a node. We report results from
+            extensive experiments on real datasets, synthetically
+            increased in size, to evaluate the speedup and scaleup
+            properties of the proposed algorithms using Hadoop. 
+             Efficient Parallel Set-Similarity Joins Using
+                MapReduce.   Paper 
+               Long Version   Slides 
+               Long Version 
+               Hadoop Summit 2010   Poster 
+                Rares Vernica, Michael J. Carey, Chen Li  SIGMOD
+              2010
+              
+           Source Code 
+
+          All the algorithms are implemented in Java. The source code
+          is licensed under the Apache License, Version 2.0.
+
+            
+               fuzzyjoin-0.0.2.tgz 
+              (April 12th, 2011)
+              
+               fuzzyjoin-0.0.2-patch-2011-11-09.tgz 
+               README  (also available in
+            the package)
+               FAQ  (last updated April 12th, 2011)
+               CHANGELOG  (also available in
+            the package)
+            
+          Previous releases:
+            
+               fuzzyjoin-mapreduce-RWE-2010-04-23.tgz 
+              (April 23rd, 2010)
+              
+               fuzzyjoin-mapreduce-1.0.tgz 
+              (March 24th, 2010)
+             ACM SIGMOD 2010 Repeatability &amp; Workability
+          Evaluation 
+          Our  fuzzyjoin-mapreduce-RWE-2010-04-23.tgz 
+          (April 23rd, 2010) release of the code was verified by
+          the  ACM
+          SIGMOD 2010 Repeatability &amp; Workability Evaluation 
+          committee against the claims in SIGMOD 2010 "Efficient
+          Parallel Set-Similarity Joins Using MapReduce" paper. The
+          Repeatability was Fully confirmed and the Workability was
+          Partly confirmed. The reviews of the code are available
+          here:
+             Review
+            1 
+               Review
+            2 
+              
+           Datasets 
+           Bellow are the two datasets used in the study: 
+            DBLP
+               dblp.raw.txt.gz  (83MB,
+              1.2M records)
+              CITESEERX
+               csx.raw.txt.gz  (591MB, 1.3M
+              records)
+              
+           Acknowledgments 
+           This study is supported by NSF IIS
+            awards  0844574 
+            and  0910989 ,
+            as well as a grant from the UC Discovery program and a
+            donation from eBay.
+           
+            
+           This study is part of the  ASTERIX 
+            and  Flamingo 
+            projects. For any questions about this study, please
+            contact  Rares
+            Vernica. 
+           
+
+
+          
+            
+           Please enable JavaScript to view the  comments powered by Disqus.  
+          
+
+           
+             Stationery 
+            theme
+            by  Thijs.   Live Chat Software  by
+            Olark.  Blog comments powered
+            by Disqus 
+           
+         
+       
+     
+
+
+</body> 

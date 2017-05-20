@@ -1,0 +1,35 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Quadtree closest pair algorithm
+// Maintains a sequence of matrices where the outer one stores all distances,
+// and each successive one stores a minimum of four entries from the previous.
+// The parent of square (i,j) in one matrix (where i&gt;j) is the square
+// (ceil(i/2),floor(j/2)) in a smaller matrix. Note the asymmetry between
+// i and j due to our matrices being triangular; we don't store entries for i j+1) {
+		dd = child_dist[HalfArray(2*i-1,2*j+1)];
+		if (dd  2 &amp;&amp; (mp &amp; 01) == 0) mp++;
+	distances = new double[(mp*(mp-1)/2)];
+	if (distances == 0) error("QuadTreeCP: unable to create distance matrix");
+	active = new int[mp];
+	if (active == 0) error("QuadTreeCP: unable to create table of active points");
+	unsigned long i, j;
+	for (i = 0; i UpdateRow((i+1)/2);
+}
+
+void QuadTreeCP::UpdateCol(point j)
+{
+	for (point i = j+1; i UpdateCol(j/2);
+}
+
+void QuadTreeCP::UpdatePoint(point p)
+{
+	UpdateRow(p);
+	UpdateCol(p);
+}
+
+void QuadTreeCP::UpdateDistance(point i, point j)
+{
+	if (i UpdateDistance((i+1)/2, j/2);
+}
+ 

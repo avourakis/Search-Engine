@@ -1,0 +1,39 @@
+ Compare documents<body>
+ 
+
+ 
+        
+   
+
+      
+ 
+
+   
+   
+ 
+
+ 
+   
+  
+ 
+
+ 
+  
+  
+  
+     Notes:</strong> 
+    
+
+ This is a feature that was incredibly important for our legal market but actually makes a lot of sense for the Web. The idea is that you have two documents which are supposed to be forked variants of the same original, but the changes aren�t neatly stored in revision marks. With lawyers, this is usually because the opposing party is hostile and doesn�t want to make things easier for you. On the Web, this could be because the person you gave the document to didn�t have a revision-savvy editor. So what you basically need to do is run a DIFF on two arbitrary documents, and generate revision marks from that. After that, other issues like merge and review reduce to the easier case. 
+
+  
+
+ This comparison is not trivial. In a classic text file DIFF, you just point out which lines differ. But in a real document, you want to show how they differ - what happened. Inferring what happened from what�s left is imprecise, though. It can be very hard to tell if A moved a paragraph and B deleted half of it, or if A left it alone and B moved half and deleted the rest, and so on.  We have heuristics that guess but they�re imperfect. 
+
+  
+
+ Unfortunately, this will probably be a likely scenario until there is a widely supported revision scheme. 
+
+    
+  
+</body> 

@@ -1,0 +1,65 @@
+ Mac Eclipse/C++ Installation
+
+This is the accumulated wisdom I have about installing on Macs.
+
+----------
+
+  Mostly, I have copied/pasted Daniel Acevedo's Post
+  "Guide to Succesfully Install Eclipse on Mac"...
+  but I have also added a few other hints from the TA
+  who said most students going to Lab today seemed to
+  get it running (and most who Daniel helped outside my
+  office hours on Wednesday did).
+
+  I don't have a good feeling for those students who got
+  the courselib working, whether they got GoogleTest to
+  work too.  For Program #1 you don't need GoogleTest working, 
+  but you will need  it for all later programs.
+
+----------
+
+ECLIPSE:
+
+This is the setup I found to work best to get Eclipse working perfectly on my
+Mac machine. As a note, I am using Mavericks.
+
+The first thing you want to do is download "Eclipse IDE for C/C++ Developers"
+(http://www.eclipse.org/downloads/packages/eclipse-ide-cc-developers/keplersr1)
+and choose the "Mac OS X(Cocoa 64)" download link on the right-hand side of the
+page.
+
+After successfully downloading Eclipse, you must download Xcode
+(https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Note that Xcode may
+take a while to download onto your computer, especially depending on your
+internet speed. NOTE: You MUST have the latest version of Xcode (Xcode 5) in
+order for this to properly work.
+
+Now, open up Terminal. Type in (don't copy/paste) "xcode-select --install"
+(yet xcode-select followed by the switch --install).
+
+Now, open up Eclipse. Under "Eclipse", open up "Preferences". Under the
+"General" tab, click "Workspace". Under "Text file encoding", switch from
+Default (MacRoman) to Other, and pick "UTF-8" from the drop-down list. Click
+Apply.
+
+Under the "New C/C++ Project Wizard" tab, look at the list under "Project
+type:" Under the "Executable" tab, highlight "Empty Project". Now, look to your
+right. Under the "Toolchains" list, highlight "MacOSX GCC". Now, underneath
+that list, click on the "Make toolchain(s) preferred" button. Click Apply.
+
+You can now test if you have set everything up correctly:
+
+Create a new C++ Project. Call the Project name whatever you'd like. If you
+have successfully done the above parts, you can just name it and click "Finish"
+at the bottom right.
+
+Highlight the project you just created. Right click it, click "New", and select
+"Source File". When the prompt shows up, enter in a Source file name, and click
+finish. Copy and paste the following code into the project to check that
+everything worked:
+
+#include 
+
+int main()
+{
+      std::cout  

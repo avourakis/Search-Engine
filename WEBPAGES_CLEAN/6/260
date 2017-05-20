@@ -1,0 +1,84 @@
+ 10.7 OEGetTag<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.6 OEBitVectorXor 
+ Up:   10. OESystem Functions 
+ Next:   10.8 OEHasTag 
+   
+
+
+    
+ 
+10.7 OEGetTag
+ 
+
+ 
+The OEGetTag functions serve to associate a text string tag with a
+corresponding unsigned integer tag.  Because integer comparisons are
+often faster than character string comparisons, operations which
+require a potentially large number of data comparisons may benefit by
+using integer instead of string data.  The OEGetTag functions serve to
+associate, store and retrieve string and integer tags.
+
+  
+    
+const char *OEGetTag(unsigned int tag)
+    
+This function retrieves a character string tag associated with an
+integer tag.  If no string tag has been associated with the passed
+integer tag, a pointer to a null-terminated pointer character string
+is returned.  The function should always return a non-zero pointer.
+
+  
+    
+unsigned int OEGetTag(const std::string &amp;tag)
+    
+This function retrieves an integer tag associated with the character
+string stored in the STL string object.  The first call to OEGetTag
+with a particular character string creates an association with an
+arbitrary unique integer, and returns the associated integer tag.
+Subsequent calls to OEGetTag with the same character string value
+return the associated integer tag.  No guarantees are made regarding
+the allocation of integer values associated with character string
+values.
+
+  
+    
+unsigned int OEGetTag(const char *tag)
+    
+This function retrieves an integer tag associated with a constant
+character string.  The first call to OEGetTag with a particular
+character string creates an association with an arbitrary unique
+integer, and returns the associated integer tag.  Subsequent calls to
+OEGetTag with the same character string value return the associated
+integer tag.  No guarantees are made regarding the allocation of
+integer values associated with character string values.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.6 OEBitVectorXor 
+ Up:   10. OESystem Functions 
+ Next:   10.8 OEHasTag 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

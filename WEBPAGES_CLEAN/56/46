@@ -1,0 +1,63 @@
+ 3.6.11 SetCoords<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.6.10 Conformer Indices 
+ Up:   3.6 OEConfBaseT 
+ Next:   3.6.12 GetCoords 
+   
+
+
+  
+3.6.11 SetCoords 
+ 
+
+ 
+    
+virtual bool SetCoords(const float*) = 0
+virtual bool SetCoords(const double*) = 0
+    
+Sets the coordinates of a conformer.  The coords parameter is expected to
+be an array of size OEConfBase::GetMaxAtomIdx()*dim.  This array should
+contain N=dim coordinates for each atom, and they should be located in the
+array passed in at  coords[atom-&gt;GetIdx()*dim+i] , where i ranges from
+0 to dim.  An internal copy of the coordinates is stored in the OEConfBaseT
+which is independent of the array passed.
+
+  
+    
+virtual bool SetCoords(const OEAtomBase* atom, const float *coords) = 0
+virtual bool SetCoords(const OEAtomBase* atom, const double *coords) = 0
+    
+Sets to coordinates of a single atom in the OEConfBaseT.  The array passed
+in should be of length dim and should contain the new coordinates of the
+atom.  An internal copy of the coordinates is stored in the OEConfBaseT
+which is independent of the coords array.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.6.10 Conformer Indices 
+ Up:   3.6 OEConfBaseT 
+ Next:   3.6.12 GetCoords 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

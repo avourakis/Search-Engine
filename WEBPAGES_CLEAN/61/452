@@ -1,0 +1,434 @@
+  <body>
+
+   
+        
+        
+     Overview 
+      Review: Testing Terminology 
+         Testing Units
+            Test Driven Development 
+             JUnit Walk Through (if technology permits) 
+            
+         Testing Behaviors
+            Behavior Driven Development 
+             Mocking (if technology+time permits) 
+                   
+        Review: Testing Terminology 
+      Mistake vs. Fault (Bug) vs. Error vs. Failure 
+         Blackbox Testing vs. Whitebox Testing 
+         More Testing Jargon
+            Test Case 
+             Test Suite 
+             Test Oracle 
+             Test Plan 
+            
+        Mistake, Fault, Error, Failure 
+       Review: Testing Terminology 
+       Mistake : A human action that produces an incorrect result. 
+          Fault (a.k.a Bug) : An anomaly in the source code of a program that *may* lead to an error. 
+          Error : The runtime effect of executing a fault, which causes a deviation from correct behavior and *may* result in a failure 
+          Failure : The externally visible manifestation of an error. 
+        Mistake, Fault, Error, Failure 
+       Review: Testing Terminology 
+     source: Prof. James Jones, Software Testing INF215  As it turns out:  Any fault has many possible fixes. The fix can actually determine what “the fault” was! 
+     Blackbox Testing 
+     Testing that ignores the internal mechanism of a system or component and focuses solely on the outputs generated in response to selected inputs and execution conditions. 
+       IEEE 
+     Blackbox Testing 
+     
+        Testing that ignores the internal mechanism of a system or component and focuses solely on the outputs generated in response to selected inputs and execution conditions.
+         
+        - IEEE
+       
+        Whitebox Testing 
+     Testing that takes into account the internal mechanism of a system or component. 
+       IEEE 
+     Whitebox Testing 
+     
+        Testing that takes into account the internal mechanism of a system or component.
+         
+        - IEEE
+       
+        Test [Case, Suite, Oracle, Plan] 
+       More Testing Jargon 
+        Test Case : A group of input values that cause a program to take some defined action, with an expected output.
+            Test Suite : A collection of test cases
+            Test Oracle *: A mechanism for determining whether the actual behavior of a test case execution matches the expected behavior.
+            Test Plan : A document describing the scope, approach, resources, and schedule of intended testing activity
+          * Test Oracles : What will test the mechanism, itself? 
+       
+    Hidden slides are left out of the presentation.
+    Testing Units 
+       Test Driven Development 
+     TDD: Test Driven Development 
+      Write tests first, then implement the code for the test. 
+         Agile technique; grew out of extreme programming. 
+         Method:
+            Write (initially failing) Test 
+             Implement (or re-factor) Functionality for Test 
+             Test Functionality by running Test (typically using automated testing frameworks) 
+             Iterate 
+            
+         We will see later: BDD adopts this method/idea! 
+        TDD: Example 
+     Code Example Bit Repository:  bitbucket.org/vpalepu/191b  
+       Write Test: 
+       
+@Test
+public void test1() {
+  assertEquals("one", NumbersToEnglish.translateToEnglish(1));
+}
+        
+     TDD: Example 
+     Write Test: 
+       
+@Test
+public void test1() {
+  assertEquals("one", NumbersToEnglish.translateToEnglish(1));
+}
+       
+
+       Write Code: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+    return null;
+  }
+}
+       
+
+       Run Test: 
+        test1: Failed 
+        TDD: Example (contd.) 
+     Write Test: 
+       
+@Test
+public void test1() {
+  assertEquals("one", NumbersToEnglish.translateToEnglish(1));
+}
+       
+
+       Refactor Code: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+    return "one";
+  }
+}
+       
+
+       Run Test: 
+        test1: Passed 
+        TDD: Example (contd.) 
+     Write Next Test: 
+       
+@Test
+public void test2() {
+  assertEquals("two", NumbersToEnglish.translateToEnglish(2));
+}
+       
+
+       Existing Code: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+    return "one";
+  }
+}
+       
+
+       Run Tests: 
+        test1: Passed 
+         test2: Failed 
+        TDD: Example (contd.) 
+     Write Next Test: 
+       
+@Test
+public void test2() {
+  assertEquals("two", NumbersToEnglish.translateToEnglish(2));
+}
+       
+
+       Refactor Existing Code: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+    if(number == 2) return "two";
+    return "one";
+  }
+}
+       
+
+       Run Tests: 
+        test1: Passed 
+         test2: Passed 
+        TDD: Example (contd.) 
+     Write Next Tests: 
+       
+@Test
+public void test1() {
+  Assert.assertEquals("one", NumbersToEnglish.translateToEnglish(1));
+}
+
+@Test
+public void test2() {
+  Assert.assertEquals("two", NumbersToEnglish.translateToEnglish(2));
+}
+
+@Test
+public void test8() {
+  Assert.assertEquals("eight", NumbersToEnglish.translateToEnglish(8));
+}
+
+@Test
+public void test10() {
+  Assert.assertEquals("ten", NumbersToEnglish.translateToEnglish(10));
+}
+
+@Test
+public void test19() {
+  Assert.assertEquals("nineteen", NumbersToEnglish.translateToEnglish(19));
+}
+       
+     TDD: Example (contd.) 
+     Write Even More Tests: 
+       
+@Test
+public void test12() {
+  Assert.assertEquals("twelve", NumbersToEnglish.translateToEnglish(12));
+}
+
+@Test
+public void test28() {
+  Assert.assertEquals("twenty eight", NumbersToEnglish.translateToEnglish(28));
+}
+
+@Test
+public void test20() {
+  Assert.assertEquals("twenty", NumbersToEnglish.translateToEnglish(20));
+}
+
+@Test
+public void testMinus20() {
+  Assert.assertEquals("minus twenty", NumbersToEnglish.translateToEnglish(-20));
+}
+
+@Test
+public void test0() {
+  Assert.assertEquals("zero", NumbersToEnglish.translateToEnglish(0));
+}
+       
+     TDD: Example (contd.) 
+     Code as we last Saw it: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+     if(number == 2) return "two";
+    return "one"; 
+  }
+}
+       
+
+       After many iterations: 
+       
+public class NumbersToEnglish {
+  public static String translateToEnglish(int number) {
+    String result = "";
+
+     if(number == 0) return "zero";
+    if(number ;
+  }
+}
+           
+     TDD: Example (contd.) 
+     translate1to29ToEnglish(int number) 
+       
+private static String translate1to29ToEnglish(int number) {
+    if(number translate1to19ToEnglish(number);
+    }
+    String translation = "twenty";    
+    int units_digit = number % 10;
+    
+    if(units_digit != 0) {
+      translation = translation + " " +  translate1to19ToEnglish(units_digit) ;
+    }
+    
+    return translation;
+  }
+       
+     TDD: Example (contd.) 
+     translate1to19ToEnglish(int number) 
+       
+private static String translate1to19ToEnglish(int number) {
+    switch(number) {
+       case 1: return "one";
+      case 2: return "two";
+      case 3: return "three";
+      case 4: return "four";
+      case 5: return "five";
+      case 6: return "six";
+      case 7: return "seven";
+      case 8: return "eight";
+      case 9: return "nine";
+      case 10: return "ten";
+      case 11: return "eleven";
+      case 12: return "twelve";
+      case 13: return "thirteen";
+      case 14: return "fourteen";
+      case 15: return "fifteen";
+      case 16: return "sixteen";
+      case 17: return "seventeen";
+      case 18: return "eighteen";
+      default: return "nineteen"; 
+    }
+  }
+          
+     Junit 
+       Screenshots 
+      junit.org  
+    Testing Behaviors 
+       Behavior Driven Development (and Mocking) 
+     Testing Behaviors 
+       How do you do it? 
+      Think in terms of Behaviors.
+            Not in terms of Tests. 
+            
+         Verify those Behaviors. 
+        “Introducing BDD” by Dan North 
+
+      Test method names should be sentences.
+            A simple  sentence template  keeps test methods focused. 
+             An expressive test name is helpful when a test fails. 
+            
+          Behavior  is a more useful word than  test .
+            Emphasize behavior over testing. 
+             Method:
+                 Write (initially failing) Test   
+                  Determine (or define) the next most important behavior. 
+                 Implement Functionality for  Test  Behavior 
+                 Test Functionality against Behavior (typically using automated testing frameworks) 
+                 Iterate 
+                
+            
+          Behaviors =&gt; Stories, Features, Goals, Scenarios  
+        It's all about Templates 
+     "A simple  sentence template  keeps test methods focused." - Dan North 
+
+       Behaviors - Typical Form 
+
+         User Story:  [Title]
+             As a  [user], 
+              I want  [feature], 
+              so that  [goal]. 
+            
+
+          Scenario:  [Title]
+             Given  [some initial context] 
+              When  [an event occurs], 
+              Then  [ensure some outcomes]. 
+            
+        Example Behavior 
+       User Story:  Student wants to adhere to English Grammar while using mathematical numerals in English passages.
+             As a  student, 
+              I want  to translate mathematical numerals into words in English, 
+              so that  my English passages are grammatically correct when using numbers. 
+            
+
+          Scenario:  Mathematical Numeral (or Number) is 1
+             Given  the number "1" denoted by a sequence of digits, 
+              When  the student requests for an English translation, 
+              Then  ensure the translation "one" for the number "1" is generated. 
+            
+
+         Immediate focus on: 
+            User (student); 
+             Context: Feature (English Translation), Goal (correct English Grammar). 
+            
+        Example Behavior (contd.) 
+       Scenario:  Mathematical Numeral (or Number) is 1
+             Given  the number "1" denoted by a sequence of digits 
+              When  the student requests for an English translation 
+              Then  ensure the translation "one" for the number "1" is generated. 
+            
+
+
+         Test Case from  TDD 
+                 
+@Test public void  test1 () {
+   assertEquals("one", NumbersToEnglish.translateToEnglish(1)); 
+}
+       
+         
+         Test Case from  BDD 
+ 
+@Test public void  shouldReturnOneFor1 () { //  expressive test name 
+  int  given = 1; 
+  //  when 
+  String translation  = NumbersToEnglish. translateToEnglish(given) 
+  //  then 
+   assertEquals("one", translation); 
+}
+       
+         
+
+        Mocking: Testing Interactions within Code 
+
+      Notes on Testing/Verifying Behavior  
+        So are we really verifying behaviors with BDD?
+            Yes, if Behaviors =&gt; Stories, Features, Goals, Scenarios 
+             No, if Behaviors =&gt; Interactions between code components
+                Did  translateToEnglish , correctly interact with  translate1to29ToEnglish ? 
+                 Did  translate1to29ToEnglish , correctly interact with  translate1to19ToEnglish ? 
+                
+            
+        Testing State vs Testing Interactions 
+
+       Behaviors =&gt; Stories, Features, Goals, Scenarios  
+          Behaviors =&gt; Interactions between code components  
+         Testing is mostly value based testing.
+            Compare: Expected value vs. Actual Computed Value 
+             This is true even with BDD, when, Behaviors =&gt; Stories, Features, Goals, Scenarios. 
+            
+         Issue: You can arrive at the right value/state with the wrong steps or interactions 
+         Solution: Make sure you follow the right steps or the right interactions in the code. 
+         Enter: Mocks and Mocking 
+        Mocks 
+       Testing Interactions 
+      Mocks are Objects with Expectations: a specification of method calls they are expected to receive. 
+         Keep track of all the method calls; 
+            check them against a specification; 
+             flag errors if the specifications and reality do not match up. 
+              Mocks: Code Example 
+       Testing Interactions 
+     
+@Test 
+public void shouldInvokeTranslateToWordsOnceAndNeverInvokeTranslate1to19() {
+  //given
+  NumbersToEnglish translator = spy(translator());
+   int number = 20; 
+  //when
+  translator.translateToWords(number);
+  //then
+   verify(translator).translateToWords(anyInt());
+  verify(translator, atLeastOnce()).translate1To29(anyInt());
+  verify(translator, never()).translate1To19(anyInt()); 
+}
+
+     
+      Review 
+     Review 
+      What is TDD? General process behind TDD? 
+         Idea: Tests drive development. 
+         Junit: What does it look like? 
+         What is BDD? General process behind BDD? 
+         Idea: Behaviors over Tests 
+         Behaviors as Stories, Features, Goals, Scenarios 
+         Testing Value/State vs. Method Calls/Interactions 
+         Behaviors as Method Calls/Interactions 
+         Mocking ("Yes, I have heard about it.") 
+         Happy Testing! 
+      
+     
+      
+     
+  </body> 

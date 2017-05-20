@@ -1,0 +1,74 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ Jim Whitehead  (  ejw@ics.uci.edu  )  Thu, 30 May 1996 17:40:46 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Kenji Takahashi: "Re: Versions and configurations" 
+    Previous message:   Jim Whitehead: "On standardization" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Kenji Takahashi: "Re: Version identifier in URL" 
+
+    
+Larry Masinter writes:
+
+&gt;Separate out the problem of
+&gt;  a) construct a URL for a previous version of a resource
+&gt;     given the current version of a resource and information
+&gt;     about the server's versioning system
+&gt;  b) determining from two URLs what their version relationship
+&gt;     might be.
+&gt;
+&gt;I think it's reasonable to use URL-decoration for (a) and not for (b).
+
+I find this concisely describes the different approaches of employing the
+URL parameter or URL query field vs. the link meta-information approach.
+
+Larry Masinter later writes:
+
+&gt;Well, there's already precedent for form URLs, for example, e.g.,
+&gt;
+&gt;   http://host.dom/form-handler?x=a+y=b+z=c 
+&gt;
+&gt;even though the client treats any URL it receieves as 'opaque', they
+&gt;can still be constructed. I see some value in just continuing this
+&gt;tradition for versions.
+&gt;
+&gt;In fact, how about making a "version" just a special kind of
+&gt;query?
+
+Dan Connolly agreed, stating:
+
+&gt;Fair enough. ?version=xxx seems reasonable for (a)
+
+Thus, there appears to be some agreement that employing the URL parameter
+or URL query field would be useful for specifying the version of an entity.
+
+
+However, it is not entirely clear to me what the tradeoffs are between
+using the URL parameter mechanism (e.g., ";version={version identifier}")
+versus using the URL query mechanism (e.g., "?version={version
+identifier}").  Can any members of the list shed some light on the intent
+of these two mechanisms?  This information is unavailable in either the
+HTTP specification or RFC 1738 (Uniform Resource Locators).
+
+I agree with David Fiander's comment:
+
+&gt;Two more things: 1) if we're not supposed to use URL parameters,
+&gt;why are they in the spec? and 2) the URL parameter makes sense,
+&gt;because one can think of different revisions of a document as
+&gt;different documents, much like the VMS or ISO 9660 filesystem
+&gt;method of indicating different file revisions with a ";revno" on
+&gt;the file name.
+
+- Jim Whitehead &lt; ejw@ics.uci.edu &gt;
+ 
+
+  
+     Next message:   Kenji Takahashi: "Re: Versions and configurations" 
+    Previous message:   Jim Whitehead: "On standardization" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Kenji Takahashi: "Re: Version identifier in URL" 
+
+  </body> 

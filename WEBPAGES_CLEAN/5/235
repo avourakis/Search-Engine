@@ -1,0 +1,107 @@
+ 5.1 OEChem Iterators<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5. Traversing the Atoms, 
+ Up:   5. Traversing the Atoms, 
+ Next:   5.2 Looping over the 
+   
+
+
+  
+5.1 OEChem Iterators 
+ 
+
+ 
+The standard way of processing each item or member of a set or
+collection in OEChem is by the use of an iterator.  The use of
+iterators is a common abstraction (or design pattern) in object
+oriented programming, that hides the way the collection/container is
+implemented from the user.  Hence a set of atoms could be implemented
+internally as a array, a linked list, a hash table or any similar data
+structure, but its behavior to the programmer is independent of the
+actual implementation.  An iterator can be thought of as a current
+position indicator.
+
+  
+OEChem iterators make use of C++'s template mechanism.  The use of
+templates allows the functionality of an iterator to be specified
+(implemented) independently of the type of the collection being
+iterated over.  An iterator over a type  T , has the type
+ OEIter&lt;T&gt; .  Hence, an iterator over the atoms of a molecule
+(represented by OEAtomBase) has type  OEIter&lt;OEAtomBase&gt;  and an
+iterator over the bonds of a molecule has type  OEIter&lt;OEBondBase&gt; .
+
+  
+The three most common operations of an OEIter are assignment, testing
+and increment.  These three iterator methods allow OEChem iterators to
+resemble conventional  for  loops in high level programming languages.
+Assignment specifies which collection/container the iterator is
+intended to loop over, testing determines whether the iterator has
+seen all of the items, and increment advances the iterator to the next
+position.
+
+  
+One possible source of confusion is that most functions and methods
+that return an iterator, actually return a result of type
+ OEIterBase&lt;T&gt;  rather than  OEIter&lt;T&gt; . The template class
+ OEIterBase&lt;T&gt;  is an internal abstraction used by OEChem, and should
+be treated as an opaque type by the user.  Suffice to say that values
+of type  OEIterBase&lt;T&gt;  can be assigned to variables of type
+ OEIter&lt;T&gt;  as created by the user.
+
+  
+A second minor point is that OEChem iterators only support the prefix
+ ++  operator, and not the suffix  ++  operator.  This means that to
+use the advance the iterator, users must write  ++i  and not
+ i++ .  This is actually a performance issue, since in C and C++
+the operator  i++  must make a copy of its argument.  This is to
+support the syntax  j = i++  where  j  is assigned the value
+of  i  before the increment.  This copying may potentially be
+expensive, and must be performed even if the value is not assigned.
+For primitive types such as integers, most C/C++ compilers can
+determine the value is not used and optimize  i++  to  ++i .
+Alas for C++ classes, most compilers are unable to perform this
+optimization and as such  i++  and  ++i  could do totally
+different things, hence  ++i  is the preferred idiom.  Even if
+OEChem changed the semantics of  i++  to perform the same thing
+as  ++i  and return the value after the increment, the  i++ 
+form is marginally less efficient (requiring an ``invisible'' integer
+argument to be passed to the operator).  Hence OpenEye's policy is to
+only implement the ``correct'' behavior and hope that users of OEChem
+will adopt  ++i  even for integer loops as good coding style.
+
+  
+Finally, the template OEIter is defined in the OESystem namespace
+rather than the OEChem namespace.  This is because iterators (like
+random number generators) are not chemistry specific, and the use of
+two namespaces makes this explicit.  It does however mean an extra
+ using namespace OESystem;  in our examples.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5. Traversing the Atoms, 
+ Up:   5. Traversing the Atoms, 
+ Next:   5.2 Looping over the 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

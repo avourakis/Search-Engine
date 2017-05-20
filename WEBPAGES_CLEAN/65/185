@@ -1,0 +1,78 @@
+ Knuth-Morris-Pratt example source code<body>
+
+ ICS 161: Design and Analysis of Algorithms 
+Example code for Knuth-Morris-Pratt algorithm 
+
+  
+
+This directory contains sample C++ code
+for an implementation of the Knuth-Morris-Pratt linear time string
+matching algorithm, and an example program that uses this algorithm
+to search for paragraphs containing a given string (similar to
+ grep ).
+  
+Files in this directory:
+
+      match.c   :
+This file defines a C++ class,
+ string_match , which implements the Knuth-Morris-Pratt
+algorithm.
+ 
+Arguments to the class constructor are the
+the string to be searched for and an optional length
+(-1 if the string is null-terminated); the constructor
+implements the preprocessing stage of the KMP algorithm.
+  
+The function  string_match.reset()  begins
+searching for a match, after which
+the function  string_match.match(char c) 
+processes one more character of text, implementing the scanning stage
+of the KMP algorithm and returning
+a Boolean value, true if the character processed was the last character
+of a match.
+  
+Example:
+  
+    string_match m("nano");
+    m.reset();
+    for (char * s = "banananobano", *s != '\0'; s++)
+        if (m.match(*s))
+            printf("found a nano!\n");
+ 
+ 
+
+      match.h   :
+Declarations for class  string_match .
+ 
+
+      lookup.c   :
+This program uses class  string_match 
+to perform a task like that of  grep , of finding a string
+in an input file.  Unlike  grep , it prints out the whole
+paragraph containing each match, rather than just one line.
+ 
+
+      lineb.c   :
+This file implements a simple
+"buffer" class suitable for holding an unknown quantity of text.
+The  lookup  program uses this to store the current paragraph,
+in case it matches the target pattern.  It was originally written
+as part of some other code, so it has added functionality beyond
+the part  lookup  uses.
+ 
+
+      lineb.h   :
+Declarations for  lineb.c .
+ 
+
+      makefile   :
+Control file for compiling the  lookup  program.
+ 
+
+      kmp.shar   :
+Contents of this directory in one UNIX "shar" format archive.
+      
+ ICS 161  --
+ Dept. Information &amp; Computer Science  --
+ UC Irvine   Last update:  
+ </body> 

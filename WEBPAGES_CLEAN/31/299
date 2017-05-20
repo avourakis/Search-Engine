@@ -1,0 +1,66 @@
+ Sorting: O(N) Sorting without Comparisons
+
+
+In this lecture, we will examine two sorting methods that do not use
+comparisons between values to sort the data. So, they are not constrained
+by the lower bound proved in the previous lecture. The algorithms are called
+Bucket Sort and Radix Sort. Both are a bit strange; they work well for integers
+(and Radix Sort for Strings) but don't work well for other kinds of data (e.g.,
+anything that is not "digital", in the same sense as a digital tree).
+
+
+Bucket Sort:
+
+Bucket Sort allows us to sort N data values, where each lies in the range 0-M
+in time O(N+M). Note that if we don't know the range of integers, we can scan
+the array first, to find the smallest and biggest one, and scale everything
+between those two values: scan the array (O(N)) to find S, the smallest value
+and B, the biggest value, scan it again (O(N)) subtracting S from every value
+(the range will be 0 to B-S), then sort these values, then scan it a final time
+(O(N)) adding S to every value. The scaling and unscaling processes are each
+O(N) (adding three O(N) passes to the data: more time but the same complexity
+class).
+
+We will analyze a few problems with various sizes of N and M below.
+
+For a first example, suppose that we needed to sort 1,000 exam scores, all in
+the range 0 to 100 (so N = 1,000 and M = 100).
+
+First, here is the psuedo-code for this algorithm. It uses an array much like
+a histogram (keeping track of the number of times a specific data value is
+seen in the array to be sorted).
+
+  1) Declare an int histogram array with indexes/buckets 0 to 100 and 
+     initialize each to 0 (there has been 0 of each index value seen so far).
+
+  2) Look at every data value in the array to sort, and increment by 1 the 
+     index (specified by that data value) in the histogram array. So, if 78 was
+     the next data value in the array to sort, increment the histogram array at
+     index 78.
+
+  3) Scan the entire histogram array from 0 to 100; whenever we get to an index
+     that stores c (with c != 0), put c values of that index into the next
+     positions in the array to sort (starting from the beginning, replacing the
+     values already in the array).
+     
+Step 1 is O(M), based only on the range of values (number of 0s we need to
+store in the array indexes) and not on N, the number of values to sort.
+
+Step 2 is O(N), based only on the number of values to sort, not the range of
+values. For each of the N values, we can access index i in an array in O(1)
+time to increment it. 
+
+Step 3 is O(N+M), based both on N, the number of values to sort (since we are
+putting each into the sorted array), and M, the range of values (since we must
+scan through each bucket, whether or not it contains a values != 0).
+
+Looking at raw numbers, Step 1 requires 100 operations, Step 2 requires 1,000
+operations, and Step 3 requires 1,100 operations (so the total operations is
+about 2,200). If we just sorted the array using an O(N Log2 N) algorithm (with
+a constant of 1), it would require about 10,000 operations. So here bucket sort
+looks pretty good, by a factor of 5.
+
+For a second example, suppose that we needed to sort 1,000,000 values from 0
+up to 1 billion (so N = 1,000,000 and M = 1,000,000,000). Here N  1 minute
+U/S = Unstable/Stable
+I/N = In place (requires  

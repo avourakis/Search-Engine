@@ -1,0 +1,377 @@
+ Rio: A System Solution for Sharing I/O between Mobile Systems 
+ 
+ Rio: A System Solution for Sharing I/O between Mobile Systems 
+ 
+   Table of Contents 
+     JavaScript must be enabled in your browser to display the table of contents.   
+ 
+ 
+ 
+ 
+ 
+  In Unix-like operating systems, everything is abstracted as a file.
+ Device files  are the files that abstract I/O devices. We have built
+Rio, an I/O sharing solution between mobile systems using device files
+as the boundary. You can find more details on Rio in our MobiSys’14
+paper:  
+  Ardalan Amiri Sani, Kevin Boos, Min Hong Yun, and Lin Zhong, "Rio: A System
+Solution for Sharing I/O between Mobile Systems," in Proc. ACM MobiSys,
+June 2014.
+( PDF )
+( video demo )  
+ 
+ 
+ 
+ People 
+ 
+   
+ 
+ Ardalan Amiri Sani  (Lead Student)
+ 
+ 
+ 
+ 
+ Kevin Boos 
+ 
+ 
+ 
+ 
+ Min Hong Yun 
+ 
+ 
+ 
+ 
+ Lin Zhong 
+ 
+ 
+  
+ 
+ 
+ 
+ 1. Software Overview 
+ 
+  Rio comes in 7 repositories.  
+   
+ 
+The kernel modules: this repository has the client and server stubs.
+ 
+ 
+ 
+ 
+The Linux kernel: this is a patched Android Linux kernel that
+includes the required modifications to support Rio.
+ 
+ 
+ 
+ 
+Android frameworks: these are five modified repositories (mainly I/O
+service and HAL repositories) that are needed for Rio.
+ 
+ 
+  
+  Our source code is hosted in Github. You can use
+the following instructions to download them. Preferably, download the
+repositories to the locations specified below. This will make it easier
+for you to follow the rest of the instructions and use our scripts.  
+  Download the kernel modules to ~/dfv in your file system.  
+ 
+ 
+ $ git clone -b rio https://github.com/arrdalan/dfv_modules.git 
+  
+  For the rest of the modules, you first need to download the CyanogenMod
+source code. Use the following link to download it for Galaxy Nexus
+(GSM) (codename "maguro"). Note that we have built Rio on CyanogenMod
+version 10.1.3-RC1, so make sure you use the same version. Also, make
+sure you download the CyanogenMod sources to ~/dfv/android_dfv/system.  
+   http://wiki.cyanogenmod.org/w/Maguro_Info   
+  Now, you need to update 6 repositories of Cyanogenmod with Rio’s
+updates. You can do that as follows:  
+ 
+ 
+ # Update the kernel
+$ cd ~/dfv/android_dfv/system/kernel/samsung/tuna
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_tuna_kernel.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv
+
+# update the frameworks repositories
+$ cd ~/dfv/android_dfv/system/device/samsung/tuna
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_tuna_device.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv
+
+$ cd ~/dfv/android_dfv/system/hardware/ti/omap4xxx
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_omap4xxx.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv
+
+$ cd ~/dfv/android_dfv/system/hardware/invensense
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_invensense.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv
+
+$ cd ~/dfv/android_dfv/system/external/tinyalsa
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_tinyalsa.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv
+
+$ cd ~/dfv/android_dfv/system/frameworks/native
+$ git remote add dfv_origin https://github.com/arrdalan/dfv_android_native.git
+$ git fetch dfv_origin dfv:dfv
+$ git checkout dfv 
+  
+ 
+ 
+ 
+ 2. Instructions 
+ 
+  In these instructions, we will show you how to set up Rio to share the
+camera, audio devices, and accelerometer between two Galaxy Nexus
+smartphones.  
+ 
+ 2.1. Compilation: 
+  Android:  
+  Follow the instructions in the link in the previous section to compile
+CyanogenMod and install it on both smartphones.  
+  Now, compile the kernel modules as follows:  
+ 
+ 
+ $ cd ~/dfv/dfv_modules
+$ source make.sh android 
+  
+ 
+ 
+ 2.2. Setting up the system 
+  We have developed some scripts that will make
+the process easier for you.
+Download them using the following commands:  
+ 
+ 
+ # Note: here is where we want to put the scripts
+$ cd ~/dfv/dfv_modules
+$ git clone -b rio https://github.com/arrdalan/dfv_scripts.git 
+  
+ 
+ 2.2.1. Copying the files to the smartphones 
+  In the server, create a directory at:  
+ 
+ 
+ /sdcard/dfv_server 
+  
+  And in the client, create a directory at:  
+ 
+ 
+ /sdcard/dfv_client 
+  
+  Then, create two adb aliases in your machine for the smartphones. We
+will use adbs for the server and adbc for the client. You can create the
+aliases by adding the following two lines to your bashrc.  
+ 
+ 
+ alias adbs='adb -s &lt;server smartphone serial number&gt;'
+alias adbc='adb -s &lt;client smartphone serial number&gt;' 
+  
+  Note: you can get the serial number of the smartphones by running  
+ 
+ 
+ $ adb devices 
+  
+  Now, you can use the scripts to push the files to the smartphones using
+the following commands:  
+ 
+ 
+ $ cd ~/dfv/dfv_modules/dfv_scripts
+$ source scripts/push_to_android_server.sh
+$ source scripts/push_to_android_client.sh 
+  
+ 
+ 
+ 2.2.2. Loading the kernel modules 
+  The following instructions need to be executed in adb shell. For
+example, to get to the server shell, use:  
+ 
+ 
+ $ adbs shell
+# Now, run the following in the adb shell
+$ su 
+  
+  Load the kernel modules in the server using:  
+ 
+ 
+ # In server adb shell
+$ cd /sdcard/dfv_server
+$ source load_server_android.sh 
+  
+  Load the kernel modules in the client using:  
+ 
+ 
+ # In client adb shell
+$ cd /sdcard/dfv_client
+$ source load_client_android.sh 
+  
+ 
+ 
+ 2.2.3. Using shared devices 
+  To use device X (X chosen from the set [accelerometer, audio, camera]),
+run the following commands:  
+  First, enable sharing of that device in the server:  
+ 
+ 
+ # In server adb shell
+$ cd /sdcard/dfv_server
+# replace X with your target device chosen from the set above
+$ source enable_X_server_android.sh 
+  
+  Then, enable sharing of that device in the client:  
+ 
+ 
+ # In client adb shell
+$ cd /sdcard/dfv_client
+# replace X with your target device chosen from the set above
+$ source enable_X_client_android.sh 
+  
+  Note: Make sure you enable the sharing on the server first.  
+  You can disable sharing using:  
+ 
+ 
+ # In client adb shell
+$ cd /sdcard/dfv_client
+# replace X with your target device chosen from the set above
+$ source disable_X_client_android.sh 
+  
+ 
+ 
+ # In server adb shell
+$ cd /sdcard/dfv_server
+# replace X with your target device chosen from the set above
+$ source disable_X_server_android.sh 
+  
+  Note: Make sure you disable the sharing on the client first.  
+  Now, the device is shared. Read the usage notes below on how to use the
+shared device.  
+ 
+ 
+ 2.2.4. Usage notes 
+   
+ 
+Test the accelerometer using an accelerometer-based game.
+  Try to align the server with the client before starting to play the
+  game.
+ 
+ 
+ 
+ 
+For audio, you can play any music on the client. Make sure you start
+  playing the music after you have enabled the audio using the commands
+  above and stop the music before disabling the audio sharing.
+ 
+ 
+ 
+ 
+Disable all the audio and tones in the server settings. We have
+  noticed that once you use the audio devices locally on the server,
+  sharing the audio with the client will fail. We have not yet looked into
+  the reason for this.
+ 
+ 
+ 
+ 
+The default audio buffering latency is set to 308 ms, which is
+  large. You can use smaller buffering latencies by writing your target
+  latency to the file /data/local/audio_period_size.txt. For example,
+  for 10 ms latency, use the following commands. You will need to
+  restart the client smartphone for the new latency to be effective.
+ 
+ 
+  
+ 
+ 
+ # In client adb shell
+$ echo '10\n' &gt; /data/local/audio_period_size.txt 
+  
+   
+ 
+For the camera, we have hardcoded the resolution in the Android
+framework to be 128x96 (in file
+~/dfv/android_dfv/hardware/ti/omap4xxx/camera/CameraHal.cpp in case you
+wanted to change it). This is because we cannot support higher
+resolutions at adequate framerates (see the paper for the actual
+numbers), and camera applications might not allow the user to choose
+such a low resolution.
+
+ 
+ 
+ 
+ 
+We have noticed that on some client smartphones, it is needed to first
+  launch the camera app locally (not using Rio), otherwise using the
+  server camera through Rio will fail. We have not yet looked into the
+  reason for this.
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 3. ChangeLog 
+ 
+   
+ 
+November 2, 2014: version 1.0 is released.
+ 
+ 
+  
+ 
+ 
+ 
+ 4. Supported Features 
+ 
+  The released source code only supports a subset of
+functionalities/features reported in the paper. The rest of
+features/functionalities will be supported in future releases as they
+are thoroughly tested. Please see below for
+more details.  
+   
+ 
+Full virtualization of device file operations, needed to share an
+  I/O device at the device file boundary. The code currently has been
+  tested only for ARM.
+ 
+ 
+ 
+ 
+Required extensions to Android framework. (Android 4.2.2, CyanogenMod 10.1.3-RC1)
+ 
+ 
+ 
+ 
+Kernel modules needed for sharing the I/O over socket-based connections.
+ 
+ 
+ 
+ 
+Required extensions to the Linux kernel. (Kernel 3.0)
+ 
+ 
+ 
+ 
+Support for the camera, audio devices (speaker and microphone), and
+  sensors. Note 1: the code is only tested for Galaxy Nexus smartphones
+  (GSM) using TI OMAP4 SoC (CyanogenMod codename "maguro").
+  Moreover, it has not been tested for
+  other sensors than accelerometer (e.g., compass and gyro).
+ 
+ 
+  
+ 
+ 
+ 
+   
+ 
+ 
+Last updated 2014-11-03 11:39:23 CST
+ 
+ 
+</body> 

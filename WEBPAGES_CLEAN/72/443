@@ -1,0 +1,410 @@
+ 3. OEChem Classes and Member Functions<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   1 OEChem Library 
+ Up:   1 OEChem Library 
+ Next:   3.1 OEAtomBase 
+   
+
+
+  
+3. OEChem Classes and Member Functions 
+ 
+
+ 
+
+      Subsections</strong> 
+
+   3.1 OEAtomBase 
+   3.1.1 GetAtomicNum 
+   3.1.2 GetAtoms 
+   3.1.3 GetBond 
+   3.1.4 GetBonds 
+   3.1.5 GetDegree 
+   3.1.6 GetExplicitDegree 
+   3.1.7 GetExplicitHCount 
+   3.1.8 GetExplicitValence 
+   3.1.9 GetFormalCharge 
+   3.1.10 GetHvyDegree 
+   3.1.11 GetHvyValence 
+   3.1.12 GetHyb 
+   3.1.13 GetIdx 
+   3.1.14 GetImplicitHCount 
+   3.1.15 GetIntType 
+   3.1.16 GetIsotope 
+   3.1.17 GetMapIdx 
+   3.1.18 GetName 
+   3.1.19 GetParent 
+   3.1.20 GetPartialCharge 
+   3.1.21 GetRadius 
+   3.1.22 GetRxnRole 
+   3.1.23 GetSymmetryClass 
+   3.1.24 GetTotalHCount 
+   3.1.25 GetType 
+   3.1.26 GetValence 
+   3.1.27 IsAromatic 
+   3.1.28 IsCarbon 
+   3.1.29 IsConnected 
+   3.1.30 IsHalogen 
+   3.1.31 IsHydrogen 
+   3.1.32 IsInRing 
+   3.1.33 IsMetal 
+   3.1.34 IsNitrogen 
+   3.1.35 IsOxygen 
+   3.1.36 IsPhosphorus 
+   3.1.37 IsPolar 
+   3.1.38 IsPolarHydrogen 
+   3.1.39 IsSulfur 
+   3.1.40 SetAromatic 
+   3.1.41 SetAtomicNum 
+   3.1.42 SetFormalCharge 
+   3.1.43 SetHyb 
+   3.1.44 SetImplicitHCount 
+   3.1.45 SetIntType 
+   3.1.46 SetInRing 
+   3.1.47 SetIsotope 
+   3.1.48 SetMapIdx 
+   3.1.49 SetName 
+   3.1.50 SetPartialCharge 
+   3.1.51 SetRadius 
+   3.1.52 SetRxnRole 
+   3.1.53 SetStereo 
+   3.1.54 SetSymmetryClass 
+   3.1.55 SetType 
+     3.2 OEBondBase 
+   3.2.1 GetBgn 
+   3.2.2 GetBgnIdx 
+   3.2.3 GetEnd 
+   3.2.4 GetEndIdx 
+   3.2.5 GetIdx 
+   3.2.6 GetIntType 
+   3.2.7 GetNbr 
+   3.2.8 GetOrder 
+   3.2.9 GetParent 
+   3.2.10 GetType 
+   3.2.11 IsAromatic 
+   3.2.12 IsInRing 
+   3.2.13 IsRotor 
+   3.2.14 SetAromatic 
+   3.2.15 SetBgn 
+   3.2.16 SetEnd 
+   3.2.17 SetIntType 
+   3.2.18 SetInRing 
+   3.2.19 SetOrder 
+   3.2.20 SetStereo 
+   3.2.21 SetType 
+   3.2.22 SwapEnds 
+     3.3 OECartesianToInternal 
+   3.3.1 reset 
+   3.3.2 update 
+     3.4 OECliqueSearch 
+   3.4.1 Constructors 
+   3.4.2 AddConstraint 
+   3.4.3 ClearConstraints 
+   3.4.4 GetMaxMatches 
+   3.4.5 GetMinAtoms 
+   3.4.6 GetPattern 
+   3.4.7 GetSaveRange 
+   3.4.8 Init 
+   3.4.9 Match 
+   3.4.10 SingleMatch 
+     3.5 OEConfBase 
+   3.6 OEConfBaseT 
+   3.6.1 coord_type 
+   3.6.2 Copy 
+   3.6.3 Constructors 
+   3.6.4 operator= 
+   3.6.5 AddAtom 
+   3.6.6 AddBond 
+   3.6.7 RemoveAtom 
+   3.6.8 RemoveBond 
+   3.6.9 MCMol 
+   3.6.10 Conformer Indices 
+   3.6.11 SetCoords 
+   3.6.12 GetCoords 
+   3.6.13 Deletion 
+   3.6.14  Torsions  
+   3.6.15 Transformations 
+   3.6.16 Title 
+   3.6.17 OEMolBase 
+   3.6.18 OEBase 
+     3.7 OEConfTest 
+   3.7.1 CompareMols 
+   3.7.2 CreateCopy 
+   3.7.3 OEDefaultConfTest 
+   3.7.4 OEIsomericConfTest 
+   3.7.5 OEAbsoluteConfTest 
+   3.7.6 OEAbsCanonicalConfTest 
+     3.8 OEEuler 
+   3.9 OEExprBase 
+   3.9.1 IsEquivalent 
+   3.9.2 CreateCopy 
+   3.9.3 GetType 
+     3.10 OEFuzzy 
+   3.10.1 Constructor 
+   3.10.2 operator bool 
+   3.10.3 operator ! 
+   3.10.4 operator &amp;&amp; 
+   3.10.5 operator     
+   3.10.6 operator == 
+   3.10.7 operator != 
+     3.11 OEInternalToCartesian 
+   3.11.1 reset 
+   3.11.2 update 
+     3.12 OELibaryGen 
+   3.12.1 Constructors 
+   3.12.2 AddStartingMaterial 
+   3.12.3 operator() 
+   3.12.4 operator bool 
+   3.12.5 ClearStartingMaterial 
+   3.12.6 GetExplicitHydrogens 
+   3.12.7 GetProducts 
+   3.12.8 GetReactants 
+   3.12.9 GetValenceCorrection 
+   3.12.10 Init 
+   3.12.11 NumReactants 
+   3.12.12 SetExplicitHydrogens 
+   3.12.13 SetStartingMaterial 
+   3.12.14 SetValenceCorrection 
+     3.13 OEMatch 
+   3.13.1 OEMatch Constructors 
+   3.13.2 operator = 
+   3.13.3 AddPair 
+   3.13.4 CreateCopy 
+   3.13.5 GetAtoms 
+   3.13.6 GetBonds 
+   3.13.7 GetPatternAtoms 
+   3.13.8 GetPatternBonds 
+   3.13.9 GetTargetAtoms 
+   3.13.10 GetTargetBonds 
+   3.13.11 NumAtoms 
+   3.13.12 NumBonds 
+     3.14 OEMatchBase 
+   3.14.1 CreateCopy 
+   3.14.2 GetAtoms 
+   3.14.3 GetBonds 
+   3.14.4 GetPatternAtoms 
+   3.14.5 GetPatternBonds 
+   3.14.6 GetTargetAtoms 
+   3.14.7 GetTargetBonds 
+   3.14.8 NumAtoms 
+   3.14.9 NumBonds 
+     3.15 OEMatchPair 
+   3.15.1 Constructors 
+   3.15.2 operator = 
+     3.16 OEMCMolBase 
+   3.17 OEMCMolBaseT 
+   3.17.1 ConfType 
+   3.17.2 Copy 
+   3.17.3 Constructors 
+   3.17.4 operator= 
+   3.17.5 Active Conformer 
+   3.17.6 GetMaxConfIdx 
+   3.17.7 NewConf 
+   3.17.8 NumConfs 
+   3.17.9 GetConf 
+   3.17.10 Delete Conformers 
+   3.17.11 SweepConfs 
+   3.17.12 OrderConfs 
+   3.17.13 GetConfs 
+   3.17.14 OEMolBase 
+   3.17.15 OEBase 
+     3.18 OEMCSFunc 
+   3.18.1 operator() 
+   3.18.2 CreateCopy 
+     3.19 OEMCSMaxAtoms 
+   3.20 OEMCSMaxBonds 
+   3.21 OEMCSMaxAtomsCompleteCycles 
+   3.21.1 Constructor 
+     3.22 OEMCSSearch 
+   3.22.1 Constructor 
+   3.22.2 operator= 
+   3.22.3 operator bool 
+   3.22.4 AddConstraint 
+   3.22.5 ClearConstraints 
+   3.22.6 GetMaxMatches 
+   3.22.7 GetMinAtoms 
+   3.22.8 GetPattern 
+   3.22.9 GetSaveRange 
+   3.22.10 Init 
+   3.22.11 Match 
+   3.22.12 SetMCSFunc 
+   3.22.13 SetMaxMatches 
+   3.22.14 SetMinAtoms 
+   3.22.15 SetSaveRange 
+   3.22.16 SingleMatch 
+     3.23 OEMol 
+   3.23.1 Constructors 
+   3.23.2 operator = 
+   3.23.3 operator bool 
+   3.23.4 ConfIdxArraySize 
+   3.23.5 DeleteConfs 
+   3.23.6 DeleteConf 
+   3.23.7 GetActive 
+   3.23.8 GetConf 
+   3.23.9 GetConfs 
+   3.23.10 IsDeleted 
+   3.23.11 NewConf 
+   3.23.12 NumConfs 
+   3.23.13 OrderConfs 
+   3.23.14 PopActive 
+   3.23.15 PushActive 
+   3.23.16 ResetConf 
+   3.23.17 SetActive 
+   3.23.18 SweepConfs 
+     3.24 OEMolBase 
+   3.24.1 operator = 
+   3.24.2 operator += 
+   3.24.3 operator bool 
+   3.24.4 Clear 
+   3.24.5 Compress 
+   3.24.6 DeleteAtom 
+   3.24.7 DeleteBond 
+   3.24.8 GetAtom 
+   3.24.9 GetAtoms 
+   3.24.10 GetBond 
+   3.24.11 GetBonds 
+   3.24.12 GetCoords 
+   3.24.13 GetDimension 
+   3.24.14 GetEnergy 
+   3.24.15 GetMaxAtomIdx 
+   3.24.16 GetMaxBondIdx 
+   3.24.17 GetTitle 
+   3.24.18 IsRxn 
+   3.24.19 NewAtom 
+   3.24.20 NewBond 
+   3.24.21 NumAtoms 
+   3.24.22 NumBonds 
+   3.24.23 OrderAtoms 
+   3.24.24 OrderBonds 
+   3.24.25 SetCoords 
+   3.24.26 SetDimension 
+   3.24.27 SetEnergy 
+   3.24.28 SetRxn 
+   3.24.29 SetTitle 
+   3.24.30 Sweep 
+   3.24.31 UnCompress 
+     3.25 oemolistream 
+   3.25.1 operator     
+   3.25.2 close 
+   3.25.3 GetFlavor 
+   3.25.4 GetFormat 
+   3.25.5 Getgz 
+   3.25.6 open 
+   3.25.7 SetConfTest 
+   3.25.8 SetFormat 
+   3.25.9 SetFlavor 
+     3.26 oemolostream 
+   3.26.1 operator     
+   3.26.2 close 
+   3.26.3 GetFormat 
+   3.26.4 open 
+   3.26.5 SetFormat 
+     3.27 OEQAtomBase 
+   3.27.1 GetQAtoms 
+   3.27.2 GetQBonds 
+     3.28 OEQBase 
+   3.28.1 SetExpr 
+   3.28.2 GetExpr 
+     3.29 OEQBondBase 
+   3.30 OEQMol 
+   3.30.1 Constructors 
+   3.30.2 operator += 
+   3.30.3 operator OEMolBase 
+   3.30.4 operator OEQMolBase 
+   3.30.5 SCMol 
+   3.30.6 QMol 
+     3.31 OEQMolBase 
+   3.31.1 operator= 
+   3.31.2 operator += 
+   3.31.3 BuildExpressions 
+   3.31.4 GetQAtoms 
+   3.31.5 GetQBonds 
+     3.32 OEQuaternion 
+   3.33 OERotMatrix 
+   3.34 OEResidue 
+   3.34.1 operator = 
+   3.34.2 operator bool 
+   3.34.3 GetAlternateLocation 
+   3.34.4 GetBFactor 
+   3.34.5 GetChainID 
+   3.34.6 GetFragmentNumber 
+   3.34.7 GetInsertCode 
+   3.34.8 GetModelNumber 
+   3.34.9 GetName 
+   3.34.10 GetOccupancy 
+   3.34.11 GetResidueNumber 
+   3.34.12 GetSecondaryStructure 
+   3.34.13 GetSerialNumber 
+   3.34.14 IsHetAtom 
+   3.34.15 SetAlternateLocation 
+   3.34.16 SetBFactor 
+   3.34.17 SetChainID 
+   3.34.18 SetFragmentNumber 
+   3.34.19 SetHetAtom 
+   3.34.20 SetInsertCode 
+   3.34.21 SetModelNumber 
+   3.34.22 SetName 
+   3.34.23 SetOccupancy 
+   3.34.24 SetResidueNumber 
+   3.34.25 SetSecondaryStructure 
+   3.34.26 SetSerialNumber 
+     3.35 OESubSearch 
+   3.35.1 Constructors 
+   3.35.2 operator = 
+   3.35.3 operator bool 
+   3.35.4 AddConstraint 
+   3.35.5 AtomMatch 
+   3.35.6 ClearConstraints 
+   3.35.7 GetMaxMatches 
+   3.35.8 GetPattern 
+   3.35.9 Init 
+   3.35.10 Match 
+   3.35.11 SingleMatch 
+   3.35.12 SetMaxMatches 
+     3.36 OETrans 
+   3.36.1 Construction and Initialization 
+   3.36.2 Adding Transformations 
+   3.36.3 OETransBase Access 
+   3.36.4 Transform 
+     3.37 OETransBase 
+   3.37.1 CreateCopy 
+   3.37.2 Transform 
+   3.37.3 Protected Transformations 
+     3.38 OETranslation 
+   3.39 OEUniMolecularRxn 
+   3.39.1 Constructors 
+   3.39.2 Init 
+   3.39.3 operator() 
+   3.39.4 operator bool 
+     3.40 OEVectorBindings 
+   3.40.1 Constructors 
+   3.40.2 operator= 
+   3.40.3 Add 
+   3.40.4 Get 
+     
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   1 OEChem Library 
+ Up:   1 OEChem Library 
+ Next:   3.1 OEAtomBase 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

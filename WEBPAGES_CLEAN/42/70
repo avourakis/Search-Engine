@@ -1,0 +1,158 @@
+ Bouncer Toolkit<body>
+   
+                 
+         
+       
+                 
+         
+       
+                             
+         
+         
+                 
+         
+       
+                             
+         
+         
+                Bouncer: 
+            Admission Control Toolkit    
+         
+       
+                             
+         
+         
+              We have implemented Bouncer, a general-purpose 
+            toolkit for admission control.  All cryptographic functions 
+            are developed using the    OpenSSL    and 
+             MIRACL  libraries. The toolkit is written in C on 
+            Linux 2.4 and currently consists of about 65,000 lines of codes.  
+         
+       
+                             
+         
+         
+               
+         
+       
+                             
+         
+         
+                System Architecture    
+         
+       
+                             
+         
+         
+              The Bouncer toolkit is composed of three basic 
+            layers of the architecture; Bouncer APIs, security and management services, 
+            and the underlying cryptographic functions.  
+         
+       
+                             
+                 
+         
+         
+               
+               
+               
+         
+       
+                             
+         
+         
+               The 
+            Bouncer APIs define the application programming interface for accessing 
+            the admission control services. These APIs are useful when integrating 
+            our Bouncer with other peer group applications. The security and 
+            management services are carried out by the following modules:  
+                 
+                 - 
+            Policy Management Module  
+                 - 
+            Certificate Handling Module  
+                 - 
+            Data Encoding Module  
+                 - 
+            Protocol Handling Module  
+              All security services are provided by the 
+            underlying cryptographic libraries. Most of the general cryptographic 
+            functions such as SHA-1, RSA, DSA, and so on, are supported by OpenSSL. 
+            Specifically, we have implemented three distributed cryptographic 
+            schemes on top of OpenSSL and MIRACL libraries, and embedded our libraries into it. The 
+            Bouncer supports five  different threshold schemes; three for long-lived 
+            DPGs and two for short-lived DPGs.  
+               1) 
+            Admission Protocols for Long-lived DPGs  
+                     
+                                     
+                                    TS-DSA  
+                     
+            TS-Sch  
+                     
+            ID-GAC (aka, TS-BLS)  
+               2) 
+            Admission Protocols for Short-lived DPGs  
+                     
+            UniAC (aka, PTKP or PSK)  
+                     
+            BiAC  
+                 
+         
+       
+                             
+         
+         
+                Source Codes    
+         
+       
+                             
+         
+         
+                 
+                LICENCE Statement   
+                README   
+                 
+                
+            Bouncer toolkit  :   
+                                     bouncer-0.8.0.tar.gz  
+                                      
+                 
+               [Individual 
+            Libraries]   
+                
+            TS-DSA library:  tsd-0.1.1.tar.gz   
+                
+            TS-Sch library:  tsc-0.1.1.tar.gz   
+                
+            ID-GAC library:  ibg-0.1.1.tar.gz , 
+              
+                 
+            UniAC library:  uni-0.1.1.tar.gz   
+                
+            BiAC library:  biv-0.1.1.tar.gz   
+                 
+               [Trial 
+            Integrations with Bouncer]   
+                Secure 
+                                    Gnut:    sgnut-0.1.2.tar.gz    
+                                    which is a    Gnut 
+                                    0.4.21    integeated with    gac-0.5.0   .  
+                                        
+            Spread-GAC:    spread-gac.tar.gz    
+                                    which is a    Spread 
+                                    3.17.0    integeated with    gac-0.5.0   .  
+               
+         
+       
+                             
+         
+         
+                 
+         
+       
+               Copyright 
+            2001 (c) SCONCE. All rights reserved. Best viewed with 
+            Internet Explorer 6.0 &amp; 1024*768 resolution or higher.   
+         
+            </body> 

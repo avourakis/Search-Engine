@@ -1,0 +1,36 @@
+ Python: module dice<body>
+
+           dice</strong>       index   c:\users\pattis\workspace\courselib\dice.py       
+ 
+         Modules</strong>                  
+     random               
+         Classes</strong>                  
+     builtins.object 
+   
+    Dice 
+    
+  
+        class  Dice</strong> ( builtins.object )           
+  Models an ensemble of dice: &gt;= 1 dice, with each die having &gt;= 1 sides.  Dice  in the ensemble can have different numbers of sides. 
+All the dice can be rolled, their pips (and pip sum) can be queried.         
+ Methods defined here:     __init__</strong> (self, max_pips)   Instantiate like  Dice ([6,6]) for 2 six-sided dice  Dice  instance is unrolled (many operations require dice to be rolled first). 
+  
+Args: 
+    max_pips: a list of positive (&gt;=1) integers 
+     
+Returns: 
+    A  Dice  instance with len(max_pips) dice, the ith of which 
+      has maxPip[i] sides, which has been rolled 0 times.       __str__</strong> (self)   Return dice as a str 
+Returns a string representation for a  Dice , such that 
+d2 = eval(str(d)) copies the state of d       all_pip_maximums</strong> (self)   Returns a list of the maximum pips for each die.       all_pips</strong> (self)   Returns a list of all pips showing. 
+Note: d. all_pips ()[i] == d. pips_on (i)       number_of_dice</strong> (self)   Returns the number of dice in the ensemble (&gt;= 1).       pip_sum</strong> (self)   Returns the sum of the pips showing on all the dice.       pips_on</strong> (self, i)   Returns the number of pips showing in die i (first die is i = 0).       pips_same</strong> (self)   Returns whether or not all die show the same number of pips. 
+For 2 dice, asking pips_same is the same as asking doubles.       roll</strong> (self)   Returns the dice ensemble after rolling every die in it. 
+Allows cascaded calls: d. roll (). pip_sum ()       rolls</strong> (self)   Returns the number of times the dice have been rolled (&gt;=0).       standard_rolls_for_debugging</strong> (self)   Returns None 
+Seeds the random number generator so that the same sequence of 
+  rolls will occur, which allows for debugging of the same 
+  'random' throws    
+Data descriptors defined here:    __dict__</strong> 
+  dictionary for instance variables (if defined)  
+    __weakref__</strong> 
+  list of weak references to the object (if defined)  
+       </body> 

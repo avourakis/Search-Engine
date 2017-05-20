@@ -1,0 +1,44 @@
+ Description of runJTgrid<body>
+  
+  Home  &gt;   MRFLearning  &gt; runJTgrid.m 
+
+
+
+ runJTgrid
+ 
+
+   PURPOSE     
+  Junction Tree Inference for a rectangular grid Boltzmann m/c</strong> 
+
+   SYNOPSIS     
+  function sNodes = runJTgrid( model ) </strong> 
+
+   DESCRIPTION     
+   Junction Tree Inference for a rectangular grid Boltzmann m/c
+
+ Function that take a rectangular grid Boltzmann m/c (with 0/1 outputs) and 
+ runs a node clustering version of the general Junction Tree algorithm. 
+ Returns the node clusters and their final potentials (the marginals).
+
+ Inputs:
+         model: struct with fields
+                numRows: # rows, R, in the grid
+                numCols: # columns, C, in the grid
+                alpha  : (R X C) matrix of node biases
+                wHor   : (R X C-1) matrix of horizontal edge weights 
+                wVer   : (R-1 X C) matrix of vertical edge weights 
+
+ Returns:
+         sNodes: struct with fields
+                 nodes: matrix where row i gives the nodes belonging to supernode i. 
+                        Size is ( number of supernodes X (R+1) )
+                 pot  : matrix where row i gives the marginal of supernode i.  
+                        Size is ( number of supernodes X (2^(R+1))  
+
+
+   CROSS-REFERENCE INFORMATION     
+This function calls:
+  
+This function is called by:
+   JTsampleGrid 	Exact sampling for rectangular grid boltzmann m/c's using junction tree.   MLgrid 	Estimate the ML parameters for a rectangular grid boltzmann m/c,    Generated on Wed 28-Sep-2005 04:10:02 by   m2html </strong> © 2003 
+</body> 

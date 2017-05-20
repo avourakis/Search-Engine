@@ -1,0 +1,199 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Quadtrees and related hierarchical decompositions
+ 
+   Provably good mesh generation .  M. Bern ,
+D. Eppstein, and 
+ 
+J. Gilbert .  31st IEEE Symp. Foundations of Comp. Sci., 
+St. Louis, Missouri, 1990, pp. 231–241.  J. Comp. Sys. Sci.  48: 384–409, 1994 (special issue for 31st FOCS).
+ 
+In this paper, we construct triangulations of point sets and polygons by
+using quadtrees to add extra vertices to the input. As a result we can
+guarantee that all triangles have angles bounded
+away from zero, using a number of triangles within a constant of
+optimal; this was the first paper to provide simultaneous bounds on mesh
+element quality and mesh complexity of this form, and therefore the
+first to provide finite element mesh generation algorithms that
+guarantee both the robustness of the algorithm against unexpected input
+geometries and the quality of its output.
+  
+In the same paper we also use quadtrees to triangulate planar point sets
+so that all angles are non-obtuse, using linearly many triangles, and to
+triangulate higher dimensional point sets with no small solid angles and
+a number of simplices within a constant of optimal.  Also, we can
+augment any higher dimensional point set so the Delaunay triangulation
+has linear complexity.
+  
+In later follow-up work, I showed that the same
+technique can also be used to find a triangulation whose edges have  total length within a constant factor of
+optimal . Bern, Mitchell, and Ruppert
+showed that alternative methods can be used to triangulate any polygon
+without obtuse angles; see " Faster circle packing
+with application to nonobtuse triangulation " for an algorithmic
+improvement to their technique. Additionally, with Bern, Chew, and
+Ruppert, we showed that  any point set in
+higher dimensions can be triangulated with nonobtuse simplices .
+Bern and I surveyed these and related results in our paper " Mesh generation and optimal triangulation ".
+  ( BibTeX  --
+ Citations  --
+ Preliminary copy of journal version  --
+ MIT hypertext bibliography  --
+ CiteSeer  --
+ ACM DL (JCSS) )
+  
+    Approximating the minimum weight Steiner triangulation . 
+D. Eppstein.  Tech. Rep. 91-55 , ICS, UCI, 1991.   3rd ACM-SIAM Symp. Discrete Algorithms,  Orlando, 1992, pp. 48–57 .   Disc. Comp. Geom.  11: 163–191, 1994 .
+ 
+ Quadtree  based
+ triangulation  gives a large but constant factor
+ approximation 
+to the minimum weight triangulation of a point set or
+convex polygon, allowing extra Steiner points to be added as vertices.
+Includes proofs of several bounds on triangulation weight relative to
+the  minimum spanning tree  or non-Steiner
+triangulation, and a conjecture
+that for convex polygons the only points that need to be added are on
+the polygon boundary.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Algorithms for proximity problems in higher dimensions .  
+M. T. Dickerson  and D. Eppstein.  
+ Comp. Geom. Theory &amp; Applications  5: 277–291, 1996 .
+ 
+Combines a method from
+" Provably good mesh generation " for
+finding sparse high-dimensional Delaunay triangulations,
+a method of Dickerson, Drysdale, and Sack
+[" Simple
+algorithms for enumerating interpoint distances ", IJCGA 1992]
+for using Delaunay
+triangulations to search for nearest neighbors,
+and a method of Frederickson for speeding up tree-based searches.
+The results are fast algorithms for several proximity problems
+such as finding the  k  nearest neighbors to each point
+in a given point set.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Parallel construction of quadtrees and quality triangulations .  M. Bern ,
+D. Eppstein, and 
+ S.-H. Teng .   3rd Worksh. Algorithms and Data
+Structures,  Montreal, 1993 . 
+Springer,  Lecture Notes in
+Comp. Sci.  709, 1993, pp. 188–199. 
+Tech. Rep. 614, MIT Lab. for Comp. Sci., 1994.   Int. J. Comp. Geom. &amp; Appl. 
+9 (6): 517–532, 1999. 
+ 
+A parallelization of the quadtree constructions in
+" Provably good mesh generation ",
+in an integer model of computation, based on a technique of
+sorting the input points using values formed by shuffling the binary
+representations of the coordinates.
+A side-effect is an efficient construction for the "fair split tree"
+hierarchical clustering method used by Callahan and Kosaraju for various
+nearest neighbor problems.
+  ( BibTeX  --
+ CiteSeer  --
+ Citations  --
+ ACM DL )
+  
+    Faster geometric  k -point MST approximation . 
+D. Eppstein.  Tech. Rep. 95-13 , ICS, UCI, 1995.  Comp. Geom. Theory &amp; Applications  8: 231–240, 1997.
+ 
+Various authors have looked at a variant of geometric clustering
+in which one must select  k  points that can be connected by a
+small
+ spanning tree .  The problem is NP-complete (for
+variable  k );
+good approximations are known based on dynamic programming techniques
+but the time dependence on  n  is high.  This paper describes
+a faster approximation algorithm based on dynamic programming in
+quadtrees, and a general technique
+based on that in " Iterated nearest neighbors "
+for reducing the dependence
+on  n  in any approximation algorithm.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Algorithms for coloring quadtrees .  M. Bern ,
+D. Eppstein, and
+B. Hutchings.  arXiv:cs.CG/9907030 .  Algorithmica  32 (1): 87–94, 2002.
+ 
+We consider several variations of the problem of
+ coloring  the squares of a
+ quadtree  so that no two adjacent squares are
+colored alike.
+We give simple linear time algorithms for 3-coloring balanced quadtrees
+with edge adjacency, 4-coloring unbalanced quadtrees with edge
+adjacency, and 6-coloring balanced or unbalanced quadtrees with corner
+adjacency.  The number of colors used by the first two algorithms is
+optimal; for the third algorithm, 5 colors may sometimes be
+needed.
+  ( BibTeX  --
+ Citations )
+  
+    The skip quadtree: a simple dynamic data structure
+for multidimensional data.  
+D. Eppstein,
+ M. T. Goodrich ,
+and
+ J. Z. Sun .  21st ACM Symp. Comp. Geom.,  Pisa, 2005, pp. 296–305.  arXiv:cs.CG/0507049 .  Int. J. Comp. Geom. &amp; Appl.  18(1-2): 131–160, 2008.
+ 
+We describe a data structure consisting of a sequence of compressed
+quadtrees for successively sparser samples of an input point set, with
+connections between the same squares in successive members of the
+sequence.  Using this structure, we can insert or delete points and
+answer approximate range queries and approximate nearest neighbor
+queries in O(log n) time per operation.
+  
+( SoCG05 talk slides  --
+ BibTeX )
+  
+    Skip-webs: efficient distributed data structures for
+multi-dimensional data sets.   L. Arge ,
+D. Eppstein,
+and
+ M. T. Goodrich .   Proc. 24th ACM SIGACT-SIGOPS Symp. Principles of Distributed Computing
+(PODC 2005) , Las Vegas,  July 2005, pp. 69–76 .  arXiv:cs.DC/0507050 .
+ 
+Describes efficient distributed versions of skip quadtrees and related
+spatial searching structures.
+  
+( BibTeX  --
+ Citations )
+  
+    Diamond-kite meshes: adaptive quadrilateral meshing and orthogonal circle packing . 
+D. Eppstein.  arXiv:1207.5082 .   21st International Meshing Round Table , San Jose, California,
+2012, pp. 261–277 .   Engineering
+with Computers  30 (2): 223–235 (special issue for the 21st
+Int. Meshing Roundtable), 2014 .
+ 
+We describe a recursive subdivision of the plane into quadrilaterals in
+the form of rhombi and kites with 60, 90, and 120 degree angles. The
+vertices of the resulting quadrilateral mesh form the centers of a set
+of circles that cross orthogonally for every two adjacent vertices,
+and it has many other properties that are important in finite element meshing.
+  
+( Slides )
+  
+     
+ Geometry  --
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

@@ -1,0 +1,64 @@
+ 4.106 OEParseSmarts<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.105 OENewQMolBase 
+ Up:   4. OEChem Functions 
+ Next:   4.107 OEParseSmiles 
+   
+
+
+  
+4.106 OEParseSmarts 
+ 
+   
+bool OEParseSmarts(OEQMolBase &amp;qmol, const char *smarts,
+                   unsigned int opt=OESmartsParseOpts::Default)
+bool OEParseSmarts(OEQMolBase &amp;qmol, const char *smarts,
+                   const OEVectorBindings &amp;vecbind,
+                   unsigned int opt=OESmartsParseOpts::Default)
+    
+These functions take a SMARTS string represented as a pointer to a
+constant character string passed as the second argument to the
+function, parse the string, and populate the query molecule passed as
+the first function argument.  If the SMARTS string passed to the
+function is valid and is parsed correctly the function will return a
+boolean value of true.  If the SMILES string is invalid, or any
+failure occurs during the process of parsing, the function will return
+a boolean value of false.  The second of the two methods provides a
+mechanism for parsing a SMARTS pattern that contains vector bindings.
+An
+ OEVectorBindings  object containing the complete set of possible
+vector bindings that may be contained in a SMARTS pattern, including
+recursive vector bindings, and passed to the  OEParseSmarts 
+function.  Vector bindings will be resolved while the SMARTS pattern
+is being parsed.  The final argument is currently unused, but allows
+for future extension and control of the SMARTS parser.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.105 OENewQMolBase 
+ Up:   4. OEChem Functions 
+ Next:   4.107 OEParseSmiles 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

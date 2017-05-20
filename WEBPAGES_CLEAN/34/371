@@ -1,0 +1,159 @@
+ Ergo_file_format - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   Ergo_file_format  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    Ergo_file_format  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+    Revision 6 as of 2007-12-05 01:20:20</strong>   Clear message 
+  
+   
+   
+  Ergo file format 
+   The file format  Ergo  is used to describe belief networks. The file format was initially developed by [ http://www.noeticsystems.com/  Noetic Systems Inc.] for their [ http://www.noeticsystems.com/ergo/index.shtml  Ergo] software. Files typically have the ending  .erg .       Note that the following is not a complete specification, but rather focuses on the parts that are of interest to our applications.       
+  Structure 
+   A file in the  Ergo  format has the following structure:                                 &lt;Preamble&gt;
+  
+  /* Probabilities */
+  &lt;Probability tables&gt;
+  
+  /* Names   */
+  &lt;Variable names&gt;
+  
+  /* Labels  */
+  &lt;Value labels&gt;      The individual sections (denoted  &lt;...&gt;  above) are described in the following:       
+  Preamble 
+   The preamble starts with one line containing the number of variables. This is followed by one line specifying each variable's domain size, separated by spaces (note that this implies an order on the variables which will be used throughout the file).       Then, one variable per line, the number of parents for that variables is given, followed by the actual list of parent variables (if any). Note that for more than one parent variable this list implies an order among the parents that will be be exploited in the probability table.       A simple example preamble with three variables might thus look like this:                     3
+  2 2 3
+  0
+  1 0
+  1 1    The first line tells us that we have three variables, let's refer to them as  X ,  Y , and  Z . Their  domain size is 2, 2, and 3 respectively (from the second line). The next three lines specify that the distribution of  X  does not depend on anything, while both  Y  and  Z  have one parent:  X  and  Y , respectively.       In mathematical terms, the joint distribution is given by  P(X,Y,Z) = P(X) P(Y|X) P(Z|Y) .       
+  Probability tables 
+     This section is opened by the keyword  /* Probabilities */ , followed by all the conditional probability tables, one for each variable.       For each table, first the number of entries is given. Then, one line for each possible parent tuple at a time (in ascending order), follows the actual table.       This is probably best detailed by continuing with our example, where we assume the following conditional probability tables:           X    
+     P(X)    
+      0   
+    0.436   
+      1   
+    0.564   
+               X    
+     Y    
+     P(Y|X)    
+      0   
+    0   
+    0.128   
+      0   
+    1   
+    0.872   
+      1   
+    0   
+    0.920   
+      1   
+    1   
+    0.080   
+               Y    
+     Z    
+     P(Z|Y)    
+      0   
+    0   
+    0.210   
+      0   
+    1   
+    0.333   
+      0   
+    2   
+    0.457   
+      1   
+    0   
+    0.811   
+      1   
+    1   
+    0.000   
+      1   
+    2   
+    0.189   
+         The correspoding  Ergo  file section could then look like this:                                     /* Probabilities */
+  2
+   0.436 0.564
+  
+  4
+   0.128 0.872
+   0.920 0.080
+  
+  6
+   0.210 0.333 0.457
+   0.811 0.000 0.189       
+  Variable names 
+   After opening this secion with the  /* Names   */  keyword, each problem variable is assigned a name. This name could for instance hint at the variable's role in the specific problem domain but does usually not play a role in the algorithmic computations.       For our problem we'll just assign the names  X ,  Y , and  Z  as follows:                   /* Names   */
+  X
+  Y
+  Z      
+  Value labels 
+     In this section, starting with the  /* Labels  */  keyword, we assign labels to the value in each variable's domain. Again, this could potentially have a meaning with respect to interpreting the results, but it is not used by the algorithm.       In our example we'll use generic labels:                   /* Labels  */
+  VAL00 VAL01
+  VAL00 VAL01
+  VAL00 VAL01 VAL02      
+  Summary 
+     To sum up, an  Ergo  file consists of 4 main secions: the preamble, the probability tables, the names and the labels. Joining these parts for our example, the complete file  example.erg  would contain the following:                                                                     3
+  2 2 3
+  0
+  1 0
+  1 1
+  
+  /* Probabilities */
+  2
+   0.436 0.564
+  
+  4
+   0.128 0.872
+   0.920 0.080
+  
+  6
+   0.210 0.333 0.457
+   0.811 0.000 0.189 
+  
+  /* Names   */
+  X
+  Y
+  Z
+  
+  /* Labels  */
+  VAL00 VAL01
+  VAL00 VAL01
+  VAL00 VAL01 VAL02      
+  Extension for expressing evidence 
+   Since the specifications above don't allow for any evidence in the problem instance, we introduce a second file to feed observed variables and their values into our algorithms. This file will typically have the same name as the original  Ergo  file but add an  .evid  extension at the end.       The file simply starts with a line containing the keyword  /* Evidence */ .   After that comes a line specifying the number of evidence variables, followed by the pairs of variable and value indexes for each observed variable, one pair per line. The indexes correspond to the ones implied by the original  Ergo  file.       If, for our above example, we want to specify that variable  Y  has been observed as having its first value and  Z  with its second value, the file  example.erg.evid  would contain the following:                       /* Evidence */
+  2
+   1 0
+   2 1      
+  More examples 
+     Example problem instances encoded in the  Ergo  file format can found in our ["Repository"].       
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

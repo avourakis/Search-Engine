@@ -1,0 +1,72 @@
+ Face Detection Matlab Code<body>
+ 
+    Face Detection, Pose Estimation and Landmark Localization in the Wild   
+  Last updated on 02/10/2013   
+   
+    
+        
+  
+  We present a unified model for face detection, pose estimation, and landmark estimation in real-world, cluttered images. Our model is based on a mixtures of trees with a shared pool of parts; we model every facial landmark as a part and use global mixtures to capture topological changes due to viewpoint. We show that tree-structured models are surprisingly effective at  capturing global elastic deformation, while being easy to optimize unlike dense graph structures. We present extensive results on standard face benchmarks, as well as a new "in the wild" annotated dataset, that suggests our system advances the state-of-the-art, sometimes considerably, for all three tasks. Though our model is modestly trained with hundreds of faces, it compares favorably to commercial systems trained with billions of examples (such as Google Picasa and face.com).
+      X. Zhu ,  D. Ramanan .  "Face detection, pose estimation and landmark localization in the wild"    Computer Vision and Pattern Recognition  (CVPR) Providence, Rhode Island, June 2012.
+  [pdf] 
+  [slides (Keynote file,36M)] 
+  [slides (PPT file, converted from keynote, animation may
+not work correctly,17M)] 
+       Updates   
+    [NEW]  The AFW testdata.
+    [NEW]  Our own landmark annotations of 400 side-view faces.
+
+
+   Fixed a small bug in the basic version code when visualize the output of the independent model. (07/11/2012)
+   Posted the two models in our CVPR2012 paper. You can use them to reproduce the results in the paper. The independent model is the best-performing one for landmark localization. (07/03/2012)
+   Added Windows compatible mex files(.cc). (07/01/2012)
+    Movies   The following movies are  DIVX  encoded.   
+
+        
+
+	       
+
+     Downloads  
+ 
+       Filename  Description  Size 
+    README 
+  Description of contents.
+  2.3 KB
+
+     face-release1.0-basic.zip 
+  Basic code (matlab) for face detection, pose and landmark estimation with pre-trained models.
+   8.3 MB
+
+     face-release1.0-full.zip 
+  Full code (matlab) for training and testing. You need  MultiPIE dataset  to run it.
+   59 MB
+
+     MultiPIE_annotations.zip 
+   Landmark annotations of multipie faces.
+   11 M
+
+
+
+
+
+
+     mex-windows-compatible.zip 
+   Windows compatible mex files(.cc).
+   11 KB
+
+     models_CVPR2012.zip 
+   The fully shared and independent model we used to produce the curves in our CVPR2012 paper.
+   6.8 MB
+     AFW.zip 
+   The Annotated Faces in the Wild (AFW) testset.
+   47 MB
+      FAQs  
+   Can you release the images and annotations of MultiPIE you used in the paper?  
+- Unfortunately, we can't. We don't own the copyright of the data, and are not authorized to release them. You can purchase MultiPIE from  here . The curator's contact information is also available on their website, if you have any questions regarding the data. 
+   Your detector could not find faces on my image. Why?  
+- The most common reason is that the faces in your image are smaller than what the released models can handle. We put three pre-learned models online. One of them (face_p146_small.mat) works for faces larger than 80x80 pixels (eyebrows to chin, ear to ear); the other two work best on faces larger than 150x150. This is simply because they were trained on large faces where all landmarks are clearly visible. 
+If landmark is not your main concern, and you are really interested in  detecting small faces , we recommend training your own model on smaller faces (you may need to use fewer parts accordingly).  AFLW  could be a nice dataset to use for doing that.
+   I saw too many false detections (or missed detections), what can I do?  
+- You could try tuning the threshold saved in  model.thresh . You may want to use a higher threshold if you see too many false detections, and a lower threshold if you miss a lot of faces.
+   
+</body> 

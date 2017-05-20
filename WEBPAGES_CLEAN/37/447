@@ -1,0 +1,203 @@
+ Theory East printer setup - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Theory East printer setup  
+ 
+
+ 
+
+Address: sloth.ics.uci.edu 
+Protocol: HP JetDirect
+Model: Brother HL-6050DN 
+ 
+
+ 
+For most setups, the above just works. On CrunchBang Waldorf (testing) I had some issues. 
+I had to download and install the driver's from Brother, then fix the settings.
+Follow the instructions from Brother:
+ 
+
+ 
+ http://welcome.solutions.brother.com/bsc/public_s/id/linux/en/instruction_prn1a.html 
+
+ 
+    Create a Symbolic Link needed by the brother packages. 
+    sudo ln -s /etc/init.d/cupsys /etc/init.d/lpd 
+ 
+  
+   Download LPR and CupsWrapper drivers 
+     http://welcome.solutions.brother.com/bsc/public_s/id/linux/en/download_prn.html#HL-6050D  
+ 
+  
+   Install the LPR and then the Cupswrapper driver 
+    dpkg  -i  –force-all  (lpr-drivername) 
+ 
+   dpkg  -i  –force-all  (cupswrapper-drivername)  
+ 
+     might have to mkdir if the installer can't find the directories it needs. 
+ 
+  
+   Check if the LPR driver and cupswrapper driver are installed  
+    dpkg  -l  |  grep  Brother 
+ 
+  
+   Then I modified printer settings, in crunchbang's right-click menu. 
+    If that doesn't work, try to modify using the cups web interface 
+     http://localhost:631/printers  
+ 
+  
+   To login to the cups web interface, you to be added to the right user group: 
+    sudo adduser (username) lpadmin 
+ 
+  
+   Click “Modify Printer” and set following parameters. 
+    “LPD/LPR Host or Printer” or “AppSocket/HP JetDirect” 	for Device 
+ 
+   lpd: sloth.ics.uci.edu/binary_p1 	for Device  URI  
+        * That's what their instructions say, but I'm using   socket: sloth.ics.uci.edu:9100 
+ 
+   Brother	for Make/Manufacturer Selection 
+ 
+   Your printer's name 	     	for Model/Driver Selection 
+ 
+  
+  
+  
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    Theory East printer setup  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/theory_north_printer_setup.txt · Last modified: Tue Sep 30 19:10:23 2014 by david  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

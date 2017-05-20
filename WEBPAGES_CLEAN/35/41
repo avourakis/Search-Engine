@@ -1,0 +1,74 @@
+ A Fractal Beta-Skeleton with High Dilation<body>
+
+ 
+   
+ 
+  
+A Fractal Beta-Skeleton with High Dilation
+ 
+
+A  beta-skeleton  is a graph formed from a set of points
+by connecting two points x,y by an edge as long as there is no third
+point z forming a very large angle xzy (that is, an angle greater than a
+certain function depending inversely on the parameter beta).
+For large values of beta (beta&gt;1) you get a planar graph,
+but as beta goes to zero the graph you get tends to have more and more
+edges until eventually you reach the complete graph.
+
+ 
+One of the original applications for these graphs is in "empirical networks".
+Suppose you discover the ruins of several ancient Mayan cities in the
+central American jungle.  Which pairs of cities should you expect to be connected by roads?  The exact answer depends on the details of history,
+but you can make a guess based on the facts that people will tend to travel between every pair of cities, and don't tend to go too far out of their way.
+So if the shortest route from city x to city y passes near some other city
+z, people will likely stop there, but otherwise they are likely to go directly
+from x to y.  In other words, we can model the likely set of roads by
+something like a beta-skeleton.  Obviously this idea would be useful
+in designing new networks as well as in predicting the patterns of old ones.
+
+  
+So how good a road network do you get if you use the beta-skeleton?
+
+    
+  
+
+ 
+Not very good at all!
+
+  
+The fractal curve depicted above defines sets of points
+for which the beta-skeleton is just the curve itself.
+In other words, the road network consists of a single
+road with cities strung out along it, much like Highway 99
+in central California.  But unlike Highway 99, the road is not very straight.
+If there are  n  cities, the length of the curve
+(relative to the distance between its endpoints) is
+proportional to a power of  n  determined by the
+curve's  fractal dimension .
+The figure above works for some particular values of beta,
+but by making the fractal flatter we can perform a similar construction
+for arbitrarily small beta.
+  
+So the  dilation  of this network,
+a factor relating distance in the network and Euclidean distance,
+is non-constant.
+In terms of the original road network problem, if you use a
+beta-skeleton road network, you can be forced to travel many times
+further than the true distance "as the crow flies".
+
+  
+[From " Beta-Skeletons Have
+Unbounded Dilation ".  For other ways of constructing
+networks with better dilation, see my survey
+" Spanners and Spanning Trees ".]
+  
+
+   
+From the  Geometry Junkyard ,
+computational
+and recreational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Last update: . 
+ </body> 

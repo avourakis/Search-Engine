@@ -1,0 +1,18 @@
+ #include "oechem.h"
+#include 
+
+using namespace OEChem;
+using namespace std;
+
+int main()
+{
+  OEUniMolecularRxn umr("[N:1]&gt;&gt;[Nh3+:1]");
+
+  OEGraphMol mol;
+  OEParseSmiles(mol,"NCCN");
+  umr(mol);
+
+  std::string smi;
+  OECreateSmiString(smi,mol);
+
+  cout  

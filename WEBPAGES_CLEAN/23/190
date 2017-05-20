@@ -1,0 +1,42 @@
+ 
+      StringMapDoc –
+      Group
+    <body>  Back to Index    
+        
+           
+AppString &gt; AppStringDoc
+ 
+ StringMap 
+ Overview 
+ 
+This module supports fuzzy string searching, i.e., finding strings similar to a given a string or a collection of strings, where similarity is defined using edit distance.  It supports both join queries and string-string-search queries.  The approach first maps strings into a high-dimensional Euclidean space.  An R-tree is constructed from the mapped objects. The program will sample from the strings to get a new threshold to be used to do search in the Euclidean space. A similarity string search is converted to a spatial search in the new Euclidean space using R-trees. [1,2] 
+ 
+ Usage 
+   make clean 
+   make 
+   date; time ./stringmap_unittest; date   
+  After running it once, you can rerun it by using  ./stringmap_unittest load  to save some time to do the mapping and construct the R-tree for the single-string-search case.
+   stringmap_unittest.cpp  shows how to use StringMap. Some parameters can be tuned, such as the sampling percentages, which should depend on the data size.
+  Some R-tree parameters are defined in rtreeparams.h. e.g., the dimensionality of the Euclidean space is set to 20.
+   Interface 
+ 
+This package includes three data files of names:
+ 
+   source1.txt  (zipped to  source1.zip ) and  source2.txt  (zipped to  source2.zip ) are used for testing join queries
+   source.txt  (zipped to  source.zip ) is used for testing single-string-search queries, which is a combination of  source1.txt  and  source2.txt .
+   source-big.txt  (zipped to  source-big.zip ) is used for testing single-string-search queries, which has more than 111K full names.
+   Performance 
+ 
+We ran this package on a Linux platform with a 2.8GHZ Pentium 4 with 1GB RAM. The join on source1.txt and source2.txt (2000 x 2000 strings) took about 105 seconds (including the time to compute the recall, which was  using nested loop and expensive), and with a recall of 98.9%.  We ran 100 single-string-search queries on 100K name strings, and the average search time is 0.079 seconds, with the average recall 98.8%.
+ 
+ Contributors 
+  Chen Li
+  Liang Jin
+    
+[1] Liang Jin, Chen Li, Sharad Mehrotra: Efficient Record Linkage in Large Data Sets. DASFAA 2003: 137-   
+[2] Chen Li, Liang Jin, Sharad Mehrotra: Supporting Efficient Record Linkage for Large Data Sets Using Mapping Techniques. World Wide Web 9(4): 557-584
+ 
+
+        
+        
+           Back to Index   </body> 

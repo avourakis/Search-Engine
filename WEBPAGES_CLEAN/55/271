@@ -1,0 +1,46 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Entity Tags<body> Entity Tags 
+ David G. Durand  (  david@dynamicdiagrams.com  )  Thu, 1 Aug 1996 15:52:32 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Dave Long: "Re: Entity Tags" 
+    Previous message:   Jim Whitehead: "Use of etags in versioning" 
+
+    Next in thread:   Dave Long: "Re: Entity Tags" 
+    Maybe reply:   Dave Long: "Re: Entity Tags" 
+    Maybe reply:   David G. Durand: "Re: Entity Tags" 
+
+    
+  I just read through the spec of Entity Tags. They are unique keys
+intended to allow comparison of documents to determine cacheability.
+So if the Entity tag is the same, the document is byte-for-byte identitical.
+If the the Entity tag is "Weak", then it may not be byte-for-byte identical,
+if the tags are the same, but the server is saying that it doesn't care,
+and caching would still be acceptable. I didn't have a chance to check out
+how this affects content-type negotiation, but I got the impression that each
+type would have its own entity tag.
+
+   It seems to me that a versioning system provides the right information to
+calculate this stuff correctly (and is under obligation to do so), but that
+ETags don't solve many of our problems for us (though they do provide a nice
+way to check if the "current version" has changed or not).
+
+   I'm not sure that there's much more to this. Anyone with more in-depth
+experience and different opinions?
+
+  -- David
+------------------------------------------+----------------------------
+David Durand                  dgd@cs.bu.edu|  david@dynamicDiagrams.com
+Boston University Computer Science        | Dynamic Diagrams
+ http://www.cs.bu.edu/students/grads/dgd/   | http://dynamicDiagrams.com/
+ 
+
+  
+     Next message:   Dave Long: "Re: Entity Tags" 
+    Previous message:   Jim Whitehead: "Use of etags in versioning" 
+
+    Next in thread:   Dave Long: "Re: Entity Tags" 
+    Maybe reply:   Dave Long: "Re: Entity Tags" 
+    Maybe reply:   David G. Durand: "Re: Entity Tags" 
+
+  </body> 

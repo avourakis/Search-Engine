@@ -1,0 +1,54 @@
+ Bucket_Elimination - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   Bucket_Elimination  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    Bucket_Elimination  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+  Bucket Elimination 
+    Bucket Elimination  performs exact inference in Bayesian networks by performing variable elimination along a bucket tree structure. In this implementation it is used to compute the probability of the evidence given.       
+  Author 
+    Robert_Mateescu        
+  Description 
+     Bucket elimination is a unifying algorithmic framework that generalizes dynamic programming to accommodate algorithms for many complex problemsolving and reasoning activities. Bucket elimination algorithms process variables one by one in a given order. Processing a variable means generating an equivalent representation that excludes, or eliminates that variable, hence the term  variable elimination .       Note that this implementation is actually a variant of  aolibPE , precompiled to perform only bucket elimination. Also note that the memory requirement is exponential in the induced width of the problem instance, so for harder problems the computation will not fit in a current desktop computer's memory.       
+  Input format 
+   The belief network and the evidence need to be specified in the  Ergo_file_format .       For some example problems please see our  Repository .       
+  Usage 
+   The algorithm is invoked with three arguments:               bucketElim &lt;networkFile&gt; &lt;evidenceFile&gt; &lt;outputFile&gt;    with the following meaning:          &lt;networkFile&gt;  specifies the path to the problem network specification in  Ergo_file_format .        &lt;evicendeFile&gt;  specifies the path to the evidence specification according to the  Ergo_file_format .        &lt;outputFile&gt;  specifies the path to the file to which (the logarithm of) the probability of evidence is written.         
+  Download 
+   A 32-bit Linux binary is available  here .         
+  References 
+     [1] Bucket Elimination: A Unifying Framework for Reasoning. Rina Dechter. In  Artificial Intelligence , October 1999.  Link         Bucket_Elimination  (last edited 2008-03-10 19:07:37 by  localhost ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

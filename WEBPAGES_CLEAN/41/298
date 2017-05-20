@@ -1,0 +1,128 @@
+ 
+  Class SuspendedTaskEvent
+<body>
+  
+ 
+  Class SuspendedTaskEvent
+ 
+ 
+java.lang.Object
+   |
+   +---- SimEvent 
+           |
+           +---- ProcessorEvent 
+                   |
+                   +----SuspendedTaskEvent
+ 
+    public class  SuspendedTaskEvent 
+    extends  ProcessorEvent 
+   
+A suspended task event.
+ 
+     See Also: 
+        Task 
+     
+ 
+    
+      COMMUNICATING  
+      Reason for suspension is communication.
+        DEADLINE  
+      Reason for suspension is that the Task has reached it's deadline
+
+        ENDED  
+      Reason for suspension is end of task.
+        IO  
+      Reason for suspension is I/O.
+        SYNCHRONIZING  
+      Reason for suspension is synchronization.
+   
+    
+      SuspendedTaskEvent  (Object, EventDestination, int, int, int)
+      Constructs an suspended task event.
+   
+    
+      getReason  ()
+      Returns the reason for suspension.
+        toString  ()
+      Returns a string representation of this object.
+    
+ 
+    
+   
+ ENDED 
+ 
+ public static final int ENDED
+ 
+   Reason for suspension is end of task. 
+      
+ IO 
+ 
+ public static final int IO
+ 
+   Reason for suspension is I/O. 
+      
+ SYNCHRONIZING 
+ 
+ public static final int SYNCHRONIZING
+ 
+   Reason for suspension is synchronization. 
+      
+ COMMUNICATING 
+ 
+ public static final int COMMUNICATING
+ 
+   Reason for suspension is communication. 
+      
+ DEADLINE 
+ 
+ public static final int DEADLINE
+ 
+   Reason for suspension is that the Task has reached it's deadline 
+     
+ 
+    
+  
+   
+ SuspendedTaskEvent 
+ 
+ public SuspendedTaskEvent(Object from,
+                           EventDestination to,
+                           int time,
+                           int peId,
+                           int reason)
+ 
+   Constructs an suspended task event.
+ 
+        Parameters: 
+       from - sender of event.
+      to - receiver of event.
+      time - time stamp.
+      peId - identifier for processing element sender runs on.
+      reason - reason for suspension.
+         
+    
+ 
+    
+   
+  getReason  
+ 
+ public int getReason()
+ 
+   Returns the reason for suspension.
+ 
+        Returns: 
+       the reason for suspension.
+     
+     
+  toString  
+ 
+ public String toString()
+ 
+   Returns a string representation of this object.
+ 
+        Returns: 
+       a string representation of this object.
+        Overrides: 
+        toString  in class  SimEvent 
+     
+  </body> 

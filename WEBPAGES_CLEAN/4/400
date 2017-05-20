@@ -1,0 +1,223 @@
+ ICS 65 Fall 2012, Project #2: Maps and Legends<body>
+
+ 
+
+ 
+ICS 65 Fall 2012 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 65 Fall 2012 
+   Project #2:  Maps and Legends  
+   
+ 
+
+ 
+
+  Due date and time:   Wednesday, November 7, 11:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ In the last couple of decades, two forces have combined to fundamentally change how software is built: 
+
+  The rise of an "always-on" Internet, local networks within organizations, and a growing variety of Internet-capable devices allows us to make assumptions about near-ubiquitous connectivity. 
+   The cost of acquiring and connecting many small servers has dropped precipitously.  Thanks especially to cloud providers, it's no longer even necessary to purchase the servers; it's now possible to dynamically (and automatically) rent servers by the hour in data centers around the world. 
+  What were once single, large-scale software systems running on beefy individual servers are now collections of cooperating services communicating with one another over networks.  The paradigm of providing  software as a service  (i.e., providing the ability to access software running on the provider's servers — or even on servers rented by the provider from a third party — rather than providing software to be installed on the user's infrastructure) is becoming increasingly popular and profitable. 
+
+ So it's become quite useful to break complex problems into small services.  In this project, we'll consider one such service: an  authentication service  that manages usernames and passwords.  It will not be battle-ready — it'll store its information only in memory with no redundancy, and will completely ignore security, for example — but it will serve as a vehicle for us to continue our recent exploration into writing  well-behaved  C++ classes and begin to consider the design of somewhat larger C++ programs, which will seed our work on future projects. 
+
+ Well-behaved classes 
+
+ We discussed in lecture what I call  well-behaved  C++ classes.  A well-behaved C++ class is one that "just works" when you use it the way you use any other type in the language.  Well-behaved C++ classes have objects that clean up after themselves when they die, that can be copied in a way that makes the copy unique and separate from the original, that can be made constant while preserving the ability to perform whatever operations do not change the publicly observable state of the object, and so on. 
+
+ Every C++ class you write, starting with this project, will have to be a well-behaved class.  What we'll discover as we go forward is that the design choices we make can make this a much simpler goal to achieve than you might think.  But first we need to understand where the issues and pitfalls lie, and what tools C++ provides us to solve the problem. 
+
+ 
+
+ 
+
+  The program 
+
+ You will be writing an  authentication service , whose role is to keep track of username/password combinations, verify that a particular username/password combination is valid, and be able to report on the number of unique username/password combinations that are currently known.  As in the previous project, it will read all of its input from the standard input ( cin ) and will write all of its output to the standard output ( cout ), though you could certainly imagine it doing its work across a network connection instead.  (If text-based communication like this seems primitive, you might be surprised to find out that many well-known Internet protocols actually send text-based commands and responses that are little different than what we're doing here.) 
+
+ Your program should read one line of input at a time, parse it, and execute one  command .  Any command that is unrecognized — because, for example, it's an unrecognized command or it has too few parameters — is should be recognized as  invalid .  Valid commands, on the other hand, should be executed and will have some kind of observable effect. 
+
+ The program continues reading, parsing, and processing one command at a time until a special "quit" command appears on the input, in which case the program ends. 
+
+ The program stores a collection of username/password combinations in a hash table stored in memory.  Initially, there are no username/password combinations stored; there are commands to create and remove them. 
+
+ Before the program ends, any objects it has allocated dynamically must be deallocated. 
+
+ The commands 
+
+ The following commands must be supported.  Every command appears on a line by itself, and the output of every command should appear on a line by itself. 
+
+   Command Format 
+     Description 
+      CREATE  username   password   
+     Create a new username/password combination and stores it in the program's collection.  If successful, the output is  CREATED .  If the username is already stored in the collection, no change is made and the output is  EXISTS . 
+      LOGIN  username   password   
+     Checks a username/password combination to see if it is valid.  A username/password combination is valid if it exists (i.e., the username is in the collection  and  is associated with the password), in which case the output is  SUCCEEDED .  If the username/password combination does not exist, the output is  FAILED . 
+      REMOVE  username   
+     Removes the username/password combination with the given username, if it exists.  If so, the output is  REMOVED .  If no username/password combination with the given username exists, the output is  NONEXISTENT . 
+      COUNT  
+     The output is the number of username/password combinations currently being stored. 
+      QUIT  
+     The output of this command is  GOODBYE .  Once this command has been processed, the program should end. 
+     All commands require all of the parameters listed above.  The output for any invalid command — one that is missing parameters, has too many parameters, or is simply unrecognized (e.g.,  LISTEN to music ) should be  INVALID . 
+
+ Minor but important details 
+
+ All input and output is case-sensitive.  (You'll find that this means you don't have to worry at all about case, as string comparisons, by default, take case into account.) 
+
+ It is safe to assume that usernames and passwords can contain any character  other than  whitespace, but they can never have whitespace characters in them.  (This simplifies the problem of parsing the commands.) 
+
+ 
+
+ 
+
+  A complete example of program execution 
+
+ The following is a complete example of program execution, demonstrating how input and output are interleaved.  Input is shown in a regular font weight; output is shown in  bold . 
+
+  
+CREATE thornton@ics.uci.edu abcdefg
+ CREATED 
+CREATE boo@thornton.com sleeping
+ CREATED 
+CREATE boo@thornton.com playing
+ EXISTS 
+LOGIN thornton@ics.uci.edu abcdefg
+ SUCCEEDED 
+LOGIN thornton@ics.uci.edu defg
+ FAILED 
+LOGIN bill.gates@microsoft.com windows
+ FAILED 
+COUNT
+ 2 
+REMOVE thornton@ics.uci.edu
+ REMOVED 
+REMOVE thornton@ics.uci.edu
+ NONEXISTENT 
+REMOVE edge@u2.com
+ NONEXISTENT 
+LOGINS hello@hello.com hello
+ INVALID 
+LOGIN thornton@ics.uci.edu
+ INVALID 
+LOGIN
+ INVALID 
+WTF
+ INVALID 
+
+ INVALID 
+QUIT
+ GOODBYE 
+  
+
+ 
+
+ 
+
+  Some background on our hash table implementation 
+
+ Hash tables are implemented in many slightly different ways, but the central concept is always the same: when storing a collection of  search keys  (and possibly other information attached to each), define a way to determine where each search key "belongs," then use that as a starting point for deciding where to store the key and where to find it later.  Deciding where a search key belongs is the role of a  hash function , whose job is to take a key and return a  hash value .  The hash value is, in turn, used to choose a location to store, find, or remove the key. 
+
+ Our hash table has the specific goal of acting as a  map , which is a collection of key/value pairs; so, we'll implement it in a class called HashMap.  It will be  separately chained , which is to say that it will be implemented as a dynamically-allocated array of  buckets , where each bucket is a singly-linked list (or, more specifically, a dynamically-allocated array of pointers to nodes, with an empty list represented by  nullptr ).  Because keys and values are paired together, each linked list node will store both a key and a value. 
+
+ Hash functions 
+
+ Each HashMap can optionally be given a hash function as a constructor parameter, or it will use a default (of your choosing) if none is specified.  Hash functions have the type  std::function&lt;unsigned int(const std::string&amp;)&gt; , which means they are anything that can be treated as a function that takes a  const std::string&amp;  as a parameter and returns an  unsigned int .  Since they will be unaware of the number of buckets, they can actually legally return any arbitrary  unsigned int , so it will be up to the HashMap class to take the values returned by the hash function and reduce them into the range of available bucket indices (e.g., by using the  %  operator). 
+
+ Load factors and rehashing 
+
+ While linked lists can grow with relative impunity, the performance of a separately-chained hash table is a function of the lengths of its linked lists, so we're strongly incentivized to keep those lists as short as possible.  Even with a wonderfully-designed hash function, a separately-chained hash table can still be slow simply because it's become overly full, with every list storing multiple keys.  We'd like to avoid this problem. 
+
+ This leads to a question: How do we measure how "full" a hash table is?  We say that the  load factor  of a hash table is the number of keys it's storing divided by the number of buckets (or, stated differently, the average length of its lists).  To avoid the performance hit of becoming overly full, your HashMap class is required to allocate a larger number of buckets and rehash all of the keys whenever the load factor exceeds a threshold of 0.8.  (The reason that rehashing is necessary is that the number of buckets has an effect on which bucket a key will be stored in, so changing the number of buckets requires rehashing the keys so they're each stored in their new "home.") 
+
+ Design requirements for your HashMap class 
+
+ Your HashMap class  must  use the following header file as a starting point: 
+
+   HashMap.h  
+  That header file declares a set of members that your class is required to implement as-is — though you're welcome to add anything you'd like to it, you won't be able to change or remove anything — because we'll be running a set of unit tests against your HashMap class to verify its correctness, separately from the rest of your program. 
+
+ One of the primary goals of this project is to explore the tools provided by C++ to allow you to write a  well-behaved  class, so your HashMap class will be required to be well-behaved. 
+
+ 
+
+ 
+
+  Some rules, limitations, and additional challenges 
+
+ Here are the rules and limitations governing your work on this project. 
+
+  You are not permitted to use containers (e.g.,  std::vector ) or generic algorithms (e.g.,  std::find ) from the C++ standard library.  We will be exploring the standard library in some depth in the relatively near future, but the goal here is to implement your own data structure by hand, to gain an understanding of how to build a well-behaved class out of underlying features that are not themselves well-behaved. 
+   The public members of your HashMap class cannot be changed in any way (including seemingly minor changes, such as removing  const  from one of the member variable declarations), so that we can compile and run our unit tests against your class, which will expect the public members to be identical to their current declarations. 
+   Now that we're embracing C++'s object-oriented features, you should write classes other than just HashMap in your implementation.  While there are no specific rules about precisely which classes you need, consider how you might slice the program's functionality into pieces or layers, representing each of those layers with a class. 
+   All of your classes should be well-behaved and no memory or resources should leak anywhere in your program.  Note, however, that classes whose member variables are all of well-behaved types are generally well-behaved without any extra work (e.g., you won't find that you need the Big Three in those classes); don't write the Big Three unless you need them. 
+   Every class must be declared in its own header file and implemented in its own source file, with separation of interface and implementation as we've seen in  code examples  thus far. 
+  Additional challenges 
+
+ As you work on the project, if you're interested in tackling additional challenges, here are a few directions you can go.  In general, you should always feel free to explore the use of language features we've yet to cover, though you should also be aware that you sometimes won't be able to submit your work (if you choose features that explicitly violate one of the rules above, such as using C++ standard library containers like  std::list ); that doesn't stop you from doing it as a learning experience. 
+
+  One design challenge is to consider implementing your user interface using the Command pattern, with inheritance and polymorphism used to differentiate the different commands that can be entered via the standard input. 
+   Another design challenge is that the HashMap class is somewhat more limited than it could be, because it requires its keys and values to be strings.  A more broadly useful HashMap would be implemented as a  template class , meaning that individual HashMap objects can have their key and value types configured (e.g., HashMap&lt;int, Student&gt;).  If you'd like to go this route, we can talk about ways to do it that won't break our unit tests; you'll have to approach it carefully, but it can be done.  (Or you can work on that part separately and not submit it.) 
+   A useful optimization is to implement the ability for your HashMaps to be  moved .  You can accomplish this by adding a  move constructor  and a  move assignment operator  to your HashMap class, which requires the use of a new C++11 feature called  rvalue references . 
+  
+
+ 
+
+  Testing 
+
+ As in the previous project, there is no explicit deliverable demonstrating that you tested your program, but you would nonetheless be well-advised to run your program on test inputs other than the example here, and to test your HashMap class in ways not necessarily exercised by the entire program, as we will be running two kinds of tests: 
+
+  Whole-program tests, where we will redirect test input files into the program's standard input and check the output against our expectations 
+   Unit tests that focus only on your HashMap class, including member functions and other functionality (e.g., the Big Three) that your program may or may not use 
+  Why should we test functionality that's not used by the program? 
+
+ You should think of classes as reusable components.  To the extent that we can make their designs clear and their implementations bullet-proof, reuse will be enabled.  For example, when you've finished your HashMap class, you should be able to write a second, separate program that uses it in ways that your original program didn't — and I'd suggest doing this in the course of your testing — yet still see, ultimately, that it works as it should; if not, you still have work to do. 
+
+ Writing two main() functions 
+
+ The  main()  function in C++ is special, in the sense that there can only be one of them in a program.  If you try to compile a program with more than one  main()  function, the linker will refuse to link the program, because the initial call to main() — the one that starts the program — will be ambiguous. 
+
+ There is a lot of value in writing your tests in a separate source file from your regular  main() .  Given that, there are at least a couple of ways to work around the problem in Visual Studio: 
+
+  Write one  main()  function with calls to two other functions — one that starts your program normally, another that runs tests — written in separate source files.  Comment out one call or the other, depending on which you want to run. 
+   Write your  main()  functions in two separate source files.  When you want to choose one over the other, exclude the one you don't want from your Visual Studio project (by right-clicking the file and selecting  Exclude from Project ) and, if it's not in the project, adding the one you do want (by right-clicking the project, selecting  Add  and then  Existing Item... ). 
+  What to submit 
+
+ As no credit is offered for them, please do not submit your tests, as it runs the risk of making it more difficult for us to compile and run your program using our test automation.  The value in writing tests is not to please us; the value in writing them is ensuring that your HashMap class is complete and correct (which will be reflected in your score). 
+
+ 
+
+ 
+
+  Deliverables 
+
+ Submit all of the source ( .cpp ) and header ( .h ) files that comprise your program.  Afterward, take a moment to be sure that you submitted all of the files; if you missed one, we won't be able to compile and run your program, which can result in a substantial penalty, since we won't be able to evaluate your program's correctness. 
+
+ Follow  this link  for a discussion of how to submit your project via Checkmate.  Be aware that I'll be holding you to all of the rules specified in that document, including the one that says that you're responsible for submitting the version of the project that you want graded.  We won't regrade a project simply because you accidentally submitted the wrong version. 
+
+ 
+
+ 
+
+   Originally written by Alex Thornton, Fall 2012. 
+  
+
+</body> 

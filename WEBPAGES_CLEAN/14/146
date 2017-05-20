@@ -1,0 +1,266 @@
+   
+  Class System.TMWInstance
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class System.TMWInstance
+ 
+ 
+ java.lang.Object 
+   |
+   +----System.TMWInstance
+ 
+    public class  TMWInstance 
+    extends  Object 
+   
+Performs manipulations of Teamware objects at the Instance level.
+Instances are Specifications with certain fields filled in with
+default data. Instances inherit their behaviors from the parent
+Category and field data from the Specifications.  Instances usually
+are created by the Teamware Interpreter.
+    See Also: 
+        TMWFoundation ,  TMWTypes ,  TMWCategory ,  TMWSpecification ,  TMWValue 
+     
+ 
+    
+      ClassInstance  
+     
+        Families  
+     
+        Multi  
+     
+        Shared  
+     
+        Single  
+     
+   
+    
+      TMWInstance  ()
+     
+   
+    
+      AddValueToMultiField  (Integer, String, String)
+     Add a value to a multple element field.
+        AssignMultiField  (Integer, String, Vector)
+     Assign the values of a multiple element field.
+        AssignSharedFieldValue  (Integer, String, String)
+     Assign a single value to a field shared across a category.
+        AssignSingleFieldValue  (Integer, String, String)
+     Assign a value to a single value field.
+        CreateInstance  (Integer)
+     
+Create a new activity Instance based on a Specification.
+        GetMultiFieldNames  (Integer)
+     Get the names of all the multiple fields in an instance.
+        GetMultiFieldValues  (Integer, String)
+     Get a value from a multiple element field.
+        RetrieveFieldFamilyValues  (Integer, String)
+     Retrieve a list of all values across a family.
+        RetrieveSharedFieldValue  (Integer, String)
+     Retrieve a single value from a field shared across a category.
+        RetrieveSingleFieldValue  (Integer, String)
+     Retrieve a value from a single value field.
+        SendEvent  (Integer, String, Vector)
+     Send an event to an instance not requiring a return value.
+        SendRequest  (Integer, String, Vector)
+     Send a request for a value to an object.
+        SendRequest  (Integer, String, Vector, String)
+     Send a request for a list of values to an object.
+    
+ 
+    
+   
+ Shared 
+ 
+  public static  String  Shared
+ 
+   
+ Single 
+ 
+  public static  String  Single
+ 
+   
+ Multi 
+ 
+  public static  String  Multi
+ 
+   
+ Families 
+ 
+  public static  String  Families
+ 
+   
+ ClassInstance 
+ 
+  public final static  String  ClassInstance
+ 
+  
+ 
+    
+  
+   
+ TMWInstance 
+ 
+  public TMWInstance()
+ 
+  
+ 
+    
+   
+  CreateInstance  
+ 
+  public static  Integer  CreateInstance( Integer  SpecId)
+ 
+   Create a new activity Instance based on a Specification.
+      Parameters: 
+       SpecId - is the id of the Specification to base the Instance on.
+        Returns: 
+       s the id of the new instance.
+         
+  GetMultiFieldValues  
+ 
+  public static  Vector  GetMultiFieldValues( Integer  Inst,
+                                            String  FieldName)
+ 
+   Get a value from a multiple element field.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field.
+          
+  GetMultiFieldNames  
+ 
+  public static  Vector  GetMultiFieldNames( Integer  Inst)
+ 
+   Get the names of all the multiple fields in an instance.
+      Parameters: 
+       Inst - is the id of the object.
+         
+  AssignMultiField  
+ 
+  public static void AssignMultiField( Integer  Inst,
+                                       String  FieldName,
+                                       Vector  FieldValue)
+ 
+   Assign the values of a multiple element field.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+      FieldValue - is the list of values to assign to the field.
+           
+  AddValueToMultiField  
+ 
+  public static void AddValueToMultiField( Integer  Inst,
+                                           String  FieldName,
+                                           String  FieldValue)
+ 
+   Add a value to a multple element field.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+      FieldValue - is the value to add.
+           
+  RetrieveSingleFieldValue  
+ 
+  public static  String  RetrieveSingleFieldValue( Integer  Inst,
+                                                 String  FieldName)
+ 
+   Retrieve a value from a single value field.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+         Returns: 
+       s a single value.
+         
+  AssignSingleFieldValue  
+ 
+  public static void AssignSingleFieldValue( Integer  Inst,
+                                             String  FieldName,
+                                             String  FieldValue)
+ 
+   Assign a value to a single value field.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+      FieldValue - is the value to assign.
+           
+  RetrieveSharedFieldValue  
+ 
+  public static  String  RetrieveSharedFieldValue( Integer  Inst,
+                                                 String  FieldName)
+ 
+   Retrieve a single value from a field shared across a category.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+         Returns: 
+       s a shared, single value.
+         
+  AssignSharedFieldValue  
+ 
+  public static void AssignSharedFieldValue( Integer  Inst,
+                                             String  FieldName,
+                                             String  FieldValue)
+ 
+   Assign a single value to a field shared across a category.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldName - is the name of the field to set.
+      FieldValue - is the value to assign.
+           
+  RetrieveFieldFamilyValues  
+ 
+  public static  Vector  RetrieveFieldFamilyValues( Integer  Inst,
+                                                  String  FieldFamily)
+ 
+   Retrieve a list of all values across a family.
+      Parameters: 
+       Inst - is the id of the object.
+      FieldFamily - is the name of the family of fields.
+         Returns: 
+       s a listing of all the values, for each field that is
+listed in the family.
+         
+  SendEvent  
+ 
+  public static void SendEvent( Integer  Inst,
+                                String  EventName,
+                                Vector  Parameters)
+ 
+   Send an event to an instance not requiring a return value.
+      Parameters: 
+       Inst - is the object id.
+      EventName - is the name of the event.
+      Parameters - are the values to send to the object.
+           
+  SendRequest  
+ 
+  public static  String  SendRequest( Integer  Inst,
+                                    String  EventName,
+                                    Vector  Parameters)
+ 
+   Send a request for a value to an object.
+      Parameters: 
+       Inst - is the object id.
+      EventName - is the name of the event.
+      Parameters - are the values to send to the object.
+          Returns: 
+       s the requested value from the object after executing the event.
+         
+  SendRequest  
+ 
+  public static  Vector  SendRequest( Integer  Inst,
+                                    String  EventName,
+                                    Vector  Parameters,
+                                    String  IsList)
+ 
+   Send a request for a list of values to an object.
+      Parameters: 
+       Inst - is the object id.
+      EventName - is the name of the event.
+      Parameters - are the values to send to the object.
+          Returns: 
+       s the requested list of values after executing the event.
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

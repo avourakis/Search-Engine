@@ -1,0 +1,82 @@
+ Homework: exercises 12.2-8, 12.4-3, 13.2-4, 13.3-6; problem 18-1.
+
+
+Motivation: sequential searching in lists
+    move-to-front heuristic
+
+Static analysis:
+	assume inputs drawn from some random distribution
+		(distr. not known =&gt; assume worst case)
+	compare your algorithm (which doesn't know distribut)
+		to best algorithm knowing distribution
+	for sequential searching, best algorithm
+		is to sort in order by priority
+
+Competetive analysis: [Irani]
+	ratio your alg. to precognitive alg
+		on worst-case input sequence
+	since w.c. seq, not w.c. dist, results are stronger than static
+
+For move-to-front:
+	comparing MTF and OPT, where OPT may be assumed to know input seq
+	as both algorithms progress, let
+		Phi = #pairs x,y where xy in OPT
+	initially zero, always positive
+
+	def amortized cost(MTF) = actual cost + Delta Phi
+
+	when search for item x, let
+		k = #items before x in both MTF and OPT
+		l = #items before x that are only in MTF
+	then cost(OPT) &gt;= k
+	     cost(MTF) = k+l (actual) + k (increase Phi) - l (decrease phi)
+
+So MTF within factor of two of cost of any other sequential search heur!
+
+
+Back to search trees...
+
+Splay trees
+	Sleater and Tarjan 1985
+
+	binary search tree
+	each node stores: left and right children
+
+	UNLIKE other search structures so far,
+	searches will change structure of tree
+	all op times (including search) amortized
+
+	search(x):
+		usual binary search for x,
+			storing list of nodes on path from root
+		then: splay -- repeatedly rotate so x=&gt;root
+
+		double rot: zigzag =&gt; balance, straight=&gt;straight
+		+ single rot at root if path has odd length
+
+	insert(x):
+		usual bst insert + splay
+
+	delete(x):
+		if x has one child, splice out, splay parent
+		else: replace with sliced-out successor, splay
+			previous parent of successor
+
+Amortized analysis:
+	assign weight w(x) to item x
+	total weight tw(x) = sum_{y in subtree rooted at x} w(y)
+	rank(x) = floor(log_2(tw(x)))
+
+	Phi = sum_x rank(x)
+
+	Time per operation = O(# splay steps)
+
+	So (with a little care for insert/delete)
+	We mainly need to show that splay takes O(log n) amortized steps
+
+	Lemma: on splay, #steps + Delta Phi  O(log n); otherwise get weighted search tree]
+
+		proof: induction on # steps
+
+		single rot: rank at root stays same
+			rank(new child)  

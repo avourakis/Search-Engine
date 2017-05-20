@@ -1,0 +1,131 @@
+ is_ccw_strongly_convex_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::is_ccw_strongly_convex_2  
+
+  
+ 
+     
+   
+ 
+   
+
+   
+     
+     
+   
+
+   
+
+
+   
+     
+     
+  
+ 
+
+  Definition 
+ 
+
+The function   is_ccw_strongly_convex_2   determines if a given sequence of points defines
+a counterclockwise-oriented, stongly convex polygon.  
+A set of points is said to be strongly convex 
+if it consists of only extreme points
+( i.e. , vertices of the convex hull).
+  
+
+ #include &lt; CGAL/convexity_check_2.h &gt; 
+  
+
+    
+         
+    template &lt;class ForwardIterator, class Traits&gt;
+         
+            
+           
+bool
+         
+          
+             
+     is_ccw_strongly_convex_2  (     
+    ForwardIterator first, 
+
+ForwardIterator beyond, 
+
+Traits ch_traits = Default_traits)     
+                
+    returns  true , iff the point elements in 
+            [ first , beyond )
+            form a counterclockwise-oriented strongly convex polygon.
+            
+
+The default traits class  Default_traits  is the kernel in which the
+type  ForwardIterator::value_type  is defined.
+  
+
+  Requirements 
+ Traits  contains the following subset of types from
+the concept  ConvexHullTraits_2  and their corresponding member
+functions that return instances of these types:
+   Traits::Less_xy_2 , 
+      Traits::Equal_2 ,
+      Traits::Left_turn_2 .
+   
+
+  See Also 
+ 
+
+  CGAL::is_cw_strongly_convex_2     CGAL::is_strongly_convex_3  
+  
+
+  Implementation 
+ 
+
+The algorithm requires  O(n)  time for a set of  n  input points.
+  
+
+    Next:    is_cw_strongly_convex_2   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

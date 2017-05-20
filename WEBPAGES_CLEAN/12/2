@@ -1,0 +1,49 @@
+ Arthur Asuncion's Official Site: Blog<body>
+     Arthur Asuncion         
+	     --   --   --   --   --   --   --   
+	   Personal Blog</strong> 
+         
+     
+	
+	  Thursday, March 26, 2009
+          
+       
+         
+            Single-Precision Dot Products in Matlab    
+        
+           
+               I was running some Matlab functions for stochastic gradient descent SVD, and I was surprised to find that while my code worked perfectly in the Windows environment, it was giving incorrect results when I ran it on the Linux machines.   After some debugging, I found out that the dot product calculation on single-precision vectors is the source of the problem:  &gt;&gt; a = [1 2 3]; &gt;&gt; b = [3 4 5]; &gt;&gt; a * b'  ans =  26  &gt;&gt; single(a) * single(b)'  ans =  1.0737e+09   One way to get around this is to just convert the single-precision vectors into double-precision.  It's probably better to just use the "dot" function instead:   &gt;&gt; dot(single(a),single(b))  ans =  26    This was a pretty subtle bug!   
+           
+            12:22 AM  
+		     
+       
+      
+      
+      
+	
+	
+	  Friday, March 06, 2009
+          
+       
+         
+            Give Me Your Eyes    
+        
+           
+                  
+           
+            8:37 PM  
+		     
+       
+      
+      
+      
+	
+	 
+	  Archives: 
+	  
+	   
+   	   February 2004    March 2004   September 2004   October 2004   November 2004   January 2005   February 2005   June 2005   July 2005   April 2006   May 2006   April 2007   July 2007   May 2008   October 2008   November 2008   December 2008   March 2009   April 2009   May 2009   August 2009   
+     
+     Copyright 
+ ©  Arthur Asuncion 2006. This is a personal website which is not endorsed by the University. By using this site, you signify that Arthur Asuncion is not liable for anything. Last Modified 4/2/06.  
+    </body> 

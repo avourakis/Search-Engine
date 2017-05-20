@@ -1,0 +1,246 @@
+ SSH tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+ 
+ Table of Contents 
+ 
+
+     Generating a key on a *NIX    
+    Generating a key on Windows    
+    The config file    
+    Other resources      
+ 
+
+
+
+
+  SSH tutorial  
+ 
+
+ 
+
+  Generating a key on a *NIX  
+ 
+
+ 
+
+These instructions apply to  OS  X and Linux.
+ 
+  ssh-keygen   -t  dsa  -C   "user@school.edu"  
+ 
+Generating public/private dsa key pair.
+Enter file in which to save the key (/home/user/.ssh/id_dsa):
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/user/.ssh/id_dsa.
+Your public key has been saved in /home/user/.ssh/id_dsa.pub.
+The key fingerprint is:
+70:85:4f:e5:91:b8:ab:a4:95:ce:fb:df:11:75:df:de user@school.edu
+The key's randomart image is:
++--[ DSA 1024]----+
+|         ..oo.   |
+|        ..o...   |
+|      . .o ..   o|
+|       o  o    .+|
+|        S. .  . o|
+|        + .    o.|
+|       * .    . E|
+|      . +    . . |
+|        .o... .  |
++-----------------+
+ 
+
+ 
+
+  Generating a key on Windows  
+ 
+
+ 
+
+Use the utility called Putty Key Generator.
+ 
+
+ 
+Generate &gt; save private key.
+ 
+
+ 
+To share the public key:
+ 
+    copy the text in the text box into a clipboard 
+ 
+   paste the text from the clipboard into a text file and save that file 
+ 
+   share the saved file 
+ 
+  
+
+Remarks:
+ 
+    For those using SourceTree as a Git client, Putty Key Generator is included under Tools. 
+ 
+   Do not use Putty Key Generator's save public key feature, that won't work. 
+ 
+  
+
+  The config file  
+ 
+   config  
+  
+Host redwood
+    HostName redwood.ics.uci.edu
+    User git
+    IdentityFile ~/.ssh/school_rsa   # Only need if you have multiple keys
+ 
+     config  
+  
+Host family-guy
+    HostName family-guy.ics.uci.edu
+    User &lt;user&gt;
+    IdentityFile ~/.ssh/school_rsa   # Only need if you have multiple keys
+ 
+   
+
+  Other resources  
+ 
+
+ 
+  
+
+ 
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    SSH tutorial  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/ssh_tutorial.txt · Last modified: Sat Sep 13 01:16:07 2014 by michael  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

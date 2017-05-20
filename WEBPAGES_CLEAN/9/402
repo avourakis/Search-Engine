@@ -1,0 +1,119 @@
+ VHDL Reference Guide - Wait Statement<body>  This is Google's cache of  http://www.vdlande.com/VHDL/waits.html . It is a snapshot of the page as it appeared on Sep 4, 2009 14:08:12 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Wait Statement  
+        Sequential Statement 
+ ---- used in ----&gt; 
+ Process Procedure 
+            Syntax        
+  
+
+ 
+     wait until condition;      wait on signal_list;      wait for time;      wait;      
+  
+
+
+
+ 
+See LRM section 8.1
+
+         Rules and Examples        
+  
+
+ 
+    The  wait until  form suspends a process until a change occurs
+on one or more of the signals in the statement and the condition is
+evaluated to be true. A rising edge on NET_DATA_VALID and three rising
+edges on CLK must occur for this process to cycle:
+ READ_NET: process
+begin
+  wait until NET_DATA_VALID = '1';
+  NET_DATA_READ &lt;= '1';
+  wait until CLK='1';
+  wait until CLK='1';
+  NET_BUFFER &lt;= NET_DATA_IN;
+  wait until CLK='1';
+  NET_DATA_READ &lt;= '0';
+end process READ_NET;  
+    
+  
+
+ 
+    The  'event  term in the following form of
+wait statement is in fact redundant, but is required by many synthesis
+tools:
+ WAIT_PROC: process
+begin
+  wait until CLK'event and CLK='1';
+  Q1 &lt;= D1;
+end process;  
+    
+  
+
+ 
+    The  wait on  form is equivalent to a sensitivity
+list. These processes will behave identically:
+ process (A,B)
+begin
+  -- sequential statements
+end process;
+
+process
+begin
+  -- identical statements
+  wait on A,B; 
+end process; 
+    The  wait  statement  cannot  be used:
+  In a process with a sensitivity list
+  In a procedure called from a process with a sensitivity list.
+  In a function
+  In a procedure called from a function
+   
+  Wait for  and  wait  are useful in behavioural models and
+test benches.  Wait  on it's own suspends a process indefinitely:
+ STIMULUS: process
+begin
+    EN_1   &lt;= '0';
+    EN_2   &lt;= '1';
+  wait for 10 ns;
+    EN_1   &lt;= '1';
+    EN_2   &lt;= '0';
+  wait for 10 ns;
+    EN_1 &lt;= '0';
+  wait for 10 ns;
+  wait; -- end of test
+end process STIMULUS; 
+ 
+    
+  
+
+ 
+         Synthesis Issues        
+  
+
+ 
+    Most logic synthesis tools only support a single  wait until 
+(clock edge expression) statement in a "clocked process".
+ 
+Some tools support a single  wait on  statement as an alternative
+to a sensitive list in a "combinational process".
+  
+ Wait for , unconditional  wait  and wait statements in
+procedures are not supported.
+  
+    
+  
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, a wait statement may have a label.
+
+  
+
+  </body> 

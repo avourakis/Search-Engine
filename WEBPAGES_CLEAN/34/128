@@ -1,0 +1,537 @@
+ 
+  Class Job
+<body>
+  
+ 
+  Class Job
+ 
+ 
+java.lang.Object
+   |
+   +----Job
+ 
+    public class  Job 
+    extends Object
+   
+Implements a job. A unique number, called the  global job
+ identifier , is associated with each job.
+ 
+     See Also: 
+        JobManager ,  Task 
+     
+ 
+    
+      Job  (JobManager, int, int, float, int, int, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, float, float, String)
+      Constructs a job.
+   
+    
+      generateTask  (float, int, float)
+      Generates a task and adds it to this job.
+        generateTasks  (int, float, int, float)
+      Generates the given number of tasks and adds them to this job.
+        getExecutionTime  ()
+      Returns the total execution time of the job.
+        getId  ()
+      Returns the global job identifier for this object.
+        getJobType  ()
+     
+        getManager  ()
+      Returns the manager of this job.
+        getSimulator  ()
+      Returns the simulator that this object belongs to.
+        getTask  (long)
+      Returns the sought task.
+        hasEnded  ()
+      Tests if the job has ended.
+        initiateGlobalSynchronization  (Task)
+      Initiates global synchronization.
+        initiateLocalSynchronization  (Task)
+      Initiates local synchronization.
+        isContainedWithin  (int, int)
+      Specifies whether or not the execution of this job is
+ completely contained within the given interval of time.
+        jobClass  ()
+      Returns the user-defined class of the job.
+        numberOfLivingTasks  ()
+      Returns the number of living tasks contained by this object.
+        numberOfTasks  ()
+      Returns the number of tasks contained by this object.
+        numberOfTasks  (int)
+      Returns the number of tasks in the given state, contained by
+ this object.
+        numberOfTasksOnPE  (int)
+      Returns the number of tasks on the given processing element,
+ contained by this object.
+        numberOfTasksOnPE  (int, int)
+      Returns the number of tasks on the given processing element
+ in the given state, contained by this object.
+        numberOfTasksSpinning  ()
+      Returns the number of tasks spinning, contained by
+ this object.
+        numberOfTasksSpinSync  ()
+      Returns the number of tasks spinning due to synchronization, contained by
+ this object.
+        randomTask  (Task)
+      Returns a randomly chosen task.
+        randomTasks  (float, Task)
+      Returns an array of randomly chosen tasks.
+        synchronizationRequested  (Task)
+      Tests if a synchronization has been requested for the given
+ task.
+        synchronize  (Task)
+      Notifies this job that a tasks synchronizes.
+        taskEnded  (Task, float)
+      Called by an ended task.
+        tasks  ()
+      Returns an array with global task identifiers for all tasks
+ contained by this object.
+        tasks  (int)
+      Returns an array with global task identifiers for all tasks
+ in the given state, contained by this object.
+        tasksOnPE  (int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by this object.
+        tasksOnPE  (int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by this object.
+        toString  ()
+      Returns a string representation of this object.
+    
+ 
+    
+  
+   
+ Job 
+ 
+ public Job( JobManager  manager,
+            int id,
+            int numberOfTasks,
+            float startTime,
+            int peId,
+            int jobTypeId,
+             ProbabilityDistribution  endDist,
+             ProbabilityDistribution  spawnDist,
+             ProbabilityDistribution  spawnSizeDist,
+             ProbabilityDistribution  ioDist,
+             ProbabilityDistribution  ioDurationDist,
+             ProbabilityDistribution  commDist,
+             ProbabilityDistribution  laxityDist,
+            float syncProb,
+            float globalSyncProb,
+            String jClass)
+ 
+   Constructs a job.
+ 
+        Parameters: 
+       manager - manager for this job.
+      id - global job identifier.
+      numberOfTasks - initial number of tasks.
+      startTime - start time of job.
+      peId - processing element identifier.
+      endDist - end task distribution.
+      spawnDist - task spawning distribution.
+      spawnSizeDist - distribution for task spawning size.
+      ioDist - task I/O distribution.
+      ioDurationDist - task I/O duration distribution.
+      commDist - task communication distribution.
+      syncProb - probability for communication being
+ synchronization.
+      laxityDist - deadline laxity distribution
+      globalSyncProb - probability for synchronization being
+ global.
+                  
+    
+ 
+    
+   
+  getManager  
+ 
+ protected  JobManager  getManager()
+ 
+   Returns the manager of this job.
+ 
+        Returns: 
+       the manager of this job.
+     
+     
+  getSimulator  
+ 
+ protected  TheSimulator  getSimulator()
+ 
+   Returns the simulator that this object belongs to.
+ 
+        Returns: 
+       the simulator that this object belongs to.
+     
+     
+  getId  
+ 
+ public int getId()
+ 
+   Returns the global job identifier for this object.
+ 
+        Returns: 
+       the global job identifier for this object.
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks()
+ 
+   Returns the number of tasks contained by this object.
+ 
+        Returns: 
+       the number of tasks contained by this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfLivingTasks  
+ 
+ public int numberOfLivingTasks()
+ 
+   Returns the number of living tasks contained by this object.
+ 
+        Returns: 
+       the number of living tasks contained by this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks(int taskState)
+ 
+   Returns the number of tasks in the given state, contained by
+ this object.
+ 
+        Parameters: 
+       state - a task state.
+        Returns: 
+       the number of tasks in the given state, contained by
+ this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasksSpinning  
+ 
+ public int numberOfTasksSpinning()
+ 
+   Returns the number of tasks spinning, contained by
+ this object.
+ 
+        Returns: 
+       the number of tasks spinning, contained by
+ this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasksSpinSync  
+ 
+ public int numberOfTasksSpinSync()
+ 
+   Returns the number of tasks spinning due to synchronization, contained by
+ this object.
+ 
+        Returns: 
+       the number of tasks spinning due to synchronization, contained by
+ this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasksOnPE  
+ 
+ public int numberOfTasksOnPE(int peId)
+ 
+   Returns the number of tasks on the given processing element,
+ contained by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+        Returns: 
+       the number of tasks on the given proecssing element,
+ contained by this object.
+        See Also: 
+        Task 
+     
+     
+  numberOfTasksOnPE  
+ 
+ public int numberOfTasksOnPE(int peId,
+                              int taskState)
+ 
+   Returns the number of tasks on the given processing element
+ in the given state, contained by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+      taskState - a task state.
+         Returns: 
+       the number of tasks on the given proecssing element,
+ contained by this object.
+        See Also: 
+        Task 
+     
+     
+  tasks  
+ 
+ public long[] tasks()
+ 
+   Returns an array with global task identifiers for all tasks
+ contained by this object.
+ 
+        Returns: 
+       an array with global task identifiers for all tasks
+ contained by this object.
+        See Also: 
+        Task 
+     
+     
+  tasks  
+ 
+ public long[] tasks(int taskState)
+ 
+   Returns an array with global task identifiers for all tasks
+ in the given state, contained by this object.
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       an array with global task identifiers for all tasks
+ in the given state, contained by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksOnPE  
+ 
+ public long[] tasksOnPE(int peId)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+        Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element, contained by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksOnPE  
+ 
+ public long[] tasksOnPE(int peId,
+                         int taskState)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+        Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by this object.
+        See Also: 
+        Task 
+     
+     
+  generateTask  
+ 
+ public void generateTask(float time,
+                          int peId,
+                          float endTimeJob)
+ 
+   Generates a task and adds it to this job.
+ 
+        Parameters: 
+       time - global time.
+      peId - identifier for processing element to put task in.
+      
+     
+  generateTasks  
+ 
+ public void generateTasks(int n,
+                           float time,
+                           int peId,
+                           float endTimeJob)
+ 
+   Generates the given number of tasks and adds them to this job.
+ 
+        Parameters: 
+       n - number of tasks.
+      time - global time.
+      peId - identifier for processing element to put tasks in.
+       
+     
+  getTask  
+ 
+ protected  Task  getTask(long taskId)
+ 
+   Returns the sought task.
+ 
+        Parameters: 
+       taskId - global task identifier for sought task.
+        Returns: 
+       the sought task.
+     
+     
+  randomTasks  
+ 
+ protected  Task [] randomTasks(float fract,
+                               Task  excluded)
+ 
+   Returns an array of randomly chosen tasks.
+ 
+        Parameters: 
+       fract - fraction of living tasks to choose.
+      excluded - task to exclude from selection.
+         Returns: 
+       an array of randomly chosen tasks.
+     
+     
+  randomTask  
+ 
+ protected  Task  randomTask( Task  excluded)
+ 
+   Returns a randomly chosen task.
+ 
+        Parameters: 
+       excluded - task to exclude from selection.
+        Returns: 
+       a randomly chosen task.
+     
+     
+  taskEnded  
+ 
+ protected void taskEnded( Task  task,
+                          float taskEndTime)
+ 
+   Called by an ended task.
+ 
+        Parameters: 
+       task - ended task.
+      taskEndTime - time when task ended.
+      
+     
+  hasEnded  
+ 
+ public boolean hasEnded()
+ 
+   Tests if the job has ended.
+ 
+        Returns: 
+        true  if there are no living tasks left in
+ this job;  false  otherwise.
+     
+     
+  getExecutionTime  
+ 
+ public float getExecutionTime()
+ 
+   Returns the total execution time of the job.
+ 
+        Returns: 
+       the total execution time of the job.
+     
+     
+  getJobType  
+ 
+ public int getJobType()
+ 
+   
+  jobClass  
+ 
+ public String jobClass()
+ 
+   Returns the user-defined class of the job.
+ 
+        Returns: 
+       the user-defined class of the job.
+     
+     
+  isContainedWithin  
+ 
+ protected boolean isContainedWithin(int start,
+                                     int end)
+ 
+   Specifies whether or not the execution of this job is
+ completely contained within the given interval of time.
+ 
+        Parameters: 
+       start - start of time interval.
+      end - end of time interval.
+         Returns: 
+        true  if the execution of this job is
+ completely contained within the given interval of time;
+  false  otherwise.
+     
+     
+  toString  
+ 
+ public String toString()
+ 
+   Returns a string representation of this object.
+ 
+        Returns: 
+       a string representation of this object.
+        Overrides: 
+        toString  in class Object
+     
+     
+  synchronizationRequested  
+ 
+ protected boolean synchronizationRequested( Task  task)
+ 
+   Tests if a synchronization has been requested for the given
+ task.
+ 
+        Parameters: 
+       task - a task.
+        Returns: 
+        true  if the given task is expected to
+ synchronize;  false  otherwise.
+     
+     
+  synchronize  
+ 
+ protected void synchronize( Task  task)
+ 
+   Notifies this job that a tasks synchronizes.
+ 
+        Parameters: 
+       task - synchronizing task.
+     
+     
+  initiateGlobalSynchronization  
+ 
+ protected boolean initiateGlobalSynchronization( Task  task)
+ 
+   Initiates global synchronization.
+ 
+        Parameters: 
+       task - initiating task.
+        Returns: 
+        true  if synchronization could be
+ initiated;  false  otherwise.
+     
+     
+  initiateLocalSynchronization  
+ 
+ protected boolean initiateLocalSynchronization( Task  task)
+ 
+   Initiates local synchronization.
+ 
+        Parameters: 
+       task - initiating task.
+        Returns: 
+        true  if synchronization could be
+ initiated;  false  otherwise.
+     
+  </body> 

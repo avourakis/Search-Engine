@@ -1,0 +1,80 @@
+ ModelSim - Getting Started 
+
+ 
+
+  A sample project    
+
+  Lab 0     
+
+ The objective of this lab assignment is to get familiar with lab environment
+( ModelSim ), and submission procedures. This is also a
+good opportunity to ask questions about this course.  
+
+  Specification   
+
+ Specify a device that checks if the input signal is equal to
+"0101". The input signal is 4 bits wide and the output signal is one
+bit. Write down the truth table, the logical expression, and the circuit
+schematic using logic gates with up to 2 inputs. You may choose from AND, NAND,
+OR, NOR and NOT gates.  
+
+  Design   
+
+ Your task is to design this module and a test bench to test the
+functionality of the module. The template VHDL files for the module (lab0.vhd)
+and the test bench (lab0_tb.vhd) have been provided for you. The interface
+(ports) is already defined. You need to add code for functionality in both
+files to make them work. Do not make any change to the interface.  
+
+ The module (that is, the example entity) has one 4-bit inputs and one 1-bit
+output. The interface (ports) is defined as below for the example entity in
+lab0.vhd file. - Input  input_ vector    :  in STD_LOGIC_VECTOR(3  downto  0)
+- Output  output  : out STD_LOGIC 
+
+  Verification  
+
+ Inside the test bench, you should test your module using various input
+combinations. At each specific interval of time (which can be in the order of
+some tens of nanoseconds for example), change the inputs, get the output from
+the module and compare the result with the expected value to see if it is
+correct. In case the result does not match with the expected value, the test
+bench should generate an error message. Use the ASSERT statement for reporting
+the error message. Note that the entity  example_tb  in
+the test bench does not have ports since there are no input and output signals
+to it.  
+
+  What you should produce in this lab:   
+
+   A specification for your design, including the
+     truth-table and gate-level design. This should be completed on paper.     
+   Your VHDL design.     
+   Your VHDL test-bench.     
+   Screenshots of the waveforms for all in/out signals in
+     the design.     
+  You are not required to submit anything to EEE for this lab. 
+
+  Getting started:    
+
+ -  Download   lab0.zip 
+and unpack it.  
+- Open  ModelSim-Altera . 
+- Create a new project (File -&gt; New -&gt; Project) by assigning project name
+and selecting location for the project. 
+- Add existing files lab0.vhd and lab0_tb.vhd to the project. 
+- Plug in your code in both the VHDL files. You can come up with your own code,
+or use  this module file  and  this test bench file . 
+- Change compilation order of the VHDL files if necessary by Compile -&gt;
+Compile Order (lab0.vhd should be compiled first followed by lab0_tb.vhd). 
+- Compile the VHDL files by Compile -&gt; Compile All. 
+- Set up simulation by Simulate -&gt; Simulate ...( here
+choose work.lab0_tb as the entity to be simulated). 
+- Add signals to waveform view by right click signals in the object view -&gt;
+add... -&gt; to wave. - Run simulation by Simulate -&gt; Run -&gt; Run-All.
+After some time, stop execution by Simulate -&gt; Break. If there is an error,
+a message will be displayed. 
+
+ Good Luck!  
+
+ 
+
+</body> 

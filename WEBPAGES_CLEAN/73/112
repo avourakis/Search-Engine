@@ -1,0 +1,1168 @@
+ Program 1<body>
+
+ 
+ Program 1 
+ 
+Programming using the ICS-46 Template Library 
+Stack, Queue, Priority Queue, Set, and Map
+ 
+ 
+  ICS-46: Data Structure Implementation and Analysis  
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+This programming assignment is designed to ensure that you know how to use
+  combinations of Python's most important data types to model and
+  compactly write code that solves a wide variety of different programming 
+  problems.
+The kind of abstract thinking that goes into modeling solutions to these
+  programming problems with these data types (and iteration over them) is
+  critical to your development as computer scientists.
+ 
+There are five parts to this assignment.
+
+In each you will be asked to write a module that contains a few functions
+  and a script at the bottom, which ties these functions together to solve
+  the problem.
+  
+You should download the 
+   program1  project folder and use it to create an
+  Eclipse project.
+The project folder contains files for all the modules in which to write your
+  functions and scripts; it also contains all the data files that you need to
+  test/debug your modules; finally, it contains all the batch self-check files
+  I will use when grading your programs.
+In your modules, you may import additional standard/courselib modules and you
+  may write additional helper functions.
+  
+I recommend that you work on this assignment in pairs, and I recommend that you
+  work with someone in your lab section (so that you have 4 hours each week of
+  scheduled time together).
+These are just recommendations.
+Try to find someone who lives near you, with similar programming skills,
+  and work habits/schedule: e.g., talk about whether you prefer to work
+  mornings, nights, or weekends; what kind of commitment you will make to submit
+  program early.
+  
+ Only one student should submit all parts of the the assignment , but both
+  students' UCInetID and name should appear in a comment at the  top  of
+   each submitted .py file .
+A special grading program reads this information.
+The format is a comment starting with  Submitter  and  Partner  (when
+  working with a partner), followed by a  colon , followed by the student's  UCInetID  (in all lower-case), followed by the student's  name in
+  parentheses  (last name, comma, first name -capitalized appropriately).
+If you omit this information, or do not follow this exact form, it will require
+  extra work for us to grade your program, so we will deduct points.
+  
+For example if Romeo Montague (whose UCInetID is romeo1) submitted a program
+  that he worked on with his partner Juliet Capulet (whose UCInetID is jcapulet)
+  the comment at the top of each .py file would appear as:
+   # Submitter: romeo1(Montague, Romeo)
+# Partner  : jcapulet(Capulet, Juliet)
+# We certify that we worked cooperatively on this programming
+#   assignment, according to the rules for pair programming  
+If you do not know what the terms  cooperatively  and/or
+   rules for pair programming  mean, please read about
+   Pair Programming  
+   before  starting this assignment.
+Please turn in each program  as you finish it , so that I can more
+  accurately assess the progress of the class as a whole during this assignment.
+ 
+Print this document and carefully read it, marking any parts that contain
+  important detailed information that you find (for review before you turn in
+  the files).
+The code you write should be as elegant and compact as possible, using 
+  appropriate Python idioms.
+You should familiarize yourselves with the  safe_open  function in the
+   goody  module and all the functions in the  prompt  module, both
+  of which you should have installed in your  courselib  folder as part
+  of the Eclipse/Python installation.
+Recall how to use the  sep  and  end  parameters in the  print 
+  function.
+  
+Reread the section on  Time Management  from Programming Assignment 0
+  before starting this assignment.
+  
+ IMPORTANT 1 :
+Before starting this assignment, download the
+   xref  project folder which contains a small Python
+  script  xref.py  that produces a cross-reference of all the words
+  (converted to lower case) in a file (where words appear with spaces between
+  them: see  xrefin.txt  for an example): the words are listed in
+  alphabetic order followed by a set (i.e., no duplicates) of the line numbers
+  it appears on (listed in increasing numeric order).
+Before solving the problems in this programming assignment, ensure you
+  understand all the details of how this program works: look at features and
+  functions like  safe_open ,  defaultdict  (and how it is used),
+   enumerate ,  rstrip  and  lower ,  split  and
+   join ,  sorted ,  for  loops with two (unpacked) indexes, the
+  two comprehensions (in the call to  max  and  join ), and
+   format .
+These are the building blocks for many parts of this assignment; explore
+  and experiment with this code to understand how all the parts work together
+  to achieve the desired result.
+Run this code on more complicated data files.
+  
+ IMPORTANT 2 :
+This assignment has 5 parts: pairs should work on each part together, not split
+  them up and do them separately.
+Parts 1-3 are going to be worth 12 points each; parts 4-5 are to be worth 7
+  points each.
+This skewing of points towards the simpler parts means students finishing the
+  first 3 parts correctly will yield a 72% average; those finishing the first 4 
+  parts correctly will have an 86% average; but to get an A on this  assignment
+  requires solving all parts correctly.
+I strongly recommend finishing the first part by the weekend, and then
+  finishing another part every few days.
+Waiting until the last few days and then trying to write all the solutions is
+  a recipe for learning little and getting a poor grade (or worse, cheating
+  and being caught).
+Remember that I'm going to be running MOSS on all the parts of this assignment,
+  checking for duplicate solutions.
+  
+ IMPORTANT 3 :
+I will  mostly  grade all these programs automatically, using the batch
+  self-check files provided in the download.
+Use the  driver  program (explored in Programming Assignment #0) to run
+  the batch-self check files in this assignment; debug any errors that they
+  produce.
+But the TAs (with some automated tools) will also look at/run the code in some
+  of your scripts: so the scripts need to follow exactly what is shown in the
+   Sample Interactions  part for each problem.
+I suggest testing your code first to match the scripts; when those results are
+  correct, test it using the batch self-check files.
+Finally, if a submitted Python module contains even one syntax error or bad
+  import, it will  fail all  its batch self-checks; ensure that you
+   submit modules with no syntax or bad import errors  (Python sometimes
+  adds strange imports at the top of your file; ensure that all your imports
+  are reasonable).
+  
+    
+       Problem #1: Reachability  
+ 
+ Problem Summary: 
+Write the required functions and script that prompts the user for the name of a
+    file representing a graph;
+  reads the file (storing the graph in a dictionary);
+  prints the graph/dictionary in a special form;
+  repeatedly prompts the user for a starting node name (rejecting those that
+    are not keys in the graph);
+  computes and prints all the node names that are reachable from it by
+    following zero or more edges in the graph (e.g., a node is reachable from
+    itself).
+
+ Input and Output: 
+Read a file of pairs of node names (representing edges) in a directed
+  graph, building a dictionary whose key is a  str  source node name and
+  whose associated value is a  set  of  str  destination node names
+  that are each reachable directly from the source node name key.
+We annotate this dictionary as  {str:{str}} .
+ 
+In the file, two nodes names appear on each line: first the source node name,
+  then the destination node name, with these node names (which may be entire
+  words, not just single characters) separated by one semicolon character.
+For example, the input file  graph1.txt  contains the following
+  lines (which could appear in this order, or any other order):
+    c;f
+  b;d
+  a;c
+  c;e
+  d;g
+  a;b
+  e;d
+  f;g
+  f;d  
+which represent the graph
+  
+   
+    
+       Problem #2: Instant Runoff Voting  
+ 
+ Problem Summary: 
+Write the required functions and script that prompts the user for the name of a
+  file representing the preferences of a sequence of voters;
+  reads the file (storing its information in a dictionary);
+  prints the voter preferences/dictionary in a special form;
+  repeatedly displays the vote count for ballots (sorted both by candidate name
+  and by vote count), eliminating from the election the candidate(s) receiving
+  the fewest votes, until one candidate (the winner) remains or no candidates
+  remain (a tie among the candidates on the final ballot).
+ 
+This form of election is known as  instant runoff voting .
+Every voter submits preferences that rank all the candidates in the election,
+  from highest preference candidate (most favorite) to lowest preference
+  candidate (least favorite): we will use a  list  for this purpose,
+  where "earlier in the  list " means "higher preference".
+All the candidates appear on the first ballot, so each voter votes for his
+  highest preference candidate.
+Then the candidate(s) with the fewest number of votes are removed from the
+  election: if more than one candidate receives the least number of votes, all
+  with that number are removed from the election.
+  
+During the second ballot, votes are allowed only for the
+   remaining candidates : there is at least 1 fewer candidate.
+If a  voter's highest preference candidate has been removed from the election,
+  then his/her second ranked candidate should receive the vote; likewise, if
+  his/her second ranked candidate has been removed from the election, then
+  his/her third ranked candidate should receive the vote .... this process
+  continues until a voter voters for his/her highest preference candidate who
+  is still in the election.
+  
+The number of votes cast in each ballot should always be the same as the number
+  of voters: each voter votes for his/her most preferred candidate  who is
+  still in the election .
+This ballot process continues until either 1 candidate remains, or 0 candidates
+  remain (meaning that all the remaining candidates tallied the same number
+  of votes, and all were removed, so the election is a tie among them).
+  
+Read these instructions carefully, a few times.
+Do some hand simulations to ensure you understand the algorithm.
+Do not attempt to write any Python code to solve this problem until you
+  understand this algorithm and can apply it to the data specified below.
+You can discuss the algorithm with the class staff and each other; but, you
+  cannot discuss your code with other students.
+
+  Input and Output: 
+Read a file of voters and their ranking of the candidates (highest to lowest
+  preference), separated by semicolons, building a dictionary whose key is each
+  voter and whose associated value is a  list  of candidates ranked by
+  that voter (they appear in the file in order, from highest to lowest
+  preference).
+We annotate this dictionary as  {str:[str]} .
+ 
+In the file, the voter's name appears first, followed by the names of all the
+  candidates in the election in highest to lowest preference (names may be
+  entire words, not just single characters) separated by one semicolon
+  character.
+For example, the input file  votepref1.txt  contains the following
+  lines (which could appear in this order, or any other):
+    A;X;Y;Z
+  B;Y;Z;X
+  C;Y;Z;X
+  D;Z;X;Y
+  E;Z;X;Y  
+The first line means, voter  A  ranks candidate  X  first,
+  candidate  Y  second, and candidate  Z  third.
+The second line means, voter  B  ranks candidate  Y  first,
+  candidate  Z  second, and candidate  X  third.
+Each line will have a unique voter and a permutation of all the 
+  candidates in the election.
+  
+Print each voter on a separate line, followed by his/her preferences.
+That is, each line contains the voter and his/her complete ranking of the
+  candidates.
+For example, the file above would print as:
+    Voter name -&gt; [Preferences]
+     A -&gt; ['X', 'Y', 'Z']
+     B -&gt; ['Y', 'Z', 'X']
+     C -&gt; ['Y', 'Z', 'X']
+     D -&gt; ['Z', 'X', 'Y']
+     E -&gt; ['Z', 'X', 'Y']  
+  
+Note that the voter names are  sorted  in alphabetical order;
+  the  list  of preferences appears in the same order they appeared in the
+  file.
+There are multiple data files for this program:  votepref1.txt , 
+   votepref2.txt ,  votepref3.txt  and  votepref4.txt ;
+  test/debug your program on the first file; when you are done, test it on the
+  remaining files.
+  
+ Algorithm: 
+Start with a  set  of all the candidates.
+Evaluate the ballot to determine how many votes each candidate received.
+Print this vote count two ways: sorted by name in alphabetical order and
+   sorted by votes in numerical order (in decreasing order).
+Remove the candidate(s) receiving the fewest votes, and repeat this process
+  until only one or no candidates remain.
+Finally, print the outcome of the election: a single candidate winner or a tie.
+An example interaction (processing the preferences above) might be
+    Vote count on ballot #1: candidates (alphabetically ordered) with remaining candidate set = {'X', 'Y', 'Z'}
+    X -&gt; 1
+    Y -&gt; 2
+    Z -&gt; 2
+
+  Vote count on ballot #1: candidates (numerically ordered) with remaining candidate set = {'Y', 'X', 'Z'}
+    Y -&gt; 2
+    Z -&gt; 2
+    X -&gt; 1
+
+  Vote count on ballot #2: candidates (alphabetically ordered) with remaining candidate set = {'Y', 'Z'}
+    Y -&gt; 3
+    Z -&gt; 2
+
+  Vote count on ballot #2: candidates (numerically ordered) with remaining candidate set = {'Y', 'Z'}
+    Y -&gt; 3
+    Z -&gt; 2
+
+  Winner is  {'Y'}  
+The first ballot consisted of all three candidates,  X ,  Y , 
+  and  Z .
+For this ballot, the votes were counted and printed; candidate  X 
+  received the fewest number of votes so he/she is eliminated from the next
+  ballot.
+The second ballot consisted of two candidates,  Y  and  Z .
+For this ballot:  A  votes for  Y , who is his/her second highest
+  preference because  X , his first highest preference, was removed from
+  the election;  B  through  E  vote for their highest preference
+  candidate, who all remain in the election.
+These votes are counted and printed; candidate  Z  received the fewest
+  number of votes so is eliminated from the next ballot.
+There is only one candidate remaining so  Y  is declared the winner.
+An alternative outcome prints
+ Not any unique winner: election is a tie among all the candidates remaining on the last ballot .
+
+  Functions and Script: 
+Write the following functions and script.
+I am providing line counts not as requirements, but to indicate the lengths of
+  well-written Pythonic code.
+   read_voter_preferences  has an open (file) parameter; it returns the
+       dictionary representing each voter and his/her preferences
+      (body is 5 lines).
+ 
+    dict_as_str  has a dictionary, key  function 
+      (default  None ) and  bool  (default  False ) as
+       parameters; it returns a multi-line string (each line is ended by
+        '\n' ), which when, which when printed shows the contents of the
+       dictionary in the appropriate textual form.
+    The key function determines the ordering and the  bool  determines
+      whether to reverse it: like the  key  and  reverse  parameters
+      used for  sort / sorted  in Python.
+    This function is used to print both the voter preference dictionary and
+      the vote count dictionary for each ballot.
+     
+     Important:  The key function (and its use when iterating over the
+      dictionary in  dict_as_str ) must assume that its argument is a
+       key  in the dictionary, not an  item ;
+      otherwise the batch self-check test will fail even if your code works.
+     (body is 4 lines; can you do it in 1?).
+  
+    evaluate_ballot  has a dictionary of voter preferences
+         (see  read_voter_preferences ) and a  set  of the remaining
+         candidates as parameters; it returns a dictionary whose keys are these
+         candidates and whose values are the number of votes they received on
+         this ballot, based on the description of the
+          instant runnoff voting  algorithm.
+       Remember to count only one vote per voter, for his/her highest ranked
+         candidate who is still in the election; hint: I used a  break 
+         statement in one loop
+       (body is 7 lines).
+ 
+    remaining_candidates  has a dictionary as a parameter whose keys are
+          candidates and whose values are the number of votes they received
+          (see  evaluate_ballot ); it returns a set containing all those
+          candidates remaining in the election (the one(s) receiving the
+          fewest number of votes are absent).
+       Note that if all the candidates receive the same number of votes, then
+         this function returns an empty  set .
+       (body is 2 lines).
+ 
+    run_election   has an open (file) parameter; it returns a  set 
+        that is empty (signifying no winner for this election) or contains one
+        value (the winner of the election).
+      In the process of computing its result to return, it calls the functions
+        above and prints all the required information: see the
+         Sample Interaction  below
+      (body is 13 lines).
+ 
+   Write a script at the bottom of this module
+    (in  if __name__ == '__main__': ) that prompts the user for the
+    file storing the voter preferences and calls  run_election  to
+    do this task.
+   Sample Interaction: 
+The program, as specified, will have the following interaction:
+  user-typed information appears in  italics .
+Your output should match this one.
+    Enter some voter preferences file name:  votepref1.txt 
+
+  Voter name -&gt; [Preferences]
+    A -&gt; ['X', 'Y', 'Z']
+    B -&gt; ['Y', 'Z', 'X']
+    C -&gt; ['Y', 'Z', 'X']
+    D -&gt; ['Z', 'X', 'Y']
+    E -&gt; ['Z', 'X', 'Y']
+  
+  Vote count on ballot #1: candidates (alphabetically ordered) with remaining candidate set = {'Z', 'Y', 'X'}
+    X -&gt; 1
+    Y -&gt; 2
+    Z -&gt; 2
+
+  Vote count on ballot #1: candidates (numerically ordered) with remaining candidate set = {'Y', 'X', 'Z'}
+    Y -&gt; 2
+    Z -&gt; 2
+    X -&gt; 1
+
+  Vote count on ballot #2: candidates (alphabetically ordered) with remaining candidate set = {'Y', 'Z'}
+    Y -&gt; 3
+    Z -&gt; 2
+
+  Vote count on ballot #2: candidates (numerically ordered) with remaining candidate set = {'Y', 'Z'}
+    Y -&gt; 3
+    Z -&gt; 2
+
+  Winner is  {'Y'}  
+ 
+You can also try processing the  votepref2.txt  file (which leads to
+  printing
+   Not any unique winner: election is a tie among all the candidates remaining on the last ballot  result),   votepref3.txt , and  votepref4.txt .
+  
+    
+       Problem #3: Finite Automata  
+ 
+ Problem Summary: 
+Write the required functions and script that prompts the user for the name of a
+   file representing a finite automaton: indicating its  states  and
+       input-&gt;state  transitions ;
+   reads the information in the file (storing the finite automaton in a
+     dictionary);
+   prints the finite-automaton/dictionary in a special form;
+   prompts the user for the name of a file storing the start-state
+      and inputs to process (each line in the file contains this combination);
+   repeatedly processes these lines, computing the results of the finite
+      automaton on each input, and then prints the results.
+Note that a finite automaton is really a  program ; in this problem we are
+  reading a program from a file and then executing it (running the finite
+  automaton) on various inputs.
+So, we are really writing a compiler/interpreter for a small programming
+  language.
+ 
+A  finite  automaton  (FA) is an machine that is sometimes called a
+  Deterministic Finite Automaton (DFA; see the next problem for an NDFA: a
+  non-deterministic finite automaton).
+An FA is described by its  states  and its  transitions :
+  each  transition  for a  state  specifies an  input  and what
+   state  in the FA that input leads to.
+We can illustrate an FA as a graph with state labels in circles and edge labels
+  for transitions (see below).
+  
+
+  Input and Output: 
+Read a file that describes a FA: each line contains a state and an
+  arbitrary number of input-&gt;state  transitions .
+Build a dictionary such that each key is a  str  state and whose associated
+  value is another dictionary specifying all the transitions from that state:
+  this second dictionary has keys that are  str  inputs and associated
+  values are  str  states.
+The first token on each line is the  str  state and the remaining tokens
+  (always coming in pairs) are  str  inputs and their resulting states.
+All tokens (which can comprise any number of characters) are separated by one
+  semicolon character.
+We annotate this dictionary as  {str:{str:str}} .
+ 
+
+For example, the input file  faparity.txt  contains the following lines
+  (which could appear in this order, or any other and still specify the same
+  FA):
+    even;0;even;1;odd
+  odd;0;odd;1;even  
+Here is a picture of the  parity  FA.
+It graphically illustrates the two  states  ( even  and  odd )
+  and their  transitions , using  inputs  ( 0  and  1 )
+  that always lead back to one of these two states.
+  
+
+   
+
+Here, the state  even  (meaning it has seen an even number of  1 
+  inputs so far) is a key in the main dictionary.
+It's value is a dictionary with two key/value pairs  0 -&gt; even 
+  and  1 -&gt; odd .
+It means that in the  even  state, if the input is a  0  the
+  FA stays in the  even  state; if the input is a  1  the
+  FA goes to the  odd  state.
+And similarly (the next line) means that for the  odd  state, if the input
+  is a  0  the FA stays in the  odd  state; if the input is a
+   1  the FA goes back to the  even  state.
+So, seeing an input of  0  keeps the FA in the same state;
+  seeing an input of  1  flips the FA into the other state.
+  
+
+Print the finite automaton, one state (and its transitions) per line;
+  the states are printed alphabetically and the transition dictionary
+  for each state is printed as a  list  of input/state items (tuples)
+  such that these are printed alphabetically by the inputs.
+  
+For example, the file above would print as:
+    The Finite Automaton Description
+    even transitions: [('0', 'even'), ('1', 'odd')]
+    odd transitions: [('0', 'odd'), ('1', 'even')]  
+  
+Note that there are multiple data files for this program:  faparity.txt 
+  and  fadivisibleby3.txt ; test/debug your program on 
+  the first file; when you are done, test it on the last file.
+Draw the FA represented by each for to ensure that your code correctly
+  prints and computes with it.
+ Important:  This task is  not  to write a Python code that simulates
+  the Parity FA; it is to write code that simulates  any  FA, whose
+  description it reads from a file.
+  
+Next, repeatedly read and process lines from a second input file, computing the
+  results of the finite automaton running on the specified start-state and its
+  inputs; then print out the results in a special form.
+Each line in the file contains a start-state followed by a sequence of inputs
+  (all separated by semicolons).
+The start-state will be a state in the FA (it is a key in the outer dictionary)
+  the inputs may specify legal or illegal transitions (may or may not be keys
+  in some inner dictonary).
+  
+For example, the input file  fainputparity.txt  contains the following
+  three lines:
+    even;1;0;1;1;0;1
+  even;1;0;1;1;0;x
+  odd;1;0;1;1;0;1  
+The first line means, the start-state is  even  and the
+  inputs are  1 ,  0 ,  1 ,  1 ,  0 , and  1 .
+  
+The result of processing each line is to print the start-state, and then each
+  input and the new state it transitions to, and finally print the stop-state.
+For the  parity  FA and the first line in this file, it should print
+  Start state = even
+  Input = 1; new state = odd
+  Input = 0; new state = odd
+  Input = 1; new state = even
+  Input = 1; new state = odd
+  Input = 0; new state = odd
+  Input = 1; new state = even
+Stop state = even  
+  
+Note that the second line contains an input  x  which is not a legal input
+  allowed in any state; any such input should stop the simulation for that line
+  only, continuing to start a new simulation for all following lines (as
+  illustrated in the  Sample Interaction ).
+  Functions and Script: 
+Write the following functions and script.
+I am providing line counts not as requirements, but to indicate the lengths of
+  well-written Pythonic code.
+   read_fa  has an open (file) parameter; it returns the dictionary
+     representing the finite automaton;  hint : I used splicing and the
+      zip  function to build the inner dictionaries.
+     (body is 6 lines).
+ 
+    fa_as_str  has a dictionary parameter (representing the FA); it
+    returns a multi-line string (each line is ended by  '\n' ), which when
+    printed shows the contents of the FA in the appropriate textual form
+    (body is 4 lines; can you do it in 1?).
+ 
+    process  has a dictionary parameter (representing the FA),
+    a  str  parameter (representing the start-state), and a  list 
+    parameter (representing a  list  of  str  inputs); it returns a
+     list  that contains the start-state followed by  tuples  that
+    show the input and resulting state after each transition.
+    For the example shown above,  process  returns the following
+     list .
+  ['even', ('1', 'odd'), ('0', 'odd'), ('1', 'even'), ('1', 'odd'), ('0', 'odd'), ('1', 'even')]  
+    Finally, if an input is illegal (is not the key in some transition for the
+    current state), say
+     'x' , for the parity FA, then  process  should terminate with
+    the last  tuple  in the  list  indicating a problem:
+      ('x', None) 
+   (body  is 9 lines).
+ 
+    interpret  has a  list  parameter (the  list  result
+    produced by   process ); it returns a multi-line string (each line is
+    ended by  '\n' ), which when printed illustrates the results of
+    processing an FA on an input in the appropriate textual form.
+    See how it prints the example  list  argument shown above in the
+      output further above.
+    Also see the  Sample Interaction  below to see how it prints
+     input errors : see the middle example
+   (body is 9 lines).
+ 
+   Write a script at the bottom of this module
+    (in  if __name__ == '__main__': ) that prompts the user for the
+    file describing the FA, prints it, prompts the user for the file containing
+    lines of start-states and input, simulates the FA on each line, printing
+    the results in the appropriate textual form
+    (body is 7 lines).
+   
+
+  Sample Interaction: 
+The program, as specified, will have the following interaction:
+  user-typed information appears in  italics .
+Your output should match this one.
+    Enter some finite automaton file name:  faparity.txt 
+
+  The Finite Automaton Description
+    even transitions: [('0', 'even'), ('1', 'odd')]
+    odd transitions: [('0', 'odd'), ('1', 'even')]
+
+  Enter some file name with start-state and inputs:  fainputparity.txt 
+  
+  Starting up a new simulation
+  Start state = even
+    Input = 1; new state = odd
+    Input = 0; new state = odd
+    Input = 1; new state = even
+    Input = 1; new state = odd
+    Input = 0; new state = odd
+    Input = 1; new state = even
+  Stop state = even
+  
+  Starting up a new simulation
+  Start state = even
+    Input = 1; new state = odd
+    Input = 0; new state = odd
+    Input = 1; new state = even
+    Input = 1; new state = odd
+    Input = 0; new state = odd
+    Input = x; illegal input: simulation terminated
+  Stop state = None
+
+  Starting up a new simulation
+  Start state = odd
+    Input = 1; new state = even
+    Input = 0; new state = even
+    Input = 1; new state = odd
+    Input = 1; new state = even
+    Input = 0; new state = even
+    Input = 1; new state = odd
+  Stop state = odd  
+ 
+You can also try the  fadivisibleby3.txt  finite automaton file, which
+  determines whether an integer (sequence of digits) is divisible by  3 :
+   it is divisible if the  finite automaton stops in state  rem0 .
+Its input file  fainputdivisibleby3.txt  tries the number
+   12,435,711 , which is divisible by  3  and number  823 ,
+  which is not divisible by  3 : dividing  823  by  3  leaves a
+  remainder of  1 .
+  
+    
+       Problem #4: Non-Deterministic FA  
+ 
+ Problem Summary: 
+Write the required functions and script that solve, for a Non-Deterministic
+   Finite Automaton, the same problem that was solved for a Deterministic Finite
+   Automaton in Problem #3 (above).
+Read about the differences between these two automata (below).
+Hint: Adapt your code for the FA problem to solve the more general NDFA problem.
+ 
+A non-deterministic finite automaton (NDFA) is machine described by its
+   states  and its  transitions :
+  each  transition  for a  state  specifies an  input  and a
+   set  of  states  (more than one is allowed) that input can lead
+  to:  sets  with  more than one states  is what makes it
+  non-deterministic.
+We can illustrate a NDFA as a graph with state labels in circles and edge
+  labels for transitions (see below).
+The critical difference between an FA and an NDFA is that an NDFA can have
+  multiple edges with the same label going to different states (we'll see how
+  to represent and simulate such transitions below).
+  
+
+  Input and Output: 
+Read a file that describes a NDFA: each line contains a state and an
+  arbitrary number of input-&gt;state  transitions .
+Build a dictionary such that each key is a  str  state and whose associated
+   value is another dictionary specifying all the transitions from that state:
+   this second dictionary has keys that are  str  inputs and associated
+   values that are  sets  of  str  states: all the states a particular
+   input can lead to.
+The first token on each line is the  str  state and the remaining tokens
+  (always coming in pairs) are  str  inputs and states.
+All tokens (which can comprise any number of characters) are separated by one
+  semicolon character.
+We annotate this dictionary as  {str:{str:{str}}} .
+ 
+
+For example, the input file  ndfaendin01.txt  contains the following lines
+  (which could appear in this order, or any other and still specify the same
+  NDFA):
+    start;0;start;1;start;0;near
+  near;1;end
+  end  
+Here is a picture of the  endin01  NDFA.
+It graphically illustrates the three  states  ( start ,  near ,
+  and  end ) and their  transitions , using  inputs  ( 0 
+  and  1 ).
+  
+
+   
+
+Here, the state  start  is a key in the main dictionary.
+It's value is a dictionary with two key/value pairs:  0  mapping to the
+   set  containing  start  and  near , and  1  mapping to
+  the  set  containing just  start .
+It means that in the  start  state, if the input is a  0  the
+  NDFA can stay in the  start  state or it can go to the  near 
+  state; if the input is a  1  the NDFA must stay in the  start 
+  state.
+And similarly the next line means that in the  near  state, if the
+  input is a  1  the NDFA must go into the  end  state.
+The last line means that the  end  state has no transitions out of it.
+  
+
+Print the NDFA, one state (and its transitions) per line;
+  the states are printed alphabetically and the transition dictionary
+  for each state is printed as a  list  of input/set of state items
+  (tuples) such that these are printed alphabetically by the inputs.
+Note that the state  end  is a key in the main dictionary, whose
+  associated transitions are an empty dictionary.
+  
+
+For example, the file above would produce:
+    The Non-Deterministic Finite Automaton Description
+    end transitions: []
+    near transitions: [('1', ['end'])]
+    start transitions: [('0', ['near', 'start']), ('1', ['start'])]  
+  
+Note that there are multiple data files for this program:  ndfaendin01.txt 
+  and  ndfatrain.txt  and  ndfare.txt ;; test/debug your program on 
+  the first file; when you are done, test it on the last file.
+Draw the FA represented by each for to ensure that your code correctly
+  prints and computes with it.
+  
+Next, repeatedly read and process lines from a second input file, computing the
+  results of the non-determinisitc finite automaton on the specified
+  start-state and its inputs ; then print out the results in a special form.
+Each line in the file contains a start-state followed by a sequence of inputs
+  (all separated by semicolons).
+The start-state will be a state in the FA (it is a key in the outer dictionary)
+  the inputs may specify legal or illegal transitions (may or may not be keys
+  in some inner dictionary).
+  
+For example, the input file  ndfainputendin01.txt  contains the following
+  two lines:
+    start;1;0;1;1;0;1
+  start;1;0;1;1;0;0  
+For example, the first line means, the start-state is  start  and the
+  inputs  1 ,  0 ,  1 ,  1 ,  0 , and  1 .
+  
+The result of processing each line is to print the start-state, and then each
+  input and the new states (plural) it could transition to (the  could 
+  is what makes it non-deterministic), and finally print the stop-states.
+For the  ndfaendin01  NDFA and the first line in this file, it should print
+    Start state = start
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 1; new possible states = ['end', 'start']
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 1; new possible states = ['end', 'start']
+  Stop state(s) = ['end', 'start']  
+  
+Note that the  set  of states it might be in are printed as an alphabetized
+   list .
+Also note especially that in the  start  state, if the input is a  0 ,
+  then the NDFA can either remain in the  start  state or go into the
+   near  state.
+For this program, we keep track of all states that the NDFA  can  be in,
+  using a  set  of  new possible states .
+For the next input,  1 , we can be either in the  start  state
+  (from the  start  state; an input of  1  allows us to stay in the
+   start  state) or the  end  state (from the  near  state; an
+  input of  1  allows us to transition to the  end  state).
+Thus, we keep track of the  set  of states the NDFA can be in, and the
+  new  set  of states the NDFA can be in after processing the next input.
+In this example, because  'end'  is included in the stop-states, this
+  input does end in  01 .
+  
+For any state that does not have a transition specifying the current input,
+  ignore that input for that state.
+For example, if  near  is one of the possible states and  0  is the
+  input, ignore the  0  for the  near  state.
+  
+  Functions and Script: 
+Write the following functions and script.
+I am providing line counts not as requirements, but to indicate the lengths of
+  well-written Pythonic code.
+   read_ndfa  has an open (file) parameter; it returns the dictionary
+     representing the non-deterministic finite automaton;  hint : I used
+     splicing and the  zip  function to build the inner dinctionaries, and
+     I called the  setdefault  function for the inner  dict :
+     alternatively I could have built it as  defaultdict s from the
+     standard   collections  module
+     (body is 9 lines).
+ 
+    ndfa_as_str  has a dictionary parameter (representing the FA); it
+    returns a multi-line string (each line is ended by  '\n' ), which when
+    printed shows the contents of the NDFA in the appropriate textual form
+    (body is 4 lines; can you do it in 1?).
+ 
+    process  has a dictionary parameter (representing the NDFA),
+    a  str  parameter (representing the start-state), and a  list 
+    parameter (representing a  list  of  str  inputs); it returns a
+     list  that contains the start-state followed by  tuples  that
+    show the input and resulting  set  of  states after each transition.
+    For the example shown above,  process  returns the following
+     list .
+ 
+    ['start', ('1', {'start'}), ('0', {'near', 'start'}), ('1', {'end', 'start'}), ('1', {'start'}),
+    ('0', {'near', 'start'}), ('0', {'near', 'start'})]  
+    Finally, remember that if an input is illegal for the current state (is not
+      the key  in some transition for the current state), just ignore it.
+    But if the input leads to no possible states (the empty set of states)
+      terminate processing there
+    (body is 12 lines).
+  
+    interpret  has a  list  parameter (the  list  result 
+    produced by  process );  it returns a multi-line string (each line is
+    ended by  '\n' ), which when printed illustrates the results of
+    processing an NDFA on an input in the appropriate textual form.
+    Note that in this output the  sets  computed in  process  appear
+      as  lists  sorted alphabetically by state.
+    See how it prints the example  list  argument shown above in the
+        Sample Interaction  below
+    (body is 5 lines).
+     
+   Write a script at the bottom of this module
+    (in  if __name__ == '__main__': ) that prompts the user for the
+    file describing the DNFA, prints it, prompts the user for the file
+    containing lines of start-states and input, and simulates the NDFA on each 
+    line, printing  the results in the appropriate textual form
+    (body is 7 lines).
+   
+
+  Sample Interaction: 
+The program, as specified, will have the following interaction:
+  user-typed information appears in  italics .
+Your output should "match" this one.
+    Enter some non-deterministic finite automaton file name:  ndfaendin01.txt 
+
+  The Non-Deterministic Finite Automaton Description
+    end transitions: []
+    near transitions: [('1', ['end'])]
+    start transitions: [('0', ['near', 'start']), ('1', ['start'])]
+
+  Enter some file name with start-state and inputs: ndfainputendin01.txt
+
+  Starting up a new simulation
+  Start state = start
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 1; new possible states = ['end', 'start']
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 1; new possible states = ['end', 'start']
+  Stop state(s) = ['end', 'start']
+  
+  Starting up a new simulation
+  Start state = start
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 1; new possible states = ['end', 'start']
+    Input = 1; new possible states = ['start']
+    Input = 0; new possible states = ['near', 'start']
+    Input = 0; new possible states = ['near', 'start']
+  Stop state(s) = ['near', 'start']  
+ 
+In Week #2 of this course we will cover EBNF and regular expressions, which
+  relate to the files below.
+You can run these files on your code to ensure they produce the correct results.
+  
+The  ndfatrain.txt  file is a non-deterministic finite automaton
+  that determines whether or not a train (a sequence of characters representing
+  different kinds of cars) is a legal train according to Chapter Exercise #7
+  in the ENBF lecture.
+Its input file is  ndfainputtrain.txt , which starts with a legal train
+  (one that ends with the state  done  as one possible state) followed by
+  an illegal train (one that does not end with the state  done  as one
+  possible state).
+  
+The  ndfare.txt  file is a non-deterministic finite automaton translation
+  of the regular expression  ((a*|b)cd)+ . 
+Its input file is  ndfainputre.txt , which starts with a match (one that
+  ends with the state  last  as one possible state) followed by a non-match
+   (one that does not end with the state  last  as one possible state).
+  
+    
+       Problem #5: Google Queries  
+ 
+ Problem Summary: 
+Write the required functions and script that prompts the user to enter the
+  name of a file of text that contains a sequence of Google queries;
+  reads the file (storing it in two special  prefix  and  query 
+    dictionaries);
+  repeatedly: prints the dictionaries in a special form; prompts the user to
+    enter a query prefix, displays the top three queries with that prefix;
+  prompts the user to enter a full query, and then updates the dictionaries
+    as if this full query had appeared at the end of the file initially read.
+ 
+  Background: 
+When we type a word (or a few words) into Google's query box, it shows some of
+  the most frequently entered queries starting with those word(s).
+For example, when I recently typed the word  uci  into Google, it showed
+  the following as the 3 most frequent queries starting with  uci :
+   uci law 
+   uci medical center 
+   uci women's soccer 
+  
+I could have clicked on one of these queries to select it, or continued typing
+  more words to specify my own (different) query.
+ 
+Here we say  uci  is a  prefix , which is the beginning of some
+   full query , like  uci medical center .
+  
+Google represents a  full query  as a  tuple  of  str  (words).
+For example,  ('uci', 'medical', 'center')  is a  full query .
+Google also represents a  prefix  as a  tuple  of  str  (words).
+For example,  ('uci',)  is a one-word  prefix  and
+   ('uci', 'medical')  is a two-word  prefix  of this
+   full query .
+  
+From any  full query  we can compute a  set  of all its
+   prefix es.
+For example, the  full query   ('uci', 'medical', 'center')  would
+  compute the  prefix set 
+   {('uci',), ('uci', 'medical'), ('uci', 'medical', 'center')} .
+The  prefix set  includes a  tuple  of the first word, 
+  a  tuple  of the first two words, ...
+  and finally a  tuple  of all the words in the  full query .
+  
+Google stores information (in dictionaries) that allows it to predict the most
+  likely  full query  from any  prefix  the user enters in the
+  Google search box (as discussed in the example above).
+The prediction is based on (1) knowing all the  full queries  for a
+   prefix  and (2) knowing how many times each  full query  was
+  used.
+Using this information, Google can show the user the most frequently
+  entered  full queries  for the  prefix  he/she typed.
+  
+Google stores two dictionaries to accomplish this task.
+Recall that dictionary keys and  set  values must be immutable types:
+   tuple s are immutable (as are strings and integers) but not
+   list s.
+   Google stores a  prefix  dictionary whose  key  is a
+   prefix  (a  tuple ) and whose  associated value  is a
+   set  of all the  full queries  that have been entered for that
+   prefix .
+ 
+   Google stores a  query  dictionary whose  key  is a
+   full query  (again a  tuple ) and whose  associated value 
+  is an  int : the number of times (the frequency) that that 
+   full query  was used.
+   IMPORTANT: 
+Use a  defaultdict  to store both of these dictionaries.
+ 
+In this program you will build these dictionaries and then use them it to
+  predict a  full query  from a  prefix  entered by the user, and
+  update the dictionaries for any new query.
+  
+  Input and Output: 
+After prompting the user for the file of full queries, read the file, building
+  the  prefix  and  query  dictionaries (we are dropping the word
+   full  now).
+ 
+For a simple example, the file  googleq0.txt  contains the following
+  lines (in it, for simplicity and conciseness, we abbreviated
+  b = basketball, c = center, l = law, m = medical, s = soccer,  u = uci, and
+  w = women's).
+    u m c
+  u l
+  u w s
+  u l
+  u w s
+  u w b
+  u w b
+  u w b  
+  
+The program will first read this file and build the appropriate  prefix 
+  and  query  dictionaries; then it will print each dictionary.
+The  prefix  dictionary should be sorted by keys, from the shortest to
+  longest prefix, with equal-length prefixes sorted in standard lexical order;
+  of course the associated sets may print their values in any order.
+The  query  dictionary should be sorted by associated values (integers),
+  from largest to smallest integer, with equal integers sorted by their keys in
+  standard lexical order.
+  
+For example, the file above would produce the following output:
+    Prefix dictionary:
+    ('u',) -&gt; {('u', 'm', 'c'), ('u', 'l'), ('u', 'w', 'b'), ('u', 'w', 's')}
+    ('u', 'l') -&gt; {('u', 'l')}
+    ('u', 'm') -&gt; {('u', 'm', 'c')}
+    ('u', 'w') -&gt; {('u', 'w', 'b'), ('u', 'w', 's')}
+    ('u', 'm', 'c') -&gt; {('u', 'm', 'c')}
+    ('u', 'w', 'b') -&gt; {('u', 'w', 'b')}
+    ('u', 'w', 's') -&gt; {('u', 'w', 's')}
+
+  Query dictionary:
+    ('u', 'w', 'b') -&gt; 3
+    ('u', 'l') -&gt; 2
+    ('u', 'w', 's') -&gt; 2
+    ('u', 'm', 'c') -&gt; 1  
+  
+In the  prefix  dictionary  ('u',)  appears before  ('u', 'l') 
+  because it has fewer words; and  ('u', 'l')  appears before
+   ('u', 'w')  because in standard lexical order, when 2-tuples have equal
+  first values, they are ordered by their second values, and  'l'  comes
+  before  'w' .
+  
+In the  query  dictionary  ('u', 'w', 'b')  appears before
+   ('u', 'l')  because the first tuple's associated value ( 3 ) is
+  bigger than the second tuple's ( 2 ); and  ('u', 'l')  appears
+  before  ('u', 'w', 's')  because when tuples are associated with equal
+  values ( 2 ), they are ordered lexically, and  ('u', 'l', ...) 
+  comes before   ('u', 'w', ...)  (see the reasoning above).
+  
+Now, repeatedly prompt the user for any query prefix and print the top three
+  full queries for the entered prefix: print them in order from most to least
+  frequent full query (with ties printed using the standard lexical ordering;
+  the same ordering used when printing the Query dictionary above).
+Using the dictionaries above the iteraction would be.
+  
+     Enter some prefix (else quit): u
+    Top 3 (maybe less) full queries: [('u', 'w', 'b'), ('u', 'l'), ('u', 'w', 's')]  
+Finally, prompt the user to enter the full query, and update the dictionaries
+  and reprint them.
+    Enter some full query (else quit): u w s
+
+  Prefix dictionary:
+    ('u',) -&gt; {('u', 'm', 'c'), ('u', 'w', 'b'), ('u', 'l'), ('u', 'w', 's')}
+    ('u', 'l') -&gt; {('u', 'l')}
+    ('u', 'm') -&gt; {('u', 'm', 'c')}
+    ('u', 'w') -&gt; {('u', 'w', 'b'), ('u', 'w', 's')}
+    ('u', 'm', 'c') -&gt; {('u', 'm', 'c')}
+    ('u', 'w', 'b') -&gt; {('u', 'w', 'b')}
+    ('u', 'w', 's') -&gt; {('u', 'w', 's')}
+
+  Query dictionary:
+    ('u', 'w', 'b') -&gt; 3
+    ('u', 'w', 's') -&gt; 3
+    ('u', 'l') -&gt; 2
+    ('u', 'm', 'c') -&gt; 1  
+Here, the prefix dictionary stays the same (the full query already was entered
+  once; we could have entered a new full query, which would augment the prefix
+  dictionary), and the full query  ('u', 'w', 's')  has its query-count
+  increased from  2  to  3 .
+ 
+
+  Functions and Script: 
+Write the following functions and script.
+I am providing line counts not as requirements, but to indicate the lengths of
+  well-written Pythonic code.
+   all_prefixes  has a  tuple  of  str 
+         (words) parameter; it returns a  set  of  tuple  of
+           str : all the  prefixes  of the  full query  argument.
+       For example,  all_prefixes(('a', 'b', 'c'))  returns
+          {('a',), ('a', 'b'), ('a', 'b', 'c')} .
+        Hints:  comprehension and slicing
+       (body is 1 line).
+ 
+    add_query  has a prefix dictionary, query dictionary, and full query
+         ( tuple  of  str ) as parameters; it returns  None  but
+         updates these two dictionaries based on the full query.
+       It adds the new query's prefixes to the prefix dictionary (each
+          associated with the full query) and increments the integer value
+          associated with
+          that full query in the query dictionary (or, if the full query is
+           new, associates that query with 1)
+       (body is 3 lines).
+ 
+    read_queries  has an open (file) parameter; it returns a 2-tuple
+     containing the prefix and query dictionaries (in that order) built by
+     reading and processing each full query in this file.
+    (body is 5 lines).
+ 
+    dict_as_str  has a dictionary, key  function 
+      (default  None ) and  bool  (default  False ) as
+       parameters; it returns a multi-line string (each line is ended by
+        '\n' ), which when printed shows the contents of the dictionary in
+       the appropriate textual form.
+    The key function determines the ordering and the  bool  determines
+      whether to reverse it: like the  key  and  reverse  parameters
+      used for the  sort / sorted  functions in Python.
+    This function is used to print both the prefix and query dictionaries.
+     
+     Important:  The key function (and its use when iterating over the
+      dictionary in  dict_as_str ) must assume that its argument is a
+       key  in the dictionary, not an  item ;
+      otherwise the batch self-check test will fail even if your code works.
+     (body is 4 lines; can you do it in 1?).
+  
+    top_n  has a prefix ( tuple  of  str ),  int , prefix
+        dictionary, and query dictionary as parameters; it returns a  list 
+        of full queries ( tuple  of  str ) whose length is the
+        integer parameter, containing the most frequent full queries with that
+         prefix; if the number of full queries with that prefix is less than
+         that integer parameter, return all the full queries.
+    If no full queries have this prefix, return the empty list.
+    Notes: The dictionaries should not be changed.
+           If multiple full queries occur the same number of times, prefer
+      the full queries that come earlier in the standard lexical ordering: e.g.,
+      the same order they are printed in the query dictionary.
+      (body is 3 lines; can you do it in 1?).
+      
+   Write a script at the bottom of this module
+    (in  if __name__ == '__main__': ) that prompts the user for the file
+    storing the queries and builds the prefix and query dictionaries from this
+    file; then repeated: print these dictionaries; prompt the user for a prefix;
+    display the top three full queries with that prefix; prompt the user for
+    a full query; and finally update the prefix and query dictionaries with that
+    full query
+   (13 lines).
+   Sample Interaction: 
+The program, as specified, will have the following interaction:
+  user-typed information appears in  italics .
+Your output should match the form of this one (the order of values in the sets
+  may vary).
+  Enter some full query file:  googleq0.txt 
+
+Prefix dictionary:
+  ('u',) -&gt; {('u', 'l'), ('u', 'w', 'b'), ('u', 'w', 's'), ('u', 'm', 'c')}
+  ('u', 'l') -&gt; {('u', 'l')}
+  ('u', 'm') -&gt; {('u', 'm', 'c')}
+  ('u', 'w') -&gt; {('u', 'w', 'b'), ('u', 'w', 's')}
+  ('u', 'm', 'c') -&gt; {('u', 'm', 'c')}
+  ('u', 'w', 'b') -&gt; {('u', 'w', 'b')}
+  ('u', 'w', 's') -&gt; {('u', 'w', 's')}
+
+Query dictionary:
+  ('u', 'w', 'b') -&gt; 3
+  ('u', 'l') -&gt; 2
+  ('u', 'w', 's') -&gt; 2
+  ('u', 'm', 'c') -&gt; 1
+
+Enter some prefix (else quit):  u 
+  Top 3 (maybe less) full queries: [('u', 'w', 'b'), ('u', 'l'), ('u', 'w', 's')]
+
+Enter some full query (else quit):  u w s 
+
+Prefix dictionary:
+  ('u',) -&gt; {('u', 'l'), ('u', 'w', 'b'), ('u', 'w', 's'), ('u', 'm', 'c')}
+  ('u', 'l') -&gt; {('u', 'l')}
+  ('u', 'm') -&gt; {('u', 'm', 'c')}
+  ('u', 'w') -&gt; {('u', 'w', 'b'), ('u', 'w', 's')}
+  ('u', 'm', 'c') -&gt; {('u', 'm', 'c')}
+  ('u', 'w', 'b') -&gt; {('u', 'w', 'b')}
+  ('u', 'w', 's') -&gt; {('u', 'w', 's')}
+
+Query dictionary:
+  ('u', 'w', 'b') -&gt; 3
+  ('u', 'w', 's') -&gt; 3
+  ('u', 'l') -&gt; 2
+  ('u', 'm', 'c') -&gt; 1
+
+Enter some prefix (else quit):  u w 
+  Top 3 (maybe less) full queries: [('u', 'w', 'b'), ('u', 'w', 's')]
+
+Enter some full query (else quit):  a b c 
+
+Prefix dictionary:
+  ('a',) -&gt; {('a', 'b', 'c')}
+  ('u',) -&gt; {('u', 'l'), ('u', 'w', 'b'), ('u', 'w', 's'), ('u', 'm', 'c')}
+  ('a', 'b') -&gt; {('a', 'b', 'c')}
+  ('u', 'l') -&gt; {('u', 'l')}
+  ('u', 'm') -&gt; {('u', 'm', 'c')}
+  ('u', 'w') -&gt; {('u', 'w', 'b'), ('u', 'w', 's')}
+  ('a', 'b', 'c') -&gt; {('a', 'b', 'c')}
+  ('u', 'm', 'c') -&gt; {('u', 'm', 'c')}
+  ('u', 'w', 'b') -&gt; {('u', 'w', 'b')}
+  ('u', 'w', 's') -&gt; {('u', 'w', 's')}
+
+Query dictionary:
+  ('u', 'w', 'b') -&gt; 3
+  ('u', 'w', 's') -&gt; 3
+  ('u', 'l') -&gt; 2
+  ('a', 'b', 'c') -&gt; 1
+  ('u', 'm', 'c') -&gt; 1
+
+Enter some prefix (else quit):  quit   
+ 
+You can also try processing the  googleq1.txt  and  googleq2.txt 
+  files
+  
+   </body> 

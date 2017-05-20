@@ -1,0 +1,127 @@
+ Hobbes Genome Sequence Mapping, UC Irvine<body> 
+  
+   
+   Hobbes   
+  Genome Sequence Mapping  
+  Information Systems Group       Institute for Genomics and Bioinformatics  
+  Bren School of ICS  UC Irvine  
+    
+ 
+  
+ 
+    About  
+  Downloads  
+  Quick Start  
+  Examples  
+  Manual  
+  People  
+  FAQ  
+  Contact  
+  
+
+
+ 
+ 
+ Quick Start 
+ Compiling Hobbes3 
+Download  Hobbes3 source  and compile it as follows.
+ 
+$ tar -zxvf hobbes-3.0.tar.gz
+$ cd hobbes3.0
+$ ./build.sh nocompress
+$ cd build
+$ ./hobbes --help
+ 
+ 
+      
+ Building an index 
+
+Given a genome sequence file "genome.fasta", you can build an index by issuing
+the following command:
+ 
+
+$ ./hobbes-index --sref genome.fasta -i genome.hix -g 11 -p 4
+
+ 
+The command makes an index file named "genome.hix" using gram length 11.
+ hobbes-index  uses  --sref  to specify an input genome sequence
+file,  -i  to specify output index file, and  -g  to specify the
+gram length.  -p  enables multithreading and the command builds an index
+using 4 threads.
+
+ 
+ 
+* Hobbes2 builds an index very fast. For the whole human genome of HG18, for example,
+  the command above built an index in 9 minutes on a machine with 94 GB of RAM, and
+  dual quad-core Intel Xeons X5670 at 2.93 GHz, running a 64-bit Ubuntu OS.
+   
+ 
+
+ Aligning single-end reads 
+
+Given a read file "read.fastq" and a genome sequence file "genome.fasta" with
+its index file "genome.hix", the following command finds all mappings within
+edit distance 5.
+ 
+
+$ ./hobbes -q read.fastq --sref genome.fasta \
+           -i genome.hix -a --indel -v 5 -p 16 --mapout output.sam
+
+ 
+ hobbes  uses  -q  to specify an input read file,  --sref 
+to specify a genome file, and  -i  to specify an index file for the
+genome file. By using  -a , you can make  hobbes  produce all
+mapping locations. --indel  indicates gapped alignment with an edit
+distance threshold of 5, which is specified by  -v .  -p  enables
+multithreading and the command aligns reads using 16 threads.  hobbes 
+produces results in the SAM format. The command output results to a file named
+"output.sam", which is specified by  --mapout . If  --mapout  is
+not specified,  hobbes  outputs results to  stdout . In this
+case, you can redirect results to an output file as follows.
+ 
+  
+$ ./hobbes -q read.fastq --sref genome.fasta \
+           -i genome.hix -a --indel -v 5 -p 16 &gt; output.sam
+
+ 
+If you want to align reads with a Hamming distance threshold instead of an edit
+disance, you can replace  --indel  with  --hamming  as follows.
+ 
+
+$ ./hobbes -q read.fastq --sref genome.fasta \
+           -i genome.hix -a --hamming -v 5 -p 16 --mapout output.sam
+
+ 
+If you specify the number of reads, N, using  -n ,  hobbes  maps
+only the first N reads from the input read file. By using  -n , you can
+see the progress with an estimated time to complete alignment. It can be useful
+for testing your pipeline.
+ 
+
+$ ./hobbes -q read.fastq --sref genome.fasta \
+           -i genome.hix -a --indel -v 5 -n 10000 -p 16 --mapout output.sam
+
+76% MAPPING READS: 7616/10000; 0'26"/0'35"
+
+ 
+
+ Aligning paired-end reads 
+
+To align paired-end reads, you should use  --pe  and specify two input
+read files using  --seqfq1  and  --seqfq2 , respectively. You
+also need to specify minimum insert size and maximum insert size
+using  --min  and  --max , respectively. Other options are
+exactly the same as those of single-end alignment. Given two read files
+"read1.fastq" and "read2.fastq", for example, the following command produces
+paired-end mappings.
+ 
+
+$ ./hobbes --pe --seqfq1 read1.fastq --seqfq2 read2.fastq --min 110 --max 290 \
+           --sref genome.fasta -i genome.hix -a --indel -v 5  -n 10000 -p 16  \
+           --mapout output.sam
+
+ 
+ 
+      
+
+   � 2015 ISG | Website maintained by Jongik Kim | Created by  Yun Huang  | Original design   Andreas Viklund      Last Updated on Jul 13, 2015   </body> 

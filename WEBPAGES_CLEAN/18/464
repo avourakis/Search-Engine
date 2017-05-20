@@ -1,0 +1,177 @@
+ ICS 46 Spring 2016, Notes and Examples: Priority Queues<body>
+
+ 
+
+ 
+ICS 46 Spring 2016 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 46 Spring 2016 
+   Notes and Examples: Priority Queues 
+
+ 
+
+ 
+
+  What is a priority queue? 
+
+ Previously, we learned about a data structure called a  queue , which solves a classic, recurring problem in computing: Allowing a collection of objects to fairly wait to be processed, to have access to some resource, or what have you.  They do this in the most straightforwardly fair way you might imagine, by handling the objects on a first-come, first-served basis.  Each time an object is dequeued, it will be the one that's been waiting the longest.  Because of the natural way that they solve a common problem, queues arise all over the place in real software, from the internals of operating systems and hardware, to the interconnections between components in a distributed system that process inputs at different rates, and lots of other scenarios where objects need to "wait in line" for some reason. 
+
+ Queues rest on the fundamental principle that all waiting objects are equally important.  In many cases, that's absolutely what you'd want, with the only factor distinguishing one object from another is how long it's been waiting.  But this isn't necessarily the right way to handle every situation.  The core of an operating system like Windows or Linux — when you strip away things like graphical user interfaces and focus only on their deeper internals — are mainly in the business of arbitrating access to hardware and other resources, so that many programs can be running simultaneously, yet still share access to processors, displays, network interfaces, and so on.  For example, you may have noticed that your own computer sometimes runs much more slowly than usual, because you've asked it to do too many things at once; there simply isn't enough processing power to go around, let's say, so the operating system starts splitting processor time up and allocating a little bit to each program, so they can each make some progress, even though none of them is running anywhere near full speed.  Have you noticed, though, that certain aspects of your machine still seem to run flawlessly in this situation?  The mouse cursor might still move smoothly, the display is still being updated at a typical sixty times per second, and so on. 
+
+ What this tells us is that queues — the kind that treat all objects equally, and simply handle them in a first-come, first-served way — aren't always the right solution to real problems.  To maintain a reasonable user experience, to make sure that certain hardware constraints are met no matter what, or whatever, the operating system has to treat some programs as more important than others.  If there isn't enough processing power to go around, the more important ones need to get their requisite share of that power at the expense of the ones that are less important. 
+
+ This notion of importance is something that we often refer to as  priority ; for example, operating systems typically assign a priority to each program, with certain ones (like the ones that run the internals of the operating system) being considered more important than a program launched by a user.  A  priority queue  is a kind of queue that is fundamentally designed around this idea, with every object having an associated priority that determines its importance.  When an object is dequeued, the more important ones will always come out first.  To settle on one notion of "importance," we'll say that priorities are integers, and that smaller-numbered priorities like 4 are considered more important than larger-numbered priorities like 10.  (Note that you can do anything you'd like in practice, as long as there's an obvious way to compare two priorities to decide which one is "more important.") 
+
+ A conceptual diagram of a priority queue might look something like this: 
+
+   
+
+ The diagram shows the most important conceptual ideas underlying priority queues: 
+
+  The most important element is the one with the smallest priority.  In the event of a tie between elements with the same priority, neither is considered more important than the other; an implementation can prefer whichever one it wants.  (If, for example, you wanted the arrival time to break these kinds of ties, you'd need to include the arrival time as part of the priority.) 
+   The common operation  enqueue  adds a new element, along with a priority that determines its importance. 
+   The common operation  dequeueMin  removes the element that has the smallest priority value — the word  Min  in the name indicates that the minimum priority is the one we care most about.  This is analogous to the queue operation we called  dequeue . 
+   The common operation  findMin  returns the element that has the smallest priority value, without removing it from the queue.  This is analogous to the queue operation we called  front . 
+  
+
+ 
+
+  Implementing a priority queue 
+
+ As always, if we want to implement a data structure, our goal is to take the concept and turn it into a concrete reality.  In the case of a priority queue, that means we have to store the elements, provide a way to determine the priority of each one (either by storing the priority or by having a function that can calculate it for us), and arrange the elements into an underlying data structure.  There are different choices we can make, and some will work better than others, but we won't know which are better until we do some analysis. 
+
+ Using a linked list 
+
+ One possible implementation would involve storing the elements and their priorities in a linked list, with each node in the linked list containing a single element and its priority.  Additionally, we could keep the linked list sorted by priority, so the element with the minimum priority would always be at the head of the list — the most convenient place to access it.  If we did that, how well would the common operations perform? 
+
+  The  findMin  and  dequeueMin  operations would run in Θ(1) time, because accessing or removing the first node in a linked list is always a constant-time operation; no searching or iterating is required. 
+   The  enqueue  operation, on the other hand, would be a disappointment.  We'd need to search for the appropriate place in which to insert the element, based on its priority.  This would involve iterating through the list until we found a node with a larger priority value; we would then insert a new node just before it.  So we might have to look at every node, but we might also be able to stop early — because the priority we're adding might be smaller than all the ones already present — so we would say that this takes  O ( n ) time. 
+  If we think the priority queue might have a large number of elements stored in it, a linear-time enqueue is a disappointing outcome, and we should seek to do better.  What makes enqueue so expensive is the need to keep the list sorted by priority, which was making  enqueue  slower than we wanted it to be, so we could try keeping the list unsorted instead. 
+
+   enqueue  could now simply add a new node to the head of the list, which would take Θ(1) time. 
+    dequeueMin  would now have to search the list, looking for the element with the smallest priority.  Unless you knew a bound on the lowest possible priority, you would always have to look at every element — because no matter how small of a priority value you find, you might yet find a smaller one if you keep looking — so, in that case, this would take Θ( n ) time. 
+  Not only are we no better off, but you might even argue that we're a little bit worse off, because what used to be a  potentially  linear time operation on each element is now a  certainly  linear time operation on each element. 
+
+ Using an array-based list 
+
+ We could try using an array or a  std::vector  as a list instead, but we'd ultimately be no better off.  We'd be confronted with the same choice: Should we keep the elements sorted by priority or not?  And regardless of which choice we made, either  enqueue  or  dequeueMin  would wind up being expensive. 
+
+ So, generally, the "flat" data structures we learned about early on in the quarter are just not going to solve our problem very well.  In order to maintain the priority ordering in a way that doesn't cost too much, we're going to have to be a bit more clever; simply maintaining a list isn't going to turn out well, so we'll need to try something else.  It turns out that trees offer a solution, though only if we use them a little differently than we did when we used them to help us implement a better search structure.  Knowing that our goal is different — arrange the elements so the one with the smallest priority is most accessible — calls for a different solution, since it's a somewhat different problem. 
+
+ 
+
+ 
+
+  Binary min heaps 
+
+ What is a min heap? 
+
+ Let's start by considering the definition of a kind of tree called a  min heap . 
+
+ 
+A  min heap  is a tree with the following properties:
+
+  The key in the root of the tree is less than or equal to the key stored in the root of every subtree 
+   Every subtree is a min heap 
+  
+
+ Every node stores a key, and the main consequence of this definition is that the smallest key in any subtree is at its root; furthermore, the smallest key in the entire tree is in the root.  Given its main objective of keeping the smallest key in the most convenient place possible, it sounds like a good candidate for implementing a priority queue. 
+
+ However, like when we learned about binary search trees, this definition has a flaw: There's no restriction on the shape the tree might have.  It might be a single root node with a very large number of one-node subtrees; it might also be "degenerate" in the way that binary search trees can be degenerate, with every node having a single subtree.  And, ultimately, neither of these is going to be all that good, if our goal is to implement a priority queue: 
+
+  If the tree is a single root with only one-node subtrees, we'll easily be able to find the minimum key, but if we want to remove it (i.e., the  dequeueMin  operation in a priority queue), we'll need to find the next-smallest one, which won't be readily available. 
+   If the tree is degenerate, its structure will actually make removing the smallest key quite simple, since the root of its only subtree will be certain to contain the next-smallest key.  However, inserting a new key (i.e., the  enqueue  operation) will be problematic. 
+  What is a binary min heap? 
+
+ If we restrict the shape of the tree, though, we might find a happy medium, the way we did when we introduced balancing to binary search trees.  A  binary min heap  presents a great solution to this problem. 
+
+ 
+A  binary min heap  is a complete binary tree that is a min heap.
+ 
+
+ In other words, a binary min heap has a very restricted shape indeed: It must be a complete binary tree.  The keys, furthermore, are arranged according to the same ordering rule in a min heap, with the smallest key in the root, and the smallest key in every subtree being in that subtree's root. 
+
+ One interesting consequence of knowing that a binary min heap is a complete binary tree is that we don't actually need to allocate nodes and keep track of child or parent pointers.  Instead, we can use a trick to store the whole thing in an array-based list (e.g., an array or a  std::vector ).  Conceptually, we can number each node consecutively in level-order starting from 1, with the root being 1; its children being 2 and 3; their children being 4, 5, 6, and 7; and so on. 
+
+   
+
+ If we do this, then if we have the number of some node, we can always find the number of its children or its parent using a simple formula.  For the node numbered  i : 
+
+  The number of the left child is 2 i  
+   The number of the right child is 2 i  + 1 
+   The number of the parent is ⌊ i  / 2⌋ (i.e., the "floor" of  i  / 2) 
+  Each of these numbers could then be used as an index into an array or a  std::vector .  (Note, too, that you could start the numbering from 0, as well, which would lead to slightly different formulas that you could derive.  We'll sidestep that issue for now, to keep things simple.) 
+
+ This allows us to store a binary min heap very efficiently in an array or a  std::vector , so we won't need to allocate nodes, manage pointers, or any of that.  This makes for a very efficient data structure, in terms of memory usage and organization, which is a plus.  As you continue reading through these notes, I'll continue to draw the trees, but make sure you understand that you wouldn't actually bother with them in the implementation; when we swap the keys in two nodes, for example, we'll simply be swapping the values in two array cells. 
+
+ The next question, then, is whether we can efficiently maintain the heap-ordering property both when we insert an arbitrary key and when we remove the smallest key — these are the two most important things we'd need if we wanted to implement a priority queue, because they would provide an implementation of  enqueue  and  dequeueMin . 
+
+ Algorithm for inserting a key 
+
+ Suppose you had a binary min heap arranged like this already: 
+
+   
+
+ Now let's suppose that you wanted to insert the key 12 into this binary min heap.  There are two things we need to ensure: 
+
+  The resulting binary min heap must still be a complete binary tree, which means we must add a node that is a left child of the node containing 20. 
+   The resulting binary min heap must still meet the min-heap-ordering property, which means our new key, 12, must be placed somewhere it's allowed to be. 
+  And, unfortunately, these two goals are in conflict with one another, because the key 12 can't be a left child of 20.  However, all is not lost; we just need to rearrange the keys a bit.  Here's what we'll do. 
+
+   
+
+  We'll add a node as a left child of 20 and decide whether the new key, 12, is allowed to be placed there.  If so, we'd place it there and be done; however, it turns out not to be allowed in this case, because 20 is larger than 12. 
+   Because 20 is larger than 12, we'll move 20 into the new node, leaving a "hole" where 20 used to be.  Then we'll ask the same question: Can 12 be placed there?  And, again, the answer is no: the parent of this "hole" contains the key 13, which is larger than 12. 
+   So now we'll move 13 into the "hole", leaving a "hole" where it was previously.  Can 12 be placed there?  Yes!  So we'll place it there and we're done. 
+  That's all there is to it. 
+
+ Analysis of insertion algorithm 
+
+ There are three important facts here that we can combine to analyze this insertion algorithm: 
+
+  The height of a complete binary tree is Θ(log  n ), for reasons we've seen previously. 
+   The "hole" starts at a leaf position and works its way up one path in the tree, always moving to its parent, then its parent again, and so on. 
+   At worst, the "hole" will reach the root, in which case the key will certainly be eligible to be placed there.  But it may not need to get all the way to the root before we can place the new key. 
+  So, ultimately, what we're talking about here is a path in the tree that stretches from some node to a leaf.  Because we know the height of the tree is Θ(log  n ), but because we know the length of this path would not necessarily cover the tree's full height, this would take  O (log  n ) time to run. 
+
+ Algorithm for removing the smallest key 
+
+ Consider, again, this binary min heap: 
+
+   
+
+ Now suppose we want to remove the smallest key from it.  Similar to insertion, there are two goals we need to meet: 
+
+  The node containing 17 will have to be removed, because the resulting binary min heap must still be a complete binary tree. 
+   The key 8 will have to be removed, because the goal was to remove the smallest key. 
+  As with insertion, achieving our goals will require some rearrangement of the keys, particularly with the goal of relocating 17.  Here's what we can do: 
+
+   
+
+  Remove the key 8, leaving a "hole" at the root. 
+   Remove the node containing 17, leaving 17 orphaned. 
+   If 17 fits into the "hole" at the root, we'll place it there and be done.  However, in this case, it doesn't, because 17 would then be larger than at least one of its children. 
+   As a result, we'll promote one of the children of the root into the root node.  It's important that we do this carefully; it has to be the smallest of the two children, so we'll promote 9, leaving a "hole" where 9 used to be.  Then, again, we'll ask whether 17 fits into the "hole".  Nope! 
+   So, again, we'll promote the smaller of the "hole"'s two children: 11.  Now 17 fits into the "hole".  So we'll place it there, and we're done. 
+  Analysis of removal algorithm 
+
+ The analysis here is more or less identical to the analysis of insertion.  The worst-case scenario is that the "hole" will follow a path from the root of the tree all the way to a leaf, but it may not get there.  So, once again, we'd say that this operation would take  O (log  n ) time. 
+
+ How this helps us to implement a priority queue 
+
+ Once we have this kind of data structure, we're in pretty good shape; it would form the basis of a priority queue implementation.  A binary min heap could hold our keys (or, more completely, our elements and their associated priorities, with the priorities being treated as keys).  Our insertion algorithm would be how we'd implement  enqueue , and our algorithm for removing the smallest key would give us an implementation of  dequeueMin .  With both of these algorithms running in  O (log  n ) time, that will be plenty efficient for most uses. 
+
+ 
+
+</body> 

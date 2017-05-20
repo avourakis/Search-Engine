@@ -1,0 +1,30 @@
+ Adaptation for Latency Tolerance<body>
+
+  Adaptation for Latency Tolerance  
+      Operation
+ 
+ 
+1. Application sets prefetch parameters (compiler controlled)
+  2. Prefetching event generation
+     (runtime controlled)
+  when a new cache block is filled        
+if(start&lt;=vAddr&lt;=end) {
+  
+  if(pAddr &amp; 0x20)
+  
+    addr = pAddr - 0x20
+  
+  else
+  
+    addr = pAddr + 0x20
+  
+  &lt;initiate fetch of cache
+  
+     line at addr to L1&gt; }
+      
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

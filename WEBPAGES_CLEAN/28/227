@@ -1,0 +1,75 @@
+ """CubicHam.py
+
+Generate all Hamiltonian cycles in graphs of maximum degree three.
+D. Eppstein, April 2004.
+"""
+
+import unittest
+from Graphs import *
+from Biconnectivity import isBiconnected
+from CardinalityMatching import matching
+from Util import arbitrary_item, map_to_constant
+
+def HamiltonianCycles(G):
+    """
+    Generate a sequence of all Hamiltonian cycles in graph G.
+    G should be represented in such a way that "for v in G" loops through
+    the vertices, and "G[v]" produces a collection of neighbors of v; for
+    instance, G may be a dictionary mapping vertices to lists of neighbors.
+    Each cycle is returned as a graph in a similar representation, and
+    should not be modified by the caller.  Running time is O(2^{3n/8}) as
+    analyzed in my paper, The Traveling Salesman Problem for Cubic Graphs.
+    """
+
+    # Check input and copy it so we can modify the copy.
+    # In the copied graph G, G[v][w] is True when vw is an original edge
+    # of the input, and False when it was produced by a contraction.
+    if not G or not isUndirected(G) or maxDegree(G) &gt; 3:
+        raise ValueError("HamiltonianCycles input must be undirected degree three graph")
+    if minDegree(G)  2 or len(forced_in_current[w]) &gt; 2:
+            return False    # Three incident forced =&gt; no cycle exists
+        if w not in G[v] or v not in G[w]:
+            return False    # Removed from G after we decided to force it?
+        forced_in_current[v][w] = forced_in_current[w][v] = True
+        not_previously_forced = [x for x in (v,w) if x not in forced_vertices]
+        for x in not_previously_forced:
+            forced_vertices[x] = True
+        was_original = G[v][w]
+        if was_original:
+            forced_in_input[v][w] = forced_in_input[w][v] = True
+
+        def unforce():
+            """Undo call to force."""
+            for x in not_previously_forced:
+                del forced_vertices[x]
+            del forced_in_current[v][w],forced_in_current[w][v]
+            if was_original:
+                del forced_in_input[v][w],forced_in_input[w][v]
+
+        actions.append(unforce)
+        return remove_third_leg(v) and remove_third_leg(w) and \
+            force_into_triangle(v,w) and force_into_triangle(w,v) and \
+            force_from_triangle(v,w)
+
+    def force_into_triangle(v,w):
+        """
+        After v,w has been added to forced edges, check if w
+        belongs to a triangle, and if so force the opposite edge.
+        Returns True if successful, False if found a contradiction.
+        """
+        if len(G[w]) != 3:
+            return True
+        x,y = [z for z in G[w] if z != v]
+        if y not in G[x]:
+            return True
+        return force(x,y)
+
+    def force_from_triangle(v,w):
+        """
+        After v,w has been added to forced edges, check whether it
+        belongs to a triangle, and if so force the opposite edge.
+        Returns True if successful, False if found a contradiction.
+        """
+        for u in list(G[v]):    # Use list to avoid dict changes
+            if u in G[w]:
+                if len(G[u])  

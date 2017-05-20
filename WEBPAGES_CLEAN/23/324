@@ -1,0 +1,57 @@
+ Python: module pdb2pqr<body>
+
+           pdb2pqr</strong>   (version 1.1.0, 28 February 2006)     index   /home/todd/release/test/pdb2pqr.py       Driver for PDB2PQR 
+  
+This module takes a PDB file as input and performs optimizations 
+before yielding a new PDB-style file as output. 
+  
+Ported to Python by Todd Dolinsky (todd@ccb.wustl.edu) 
+Washington University in St. Louis 
+  
+Parsing utilities provided by Nathan A. Baker (baker@biochem.wustl.edu) 
+Washington University in St. Louis  
+ 
+         Modules</strong>                  
+     copy   getopt   math   os     src.pdb   src.protein   re   src.routines     xml.sax   src.server   string   src.structures     sys   time   src.utilities         
+         Functions</strong>                  
+     getAvailableExtensions</strong> (displayflag =0 )   Grab available extensions from the extensions directory 
+  
+Parameters 
+    displayflag: Display the error message if 1 
+Returns 
+    extensions: A map containing the extensions name and 
+                the module instance.       mainCGI</strong> ()   Main driver for running PDB2PQR from a web page       mainCommand</strong> ()   Main driver for running program from the command line.       printHeader</strong> (atomlist, reslist, charge, ff, warnings, options)   Print the header for the PQR file 
+  
+Parameters: 
+    atomlist: A list of atoms that were unable to have 
+              charges assigned (list) 
+    reslist:  A list of residues with non-integral charges 
+              (list) 
+    charge:   The total charge on the protein (float) 
+    ff:       The forcefield name (string) 
+    warnings: A list of warnings generated from routines (list) 
+    options:  A dictionary of command lnie options (float) 
+Returns 
+    header:   The header for the PQR file (string)       runPDB2PQR</strong> (pdblist, ff, options)   Run the PDB2PQR Suite 
+  
+Parameters 
+    pdblist: The list of objects that was read from the PDB file 
+             given as input (list) 
+    ff:      The name of the forcefield (string) 
+    options: A dictionary of PDB2PQR options, including: 
+             verbose: When 1, script will print information to stdout 
+                      When 0, no detailed information will be printed (int) 
+             debump:  When 1, debump heavy atoms (int) 
+             opt:     When 1, run hydrogen optimization (int) 
+             ph:      The desired ph of the system (float) 
+             outname: The name of the desired output file 
+Returns 
+    header:  The PQR file header (string) 
+    lines:   The PQR file atoms (list)       usage</strong> (rc)   Print usage for this script to stdout. 
+  
+Parameters 
+    rc:  Exit status (int)       
+         Data</strong>                  
+  AAPATH</strong> = 'dat/AA.xml'  ANGLE_CUTOFF</strong> = 20.0  BACKBONE</strong> = ['N', 'CA', 'C', 'O', 'O2', 'HA', 'HN', 'H', 'tN']  BONDED_SS_LIMIT</strong> = 2.5  BUMP_DIST</strong> = 2.0  BUMP_HDIST</strong> = 1.5  CELL_SIZE</strong> = 2  DIHEDRAL</strong> = 57.2958  DIST_CUTOFF</strong> = 3.2999999999999998  HDEBUG</strong> = 0  HYDPATH</strong> = 'dat/HYDROGENS.xml'  LIMIT</strong> = 500.0  LOADPATH</strong> = '/proc/loadavg'  LOCALPATH</strong> = '/export/home/www/html/test/'  LOGPATH</strong> = '/export/home/www/html/test//tmp//usage.txt'  NAPATH</strong> = 'dat/NA.xml'  PATCHPATH</strong> = 'dat/PATCHES.xml'  PEPTIDE_DIST</strong> = 1.7  REFRESHTIME</strong> = 10  REPAIR_LIMIT</strong> = 10  SMALL</strong> = 9.9999999999999995e-08  STYLESHEET</strong> = 'http://agave.wustl.edu/css/baker.css'  TMPDIR</strong> = 'tmp/'  WEBNAME</strong> = 'server.html'  WEBSITE</strong> = 'http://agave.wustl.edu/test/'  __author__</strong> = 'Todd Dolinsky, Nathan Baker'  __date__</strong> = '28 February 2006'  __version__</strong> = '1.1.0'    
+         Author</strong>                  
+ Todd Dolinsky, Nathan Baker   </body> 

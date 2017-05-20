@@ -1,0 +1,129 @@
+ VHDL Reference Guide - Process<body>  This is Google's cache of  http://www.vdlande.com/VHDL/process.html . It is a snapshot of the page as it appeared on Aug 5, 2009 01:41:13 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Process  
+        Concurrent Statement 
+ ---- used in ----&gt; 
+ Architecture 
+            Syntax        
+  
+
+ 
+     optional_label:  process  (optional sensitivity list)
+	declarations
+ begin 
+	sequential statements
+ end process  optional_label;
+  
+    
+  
+
+
+
+ 
+See LRM section 9.2
+
+         Rules and Examples        
+  
+
+ 
+    The  sensitivity list  is a list of signals. A change in value
+on one or more of these signals, causes the process to be activated:
+ process (ALARM_TIME, CURRENT_TIME)
+begin
+  if (ALARM_TIME = CURRENT_TIME) then
+    SOUND_ALARM &lt;= '1';
+  else
+    SOUND_ALARM &lt;= '0';
+  end if;
+end process;  
+    
+  
+
+ 
+    Alternatively, process activation and suspension may be controlled
+via the  wait  statement:
+ process
+begin
+  if (ALARM_TIME = CURRENT_TIME) then
+    SOUND_ALARM &lt;= '1';
+  else
+    SOUND_ALARM &lt;= '0';
+  end if;
+  wait on ALARM_TIME, CURRENT_TIME;
+end process;  
+    
+  
+
+ 
+    A process cannot have both a sensitivity list and wait statements 
+    
+  
+
+ 
+    A process may contain any sequential statement. 
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+Processes are synthesisable, provided they match certain typical forms,
+some of which are shown below:
+ 
+    A "clocked process" with either a wait statement or sensitivity
+list. For such a process, registers are inferred on  all  signals
+which have assignments to them:
+ WAIT_PROC: process
+begin
+  wait until CLK'event and CLK='1';
+  Q1 &lt;= D1;
+end process;
+
+SENSE_PROC: process (CLK)
+begin
+  if CLK'event and CLK='1' then
+    Q2 &lt;= D2;
+  end if;
+end process;  
+    
+  
+
+ 
+    A "combinational process" must have a sensitivity list containing
+all the signals which it reads (inputs), and must  always  update
+the signals which it assigns (outputs):
+ process (A, B, SEL)
+begin
+  Z &lt;= B;
+  if SEL='1' then
+    Z &lt;= A;
+  end if;
+end process;  
+    
+  
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, the keyword  process  (or the sensitivity list, if
+there is one) may be folllowed by the keyword  is  for clarity and
+consistancy.
+  
+In  VHDL -93, a  postponed process  may be defined. Such a process
+runs when all normal processes have completed at a particular point in
+simulated time. Postponed processes cannot schedule any further
+zero-delay events. Their main use is to perform timing or functional
+checks, based on the "steady-state" values of signals.
+
+  
+
+  </body> 

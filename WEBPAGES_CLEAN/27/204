@@ -1,0 +1,815 @@
+ Sets<body>
+
+ 
+
+ 
+Sets
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+ 
+Informally, a
+ set  is a collection of
+ elements 
+(also called  members ). 
+ 
+
+  If  X  is a set and
+ e  is an element of  X ,
+then we write  e  ∈  X . 
+If  e  is in not in  X ,
+then we write  e ∉ X . 
+ 
+
+  We have two ways of specifying the elements of a specific set. 
+ 
+
+  extensionally 
+     We can list all the elements of the set, in curly braces,
+      separated by commas. 
+      The list is termed the set's  extension . 
+      For example, {1,2,3} is the set whose elements are 1, 2, and 3;
+      the extension of "the positive integers no greater than 3" is
+      {1,2,3}. 
+      Each element of the set is listed exactly once. 
+     
+   intensionally 
+     Let  P ( x )
+      be a predicate that is true or false for each possible x
+      in some already-existing set  E . 
+      Then we write the set  S  of elements
+       x  for which
+       P ( x ) is true as
+       S ={ x  ∈ E | P( x )}. 
+      Where it is clear from context what set  E  is intended,
+      we simply write
+      { x  | P( x )}. 
+      It is clear that in all such cases S ⊆ E. 
+     
+   The
+ empty set  is the unique set that contains no elements. 
+We write the empty set as  ∅ 
+or {}. 
+ 
+
+ 
+A   singleton set 
+is a set containing exactly one element. 
+For example,
+{ a },
+{ ∅ },
+and { { a } } are all singleton sets
+(the lone member of { { a } } is
+{ a }). 
+ 
+
+ 
+The  cardinality  or
+ size  of a set
+is the number of elements it contains. 
+We write the cardinality of set  S  as
+| S |. 
+ 
+
+ 
+The cardinality of the integers is represented by  ω ;
+many (but not all) infinite sets also have this cardinality
+and are said to be  countably infinite ,  countable ,
+or  enumerable ,
+because their elements can be "counted" or
+placed in correspondence with the integers. 
+Examples: 
+| ∅ | = 0,
+|{a,b,c}| = 3,
+|{all even numbers}| =  ω . 
+ 
+
+
+ Relations between sets 
+
+ 
+Set  X  is a
+ subset  of set  Y  iff
+ e  ∈  X  implies
+ e  ∈  Y  for every
+ e . 
+We write this as  X  ⊆  Y . 
+ ⊆  is an  order relation . 
+ 
+
+  Sets  X  and
+ Y  are
+ equal  iff
+they have exactly the same elements. 
+Equivalently,  X  and  Y  are equal iff
+ X  ⊆  Y  and
+ Y  ⊆  X . 
+ 
+
+
+ Constructing a set from other sets 
+
+  The
+ intersection  of sets  X  and
+ Y ,
+written  X  ∩  Y ,
+is the set
+{ x  |  x  ∈  X  and  x  ∈  Y }. 
+ 
+
+  The
+ union  of sets  X  and  Y ,
+written  X  ∪  Y ,
+is the set { x  |  x  ∈  X  or  x  ∈  Y }. 
+ 
+
+  The
+ difference  of sets  X  and
+ Y ,
+written X- Y  or X\Y,
+is the set { x  |  x  ∈  X  and  x ∉ Y }. 
+Where  X  can be assumed: 
+the  complement  of  Y  with respect to
+ X ,
+written  Y ,
+is the set X- Y . 
+ 
+
+  The
+ powerset  of set  X ,
+written  ℘  X 
+or  P   X 
+or 2  X  ,
+is the set of all subsets of  X . 
+( Detailed discussion ) 
+A powerset is a  partially-ordered set . 
+ 
+
+  The
+ (Cartesian) product  of sets  X  and
+ Y ,
+written  X × Y ,
+is the set of pairs
+{( x , y ) |  x  ∈  X  and  y  ∈  Y }. 
+( Example ) 
+ 
+
+ 
+Products may be of any positive  arity 
+(or order)  n ,
+in which case the
+  n -ary
+(Cartesian) product 
+ X  1 ×...× X  n 
+is the set of  n -tuples
+{( x  1 ,..., x  n ) |  x  1  ∈  X  1 ∧...∧ x  n  ∈  X  n }. 
+The smallest arities have names: 
+ 
+   1-ary:   unary 
+   
+    2-ary:   binary 
+  (by far the most common arity)
+   
+    3-ary:   ternary 
+   
+  
+The  quotient 
+of set  X  by
+ equivalence relation 
+ E ,
+written  X / E ,
+is the set of  equivalence classes 
+into which  E  partitions  X . 
+ 
+
+
+ Properties of set operations 
+
+    Property 
+       Definition for  ∩  and
+       ∪  
+       Definition for  ∪  and
+       ∩  
+     idempotent 
+        X  ∩  X  = X 
+        X  ∪  X  = X 
+     commutative 
+        X  ∩  Y  =
+         Y  ∩ X 
+        X  ∪  Y  =
+         Y  ∪ X 
+     associative 
+       ( X  ∩  Y ) ∩  Z  =
+         X  ∩ ( Y  ∩  Z ) 
+       ( X  ∪  Y ) ∪  Z  =
+         X  ∪ ( Y  ∪  Z ) 
+     distributive 
+        X  ∩ ( Y  ∪  Z ) =
+        ( X  ∩  Y ) ∪ ( X  ∩  Z ) 
+        X  ∪ ( Y  ∩  Z ) =
+        ( X  ∪  Y ) ∩ ( X  ∪  Z ) 
+     De Morgan's laws 
+         X  ∩ Y  =
+           X   ∪   Y  
+         X  ∪ Y  =
+           X   ∩   Y  
+     
+           U -( X  ∩  Y )
+          =
+          ( U - X ) ∪ ( U - Y ) 
+       
+           U -( X  ∪  Y )
+          =
+          ( U - X ) ∩ ( U - Y ) 
+     absorptive 
+       
+           X  ∩ ( X  ∪  Y ) =
+           X  =
+           X  ∪ ( X  ∩  Y ) 
+      
+In the table above,
+De Morgan's laws are given twice, equivalently: 
+once in terms of complement (with respect to an implicit universe),
+and once in terms of subtraction
+from a specified universe  U . 
+ 
+
+ 
+I know no names for these useful equivalences involving set difference: 
+ 
+
+     
+       − and  ∪  
+       − and  ∩  
+     0. 
+        X  ∪  Y −(( X − Y ) ∪ ( Y − X ))
+        =  X  ∩ Y 
+     1. 
+       ( X − Z ) ∪ ( Y − Z ) = ( X  ∪  Y )−Z 
+       ( X − Z ) ∩ ( Y − Z ) = ( X  ∩  Y )−Z 
+     2. 
+        X  ∪ ( Y − Z ) = ( X  ∪  Y )−( Z − X ) 
+        X  ∩ ( Y − Z ) = ( X  ∩  Y )−( Z − X ) 
+       You will notice that the properties of  ∪  and  ∩ 
+are interchangeable, in a sense. 
+Every property that is true for  ∪  is also true for  ∩ ;
+more generally,
+if  P  is a property involving  ∪  and  ∩ ,
+then there is a property  P   ∂  
+(pronounced "P dual")
+that is  P  with every instance of  ∪  replaced by  ∩ ,
+and every instance of  ∩  replaced by  ∪ ,
+such that
+ P ≡ P  ∂ . 
+This relation between the two operators is termed  duality 
+and is an instance of the
+ duality 
+that holds in any ordered set. 
+ 
+
+ 
+It is worth noting that set difference (−)
+is neither commutative nor associative:
+ 
+
+    Property 
+       Explanation 
+     − is  not  commutative 
+       X− Y  ≠Y− X  for some  X  and Y 
+     − is  not  associative 
+       ( X − Y )− Z  ≠X−( Y − Z ) for some
+           X ,  Y , and Z 
+      Closure 
+
+ Let  S  be a set, and
+ O  an operation that takes
+0 or more operands (x1,x2,...) from S
+and returns a value. 
+S is  closed  under  O  iff
+for all x1,x2,... ∈ S,
+O(x1,x2,...) ∈ S. 
+ 
+
+  Examples:
+ 
+  The integers are closed under addition.  
+     The sum of any two integers is also an integer. 
+     
+   The integers are not closed under division.  
+     Counterexample:  1 divided by 2 is not an integer. 
+     
+   A powerset is closed under intersection.  
+     A powerset 2 S  contains all subsets of
+       S . 
+      The intersection of two subsets of  S 
+      contains no elements not in  S ,
+      so the intersection is also a subset of  S  and thus
+      an element of 2 S .
+     
+  
+A new set can be created by closing an existing basis set under an operation;
+the new set is called the  closure 
+of the basis set under the operation. 
+ 
+
+ 
+Most commonly, when we say closure we mean
+ transitive closure ,
+the set resulting from
+closing the closure of the ... of the closure of the basis set. 
+ 
+
+  The closure of  {1}  under  +  
+     The closure consists of the result of applying + to
+      every pair of elements in {1}: 
+      1+1=2. 
+      The closure is {1,2}. 
+     
+   The transitive closure of  {1} 
+      under  +  
+     The closure consists of the result of
+         1.  applying + to every pair of elements in {1}: 
+          1+1=2, resulting in {1,2};
+         
+          2.  then applying + to every pair of elements
+          in that closure {1,2}: 
+          1+1=2, 1+2=3, 2+1=3, 2+4=4, resulting in {1,2,3,4};
+         
+          3.  then applying + to every pair of elements
+          in that closure {1,2,3,4}: 
+          ... 
+         
+          ...
+         
+        
+      and so forth until the set is closed
+      (after an infinite number of closures, in this case).  
+      The transitive closure of {1} under + is the set of positive integers. 
+       
+     
+   The transitive closure of
+       { { a },{ b },{ c } } 
+      under   ∪   
+     The closure consists of the result of
+         applying  ∪ 
+          to every pair of elements in { {a},{b},{c} }: 
+          {a} ∪ {a{=}a},
+          {a} ∪ {b{=}a,b},
+          {a} ∪ {c{=}a,c},
+          {b} ∪ {a{=}a,b},
+          {b} ∪ {b{=}b},
+          {b} ∪ {c{=}b,c},
+          {c} ∪ {a{=}a,c},
+          {c} ∪ {b{=}b,c},
+          {c} ∪ {c{=}c},
+          resulting in { {a},{b},{c},{a,b},{a,c},{b,c} };
+         
+          then applying  ∪  to every pair of elements
+          in that closure { {a},{b},{c},{a,b},{a,c},{b,c} },
+          resulting in one new element {a,b,c};
+         
+        
+      Further closure cycles add no new elements. 
+      In this case, closure was achieved after a finite number of cycles
+      (two). 
+      The transitive closure of { {a},{b},{c} } under   ∪  
+      is { {a},{b},{c},{a,b},{a,c},{b,c},{a,b,c} }
+      (the  powerset  of {a,b,c}, incidentally). 
+       
+     
+  Enumerating infinite sets 
+
+ 
+We enumerate (count) finite sets by
+mapping a positive integer to each element,
+starting with 1 and continuing in sequence. 
+For example,
+we could count the vowels "a e i o u" thus: 
+ 
+    Extension of the set 
+     a 
+     e 
+     i 
+     o 
+     u 
+     Enumerating it 
+     1 
+     2 
+     3 
+     4 
+     5 
+      
+The same approach is used to enumerate infinite sets,
+except that just as we can't list
+the  extension  of an infinite set
+but have to define it  intensionally 
+with a rule,
+we can't count it either
+but instead have to give a rule for how we would count it. 
+Here's one way to enumerate the integers (positive, negative, and zero). 
+We start at 0,
+then alternate sides with 1, −1, 2, −2, 3, −3, .... 
+ 
+
+    Extension of the set 
+     ... 
+     −j 
+     ... 
+     −2 
+     −1 
+     0 
+     1 
+     2 
+     ... 
+     j 
+     ... 
+     Enumerating it 
+     ... 
+     2j+1 
+     ... 
+     5 
+     3 
+     1 
+     2 
+     4 
+     ... 
+     2j 
+     ... 
+      
+     (j is a positive integer, so −j is negative) 
+      
+In our enumeration,
+every integer gets a distinct positive integer: 
+0 gets 1,
+positive integer j gets 2j,
+and negative integer −j gets 2j + 1. 
+Thus the integers are enumerable
+(because we've given a rule that enumerates them). 
+ 
+
+ 
+You might think that the rationals (integer fractions) are not enumerable
+(because there are so many of them). 
+However,
+the following scheme shows the concept for enumerating the positive rationals. 
+ 
+
+ 
+The table on the left arranges the rationals
+so that each rational appears at least once —
+rational j/k appears in column j, row k (j, k &gt; 0). 
+(Actually, every number appears infinitely many times,
+for example 1/2 appears equivalently as 1/2, 2/4, 3/6, ....) 
+ 
+
+ 
+The table on the right
+enumerates the cells of the table on the left
+by diagonals, Fibonacci-style. 
+ 
+
+  The positive rationals 
+    
+     1 
+     2 
+     3 
+     4 
+     ... 
+     1 
+     1/1 
+     2/1 
+     3/1 
+     4/1 
+     ... 
+     2 
+     1/2 
+     2/2 
+     3/2 
+     4/2 
+     ... 
+     3 
+     1/3 
+     2/3 
+     3/3 
+     4/3 
+     ... 
+     4 
+     1/4 
+     2/4 
+     3/4 
+     4/4 
+     ... 
+     ... 
+     ... 
+     ... 
+     ... 
+     ... 
+     ... 
+       An enumeration 
+    
+     1 
+     2 
+     3 
+     4 
+     ... 
+     1 
+     1 
+     3 
+     6 
+     10 
+     ... 
+     2 
+     2 
+     5 
+     9 
+     ... 
+     3 
+     4 
+     8 
+     ... 
+     4 
+     7 
+     ... 
+     ... 
+     ... 
+       
+All the (positive) rationals get counted at least once,
+so they are enumerable. 
+The rule can easily be extended to cover zero and the negative rationals
+using the approach that enumerated the integers. 
+ 
+
+
+ Diagonalization 
+
+     
+       digit # 
+     list 
+       1 
+       2 
+       3 
+       4 
+       ... 
+        n  
+   ... 
+     1.  0. 
+       7 
+       5 
+       2 
+       0 
+        ... 
+       4 
+   ... 
+     2.  0. 
+       4 
+       3 
+       1 
+       5 
+        ...  
+       6 
+   ... 
+     3.  0. 
+       8 
+       6 
+       6 
+       3 
+        ...  
+       6 
+   ... 
+     4.  0. 
+       2 
+       9 
+       2 
+       5 
+        ...  
+       8 
+   ... 
+     ... 
+       ... 
+      n .  0. 
+       3 
+       2 
+       5 
+       6 
+        ...  
+       2 
+   ... 
+     ... 
+       ... 
+      
+Diagonalization is a technique for showing that
+the elements of a set are  not  countable. 
+We will illustrate it with the set of real numbers between 0 and 1. 
+ 
+
+ 
+The table shows a list of the real numbers between 0 and 1,
+in some arbitrary order (it doesn't matter what order). 
+The first real number in this particular order
+has a decimal representation begins with 0.75206...;
+the second one begins with 0.43158...,
+the third with 0.86630...,
+and so on. 
+The (infinite) table lists the infinite number of digits of each of the numbers;
+we show the 1st through 5th digits, and then also the  n th digit. 
+It doesn't matter what  n  is
+(except that in our example, it must be bigger than 5);
+it's just some large positive integer. 
+We also show the  n th number in the list,
+which begins with 0.32568.... 
+ 
+
+ 
+We can use diagonalization to show that there is
+a real number that is not in the list, even though the list is
+(countably) infinite. 
+We do this by conceptually stating a number,
+digit by digit: 
+ 
+
+ 
+    • Its 
+     1st 
+       digit is different from the 
+     1st 
+       digit of the 
+     1st 
+       number
+        (say, 6 instead of 7)
+          (although it doesn't matter which 
+        as long as it's different).   
+     • Its 
+     2nd 
+       digit is different from the 
+     2nd 
+       digit of the 
+     2nd 
+       number
+        (say, 2 instead of 3).  
+     • Its 
+     3rd 
+       digit is different from the 
+     3rd 
+       digit of the 
+     3rd 
+       number
+    (say, 5 instead of 6).  
+     • Its 
+     4th 
+       digit is different from the 
+     4th 
+       digit of the 
+     4th 
+       number
+    (say, 4 instead of 5).  
+     • ... 
+     • Its 
+      n th 
+       digit is different from the 
+      n th 
+       digit of the 
+      n th 
+       number
+    (say, 1 instead of 2).  
+     • And so on without end. 
+      
+
+ 
+This number with an infinite number of digits, 0.62546...,
+is  not in the list . 
+We know this, even though we don't know all the digits of the number,
+because it is different from the  j th number in the list,
+for any  j ,
+in its  j th digit. 
+It doesn't matter in what order we list the numbers;
+it is true in general. 
+We have just shown that the real numbers are not countable: 
+there are more real numbers than there are integers. 
+ 
+
+ 
+Interestingly, the rationals are countable,
+so that in a very practical sense there are not more rationals than integers. 
+The rationals cannot be diagonalized
+because in general an arbitrary decimal fraction
+with an infinite number of digits
+is not going to be a rational number (it will be real, but not rational),
+so the counterexample that diagonalization produces
+can't be guaranteed to be a rational number. 
+Similarly,
+the integers can't be diagonalized
+(such a table would be infinite to the left, not the right,
+and show the digits of each integer in the list)
+because the counterexample has an infinite number of digits
+and no integer has an infinite number of digits. 
+ 
+
+ 
+We can also use diagonalization to show that
+the  powerset  of a countably infinite set
+is not countable. 
+ 
+
+ 
+Diagonalization is due to Georg Cantor, circa 1880. 
+ 
+
+
+ Russell's paradox 
+
+  We must be just a bit careful
+when allowing sets to be elements of other sets,
+as this can lead to paradoxes. 
+The first such paradox was discovered by Bertrand Russell not long after
+sets were first introduced (circa 1900). 
+Let  R  be the set containing all sets that
+do not contain themselves. 
+Does  R  contain itself? 
+ 
+
+   Assume  R  contains itself. 
+    Then  R  cannot contain itself,
+    as  R  only contains sets that
+    do not contain themselves. 
+   
+    Assume  R  does not contain itself. 
+    Then  R  must contain itself,
+    as  R  contains all sets that
+    do not contain themselves. 
+   
+   Not a happy situation!
+ 
+
+  There are a number of ways of avoiding Russell's Paradox
+by carefully defining
+sets and their operations. 
+We avoid Russell's Paradox by restricting sets to be constructed only
+from sets that already exist
+(specifically,
+when naming a set by  intension ,
+we require that its elements be drawn from
+some other already-existing set  E ). 
+Thus we provide no way of constructing a set that contains
+all sets that do not contain themselves;
+there is only  ∩ ,  ∪ , −,
+ ℘ , ×,
+and intensional definition of a subset of an already existing set,
+and these aren't enough to construct  R . 
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Sep23We10:12 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

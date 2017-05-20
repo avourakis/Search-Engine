@@ -1,0 +1,170 @@
+ ICS 31 Lab 1<body>
+  ICS 31 • DAVID G. KAY • UC IRVINE • FALL 2016  
+   Lab Assignment 1   
+ 
+  This assignment is due by 10:00 p.m. on Friday, September 30.  
+   Preparation</strong>  (Do this part individually, before coming to lab) 
+ Some of these items are repeated from Lab Assignment 0 because they're important and some people may have added the class late. We won't be repeating assignment parts in the future. 
+   (1)</strong> (Repeated from the previous assignment) Do everything on the course refrence sheet (the syllabus) under the heading "What to do this week to get started in ICS 31." This includes filling out the questionnaire at   eee.uci.edu/survey/ics31,f16.q   and registering yourself at   checkmate.ics.uci.edu   and   piazza.com  .   
+  (2)</strong> Read through the Lab Work part of this assignment before you come to lab, to get an idea of what you'll be doing with your partner. 
+  (3)</strong>  (Repeated from the previous assignment)  If you haven't already, read the  guidelines for pair programming . They describe how you will be doing all your work in the lab. Pair programming is not as simple as just working together; there are specific roles and specific things each person needs to do. 
+  (4) </strong> (Repeated from the previous assignment)  We encourage you to talk with each other and help each other understand how to do the assignments. There are some limits, though; in particular, remember that knowing  how  to do it (when the quizzes and exams come, for example) is much more important than just putting down the answer. If you haven't already, read the  guidelines for collaboration and independent work . You may also wish to read some general advice about  how to approach college work ; not all of the practices that served you well in secondary school will work well here.
+ 
+  (5)</strong>  (Repeated from the previous assignment)  Read Chapter 1  of the Perkovic textbook; it provides some background, including some issues we talked about in class. 
+ These "preparation" sections of each assignment will include the reading in the text and some exercises for you to try out as you read.  People learn best when they apply what they read as they go, so it's best to read the book with a computer at hand so you can type things in and try them out. There's always a big gap between thinking you understand something you read and actually being able to apply it. We expect these exercises to go quickly, but if you find yourself spending more than a couple of minutes on an exercise without making any progress, you should ask about it (on Piazza, probably) rather than continuing to spin your wheels unproductively. Note that this also means you should get started early, so that you'll have the time to get any questions answered. 
+  (6)</strong>  (Repeated from the previous assignment)  Read sections  2.1 and 2.2 of the Perkovic text.  
+ As you're reading, it's important that you apply what you're reading; it's impossible to learn this material without actually working through it. Perkovic provides "Practice Problem" sections: You should try to do nearly all of these in whichever text you're using. Don't get stalled for a long time on any single question, but if you have trouble, ask someone.  Especially early in the course, it may seem tedious and slow because you're just learning your way. But the effort here will pay off in a greater facility later (or, to put it negatively, failing to do this now will result in disappointing performance later). 
+ We don't require you to turn in your answers to these practice problems; most of the solutions  appear at the end of the chapter in Perkovic. But don't just read the problem, turn to the solution, and say, "Yeah, that looks right." Write down your answer first; force yourself to work it through. That's how you learn. 
+  (7)</strong>  (Repeated from the previous assignment)  If you'd like to install Python on your personal machine, follow  these instructions . (If you're in a "Laptop Only" section, sections 8–12, you'll need to do this. Your TA or lab tutor may be able to help in lab.) 
+   
+   Lab Work</strong>  (Do this part with your partner in lab) 
+  (a)</strong> Choose a partner for this assignment and register your choice in the  partner app . Remember that you'll choose a different partner for each lab assignment, so you'll work with this partner only on this assignment. Your partner must be enrolled in the same lab section you're enrolled in. Make sure you know your partner's name (first and last) and contact information (Email or cellphone or whatever) in case one of you can't make it to lab. 
+ All your computer-based work on this (and every) lab assignment must follow the  pair programming guidelines .
+   (b)</strong> (Repeated from the previous assignment.) Locate and launch the IDLE software.
+  
+IDLE starts up with a "Python Shell" window where we'll see the results of most of our programs. IDLE also lets you open up a program window; do this now, by choosing "New Window" from the File menu. Give that window a name right away and save it, by choosing "Save As" from the file menu and specifying the name  lab1.py  . (You can save it anywhere on your machine; just don't forget where you put it and remember to recycle/discard it after you're done so that the next student on your lab machine doesn't use your work by mistake.)
+  In your 
+   lab1.py  file, you can type  print  statements that contain expressions; when you run the  code in the file (choose "Run Module" from the Run menu or press the F5 key), the results are printed in the Python Shell window. Try it: Type  print('Hello')  in your  lab1.py  file and then run it. You should se e Hello  
+in the shell window.
+  [It is also possible to type expressions, without the  print , directly into the shell window after IDLE's "prompt" of three greater-than signs (" &gt;&gt;&gt; "). This behaves a little differently, though, and most beginners find it confusing, so for now we're going to type all our Python code in a code window and run it when we're ready.]
+   (c)</strong> Experiment with IDLE to get familiar with it, following the suggestions below. One person "drives" (types); the other "navigates" (observes, questions, suggests); if you don't know what this is about, go back and read the  pair programming guidelines . The main point of this assignment is to get you familiar with the mechanics of IDLE, Python, and pair programming.
+  Try printing the values of some expressions, like  print(123 + 456)  and  print(2 ** 5)  ( **  is the operator for exponents) and  print(5 * 4 * 3 * 2 * 1) . 
+  Type in some definitions, like  number_of_students = 356  and  number_of_staff = 16  and then try printing expressions like  number_of_students / number_of_staff .
+
+
+(That is, type the Python statement  print(number_of_students / number_of_staff) . At this point we'll just say "print the expresion X" and you'll know to type the Python statement  print( X )  in your  lab1.py  file and then run it.)
+  Probably you've already done this a few times: Type some things that Python can't evaluate and see what messages Python produces. (Error messages are not bad; they're an inevitable part of programming. Don't think of them as the computer yelling at you; it's just trying to tell you why it couldn't process something.  The language of error messages can be cryptic, but you will learn how to pick through them for useful clues to what Python thinks the problem is.) 
+  Save a copy of the Python Shell window that shows your work for this part (using Save a Copy As from the File menu). A good name for the file would be  lab1c.txt ; stick with a naming pattern like this for the rest of the quarter. It's fine if your interactions show false starts and mistakes; it's also fine if you just produce a short, clean copy. Edit the file to make sure it includes your name and your partner's at the top; when you're done with the assignment, this is one of the files you'll submit via Checkmate. You will also submit your  lab1.py  file containing whatever Python code you wrote for this part. (Don't know what Checkmate is? Look at the "What to do this week" section of the course syllabus).
+  
+ (d)</strong> Switch roles now, if you haven't already, so the navigator can drive and vice versa. Don't worry if the new driver is less familiar with Python or IDLE than the first driver. Both will get more experienced rapidly.
+  
+As we mentioned briefly above, the Python shell window can be useful for testing out small things, but it doesn't save the code we type, so as our code gets longer and more involved, we need the technique we've already started using: We create a new window into which we can type Python code to save as a Python ( .py ) file. That's the way we'll be doing our work this quarter.
+  The factorial function (written in mathematical notation with an exclamation point, so "n factorial" would be n!) is used in calculating how many ways there are to arrange things (like the number of different ways to arrange five students in a row). The value of n! is n· (n-1)· (n-2)· ...· 1, so 5! = 5· 4· 3· 2· 1 = 120.
+  Create a new window (from the File menu) and save it as   lab1d.py . On the first line of the file type a pound sign followed by the names and IDs of both partners and some other identifying information, like this: 
+  
+ #  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab Asst 1d.
+ 
+ Type the following function definition into your new window. Actually do the typing so you can get used to the way it works; don't just copy and paste. (We'll go over the details of this code in class some time soon; for now, this is just a typing exercise and you shouldn't try too hard to figure out how it works. If you're not used to typing programs, be careful to type accurately. In particular, the spacing at the beginnings of the lines matters in Python.) 
+  Watch what happens every time you type a right-parenthesis, and watch what happens when you hit Return after typing a colon.
+  
+def factorial (n: int) -&gt; int:
+    ''' Compute n! (n factorial) '''
+    if n 
+ 
+  When you're done, run the code (select Run Module from the Run menu or type the F5 key). Don't be surprised to get error messages; you've probably just mis-typed something, and programming languages are pickier than the pickiest human proofreader. Just use the messages to help you identify each typo until you get an error-free result.
+  Now try changing the print statement(s) to print expressions like  factorial(120) ,  factorial(50 * 10) , and  factorial(factorial(5)) . Re-run the code to see what the results are. 
+ 
+Python can handle long numbers effortlessly, but any computer is finite; what do you think might happen if you evaluate  factorial(factorial(50)) ? You can try this, but you'll have to stop the evaluation by selecting Restart Shell from the Shell menu.
+  Make sure both partners' names are at the top of the Python file you typed, save that file, and submit it via Checkmate.
+
+But before you submit it, run the file one last time. It should produce correct results. If it doesn't, correct the mistakes before you submit it. Whenever you submit a Python file in ICS 31, the file should produce correct results when you (or we) run it; you won't receive credit if it produces an error message.
+   (e)</strong> 
+In IDLE, create a new file and save it as  lab1e.py . When you have your personal ICS lab account, save the file on your personal H: drive (or on a removable thumb drive). If you save it on the common C: drive, someone else might pick it up later (by mistake, we hope, but it would still lead to a lot of awkward questions about academic honesty). Keeping personal information secure is a real-world skill; people who work with health and other personal information can get in huge trouble if they leave personal information open to unauthorized access.
+  On the first line of the file type a pound sign followed by the names and IDs of both partners and some other identifying information, like this: 
+  
+ #  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab Asst 1e.
+ 
+ Now put in a couple of print statements that print some expressions—any expressions, you make them up—and run the code in the file. Once you have this working, continue with the rest of this assignment. Type your solutions to the rest of the lab into your   lab1e.py  file, which you will submit via Checkmate. (It's a good idea if each partner keeps a copy of the lab work at the end of each session, just in case someone can't make it to the next lab.) 
+
+  (f)</strong> 
+ Python exercises; answer in your  lab1e.py  file. [If you're moving along quickly, it's possible that you'll get to some problems below that address topics we haven't gotten to yet in class. Feel free to try them; it's also fine to wait until class catches up.]
+  
+ (1)  Write Python expressions that correspond to each of the following statements: 
+   
+The sum of the five even integers from 2 to 10.
+  
+The average of this group of test scores: 75%, 83.5%, 61%, 43%
+  
+2 to the 10th power
+  
+A moving anteater has a mass of 50 kg and a velocity (speed) of 15 meters per second.
+Compute its kinetic energy using this formula:  1/2 times the mass times the velocity squared.
+   (2)  We're designing a game where players can create castle defenses against invaders.
+Each side of the castle consists of a sequence of wall parts and cannons:  We
+represent a six-segment side with no cannons as  'wwwwww' ; a five-segment
+side with one cannon in the middle would be  'wwcww' .
+ Define these two variables: 
+  wall = 'w'
+cannon = 'c'  
+ Using the variables  wall  and  cannon , the string operators  +  and  * , and parentheses, write string expressions that evaluate to: 
+    "wc"   
+   "wcw"   
+   "wwwcwww"   
+   "wccwccwccwcc"   
+   "wwwcwwwcwwwcwwwcw"   
+   "wwwwcwwwwcwwwwcwwwwcwwww"   
+ 
+Try making your string expressions as compact as you can.
+
+  (3) 
+Scores on a quiz range from 0 to 5.
+Suppose we have the following assignment statement (which represents the quiz scores of all the students in a class):
+ 
+  test_scores = "4325220523455023" 
+ 
+Using the variable  test_scores  and the indexing operators,
+write four separate expressions whose values are each of
+the following:  quiz score for the 1st student, the 5th student,
+the 10th student, and the 16th student.  Remember zero-based indexing.
+ 
+
+
+  (4) 
+Suppose we have the following assignment statement: 
+  s = "anteater" 
+ 
+For each of the following, write a boolean expression that represents the English statement:
+   The first character of string  s  is  "a" 
+ 
+ The last character of string  s  is  "r" 
+ 
+ The fourth character of string  s  is  "x" 
+ 
+ The first three characters of string  s  match the string  "zot" 
+
+    (5)  Write Python assignment statements that correspond to each of the following: 
+  Assign 3.14159 to variable  pi 
+ 
+ Assign the values
+ "Toyota" ,  "Camry" , and  2014 
+to the variables  make ,  model , and  year  
+ 
+ Assign a list containing strings  "Computer Science" ,  "Informatics" , and  "Computer Game Science"  to the variable  ICS_majors 
+ 
+ Assign the variable  a  to be the average of the odd numbers from 3 to 9.
+ 
+   (6) 
+Write boolean expressions corresponding to each of the following statements: 
+  20 plus 35 is greater than 2 to the power of 4
+ 
+ The string  "hello"  is not equivalent to the string  "goodbye" 
+ 
+ The remainder when 10 is divided by 3 is less or equal to 1.
+ 
+ The list  ["apple", "orange", "banana", "mango"]  contains 5 elements.
+ 
+ The number 63 is an even number.
+ 
+   (7) 
+Start with the following assignment statement:   s = "abcdefghijklmnopqrstuvwxyz" 
+ 
+ Using only string concatenation and the indexing operator on the string  s , write Python expressions that result in the following: 
+   "dog" 
+ 
+  "tv" 
+ 
+  "ics" 
+ 
+  "uci" 
+ 
+   (g)</strong> Done, and it's not Friday yet? Good for you! But you should know that the rest of the class will catch up to you and that later assignments will take everyone longer. And ask yourself: Are you sure that both you and your partner understand everything in this assignment? Could each of you re-solve each problem easily? Does each of you understand every technical term used? 
+ Take this opportunity to make sure each of you has a solid foundation in the basics. If you like, try some of the problems at  Codingbat.com.  
+  (h) </strong>Remember that each partner must complete a partner evaluation form and submit it individually. Do this by connecting to the  partner app ; you'll need to log in with your UCInet ID. The partner evaluations will typically be available on the day the lab is due. 
+ Make sure you know your partner's name, first and last, so you can evaluate the right person. Please complete your evaluation by the end of the day on Friday, or Saturday morning at the latest. It only takes a couple of minutes and not doing it hurts your participation score.  
+  What to turn in:</strong> It would be an excellent idea to go back and re-read the assignment carefully now, to make sure you've completed all the steps specified. Then one member of each pair (not both!) must submit via Checkmate the files you created for parts (c), (d), (e) and (f) above; make sure both partners' names appear at the top of each file. Also remember that each student must complete a partner evaluation form; these evaluations contribute to your class participation score. Get in the habit of doing this every week on Friday after you've submitted your assignment; the partner evaluations close on Saturday.
+  
+    
+  Written by David G. Kay in Fall 2012 for ICS 31, based on materials from ICS H21, H22, and Informatics 41; modified by David G. Kay, Winter and Fall 2013, Winter 2014, Fall 2014, Winter 2015, Fall 2015, Fall 2016. Python exercises by David Lepe, Winter 2014.      David G. Kay ,  kay@uci.edu      
+Tuesday, September 27, 2016 7:31 PM
+  
+</body> 

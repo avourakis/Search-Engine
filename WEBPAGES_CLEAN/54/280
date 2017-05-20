@@ -1,0 +1,283 @@
+ CHEM.CombiCDB.BaseScreen.BaseScreen<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package CombiCDB  ::
+         Module BaseScreen  ::
+        Class BaseScreen
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class BaseScreen    Abstract base class for all screen classes.  Screen classes are those 
+  that take an oemolistream (list of molecules) as input and outputs a 
+  subset of them, as an oemolostream, that passes some screening criteria, 
+  determined by the instantiating class. 
+   Subclasses should primarily just define their own constructor that 
+  accepts as parameters anything necessary to define the screening 
+  function, and override the screenMolecule(...) method. 
+  Once done, then client code just needs to create an instance, set the 
+  input and output sources and any screening parameters and call 
+  runScreen(...) to fill in the output stream.    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+             setOEIS ( self ,
+         oeis )  
+           
+            
+            
+           
+           
+     
+         
+      
+             setOEOS ( self ,
+         oeos )  
+           
+            
+            
+           
+           
+     
+         
+      
+             setParameter ( self ,
+         key ,
+         value )  
+           
+            
+            
+           
+           
+     
+         
+      
+             getParameter ( self ,
+         key )  
+           
+            
+            
+           
+           
+     
+         
+      
+             clearParameters ( self )  
+           
+            
+            
+           
+           
+     
+         
+      
+           screenMolecule ( self ,
+         mol )  
+      Primary method for subclass to override. 
+           
+            
+            
+           
+           
+     
+         
+      
+           screenSmiles ( self ,
+         smiles )  
+      Wrapper for primary screenMolecule method. 
+           
+            
+            
+           
+           
+     
+         
+      
+           prepareParameters ( self )  
+      Another method for subclass to override. 
+           
+            
+            
+           
+           
+     
+         
+      
+           runScreen ( self )  
+      Primary execution method to be called by client code. 
+           
+            
+            
+           
+           
+     
+         
+      
+             runScreenByFilename ( self ,
+         sourceFilename ,
+         screenFilename )  
+      Alternative to runScreen(...) where filenames are specified to 
+      read / write instead of assuming the mOEIS and mOEOS attributes are 
+      set. 
+           
+            
+            
+           
+           
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         mOEIS  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Search ...   
+      Output oemolostream to send screened results to
+     
+     
+         
+      
+         mOEOS  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Search ...   
+      Screening parameters as a dictionary.
+     
+     
+         
+      
+           mParameters  =  {} 
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     screenMolecule ( self ,
+         mol ) 
+   
+     
+     
+    
+  
+  Primary method for subclass to override.  Given a molecule 
+  (OEMolBase), the method should just return True or False as to whether 
+  the molecule passes the screening criteria.
+        
+  
+ 
+   
+     
+     screenSmiles ( self ,
+         smiles ) 
+   
+     
+     
+    
+  
+  Wrapper for primary screenMolecule method.  Creates a molecule object 
+  by parsing the SMILES string first.
+        
+  
+ 
+   
+     
+     prepareParameters ( self ) 
+   
+     
+     
+     Another method for subclass to override.  Called before any 
+  screenMolecule(...) is done by the runScreen(...) method. This is 
+  important if say, the caller uses the setParameter(...) method after 
+  instantiation, then need to have a chance to prepare the parameters for 
+  usage, since can't count on it being done at construction time and don't 
+  want to have to do it each time screenMolecule(...) is called. 
+   However, this also means, if the screenMolecule(...) method is called 
+  directly instead of runScreen(...), the caller must be responsible to 
+  call prepareParameters(...) first. 
+  The again, if no extra parameter preparation is necessary, as in if 
+  simple calls to getParameter(...) can be used by the screenMolecule(...) 
+  method, then not much to do here.
+        
+  
+ 
+   
+     
+     runScreen ( self ) 
+   
+     
+     
+    
+  
+  Primary execution method to be called by client code. After setting 
+  the input and output streams and any screening parameters, just iterate 
+  through the input stream and pass all molecules that pass the 
+  screenMolecule(...) method to the output stream.
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   mOEIS 
+  Output oemolostream to send screened results to
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   mOEOS 
+  Screening parameters as a dictionary. Better to have these all set by 
+  the instantiating subclass's constructor, but have it here to provide 
+  option to specify or change after instantiation, while still only using 
+  base class methods.
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:27 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

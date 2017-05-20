@@ -1,0 +1,305 @@
+ CHEM.Common.test.Util.ChemDBTestCase<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Common  ::
+         Package test  ::
+         Module Util  ::
+        Class ChemDBTestCase
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class ChemDBTestCase    
+       object --+    
+                |    
+unittest.TestCase --+
+                    |
+                    ChemDBTestCase</strong>
+ 
+
+  Known Subclasses: 
+ 
+     TestStatsUtil.TestStatsUtil ,
+     Web.cgibin.test.TestUtil.TestUtil 
+   
+Common base class for TestCase classes to add some extra 
+  functionality    
+   
+        Nested Classes  
+          [ hide private ]  
+         
+   
+      Inherited from  unittest.TestCase  :
+        failureException  
+       
+     
+      
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           setUp ( self )  
+      Prep for test case. 
+           
+            
+            
+           
+           
+     
+         
+      
+           tearDown ( self )  
+      Restore state after test finishes. 
+           
+            
+            
+           
+           
+     
+         
+      
+           assertEqualGeneral ( self ,
+         verifyValue ,
+         sampleValue ,
+         precision )  
+      If the verifyValue is a number (float or int) try to convert the 
+      sampleValue into something more comparable. 
+           
+            
+            
+           
+           
+     
+         
+      
+           assertEqualFile ( self ,
+         verifyFile ,
+         sampleFile ,
+         arbitraryLines = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  )  
+      Assumes the two parameters are each File objects and does an 
+      "assertEqual" on each pair of lines in the two files 
+           
+            
+            
+           
+           
+     
+         
+      
+           assertEqualList ( self ,
+         verifyList ,
+         sampleList )  
+      Assumes the two parameters are each lists or tuples and does an 
+      "assertEqual" on each pair of items. 
+           
+            
+            
+           
+           
+     
+         
+      
+           assertEqualTable ( self ,
+         verifyTable ,
+         sampleTable )  
+      Assumes the two parameters are each 2D lists or tuples and does an
+      "assertEqual" on each pair of items. 
+           
+            
+            
+           
+           
+     
+      Inherited from  unittest.TestCase  :
+       __call__ ,
+       __init__ ,
+       __repr__ ,
+       __str__ ,
+       assertAlmostEqual ,
+       assertAlmostEquals ,
+       assertEqual ,
+       assertEquals ,
+       assertFalse ,
+       assertNotAlmostEqual ,
+       assertNotAlmostEquals ,
+       assertNotEqual ,
+       assertNotEquals ,
+       assertRaises ,
+       assertTrue ,
+       assert_ ,
+       countTestCases ,
+       debug ,
+       defaultTestResult ,
+       fail ,
+       failIf ,
+       failIfAlmostEqual ,
+       failIfEqual ,
+       failUnless ,
+       failUnlessAlmostEqual ,
+       failUnlessEqual ,
+       failUnlessRaises ,
+       id ,
+       run ,
+       shortDescription 
+       
+           Inherited from  unittest.TestCase   (private):
+       _exc_info 
+        
+      Inherited from  object  :
+       __delattr__ ,
+       __getattribute__ ,
+       __hash__ ,
+       __new__ ,
+       __reduce__ ,
+       __reduce_ex__ ,
+       __setattr__ 
+       
+     
+      
+   
+        Properties  
+          [ hide private ]  
+         
+   
+      Inherited from  object  :
+       __class__ 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     setUp ( self ) 
+   
+     
+     
+    
+  
+  Prep for test case.  Subclass must call this parent method to actually
+  use it.
+    Overrides:
+      unittest.TestCase.setUp
+     
+       
+  
+ 
+   
+     
+     tearDown ( self ) 
+   
+     
+     
+    
+  
+  Restore state after test finishes.  Subclass must call this parent 
+  method to actually use it.
+    Overrides:
+      unittest.TestCase.tearDown
+     
+       
+  
+ 
+   
+     
+     assertEqualGeneral ( self ,
+         verifyValue ,
+         sampleValue ,
+         precision ) 
+   
+     
+     
+    
+  
+  If the verifyValue is a number (float or int) try to convert the 
+  sampleValue into something more comparable.  If it is a float, use the 
+  precision value to do an assertAlmostEqual.
+        
+  
+ 
+   
+     
+     assertEqualFile ( self ,
+         verifyFile ,
+         sampleFile ,
+         arbitraryLines = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ) 
+   
+     
+     
+     Assumes the two parameters are each File objects and does an 
+  "assertEqual" on each pair of lines in the two files 
+  If arbitraryLines is a collection of integers, will skip the 
+  respectively indexed lines.
+        
+  
+ 
+   
+     
+     assertEqualList ( self ,
+         verifyList ,
+         sampleList ) 
+   
+     
+     
+    
+  
+  Assumes the two parameters are each lists or tuples and does an 
+  "assertEqual" on each pair of items. Check item by item rather 
+  than whole list so errors are easier to debug.
+        
+  
+ 
+   
+     
+     assertEqualTable ( self ,
+         verifyTable ,
+         sampleTable ) 
+   
+     
+     
+    
+  
+  Assumes the two parameters are each 2D lists or tuples and does an 
+  "assertEqual" on each pair of items. Check item by item rather 
+  than whole table or rows, so errors are easier to debug.
+        
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:28 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

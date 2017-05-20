@@ -1,0 +1,45 @@
+ Executable Domain Languages<body>
+
+  Executable Domain Languages  
+      CORBA -&gt; CLOS mapping 
+     
+module Bank{
+  
+   interface Account {
+  
+       float Balance(); 
+  
+       };
+  
+   interface AccountManager {
+  
+      Account open (in string name);
+  
+      };
+  
+};    
+(idl �Bank.idl�)
+    
+(defclass Account (Bank:Account)
+  
+    (balance :accessor get-balance))
+    
+(def-corba-method Balance ((account Account))
+  
+    (get-balance account))
+    
+(defclass AccountManager (Bank:AccountManager)
+  
+    ((accounts :accessor get-accounts :initform (make-hash-table :test #�equal))))
+    
+(def-corba-method open ((mgr AccountManager) name)
+  
+    (gethash name (get-accounts mgr)))    
+Server Implementation    
+Bank.idl    
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

@@ -1,0 +1,52 @@
+ 4.87 OEKekulize<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.86 OEIsWriteable 
+ Up:   4. OEChem Functions 
+ Next:   4.88 OEMacroModelAtomTypes 
+   
+
+
+  
+4.87 OEKekulize 
+ 
+   
+bool OEKekulize(OEMolBase &amp;mol)
+    
+Determine a valid Kekulé form for a molecule.  On input, the integer
+bond types of each bond should be set to 1 for single, 2 for double, 3
+for triple, 4 for quadruple and 5 for an aromatic (or resonant bond).
+On output, the bond order property of each bond is set to the integer
+bond types, except for bonds marked type 5, which are assigned as
+either single or double as required.  The formal charges and implicit
+hydrogen counts of each atom must be correctly specified prior to
+calling this function.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.86 OEIsWriteable 
+ Up:   4. OEChem Functions 
+ Next:   4.88 OEMacroModelAtomTypes 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

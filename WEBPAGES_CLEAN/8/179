@@ -1,0 +1,40 @@
+ /*
+  $Id: lexic.cc 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#include "lexic.h"
+
+#include 
+
+class LexicCmp
+{
+private:
+  const vector *data;
+public:
+  LexicCmp(const vector *d): data(d) {}
+  bool operator()(unsigned a, unsigned b) const { return (*data)[a]  *d, const unsigned clusterNo, 
+             const SampleType sampleType, const unsigned samplePer,
+             const unsigned queueSize, const unsigned uniqueNo): 
+  Clusters(d, clusterNo, sampleType, samplePer, queueSize, uniqueNo)
+{  
+  for (unsigned i = 0; i push_back(Cluster());
+}
+
+void Lexic::buildClusters() 
+{
+  vector dId(data-&gt;size());
+  for (unsigned i = 0; i size(); i++) dId[i] = i;
+
+  sort(dId.begin(), dId.end(), LexicCmp(data));
+
+  const unsigned n = static_cast(data-&gt;size());
+  const unsigned nclust = n/clusterNo;
+  for (unsigned i = 0; i  

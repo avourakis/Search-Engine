@@ -1,0 +1,53 @@
+ 15.2.1 Constructors<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.2 oeifstream 
+ Up:   15.2 oeifstream 
+ Next:   15.2.2 fd 
+   
+
+
+  
+15.2.1 Constructors 
+ 
+   
+oeifstream()
+oeifstream(int fd)
+oeifstream(const char        *filename)
+oeifstream(const std::string &amp;filename)
+    
+Creates a new oeifstream. If a valid file descriptor ( fd ) is passed to
+the constructor, the stream will use the associated data source for input.
+Otherwise, the constructors expect the name of an existing file from which to
+read. If no parameter is passed to the constructor, the stream can later be
+opened using the  open  command defined in  OEPlatform::oeistream  or
+the  openfd  command defined in this class.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.2 oeifstream 
+ Up:   15.2 oeifstream 
+ Next:   15.2.2 fd 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

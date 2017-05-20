@@ -1,0 +1,271 @@
+ Circle<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+
+ Circle Type ( Circle ) 
+ 
+
+  Definition 
+ 
+
+An object of the class  Circle  is a circle in two-dimensional
+Euclidean plane     2  . Its boundary splits the plane into a bounded
+and an unbounded side. By definition, an empty  Circle  has no
+boundary and no bounded side, i.e. its unbounded side equals the
+whole plane     2  . A  Circle  containing exactly one point  p 
+has no bounded side, its boundary is  {p} , and its unbounded side
+equals     2  - {p} .
+  
+
+  Types 
+ 
+
+    
+         
+    Circle::Point
+         
+              
+    Point type.
+ 
+
+     
+
+The following type is only needed, if the member function  is_valid 
+of   Min_circle_2   is used.
+  
+
+    
+         
+    Circle::Distance
+         
+              
+    Distance type. The function   squared_radius   (see below)
+        returns an object of this type.
+ 
+
+     
+
+  Creation 
+ 
+
+    
+         
+    void
+         
+          
+         
+    circle.set ()
+         
+          
+    sets  circle  to the empty circle.
+                 
+         
+    void
+         
+          
+         
+    circle.set (  Point p)
+         
+                
+    sets  circle  to the circle containing exactly  {  p  } .
+                 
+         
+    void
+         
+          
+         
+    circle.set (  Point p,  Point q)
+         
+                
+    sets  circle  to the circle with diameter equal to the segment
+        connecting  p  and  q . The algorithm guarantees that
+         set  is never called with two equal points.
+                 
+         
+    void
+         
+          
+         
+    circle.set (  Point p,  Point q,  Point r)
+         
+                
+    sets  circle  to the circle through  p , q , r .
+        The algorithm guarantees that  set  is never called with
+        three  collinear  points.
+            
+
+  Predicates 
+ 
+
+    
+         
+    bool
+         
+          
+         
+    circle.has_on_unbounded_side (  Point p)
+         
+                
+    returns  true , iff  p  lies properly outside of  circle .
+            
+
+Each of the following predicates is only needed, if the corresponding
+predicate of   Min_circle_2   is used.
+  
+
+    
+          CGAL::Bounded_side 
+         
+          
+         
+    circle.bounded_side (  Point p)
+         
+                
+    returns  CGAL::   ON_BOUNDED_SIDE  ,
+         CGAL::   ON_BOUNDARY  , or
+         CGAL::   ON_UNBOUNDED_SIDE   iff  p  lies properly inside,
+        on the boundary, or properly outside of  circle , resp.
+                 
+         
+    bool
+         
+          
+         
+    circle.has_on_bounded_side (  Point p)
+         
+                
+    returns  true , iff  p  lies properly inside  circle .
+                 
+         
+    bool
+         
+          
+         
+    circle.has_on_boundary (  Point p)
+         
+                
+    returns  true , iff  p  lies on the boundary
+        of  circle .
+                 
+         
+    bool
+         
+          
+         
+    circle.is_empty ()
+         
+          
+    returns  true , iff  circle  is empty (this implies
+        degeneracy).
+                 
+         
+    bool
+         
+          
+         
+    circle.is_degenerate ()
+         
+                
+    returns  true , iff  circle  is degenerate, i.e. if
+         circle  is empty or equal to a single point.
+            
+
+  Additional Operations for Checking 
+ 
+
+The following operations are only needed, if the member function
+ is_valid  of   Min_circle_2   is used.
+  
+
+    
+         
+    bool
+         
+          
+         
+     circle ==  circle2
+         
+          
+    returns  true , iff  circle  and  circle2  are equal.
+                 
+         
+    Point
+         
+          
+         
+    circle.center ()
+         
+          
+    returns the center of  circle .
+                 
+         
+    Distance
+         
+          
+         
+    circle. squared_radius  ()
+         
+                
+    returns the squared radius of  circle .
+            
+
+  I/O 
+ 
+
+The following I/O operators are only needed, if the corresponding I/O
+operators of   Min_circle_2   are used.
+  
+
+    
+         
+    std::ostream&amp;
+         
+          
+         
+     std::ostream&amp; os &lt;&lt;  circle
+         
+                
+    writes  circle  to output stream  os .
+                 
+          CGAL::Window_stream &amp;
+         
+              
+          CGAL::Window_stream &amp; ws &lt;&lt;  circle
+         
+                
+    writes  circle  to window stream  ws .
+            
+
+    Next:    Min_ellipse_2&lt;Traits&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

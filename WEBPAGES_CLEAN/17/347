@@ -1,0 +1,109 @@
+ VHDL Reference Guide - Use Clause<body>  This is Google's cache of  http://www.vdlande.com/VHDL/use.html . It is a snapshot of the page as it appeared on Oct 8, 2009 09:09:05 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Use Clause  
+        Context Clause 
+ ---- used in ----&gt; 
+ Entity Architecture Package Configuration 
+            Syntax        
+  
+
+ 
+     use library_name.primary_unit_name;        use library_name.primary_unit_name.item;      
+  
+
+
+
+ 
+See LRM section 10.4
+
+         Rules and Examples        
+  
+
+ 
+    The use clause must appear before the start of the design unit
+itself. If the unit to be used is not in the library  work , it
+must be preceded by a  library  clause:
+ library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+entity WIDGET is
+
+-- etc.
+
+end WIDGET;  
+    
+  
+
+ 
+    The use clause is valid only for the design unit immediately
+following it in the design file. However it also automatically applies
+to any secondary units associated with primary units for which it is
+valid. 
+    
+  
+
+ 
+    Where multiple primary design units in the same design file need to
+use the same items, the use clause(s) must be repeated before each unit.
+ 
+    
+  
+
+ 
+    The last field in a use clause may be replaced by  all  to
+access all items in a design unit, or all design unitsin a library:
+ library MY_LIB;
+use MY_LIB.MY_PACK.all;  
+    
+  
+
+ 
+    The shorter form of the use clause may appear in a configuration, to
+select which library entities are selected from:
+ library ASIC_LIB;
+configuration ASIC_TECH of ENT is
+  for GATE_ARCH
+    use ASIC_LIB.all;
+  end for;
+end ASIC_TECH;  
+    
+  
+
+ 
+    The shorter form of the use clause may also appear in the
+declarative part of an entity, architecture or block. 
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+ 
+    The use clause is usually supported by synthesis tools, but design
+libraries are often not.
+ 
+Design files corresponding to any design units referenced by a use
+clause must be analysed before the design units referencing them can be
+synthesised.
+  
+    
+  
+
+
+
+ 
+         Whats New in '93        
+
+The use clause has not changed in  VHDL -93.
+
+  
+
+  </body> 

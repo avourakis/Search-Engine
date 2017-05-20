@@ -1,0 +1,567 @@
+ Collection Classes: Basics (including Iterators)<body>
+
+ 
+ Collection Classes: Basics Including Iterators 
+ 
+  Introduction to Computer Science II 
+ICS-22  
+ 
+  
+
+
+
+
+
+        Introduction  
+ 
+This lecture begins a series of lectures that together act as a capstone for
+  the first half of the quarter.
+These lectures explore collection classes, which are a sophisticated and
+  powerful group of related interfaces and classes that are useful in a wide
+  variety of programming tasks; they are also designed and built using most
+  of the high-level Java programming features that we have studied: interfaces,
+  inheritance, abstract classes, concrete classes, exceptions, and analysis
+  of algorithims (and iterators, and inner-clases which we learn in this
+  lecture).
+ 
+Thus, studying collection classes now brings all these features back into
+  focus, each sharing the spotlight with -and complementing- the others.
+Once you accept the power of these tools, and practice using them, you'll
+  never think about plain old arrays in the same way again (and maybe you'll
+  never think of them at all).
+  
+This lecture begins with a taxonomy of the collection classes, and an
+  introduction to the interfaces, abstract classes, and concrete classes
+  that are used to define them.
+The second part of this lecture explores  iterators , which is an
+  interesting concept by itself, but which takes on a central role when
+  coupled with collection classes.
+We can create extremely sophisticated and efficient behavior by composing
+  collection classes (for modelling complex data) and processing them with
+  iterators.
+  
+           Design of Collection Classes  
+ 
+In this section we will briefly examine the standard Java collection classes,
+  to get a birds-eye view of how they are designed and implemented.
+First we will examine the overall relationships among the interfaces, abstract
+  classes, and concrete classes; these features naturally arrange themselves
+  into three vertical levels in a hierarchy.
+Then we will examine one example more closely, at each level in the hierarchy.
+ 
+The following legend explains the three levels and some of the notation used.
+      
+   
+     &amp;nbsp 
+ 
+ 
+Overall, there are three major groups of "collection" classes, eact rooted in
+  one special interface:  OrderedCollection ,  Collection , and
+   Map .
+Each group is presented using the three vertical levels of interfaces,
+  abstract classes, and concrete classes.
+We depict the  OrderedCollection  group as follows.
+      
+   
+     &amp;nbsp 
+ 
+ 
+Next, we depict the  Collection  group as follows.
+      
+   
+     &amp;nbsp 
+ 
+And finally, we depict the  Map  group as follows.
+     
+   
+     &amp;nbsp 
+ 
+In each, interfaces are implemented by abstract classes (which supply some
+  but not all of the needed methods) which are extended by concrete classes
+  that inherit some behvaior from the abstract classes and define all their
+  abstract methods.
+In some cases, an interface extends another interface: 
+    List  and  Set  extend  Collection ;
+    SortedSet  extends  Set ; and
+    SortedMap  extends  Map .
+In many cases, one abstract class extends another, before being extended by
+  a concrete subclass.
+Recall that concrete subclasses automatically implement the interfaces that
+  their superclasses implement, and [abstract]classes can implement more
+  than one interface (but can extend only one superclass); this is a
+  fundamentcal difference between interfaces and classes.
+ 
+In the next three sections, we will examine the Javadoc of an interface, two
+  abstract classes, and a concrete class, forming a chain from top to bottom,
+  starting with the  Collections  interface and ending with the
+   HashSet  concrete class.
+We will spend two more lectures covering this same material in more detail.
+      
+      Interfaces  
+ 
+The methods specified in the  Collection  interface are summarized
+  in the following Javadoc.
+The semantics of most methods should be somewhat intuitive.
+Primarily, objects can be added and removed from a collection, and checked for
+  membership.
+Methods like  add ,  contains , and  remove  which have
+   Object  parameters, have counterparts  addAll ,
+   containsAll , and  removeAll  which use another
+   Collection  as a parameter, adding, removing, or checking for
+  containment each of the values in the parameter.
+ 
+Read these Javadoc descriptions now; we will examine them again, in more
+  detail, in a subsequent lecture (including  hashCode ).
+We will discuss the  iterator  method (and the  Iterator 
+  interface) at the end of this lecture.
+      
+   
+     &amp;nbsp 
+ 
+Now we will examine an abstract class and abstract subclass that implement
+  a surprising number of these methods, leaving the concrete subclass to
+  implement very little (mostly the iterator, which many other methods use).
+Remember that there are 15 methods specified in this interface.
+     
+      Abstract Classes  
+ 
+Now we will examine the Javadoc of an abstract class and its abstract subclass
+  that implement the interface specified above (although some of its methods
+  are abstract).
+The  Collection  interface specified 15 methods.
+The  AbstractCollection  class specifies one  protected  constructor
+  and 14 methods; it doesn't define  equals  or  hashCode  which are
+  inherited from the  Object  class that this one implicitly extends
+  (and overridden is the abstract subclass in the next section); it adds the
+  specification of a  toString  method.
+Of these 14 (=15-2+1) methods, all but two  iterator  and  size  are
+  defined here (they are defined to be  abstract ), although operations
+  like  add ,  contains , and  remove  are implemented to throw
+   UnsupportedOperationException .
+Yet the  addAll ,  containsAll , and  removeAll  methods are
+  completely written here, using the promised iterator and eventually-working
+  add ,  contains , and  remove  methods: they iterate through
+  the parameter collection, calling the appropriate method for each element.
+Here is the Javadoc of  AbstractCollection  (because of size constraints,
+  it appears in a smaller font).
+     
+   
+     &amp;nbsp 
+ 
+    
+The  AbstractSet  class extends  AbstractCollection .
+It too specifies one  protected  constructor, and it specifies 3 methods:
+  it overrides the  equals  and  hashCode  methods inherited
+  from  Object , and it also overrides the  removeAll  method
+  inherited from the  AbstractCollection  (it can improve its peformance
+  knowing something that is true about sets but not collections in general).
+Here is the Javadoc of  AbstractSet , which is very short.
+
+ 
+   
+     &amp;nbsp 
+ 
+Now we will examine the Javadoc of a concrete class that extends
+   AbstractSet .
+     
+      Concrete Classes  
+ 
+Now we will examine the Javadoc of a concrete class that extends
+   AbstractSet .
+This class is implemented by an advanced and efficient technique called
+   hashing 
+We will briefly discuss hash tables at the end of this series of lectures.
+Needless to say from the constructors, hash tables have "initial sizes" and
+  "load factors"; you will need to use only the first two constructors this
+  quarter; the other parameters relate to fine-tuning the efficiency of
+  the underlying hash table, and is a topic you will study in IC-23.
+ 
+The  HashSet  class extends  AbstractSet .
+It specifies some  public  constructors and 8 methods:
+  defines the two abstract methods that it inherited,  iterator 
+  and  size ; it overrides some other inherited methods as well
+  (it either implements methods like  add , which were previously defined
+  to throw  UnsupportedOperationException  and can improve the
+  peformance of others, knowing something about the hash tables that
+  implement this class)
+Here is the Javadoc of  HashSet  (because of size constraints,
+  it appears in a smaller font).
+      
+   
+     &amp;nbsp 
+ 
+So, the structure leading from the  Collection  interface to the
+   HashSet  concrete class involved all sorts of interesting
+  inheritance of abstract and concrete methods.
+In some sense, we can use this class without knowing all this information,
+  by examining the  Collection  and  Set  interfaces, and knowing
+  that it implements its methods efficienty.
+ 
+Finally, we when discuss the actual implementation of all these methods in
+  concrete classes, we will discuss their performance in terms of big O
+  notation, where  n  is typically the number of values stored in the
+  collection.
+      
+      A Simple Example of Using a Collection Class  
+ 
+Assume that we have to prompt the user for a sequence of  n String s,
+  such that the they are different.
+The following program uses the  Set  interface and  HashSet  class
+  to solve this problem.
+Note that  i  is incremented only if a new value is successfully
+  added to the set.
+    System.out.println("Enter "+n+" different Strings");
+  Set unique = new HashSet();
+  for (int i=1; i&lt;=n; ) {
+    String attempt = Prompt.forString("Enter unique value #"+i);
+    if (!unique.contains(attempt)) {
+      unique.add(attempt);
+      i++;
+    }
+  }  
+Actually, this code can be simplified if you carefully read the real
+  Javadoc (not just the summary listed in this lecture) for the  HashSet 
+  class.
+The  add  method adds the value to the set only if it is not there
+  (generally, sets don't contain duplicates) and returns whether it
+  added it.
+    System.out.println("Enter "+n+" different Strings");
+  Set unique = new HashSet();
+  for (int i=1; i&lt;=n; ) {
+    String attempt = Prompt.forString("Enter unique value #"+i);
+    if (unique.add(attempt))
+      i++;
+  }  
+Generally, we use the name of the interface ( Set ) for the type
+  of the variable ( unique ), not the name of the actual class
+  we are using for its implementation ( HashSet ).
+But we must use this name when constructing an object.
+ 
+Technically, the most elegant solution to this problem uses the fact that the
+   Set  knows its size, so we don't need the counter  i  at all.
+    System.out.println("Enter "+n+" different Strings");
+  Set unique = new HashSet();
+  while (unique.size()&lt;n)
+    unique.add( Prompt.forString("Enter unique value #"+ (unique.size()+1)) );  
+Notice here that we must write  ( unique.size()+1) )  in parentheses,
+  otherwise Java would treat the  +  operator as catenation instead of
+  addition.
+             Iterators (and inner classes)  
+ 
+The  Iterator  interface (declared in the  java.util  package) is
+  used heavily with collection classes (both to implement the collection
+  classes and by users of the collection classes), but it it also useful in
+  other contexts.
+Iterators allow us to process, one at at time, a sequence of values
+  (which we are said to iterate over), either stored in some collection or
+  generated on the fly, as necessary.
+Before we begin to study using iterators with collection classes, we will first
+   study them independently (and a bit later in simplified collection classes).
+The  Iterator  interface is very simple (as a heuristic, the simpler the
+  interface, the more useful it is): it comprises jut three methods.
+    public interface Iterator {
+    public boolean hasNext();
+    public Object  next   ();
+      throws NoSuchElementException
+    public void    remove ();
+      throws UnsupportedOperationException, IllegalStateException
+  }  
+The first two methods are the most interesting and useful; the third method
+  does not have to be implemented to do anything but throw
+  the  UnsupportedOperationException .
+The standard code fragment using the first two methods looks like
+    for (Iterator i =  an-iterator-object ; i.hasNext(); ) {
+    Object o = i.next();
+    ...process o...
+  }  
+So, the  hasNext  and  next  methods work together to query whether
+  the loop should continue, and if so, access and process the next value in
+  the collection.
+Sometimes the next object retrieved will be cast immediately and stored in
+  a non- Object  variable.
+ 
+Because  next  can throw an exception, we can also write the following
+  loop to iterate over a sequence of values, which is equivalent to the first
+    for (Iterator i =  an-iterator-object ; ; ) 
+    try {
+      Object o = i.next();
+      ...process o...
+    } catch (NoSuchElementException nsee){break;}
+  }  
+Most programmers prefer the non  try-catch  code, deeming it simpler.
+In many ways, we use iterators much like we use objects from the
+   StringTokenizer  class; this method has  hasNext  and
+   nextToken  methods, although it DOES NOT implement this interface.
+  
+The  Squares  class illustrates how to write a simple class that
+  implements this interface; it contains only a constructor and the methods
+  required to implement the  Iterator  interface.
+    public class Squares implements Iterator {
+
+    private int current;
+    private int leftToGenerate;
+
+    public Squares(int numberToGenerate)
+    {this(0,numberToGenerate-1);}
+
+    public Squares(int start, int stop)
+    {
+      current        = start;
+      leftToGenerate = stop-start+1;
+    }
+
+    public boolean hasNext()
+    {return leftToGenerate != 0;}
+
+    public Object next ()
+      throws NoSuchElementException
+    {
+      if (!hasNext())
+        throw NoSuchElementException("Squares: next");
+      leftToGenerate--;
+      Integer answer = new Integer(current*current);
+      current++;
+      return answer;
+    }
+
+    public void remove ()
+      throws UnsupportedOperationException, IllegalStateException
+    {throw UnsupportedOperationException("Squares: remove");}
+  }  
+Hand simulate the following code to ensure that it prints the squares
+  of the first 10 integers (starting with 0): 0, 1, 4, 9, ... , 81.
+    for (Iterator i = new Squares(10); i.hasNext(); )
+    System.out.println(i.next());  
+Note that because all we are doing to each value is printing it, we
+  do not store it in an  Object  variable, and the
+   System.out.println  automatically calls the  toString  method
+  on the object returned.
+To print the sequence 25, 36, ... , 100 we would instead write
+   new Squares(5,10)  in the initialization part of the  for  loop.
+  
+
+      
+      Inner Classes to Implement Iterators in Collection Classes  
+ 
+Now lets start learning about how iterators are implemented in collection
+  classes.
+But, instead of starting with "real" collection classes (involving interfaces
+  and abstract classes), we will write an iterator in a simpler context: the
+   SimpleQueue  class that we studied in the lecture on 
+   1-d Arrays .
+Please find and review this code now; pay close attention to the
+  class invariant that  rear  refers to the largest member index
+  that stores a value.
+ 
+To illustrate iterators, we will add a method to this class with the prototype
+   public Iterator iterator() : it returns a reference to an object from
+  some class that implements  Iterator  (over the sequence of values that
+  this collection stores).
+It is simple to use the result returned by this class with the idiom shown
+  above; to print all the values in the queue (without changing their
+  order in the queue) we would write just
+    SimpleQueue sq = new SimpleQueue();
+  ...put some values in the queue...
+  for (Iterator i = sq.iterator(); i.hasNext(); )
+    System.out.println(i.next());  
+Generally, iterators in collection classes allow us to process each value in
+  the collection (say to print each) without altering the contents of the
+  collection (in the case of a queue, all the elements remain in the queue in
+  their original order); in addition, the  remove  method allows us to
+  alter the collection by removing the value which the most recent call to
+   next  returned; it throws  IllegalStateException  if
+   next  has not been called OR if its value has already been removed.
+This method can also just throw  UnsupportedOperationException  if
+  it is not meaningful (or just not implemented).
+  
+In this context, it is useful to discuss the concept of an  inner class .
+Sometimes -as with iterators- it is useful to declare a  private  class
+  INSIDE another ( public ) class.
+By doing so, Java allows some interesting behaviors to emerge.
+   Only the methods in the outer class can construct objects from
+     the inner class; in fact, only non- static  methods can do so
+     (or the Java compiler will detect and report an error).
+ 
+   When a method in the outer class constructs an object from its inner
+      class, the inner class object can refer to all the instance variables
+      by name (even  private  ones) in the outer class object that it was
+      constructed in.
+  
+The scope rules for classes (outer and inner) are just like the scope rules
+  for blocks (inner and outer): an inner block can freely refer to variables
+  define in the outer block enclosing it.
+Think of the inner class object storing a reference to the outer class
+  object, which by the restriction in rule 1, always must exist.
+In fact, we can explicitly refer to this outer object by
+  writing   Outer-Class-Name .this , and its instance variable
+    p   by   Outer-Class-Name .this. p   -either
+  to be explicit, or in case there is a name conflict between the instance
+  variable   p   and some other variable.
+ 
+So, how can we extend the  SimpleQueue  to allow iterators?
+First, we must define  the  iterator  method in that class as
+    public Iterator iterator()
+  {return new SimpleQueueIterator();}  
+where  SimpleQueueIterator  is an inner class defined in 
+   SimpleQueue .
+We must also import the following classes for this definition and
+  the ones below to make sense to Java
+    import java.util.Iterator;
+  import java.util.NoSuchElementException;  
+(the  UnsupportedOperationException  is in the  java.lang 
+  package, and doesn't need to be imported).
+The simplest version of this inner class is
+  
+  private class SimpleQueueIterator implements Iterator {
+     private int next = 0;
+     
+    public boolean hasNext()
+    {return next   
+Here, each new  SimpleQueueIterator  object intializes  next  to
+   0 : it refers to the index of the next value in the queue that the
+   next  method returns.
+Both the  hasNext  and  next  methods can access the
+   SimpleQueue  instance  variables  q  and  rear ,
+  either directly by these names or by  SimpleQueue.this.q  and
+   SimpleQueue.this.rear .
+So long as  next  is not beyond  rear , the last member index that
+  stores a value, there is another value to iterate over.
+The  next  method returns the value in that location, and increments
+   next  for (possibly) another call to this method.
+The following picture illustrates both a  SimpleQueue  object, and a
+   SimpleQueueIterator  object that is ready to iterate over it.
+      
+   
+     &amp;nbsp 
+ 
+If we wanted to implement the  remove  method, we would have to declare
+  an additional  removedAlready  instance variable and rewrite the
+  methods as follows.
+    private class SimpleQueueIterator implements Iterator {
+  
+    private int     next           = 0;
+    private boolean removedAlready = true;
+     
+    public boolean hasNext()
+    {return next   
+The differences are that  next  resets  removedAlready  to
+   false  when it successfully advances to return another value, and
+   remove  checks this value.
+If  remove  does remove a value, it must shift the values following it to
+  the left by 1 index, just like the  dequeue  method: in fact, a
+  generalized helper method
+      private void shiftLeftFrom (int shiftStart)  
+would be useful to simplify both methods.
+Finally,  removedAlready  is initialized to  true , because we
+  cannot call  remove  until  next  has been called; this
+  initialization ensures this requirement.
+ 
+We can use the  remove  method to remove every odd value in a queue of
+  Integer s easy.
+The code is
+    SimpleQueue sq = new SimpleQueue();
+  ...put some values in the queue...
+  for (Iterator i = sq.iterator(); i.hasNext(); ) {
+    Integer x = (Integer)i.next();
+    if (x.intValue()%2 == 1)
+      i.remove();
+  }  
+You can download, unzip, run, and examine all this code (along with
+  a driver program) in the
+   
+      SimpleQueue with Iterator Demonstration .
+In fact, this code includes the material described in the next section on
+  what happens when a collection is modified concurrently with it being
+  iterated over.
+      
+      Detecting Concurrent Changes  
+ 
+There is still one loose end connecting collection classes and iterators.
+If we are iterating through a collection class, and we modify it (add or
+  remove a value), how should this affect the way our iterator works in the
+  future, when  hasNext / next  are called?
+It turns out that there is no uniformly good way to answer to this question
+  for all collection classes,  so instead all Java collection classes (with
+  iterators) prohibit it from occurring.
+ 
+Java prohibits it from occuring by forcing the  next  method to
+  throw the  ConcurrentModificationException  if any state changes have
+  been made to the object it is iterating over: i.e., we are modifying a
+  collection class while concurrently iterating over it.
+This is accomplished in a surprisingly simple and efficient way (funny how
+  those two properties often go together) by the iterator class.
+When this approach is used, the iterators are said to be  fail-fast 
+  iterators.
+  
+On the  SimpleQueue  side:
+   Each  SimpleQueue  object stores another instance variable, named
+       modCount : it represents the modification count of this queue
+      and is initialized to  0  at construction.
+  Each mutator method in this class increments this instance variable.
+  
+On the  SimpleQueueIterator  side:
+  Each  SimpleQueueIterator  object stores another instance variable,
+      named  expectedModCount : it represents the modification count of
+      the queue when THIS ITERATOR WAS CONSTRUCTED, so it is initialized to the
+       modCount  of its  SimpleQueue  object at construction.
+ 
+   Each call to  next  in this class first compares this stored value
+      with the  modCount  value stored in the queue that it is iterating
+      over; if they differ (the queue has been changed), it immediately throws
+       ConcurrentModificationException .
+  
+In this way, if the expected modification count is not found, we know that
+  the collection was modified after the iterator was constructed, so this
+  iterator cannot continue to iterate over it.
+ 
+Finally, if the  remove  method in the iterator successfully removes an
+  element from the collection, no other iterator should be able to continue.
+This is accomplished by incrementing the  modCount  of the collection
+  first, and then copying this new value into the  expectedModCount  of
+  this iterator.
+Therefore, this iterator can continue (because it knows how to ensure that
+  it still iterates over all the remaining values in the collection) but any 
+  other iterator is forced to throw  ConcurrentModificationException .
+             Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a TA,
+    or any other student.
+
+   Write a class named  Constant  that implements  Iterator .
+    Its constructor should be called with some object, and its  next 
+      method should always return a reference to that same object, with
+       hasNext  always returning  true .
+ 
+   Write a class named  Prime  that implements  Iterator ,
+      retuning only prime numbers.
+    You may assume that the method  public static boolean isPrime(int i) 
+      is defined in the  Math  class (it isn't, but assume it).
+    Write a few reasonable constructors for this class.
+ 
+   Write a class named  Combine  that implements  Iterator .
+    Its constructor should be called with two objects constructed from a
+      class implementing  Iterator , and an object constructed from a
+      class implementing  Combine2 .
+    public interface Combine2 {
+    public Object combine2(Object o1, Object o2);
+  }  
+  The  hasNext  method returns  true  when both of the iterators
+    it stores have a next value; its  next  method combines the next
+   values from each of the iterators it stores.
+ 
+   What are the implications of defining the  iterator  method
+     in  SimpleQueue  to be  static .
+ 
+   Write an inner class implementing iterators of  SimpleStack .
+ 
+   Devise a scheme whereby each mutator method in the  SimpleQueue 
+      class detects if there is an iterator iterating over the object it is
+      about to change, and throws the  ConcurrentModificationException .
+    Compare the efficiency of these two approaches to reportng this problem.
+   
+   </body> 

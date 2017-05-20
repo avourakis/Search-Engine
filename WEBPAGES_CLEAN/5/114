@@ -1,0 +1,204 @@
+ Visio for C2/xADL<body>
+ 
+     
+  Jie Ren (任杰)  
+   Area   Software  
+   Advisor   Richard N. Taylor  
+   E-mail   jie@ics.uci.edu  
+   
+ 
+ 
+  Biography  
+   Research   
+    Teach    
+     Work     
+   Service   
+ Publication 
+   Contact   
+ 
+ 
+
+ 
+		 Visio for C2/xADL 
+		  Download!  
+		 Visio for C2/xADL is a graphical front end of  
+				ArchStudio 3 . It can be used to create  
+				xADL 2.0  document graphically, with special support for  
+				C2  architecture style
+		 
+		 Features
+		 
+		  
+			Extend Microsoft Visio 2000/2002 to work as ArchStudio 3.0 front end editor
+			 
+			 
+			Integration between COM and Java
+			 
+			 
+			Create both generic and C2-style architectures, using drag-and-drop, supporting 
+			undo and layout
+			 
+			 
+			Full synchronization between xADL content and Visio format
+			 
+			 
+			Support xADL 2.0's instance, type, structure, and implementation schemas
+			 
+			 
+			Event visualization
+			 
+			 
+			Easy installation and upgradability
+			 
+		  System Requirements 
+		  
+			Windows operating system. ( 95, 98, ME, NT, 2000, XP )
+			 
+			 
+			Microsoft Visio 2000/2002. ( Any edition: standard, professional, technical, or 
+			enterprise)
+			 
+			 
+			Sun Java environment, JDK 1.4 or better. Make sure its bin directory is in your 
+			PATH.
+			 
+			 
+				AT&amp;T Graphviz, an open source visualization package. It can be downloaded  
+					here . Make sure it's executable, dot, is in your PATH. 
+		  Installation 
+		 You should download/install  
+				ArchStudio 3  and the required software listed above first.
+		 
+		 This package requires Windows Installer 2.0 to install. 
+		  
+			If you are using Windows XP, you already have it.
+			 
+			 
+				If you are using Windows NT 4 and 2000, you can get Windows Installer 2.0 from  
+					here .
+			 
+			 
+				If you are using Windows 95, 98 and Me, you can get Windows Installer 2.0 from  
+					here . 
+		  Please download and install  
+				this installation package . 
+		 Notes for Visio 2003 
+		 
+			This program seems working with Visio 2003. Due to the change of the way that  Visio detects third-party templates , please
+			add the string "Software" to both the "Templates" box and the "Stencils" box at the "Tools/Options/Advanced/File Paths" dialog of Visio 2003. The "C2" and "xADL" 
+			template will appear in the "File/New" menu and in the "(Other)" category of the "Choose Drawing Type" pane. 
+		 
+		 
+			You also need to enable macros to use this program. 
+		 
+		 Previous version
+		 
+		 
+			The previous version can be found at  here.  The 
+			functionality is the same, but the new version uses a custom COM/Java connector 
+			that makes installation simpler and easier. The source code of the connector is 
+			included in the installation package.
+		 
+		  User Manual 
+		 You need to understand the concepts in both Visio and xADL 2.0 to use this 
+			tool. 
+		 Start the environment 
+		 
+			Start ArchStudio 3. 
+		 After you start Visio, you can find a xADL solution in Software solutions 
+			(Software/xADL in the New menu). You can start creating a new xADL document by 
+			choose the appropriate solutions, as you would do in general Visio. 
+		 Note: ArchStudio 3 and Visio will use TCP port 3333 and 4444 to communicate. Make 
+			sure no other programs are using these ports.
+		 
+		 Use ArchStudio's FileManager 
+		 Use the menu in FileManager to create, open, save xADL documents. Visio solution 
+			will not do file input/output directly. 
+		 Create a new document 
+		  
+			Choose New/xADL, you will see a blank document.  
+			 
+			There is an Architecture Menu. Choose "read xADL file"  
+			 
+				Choose one item from the list. The content of that file will be displayed 
+				graphically in Visio. 
+		  Open an existing document 
+		 Just open the document. The system will load the Visio file and parse the 
+			associated xADL document. If there is any incompatibility, it will give an 
+			warning. 
+		 Create Type 
+		 You must have a set of component and connector types to design a software 
+			architecture. The types will be displayed as Masters in Stencil, which you can 
+			drag and drop to create an instance for the type. 
+		 First, you need to create interface type. Choose "Create New Type" from 
+			Architecture Menu. Choose "Interface Type". Type an id and a description for 
+			the interface type, click OK. 
+		 Second, you can create component types and connector types. Choose "Create New 
+			Type" from Architecture Menu. Choose "Component Type" or "Connector Type". Type 
+			an id, a description, and a signature. ( The signature should be in this format 
+			"DirectionOfInterfaceType,IDofInterfaceType;...;DirectionOfInterfaceType,IDofInterfaceType; "
+			) 
+		 After you create types, you can either reload the xADL document (through "read 
+			xADL file") if you still have a blank Visio file, or you can close the old 
+			Visio file(The content in ArchStudio is not lost) and then create a new one, 
+			choose "read xADL file" again. In both cases the types will be used to create 
+			new stencils. 
+		 Component/Connector operations 
+		 To create a component or connector, drag the icon from the stencil into the 
+			drawing, then type a unique name for it. Hit Esc when you finish typing new 
+			name. 
+		 To connect a connector to a component or another connector, drag the handle of 
+			the connector to the center of the component or the other connector, release it 
+			when the big red spot appears. 
+		 To change the name of a component/connector, select it and type the new name. 
+			Hit Esc when you are done. 
+		 To delete a component/connector, select it and hit Delete. (Deleting 
+			component/connector will also delete connected links.) 
+		 To delete a link, select it and hit Delete. 
+		 To view the property of a component/connector, right click on it and select 
+			"Property" from the pop-up menu. 
+		 Group Operations 
+		 To create a group, select the members of group (components, connectors, and 
+			subordinate groups), then choose group from Architecture Menu in the Menu bar. 
+			Type the name of the group. 
+		 To ungroup a group, click the group, then click it again ( The boundary would 
+			change to a different line pattern. ) Right click, choose Ungroup. 
+		 Using Architecture Browser 
+		 To toggle the display of architecture browser, select "Architecture Browser". 
+		 You can see all the components/connectors/links in the right tree. The group has 
+			its members as the children. All items are sorted alphabetically. Hit on any 
+			node will lead you to corresponding shape in Visio file. 
+		 Sub Architecture Support 
+		 Choose "Create New Structure" from Architecture menu. Input an id and a 
+			description for the new ArchStructure. A new page will be created. You can add 
+			new components/connectors/links to this ArchStructure. 
+		 When create a new component/connector type, you can check "Use current 
+			structure" box in the "Create New Type" dialog box to specify using current 
+			structure as sub architecture for the newly created component/connector type. 
+		 When right click on a component/connector, if its type contains sub 
+			architecture, you can choose "GotoSubarchitecture" do bring in a new page for 
+			the sub Architecture. 
+		 Event Visualization 
+		 To see the visualization, choose set sender color and set receiver color from 
+			Architecture Menu, set the colors to what you want. Run the events source 
+			application. You will see messages sending between components and connectors. 
+		 Other Operations 
+		 Toggle "Check Unique Name" will enable or disable uniqueness checking for names. 
+			Disable it when you want to do multiple pasts form previous copies. 
+		 "Bind xADL file" connects current Visio file to the selected xADL document, but 
+			does not do any loading or checking. 
+
+ 
+
+ 
+   Last Modified: 
+		November 20, 2005
+   
+   
+	 
+	  
+	 
+	  
+   
+ 
+</body> 

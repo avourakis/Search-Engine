@@ -1,0 +1,139 @@
+  Handling Interrupts
+<body>
+
+  Handling interrupts in C  
+
+Programs should be able to recover gracefully when run-time errors
+occur, such as illegal arithmetic, I/O problems, etc. 
+In some of these cases, a system library procedure you use
+will return a value to the caller (your procedure) indicating
+whether or not it was successful. 
+You are responsible for checking these return values and deciding
+what to do if an error is detected. 
+You will need to check the manual entries
+of any procedures you use to determine what returns to look for.
+ 
+In other cases, an error is detected by the hardware or operating system
+rather than a library routine you called. 
+A "signal" is sent to the process (your program) in these cases. 
+Every process has a list of actions to be taken upon receipt
+of various signals. 
+For most signals, the action is to print an error message to
+the standard error stream, dump core, and abort the process. 
+You will, almost certainly, be plagued by this behavior before
+this class is through.
+  
+You may, in your program, redefine the actions which are to be taken
+upon receipt of these signals. 
+You are expected to use this facility to have
+your program recover gracefully from illegal arithmetic errors
+(such as overflow). 
+To do this, first include the file   
+and write a procedure of the form:
+  
+	floatexception( sig, code )
+	int sig, code;
+	{
+		/* your code for exception handling */
+	}
+ 
+ 
+Then the command:   signal( SIGFPE, floatexception ); 
+will tell the system to execute the procedure  floatexception 
+whenever the signal SIGFPE (Floating Point Exception) is received. 
+After completion of the  floatexception  procedure
+(if it completes at all;  more on this later),
+the code that caused the signal is continued
+as if nothing happened. 
+The two parameters passed to  floatexception  by the system
+tell it what signal caused it to be executed (in case you
+have more than one signal set to call it) and a further integer code
+giving more details in some cases. 
+See the manual page on  signal  for more details.
+  
+Note that, since your procedures are supposed to be self-contained,
+before your procedure quits it must reset any signals back to whatever
+they were before your procedure changed them. 
+The  signal  function returns a
+pointer to whatever function was the old action to be taken. 
+You must remember this pointer, and use it to reset the signal
+before quitting. 
+In the case of a recursive procedure, you
+should probably use a separate top-level "bootstrap"
+procedure that the user will
+call, which just sets up the signals, allocates whatever memory will be
+needed, then calls the recursive procedure. 
+This top-level procedure will then return memory
+and reset signals before returning control to its caller. 
+A simplified outline of such a top-level procedure follows:
+  
+	/* define possible returns of the procedure */
+	typedef enum { FAILSIG, FAILMEM, FAILFLOAT, FAILRESETIG, SUCCEED };
+
+	void (*old_sigfpe)(); /* to remember the old action associated with SIGFPE */
+
+	if ( -1 == (int) ( old_sigfpe = signal( SIGFPE, floatexception ) ) );
+		/* something wrong with the signal system: bail out */
+		return( FAILSIG );
+	.
+	.	/* allocate memory, call recursive procedure, free memory */
+	.
+	if ( -1 == (int) signal( SIGFPE, old_sigfpe ) )
+		/* signal reset failed, but we have otherwise succeeded */
+		return( FAILRESETSIG );
+	return( SUCCEED );
+ 
+ 
+The typedef should probably be in an include file, so that your calling
+program (the tester) can decipher the return status of your procedure.
+  
+The other main problem with interrupt handling is how to abort a
+procedure when it may be several levels deep in recursion. 
+One technique is to set up a global flag which the procedure checks
+periodically and exits if the flag is changed. 
+In this case,  floatexception  would be the one
+to change the flag. 
+This is not great, since the procedure must
+waste time checking the flag.
+  
+A better solution is provided by the C library functions
+ setjump  and  longjmp . 
+To use them, include the file
+   and define a variable,
+we will call it  env , of type  jmp_buf . 
+A call to  setjmp  will save a copy of the execution stack
+in  env  and return 0. 
+A call to  longjmp  will restore the
+execution stack to whatever is stored in  env ,
+and will cause  setjmp 
+(which will then be executing again) to return whatever integer is given
+to  longjmp . 
+Thus, when you call  setjmp , your code must check the
+return to see if it is actually the first call, or whether you got there
+as a result of an error. 
+At some point in a top-level procedure (like the
+"bootstrap" mentioned above) you should have some code looking something
+like:
+  
+	if ( x == setjmp( env ) ) {
+		/* code to deal with error x: (probably just clean up and */
+		/* return an error status to caller) */
+	} else {
+		/* code to continue with the task at hand */
+	}
+ 
+ 
+In this case, the code in  floatexception  should just be:
+  
+	longjmp( env, /* some non-zero integer of your choosing */ );
+ 
+ 
+
+   
+ 
+Dan Hirschberg    
+Computer Science Department 
+University of California, Irvine, CA 92697-3435  
+ dan (at) ics.uci.edu  
+Last modified: Mar 20, 1999
+</body> 

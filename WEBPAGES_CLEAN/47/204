@@ -1,0 +1,127 @@
+ 
+Formula (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+  
+ 
+formulaVisited 
+ 
+Interface Formula 
+   All Known Implementing Classes:     Conjunction ,  Disjunction ,  LogicalConstant ,  LogicalVariable ,  Negation  
+     public interface  Formula     
+The type of all logic formulas that accept visitors.
+  
+
+  
+   
+
+
+
+  
+     
+ Method Summary   
+    
+  java.lang.Object   
+    accept  ( Visitor  _v) 
+
+ 
+          Accepts a visitor. 
+  
+ 
+ 
+
+
+
+  
+     
+ Method Detail   
+     
+accept 
+ 
+java.lang.Object  accept ( Visitor  _v) 
+  Accepts a visitor.
+    Each subclass implements this method as 
+     {  return _v.visit(this);  } ,
+    and the compiler identifies the right   Visitor   method
+    based on the subclass (which is the type of  this ).
+ 
+     Parameters:    _v  - The visitor.
+   Returns:   The result _v calculates for this formula.   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD | CONSTR |  METHOD   
+  
+DETAIL: FIELD | CONSTR |  METHOD   
+    
+
+
+ </body> 

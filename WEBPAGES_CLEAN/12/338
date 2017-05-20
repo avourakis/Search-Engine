@@ -1,0 +1,219 @@
+ 
+SimQueryEngine
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.QE 
+ 
+Class SimQueryEngine 
+ 
+java.lang.Object
+    Raccoon.QE.QueryEngine 
+        Raccoon.QE.SimQueryEngine 
+ 
+   public class  SimQueryEngine  extends  QueryEngine     
+SimQueryEngine : Class that helps to simulate the QueryEngine. It always 
+ returns constant answers and thus it is good to test whether other engines
+ work properly.
+  
+
+  
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+  
+   
+    Fields inherited from class Raccoon.QE. QueryEngine   
+     netModule ,  ph ,  rm ,  sqlParser   
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      SimQueryEngine  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+   PVInstance    
+    executeSFW  (java.lang.String nodeName,
+           java.lang.String sqlStmt) 
+
+ 
+            
+    
+  int   
+    GetAttrType  (java.lang.String nodeName,
+            java.lang.String relName,
+            java.lang.String attrName) 
+
+ 
+          get the type of attribute. 
+    
+  boolean   
+    isAttrExist  (java.lang.String nodename,
+            java.lang.String relname,
+            java.lang.String attrname) 
+
+ 
+            
+    
+  boolean   
+    isRelExist  (java.lang.String nodename,
+           java.lang.String relname) 
+
+ 
+            
+  
+   
+    Methods inherited from class Raccoon.QE. QueryEngine   
+     doLocalQuery ,  doQuery ,  filter ,  getResourceManager ,  initParser ,  intersect ,  isLocalQuery ,  searchCandidateTable ,  setNetModule ,  setResourceManager   
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+
+
+
+  
+     
+ Constructor Detail   
+     
+SimQueryEngine 
+ 
+public  SimQueryEngine () 
+    
+    
+ Method Detail   
+     
+isRelExist 
+ 
+public boolean  isRelExist (java.lang.String nodename,
+                          java.lang.String relname) 
+     Overrides:     isRelExist   in class   QueryEngine     
+    
+     
+isAttrExist 
+ 
+public boolean  isAttrExist (java.lang.String nodename,
+                           java.lang.String relname,
+                           java.lang.String attrname) 
+     Overrides:     isAttrExist   in class   QueryEngine     
+    
+     
+GetAttrType 
+ 
+public int  GetAttrType (java.lang.String nodeName,
+                       java.lang.String relName,
+                       java.lang.String attrName) 
+   Description copied from class:   QueryEngine    
+ get the type of attribute. We'll use the information 
+  sored in the Schema in each node and then convert the 
+  typeName into enum type
+ 
+     Overrides:     GetAttrType   in class   QueryEngine     
+    
+      
+executeSFW 
+ 
+public  PVInstance   executeSFW (java.lang.String nodeName,
+                             java.lang.String sqlStmt)
+                      throws java.sql.SQLException 
+     Overrides:     executeSFW   in class   QueryEngine     
+    Throws: 
+   java.sql.SQLException    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

@@ -1,0 +1,126 @@
+ Database Research Group @ UCI 
+
+ 
+     
+     
+       [  Home  |
+       Research  | 
+       Publications  | 
+       People  | 
+       Partners  | 
+       Demos  ] 
+      [  Courses  | 
+       Software  | 
+       Links   |
+       Internal  |
+       Search  | 
+       Joining Our Group  ]
+      
+     
+  
+
+   
+        
+     
+      Terrain Similarity Demo Description
+     
+     
+        
+         
+      This demonstration applies the current MARS back end prototype
+      to the field of remotely sensed data. The MARS prototype is better
+      described elsewhere, but essentially consists
+      of a search engine capable of searching images based on their content.
+      To this end a series of image processing tools are used to extract desirable
+      features from images so as to query based on them.
+       
+      MARS provides a simple querying interface taken form the 
+      Information Retrieval community. Currently MARS supports the boolean retrieval
+      model in which queries over images can be combined via the boolean operators
+       AND ,  OR  and  NOT . Each simple term is formed by specifying
+      the desired measure (i.e. color similarity, texture similarity, etc.) and
+      an identifying number of the query image. MARS then computes for each
+      simple term all matching images and the degree of the match and then combines
+      them according to one of two criteria: distance and probability.
+        
+        Project description 
+     
+         Database Size   
+        For this demonstration, we have 30 meter satellite imagery of the Fort
+        Irwin Area. Our data is composed of seven bands described here:   Band 1 - (0.45-0.52 micrometers) Water penetration 
+
+           Band 2 - (0.52-0.60 micrometers) Visible green 
+
+           Band 3 - (0.63-0.69 micrometers) Chlorophyll absorption
+          (vegetation detection) 
+
+           Band 4 - (0.76-0.90 micrometers) Soil-crop, land-water
+          contrast 
+
+           Band 5 - (1.55-1.75 micrometers) Crop and soil moisture 
+
+           Band 6 - (2.08-2.35 micrometers) Discrimination of rock
+          formations 
+
+           Band 7 - (10.4-12.5 micrometers) Thermal infrared 
+          
+        This data covers 50 x 50 kilometers and we chose to divide
+        it up into one by one kilometer regions. These image subsets are then used
+        to extract the required features and stored in a database. Additionally, 
+        we have elevation data for the same area. This was used to
+        construct the colored image shown upon entry and was height color coded
+        according to a fairly standard color scheme for elevation data.  
+         
+           Modules Of This Project  
+        This project can be divided into 4 main components   
+
+             Back End Algorithm (Image Feature Extraction)  
+            The algorithms that extract images features. 
+            The other algorithm in use is a combination of the first three moments
+            of the intensity level of each pixel. Other algorithms are available in
+            the back end query engine and feature extractors, but were not used for
+            this demonstration.  
+
+              Back End Query Engine  
+            The feature extraction described above is done off-line and once to build
+            the database. The query engine then uses these databases to process queries
+            submitted from the user interface.  
+
+              Front End Interface   
+            We have a GUI and the demo is accessible from the web. Although this interface
+            covers the back end query engine, it serves as a conduit for the user to
+            access it.  
+            The user interface constructs a query which is then submitted to the query
+            engine. The user can see the query at different stages of completion and
+            just before submission.  
+
+              Relational Database Design  
+            The image features extracted are then stored in an image database  
+            
+         
+          
+
+           User Interface Output  
+        The User interface outputs a color coded sequence of images. The first
+        one shown is the above mentioned color coded by height data. From then
+        on, a series of images representing individual bands are shown. Each of
+        these images corresponds to a band that was selected by the user.
+        Each of these images has a colored overlay ranging from red to blue. Areas
+        colored are good matches, the red being the best and the blue the worst,
+        but still better that any non colored area. The user is given the option
+        to zoom in on one of the images to see more detail. A sample output is shown 
+        here, click it for a larger view. 
+        
+     
+   
+        
+      For any problems, questions or suggestions about this page, please contact, 
+      Mario Espinoza - (  espinoza@ics.uci.edu  ) 
+     
+       rev. 
+       Feb. 07, 2001
+       
+     
+     
+
+</body> 

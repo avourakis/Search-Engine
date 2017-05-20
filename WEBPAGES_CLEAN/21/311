@@ -1,0 +1,106 @@
+ <body>
+
+    UC IRVINE - ICS 125 PROJECT IN SYSTEM DESIGN 
+     PROJECT DESCRIPTION 
+     
+        Workflow Model User Interface   
+
+  Customer Contacts:  
+
+    Primary Contact     Mark Bergman {  mbergman@ics.uci.edu 
+  }   http://www.ics.uci.edu/~mbergman/ 
+  ICS2 Room 276 Availability: E-mail or by appointment 
+     Secondary Contact   Art Hitomi {  ahitomi@ics.uci.edu  }  http://www.ics.uci.edu/~ahitomi/ 
+  ICS2 Room 237 Office Phone: 824-4101  Availability: 10am-5pm or by appointment    
+    Overview   
+
+ Workflow modeling can be used to represent and/or augment a current workflow activity
+network. A workflow activity network is a fancy name for people working together in an
+organization. A workflow model can be represented by a network of tasks (work nodes) and
+flows (directed arcs between tasks). A task is defined as a person (or group) using a tool
+(or toolset) while following a process to produce a useful output (artifact(s) and/or
+data) from an input (artifact(s) and/or data). A task consists 3 main nodes, person/role,
+tool, and process, and directed links (arcs) between these nodes. See  Figure 1   .   
+Figure 1: Task Diagram Model    Figure 1 
+Note: For clarity, the links from the Input to the internal task nodes and from these
+nodes to the Output have been omitted. These should be available, if a designer wants to
+use them.   
+A flow is a set of connections (directed arcs) from one task to another. The arcs that
+make up a flow are seen in  Figure 2 .
+A flow can be considered a  bus    representation of these arcs
+between the task nodes.   
+Figure 2: Flow Bus    Figure 2 
+Note: Although these links look disconnected, they are actually connections between the
+stated nodes via the In/Out connectors.   
+There are subnetworks that are represented within a workflow network. The 3 main
+subnetworks are the social network (people to people), the technical network (tool to
+tool) and the process network (process to process). These subnetworks should be viewable
+individually as well. Arcs for these subnetworks can exist and connect without going
+through an In/Out connector pair.   
+
+   Project Requirements   
+
+ This project is focused on creating an editor which can be used to construct workflow
+models. The general functions of there editor are: 
+
+   Identifying and classifying all of the workflow components: nodes, arcs, encapsulation
+    and input/output connectors, artifacts &amp; data   Identification should include (but is not limited to): unique, easily identifiable
+        object shapes, text tags, hyperlink references, colors, and mouse rollover popup
+        information and menu choices  
+       Nodes and arcs should be open and extensible (i.e. able to be connected to lower and
+        alternative levels of detail, but have these connection be specified at a later time)   Minimally, nodes and arcs should be able to point to underlying text details. This can
+            include hyperlinking or equivalent.  
+          
+       Arc &amp; Flow Control   All arcs and flows are single directed   Dual directed arcs can be represented by a bundled/grouped pair of single directed arcs  
+              
+           Arcs can be (but do not have to be) bundled into flows (See  Figure 2 ,
+            above)  
+           Arcs &amp; flows need to able to be split and joined (split and join can be control
+            components)  
+           (Optional) Other control components - loops, conditionals, case-switch blocks, etc.  
+          
+       Inputs &amp; Outputs   Contain a list of required artifacts, data and/or text based requirements need to enter
+            or leave a task node  
+          
+      
+   Editing (add, copy, cut, paste, delete, modify, move) workflow components  
+   Encapsulation, i.e. grouping, of tasks, flows, subworkflows and other subnetworks  
+   Routing of arcs between nodes (autorouting is preferred)  
+   Viewing   Navigation through encapsulation levels  
+       Choosing which type of network or subnetwork (task, social, tool, process) to view  
+       Zooming (in &amp; out) and scrolling (via a "view window") through workflow
+        networks  
+       Path Selection: The ability to "light up a path" between any two, or more
+        selected nodes  
+      
+   Storage and retrieval of models   Models are to be stored in a flat file XML format  
+       Storage means "Save" and "Save As" model files  
+       The ability for a single model to link across multiple files models  
+       (Optional) The ability to "Include" files within a model  
+      
+   
+The model is to be general enough to represent any kind of observed workflow, yet have the
+capability to show increasing levels of workflow details, i.e. encapsulation.   
+Finally, the editor should be able to be treated as a plug-in/applet into a Web browser
+(Netscape Navigator or Internet Explorer).   
+
+   Technologies and References   
+
+ Java 2 (JDK 1.2.2 and SWING):  http://java.sun.com/   
+XML:  http://java.sun.com/xml/tutorial_intro.html ,
+ http://msdn.microsoft.com/workshop/xml/toc.htm ,
+ http://www.xml.com/xml/pub/98/10/guide0.html 
+ 
+Web Browser:  http://www.netscape.com/computing/download/index.html 
+ 
+HTTP Server (Optional)  http://jserv.javasoft.com/ ,
+ http://jserv.apache.org/    
+If you have any questions, requests, or comments concerning this project, please contact
+Mark Bergman (  mbergman@ics.uci.edu  ) for
+more information.  
+   
+      
+
+   More Info  
+   ICS125 WQ00 Project Opportunities   ICS125 WQ00   David F. Redmiles � Home Page   Department of Information and Computer Science   University of California, Irvine CA 92717-3425   
+</body> 

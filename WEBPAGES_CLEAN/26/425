@@ -1,0 +1,590 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Mesh generation and optimal triangulation
+ 
+   The expected extremes in a Delaunay triangulation .  M. Bern ,
+D. Eppstein, and F. Yao.  18th Int. Coll. Automata, Languages and Programming, 
+Madrid, Spain, 1991. 
+Springer,  Lecture Notes in Comp. Sci.  510, 1991, 674–685.   Int. J. Comp. Geom. &amp; Appl.  1 (1): 79–92, 1991 .
+ 
+Discusses the expected behavior of Delaunay triangulations for
+points chosen uniformly at random (without edge effects).
+The main result is that within a region containing  n  points,
+the expected maximum degree is bounded to within a constant factor
+of log  n  / log log  n. 
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL  --
+ ACM DL (2) )
+  
+    The farthest point Delaunay triangulation minimizes angles . 
+D. Eppstein.  Tech. Rep. 90-45 , ICS, UCI, 1990.  
+ Comp. Geom. Theory &amp; Applications  1: 143–148, 1992 .
+ 
+Given a collection of points in convex position,
+the sharpest angle determined by any triple can be found
+as a corner of a triangle
+in the farthest point Delaunay triangulation.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Polynomial-size non-obtuse triangulation of polygons .  M. Bern 
+and D. Eppstein.  
+ 7th ACM Symp. Comp. Geom.,  North Conway, New Hampshire, 1991, pp. 342–350 .   Int. J. Comp. Geom. &amp; Appl.  2: 241–255, 1992 
+(special issue for 7th Symp. Comput. Geom.).
+ 
+Any simple polygon can be triangulated with quadratically many nonobtuse
+triangles.  Mostly subsumed by recent results of Bern et al described in
+" Faster circle packing ".
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Edge insertion for optimal triangulations .  M. Bern ,
+ H. Edelsbrunner ,
+D. Eppstein, 
+ 
+S. Mitchell , and
+ T.S. Tan .  1st Latin Amer. Symp. Theoretical Informatics,  Sao Paulo, 1992. 
+Springer,  Lecture Notes in Comp. Sci.  583, 1992, pp. 46–60. 
+Tech. Rep. EDC UILU-ENG-92-1702, Univ. Illinois, Urbana-Champaign, 1992.   Disc.
+&amp; Comp. Geom.  10: 47–65, 1993 .
+ 
+One standard way of constructing Delaunay triangulations
+is by iterated local improvement, in which each step
+flips the diagonal of some quadrilateral.
+For many other optimal triangulation problems, flipping is
+insufficient, but the problems can instead be solved
+by a more general local improvement step in which
+a new edge is added to the triangulation, cutting through
+several triangles, and the region it cuts through
+is retriangulated on both sides.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Provably good mesh generation .  M. Bern ,
+D. Eppstein, and 
+ 
+J. Gilbert .  31st IEEE Symp. Foundations of Comp. Sci., 
+St. Louis, Missouri, 1990, pp. 231–241.  J. Comp. Sys. Sci.  48: 384–409, 1994 (special issue for 31st FOCS).
+ 
+In this paper, we construct triangulations of point sets and polygons by
+using quadtrees to add extra vertices to the input. As a result we can
+guarantee that all triangles have angles bounded
+away from zero, using a number of triangles within a constant of
+optimal; this was the first paper to provide simultaneous bounds on mesh
+element quality and mesh complexity of this form, and therefore the
+first to provide finite element mesh generation algorithms that
+guarantee both the robustness of the algorithm against unexpected input
+geometries and the quality of its output.
+  
+In the same paper we also use quadtrees to triangulate planar point sets
+so that all angles are non-obtuse, using linearly many triangles, and to
+triangulate higher dimensional point sets with no small solid angles and
+a number of simplices within a constant of optimal.  Also, we can
+augment any higher dimensional point set so the Delaunay triangulation
+has linear complexity.
+  
+In later follow-up work, I showed that the same
+technique can also be used to find a triangulation whose edges have  total length within a constant factor of
+optimal . Bern, Mitchell, and Ruppert
+showed that alternative methods can be used to triangulate any polygon
+without obtuse angles; see " Faster circle packing
+with application to nonobtuse triangulation " for an algorithmic
+improvement to their technique. Additionally, with Bern, Chew, and
+Ruppert, we showed that  any point set in
+higher dimensions can be triangulated with nonobtuse simplices .
+Bern and I surveyed these and related results in our paper " Mesh generation and optimal triangulation ".
+  ( BibTeX  --
+ Citations  --
+ Preliminary copy of journal version  --
+ MIT hypertext bibliography  --
+ CiteSeer  --
+ ACM DL (JCSS) )
+  
+    Approximating the minimum weight Steiner triangulation . 
+D. Eppstein.  Tech. Rep. 91-55 , ICS, UCI, 1991.   3rd ACM-SIAM Symp. Discrete Algorithms,  Orlando, 1992, pp. 48–57 .   Disc. Comp. Geom.  11: 163–191, 1994 .
+ 
+ Quadtree  based
+ triangulation  gives a large but constant factor
+ approximation 
+to the minimum weight triangulation of a point set or
+convex polygon, allowing extra Steiner points to be added as vertices.
+Includes proofs of several bounds on triangulation weight relative to
+the  minimum spanning tree  or non-Steiner
+triangulation, and a conjecture
+that for convex polygons the only points that need to be added are on
+the polygon boundary.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Subquadtratic nonobtuse triangulation of convex polygons . 
+D. Eppstein.  Tech. Rep. 91-61 , ICS, UCI, 1991.
+ 
+This was merged into " triangulating polygons
+without large angles ".
+We find a grid-like structure in the input polygon,
+which is then thinned out using a complicated divide-and-conquer scheme.
+The results are largely subsumed by the method of Bern et al.
+described in " Faster circle packing ".
+  ( BibTeX )
+  
+    Triangulating polygons without large angles .  M. Bern ,
+ D. Dobkin ,
+and D. Eppstein.  
+ 8th ACM Symp. Comp. Geom.,  Berlin, 1992, pp. 222–231 .   Int. J. Comp. Geom. &amp; Appl.  5: 171–192, 1995 
+(special issue for 8th Symp. Comput. Geom.)
+ 
+Follows up " Polynomial size non-obtuse
+triangulation of polygons ";
+improves the number of triangles by relaxing the requirements on their angles.
+Again mostly subsumed by results of Bern et al described in
+" Faster circle packing ".
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Mesh generation and optimal triangulation .  M. Bern 
+and D. Eppstein. 
+Tech. Rep. CSL-92-1, Xerox PARC, 1992.  Computing in Euclidean Geometry, 
+D.-Z. Du and F.K. Hwang, eds.,
+World Scientific, 1992, pp. 23–90.  Revised
+version in  Computing in Euclidean Geometry,  2nd ed.,
+D.-Z. Du and F.K. Hwang, eds.,
+World Scientific, 1995, pp. 47–123 .
+ 
+Considers both heuristics and theoretical algorithms
+for finding good triangulations and tetrahedralizations
+for surface interpolation and unstructured finite element meshes.
+Note that the online copy here omits the figures;
+also online is this paper's
+ bibliography .
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Algorithms for proximity problems in higher dimensions .  
+M. T. Dickerson  and D. Eppstein.  
+ Comp. Geom. Theory &amp; Applications  5: 277–291, 1996 .
+ 
+Combines a method from
+" Provably good mesh generation " for
+finding sparse high-dimensional Delaunay triangulations,
+a method of Dickerson, Drysdale, and Sack
+[" Simple
+algorithms for enumerating interpoint distances ", IJCGA 1992]
+for using Delaunay
+triangulations to search for nearest neighbors,
+and a method of Frederickson for speeding up tree-based searches.
+The results are fast algorithms for several proximity problems
+such as finding the  k  nearest neighbors to each point
+in a given point set.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Faster circle packing with application to nonobtuse triangulation . 
+D. Eppstein.  Tech. Rep. 94-33 , ICS, UCI 1994.  Int. J. Comp. Geom. &amp; Appl.  7 (5): 485–491, 1997.
+ 
+Speeds up a triangulation algorithm of Bern et al.
+[" Linear-Size
+Nonobtuse Triangulation of Polygons "] by finding a
+collection of disjoint circles
+which connect up the holes in a non-simple polygon.
+The method is to use a
+ minimum spanning tree  to find a collection of
+overlapping circles, then shrink them one by one to reduce the number of
+overlaps, using Sleator and
+Tarjan's dynamic tree data structure to keep track of the
+connectivity of the shrunken circles.
+  ( BibTeX  --
+ Citations )
+  
+    Parallel construction of quadtrees and quality triangulations .  M. Bern ,
+D. Eppstein, and 
+ S.-H. Teng .   3rd Worksh. Algorithms and Data
+Structures,  Montreal, 1993 . 
+Springer,  Lecture Notes in
+Comp. Sci.  709, 1993, pp. 188–199. 
+Tech. Rep. 614, MIT Lab. for Comp. Sci., 1994.   Int. J. Comp. Geom. &amp; Appl. 
+9 (6): 517–532, 1999. 
+ 
+A parallelization of the quadtree constructions in
+" Provably good mesh generation ",
+in an integer model of computation, based on a technique of
+sorting the input points using values formed by shuffling the binary
+representations of the coordinates.
+A side-effect is an efficient construction for the "fair split tree"
+hierarchical clustering method used by Callahan and Kosaraju for various
+nearest neighbor problems.
+  ( BibTeX  --
+ CiteSeer  --
+ Citations  --
+ ACM DL )
+  
+    Dihedral bounds for mesh generation in high dimensions .  M. Bern ,
+ L.P. Chew ,
+D. Eppstein, and
+ J. Ruppert .  892nd Meeting Amer. Math. Soc.,  Brooklyn, 1994. 
+Abstract in  Abs. Amer. Math. Soc.  15, 1994, p. 366.  
+ 6th ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1995, pp. 189–196. 
+ 
+Any  d -dimensional point set
+can be triangulated
+with O( n  ceil( d /2) ) simplices, none of which has
+an obtuse
+dihedral angle.
+No bound depending only on  n  is possible 
+if we require the maximum dihedral angle to measure at most 
+90-epsilon degrees or the minimum dihedral to measure
+at least epsilon.  Includes a
+ 
+classification of simplices  in terms of their bad angles.
+  ( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer )
+  
+    Approximation algorithms for geometric problems .  M. Bern 
+and D. Eppstein.  
+ Approximation Algorithms for NP-hard Problems  ,
+ D. Hochbaum , ed.,
+PWS Publishing, 1996, pp. 296–345.
+ 
+Considers problems for which no polynomial-time exact algorithms
+are known, and concentrates on bounds for worst-case approximation
+ratios, especially those depending intrinsically on geometry
+rather than on more general graph theoretic or metric space formulations.
+Includes sections on the
+ traveling salesman problem ,
+Steiner trees,
+ minimum weight triangulation ,
+clustering, and separation problems.
+  ( BibTeX  --
+ Citations  --
+ ACM DL )
+  
+    Linear complexity hexahedral mesh generation . 
+D. Eppstein.  Tech. Rep. 95-51 , ICS, UCI, 1995.  
+ 12th ACM Symp. Comp. Geom.,  Philadelphia,
+1996, pp. 58–67 .  arXiv:cs.CG/9809109 .  Comp. Geom. Theory &amp; Applications  12: 3–16, 1999
+(special issue for 12th SCG).
+ 
+Any simply connected polyhedron with an even number of quadrilateral
+sides can be partitioned into O(n) topological cubes, meeting face to
+face.
+  ( BibTeX  --
+ Citations  --
+ SCG paper  --
+ SCG talk slides  --
+ CiteSeer  --
+ ACM DL (CGTA) )
+  
+    On triangulating three-dimensional polygons .  G. Barequet , 
+ M. Dickerson ,
+and D. Eppstein.  
+ 12th ACM Symp. Comp. Geom.,  Philadelphia, 1996, pp. 38–47 .  
+ Comp. Geom. Theory &amp; Applications  10: 155–170, 1998 .
+ 
+It is NP-complete, given a simple polygon in 3-space,
+to find a triangulated simply-connected surface (without extra vertices)
+spanning that polygon.  If extra vertices are allowed,
+or the surface may be curved,
+such a surface exists if and only if the polygon is unknotted;
+the complexity of testing knottedness remains open.
+Snoeyink has shown that exponentially many extra vertices may be
+required for a triangulated spanning disk.
+  ( BibTeX  --
+ SCG paper  --
+ Full paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Optimal point placement for mesh smoothing .  N. Amenta ,
+ M. Bern ,
+and D. Eppstein.  
+ 8th ACM-SIAM Symp. Discrete
+Algorithms,  New Orleans, 1997, pp. 528–537 .  Symp.
+Computational Geometry Approaches to Mesh Generation ,
+SIAM 45th Anniversary Mtg., Stanford, 1997.  arXiv:cs.CG/9809081 .  
+ J. Algorithms  30: 302–322, 1999 (special issue for SODA 1997) .
+ 
+We study  finite element mesh  smoothing
+problems in which we
+move vertex locations to optimize the shapes of nearby
+triangles.  Many such problems can be solved in linear time using
+ generalized linear programming ; we also give
+efficient
+algorithms for some non-LP-type mesh smoothing problems.
+One lemma may be of independent interest: the locus of points in R d 
+from which a d-1 dimensional convex set subtends a given solid angle
+is convex.
+  ( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Quadrilateral meshing by circle packing .  M. Bern 
+and D. Eppstein.   2nd CGC
+Worksh. Computational Geometry  , Durham, North Carolina, 1997.   6th Int. Meshing Roundtable,  Park
+City, Utah, 1997, pp. 7–19 .  arXiv:cs.CG/9908016 .  Int. J. Comp. Geom. &amp; Appl.  10 (4): 347–360, 2000.
+ 
+We use  circle-packing methods  to generate
+quadrilateral meshes for
+polygonal domains, with guaranteed bounds both on the quality and the
+number of elements.  We show that these methods can generate meshes of
+several types:
+   The elements form the cells of a Voronoi diagram,
+  The elements each have two opposite 90 degree angles,
+  All elements are kites, or
+  All angles are at most 120 degrees.
+  
+In each case the total number of elements is O( n ).
+The 120-degree bound is optimal; if a simply-connected region has all
+angles at least 120 degrees, any mesh of that region has a 120 degree
+angle.
+ ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Optimal Möbius transformations for information visualization
+and meshing .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0101006 .   7th Worksh. Algorithms and Data
+Structures,  Providence, Rhode
+Island, 2001 . 
+Springer,  Lecture Notes in
+Comp. Sci.  2125, 2001, pp. 14–25.
+ 
+We give linear-time
+ quasiconvex programming 
+algorithms for finding a Möbius transformation of a
+ set of spheres 
+in a unit ball or on the
+surface of a unit sphere that maximizes the minimum size of a
+transformed sphere. We can also use similar methods to maximize the
+minimum distance among a set of pairs of input points. We apply these
+results to vertex separation and symmetry display in spherical
+ graph drawing , viewpoint selection in
+ hyperbolic  browsing, and element size
+control in conformal structured
+ mesh generation .
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ WADS talk slides  --
+ ACM DL )
+  
+    Topological issues in hexahedral meshing . 
+D. Eppstein. 
+Invited talk at
+ Conf. Algebraic
+Topology Methods in Computer Science , Stanford, 2001.
+ 
+We consider the problem of subdividing a polyhedral domain in R^3 into
+cuboids meeting face-to-face. For topological subdivisions (cell
+complexes in which each cell is combinatorially equivalent to a cube,
+but may not be embedded as a polyhedron) and simply-connected domains, a
+simple necessary and sufficient condition for the existence of a
+hexahedral mesh is known: a domain with quadrilateral faces can be
+meshed if and only if there is an even number of faces. However,
+conditions for the existence of polyhedral meshes remain open, as do the
+topological versions of the problem for more complicated domain topologies. 
+  
+( Slides )
+  
+    Flipping cubical meshes .  M. Bern 
+D. Eppstein, and
+ J. Erickson .  arXiv:cs.CG/0108020 . 
+10th Int. Meshing Roundtable, Newport Beach, 2001, pp. 19–29.  Engineering with Computers  18 (3): 173–187, 2002.
+ 
+We examine  flips  in which a set of mesh cells connected in a
+similar pattern to a subset of faces of a cube or hypercube is replaced
+by cells in the pattern of the complementary subset.
+We show that certain flip types preserve geometric realizability of a
+mesh, and use this to study the question of whether every topologically
+meshable domain is geometrically meshable.  We also study flip graph
+connectivity, and prove that the flip graph of quadrilateral meshes has
+exactly two connected components.
+  
+Note that the Meshing Roundtable version was by Bern and Eppstein.
+Erickson was added as a co-author during the revisions for the journal version.
+  
+( Slides  --
+ BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Global optimization of mesh quality . 
+D. Eppstein. 
+Tutorial at
+10th Int. Meshing Roundtable, Newport Beach, 2001.
+ 
+Delaunay triangulation has been a staple of triangular mesh generation
+for a long time.  Why?  As well as being simple, fast, and visually
+pleasing, Delaunay triangulations can be shown to be optimal for various
+measures of mesh quality; for instance, they avoid sharp angles to the
+maximum extent possible.  We review these and other results on
+construction of meshes that optimize given quality measures, including
+recent work on postprocessing tetrahedral meshes to eliminate slivers.
+  
+( slides  --
+ Citations )
+  
+    Tiling space and slabs with acute tetrahedra . 
+D. Eppstein,
+ J. M. Sullivan ,
+and  A. Üngör .  arXiv:cs.CG/0302027 .  
+ Comp. Geom. Theory &amp; Applications  27 (3): 237–255, 2004 .
+ 
+We show it is possible to
+ triangulate  three-dimensional space using only
+tetrahedra with acute dihedral angles. We present several constructions
+to achieve this, including one in which all dihedral angles are less
+than 77.08 degrees, and another which tiles a slab in space.
+  
+( BibTeX )
+  
+    Quasiconvex programming . 
+D. Eppstein. 
+Invited talk at DIMACS Worksh. on Geometric Optimization, New Brunswick,
+NJ, 2003. 
+Plenary talk at  ALGO 2004 ,
+Bergen, Norway, 2004.  arXiv:cs.CG/0412046 .  Combinatorial and Computational Geometry , Goodman, Pach, and
+Welzl, eds., MSRI Publications 52, 2005, pp. 287–331.
+ 
+Defines  quasiconvex programming , a form of generalized linear
+programming in which one seeks the point minimizing the pointwise
+maximum of a collection of quasiconvex functions.
+Surveys algorithms for solving quasiconvex programs either numerically
+or via generalizations of the dual simplex method from linear
+programming, and describe varied applications of this geometric
+optimization technique in meshing, scientific computation, information
+visualization, automated algorithm analysis, and robust statistics.
+  
+( DIMACS talk slides  --
+ ALGO talk slides )
+  
+    Single-strip triangulation of manifolds with arbitrary topology.  
+D. Eppstein and
+ M. Gopi .  13th Video Review of
+Computational Geometry, 2004 .  20th ACM Symp. Comp. Geom.,  Brooklyn, 2004, pp. 455–456 (abstract
+for video).  25th Conf. Eur. Assoc. for Computer Graphics (EuroGraphics '04) ,
+Grenoble, 2004 (2nd best paper award).  Eurographics Forum  23 (3): 371–379, 2004.  arXiv:cs.CG/0405036 .
+ 
+We describe a new algorithm, based on
+ graph matching ,
+for subdividing a
+ triangle mesh  (without boundary)
+so that it has a
+ Hamiltonian cycle  of triangles, and prove that
+this subdivision process increases the total number of triangles
+in the mesh by at most a factor of 3/2.  We also prove lower bounds
+on the increase needed for meshes with and without boundary.
+  
+( Graphics
+lab pubs page  --
+ Citations )
+  
+    Single triangle strip and loop on manifolds with boundaries.   A. Bushan ,
+ P. Diaz-Gutierrez ,
+D. Eppstein, and
+ M. Gopi . 
+Tech. Rep. 05-11, UC Irvine, School of Information and Computer Science,
+2005. 
+Proc. 19th Brazilian Symp. Computer Graphics and Image Processing
+(SIBGRAPI 2006), pp. 221–228.
+ 
+This follows on to our previous paper on
+ using graph matching to cover a
+triangulated polyhedral model with a single triangle strip  by
+extending the algorithms to models
+with boundaries. We provide two methods: one is based on using an algorithm
+for the Chinese Postman problem to find a small set of triangles to
+split in order to find a perfect matching in the dual mesh, while the
+other augments the model with virtual triangles to remove the boundaries
+and merges the strips formed by our previous algorithm on this augmented
+model. We implement the algorithms and report some preliminary
+experimental results.
+  
+( Graphics
+lab pubs page )
+  
+    Happy endings for flip graphs.  
+D. Eppstein.  arXiv:cs.CG/0610092 .  23rd ACM Symp. Comp. Geom.,  Gyeongju, South Korea, 2007, pp. 92–101.   J. Computational Geometry  1 (1): 3–28, 2010 .
+ 
+We show that the triangulations of a finite point set form a flip graph
+that can be embedded isometrically into a hypercube, if and only if the
+point set has no empty convex pentagon. Point sets of this type include
+convex subsets of lattices, points on two lines, and several other
+infinite families. As a consequence, flip distance in such point sets
+can be computed efficiently.
+  
+    Approximate Topological Matching of Quadrilateral Meshes . 
+D. Eppstein,
+ M. T. Goodrich ,
+ E. Kim ,
+and R. Tamstorf.   Proc. IEEE
+Int. Conf. Shape Modeling and Applications (SMI 2008) , Stony Brook,
+New York, pp. 83–92 .   The Visual Computer 
+  25 (8): 771–783, 2009 .
+ 
+We formalize problems of finding large approximately-matching regions of
+two related but not completely isomorphic quadrilateral meshes, show
+that these problems are NP-complete, and describe a natural greedy
+heuristic that is guaranteed to find good matches when the mismatching
+parts of the meshes are small.
+  
+( Preprint )
+  
+    Motorcycle graphs: canonical quad mesh partitioning . 
+D. Eppstein,
+ M. T. Goodrich ,
+ E. Kim ,
+and R. Tamstorf.   Proc. 6th Symp. Geometry Processing , Copenhagen, Denmark, 2008 .  Computer Graphics Forum   27 (5): 1477–1486 , 2008.
+ 
+We use a construction inspired by the motorcycle graphs previously used
+in  straight skeleton  construction, to partition quadrilateral meshes
+into a small number of structured submeshes. Our construction is
+canonical in that two copies of the same mesh will always be partitioned
+in the same way, and can be used to speed up graph isomorphism
+computations for geometric models in feature animation.
+  
+    Diamond-kite meshes: adaptive quadrilateral meshing and orthogonal circle packing . 
+D. Eppstein.  arXiv:1207.5082 .   21st International Meshing Round Table , San Jose, California,
+2012, pp. 261–277 .   Engineering
+with Computers  30 (2): 223–235 (special issue for the 21st
+Int. Meshing Roundtable), 2014 .
+ 
+We describe a recursive subdivision of the plane into quadrilaterals in
+the form of rhombi and kites with 60, 90, and 120 degree angles. The
+vertices of the resulting quadrilateral mesh form the centers of a set
+of circles that cross orthogonally for every two adjacent vertices,
+and it has many other properties that are important in finite element meshing.
+  
+( Slides )
+  
+     
+ Geometry  --
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

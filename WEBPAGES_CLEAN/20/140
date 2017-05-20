@@ -1,0 +1,75 @@
+ 22.2 operator() and function pointers<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.1 Introduction 
+ Up:   22. Predicate Functors 
+ Next:   22.3 Functors have State 
+   
+
+
+  
+22.2  operator()  and function pointers 
+ 
+
+ 
+C++ allows a user to define a function  operator ()  for any class.
+This operator can have return values, take arguments and be overloaded.
+For instance  bool operator()(const OEAtomBase *atom)  is a functor
+which takes a const pointer to an  OEAtomBase  as an argument and
+returns boolean.  The  operator()  function is called when the class
+instance name is followed by the arguments to the function.
+
+  
+If we have a class  MyPredicate  which defines  bool
+operator()(const OEAtomBase *) , then the function will be called in the
+example below.
+
+  
+      MyPredicate pred; //create functor
+  bool returnVal;
+  OEAtomBase *atom;
+
+  ...define atom...
+
+  returnVal = pred(atom);
+    
+Note that while pred in the example above is actually a class.  However,
+the syntax for calling a function and calling  operator()  of a
+functor is indistinguishable.
+
+  
+While this idiom may be new to non-C++-aficionados, it is actually quite
+similar to using function pointers in C or other languages.
+
+  
+Note: For technical reasons,  operator()  functions  cannot  be
+virtual.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.1 Introduction 
+ Up:   22. Predicate Functors 
+ Next:   22.3 Functors have State 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

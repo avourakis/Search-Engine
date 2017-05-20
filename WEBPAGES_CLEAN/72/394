@@ -1,0 +1,56 @@
+ /*
+ * simple code for computing the KL-divergence objective function and gradient
+ * from "Neighbourhood Components Analysis" Goldberger et al, NIPS04
+ *
+ * charless fowlkes
+ * fowlkes@cs.berkeley.edu
+ * 2005-02-23
+ *
+ */
+
+#include 
+#include 
+#include 
+
+void 
+mexFunction (int nlhs, mxArray* plhs[], int nrhs, const mxArray* prhs[])
+{
+    // check number of arguments
+    if (nlhs = 3) {
+        mexErrMsgTxt("Too many output arguments.");
+    }
+    if (nrhs = 5) {
+        mexErrMsgTxt("Too many input arguments.");
+    }
+
+    // get arguments
+    double* A = mxGetPr(prhs[0]);
+    int ID = mxGetN(prhs[0]);
+    int OD = mxGetM(prhs[0]);
+    double* X = mxGetPr(prhs[1]);
+    if (mxGetN(prhs[1]) != ID) { mexErrMsgTxt("data (X) dimension  does not match (A) input dimension"); }
+    int N = mxGetM(prhs[1]);
+
+    double* Y = mxGetPr(prhs[2]);
+    int K = mxGetN(prhs[2]);
+    if (mxGetM(prhs[2]) != N) { mexErrMsgTxt("different #of class labels (Y) and point coordinates (X)"); } 
+
+    double* AXT = mxGetPr(prhs[3]);
+    if (mxGetN(prhs[3]) != N) { mexErrMsgTxt("AX has wrong # colums"); } 
+    if (mxGetM(prhs[3]) != OD) { mexErrMsgTxt("AX has wrong # rows"); } 
+
+    printf("pts=%d ",N);
+    printf("classes=%d ",K);
+    printf("indim=%d ",ID);
+    printf("outdim=%d \n",OD);
+
+    ////// set up output arguments
+    plhs[0] = mxCreateDoubleMatrix(1,1,mxREAL); 
+    //plhs[1] = mxCreateDoubleMatrix(1,ID*OD,mxREAL); 
+    plhs[1] = mxCreateDoubleMatrix(ID,ID,mxREAL); 
+    double* F = mxGetPr(plhs[0]);
+    double* M = mxGetPr(plhs[1]);
+
+    //compute exp(-D2)
+    double* ED2 = new double[N*N];
+    for (int i = 0; i  

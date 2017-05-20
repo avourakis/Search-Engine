@@ -1,0 +1,337 @@
+ Sixth Homework<body>
+  
+ 
+          
+ 
+ This assignment is due on Monday, February
+24.  
+ 
+  (a)   Take the   Button2  
+class we went over last Thursday (adapted from  Bruce Eckel's Thinking in Java, third edition )
+and change it as follows:  
+  
+ Make the text field display a counter that
+starts at zero.  
+   
+ Make one button say "Increment";
+when you click it, the counter is increased by one.  
+   
+ Make the other button say "Decrement";
+when you click it, the counter is decreased by one.  
+   
+ Add another button called "Reset"
+that sets the counter to zero.  
+  
+ See    http://www.ics.uci.edu/~kay/courses/h22/hw/Button2.java   
+for the version of the     Button2  
+code we used in class.  
+ 
+ For some extra credit, which you absolutely
+may not attempt until you finish the rest of this assignment (come on now,
+GUIs are fun, but no dessert until you eat your vegetables!), take a look
+at Eckel's text (try the "Catalog of Swing Components" section
+of Chapter 14, Creating Windows &amp; Applets) to get an idea of some of
+the other components you can create.  Then add some bells and whistles to
+your counter:  Some simple possibilities are counting by twos (or a user-specified
+increment, possibly specified by a slider), highlighting particular values
+(e.g., values evenly divisible by 10), or allowing the user to specify starting
+or reset values.  
+ 
+  (b)   Design and implement a class DVD,
+which has the following 14 fields:  title, studio, pending release date,
+status (e.g., out or released, discontinued, pending), sound, versions,
+price, rating, year, genre, aspect ratio, UPC (universal product code),
+release date, and ID number.  The file    http://www.ics.uci.edu/~kay/courses/h22/hw/DVD.txt   
+contains data for about 25,000 DVDs (the original source of this file is
+   http://hometheaterinfo.com/dvdlist.htm   ).
+ Note that the first line contains the field names.  
+ 
+  (b.1)   Your DVD class should have conventional
+getter and setter methods for each field.    
+ 
+  (b.2)   You should also have a constructor
+that takes a single string (a line of information about the DVD, in the
+format of the input file listed above) and extracts from it the field values,
+creating a new DVD object appropriately.  The data file contains a single
+line for each DVD; you can read that line into a string and then call this
+constructor. Parsing these strings requires a little bit of attention:  
+  
+ In each string, the 14 fields of DVD information
+are separated from one another by commas.  Some fields have null values;
+they are represented in the input by two commas with nothing in between
+(or by a comma at the end of the string).  
+   
+ Most of the fields are strings, surrounded
+by double-quote marks (and where a double-quoted string  contains 
+a double-quote mark, two double-quote marks appear in a row).  When you
+store these string values, of course you should not store the surrounding
+double-quote marks (and any internal double-quote marks should not be doubled
+in the stored version as they were in the input).  
+   
+ The price field appears with a dollar sign
+and no quotation marks.  Store it as an integer number of cents.  
+   
+ The pending release date field is null if
+the status isn't pending; this field and the other release date field,
+when they aren't null, contain a date and time (in the format 2/14/03
+12:00, not enclosed in quotation marks).  You may store each date/time value
+as a single string.  
+   
+ The ID number field is either null or an integer;
+store this field as an integer with null values as zero.  
+  
+  (b.3)   You should also have a toString
+method that produces from a DVD object a string in the same form as the
+original data.  
+ 
+  (b.4)   Write a simple driver program
+that reads lines from the input file, creates DVD objects, and writes lines
+back to a new text file.  You should eventually test your program on the
+entire input file, but of course you can use just a small portion of it
+as you're working.  
+ 
+  (c)   For the next part of this assignment,
+you will design and implement a "bag" of objects.  A bag (or multiset)
+is a collection of objects, each with a string as its key, in which the
+order isn't important (like a set) but the number of times each item
+occurs  is  important (unlike a set).  You might use a bag, for example,
+in an automated building entry system where you look up each entrant and
+keep a count of how many times that person has passed through the door;
+you might also use one to support a web site that counts votes for a favorite
+song or book.  
+ 
+ Your bag will implement the interface described
+below.  You will write two classes that implement the Bag interface, one
+class using a binary search tree and the other using a hash table.  For
+the hash table class, you will experiment with different hash functions
+and compare their results.  You will also write one or more simple driver
+programs to read in the data specified below and insert it into your various
+Bags.    
+ 
+ For the hash table version, you will implement
+five alternative hash functions.  Then you will hash each set of data using
+each of the five hash functions, producing statistics on the effectiveness
+of each combination.  [You may choose to parameterize your choice of hash
+function (and of data file), combining all your tests into one single run
+of the program.  You may also recompile the class and run the test separately
+with each hash function and each data set.]  Finally you will write a brief
+summary of your findings, describing which functions worked best and worst
+for which data.  
+ 
+  (c.1:  the Bag interface)   A bag has
+the operations described below; the behavior of the classes that implement
+this interface is also described.  
+ 
+ Constructor--Creates an empty Bag.  If an
+argument is specified, the binary search tree version ignores it but the
+hash table version uses that argument as the table size.  (For a little
+extra credit, make your hash table constructor use as the table size a prime
+number greater than or equal to the argument.)    
+ 
+  isEmpty   --Return
+true if the Bag contains no elements.  (Implement this so that it works
+in constant time.)    
+ 
+  makeEmpty   --Remove
+all the items stored in the Bag.    
+ 
+  insert   --Take
+a string (the key) and an object as arguments and insert the object into
+the Bag (according to the key).    
+ 
+  find   --Take
+a string (the key) as an argument and return a reference to the object with
+that key if it's present in the Bag (or null if it's not present).    
+ 
+  delete   --Take
+a string (the key) as an argument and remove from the Bag one object with
+that key (if it's present).  (E.g., if you insert objects with keys
+A, B, A, C, and B, and then delete A, the table will contain A, C, and two
+Bs.)    
+ 
+  totalElements   --Return
+the total number of elements currently stored in the Bag.  (E.g., if you
+insert A, B, A, C, and B,      totalElements   
+should return 5.)  Implement this so that it works in constant time.    
+ 
+  uniqueElements   --Return
+the number of unique elements currently stored in the Bag.  (E.g., if you
+insert A, B, A, C, and B,      uniqueElements   
+should return 3.)  Implement this so that it works in constant time.    
+ 
+  printStats   --Print
+statistics that show how evenly elements are distributed in the Bag.  This
+function will produce different results for each implementation.  
+ 
+--The binary search tree version should print out some indication of whether,
+or how well, the tree is balanced.  
+ 
+--The hash table version should print one line for each index (i.e., each
+bin) in the hash table; on that line should be the index, the total number
+of items in that bin, the number of unique items in that bin, and an asterisk
+for each unique item in that bin.  For example, suppose we have a HashTable
+of size 3 in which the following items are inserted:       A
+B a c 3 9 D E D 4 9 5 7 5   .  Suppose
+further that all upper-case letters hash to bin 0, all lower-case letters
+hash to bin 1, and all digits hash to bin 2.  The output of      printStats   
+for this table might look like this:    
+ 
+  0.  5  4 ****
+ 
+1.  2  2 **
+ 
+2.  7  5 *****   
+ 
+  (c.2:  binary search tree details) 
+ Your binary search tree should be a simple (unbalanced) binary search tree.
+ You may use as a guide the Scheme code at    http://www.ics.uci.edu/~kay/courses/h22/hw/bst.scm   ,
+as well as any code in Goodrich's text.  Note that even though the order
+of the items isn't important to the Bag class, you will need to compare
+strings internally to construct your binary search tree.  
+ 
+  (c.3: hash table details)   Your hash
+table should resolve collisions by linear chaining, as described in class
+and in Goodrich's text.  
+ 
+  (c.4: hash functions)   The      Insert   
+and      Find   
+operations must (of course) use a function that computes a hash code from
+the key field of the data.  This hash function is critical to the performance
+of your hash table, since you'll lose the performance advantages of
+hashing if your data are not distributed evenly (i.e., randomly) throughout
+the table.  You should code each of the hash functions listed below.  (Where
+a function speaks of a character's ASCII code, you may use any numeric
+value that's unique for every character.)  
+ 
+ * the sum of the ASCII codes of each character
+of the key, mod the table size  
+ 
+ * the product of the ASCII codes of each character
+of the key, mod the table size  
+ 
+ * the product of the ASCII codes of the first,
+fifth, ninth, thirteenth, seventeenth, and twenty-third characters of the
+key, mod the table size  
+ 
+ * the hash function given on page 346 of the
+Goodrich text  
+ 
+ * at least one other hash function of your
+own design (which may be a variation of one of the functions described above)  
+ 
+  (c.5: experimental runs and input data) 
+ Write simple driver programs to read the two data sets below, insert them
+into a bag, and observe and analyze their performance:  
+ 
+ * The DVD objects described in part  (b) 
+above.  Use the DVD's title as the key.  There are about 40 titles that
+aren't unique.  Your bag should count those as multiple occurrences
+of the same DVD object.  (For some extra credit, you can create from each
+title a "main title" field.  You'll notice that in the DVD
+list, multiple versions of the same work are distinguished by adding to
+the title some extra information like "(Animated)" or "(Live
+Action)."  You can create a "main title" by finding the first
+character of the title that isn't a letter, upper or lower case, a digit,
+a space, or an apostrophe; everything from the start of the string up to
+that point could be the main title.  If you use this main title as the key,
+you will produce more duplicate keys for your bag to count.)  
+ 
+ * Any list of at least 2000 English words.
+ There is a file of many words available at    http://www.ics.uci.edu/~kay/courses/h22/hw/wordlist.txt   .  
+ 
+ Ask yourself this question and check with
+someone if you don't know the answer:  What is the problem with these
+two input files when you're testing the performance of your BST-based
+Bag?  (Hint:  To make your life easier, we have provided these two files:
+    http://www.ics.uci.edu/~kay/courses/h22/hw/DVD-random.txt   
+and    http://www.ics.uci.edu/~kay/courses/h22/hw/wordlist-random.txt   .)  
+ 
+  (c.6: extra credit)   For a little extra
+credit, try one or both of these:  
+ 
+ * Run your tests and experiments on a third
+set of test data that you download from the Web, including the results in
+your written analysis.  Your data should contain at least 5000 items.  Be
+sure to supply the URL where you found the data.  
+ 
+ * So far, we have been concerned with how
+effective our hash functions are--that is, how evenly they distribute the
+data throughout the table.  For this part, you will concentrate on the efficiency
+of the function itself--that is, how long it takes to compute the hash value
+from the key.  You will measure how long each of your hash functions takes
+to hash 10,000 data items, including a description of your results in your
+written analysis.  You should write a separate driver for this task that
+just reads the data and calls the hash function, because you don't want
+to skew the results by including the time it takes to insert the data into
+the table.  Produce timing results for each of the different hash functions
+on each of the different sets of test data, to see if there are any efficiency
+differences that depend on the characteristics of the data.  
+ 
+  (d)   Write an interpreter for the programming
+language Facile 2.0, which is like the original version of Facile except
+for these two enhancements:  
+  
+ Long variable names.  Everywhere a single-letter
+variable could occur in an original Facile program, Facile 2.0 accepts a
+string of one or more alphabetic characters (A-Z).  You'll need to build
+a symbol table (as either a binary search tree or a hash table, similar
+to your Bag implementations from part  (c) ; you may use your implementations
+or a class from the Java library) to store each variable and its value and
+to retrieve the value when an already-defined variable appears in the code.  
+   
+ Statement labels:  Perhaps the most painful
+part of programming in original Facile is having to count statements to
+get the statement numbers correct in goto, gosub, and if statements.  In
+Facile 2.0, the programmer may include statement label lines.  Each statement
+label is a variable name (as above) followed by a colon, as shown below.
+ (Note that if the first word on a line isn't a statement keyword known
+to Facile (like LET or GOSUB), it's a label.)  When your program finds
+a label, it adds the label to the symbol table with the value of the statement/line
+number where the label occurred.  When a label occurs in a goto, gosub,
+or if statement, the interpreter looks up the label in the symbol table
+and substitutes its value.  An example appears below.   
+    LET N 5  
+    LET F 1  
+    GOSUB FACT  
+    PRINT F  
+    END  
+    FACT:  
+    IF N &gt; 1 THEN KEEPGOING  
+    RETURN  
+    KEEPGOING:  
+    MULT F N  
+    SUB N 1  
+    GOSUB FACT  
+    RETURN  
+    .   
+   
+  (e)   This part is extra credit, and
+it is not due with the rest of the assignment.  It will be due in a couple
+of weeks, but we wanted to give you the chance to start thinking about it
+now.  Either individually or in pairs, add a graphical user interface to
+one of the programs you've written this quarter:  The restaurant database
+program, the restaurant ordering program, the bank accounts, or the Facile
+interpreter.  Think about the design before you start coding, and develop
+incrementally:  That is, add a little bit at a time so that if you don't
+have time to implement that one last feature, at least you'll have the
+previous features working and ready to turn in.    
+ 
+  What to turn in:     
+ 
+ Turn in your Java files via Checkmate for
+parts  (a)  through  (d) .  Also turn in a prose document with
+part  (c)  that gives your analysis of the hash functions you tested.  
+ 
+ GUI counter problem written by David G. Kay,
+Winter 2003 to build on code from Bruce Eckel's  Thinking in Java,
+Third Edition. 
+  DVD class problem written by David G. Kay, Winter 2003.
+ 
+Hash table implementation assignment written by David G. Kay, Winter 1997
+and modified by David G. Kay, Spring 1997 and Fall 1998. Bags and binary
+search trees included by David G. Kay, Winter 1999 with residual revisions
+by David G. Kay, Spring 1999 and Winter 2003.
+ 
+Facile enhancements written by David G. Kay, Winter 2003, to build on the
+Facile lab assignment by Alex Thornton.  
+ </body> 

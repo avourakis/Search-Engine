@@ -1,0 +1,87 @@
+ 
+  Class ScheduleTaskEvent
+<body>
+  
+ 
+  Class ScheduleTaskEvent
+ 
+ 
+java.lang.Object
+   |
+   +---- SimEvent 
+           |
+           +---- ProcessorEvent 
+                   |
+                   +----ScheduleTaskEvent
+ 
+    public class  ScheduleTaskEvent 
+    extends  ProcessorEvent 
+   
+Event generated when a task is scheduled
+ 
+    
+ 
+    
+      ScheduleTaskEvent  (Object, EventDestination, float, int, long, float)
+     
+   
+    
+      equals  (Object)
+     Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+
+        getPeriod  ()
+     
+        getTask  ()
+     
+        toString  ()
+     
+    
+ 
+    
+  
+   
+ ScheduleTaskEvent 
+ 
+ public ScheduleTaskEvent(Object f,
+                          EventDestination et,
+                          float ti,
+                          int pe,
+                          long taskId,
+                          float p)
+ 
+  
+ 
+    
+   
+  equals  
+ 
+ public boolean equals(Object o)
+ 
+   Override this method to provide the type
+  of equality you want the simulator to
+  search for when using the removeEvent method
+ 
+        Overrides: 
+        equals  in class  ProcessorEvent 
+     
+     
+  getTask  
+ 
+ public long getTask()
+ 
+   
+  getPeriod  
+ 
+ public float getPeriod()
+ 
+   
+  toString  
+ 
+ public String toString()
+ 
+      Overrides: 
+        toString  in class  SimEvent 
+     
+ </body> 

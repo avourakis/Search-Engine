@@ -1,0 +1,227 @@
+ Java Package<body>
+
+ 
+
+ 
+Making a Java Package
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+To make a Java package named  pkg :
+ 
+
+   Make a  directory  named  pkg . 
+   
+    Put all the   .java  files  for the classes and interfaces
+    in the directory  pkg . 
+   
+    Begin each of the  .java  files
+  with a  package declaration : 
+     
+       package pkg; 
+     
+   
+    Compile the files by  running  javac 
+    from  pkg 's parent directory . 
+    For example,
+     
+       javac pkg/*.java 
+     
+   
+    Access the classes and interfaces of package  pkg 
+    from other packages by importing its definitions
+    with an import line in every  .java  file that uses them: 
+     
+       import pkg; 
+     
+   
+    Tell the Java interpreter how to find package  pkg 
+    by putting  pkg 's parent directory
+    on the classpath,
+    or by running the interpreter from that directory. 
+    If the full or relative pathname of  pkg 's parent directory
+    is  pname , then  java -cp pname ... 
+    will put  pname  on the classpath
+    and make package  pkg  accessible. 
+    If you have several packages in different parent directories,
+    separate the names with colons: 
+     java -cp pname:name2:dir3 ... . 
+   
+  
+Here is an  example package . 
+The package is named  formula ,
+its source files are in a directory named  formula ,
+and each source file begins with
+ 
+
+ 
+   package formula; 
+ 
+
+
+ Making a Java subpackage 
+
+ 
+A subpackage is just a package in a
+subdirectory of another package's directory. 
+Java uses dot as the package name separator,
+like  /  is used as the directory separator
+(for civilized operating systems, at least). 
+For example,
+to make a subpackage  subp 
+of the package  pkg : 
+ 
+
+   Make a subdirectory named  subp 
+    in the  pkg  directory. 
+   
+    Put all the  .java  files for the classes and interfaces
+    in the directory  pkg/subp . 
+   
+    Begin each  .java  file with a package declaration: 
+     
+       package pkg.subp; 
+     
+   
+    Compile the files by running  javac 
+    from  pkg 's parent directory
+    (just as before). 
+    For example,
+     
+       javac pkg/subp/*.java 
+     
+   
+    Access the classes and interfaces of package  subp 
+    from other packages including  pkg ) by importing its definitions
+    with an import line in every  .java  file that uses them: 
+     
+       import pkg.subp; 
+     
+   
+    You don't need to do anything different
+    to tell the Java interpreter how to find package  pkg.subp ,
+    since you are already telling it to look in  pkg 's
+    parent directory. 
+   
+  
+Although it may seem like  pkg  and  subp 
+should have easier or simpler access to each other
+because one is a subpackage of the other,
+this is not the case. 
+Either package's files have to import the other package to use it,
+just like any other package's files do.
+ 
+
+
+
+ The convention for names of published packages 
+
+ 
+It doesn't much matter what you name your own packages,
+as long as the names are unique. 
+For published packages,
+there is a convention for unique names
+that uses a URL associated with you, the package, or the project it is part of. 
+The components of the URL are used as package names,
+in reverse order. 
+For example,
+for the ScenarioML project
+whose associated URL is  http://scenarioml.ics.uci.edu ,
+each package would be a subpackage of
+ edu.uci.ics.scenarioml . 
+The  scenario  package for that project
+would have this as its package name: 
+ 
+
+ 
+   edu.uci.ics.scenarioml.scenario 
+ 
+
+ 
+and its source files would have to be in a directory named
+ 
+
+ 
+   edu/uci/ics/scenarioml/scenario 
+ 
+
+
+  jar  and packages 
+
+ 
+To produce a jarfile for one or more packages,
+go to the parent directory from which you would compile the source files,
+and run  jar  giving it all the class file names. 
+For example,
+for the  scenario  package discussed above,
+you would go to the directory containing the  edu  directory
+and enter the command
+ 
+
+ 
+   jar cf jarfname edu/uci/ics/scenarioml/scenario/*.class 
+ 
+ 
+
+and would obtain a jarfile named  jarfname.jar 
+which you could put on a classpath
+and thus gain access to the  scenario  package.
+ 
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010Feb24We20:58 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

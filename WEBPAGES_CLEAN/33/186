@@ -1,0 +1,261 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Draft functional requirements (strawman or woodman, you decide!)<body> Draft functional requirements (strawman or woodman, you decide!) 
+ David Durand  (  dgd@cs.bu.edu  )  Mon, 1 Jul 1996 11:10:59 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+    Previous message:   Jim Whitehead: "Proposed agenda for San Mateo Meeting" 
+
+    Next in thread:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+    Maybe reply:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+
+    
+ 
+
+
+Functional Requirements and Framework for Versioning on the WWW Preamble 
+Dear all,    During Fabio's pleasant visit to David's house, the two of
+us have decided to have a try at another draft of the functional
+requirement document, to include some new requirements and to make
+explicit some that we think have been implicit in the discussion so far.
+The  requirements in this document are proposed as an additional step after
+David Fiander's; we do not claim that they are complete.
+
+  We have divided the requirements in three sections. A first short
+section describes the rationale for versioning on the web. This rationale
+enumerates the goals as we see them for the whole project. All specific
+requirements should support (and certainly should not hinder) the
+realization of the goals. The Second section
+contains global requirements for protocol development. These are things we
+think are technically justified and that fulfil the rationale. They are
+separated from the other requirements because their acceptance creates
+further constraints on other technical requirements. Finally we list some
+specific requirements and that reflect our own analysis of the problem.
+
+  Also, we strongly agree with David Fiander's separation of versioning
+and configuration requirements, and propose a two-layer architecture for
+versioning on the web.  The first layer will address the simple problem of
+ handling multiple versions of single resources.  The second layer
+will address the thornier problems of configuration management for multiple
+resources.  This layering separates concerns nicely, and also leads to an
+efficient work plan.  We can create a basic architecture for versioning,
+and maybe even have it on the standards track, while we're still arguing
+about how to approach the more differentiated and ticklish problems of
+configuration management.
+
+  In practice this means that, while we should still take our own
+knowledge of configuration management into consideration insofar as it has an
+impact on the lower-level versioning issues, we shouldn't spend time,
+efforts and flames on configuration problems until we are ready to solve
+them.
+
+  Therefore we have decided to write down our view of the functional
+requirements for versioning support on the WWW, with an emphasis on
+resource versioning only. We invite people to contribute any configuration
+management requirements that may affect the development of the resource
+versioning layer.
+
+  At the end of specific requirements, you will find  [emphasized] 
+notes comparing this note and David Fiander's one, noting and justifying
+changes in wording, structure and issues.
+
+  
+
+ Functional Requirements and Framework for Versioning on the WWW 
+
+ This document gives a brief rationale for versioning on the WWW,
+and presents some functional requirements based on the rationale.
+ 
+
+ Rationale 
+
+ Versioning in the context of the world-wide web offers a variety of
+benefits: 
+
+  It allows more efficient management of large web sites.
+  It allows concurrent and controlled access to resources by
+authors and editors 
+ It can enhance the quality of annotation support
+(and other externally stored references) by preserving the
+historical record of changes to WWW resources 
+ It allows explicit semantic representation of
+single resources with multiple states 
+  [Other rationale items to follow?]  
+  This document gives requirements for extending WWW standards and
+protocols to obtain these benefits. 
+
+ Global requirements 
+
+
+ This section covers the overarching contraints that must
+inform and direct all the detailed requirements for specific features.
+These encompass compatibility across different implementations, as well as
+with current practice.
+Therefore, we believe the following to be the general requirements for
+versioning extensions: 
+
+   Stableness of versions.  Any successful attempt to retrieve a
+named version of a resource will always retrieve exactly the same content.
+To put it in another way, the content of a named version of a resource is
+immutable (it is reliably either frozen or not available).
+
+  [No one has made this explicit, yet this is the
+ distinctive feature essential to versioning systems]</strong> 
+
+  User Agent Interoperability. All
+versioning-aware user agents should be able to work with any
+versioning-aware HTTP server. It is acceptable for some user
+agent/server combinations to provide special features that are not
+universally available.
+
+  [This has also been implicit, yet somehow
+forgotten. Better to
+specify it]</strong> 
+
+  Legacy User Agent Support.  Servers should make versioned
+resources accessible to versioning-unaware user-agents
+in a format acceptable to them.
+  [This is our justification for endorsing
+Fiander's proposal that
+URLs must be able to specify version information.]</strong> 
+
+  Legacy Resource Support.  The protocol must enable a versioning
+aware server to work with existing resources and URLs. Special versioning
+information should not become a mandatory part of the protocol except where
+it is absolutely required. Version information cannot therefore be required
+in a URL for simple GET operations (and possibly also for POST). 
+
+  Separation of access to resources and access control  The protocol
+must provide ways to reserve or release versioned resources that are separated
+from the ways to get to these resources. Provided that the required set of
+consistency constraints are met before, during and after the modification of a
+versioned resource, no "right way" to access to a resource is enforced by the
+protocol. For instance, a user may request a lock *after* a GET, may POST a
+resource without releasing the lock, and may request a lock within the means of
+the protocol (HTTP connection) while getting the resource outside of it (FTP
+access, direct file access, or simply because the right copy hung around her
+disk after a previous access). This also provides a better policy for handling
+versioning through proxies.  
+
+  Functional requirements 
+
+ The protocol should provide: 
+  Access to specific named versions via a URL
+  [Again, a part of one of David F.'s
+requirements]</strong> 
+
+ Specific named version URLs that are constructed from an opaque URL and an
+opaque version string.
+
+  [Because the notation will be required to
+operate in the version control
+environment preferred by the website maintainer, it must be able to properly
+contain arbitrary strings, which may be used by the VCS as version
+identifiers.  While version information may be intelligible to the human
+operator, and perhaps to special-purpose clients, in the general case, we
+must assume that the client treats the version as a black box.
+ This is David Fiander's justification copied in with a few minor
+changes (we can't guarantee that version strings will be meaningful to a
+human).]</strong> 
+
+
+ Direct access to a server-defined "default", "current" or "tip" version
+of a resource.
+  [This provides one of the simplest ways to
+guarantee legacy
+user-agent compatibility, and legacy file compatibility. If no special
+version URLs are used, the server can provide an intelligent default. This
+does not rule out the possibility of a server returning an error in case
+it believes that no such default exists.]</strong> 
+
+ A way to access common related URLs from a versioned URL, whether by
+server query, URL computation, or some other way:
+  root version(s) of this document 
+ predecessor version(s) of this document 
+ successor version(s) of this document 
+ default version of this document 
+ complete version topology for this document 
+  [This is a new one: *some* versions of a resource
+are special. It
+must be possible in some way for a versioning-aware client to access
+common related versions to the one it currently is displaying. Possible
+solutions include, but are not limited to: the server automatic adding
+header fields to a versioned URL specifying the URL of the common
+related versions, the server providing a query method ("who is the
+previous version to this URL?"), or a standardized way to compute
+related URL given a versioned URL. ]</strong> 
+
+
+ Some way (e.g.  by URL inspection or server query) to determine that a
+URL points to a named version of a resource, and to tell the version
+identification part from the resource identification part.
+ Note that the requirement that a user agent can determine a resource
+name (URL) and a version identifier supports only some comparison
+operations: It enables the determination that two version-containing URLs
+designate versions of the same resource. However, given the phenomenon of
+URL aliasing, it is insufficient to determine that they are  not 
+versions of the same resource.
+  [This is a direct contradiction of one of David
+F.'s requirements. We
+feel that access to the "default" version of a resource is an extremely
+important operation, that a browser should be able to perform at any time
+that a versioned URL is seen. This is sort of a minimal "browsing through
+time" requirement. Even if this kind of default access is not allowed for
+encapsulation reasons,
+this requirement allows a browser to tell that a versioned resource has been
+accessed and then to invoke special versioning or configuration management
+operations on the resource. We also don't see that determining this information
+is any more pernicious that being able to determine that a URL contains a
+query string -- indeed it's potentially more useful, as it tells you
+about the identity of the referenced item, not one of its
+properties.]</strong> 
+
+ a way to request exclusive access to a version of a resource (LOCK). 
+
+ a way to release exclusive acccess to a resource (UNLOCK), 
+
+ A way for a user-agent to request a version identifier for a checked
+out version, with the understanding that it will not be used by any other
+user-agent in the meantime. The server may refuse the service. 
+
+ a way to submit a resource as a version of an existing version of a
+resource (POST or PUT), and have the server attach it to the correct part of
+the version tree. The client may propose a version identifier upon
+submitting the
+resource. The server may refuse to use it.  
+
+  [ The last four functional requirements take
+care of the last
+global requirements: version access is now logically separated from
+access control (LOCK/UNLOCK) and updating. In terms of traditional CM, a
+CHECKOUT is a LOCK followed by a GET and a CHECKIN is a POST followed by
+an UNLOCK.
+  In this way, we get the advantage of separating access control (locking
+and unlocking of resources) from modification of resources. We also have
+many more options for the assigment of version numbers depending on
+server policy. The version identifier of a new resource can be
+negotiated between the user-agent and the server at 3 points in time:
+when a lock is taken, when the lock is released, or when the resource is
+POSTed. We also offer options (such as locking a resource without
+modifying it) that will be useful in creating the configuration
+management layer.
+ The hardest thing will be assuring that clients can work with servers
+varying in locking policy from those that spawn versions rather than
+implement locks, to those that allow optional locking, to those that
+ require  locking (and possibly explicit control of version
+branching at the same time). Even without getting into config
+management, server policy on these issues varies a lot: we want a
+protocol that will allow user-agents to work with all servers,
+regardless of strategy.]</strong>
+
+
+
+
+  
+     Next message:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+    Previous message:   Jim Whitehead: "Proposed agenda for San Mateo Meeting" 
+
+    Next in thread:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+    Maybe reply:   Larry Masinter: "Re: Draft functional requirements (strawman or woodman, you decide!)" 
+
+   </body> 

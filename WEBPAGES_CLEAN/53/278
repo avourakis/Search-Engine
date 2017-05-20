@@ -1,0 +1,144 @@
+ 
+  Class GangScheduling
+<body>
+  
+ 
+  Class GangScheduling
+ 
+ 
+java.lang.Object
+   |
+   +----GangScheduling
+ 
+    public class  GangScheduling 
+    extends Object
+    implements  SchedulerInterface 
+    
+Example: A very simple gang scheduler
+ 
+    
+ 
+    
+      GangScheduling  (TheSimulator)
+     
+   
+    
+      EndOfTimeSlice  (float, int)
+     
+	EndOfTimeSlice
+
+	Invoked at the end of a time slice
+
+
+        GlobalClock  (float)
+     
+ Invoked when a receiving a global clock signal
+
+ 
+        JobArrival  (float, int)
+     Invoked when a new job arrives
+
+ 
+        main  (String[])
+     
+        PeIdle  (float, int, int)
+      Invoked when a PE has become idle for some reason
+
+ 
+        TaskArrival  (float, long)
+     
+ Invoked when a new task arrives, only if the network is asynchronous
+
+ 
+        TaskStateChange  (float, long)
+     
+ Invoked when a task has changed state
+
+ 
+    
+ 
+    
+  
+   
+ GangScheduling 
+ 
+ public GangScheduling( TheSimulator  ts)
+ 
+  
+ 
+    
+   
+  JobArrival  
+ 
+ public void JobArrival(float time,
+                        int jobId)
+ 
+   Invoked when a new job arrives
+ 
+        Parameters: 
+       time - Time when the job arrived
+      jobID - ID of the job that arrived
+      
+     
+  TaskStateChange  
+ 
+ public void TaskStateChange(float time,
+                             long taskID)
+ 
+   Invoked when a task has changed state
+ 
+        Parameters: 
+       time - Time when the change of state occured
+      task - ID of the task that changed state
+      
+     
+  PeIdle  
+ 
+ public void PeIdle(float time,
+                    int peId,
+                    int reason)
+ 
+   Invoked when a PE has become idle for some reason
+ 
+        Parameters: 
+       time - Time when the PE became idle
+      peId - The id of the PE that became idle
+      reason - Why the PE became idle. Not implemented.
+       
+     
+  EndOfTimeSlice  
+ 
+ public void EndOfTimeSlice(float time,
+                            int peId)
+ 
+   EndOfTimeSlice
+	Invoked at the end of a time slice
+ 
+      
+  TaskArrival  
+ 
+ public void TaskArrival(float time,
+                         long taskID)
+ 
+   Invoked when a new task arrives, only if the network is asynchronous
+ 
+        Parameters: 
+       time - Time when the task arrived
+      task - ID of the task that arrived
+      
+     
+  GlobalClock  
+ 
+ public void GlobalClock(float time)
+ 
+   Invoked when a receiving a global clock signal
+ 
+        Parameters: 
+       time - Time when the global clock arrived
+     
+     
+  main  
+ 
+ public static void main(String args[])
+ 
+</body> 

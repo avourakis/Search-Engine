@@ -1,0 +1,594 @@
+ Simplification<body>
+
+ 
+ Simplification 
+ 
+  Introduction to Computer Science I-III 
+ICS-21/-22/-23  
+ 
+  
+
+
+
+
+        Introduction  
+ 
+  In this lecture, we will discuss a variety of general issues in program simplification.
+  It introduces no new Java programming features, but instead steps back to provide a perspective
+    on one very important programming skill that all competent programmers must acquire.
+  Sometimes simplifying a program is the only way to comprehend it, and hence debug it.
+  Finally, this lecture shows that programs themselves can be studied and manipulated in a
+    formal way (just as expressions are manipulated in algebra).
+ 
+           Simplification  
+ 
+  We can use the laws of algebra to tell whether two forms are equivalent: using either
+    one produces the same result.
+  Thus, equivalence is a mathematical topic.
+  But as programmers, we must judge which form (the simpler one) to use in our programs.
+   
+  The simplest program is the one that is easiest to read, debug, and maintain.
+  Thus, simplicity is a psychological topic.
+  As a rule of thumb, smaller forms are often easier to understand (although sometimes a bit of
+    redundancy makes forms easier to understand: smtms lss s nt mr).
+    
+  In this section we will examine three kinds of algebras for proving equivalences
+     Boolean Algebra
+      Relational Algebra
+      Control Structure Algebra
+    
+  We will learn how to prove equivalences in each algebra and discuss how to gauge simplicity, as
+    well as show lots of examples of simplifictions.
+ 
+           Boolean Algebra  
+ 
+  Boolean Algebra concerns equivalences involving the  boolean  type and the logical operators.
+  The following is a list of useful laws (theorems, if you will) of Boolean Algebra.
+  The most practical law is DeMorgan's law: one form explains how to simplify the negation of
+    a conjunction ( &amp;&amp; ) and the other form explains how to simplify the negaion of a
+    disjunction ( || ).
+ 
+     
+     &amp;nbsp 
+ 
+  We can easily prove laws in Boolean Algebra by trying every combination of
+    the  true  and  false  values for each of the variables.
+  For example, to prove the conjunctive version of DeMorgan's law, we can start with the
+    following table of values, called a  truth table .
+  Here we list all the variables in the leftmost columns, and the two
+    expressions -which we hope to prove equivalent- in the rightmost columns.
+   
+       A  B  !(A&amp;&amp;B)  !A||!B 
+       true  true  &amp;nbsp  &amp;nbsp 
+     true  false  &amp;nbsp  &amp;nbsp 
+     false  true  &amp;nbsp  &amp;nbsp 
+     false  false  &amp;nbsp  &amp;nbsp 
+  
+      
+  We then fill in each column by just computing the values of the expressions
+    (using the semantics of the operators and our knowledge of evaluating
+     expressions: e.g., operator precedence and associativity).
+    
+       A  B  !(A&amp;&amp;B)  !A||!B 
+       true  true  false  false 
+     true  false  true  true 
+     false  true  true  true 
+     false  false  true  true 
+  
+      
+  The law is proved if the columns under the two expressions always contain the same pair of
+    values on each line.
+  This means that for every pair of values, the expressions compute the same result, so the
+    expression are equivalent and thus interchangable in our code.
+    
+  This approach also illustrates a divide and conquer strategy to proofs: we divide the complicated 
+    proof into four different parts (each a line in the truth table); each line is easy to verify by
+    pure calculation; once we verify all of the lines, we have verified the entire proof.
+  
+           Relational Algebra  
+ 
+  Relational Algebra concerns equivalances mostly involving the  int  and  double  types
+    and the numeric and relational operators.
+  It is based on the law of trichotomy. 
+       The law of trichotomy : Given two values, the first is either less than, equal to,
+            or greater than the second.
+          One (and exactly one) of these relationships must always hold.
+      
+  We can use the law of trichotomy as a divide and conquer method to break one
+    hard proof into many simpler ones.
+  Unlike using boolean values, there are billions of different  int 
+   values (and an infinite number of integer value -in the mathematics sense).
+   
+  As a first example, we will prove that  Math.max(x,y)+1  is equivalent to  Math.max(x+1,y+1) .
+  So, we can factor additive constants out of calls to  Math.max .
+    
+       x?y  Math.max(x,y)+1  Math.max(x+1,y+1) 
+       x   y+1  y+1 
+     x = y  x+1 or y+1  x+1 or y+1 
+     x &gt; y  x+1  x+1 
+  
+      
+  Here, knowing the relationship between  x  and  y  allows us to compute the answer
+    for each expression.
+  For example, if we know that  x&amp;lty , we know  Math.max(x,y)  evaluates to  y ,
+    so  Math.max(x,y)+1  evaluates to  y+1 ; likewise, if we know that  x&amp;lty , we
+    know that  x+1&amp;lty+1 , so  Math.max(x+1,y+1)  evaluates to  y+1 .
+  The other two cases can be simplified similarly. 
+    
+  Again, the law is proved if the columns under the two expressions always have
+    the same pair of values on each line.
+  This means that for every pair of values, the expressions compute the same
+    result, so the expressions are interchangable.
+    
+  As another example, we can prove that the expression  x is
+    equivalent to   (x=0 &amp;&amp; y&gt;=0) , which is true when
+     x  and  y  have the same sign (assuming the sign of 0 is
+    considered positive).
+  Here we need to list all possibilities of how  x  and  y 
+    compare to  0 .
+     
+       x?0  y?0  x  (x=0 &amp;&amp; y&gt;=0) 
+       x  y  true  true 
+     x  y=0  false  false 
+     x  y&gt;0  false  false 
+     x=0  y  false  false 
+     x=0  y=0  true  true 
+     x=0  y&gt;0  true  true 
+     x&gt;0  y  false  false 
+     x&gt;0  y=0  true  true 
+     x&gt;0  y&gt;0  true  true 
+  
+      
+  So again, the equivalence it proven.
+  Here is an interesting case where the smaller/simpler/more efficient code is
+    not necessarily easier to understand.
+  Most students believe the larger expression is easier to understand, until
+    they intensely study the meaning of  ==  when applied to
+     boolean  values generated by relational  operators.
+    
+  In actual code, I would suggest using the simpler form, and then include
+    the larger -easier to understand- form in a comment; we could even include
+    the above proof as part of the comment.
+    
+  Finally we can use the law of trichotomy to prove that we simplify the 
+    negation of relational operators.
+  Be careful when you do so, and recall the law of trichotomy.
+  If it is not true that x is less than y, then there are two possiblities
+    left: x is equal to y or x is greater than y.
+  Beginning programmers make the mistake of negating  x&lt;y  as
+     x&gt;y , but the correct equivalent expression is  x&gt;=y 
+    
+       x?y  !(x   x &gt;= y 
+       x   false  false 
+     x = y  true  true 
+     x &gt; y  true  true 
+  
+      
+  In fact, we can use the same kinds of proofs to show how to simplify the
+    negation of every relational operator.
+    
+       Negated Form  Simplified Form   
+        !(x   x &gt;= y  !(x 
+      !(x   x &gt; y  y 
+      !(x == y)  x != y  x 
+      !(x != y)  x == y  !(x 
+      !(x &gt;= y)  x   x 
+      !(x &gt; y)  x   !(y 
+   
+      
+  Also notice that each of the relational operators is equivalent to an
+    expression that includes only the  &amp;lt  relational operator (along
+    with sone logical operators).
+  Although we don't need the five other relational operators to write Java
+     programs (in a mathematical sense), they are provided because most
+     programmers are aware of them and can use them to write simpler programs
+     (in a psychological sense).
+  Thus the Java language is made larger (more operators) to make it easier for
+    human minds to use.
+  Such value judgements (which is better, a smaller language or a language
+    easier for humans to use) are required by programming language designers.
+    
+  Finally, we can often simplify negatate relational operators in DeMorgan's Laws simplifications.
+  For example, we can "simplify"  !(x  10)  to
+      !(x  10)  which is actually a bit larger, but can be further simplified to
+      x &gt;= 0 &amp;&amp; x  which is truly simpler.  
+   
+           Control Structure Algebra  
+ 
+  Now we will explore the richest algebra: the algebra of control structures.
+  First we will examine when changing the order in a sequence of statements
+    doesn't change the results of executing the sequence.
+  Second we will discuss transformations to  if  statements.
+  Finally, we will discuss transformations to  for  loops containing  break 
+    statements.
+
+   
+   Sequence equivalences 
+  We start by examining the orderings of statements and defining two important terms.
+    A statement  stores into  a variable if the state of the variable can be changed
+          by executing the statement.
+        So,  x = y;  stores into  x  (but not  y ).
+      A statement  examines  a variable if the statements needs to retrieve the value
+          stored in that variable.
+        So,  x = y;  examines  y  (but not  x ).
+    
+  Interestingly enough, the expression statement  x++;  both stores into and examines  x :
+    it first examines the value stored in  x , then computes a value one higher, then stores
+    that value back into  x  (the equivalent expression statement  x = x+1;  illustrates
+    this assertion more clearly).
+  In the entire  if  statement   
+  if (x &gt; y)            //Examines x and y
+    z = x;              //Stores into z; examines x
+  else
+    y++;                //Stores into and examines y  
+  we say that it stores into  z  and  y ; it examines  x  and  y .
+  Note that we will also say  System.out.println("...");  stores into the console because this
+    method causes new information to appear inside the console window (changing its state).
+   
+  Armed with this terminology, we can define  indepdendent  statements in a sequence.
+  Two statements are independent if we can exchange their order and they still always compute 
+    equivalent results.
+  Two statements  S 1   and  S 2   are independent if
+     S 1   stores into and examines no variables that  S 2   stores into, and
+     S 2   stores into and examines no variables that  S 1   stores into.
+    
+  For example, we can exchange the order of   x = 1; System.out.println(y);  because they
+    satisfy the property above (also, just think about whether either statement affects the other:
+    they don't).
+  We cannot exchange the order of   x = 1; System.out.println(x);  because the second statement examines
+     x , which the first statement stores into (the value printed depends on whether  x  is
+    assigned the value 1 before or after the print statement).
+  Likewise, we can exchange the order of   x = 1; y = 0;  because they satisfy the
+    property above.
+  We cannot exchange the order of   x = 1; x++;  because the second statement stores into
+     x , which the first statement also stores into.
+    
+  Obviously, changing the order of two statements doesn't simplify anything; but we will learn that
+    such exchanges can sometimes enable further "real" simplifications.
+    
+
+
+   
+   if equivalences 
+  Now, onto  if  statements.
+  We can use a modified truth table to prove the equivalence of two  if  statements.
+  For the  if  statement below
+      if (test)
+    statement 1 
+  else
+    statement 2   
+  we have the following modified truth table. 
+  Note that although  test  can be an arbitrarily complicated expression, ultimately its
+    value is either  true  or  false .
+   
+          test  Code Executed 
+       true  statement 1  
+     false  statement 2  
+  
+      
+   Boolean Assignment :
+  Let's examine various pairs of statements that we can prove equivalent by using these
+    modified truth tables.
+  The first involves storing a value into a  boolean  variable.
+  Assume that we have declared  boolean b; 
+  For the two statements     if (test)                  b = test;
+    b = true;
+  else
+    b = false;  
+  we have the following modified truth table. 
+    
+       test  Left Code Executed  Right Code Executed 
+       true  b = true;  b = true; (becaue  test  is  true ) 
+     false  b = false;  b = false; (becaue  test  is  false ) 
+  
+      
+  Again, because both columns show the same statements executed, regardless of
+    the value of  test , the  if/else  statement on the left and
+    expression statement on the right are equivalent.
+    
+   Test Reversal :
+  This equivalence shows that we can reverse the  test  AND the order of the two
+    statements inside the  if/else  and the resulting  if  statement is equivalent to the first.
+      if (test)          if (!test)
+    statement 1          statement 2 
+  else               else
+    statement 2          statement 1   
+  we have the following modified truth table. 
+    
+       test  Left Code Executed  Right Code Executed 
+       true  statement 1   statement 1  
+     false  statement 2   statement 2  
+  
+      
+  Which means that the following two  if/else  statements are equivalent.
+  I'd argue that the one on the right is simpler and easier to understand,
+    because it is easier to see that it is an  if/else  statement: our
+    eyes can see that loking just at the top three lines.
+  In the version on the left, the small  else  clause is almost hidden
+    at the bottom.
+    
+  if (test) {          if (!test)
+    statement T1           statement F 
+    statement T2         else {
+    ... &amp;nbsp                  statement T1 
+    statement Tn           statement T2 
+  } else                 ...
+    statement F            statement Tn 
+                       }  
+  Of course, we might be able to use DeMorgan's law to further simplify  !test  too.
+    
+   Bottom Factoring :
+  This equivalence shows that we can  always  remove (factor) a common statement out from the bottom 
+    of an  if/else  statement.
+  It is similar to algebraically factoring  AX+BX  into  (A+B)X .
+    
+  if (test) {          if (test)
+    statement 1           statement 1 
+    statement c         else
+  }else{                statement 2 
+    statement 2         statement c 
+    statement c 
+  }  
+  To prove this equivalence we use the following modified truth table. 
+    
+       test  Left Code Executed  Right Code Executed 
+       true  statement 1 ; statement c   statement 1 ; statement c  
+     false  statement 2 ; statement c   statement 2 ; statement c  
+  
+      
+  For example, the code on the top is equivalent to the code on the bottom.
+      if (zcc == 0) {
+    System.out.println("zcc = 0");
+    zcc = 1;
+  }else{
+    System.out.println("zcc != 0");
+    zcc = 1;
+  }
+
+  if (zcc == 0)
+    System.out.println("zcc = 0");
+  else
+    System.out.println("zcc != 0");
+  zcc = 1;  
+  Note that there is one extra constraint on this simplification: the
+    statement factored out of a block cannot use any variables declared in 
+    that block, because those variables are not in the new scope of the
+    statement, which has been moved outside of either block.
+  This constraint is typically not a problem, because few local variables are
+    declared in blocks following  if  and  else .
+    
+
+   Top Factoring :
+  This equivalence is shows that we can  often  remove a common statement 
+    out from the front of an  if/else  statement.
+  It is similar to algebraically factoring  XA+XB  into  X(A+B) .
+    
+  if (test) {          statement c 
+    statement c          if (test)
+    statement 1            statement 1 
+  }else{               else
+    statement c           statement 2 
+    statement 2 
+  }  
+  To prove this equivalence we use the following modified truth table. 
+     
+      test  Left Code Executed  Right Code Executed 
+       true  statement c ; statement 1   statement c ; statement 1  
+     false  statement c ; statement 2   statement c ; statement 2  
+  
+      
+  But there is one more detail to take care of.
+  Now we are executing  statement c   before the  if/else , which means
+    it is executed before the  test  expression is evaluated. 
+  This is guaranteed to work only if the statement and test are independent (as defined early).
+  In the example below, the code on the top is NOT equivalent to the code on the bottom.
+      if (zcc == 0) {
+    zcc = 1;
+    System.out.println("zcc = 0");
+  }else{
+    zcc = 1;
+    System.out.println("zcc != 0");
+  }
+
+
+  zcc = 1;
+  if (zcc == 0)
+    System.out.println("zcc = 0");
+  else
+    System.out.println("zcc != 0");  
+  because the code on the bottom can never have the test  zcc == 0  succeed.
+  This is because the  test  ( zcc == 0 ) is not independent of the statements
+      zcc = 1; : it examines (accesses) a variable stored into by this statement.
+    
+  On the other hand, sometimes even if the expression and statement are not independent, we can 
+    modify the test to account for the statement always executing before the  if/else  statement.
+  The code on the top here is equivalent to the code on the bottom (we can prove it using the
+    law of trichotomy:  zcc ? 0 ).
+      if (zcc == 0) {
+    zcc++;
+    System.out.println("zcc was == 0");
+  }else{
+    zcc++;
+    System.out.println("zcc was not == 0");
+  }
+
+
+  zcc++;
+  if (zcc == 1)
+    System.out.println("zcc was == 0");
+  else
+    System.out.println("zcc was not == 0");  
+  In fact, another way to simplify this code is to exchange the two statements in each
+    block (they are independent) and then just bottom-factor  zcc++ ,
+    yielding
+      if (zcc == 0)
+    System.out.println("zcc was == 0");
+  else
+    System.out.println("zcc was not == 0");
+  zcc++;  
+
+    
+  As with bottom factoring, the statement factored out of a block cannot contain any variables 
+    declared in that block (if such is the case, often the declaration can be top factored out
+    of the block too).
+  
+ 
+
+   
+   for equivalences 
+  Finally, let's look at three  for  loop equivalences.
+   
+   else Removal :
+  This equivalence involves the removal of an unnecessary  else  in an
+     if  controlling a  break .
+      for (;;) {              for (;;) {
+    statements 1              statements 1 
+    if (test)               if (test)
+      break;                   break;
+    else {                  statements 2 
+      statements 2           }
+    }
+  }  
+  In both loops, if  test  is  true  Java executes the  break ;
+  if  test  is  false  each loop executes  statements 2   next and
+    then re-executes the loop:
+    on the left because  statements 2   is in the  else , and on the right 
+    because the  if  finishes and Java executes the next statement in the loop's body.
+  After executing  statements 2  , the bodies of both loops are finished executing,
+    so the  for  loop causes Java to execute them again.
+    
+  Typically code is simpler if it isn't nested deeply.
+    
+   Loop Factoring :
+  The second loop equivalence again involves factoring statements.
+    
+  for (;;) {              for (;;) {
+    statements 1              statements 1 
+    if (test) {             if (test)
+      statements a               break;
+      break;                statements 2 
+    }                     }
+    statements 2            statements a 
+  }  
+  In both loops, if  test  is  false  each executes  statements 2  ,
+    and the bodies of both loops are executed again.
+  In the left loop, if  test  is  true  it executes  statements a  
+     and then terminates the loop; on the right it terminates the loop and afterward executes
+      statements a  .
+  The order of these operations makes no difference, except that any variables declared inside
+    the block that is the block that is the body of the  for  statement cannot be stored
+    in or examined outside of that block (after the loop terminates).
+    
+  Typically, loop statements are the most complex to understand, in terms of
+    what they do; so by removing  statements a   from the body
+    of the loop, we simplify it.
+    
+   Loop Rerolling :    
+  The third loop equivalence involves moving statements repeated before and at the bottom of
+    a loop completely inside the loop.
+    
+  statements 1              for (;;) {
+  for (;;) {                statements 1 
+    if (test)               if (test)
+      break;                  break;
+    statements 2              statements 2 
+    statements 1            }
+  }  
+  Each code fragment first executes  statements 1   (on the left before the loop; on
+    the right as the first statement in the loop's body).
+  Then, each tests for termination; if the  test  is not true, each executes
+    statements 2  , followed by  statements 1   (on the left at the
+   bottom of the loop; on the right at the top of th loop), followed by testing for termination again.
+    
+  Typically, we want to avoid duplicating statements inside and outside of
+    loops.
+  By using  for / if / break , which allows a termination test
+    in the middle of a loop, we can remove this redundancy.
+    
+    
+           Pragmatics  
+ 
+  The formal techniques presented and illustrated above allow us to prove that two programming
+    forms are equivalent.
+  It is then up to us to determine which form is simpler, and use it in our programs.
+  As a rule of thumb, the smaller the code the simpler it is.
+  Also, code with fewer nested statements is generally simpler.
+   
+  More generally, we should try to distribute complexity.
+  So, when decidiing between two equivalences, choose the one whose most
+    complicated statement is simplest.
+    
+  If you ever find yourself duplicating code, there is an excellent chance that
+    some simplification will remove this redundancy.
+  Beginners are especially prone to duplicating large chunks of code, missing the
+    important simplification.
+    
+  We should aggressively simplify our code while we are programming.
+  We will be amply rewarded, because it is easier to add more code (completing
+    the phases of the enhancements) to an already simplified program.
+  If we wait until the program is finished before simplifying...well, we many
+    never finish the program because it has become too complex; if we do
+    finish, the  context in which to perform each simplification will be much
+    bigger and more complex, making it harder to simplify.
+  Excessive complexity is one of the biggest problems that a software engineer
+    faces.
+    
+  Generally, I try not to get distracted when I am writing code; but one of 
+    the few times that I will stop writing code is when I see a simplification.
+  I know that in the long run, taking time to do a simplification immediately
+    will likely allow me to finish the  program faster.
+  
+           Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a CA, or any other student.
+
+     Prove that the expressions  x  and  (x  are equivalent.
+         Prove that the expressions  x  and  (x &gt;= 10) == false  are equivalent.
+         In each case, which would you judge the simpler expression?
+         
+     
+
+        Use the law of trichotomy to prove that  (x+y-Math.abs(x-y))/2.  and
+            Math.min(x,y)  compute the same value.
+      
+     
+        In the following statements, identify which variabes are stored into and which variables
+           are examined.
+            x += y; 
+              x = x + 1; 
+              System.out.println(x); 
+              if (x &gt; 0) x = 0; 
+              if (x == 0) break 
+              x += y += z; 
+            
+
+     Prove that the following two statements are equivalent. Assume that we declared  boolean b; 
+          if (test)          b = !test;
+    b = false;
+  else
+    b = true;  
+   
+
+     The code on the left is not equivalent to the code on the right (which has been top factored).
+      They are not equivalent because the  if 's test and the statements  x++  are not
+        independent.
+      Rewrite the  if 's test in the code on the right so that left and right are equivalent.
+         if (x   
+
+   
+     Suppose we are comparing aspirin A1, A2, A3, and A4 for efficacy.
+      Suppose that the company making A1 goes on TV with the advertisement:
+      �No aspirin is better than A1�.
+      Could the other companies also run ads saying the exact same thing about their products?
+       
+      How does this question relate to the material in this lecture?
+      How does it relate to mathematical vs. perceptual/psychological truths in advertising?
+      As a programmer whose code is read by other people (as well as the Java compiler), what
+        implications does this have for the audience for which we are writing code?
+    
+   </body> 

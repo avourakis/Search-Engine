@@ -1,0 +1,639 @@
+ Glossaries and Ontologies<body>
+
+ 
+
+ 
+Glossaries and Ontologies
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+ 
+  
+ 
+Fig. 1. 
+Glosses written in margin and between lines
+ of a page of
+ Gregory IX's  Decretals  
+ (used by permission of the Bodleian Library)
+ 
+ 
+
+
+ Glossaries 
+
+
+ 
+A  glossary  is
+a partial dictionary, a list with explanations of technical or abstruse terms,
+a collection of glosses. 
+A  gloss  is a synonym or explanation
+inserted between the lines or in the margin to explain difficult words in a text
+— see the beautiful example to the right (Fig. 1) dating from 1241,
+in which you can clearly see glosses in the left margin,
+and also in the right margin, the center gutter, and in many of the
+spaces between lines. 
+A glossary collects such glosses in a single place,
+rather than dispersed through a document. 
+ 
+
+ 
+A glossary for a particular problem or domain
+is a list of the special terms that are used there. 
+A glossary is a partial dictionary
+in that it does not include words that are used in their ordinary senses,
+only those that are either special words not used in ordinary life
+or that are used with a special meaning in this context. 
+ 
+
+ 
+See the  voting glossary  for an example
+of a glossary in requirements engineering. 
+This glossary defines the words and phrases
+that are used with special meaning
+in the domain of elections and voting. 
+Hyperlinks are used to take a reader from each use of a glossary term
+to the definition of that term,
+and the distinctive format of hyperlink text identifies each such use. 
+ 
+
+ 
+A good glossary defines every word and phrase that is used with special meaning,
+and gives these definitions in terms of ordinary words
+and in terms of other glossary terms. 
+ 
+
+
+ Ontologies 
+
+ 
+An  ontology  consists (for our purposes) of several components: 
+ 
+
+   a  glossary  of concepts (as in the voting example)
+   
+    a  sub-concept hierarchy  of those concepts
+   
+    an  instance-part hierarchy  of those concepts
+   
+     properties  associated with each concept
+    (an instance-property relationship). 
+   
+     other relationships  between concepts
+   
+     cardinality  constraints on relationships,
+    and  functions  from one concept to another. 
+   
+  
+ 
+Vehicles. 
+ 
+
+  
+    concepts
+     vehicle ,  car ,
+     bicycle ,
+     wheel ,  engine ,
+     model year ,
+     license number ,  license plate 
+    defined in glossary. 
+   
+   
+    Sub-concept hierarchy includes: 
+     car  is a sub-concept of  vehicle 
+    (so, every car is also by definition a vehicle). 
+   
+   
+    Instance-part hierarchy includes: 
+     car s consist of  wheel s,
+    an  engine ,
+    and some other things
+    (so, every car has wheels and an engine). 
+   
+   
+    Properties include: 
+    a  car  has a  model year . 
+   
+   
+    Other relationships include: 
+    each  license plate  corresponds to a separate  license number . 
+   
+   
+    Cardinality and functions include: 
+    every  bicycle  has exactly two  wheel s,
+     car s have at most one  license number ;
+    given a  license number , it is possible to determine what  car 
+    (if any)
+    corresponds to it. 
+   
+  
+
+ 
+  
+Fig. 2.  Ontology diagram — vehicles
+ 
+ 
+
+ 
+An ontology adds more information that is not present in a glossary. 
+This additional information provides for more informative problem descriptions. 
+It also makes it easier to check that the glossary is correct,
+by giving paths by which we can try out what we have so far. 
+For example,
+ 
+
+  
+    since car is a sub-concept of vehicle,
+    every car must be a vehicle, and some vehicles are not cars. 
+   
+   
+    since wheels are parts of cars,
+    every car has wheels, and some wheels are parts of cars.
+   
+   
+    since cars have license numbers,
+    some license numbers belong to cars, and some vehicles have license numbers
+   
+   
+    since cars have at most one license number,
+    there is no car that has two license numbers (this seems close but questionable), and there could be a car that has no license number
+   
+  
+Some of this additional information can be effectively presented in a diagram
+(see Fig. 2). 
+A key for ontology diagrams (as we will draw them in this class)
+is given in Fig. 3. 
+ 
+
+ 
+   Fig. 3.  Key to ontology diagrams 
+ 
+
+ 
+There are several terms that seem just about interchangeable with "ontology"
+in requirements engineering: 
+"conceptual map", "conceptual graph". 
+Ontologies show up in studies of databases
+and have recently become common as a coming underpinning of Web pages. 
+ 
+
+
+ Deciding what kind of relationship it is 
+
+ 
+Once you have decided that two concepts  T  and  t  are related,
+you need to decide what kind of relationship they have. 
+One way to decide is to consider the following questions, in sequence: 
+ 
+
+  
+    Is every  t  a  T ? 
+    Then  t  is a sub-concept of  T . 
+     
+    (It must not be possible for any  t  not to also be a  T .) 
+     
+   
+   
+    Does every  T  contain a  t  as a component part of it? 
+    Then  T  and  t  have an instance-part relationship. 
+     
+    ( T  and  t  must be the same sort of concept: 
+    both are physical objects, or both are mathematical concepts,
+    or ....) 
+     
+     
+    (It must not be possible for a particular  t 
+    to be part of more than one  T  at the same time;
+    if it is possible, then probably a  t  is a property of a  T 
+    rather than a component part.) 
+     
+   
+   
+    Is every  T  described by a  t  ? 
+    Then  t  is a property of  T . 
+     
+    (It must not be possible for any  T 
+    to not have a  t  that describes it.) 
+     
+   
+   
+    Are  T  and  t  related, but not in any of the ways listed above? 
+    Then  t  is just related to  T . 
+   
+  
+Because the hierarchical  sub-concept  and  instance-part  relationships
+are transitive,
+you do not need to specify them
+across more than one level of hierarchy;
+for example, if "Toyota Prius" is a sub-concept of "Toyota",
+and "Toyota" is a sub-concept of "car",
+you need not also say that "Toyota Prius" is a sub-concept of "car",
+because it is already implied.
+Similarly, if "tire" is a part of "wheel",
+and "wheel" is a part of "car",
+you need not say that "tire" is a part of "car"
+because this is also already implied. 
+ 
+
+ 
+Relations are inherited down the sub-concept hierarchy,
+and these do not need to be explicitly stated either. 
+For example, "car" is related to "model-year", so
+you need not say that "Toyota Prius" is related to "model-year"
+because this is already implied. 
+ 
+
+ 
+ Example : 
+car, Toyota Prius, wheel, model year, driver, goal. 
+What kinds of relationships do these have? 
+ 
+
+  
+    Every Toyota Prius is a car;
+    there are no Toyota Priuses that are not cars. 
+    Therefore
+    "Toyota Prius" is a sub-concept of "car". 
+   
+   
+    It is not true that every wheel is a car, or vice-versa,
+    so "wheel" and "car" do not have a sub-concept relationship. 
+    However, every car has wheels as some of its component parts,
+    and both cars and wheels are physical objects,
+    and it is not possible for a wheel to be part of
+    more than one car at the same time. 
+    Therefore
+    "car" and "wheel" have an instance-part relationship,
+    with "wheel" being a part of "car". 
+   
+   
+    It is not true that every model year is a car, or vice-versa,
+    so "model-year" and "car" do not have a sub-concept relationship. 
+    Nor does every car have a model year as one of its component parts,
+    because "car" and "model year" are very different kinds of concepts. 
+    But every car is described by a model year,
+    so "model year" is a property of "car". 
+   
+   
+    It is not true that every driver is a car, or vice-versa,
+    so "driver" and "car" do not have a sub-concept relationship. 
+    Nor does every car have a driver as one of its component parts,
+    or vice-versa,
+    so "driver" and "car" do not have an instance-part relationship. 
+    Nor is every car is described by specifying its driver,
+    or vice versa, at least not in general
+    (a particular driver may drive many cars, although not at the same time),
+    so neither "driver" nor "car" is a property of the other. 
+    However, there is a relationship between a driver and a car,
+    although it is none of the above kinds. 
+   
+   
+    "Car" and "goal" do not appear to have any relationship. 
+    It's not necessary to state this specifically
+    (unless a reader might be confused and assume some relationship exists),
+    as most concepts are assumed to be unrelated
+    unless some relationship is stated. 
+   
+  Deciding what cardinality or function is appropriate, if any, for a relationship 
+
+ 
+Sub-concept relationships  never  have cardinalities or functions;
+they make no sense for this kind of relationship. 
+ 
+
+ 
+An instance-part relationship or a property relationship
+has an  implicit  cardinality (at one end). 
+If a  t  is a part of a  T ,
+then there is necessarily at most one  T  for every  t  already,
+and this should not be also specified as a cardinality. 
+If a  t  is a property of a  T ,
+then there are ordinarily many  T s for every  t  already,
+and this should not be also specified as a cardinality. 
+If the cardinality of the instances for a particular property is important,
+the relationship should probably not be expressed as a property. 
+ 
+
+ 
+An instance-part relationship
+has an  implicit  function (in one direction). 
+It is always possible to figure out which  T  goes with a specific  t 
+that is part of it
+(it's the one that the  t  is part of)
+and this should not be also specified as a function. 
+ 
+
+ 
+Although it makes no sense to specify a function that restricts an
+instance-part or property relationship,
+it is possible to have one cardinality
+at the part end of an instance-part relationship,
+or at the property end of a property relationship. 
+A  T  may consist of  n   t s, for example,
+or be characterized by  n  values of property  p . 
+ 
+
+ 
+"Other relationships" can have cardinalities at either or both ends,
+and can be restricted by functions in either direction. 
+ 
+
+ 
+ Example : 
+car, Toyota Prius, wheel, model year, driver, goal. 
+What kinds of cardinalities and functions do these have? 
+ 
+
+  
+    "Toyota Prius" is a sub-concept of "car". 
+    Sub-concept relationships do not have cardinalities or functions. 
+   
+   
+    "Car" and "wheel" have an instance-part relationship,
+    with "wheel" being a part of "car". 
+    In an instance-part relationship,
+    the cardinality of the whole instance is never stated (it is implied to be 1)
+    nor is the function from a part to a whole stated. 
+    It is possible to give a cardinality for the number of parts, however. 
+    In this case, we would say that each car has 4 wheels. 
+    We might also give functions to determine the four wheels for a particular car,
+    calling them "right-front", "left-front", etc. 
+   
+   
+    "Model year" is a property of "car",
+    and "car" and "model-year" have an instance-property relationship
+    (an instance of a car has a model year as a property). 
+    The cardinality of the instance is never or rarely stated
+    (it is implied to be *). 
+    Each car has exactly one model year, however, and this should be stated. 
+   
+   
+    "Driver" and "car" have a relationship
+    that is none of the above kinds. 
+    It would be possible to specify cardinalities
+    and/or functions if these could be determined. 
+    A driver "drives" a car, so it would probably make sense
+    to specify this as a function
+    (each driver can drive at most one car at a time)
+    by labelling the line between the concepts;
+    the cardinalities might be 0..1 drivers drive 0..1 cars
+    (each driver drives either 0 or 1 car at a time,
+    and each car is driven by either 0 or 1 driver at a time). 
+    An alternative relationship might be "can drive";
+    for this relationship, the cardinalities might be * drivers can drive * cars
+    (a driver can drive any of some unknown but potentially large number of cars,
+    and vice versa). 
+   
+   
+    "Car" and "goal" have no relationship,
+    so it makes no sense to talk about cardinalities and functions for these. 
+   
+  Testing the correctness of an ontology 
+
+ 
+In general, one can test the correctness of an ontology by asking these questions: 
+ 
+
+   Glossary . 
+    For every term  T  in the glossary
+    and term  U  used to talk about the domain: 
+      
+        Is  T  a special term not in common use,
+        or a common term that has a special meaning in this domain? 
+        (must be "yes" for every  T )
+       
+       
+        Is every word used in the definition of  T  either
+        a common word used in one of its common meaning,
+        or another term defined in this glossary? 
+        (must be "yes" for every  T )
+       
+       
+        Is  T  needed to discuss the domain?
+        (must be "yes" for every  T )
+       
+       
+        Does the glossary contain  U ?
+        (must be "yes" for every  U )
+       
+      
+    Sub-concept hierarchy . 
+    For every concept  T  that has a sub-concept  t : 
+      
+        Are all  t s also  T s? 
+        (must be "yes")
+       
+       
+        Are there  T s that are not  t s? 
+        (should be "yes")
+       
+       
+        Is there anything one can do (relationships, properties, functions, ...)
+        with a  T 
+        that one can't do with a  t s? 
+        (must be "no")
+       
+       
+        Is there anything one can do with a  t 
+        that one can't do with a  T s? 
+        (should be "yes")
+       
+       
+        Is there anything that is true of a  T 
+        that is not true of a  t s? 
+        (must be "no")
+       
+       
+        Is there anything that is true of a  t 
+        that is not true of a  T s? 
+        (should be "yes")
+       
+      
+    Instance-part hierarchy . 
+    For every concept  T  whose instances have  t s,  u s, etc.
+    as their component parts: 
+      
+        Does a  T  consist of anything other than its  t s,  u s, etc.? 
+        (must be "no", at least for the purposes of discussing the domain)
+       
+      
+    Properties . 
+    For every concept  T  and one of its properties  P ,  P' , etc.: 
+      
+        Does every  T  have some value for  P ? 
+        (must be "yes")
+       
+       
+        Does every  T  have the same value of  P ? 
+        (should be "no", unless  T  is a sub-concept
+        that inherits  P  from its parent in which case "yes" is acceptable)
+       
+      
+    Other relationships . 
+    For every relationship  R  between instances of concept  T  and  U : 
+      
+        Are there some instances of  T  and  U  that are  R ? 
+        (should be "yes")
+       
+      
+    Cardinality and functions . 
+      
+        (Ask questions that test the specific cardinalities and functions.)
+       
+      
+  Ontology diagrams are not class diagrams 
+
+ 
+The concepts, properties, organization, relationships, and functions of an ontology
+can be partially expressed in a diagram. 
+This diagram is somewhat similar to a UML class diagram, but also not similar. 
+ 
+
+    Similar   (in an ontology)   (in a class diagram) 
+     Both have a hierarchical organization   
+        of concepts  
+        of classes 
+     Both have relationships between things 
+        between instances of concepts    between objects of classes 
+     Both have ways to restrict relationships  
+        functions  
+        cardinalities 
+     Not similar   (in an ontology)   (in a class diagram) 
+     Different kinds of things are in the diagram 
+       Things in the problem space  
+       Things in the system implementation 
+     Implementation-specific notation 
+        — 
+        operations (methods) 
+        associations as classes 
+        most of the stereotypes 
+      
+  
+Fig. 4.  The same approaches apply no matter what the concepts
+ 
+ 
+
+ Questions to ask about parts of an ontology 
+
+ 
+In general,
+there are certain questions you can (and should) ask about parts of an ontology,
+even if you don't know what the concepts mean
+(as in the "Frooble" example diagram in Fig. 4). 
+ 
+
+   Questions about concepts ("an A")
+       What can an A do (or have, or be related to) that a non-A can't?
+       
+        What can't an A do that a non-A can?
+       
+        What can only some A's do?
+       
+        Can a non-A later become an A?  Can an A later not be an A?
+       
+      
+    Questions about properties ("A is  P ")
+       If A is  P  right now, does that mean A is always  P ?
+       
+        What can A do or not do if it is  P ?
+       
+        What can A do or not do if it is not  P ?
+       
+        What other relationships can A have if it is  P ,
+        that it can't have if it is not  P ?
+       
+      
+    Questions about sub-concept hierarchy ("An A is a B")
+       Can an A do everything a B can?  (should be "yes")
+       
+        Are there Bs that are not As?  (should be "yes")
+       
+        If an A is a B now, can it later still be an A but not be a B? 
+        (should be "no")
+       
+        If an A changes later so it is no longer an A,
+          is it still necessarily a B anyway?
+        (could be either "yes" or "no")
+       
+        Can an A change later so it is not an A? 
+          (can be either "yes" or "no")
+         (unlike UML class diagrams) 
+       
+      
+    Questions about relationships and functions ("A is  R  with B")
+       Is every A  R  with some B?
+       
+        How many Bs is A  R  with?
+       
+        Is A always  R  with B?
+       
+        Is A necessarily  R  with itself?
+       
+        If A is  R  with B, does that mean B is  R  with A?
+       
+        If A is  R  with B, and B is  R  with C, is A  R  with C?
+       
+      
+  
+You can ask these questions about any ontology,
+even if you don't know what the concepts in the ontology mean. 
+The answers help test you understanding of the relations among the concepts
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Nov04We09:53 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

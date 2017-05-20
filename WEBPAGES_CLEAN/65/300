@@ -1,0 +1,22 @@
+ MOVE and DELETE<body>
+
+ 
+   
+               
+            
+            
+            
+            
+             
+            
+          Slide 9 of 14 
+ 
+
+      Notes:  </strong>       
+If a reference-aware client REALLY wants to apply the method to the target, it can do so by looking up the target�s URI in the DAV:reftarget property, and submitting the request to it.
+  
+Other rationale:
+  
+This is the way file systems behave.
+  
+Passing MOVE and DELETE through to targets can do very widespread damage (much more so than other methods that affect only individual resources).  They can result in every reference to the moved or deleted resource being broken, and if applied to a collection, then every reference to every member of the collection might be broken.  </body> 

@@ -1,0 +1,58 @@
+ 4.140 OETriposAtomNames<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.139 OETranslate 
+ Up:   4. OEChem Functions 
+ Next:   4.141 OETriposAtomType 
+   
+
+
+  
+4.140 OETriposAtomNames 
+ 
+
+ 
+    
+void OETriposAtomNames(OEMolBase &amp;mol)
+    
+The  OETriposAtomNames  function sets the atom name property of each
+atom, using the  OEAtomBase::SetName  method, to follow the convention
+typically followed in Sybyl .mol2 files.  Each atom is named by its
+atomic symbol (or ``Du'' for element zero) followed by a sequential
+index per atomic number.  For example, the first carbon in the molecule
+is named ``C1'', the second ``C2'', and so on.  Similarly, the first
+oxygen is named ``O1'' and so on.
+
+  
+The ordering of atoms is taken from the iterator returned by the
+ OEMolBase::GetAtoms  method (and may therefore be changed by using
+ OEMolBase::OrderAtoms ) and is unchanged by this function.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.139 OETranslate 
+ Up:   4. OEChem Functions 
+ Next:   4.141 OETriposAtomType 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

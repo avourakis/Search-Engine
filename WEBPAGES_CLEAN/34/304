@@ -1,0 +1,76 @@
+ Evaluation/Report/MPE - UAI '08 Workshop: Probabilistic Reasoning Systems  
+     
+
+
+ 
+ Search: 
+ 
+
+   Login    
+
+
+   Evaluation    Report    MPE  
+  
+
+
+   FrontPage    RecentChanges    FindPage    HelpContents    Evaluation/Report/MPE  
+    
+
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+    
+   
+   
+  Results for MPE Solvers 
+   The following solvers participated in the MPE competition:        INRA*: 2 solvers     Anytime, exact       AOBB*: 3 solvers     Anytime, exact       AOBF*: 3 solvers     Not anytime, exact       UBC:     Anytime, approximate          As noted earlier, some benchmark sets were reduced (or eliminated altogether) due to time constraints in running all solvers.                 
+  Number of instances solved 
+     These plots show, for each exact solver, the number of instances solved as a function of time (time limit 20 minutes). We first show eight plots, one for each benchmark class that was run:                
+          
+          
+          
+          
+          
+          
+          
+         The overall results, for all benchmark sets:                
+         We can see the following: The INRA solvers outperform the other solvers on 3 sets of benchmarks (WCSP/Linkage, Promedas, Relational),   while AOBB and AOBF perform better on 2 sets (Linkage, Grids). On bn2o and both UAI06 sets all solvers perform similarly. The overall   plot is hard to interpret since it does not account for the differing sizes of the benchmark sets -- what can be said, however, is that of the   INRA solvers, the standard "inra" seems to be slightly better than "inra-mf"; among the AOBB and AOBF solvers, "aobb3" has a slight   edge.                 
+  Cumulative time results 
+     Again, each of the 8 exact solvers was given 20 minutes to solve an instance. For each solver, the set of instances is ordered by   solution time (shortest first); the plotted value at point  x  is then the cumulative time that solver   took to solve the first  x  instances. The interpretation is as follows: A plot further to the right means more   instances were solved, a lower plot signals that instances were solved faster.                
+          
+          
+          
+          
+          
+          
+          
+         The overall results, for all benchmark sets:                
+         The results confirm what we observed earlier (cf. instances solved as function of time), with INRA solving more   instances on some benchmark sets, while AOBB/AOBF outperforms it on others. In addition, though, for the   benchmarks classes bn2o and UAI06, where both INRA and AOBB/AOBF solve almost the same number of instances, we can   see that the INRA solvers seem to give shorter solutions times, as evident by the lower curve in the plots. This is   also confirmed by the overall plot -- although this plot does again not take the different sizes of the benchmark sets   into account and can therefore be misleading.                 
+  Average error results 
+     This evaluation was performed for anytime solvers (INRA, AOBB and UBC). The solvers' output over at each minute (up to the 20 minute timelimit) was compared to the optimal solution. Optimal solutions were collected from the results of the exact solvers (note that this results in a subset of benchmarks that were solved by at least one exact solver).       For a given solver, not producing a solution for instance  i  at time  t  is penalized with error &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; . If a MPE solution with probability  z  is reported by the solver at time  t , the error &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; against the probability  z opt   of the optimal solution is computed as         &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; , where &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .         The average error for the solver at time  t  is then just &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; , where  n  is the number of instances averaged over.                
+          
+          
+          
+          
+          
+          
+          
+         The overall results, for all benchmark sets:                
+         In evaluating the results, we should note that the UBC solver is at a slight disadvantage here, since the base set was determined from the benchmarks that could be solved by at least one exact solver within the time limit of 20 minutes. But even if no exact solver could produce any results, UBC can often provide an approximation, which is not considered in the plots above. Looking at the plots, we see again that the INRA solver mostly achieves a low average error quickly, but UBC is often also performing well after a few minutes.                 
+  Scatter plot INRA vs. AOBB3 
+     The following shows a scatter plot of solution times for the INRA and AOBB3 solvers. Each point represents one problem instance, its x-value (log-scale) is the time the INRA solver took to solve it, its y-value (log scale) the solution time of the AOBB3 solver. A point on the beginning of an axis means that the respective solver solved it in 1 second or less, a point at the far end of an axis means the solver didn't solve this instance within the 20 minute time limit.                
+         We can confirm our earlier observations. INRA solves many instances faster than AOBB3 (e.g., many points on the left border of the plot), and it solved several instances that AOBB3 can't solve within the time limit (points on the top border of the plot). AOBB3, on the other hand, can solve several Linkage and Grid instances that INRA runs out of time on (points on the right border of the plot).        Evaluation/Report/MPE  (last edited 2008-09-01 13:31:18 by   LarsOtten  ) 
+
+  
+  
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+     MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

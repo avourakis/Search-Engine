@@ -1,0 +1,763 @@
+ 
+JFMLocalFile
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.localFileSystem 
+ 
+Class JFMLocalFile 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.localFileSystem.JFMFile 
+        org.itr_rescue.dataGuard.localFileSystem.JFMLocalFile 
+ 
+   All Implemented Interfaces:    java.lang.Comparable 
+     public class  JFMLocalFile   extends  JFMFile     
+TODO change me!!!
+  
+
+  
+    Author:  
+   sergiu 
+   
+
+
+  
+     
+ Field Summary   
+  
+   
+    Fields inherited from class org.itr_rescue.dataGuard.localFileSystem. JFMFile   
+     data ,  displayName ,  marked ,  multiPart   
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      JFMLocalFile  (java.lang.Object data) 
+
+ 
+          Constructor of this file. 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  boolean   
+    canRead  () 
+
+ 
+          Tests whether the application can read the file denoted by the
+ abstract pathname. 
+    
+  boolean   
+    canWrite  () 
+
+ 
+          Tests whether the application can modify to the file denoted by the
+ abstract pathname. 
+    
+  int   
+    compareTo  ( JFMFile  pathname) 
+
+ 
+          Compares two abstract pathnames lexicographically. 
+    
+   JFMFile    
+    createFile  (java.lang.String name) 
+
+ 
+          Creates the file named by the abstract pathname denoted by the parameter. 
+    
+  boolean   
+    delete  () 
+
+ 
+          Deletes the file or directory denoted by the abstract pathname. 
+    
+  boolean   
+    equals  (java.lang.Object obj) 
+
+ 
+          Tests this abstract pathname for equality with the given object. 
+    
+  boolean   
+    exists  () 
+
+ 
+          Tests whether the file or directory denoted by the abstract pathname
+ exists. 
+    
+   JFMFile    
+    getAbsoluteFile  () 
+
+ 
+          Returns the absolute form of this abstract pathname. 
+    
+  java.lang.String   
+    getAbsolutePath  () 
+
+ 
+          Returns the absolute pathname string of this abstract pathname. 
+    
+   JFMFile    
+    getCanonicalFile  () 
+
+ 
+          Returns the canonical form of this abstract pathname. 
+    
+  java.lang.String   
+    getCanonicalPath  () 
+
+ 
+          Returns the canonical pathname string of this abstract pathname. 
+    
+  java.io.File   
+    getFile  () 
+
+ 
+          gets the content of the JFMFile if it exists. 
+    
+  javax.swing.Icon   
+    getIcon  () 
+
+ 
+          Returns the filesystem's icon associated with this file, or null if it can't be determined. 
+    
+  java.io.InputStream   
+    getInputStream  () 
+
+ 
+          Returns an InputStream to read from this file, or null if it can't be done (the filesystem doesn't support it) 
+    
+  java.lang.String   
+    getMimeType  () 
+
+ 
+          This method returns the string that represents the mime-type of this file, or null if it can't be determined. 
+    
+  java.lang.String   
+    getName  () 
+
+ 
+          This string represents the short name of the file (e.g. 
+    
+  java.io.OutputStream   
+    getOutputStream  () 
+
+ 
+          Returns an OutputStream to write to this file, or null if the write operation isn't supported
+ (or doesn;t make sense from the filesystem's point of view). 
+    
+  java.lang.String   
+    getParent  () 
+
+ 
+          Returns the pathname string of this abstract pathname's parent, or
+  null  if this pathname does not name a parent directory. 
+    
+   JFMFile    
+    getParentFile  () 
+
+ 
+          Returns the abstract pathname of this abstract pathname's parent,
+ or  null  if this pathname does not name a parent
+ directory. 
+    
+  java.lang.String   
+    getPath  () 
+
+ 
+          Converts this abstract pathname into a pathname string. 
+    
+  java.lang.String   
+    getSystemDisplayName  () 
+
+ 
+          Returns the system display name as returned by the filesystem viewer, or null 
+    
+  int   
+    hashCode  () 
+
+ 
+          Computes a hash code for this abstract pathname. 
+    
+  boolean   
+    isAbsolute  () 
+
+ 
+          Tests whether this abstract pathname is absolute. 
+    
+  boolean   
+    isDirectory  () 
+
+ 
+          Tests whether the file denoted by this abstract pathname is a
+ directory. 
+    
+  boolean   
+    isFile  () 
+
+ 
+          Tests whether the file denoted by this abstract pathname is a normal
+ file. 
+    
+  boolean   
+    isHidden  () 
+
+ 
+          Tests whether the file named by this abstract pathname is a hidden
+ file. 
+    
+  long   
+    lastModified  () 
+
+ 
+          Returns the time that the file denoted by this abstract pathname was
+ last modified. 
+    
+  long   
+    length  () 
+
+ 
+          Returns the length of the file denoted by this abstract pathname. 
+    
+   JFMFile []   
+    listFiles  () 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by this abstract pathname. 
+    
+   JFMFile    
+    mkdir  (java.lang.String name) 
+
+ 
+          Creates the directory named by the abstract pathname denoted by the parameter. 
+  
+   
+    Methods inherited from class org.itr_rescue.dataGuard.localFileSystem. JFMFile   
+     compareTo ,  getDisplayName ,  getMultiPart ,  getRootDriveFile ,  isMarked ,  setDisplayName ,  setMarked ,  setMultiPart ,  toString   
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, finalize, getClass, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+JFMLocalFile 
+ 
+public  JFMLocalFile (java.lang.Object data) 
+  Constructor of this file.
+ 
+     
+    
+ Method Detail   
+     
+getInputStream 
+ 
+public java.io.InputStream  getInputStream () 
+   Description copied from class:   JFMFile    
+ Returns an InputStream to read from this file, or null if it can't be done (the filesystem doesn't support it)
+ 
+     Specified by:     getInputStream   in class   JFMFile     
+    Returns:   an InputStream to read from the file   See Also:    org.jfm.md.filesystems.JFMFile#getInputStream()    
+      
+listFiles 
+ 
+public  JFMFile []  listFiles () 
+   Description copied from class:   JFMFile    
+ Returns an array of abstract pathnames denoting the files in the
+ directory denoted by this abstract pathname.
+
+   If this abstract pathname does not denote a directory, then this
+ method returns  null .  Otherwise an array of
+  File  objects is returned, one for each file or directory in
+ the directory.  Pathnames denoting the directory itself and the
+ directory's parent directory are not included in the result.  Each
+ resulting abstract pathname is constructed from this abstract pathname
+ using the   File(File, String)   constructor.  Therefore if this pathname
+ is absolute then each resulting pathname is absolute; if this pathname
+ is relative then each resulting pathname will be relative to the same
+ directory.
+
+    There is no guarantee that the name strings in the resulting array
+ will appear in any specific order; they are not, in particular,
+ guaranteed to appear in alphabetical order.
+  
+     Specified by:     listFiles   in class   JFMFile     
+    Returns:   An array of abstract pathnames denoting the files and
+          directories in the directory denoted by this abstract
+          pathname.  The array will be empty if the directory is
+          empty.  Returns  null  if this abstract pathname
+          does not denote a directory, or if an I/O error occurs.   See Also:    org.jfm.md.filesystems.JFMFile#listFiles()    
+      
+getOutputStream 
+ 
+public java.io.OutputStream  getOutputStream () 
+   Description copied from class:   JFMFile    
+ Returns an OutputStream to write to this file, or null if the write operation isn't supported
+ (or doesn;t make sense from the filesystem's point of view).
+ The way that this is implemented in every filesystem can vary.
+ The call to this method might get the file to be emptied (as in the LocalFileSystem implementation)
+ You have been warned.
+ 
+     Specified by:     getOutputStream   in class   JFMFile     
+    Returns:   An OutputStream to write to this file   See Also:    org.jfm.md.filesystems.JFMFile#getOutputStream()    
+      
+getName 
+ 
+public java.lang.String  getName () 
+   Description copied from class:   JFMFile    
+ This string represents the short name of the file (e.g. foo.txt)
+ 
+     Specified by:     getName   in class   JFMFile     
+    See Also:    org.jfm.md.filesystems.JFMFile#getName()    
+      
+getParent 
+ 
+public java.lang.String  getParent () 
+   Description copied from class:   JFMFile    
+ Returns the pathname string of this abstract pathname's parent, or
+  null  if this pathname does not name a parent directory.
+
+   The  parent  of an abstract pathname consists of the
+ pathname's prefix, if any, and each name in the pathname's name
+ sequence except for the last.  If the name sequence is empty then
+ the pathname does not name a parent directory.
+  
+     Specified by:     getParent   in class   JFMFile     
+    Returns:   The pathname string of the parent directory named by this
+          abstract pathname, or  null  if this pathname
+          does not name a parent   See Also:    org.jfm.md.filesystems.JFMFile#getParent()    
+      
+getMimeType 
+ 
+public java.lang.String  getMimeType () 
+   Description copied from class:   JFMFile    
+ This method returns the string that represents the mime-type of this file, or null if it can't be determined.
+ 
+     Specified by:     getMimeType   in class   JFMFile     
+    Returns:   the mime type of this file   See Also:    org.jfm.md.filesystems.JFMFile#getMimeType()    
+      
+getParentFile 
+ 
+public  JFMFile   getParentFile () 
+   Description copied from class:   JFMFile    
+ Returns the abstract pathname of this abstract pathname's parent,
+ or  null  if this pathname does not name a parent
+ directory.
+
+   The  parent  of an abstract pathname consists of the
+ pathname's prefix, if any, and each name in the pathname's name
+ sequence except for the last.  If the name sequence is empty then
+ the pathname does not name a parent directory.
+  
+     Specified by:     getParentFile   in class   JFMFile     
+    Returns:   The abstract pathname of the parent directory named by this
+          abstract pathname, or  null  if this pathname
+          does not name a parent   See Also:    org.jfm.md.filesystems.JFMFile#getParentFile()    
+      
+getPath 
+ 
+public java.lang.String  getPath () 
+   Description copied from class:   JFMFile    
+ Converts this abstract pathname into a pathname string.  The resulting
+ string uses the  default name-separator character  to
+ separate the names in the name sequence.
+ 
+     Specified by:     getPath   in class   JFMFile     
+    Returns:   The string form of this abstract pathname   See Also:    org.jfm.md.filesystems.JFMFile#getPath()    
+      
+isAbsolute 
+ 
+public boolean  isAbsolute () 
+   Description copied from class:   JFMFile    
+ Tests whether this abstract pathname is absolute.  The definition of
+ absolute pathname is system dependent.  On UNIX systems, a pathname is
+ absolute if its prefix is  "/" .  On Microsoft Windows systems, a
+ pathname is absolute if its prefix is a drive specifier followed by
+  "\\" , or if its prefix is  "\\" .
+ Some other filesystems implementations (FTP, NFS, SMB, etc.) can have their own definition
+ of the  absolute pathname , ven though I would recommend sticking to the UNIX definition.
+ 
+     Specified by:     isAbsolute   in class   JFMFile     
+    Returns:    true  if this abstract pathname is absolute,
+           false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#isAbsolute()    
+      
+getAbsolutePath 
+ 
+public java.lang.String  getAbsolutePath () 
+   Description copied from class:   JFMFile    
+ Returns the absolute pathname string of this abstract pathname.
+
+   If this abstract pathname is already absolute, then the pathname
+ string is simply returned as if by the    JFMFile.getPath()   
+ method.  If this abstract pathname is the empty abstract pathname then
+ the pathname string of the current user directory, which is named by the
+ system property  user.dir , is returned.  Otherwise this
+ pathname is resolved in a system-dependent way.  On UNIX systems, a
+ relative pathname is made absolute by resolving it against the current
+ user directory.  On Microsoft Windows systems, a relative pathname is made absolute
+ by resolving it against the current directory of the drive named by the
+ pathname, if any; if not, it is resolved against the current user
+ directory.
+  
+     Specified by:     getAbsolutePath   in class   JFMFile     
+    Returns:   The absolute pathname string denoting the same file or
+          directory as this abstract pathname   See Also:    org.jfm.md.filesystems.JFMFile#getAbsolutePath()    
+      
+getAbsoluteFile 
+ 
+public  JFMFile   getAbsoluteFile () 
+   Description copied from class:   JFMFile    
+ Returns the absolute form of this abstract pathname.
+ 
+     Specified by:     getAbsoluteFile   in class   JFMFile     
+    Returns:   The absolute abstract pathname denoting the same file or
+          directory as this abstract pathname   See Also:    org.jfm.md.filesystems.JFMFile#getAbsoluteFile()    
+      
+getCanonicalPath 
+ 
+public java.lang.String  getCanonicalPath ()
+                                  throws  FSException  
+   Description copied from class:   JFMFile    
+ Returns the canonical pathname string of this abstract pathname.
+
+   A canonical pathname is both absolute and unique.  The precise
+ definition of canonical form is system-dependent.  This method first
+ converts this pathname to absolute form if necessary, as if by invoking the
+   JFMFile.getAbsolutePath()   method, and then maps it to its unique form in a
+ system-dependent way.  This typically involves removing redundant names
+ such as  "."  and  ".."  from the pathname, resolving
+ symbolic links (on UNIX platforms), and converting drive letters to a
+ standard case (on Microsoft Windows platforms).
+
+    Every pathname that denotes an existing file or directory has a
+ unique canonical form.  Every pathname that denotes a nonexistent file
+ or directory also has a unique canonical form.  The canonical form of
+ the pathname of a nonexistent file or directory may be different from
+ the canonical form of the same pathname after the file or directory is
+ created.  Similarly, the canonical form of the pathname of an existing
+ file or directory may be different from the canonical form of the same
+ pathname after the file or directory is deleted.
+  
+     Specified by:     getCanonicalPath   in class   JFMFile     
+    Returns:   The canonical pathname string denoting the same file or
+          directory as this abstract pathname
+   Throws: 
+    FSException   - If an filesystem error occurs, which is possible because the
+          construction of the canonical pathname may require
+          filesystem queries   See Also:    org.jfm.md.filesystems.JFMFile#getCanonicalPath()    
+      
+getCanonicalFile 
+ 
+public  JFMFile   getCanonicalFile ()
+                         throws  FSException  
+   Description copied from class:   JFMFile    
+ Returns the canonical form of this abstract pathname.
+ 
+     Specified by:     getCanonicalFile   in class   JFMFile     
+    Returns:   The canonical pathname string denoting the same file or
+          directory as this abstract pathname
+   Throws: 
+    FSException   - If an filesystem error occurs, which is possible because the
+          construction of the canonical pathname may require
+          filesystem queries   See Also:    org.jfm.md.filesystems.JFMFile#getCanonicalFile()    
+      
+isDirectory 
+ 
+public boolean  isDirectory () 
+   Description copied from class:   JFMFile    
+ Tests whether the file denoted by this abstract pathname is a
+ directory.
+ 
+     Specified by:     isDirectory   in class   JFMFile     
+    Returns:    true  if and only if the file denoted by this
+          abstract pathname exists  and  is a directory;
+           false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#isDirectory()    
+      
+isFile 
+ 
+public boolean  isFile () 
+   Description copied from class:   JFMFile    
+ Tests whether the file denoted by this abstract pathname is a normal
+ file.  A file is  normal  if it is not a directory and, in
+ addition, satisfies other system-dependent criteria.  Any non-directory
+ file created by a Java application is guaranteed to be a normal file.
+ 
+     Specified by:     isFile   in class   JFMFile     
+    Returns:    true  if and only if the file denoted by this
+          abstract pathname exists  and  is a normal file;
+           false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#isFile()    
+      
+isHidden 
+ 
+public boolean  isHidden () 
+   Description copied from class:   JFMFile    
+ Tests whether the file named by this abstract pathname is a hidden
+ file.  The exact definition of  hidden  is system-dependent.  On
+ UNIX systems, a file is considered to be hidden if its name begins with
+ a period character ( '.' ).  On Microsoft Windows systems, a file is
+ considered to be hidden if it has been marked as such in the filesystem.
+ 
+     Specified by:     isHidden   in class   JFMFile     
+    Returns:    true  if and only if the file denoted by this
+          abstract pathname is hidden according to the conventions of the
+          underlying platform   See Also:    org.jfm.md.filesystems.JFMFile#isHidden()    
+      
+lastModified 
+ 
+public long  lastModified () 
+   Description copied from class:   JFMFile    
+ Returns the time that the file denoted by this abstract pathname was
+ last modified.
+ 
+     Specified by:     lastModified   in class   JFMFile     
+    Returns:   A  long  value representing the time the file was
+          last modified, measured in milliseconds since the epoch
+          (00:00:00 GMT, January 1, 1970), or  0L  if the
+          file does not exist or if an I/O error occurs   See Also:    org.jfm.md.filesystems.JFMFile#lastModified()    
+      
+length 
+ 
+public long  length () 
+   Description copied from class:   JFMFile    
+ Returns the length of the file denoted by this abstract pathname.
+ The return value is unspecified if this pathname denotes a directory.
+ 
+     Specified by:     length   in class   JFMFile     
+    Returns:   The length, in bytes, of the file denoted by this abstract
+          pathname, or  0L  if the file does not exist   See Also:    org.jfm.md.filesystems.JFMFile#length()    
+      
+compareTo 
+ 
+public int  compareTo ( JFMFile  pathname) 
+   Description copied from class:   JFMFile    
+ Compares two abstract pathnames lexicographically.  The ordering
+ defined by this method depends upon the underlying system.  On UNIX
+ systems, alphabetic case is significant in comparing pathnames; on Microsoft Windows
+ systems it is not.
+ 
+     Specified by:     compareTo   in class   JFMFile     
+    Parameters:    pathname  - The abstract pathname to be compared to this abstract
+                    pathname
+   Returns:   Zero if the argument is equal to this abstract pathname, a
+                value less than zero if this abstract pathname is
+                lexicographically less than the argument, or a value greater
+                than zero if this abstract pathname is lexicographically
+                greater than the argument   See Also:    org.jfm.md.filesystems.JFMFile#compareTo(org.jfm.md.filesystems.JFMFile)    
+      
+equals 
+ 
+public boolean  equals (java.lang.Object obj) 
+   Description copied from class:   JFMFile    
+ Tests this abstract pathname for equality with the given object.
+ Returns  true  if and only if the argument is not
+  null  and is an abstract pathname that denotes the same file
+ or directory as this abstract pathname.  Whether or not two abstract
+ pathnames are equal depends upon the underlying system.  On UNIX
+ systems, alphabetic case is significant in comparing pathnames; on Microsoft Windows
+ systems it is not. With other filesystems implementation ... it's their responsability
+ to decide wether it should be case sensitive or not.
+ 
+     Specified by:     equals   in class   JFMFile     
+    Parameters:    obj  - The object to be compared with this abstract pathname
+   Returns:    true  if and only if the objects are the same;
+           false  otherwise   See Also:    Object.equals(java.lang.Object)    
+      
+hashCode 
+ 
+public int  hashCode () 
+   Description copied from class:   JFMFile    
+ Computes a hash code for this abstract pathname.  Because equality of
+ abstract pathnames is inherently system-dependent, so is the computation
+ of their hash codes.  On UNIX systems, the hash code of an abstract
+ pathname is equal to the exclusive  or  of its pathname string
+ and the decimal value  1234321 .  On Microsoft Windows systems, the hash
+ code is equal to the exclusive  or  of its pathname string,
+ convered to lower case, and the decimal value  1234321 .
+ 
+     Specified by:     hashCode   in class   JFMFile     
+    Returns:   A hash code for this abstract pathname   See Also:    Object.hashCode()    
+      
+canRead 
+ 
+public boolean  canRead () 
+   Description copied from class:   JFMFile    
+ Tests whether the application can read the file denoted by the
+ abstract pathname.
+ 
+     Specified by:     canRead   in class   JFMFile     
+    Returns:    true  if and only if the file specified by this
+          abstract pathname exists  and  can be read by the
+          application;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#canRead()    
+      
+canWrite 
+ 
+public boolean  canWrite () 
+   Description copied from class:   JFMFile    
+ Tests whether the application can modify to the file denoted by the
+ abstract pathname.
+ 
+     Specified by:     canWrite   in class   JFMFile     
+    Returns:    true  if and only if the file system actually
+          contains a file denoted by this abstract pathname  and 
+          the application is allowed to write to the file;
+           false  otherwise.   See Also:    org.jfm.md.filesystems.JFMFile#canWrite()    
+      
+exists 
+ 
+public boolean  exists () 
+   Description copied from class:   JFMFile    
+ Tests whether the file or directory denoted by the abstract pathname
+ exists.
+ 
+     Specified by:     exists   in class   JFMFile     
+    Returns:    true  if and only if the file or directory denoted
+          by this abstract pathname exists;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#exists()    
+      
+mkdir 
+ 
+public  JFMFile   mkdir (java.lang.String name) 
+   Description copied from class:   JFMFile    
+ Creates the directory named by the abstract pathname denoted by the parameter.
+ 
+     Specified by:     mkdir   in class   JFMFile     
+    Returns:   The new file object created or null otherwise   See Also:    org.jfm.md.filesystems.JFMFile#mkdir()    
+      
+createFile 
+ 
+public  JFMFile   createFile (java.lang.String name) 
+   Description copied from class:   JFMFile    
+ Creates the file named by the abstract pathname denoted by the parameter.
+ 
+     Specified by:     createFile   in class   JFMFile     
+    Returns:   The new file object created or null otherwise   
+      
+delete 
+ 
+public boolean  delete () 
+   Description copied from class:   JFMFile    
+ Deletes the file or directory denoted by the abstract pathname.  If
+ this pathname denotes a directory, then the directory must be empty in
+ order to be deleted.
+ 
+     Specified by:     delete   in class   JFMFile     
+    Returns:    true  if and only if the file or directory is
+          successfully deleted;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFile#delete()    
+      
+getIcon 
+ 
+public javax.swing.Icon  getIcon () 
+   Description copied from class:   JFMFile    
+ Returns the filesystem's icon associated with this file, or null if it can't be determined.
+ 
+     Specified by:     getIcon   in class   JFMFile     
+    Returns:   The filesystem's icon associated with this file, or null if it can't be determined.   See Also:    org.jfm.md.filesystems.JFMFile#getIcon()    
+      
+getSystemDisplayName 
+ 
+public java.lang.String  getSystemDisplayName () 
+   Description copied from class:   JFMFile    
+ Returns the system display name as returned by the filesystem viewer, or null
+ 
+     Specified by:     getSystemDisplayName   in class   JFMFile     
+    Returns:      
+      
+getFile 
+ 
+public java.io.File  getFile () 
+   Description copied from class:   JFMFile    
+ gets the content of the JFMFile if it exists.
+ 
+     Overrides:     getFile   in class   JFMFile     
+    
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

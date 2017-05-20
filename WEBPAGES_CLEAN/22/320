@@ -1,0 +1,109 @@
+ VHDL Reference Guide - Package Body<body>  This is Google's cache of  http://www.vdlande.com/VHDL/packageb.html . It is a snapshot of the page as it appeared on Aug 11, 2009 15:02:47 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Package Body  
+        Secondary Library Unit 
+            Syntax        
+  
+
+ 
+      package body  package_name is
+	declarations
+	deferred constant declarations
+	subprogram bodies
+ end  package_name;  
+    
+  
+
+
+
+ 
+See LRM section 2.6
+
+         Rules and Examples        
+  
+
+ 
+    When a procedure or function is declared in a package, its body (the
+algorithm part) must be placed in the package body:
+ package REF_PACK is
+  procedure PARITY
+   (signal X : in bit_vector;
+    signal Y : out bit);
+end REF_PACK;
+
+package body REF_PACK is
+  procedure PARITY
+   (signal X : in bit_vector;
+    signal Y : out bit) is  
+  begin
+    -- procedure code
+  end PARITY;
+end REF_PACK;  
+    
+  
+
+ 
+    Other declarations made in a package body may be used within that
+body, but are  not  visible outside. declarations may typically be
+any of the following:
+ type ,  subtype ,
+ constant ,  file ,
+ alias ,
+ attribute ,  function ,
+ procedure .
+ 
+    
+  
+
+ 
+    A constant declared in a  package  may be
+deferred. This means its value is defined in the package body. The value
+may be changed by re-analysing only the package body:
+ package P is
+  constant C : integer;
+end P;
+
+package body P is
+  constant C : integer := 200;
+end P;  
+    
+  
+
+ 
+    A package body cannot be analysed unless a matching package exists
+in the same design library. 
+    
+  
+
+ 
+    Each package can only have one  body . 
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+Package bodies are usually supported by synthesis tools, provided all
+the items they declare are compatible with synthesis.
+ 
+A package body must usually be in the same design file as the package
+itself.
+
+  
+         Whats New in '93        
+
+In  VHDL -93, the keyword  end  may be followed by the
+keyword  package body , for clarity and consistancy.
+
+  
+
+  </body> 

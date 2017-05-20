@@ -1,0 +1,35 @@
+ # prim - minimum spanning tree
+# Tim Wilson, 2-25-2002
+
+#A = adjacency matrix, u = vertex u, v = vertex v
+def weight(A, u, v):
+    return A[u][v]
+
+#A = adjacency matrix, u = vertex u
+def adjacent(A, u):
+    L = []
+    for x in range(len(A)):
+        if A[u][x] &gt; 0 and x  u:
+            L.insert(0,x)
+    return L
+
+#Q = min queue
+def extractMin(Q):
+    q = Q[0]
+    Q.remove(Q[0])
+    return q
+
+#Q = min queue, V = vertex list
+def decreaseKey(Q, K):
+    for i in range(len(Q)):
+        for j in range(len(Q)):
+            if K[Q[i]]  0:
+        u = extractMin(Q)    # pop the first vertex off the min queue
+
+        # loop through the vertices adjacent to u
+        Adj = adjacent(A, u)
+        for v in Adj:
+            w = weight(A, u, v)    # get the weight of the edge uv
+
+            # proceed if v is in Q and the weight of uv is less than v's key
+            if Q.count(v)&gt;0 and w  

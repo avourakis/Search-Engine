@@ -1,0 +1,177 @@
+ Junit and JDepend Demo<body>   
+  
+   
+
+     
+      
+       
+        
+           Research 
+        
+
+        
+           Projects 
+        
+        
+        
+           News 
+        
+
+        
+           Notes 
+        
+
+        
+           CV 
+        
+       
+      
+        
+
+       
+      
+         
+             /
+          
+             Notes  / Junit and JDepend Demo
+          
+         
+                 
+
+     
+
+
+    
+    Junit and JDepend Demo 
+
+
+  
+   
+    Date: 20 Feb 2013
+   
+  
+  
+ JUnit 
+
+ What is JUnit? 
+ 
+   JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks. -  Junit 4.0  
+ 
+
+ Which Version? 
+  Junit 4.0   Junit older versions  
+
+ Installation 
+ Just download the JAR file and add it to your build path in Eclipse.  More details here…  
+
+ Writing Tests with JUnit? 
+   Start here…  
+   Follow it up with  Junit Assertions here…  
+   You can find a  simple code example using assertions here…  
+  Here is an excerpt of that example: 
+
+    package   edu  .  uci  .  inf191  ; 
+ import   static   org  .  junit  .  Assert  .*; 
+ import   org.junit.Test  ; 
+ public   class   NumbersToStringTest   { 
+         @Test 
+         public   void   NumberToEnglishShouldReturnOne  ()   { 
+                 String   actual   =   NumbersToString  .  numbersToEnglish  (  1  ); 
+                 assertEquals  (  "Expected result one."  ,   "one"  ,   actual  ); 
+         }    
+
+   Extensive Junit Documentation @ github  
+  Food for though 
+  Q.</strong> Do you think the JDK uses JUnit for testing? Remember, Junit came well after the JDK. 
+
+  JDepend 
+
+ What is JDepend? / What does JDepend do? 
+ IMHO JDepend is a simple tool for measuring certain metrics about how packages in Java depend on each other. 
+
+ According to  JDepend’s Official Webpage : 
+
+ 
+   JDepend traverses Java class file directories and generates design quality metrics for each Java package, including: 
+
+    Number of Classes and Interfaces 
+     Afferent Couplings (Ca) - measure of Responsibility 
+     Efferent Couplings (Ce) - measure of Independence 
+     Abstractness (A) - Number of Abstract Classes and Interfaces 
+     Instability (I) 
+     Distance from the Main Sequence (D) 
+     Package Dependency Cycles 
+    
+
+ Further  details on the metrics here…  
+
+ Why do I like it? 
+ It is a simple tool that succinctly captures how one Java package depends on another. This might be useful when building large projects or APIs to maintain “appropriate” (runtime) boundaries between different sections of your code base. 
+
+ Why the double quotes around ‘appropriate’? 
+  ‘Appropriate’ is what you define for your project. 
+   E.g. in a project following a client server architecture, you might want the client and the server to communicate via a middle-ware or an interface. Keeping the client code from calling the server code. OR, you very well could want the client code to call the server code directly. 
+   You might want to avoid both the client and the server calling each others modules or methods. OR, perhaps you want them to communicate like that. 
+  Installation and Learning curve 
+
+  INSTALLATION: I have tried the installation with Eclipse and it is simple.
+      Here is the  link for the same . 
+       This is the  link for installing the plugin in Eclipse  
+       This is a good resource to learn how to  install any Eclipse Plugin  
+      
+   LEARNING CURVE: As long as you know what packages are and how one package uses another, the learning curve is non-existent. I have not yet tried using it in an advanced manner, like with JUnit or with Ant. There might be some learning curve there but it should be trivial. 
+  
+
+ 
+	  Tags: 
+	
+		 testing 
+		
+			   
+		
+	
+		 analysis 
+		
+			   
+		
+	
+		 java 
+		
+			   
+		
+	
+		 junit 
+		
+	
+ 
+ 
+
+ 
+   Related Posts 
+     07 Oct 2015  »  Spider SENSE: Software-Engineering, Networked, System Evaluation  
+    
+        07 Oct 2015  »  Revealing Runtime Features and Constituent Behaviors within Software  
+    
+        01 Oct 2015  »  Attended VISSOFT 2015  
+    
+    
+
+       
+       
+         home  •
+          bitbucket .com  •
+         Linked in   •
+         Instagram  •
+         medium  •
+         stack overflow   •
+          github .com   •
+          arch ives 
+        •
+        Background:  Mt. Ranier , © Vijay Krishna Palepu, 2015
+        
+       
+         
+   
+   
+  
+</body> 

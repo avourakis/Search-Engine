@@ -1,0 +1,65 @@
+ SEAL - FUSION<body>
+ 
+
+
+ Travel Reservation System 
+
+ 
+To test the concepts of FUSION framework on larger scale system, we used an online Travel Reservation System (TRS) that provides a web portal for making travel reservations online. TRS aims to provide the best prices for airline tickets, hotels, and car rentals in the market. The figure below shows a subset of this system's capabilities and adaptation choices.
+ 
+
+  
+Travel Reservation System (TRS): Business Processes, Use Cases, and Structure of Adaptation Space
+
+ Framework Overview 
+ Above figure depicts the FUSION framework as it adapts a running system composed of a number of features. The running system is variable in the sense that features can be "selected" and "deselected" on demand. FUSION makes new feature selections to resolve QoS tradeoffs and satisfy as many goals as possible. For example, if a Response Time goal is violated, FUSION adapts the system by choosing a new configuration (i.e., feature selection) that brings down the response time and keeps other goals satisfied. 
+
+ Business Processes 
+ TRS offers services in five major business process areas (i.e., Flights, Hotels, Car Rental, and Account Management). Each of the first three business process area (i.e., Flights, Hotels, and Car Rentals), involves four use cases that execute consecutively as follows: 
+  
+        Price Quotes: Collects trip details from the customer, discovers travel agent service providers to get a price quote, and returns a filtered list of quotes to the customer.
+     
+     
+        Booking: Allows the user to select one of the quotes, which is obtained from the previous use case, and then proceeds with selecting detailed preferences. In some cases, customer preferences, such as choosing aisle/window seat, may involve several rounds of interaction with the travel agent. 
+     
+     
+        Payment Processing: Collects customer payment information and interacts with a credit card processing service provider. Successful transactions result in updating the user profile, which is maintained for each customer, to determine future discounts and travel packages.
+     
+     
+        Travel Packages: Offers comprehensive travel packages (i.e., from other business process areas) to the customer based on trip destination and user profile history. Frequent customers qualify for additional discounts on travel packages.
+     
+  
+       
+Goal Model of TRS: 8 goals in two business process areas
+
+ Goal Model 
+ Eight QoS goals have been identified as critical for the stakeholders of the system. The table below describes the QoS goals for each business process area along with their key characteristics.
+ 
+ 
+       
+Specification of QoS Goals for TRS
+
+ Feature Model 
+
+ For each QoS goal, the corresponding QoS dimension has been identified(e.g., security, performance, forensics, reliability, etc.) and related use cases were analyzed to and determine practical adaptation choices (variations in the architectural configuration of the system) that have a significant impact on the goals.
+
+      Download  Full Feature Model of TRS (PDF) 
+ 
+
+ Feature Mapping to Software Architecture 
+
+ Following figure depicts how Booking_PerRequestAuth feature maps to the software architecture. The feature simply adds one connector (i.e., PerRequestAuth) to the system. The new connector intercepts all communication between the components: BusinessTier and TravelAgent. Thus, to add the new functionality of authentication properly, the existing direct link between BusinessTier and TravelAgent should be removed as well. FUSION uses adaptation operators (i.e., &lt;&lt;Find&gt;&gt;, &lt;&lt;Create&gt;&gt;, and &lt;&lt;Delete&gt;&gt;), as a means to describe change management logic for the running system. 
+ 
+        
+       
+Feature Mapping to Software Architecture: (top) Core Architecture of Flights Business Process, (bottom) Booking_PerRequestAuth Feature
+
+
+ 
+               
+ 
+ 
+               
+  
+ 
+</body> 

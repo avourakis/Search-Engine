@@ -1,0 +1,27 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Re2: what's doable in Web version control<body> Re: Re2: what's doable in Web version control 
+ Larry Masinter  (  masinter@parc.xerox.com  )  Wed, 12 Jun 1996 22:16:57 PDT 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Previous message:   David G. Durand: "Re: Re2: what's doable in Web version control" 
+    Maybe in reply to:   David G. Durand: "Re2: what's doable in Web version control" 
+
+
+    
+&gt; VTML can be lock-free, in which case you're not guaranteed what version
+&gt; you'll get on check-in.
+
+You can get consistent semantics without locking by using entity tags
+and if-match: that is, do a POST to update the resource but only if
+the entity had not changed since the last time you did a GET and the
+entity tag matched. This is probably useful to get standard.
+
+Larry
+ 
+
+  
+     Previous message:   David G. Durand: "Re: Re2: what's doable in Web version control" 
+    Maybe in reply to:   David G. Durand: "Re2: what's doable in Web version control" 
+
+
+  </body> 

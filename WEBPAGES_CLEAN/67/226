@@ -1,0 +1,661 @@
+   
+  Class c2.comp.graphics.GraphicsBinding
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.comp.graphics.GraphicsBinding
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +---- c2.framework.Component 
+                   |
+                   +---- c2.framework.ComponentThread 
+                           |
+                           +----c2.comp.graphics.GraphicsBinding
+ 
+    public class  GraphicsBinding 
+    extends  ComponentThread 
+   
+GraphicsBinding class. 
+GraphicsBinding accepts notifications from C2 components above it and
+reifies them as calls to Java AWT methods.  It also transforms 
+user-generated events into C2 requests, which are sent up an 
+architecture.  
+The binding currently supports manipulation of AWT frames, panels, 
+buttons, text fields, arcs, lines, ovals, rectangles, and text 
+strings.  The binding is extensible and is intended to support additional
+AWT functionality.   
+   GraphicsBinding's C2 Message Interface  
+GraphicsBinding's methods should not be invoked directly in a C2
+architecture.  Instead, the binding's functionality is accessed via C2
+notifications.  In response, the binding invokes Java AWT methods and
+generates C2 requests, which it then sends to components above
+it in the architecture. 
+NOTE:  Italicized message parameters have a default value and are 
+hence optional.    
+  
+     Incoming Notifications 
+        ApplicationTerminated ();
+        ViewportCreated       (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String title, String id, 
+                               String foreground, String background);
+        ViewportDestroyed     (String id);
+        ViewportCleared       (String id);
+        PanelAdded            (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String foreground, String background,
+                               String id, String parent_id);
+        PanelCleared          (String id);
+        ButtonAdded           (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String foreground, String background,
+                               String label, String parent_id);
+        TextFieldAdded        (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String foreground, String background,
+                               String label,  String value , 
+                               String parent_id);
+        TextFieldSet          (String label, String value, 
+                               String parent_id);
+        TextFieldCleared      (String label, String parent_id);
+        c2Grectangle          (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String fill, String border, 
+                               String parent_id);
+        c2Gline               (Integer x1, Integer y1, 
+                               Integer x2, Integer y2,
+                               String color, String parent_id);
+        c2Garc                (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               Integer angle1, Integer angle2,
+                               String fill, String border, 
+                               String parent_id);
+        c2Goval               (Integer x, Integer y, 
+                               Integer width, Integer height,
+                               String fill, String border, 
+                               String parent_id);
+        c2Gtext               (Integer x, Integer y, 
+                               String value, String font,
+                               String color,  String style , 
+                                Integer size , String parent_id);
+     Outgoing Requests 
+        AcceptEvent           (String button, String parent_id); 
+        AcceptEvent           (String text_field, String value,
+                               String parent_id);
+        AcceptEvent           (String c2GkeyEvent, String parent_id);
+        AcceptEvent           (Integer otherC2GkeyEvent, String parent_id);
+     Incoming Requests 
+        none
+     Outgoing Notifications 
+        none
+ 
+   
+ 
+    
+      panels  
+     All the C2 Panels maintained by the GraphicsBinding.
+        vports  
+     All the C2 Viewports maintained by the GraphicsBinding.
+   
+    
+      GraphicsBinding  ()
+     
+        GraphicsBinding  (String)
+     
+   
+    
+      addButton  (C2Panel, int, int, int, int, String, Color, Color)
+     Adds a button to a C2 panel.
+        addButton  (C2Viewport, int, int, int, int, String, Color, Color)
+     Adds a button to a C2 viewport.
+        addPanel  (String, C2Viewport, int, int, int, int, Color, Color, GraphicsBinding)
+     Creates a C2 panel, which is a Java AWT Panel in this case.
+        addTextField  (String, C2Panel, int, int, int, int, Color, Color, String)
+     Adds a text field to a C2 Panel.
+        addTextField  (String, C2Viewport, int, int, int, int, Color, Color, String)
+     Adds a text field to a C2 viewport.
+        arc  (C2Panel, int, int, int, int, int, int, Color, Color)
+     Draws an arc in a panel.
+        arc  (C2Viewport, int, int, int, int, int, int, Color, Color)
+     Draws an arc in a viewport.
+        clearPanel  (C2Panel)
+     Clears a C2 panel.
+        clearViewport  (C2Viewport)
+     Clears a C2 viewport.
+        create  (String)
+     Creates and initializes an instance of the GraphicsBinding.
+        createViewport  (String, int, int, int, int, String, Color, Color, GraphicsBinding)
+     Creates a C2 viewport, which is a Java AWT Frame in this case.
+        destroyViewport  (C2Viewport)
+     Destroys a C2 viewport.
+        eraseTextField  (C2TextField)
+     Clears a text field.
+        getTextField  (C2TextField)
+     Retrieves the value of a text field.
+        handle  (Notification)
+     Handles C2 notifications received from components above 
+GraphicsBinding in an architecture by invoking AWT functions and 
+issuing requests to above components in response to user events.
+        handle  (Request)
+     Handles requests received from components below.
+        line  (C2Panel, int, int, int, int, Color)
+     Draws a line in a panel.
+        line  (C2Viewport, int, int, int, int, Color)
+     Draws a line in a viewport.
+        oval  (C2Panel, int, int, int, int, Color, Color)
+     Draws an oval in a panel.
+        oval  (C2Viewport, int, int, int, int, Color, Color)
+     Draws an oval in a viewport.
+        rectangle  (C2Panel, int, int, int, int, Color, Color)
+     Draws a rectangle in a panel.
+        rectangle  (C2Viewport, int, int, int, int, Color, Color)
+     Draws a rectangle in a viewport.
+        send  (Request)
+     Sends C2 requests up the architecture.
+        setTextField  (C2TextField, String)
+     Sets the value of a text field.
+        shutdown  ()
+     Exits the current application.
+        text  (C2Panel, int, int, String, String, String, int, Color)
+     Draws a text string in a panel.
+        text  (C2Viewport, int, int, String, String, String, int, Color)
+     Draws a text string in a viewport.
+    
+ 
+    
+   
+ vports 
+ 
+  protected  Vector  vports
+ 
+   All the C2 Viewports maintained by the GraphicsBinding.
+     
+ panels 
+ 
+  protected  Vector  panels
+ 
+   All the C2 Panels maintained by the GraphicsBinding.
+    
+ 
+    
+  
+   
+ GraphicsBinding 
+ 
+  public GraphicsBinding()
+ 
+   
+ GraphicsBinding 
+ 
+  public GraphicsBinding( String  name)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  name)
+ 
+   Creates and initializes an instance of the GraphicsBinding.
+      Parameters: 
+       name - Name of the class.
+         
+  handle  
+ 
+  public synchronized void handle( Notification  n)
+ 
+   Handles C2 notifications received from components above 
+GraphicsBinding in an architecture by invoking AWT functions and 
+issuing requests to above components in response to user events.
+      Parameters: 
+       n - C2 notification.
+        Overrides: 
+        handle  in class  Component 
+         
+  handle  
+ 
+  public synchronized void handle( Request  r)
+ 
+   Handles requests received from components below.  Assumes that
+GraphicsBinding is at the bottom of an architecture and
+receives no requests; hence, this is an empty method.
+      Parameters: 
+       r - C2 request.
+        Overrides: 
+        handle  in class  Component 
+         
+  send  
+ 
+  public void send( Request  r)
+ 
+   Sends C2 requests up the architecture.
+      Parameters: 
+       r - C2 request.
+        Overrides: 
+        send  in class  Component 
+         
+  createViewport  
+ 
+  public  C2Viewport  createViewport( String  id,
+                                   int x,
+                                   int y,
+                                   int width,
+                                   int height,
+                                    String  title,
+                                    Color  foreground,
+                                    Color  background,
+                                    GraphicsBinding  gb)
+ 
+   Creates a C2 viewport, which is a Java AWT Frame in this case.
+      Parameters: 
+       id - Viewport's unique identifier.
+      x - Viewport's x location.
+      y - Viewport's y location.
+      width - Viewport's width.
+      height - Viewport's height.
+      title - Viewport's title.
+      foreground - Viewport's foreground color.
+      background - Viewport's background color.
+      gb - Handle to this instance of the GraphicsBinding.
+                Returns: 
+       The created C2 Viewport.
+         
+  destroyViewport  
+ 
+  public void destroyViewport( C2Viewport  v)
+ 
+   Destroys a C2 viewport.
+      Parameters: 
+       v - Viewport to be destroyed.
+         
+  clearViewport  
+ 
+  public void clearViewport( C2Viewport  v)
+ 
+   Clears a C2 viewport.
+      Parameters: 
+       v - Viewport to be cleared.
+         
+  shutdown  
+ 
+  public void shutdown()
+ 
+   Exits the current application.
+     
+  addPanel  
+ 
+  public  C2Panel  addPanel( String  id,
+                           C2Viewport  v,
+                          int x,
+                          int y,
+                          int width,
+                          int height,
+                           Color  foreground,
+                           Color  background,
+                           GraphicsBinding  gb)
+ 
+   Creates a C2 panel, which is a Java AWT Panel in this case.
+      Parameters: 
+       id - Panel's unique identifier.
+      x - Panel's x location.
+      y - Panel's y location.
+      width - Panel's width.
+      height - Panel's height.
+      foreground - Panel's foreground color.
+      background - Panel's background color.
+      gb - Handle to this instance of the GraphicsBinding.
+               Returns: 
+       The created C2 Panel.
+         
+  clearPanel  
+ 
+  public void clearPanel( C2Panel  p)
+ 
+   Clears a C2 panel.
+      Parameters: 
+       p - Panel to be cleared.
+         
+  addButton  
+ 
+  public  C2Button  addButton( C2Viewport  v,
+                            int x,
+                            int y,
+                            int width,
+                            int height,
+                             String  label,
+                             Color  foreground,
+                             Color  background)
+ 
+   Adds a button to a C2 viewport.
+      Parameters: 
+       v - C2 Viewport to which the button is to be added.
+      x - Button's x location.
+      y - Button's y location.
+      width - Button's width.
+      height - Button's height.
+      label - Button's label.
+      foreground - Button's foreground color.
+      background - Button's background color.
+               Returns: 
+       The added C2 Button.
+         
+  addButton  
+ 
+  public  C2Button  addButton( C2Panel  p,
+                            int x,
+                            int y,
+                            int width,
+                            int height,
+                             String  label,
+                             Color  foreground,
+                             Color  background)
+ 
+   Adds a button to a C2 panel.
+      Parameters: 
+       p - C2 Panel to which the button is to be added.
+      x - Button's x location.
+      y - Button's y location.
+      width - Button's width.
+      height - Button's height.
+      label - Button's label.
+      foreground - Button's foreground color.
+      background - Button's background color.
+               Returns: 
+       The added C2 Button.
+         
+  getTextField  
+ 
+  public  String  getTextField( C2TextField  tf)
+ 
+   Retrieves the value of a text field.
+      Parameters: 
+       tf - Text field whose value is accessed.
+        Returns: 
+       The value of the text field.
+         
+  setTextField  
+ 
+  public void setTextField( C2TextField  tf,
+                            String  s)
+ 
+   Sets the value of a text field.
+      Parameters: 
+       tf - Text field whose value is to be set.
+      s - New value for the text field.
+          
+  eraseTextField  
+ 
+  public void eraseTextField( C2TextField  tf)
+ 
+   Clears a text field.
+      Parameters: 
+       tf - Text field to be cleared.
+         
+  addTextField  
+ 
+  public  C2TextField  addTextField( String  id,
+                                   C2Viewport  v,
+                                  int x,
+                                  int y,
+                                  int width,
+                                  int height,
+                                   Color  foreground,
+                                   Color  background,
+                                   String  initial)
+ 
+   Adds a text field to a C2 viewport.
+      Parameters: 
+       id - Text field's unique id.
+      v - C2 Vieport to which the text field is to be added.
+      x - Text field's x location.
+      y - Text field's y location.
+      width - Text field's width.
+      height - Text field's height.
+      foreground - Text field's foreground color.
+      background - Text field's background color.
+      initial - Text field's initial value.
+                Returns: 
+       The added C2 Text Field.
+         
+  addTextField  
+ 
+  public  C2TextField  addTextField( String  id,
+                                   C2Panel  p,
+                                  int x,
+                                  int y,
+                                  int width,
+                                  int height,
+                                   Color  foreground,
+                                   Color  background,
+                                   String  initial)
+ 
+   Adds a text field to a C2 Panel.
+      Parameters: 
+       id - Text field's unique id.
+      p - C2 Panel to which the text field is to be added.
+      x - Text field's x location.
+      y - Text field's y location.
+      width - Text field's width.
+      height - Text field's height.
+      foreground - Text field's foreground color.
+      background - Text field's background color.
+      initial - Text field's initial value.
+                Returns: 
+       The added C2 Text Field.
+         
+  rectangle  
+ 
+  public void rectangle( C2Viewport  v,
+                        int x,
+                        int y,
+                        int width,
+                        int height,
+                         Color  fill,
+                         Color  border)
+ 
+   Draws a rectangle in a viewport.
+      Parameters: 
+       v - C2 Viewport in which the rectangle is to be drawn.
+      x - Rectangle's x location.
+      y - Rectangle's y location.
+      width - Rectangle's width.
+      height - Rectangle's height.
+      fill - Rectangle's fill color.
+      border - Rectangle's border color.
+               
+  oval  
+ 
+  public void oval( C2Viewport  v,
+                   int x,
+                   int y,
+                   int width,
+                   int height,
+                    Color  fill,
+                    Color  border)
+ 
+   Draws an oval in a viewport.
+      Parameters: 
+       v - C2 Viewport in which the oval is to be drawn.
+      x - Oval's x location.
+      y - Oval's y location.
+      width - Oval's width.
+      height - Oval's height.
+      fill - Oval's fill color.
+      border - Oval's border color.
+               
+  arc  
+ 
+  public void arc( C2Viewport  v,
+                  int x,
+                  int y,
+                  int width,
+                  int height,
+                  int angle1,
+                  int angle2,
+                   Color  fill,
+                   Color  border)
+ 
+   Draws an arc in a viewport.
+      Parameters: 
+       v - C2 Viewport in which the arc is to be drawn.
+      x - Arc's x location.
+      y - Arc's y location.
+      width - Arc's width.
+      height - Arc's height.
+      angle1 - Arc's start angle.
+      angle2 - Arc's end angle.
+      fill - Arc's fill color.
+      border - Arc's border color.
+                 
+  line  
+ 
+  public void line( C2Viewport  v,
+                   int x1,
+                   int y1,
+                   int x2,
+                   int y2,
+                    Color  c)
+ 
+   Draws a line in a viewport.
+      Parameters: 
+       v - C2 Viewport in which the line is to be drawn.
+      x1 - Line's starting x location.
+      y1 - Line's starting y location.
+      x2 - Line's ending x location.
+      y2 - Line's ending y location.
+      c - Line's color.
+              
+  text  
+ 
+  public void text( C2Viewport  v,
+                   int x,
+                   int y,
+                    String  message,
+                    String  font,
+                    String  style,
+                   int size,
+                    Color  c)
+ 
+   Draws a text string in a viewport.
+      Parameters: 
+       v - C2 Viewport in which the text string is to be drawn.
+      x - Text string's x location.
+      y - Text string's y location.
+      message - Text string's value.
+      font - Text string's font (e.g., helvetica).
+      style - Text string's style (e.g., bold).
+      size - Text string's size.
+      c - Text string's color.
+                
+  rectangle  
+ 
+  public void rectangle( C2Panel  p,
+                        int x,
+                        int y,
+                        int width,
+                        int height,
+                         Color  fill,
+                         Color  border)
+ 
+   Draws a rectangle in a panel.
+      Parameters: 
+       p - C2 Panel in which the rectangle is to be drawn.
+      x - Rectangle's x location.
+      y - Rectangle's y location.
+      width - Rectangle's width.
+      height - Rectangle's height.
+      fill - Rectangle's fill color.
+      border - Rectangle's border color.
+               
+  oval  
+ 
+  public void oval( C2Panel  p,
+                   int x,
+                   int y,
+                   int width,
+                   int height,
+                    Color  fill,
+                    Color  border)
+ 
+   Draws an oval in a panel.
+      Parameters: 
+       p - C2 Panel in which the oval is to be drawn.
+      x - Oval's x location.
+      y - Oval's y location.
+      width - Oval's width.
+      height - Oval's height.
+      fill - Oval's fill color.
+      border - Oval's border color.
+               
+  arc  
+ 
+  public void arc( C2Panel  p,
+                  int x,
+                  int y,
+                  int width,
+                  int height,
+                  int angle1,
+                  int angle2,
+                   Color  fill,
+                   Color  border)
+ 
+   Draws an arc in a panel.
+      Parameters: 
+       p - C2 Panel in which the arc is to be drawn.
+      x - Arc's x location.
+      y - Arc's y location.
+      width - Arc's width.
+      height - Arc's height.
+      angle1 - Arc's start angle.
+      angle2 - Arc's end angle.
+      fill - Arc's fill color.
+      border - Arc's border color.
+                 
+  line  
+ 
+  public void line( C2Panel  p,
+                   int x1,
+                   int y1,
+                   int x2,
+                   int y2,
+                    Color  c)
+ 
+   Draws a line in a panel.
+      Parameters: 
+       p - C2 Panel in which the line is to be drawn.
+      x1 - Line's starting x location.
+      y1 - Line's starting y location.
+      x2 - Line's ending x location.
+      y2 - Line's ending y location.
+      c - Line's color.
+              
+  text  
+ 
+  public void text( C2Panel  p,
+                   int x,
+                   int y,
+                    String  message,
+                    String  font,
+                    String  style,
+                   int size,
+                    Color  c)
+ 
+   Draws a text string in a panel.
+      Parameters: 
+       p - C2 Panel in which the text string is to be drawn.
+      x - Text string's x location.
+      y - Text string's y location.
+      message - Text string's value.
+      font - Text string's font (e.g., helvetica).
+      style - Text string's style (e.g., bold).
+      size - Text string's size.
+      c - Text string's color.
+               
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

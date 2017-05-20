@@ -1,0 +1,137 @@
+ Notes on Bash, Shell and other useful stuff<body>   
+  
+   
+
+     
+      
+       
+        
+           Research 
+        
+
+        
+           Projects 
+        
+        
+        
+           News 
+        
+
+        
+           Notes 
+        
+
+        
+           CV 
+        
+       
+      
+        
+
+       
+      
+         
+             /
+          
+             Notes  / Notes on Bash, Shell and other useful stuff
+          
+         
+                 
+
+     
+
+
+    
+    Notes on Bash, Shell and other useful stuff 
+
+
+  
+   
+    Date: 24 Aug 2013
+   
+  
+   Useful Unix commands / Bash Snippets / Resources 
+
+  list out the ppa’s on your machine:  egrep -v '^#|^ *$' /etc/apt/sources.list /etc/apt/sources.list.d/* &gt; ppa.txt  
+    Install sublime text ubunutu w/ ppa  
+   view the various versions of java installed on your machine.  update-alternatives --display java . In fact you can do this for other programs as well, like ruby …  update-alternatives --display ruby . 
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=file-compressed.pdf file.pdf  
+  Frequently used   less </strong> commands 
+
+ {Key}……………{Command}  Space bar ………Next Page  b ……………..Previous Page  j or ↵ Enter ……Next Line  k ……………..Previous Line  g ……………..First Line  G ……………..Last Line  &lt;n&gt;G …………..Line  &lt;n&gt;   /&lt;text&gt; ………..Forward Search for  &lt;text&gt; . Text is interpreted as a regex.  ?&lt;text&gt; ………..Backward Search like /  n ……………..Next Search Match  N ……………..Previous Search Match  Escu …………..Turn off Match Highlighting (see -g command line option)  -&lt;c&gt; …………..Toggle option  &lt;c&gt; , e.g., -i toggles option to match case in searches  m&lt;c&gt; …………..Set Mark  &lt;c&gt;   '&lt;c&gt; …………..Go to Mark  &lt;c&gt;   = or Ctrl+G …….File information  h ……………..Help. This is presented with less, q to quit.  q ……………..Quit 
+
+  http://stackoverflow.com/questions/8586648/going-to-a-specific-line-number-using-less-in-unix  
+
+ Calling shell commands from Java 
+
+    Process   p   =   Runtime  .  getRuntime  ().  exec  (  new   String  []{  "bash"  ,  "-c"  ,  "echo something"  });   // used to fire a bash command and logically a script from java.    
+
+ or more ellaboratelly … 
+
+    String   shell_cmd   =   "echo something"  ; 
+ try   { 
+	 Process   p   =   Runtime  .  getRuntime  ().  exec  (  new   String  []{  "bash"  ,  "-c"  ,   shell_cmd  }); 
+	 System  .  out  .  println  (  p  .  waitFor  ()); 
+ }   catch   (  IOException   e  )   { 
+	 e  .  printStackTrace  (); 
+ }   catch   (  InterruptedException   e  )   { 
+	 e  .  printStackTrace  (); 
+ }    
+
+ Useful things with Grep: 
+
+ Find all direct dependencies for a Java project given that the source code is available. Run the following snippet of code in the source root of the target Java project.  grep -rh import . | sort | uniq &gt; deps.txt  
+Run it without the  -h  to display the file for a given dependency as well :  grep -r import . | sort | uniq &gt; deps.txt  
+
+ http://stackoverflow.com/questions/109383/how-to-sort-a-mapkey-value-on-the-values-in-java 
+ 
+ 
+
+ 
+	  Tags: 
+	
+		 bash 
+		
+			   
+		
+	
+		 shell 
+		
+			   
+		
+	
+		 commands 
+		
+	
+ 
+ 
+
+ 
+   Related Posts 
+     07 Oct 2015  »  Spider SENSE: Software-Engineering, Networked, System Evaluation  
+    
+        07 Oct 2015  »  Revealing Runtime Features and Constituent Behaviors within Software  
+    
+        01 Oct 2015  »  Attended VISSOFT 2015  
+    
+    
+
+       
+       
+         home  •
+          bitbucket .com  •
+         Linked in   •
+         Instagram  •
+         medium  •
+         stack overflow   •
+          github .com   •
+          arch ives 
+        •
+        Background:  Mt. Ranier , © Vijay Krishna Palepu, 2015
+        
+       
+         
+   
+   
+  
+</body> 

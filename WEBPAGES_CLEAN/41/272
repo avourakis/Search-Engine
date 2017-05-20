@@ -1,0 +1,78 @@
+ 11.8.1 Specializations<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.8 OEUnaryFunction 
+ Up:   11.8 OEUnaryFunction 
+ Next:   11.9 OEUnaryPredicate 
+   
+
+
+  
+11.8.1 Specializations 
+ 
+   
+template&lt;class Arg, class Result&gt;
+class OEUnaryFunction&lt;Arg,Result,true,false&gt;
+
+virutal Result operator()(const Arg &amp;) = 0;
+virtual OEUnaryFunction&lt;Arg,Result,true,false&gt; *CreateCopy() = 0;
+    
+This is a specialization of the functor base-class in OEChem.  This
+specialization provides an operator() which takes a const argument and is a
+volatile.  CreateCopy is a virtual constructor which allows copying of concrete
+derived objects using a reference to this base class.
+
+  
+    
+template&lt;class Arg, class Result&gt;
+class OEUnaryFunction&lt;Arg,Result,false,true&gt;
+
+virutal Result operator()(Arg &amp;) const = 0;
+virtual OEUnaryFunction&lt;Arg,Result,false,true&gt; *CreateCopy() = 0;
+    
+This is a specialization of the functor base-class in OEChem.  This
+specialization provides an operator() which takes a volatile argument and is a
+const.  CreateCopy is a virtual constructor which allows copying of concrete
+derived objects using a reference to this base class.
+
+  
+    
+template&lt;class Arg, class Result&gt;
+class OEUnaryFunction&lt;Arg,Result,false,false&gt;
+
+virutal Result operator()(Arg &amp;) = 0;
+virtual OEUnaryFunction&lt;Arg,Result,false,false&gt; *CreateCopy() = 0;
+    
+This is a specialization of the functor base-class in OEChem.  This
+specialization provides an operator() which takes a volatile argument and is a
+volatile.  CreateCopy is a virtual constructor which allows copying of concrete
+derived objects using a reference to this base class.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.8 OEUnaryFunction 
+ Up:   11.8 OEUnaryFunction 
+ Next:   11.9 OEUnaryPredicate 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

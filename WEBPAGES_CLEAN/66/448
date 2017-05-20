@@ -1,0 +1,61 @@
+ Gliders and Wolfram's Classification<body>
+      Lifelike Rules and Pattern Notation  
+
+      Conway's Game of Life is defined as follows: each cell
+    of a two-dimensional grid is considered to be either "live" or
+    "dead". At each step of the automaton's evolution, each cell
+    counts the number of its live neighbors in the eight
+    surrounding cells of the grid. A dead cell becomes live (is
+    "born") if it has exactly three live neighbors, and a live cell
+    stays live ("survives") if it has either two or three live
+    neighbors; in all other cases the cell becomes dead. This
+    process is performed simultaneously for all cells of the grid,
+    forming a single "generation" of a life pattern. Over the
+    course of many generations, a pattern may die out completely
+    (in which case it stays dead permanently), it may repeat its
+    initial configuration after some number of generations (in
+    which case it continues to repeat with the same period
+    indefinitely), or exhibit more complex behaviors.  
+
+      We are interested in understanding rules that, like
+    Life, have a transition rule defined by counting the live cells
+    among the eight cells surrounding each cell. Sometimes these
+    are called "semitotalistic" rules. We define a rule by a string
+     Bxx/Syy  where the xx's and yy's are replaced by digits
+    indicating the numbers of live neighbors leading to a birth or
+    survival respectively. In this system, Life is denoted  
+    B3/S23 .  
+
+      Each of the patterns depicted on this site is linked
+    to a file in "RLE" (run-length-encoded) format, suitable for
+    input to many cellular automaton simulation packages. The
+    format begins with a line describing the x and y dimensions of
+    the pattern, and the rule in which the pattern should be run.
+    The next lines contain sequences of the characters  b ,
+     o , and  $ . The  b  character stands for
+    a dead cell, and the  o  character stands for a live
+    one. The  $  character means to end one line of the
+    pattern and start a new line. Any of these characters can be
+    preceded by a number; this tells the simulator to act as if it
+    had seen that many copies of the character, so e.g.  3o 
+    makes a row of three live cells while  3$  starts a new
+    line after leaving two blank (completely dead) lines. The file
+    is ended by an exclamation mark character. For instance, the  replicator  in the  HighLife rule (B36/S23)  looks
+    like this:  
+
+     
+        
+
+      This turns into the following RLE-encoded
+    file:  
+
+  
+x = 5, y = 5, rule = B36/S23
+bb3o$bobbo$o3bo$obbo$3o!
+ 
+ 
+
+      
+        Cellular automata  ,  D. Eppstein  
+     
+  </body> 

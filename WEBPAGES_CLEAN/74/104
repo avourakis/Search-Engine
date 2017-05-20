@@ -1,0 +1,26 @@
+ External Merge Sort
+
+
+In this lecture we will continue our examination of algorithms that use more
+space than is available in main memory. We will analyze them with respect to
+how often they move blocks of data between main and external memory (discussed
+in the previous lecture). Typically the cost of such memory transfers dominates
+the cost of executing code on the block while it is in memory. That is, a
+transfer between main and external memory might take 10 milliseconds, while
+processing the data in the block might take microseconds (a few 1/1000ths of a
+millisecond). A processor executing 10^9 instructions per second can process
+10^7 (10 million) instructions in 10 ms. So, we can virtually ignore the time
+taken to process each block retrieved from memory.
+
+
+------------------------------------------------------------------------------
+
+Sorting:
+
+Our external sorting algorithm is a variant of Merge Sort, which can be run
+efficiently in terms of external storage use. We will characterize it as
+follows. We will assume the array of T is stored on external memory.
+
+  template
+  void external_merge_sort(int low, int high) {
+    if (high-low  

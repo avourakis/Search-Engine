@@ -1,0 +1,181 @@
+  /*****************************************************************************
+ gui.TabPanel
+
+ Container for a set of Tab Cards or Tab Folders.
+
+ bruce.miller@nist.gov
+ Contribution of the National Institute of Standards and Technology,
+ not subject to copyright.
+ 
+ 
+ HACKED BY DAVID EPPSTEIN, UC IRVINE, 15 JUNE 1997
+ SEE CHANGES MARKED "[DE]"
+
+ *****************************************************************************/
+package gui;
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+
+/** **************************************************************************
+ TabPanel is a container for a set of tabbed cards, lying atop each other,
+ but with the labelled tabs exposed at the top.  That is, the classic Tab 
+ Folder. Each card is an awt.component of whatever design you wish.  The 
+ topmost card can be selected programmatically (Using first(), last(), 
+ next(), previous(), or show(name)), or by clicking on the tab with the mouse.
+   
+ Components should be added using add(name,component)); the name is used
+ to label the tab.  If you set the layout manager, it should be a subclass 
+ of CardLayout.
+ You probably want to setBackground() to a color contrasting that of
+ the parent and the components.
+  
+ Whenever a card is selected (whether by software or mouse), an event with
+ id = Event.WINDOW_EXPOSE is sent to the selected component.  Handling this
+ event may be useful for deferred initialization.
+
+@author Bruce R. Miller (bruce.miller@nist.gov)
+@author Contribution of the National Institute of Standards and Technology,
+@author not subject to copyright.
+*/
+public class TabPanel extends Panel {
+  /** The width of the margins around the cards. */
+  public int margin = 3; // width of margins around cards
+
+  Font tabFont;			// for tab labels
+  FontMetrics metric;
+  int nCards = 0;		// total # of cards
+  Vector names = new Vector(10,10); // contains the (interned) card names
+  int pos[], width[];		    // position &amp; width of each tab
+  int selected = 0;		    // index of selected (displayed) card
+  int offset = 0;		    // left shift to allow for `too many' tabs
+  int tabH;			    // height of tab (set from tabFont)
+  int tabN = 12,		    // #points along edges: must = (2*int + 2)
+      tabLeft[][] = new int[2][tabN], // coordinates of tab edge curves
+      tabRight[][] = new int[2][tabN];
+// begin changes [DE]
+//      
+// additional color for background tabs
+	Color shade = null;
+	public void setShade(Color c) { shade = c; }
+	public Color getShade() { if (shade != null) return shade; else return getBackground(); }
+//
+// end changes [DE]
+
+  /** Creates an empty TabPanel. */
+  public TabPanel() {
+    setLayout(new CardLayout()); 
+    setTabFont(new Font("Helvetica",Font.BOLD,12)); }
+
+  /***************************************************
+    internals */
+  
+  int findComponent(Component c) { // find index of a given component
+    for (int i=0; i 0)) {	// was selected, select another
+      setSelected(selected % nCards,true); }
+    if (isShowing()) { // already showing? better rebuild!
+      computeTabs(); repaint(); }
+  }
+
+  /** remove the card having the given name from the TabPanel. */
+  public void remove(String name) { 
+    int i = names.indexOf(name.intern());
+    if (i != -1)
+      remove(getComponent(i)); }
+
+  /** remove all cards from the TabPanel. */
+  public void removeAll() {
+    super.removeAll();
+    names.removeAllElements();
+    repaint(); }
+
+  /***************************************************
+    Component Selection */
+
+  void setSelected(int i, boolean force) {
+    if (force || ((i != selected) &amp;&amp; (i &gt;= 0) &amp;&amp; (i  0) { selected = i % nCards;}
+      ((CardLayout) getLayout()).show(this, (String) names.elementAt(i));
+      repaint();
+      Component c = getComponent(i);
+      c.postEvent(new Event(c,Event.WINDOW_EXPOSE,this)); }}
+
+  /** Select the first card in the Panel. */
+  public void first()    { setSelected(0,false); }
+
+  /** Select the last card in the Panel. */
+  public void last()     { setSelected(nCards-1,false); }
+
+  /** Select the next card in the Panel. */
+  public void next()     { setSelected((selected+1) % nCards,false);}
+
+  /** Select the previous card in the Panel. */
+  public void previous() { setSelected((selected-1+nCards) % nCards,false); }
+
+  /** Select the named card in the Panel. */
+  public void show(String name) { 
+    setSelected(names.indexOf(name.intern()),false); }
+
+  /** Select the card component in the Panel. */
+  public void show(Component component) {
+    setSelected(findComponent(component),false); }
+
+  int cardAt(int x, int y) {
+    if (y  offmax)) 
+	offset = Math.min(Math.max(0,(offmin+offmax)/2),pos[nCards]+r-w);
+
+      // Draw first tabs from the left (offscreen ones only partly visible)
+      for(j = 0, x = offset+r;(j  0) {
+	x = 0;
+// add extra color args to paintTabEdge and paintTab [DE]
+//
+	for(int i=Math.max(0,j-nShadows); i s) &amp;&amp; (pos[j+1] &gt;= x); j--);
+      if (j j+1; i--, x-=shadow)
+	  paintTabEdge(g,x,tabRight,getShade());
+	paintTab(g,x-r-width[j+1],j+1,getShade()); }
+      for(int i = j; i &gt; s; i--)
+	paintTab(g,pos[i]-offset,i,getShade());
+      
+      // now draw the selected tab on top of the others.
+      paintTab(g,pos[s]-offset,s,getBackground()); 
+      // and fixup the baseline so the selected is on `top'.
+      g.drawLine(0,tabH,pos[s]-r-offset,tabH);
+//
+// This seems to make a gray line between tab and panel. [DE]
+// Instead I want it painted in our background color.
+//
+//      g.clearRect(pos[s]-r-offset,tabH,width[s]+tabH,1);
+//
+g.setColor(getBackground());
+g.fillRect(pos[s]-r-offset+2,tabH,width[s]+tabH-3,1);
+g.setColor(getForeground());
+
+      g.drawLine(pos[s+1]+r-offset,tabH,w,tabH);
+      g.drawLine(w,tabH,w,h);
+      g.drawLine(w,h,0,h);
+      g.drawLine(0,h,0,tabH);
+    }}     
+
+// Double buffered redisplay [DE]
+
+// Double buffer [DE]
+	Image offscreenImage = null;
+	Graphics offscreenGraphics = null;
+	int offscreenWidth = -1;
+	int offscreenHeight = -1;
+
+	public void update(Graphics g) {
+		Dimension d = size();
+		if (d.width != offscreenWidth || tabH+1 != offscreenHeight) {
+			offscreenWidth = d.width;
+			offscreenHeight = d.height; // tabH+1 if we omit last three drawLines
+			if (offscreenGraphics != null) offscreenGraphics.dispose();
+			offscreenImage = createImage(offscreenWidth,offscreenHeight);
+			offscreenGraphics = offscreenImage.getGraphics();
+		}
+		offscreenGraphics.clearRect(0,0,offscreenWidth,offscreenHeight);
+		paint(offscreenGraphics);
+		g.drawImage(offscreenImage, 0, 0, this);	
+	}
+}
+
+  

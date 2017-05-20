@@ -1,0 +1,180 @@
+ Real_timer<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Real_timer  
+ 
+
+  Definition 
+ 
+
+ #include &lt; CGAL/Real_timer.h &gt; 
+  
+
+The class   Real_timer   is a timer class for measuring real time.
+A timer  t  of type   Real_timer   is an object with a state. It is
+either  running  or it is  stopped . The state is controlled
+with  t.start()  and  t.stop() . The timer counts the
+time elapsed since its creation or last reset. It counts only the time
+where it is in the running state. The time information is given in seconds.
+The timer counts also the number of intervals it was running, i.e. it 
+counts the number of calls of the  start()  member function since the 
+last reset. If the reset occures while the timer is running it counts as the
+first interval.
+  
+
+  Creation 
+ 
+
+    
+          Real_timer  t;
+         
+              
+    state is  stopped. 
+ 
+
+     
+
+  Operations 
+ 
+
+    
+           
+void
+         
+          
+         
+    t.start ()
+         
+            Precondition:  state is  stopped .
+            
+           
+void
+         
+          
+         
+    t.stop ()
+         
+            Precondition:  state is  running .
+            
+           
+void
+         
+          
+         
+    t.reset ()
+         
+          
+    reset timer to zero. The state is unaffected.
+            
+           
+bool
+         
+          
+         
+    t.is_running ()
+         
+          
+     true  if the current state is running.
+                 
+           
+double
+         
+          
+         
+    t.time ()
+         
+          
+    real time in seconds, or 0 if the 
+                            underlying system call failed.
+            
+           
+int
+         
+          
+         
+    t.intervals ()
+         
+          
+    number of start/stop-intervals since
+                                 the last reset.
+            
+           
+double
+         
+          
+         
+    t.precision ()
+         
+          
+    smallest possible time step in seconds,
+                                 or -1 if the system call failed.
+            
+           
+double
+         
+          
+         
+    t. max  ()
+         
+          
+    maximal representable time in seconds.
+            
+
+  Implementation 
+ 
+
+The timer class is based in the C function  gettimeofday()  on
+POSIX systems, the C function  _ftime()  on MS Visual C++,
+the C function  ftime()  on Borland C++, and  time() 
+on Metrowerks Codewarrior. The system calls to these
+timers might fail, in which case a warning message will be issued
+through the C GAL  error handler and the functions return with the
+error codes indicated above.  The  precision  method computes the
+precision dynamically at runtime at its first invocation.
+  
+
+    Next:    Timer   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

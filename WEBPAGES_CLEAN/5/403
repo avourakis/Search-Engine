@@ -1,0 +1,941 @@
+ 
+Fielding Dissertation: CHAPTER 3: Network-based Architectural Styles
+<body>
+ 
+ [ Top ]
+   [ Prev ]
+   [ Next ]  
+  CHAPTER 3 
+ Network-based Architectural Styles 
+ 
+This chapter presents a survey of common architectural styles for network-based application software within a classification framework that evaluates each style according to the architectural properties it would induce if applied to an architecture for a prototypical network-based hypermedia system. 
+  3.1 Classification Methodology  
+ 
+The purpose of building software is not to create a specific topology of interactions or use a particular component type -- it is to create a system that meets or exceeds the application needs. The architectural styles chosen for a system's design must conform to those needs, not the other way around. Therefore, in order to provide useful design guidance, a classification of architectural styles should be based on the architectural properties induced by those styles. 
+  3.1.1 Selection of Architectural Styles for Classification  
+ 
+The set of architectural styles included in the classification is by no means comprehensive of all possible network-based application styles. Indeed, a new style can be formed merely by adding an architectural constraint to any one of the styles surveyed. My goal is to describe a representative sample of styles, particularly those already identified within the software architecture literature, and provide a framework by which other styles can be added to the classification as they are developed. 
+ 
+I have intentionally excluded styles that do not enhance the communication or interaction properties when combined with one of the surveyed styles to form a network-based application. For example, the blackboard architectural style [ 95 ] consists of a central repository and a set of components (knowledge sources) that operate opportunistically upon the repository. A blackboard architecture can be extended to a network-based system by distributing the components, but the properties of such an extension are entirely based on the interaction style chosen to support the distribution -- notifications via event-based integration, polling  a la  client-server, or replication of the repository. Thus, there would be no added value from including it in the classification, even though the hybrid style is network-capable. 
+  3.1.2 Style-induced Architectural Properties  
+ 
+My classification uses relative changes in the architectural properties induced by each style as a means of illustrating the effect of each architectural style when applied to a system for distributed hypermedia. Note that the evaluation of a style for a given property depends on the type of system interaction being studied, as described in  Section 2.2 . The architectural properties are relative in the sense that adding an architectural constraint may improve or reduce a given property, or simultaneously improve one aspect of the property and reduce some other aspect of the property. Likewise, improving one property may lead to the reduction of another. 
+ 
+Although our discussion of architectural styles will include those applicable to a wide range of network-based systems, our evaluation of each style will be based on its impact upon an architecture for a single type of software: network-based hypermedia systems. Focusing on a particular type of software allows us to identify the advantages of one style over another in the same way that a designer of a system would evaluate those advantages. Since we do not intend to declare any single style as being universally desirable for all types of software, restricting the focus of our evaluation simply reduces the dimensions over which we need to evaluate. Evaluating the same styles for other types of application software is an open area for future research. 
+  3.1.3 Visualization  
+ 
+I use a table of style versus architectural properties as the primary visualization for this classification. The table values indicate the relative influence that the style for a given row has on a column's property. Minus ( - ) symbols accumulate for negative influences and plus ( + ) symbols for positive, with plus-minus ( ± ) indicating that it depends on some aspect of the problem domain. Although this is a gross simplification of the details presented in each section, it does indicate the degree to which a style has addressed (or ignored) an architectural property. 
+ 
+An alternative visualization would be a property-based derivation graph for classifying architectural styles. The styles would be classified according to how they are derived from other styles, with the arcs between styles illustrated by architectural properties gained or lost. The starting point of the graph would be the null style (no constraints). It is possible to derive such a graph directly from the descriptions. 
+  3.2 Data-flow Styles  
+    Table 3-1: Evaluation of Data-flow Styles for Network-based Hypermedia   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   PF 
+   
+   
+  ±  
+   
+   
+  +  
+  +  
+  +  
+   
+  +  
+  +  
+   
+   
+   
+   UPF 
+ PF 
+  -  
+  ±  
+   
+   
+  ++  
+  +  
+  +  
+   
+  ++  
+  ++  
+  +  
+   
+   
+    3.2.1 Pipe and Filter (PF)  
+ 
+In a pipe and filter style, each component (filter) reads streams of data on its inputs and produces streams of data on its outputs, usually while applying a transformation to the input streams and processing them incrementally so that output begins before the input is completely consumed [ 53 ]. This style is also referred to as a one-way data flow network [ 6 ]. The constraint is that a filter must be completely independent of other filters (zero coupling): it must not share state, control thread, or identity with the other filters on its upstream and downstream interfaces [ 53 ]. 
+ 
+Abowd et al. [ 1 ] provide an extensive formal description of the pipe and filter style using the Z language. The  Khoros  software development environment for image processing [ 112 ] provides a good example of using the pipe and filter style to build a range of applications. 
+ 
+Garlan and Shaw [ 53 ] describe the advantageous properties of the pipe and filter style as follows. First, PF allows the designer to understand the overall input/output of the system as a simple composition of the behaviors of the individual filters (simplicity). Second, PF supports reuse: any two filters can be hooked together, provided they agree on the data that is being transmitted between them (reusability). Third, PF systems can be easily maintained and enhanced: new filters can be added to existing systems (extensibility) and old filters can be replaced by improved ones (evolvability). Fourth, they permit certain kinds of specialized analysis (verifiability), such as throughput and deadlock analysis. Finally, they naturally support concurrent execution (user-perceived performance). 
+ 
+Disadvantages of the PF style include: propagation delay is added through long pipelines, batch sequential processing occurs if a filter cannot incrementally process its inputs, and no interactivity is allowed. A filter cannot interact with its environment because it cannot know that any particular output stream shares a controller with any particular input stream. These properties decrease user-perceived performance if the problem being addressed does not fit the pattern of a data flow stream. 
+ 
+One aspect of PF styles that is rarely mentioned is that there is an implied "invisible hand" that arranges the configuration of filters in order to establish the overall application. A network of filters is typically arranged just prior to each activation, allowing the application to specify the configuration of filter components based on the task at hand and the nature of the data streams (configurability). This controller function is considered a separate operational phase of the system, and hence a separate architecture, even though one cannot exist without the other. 
+  3.2.2 Uniform Pipe and Filter (UPF)  
+ 
+The uniform pipe and filter style adds the constraint that all filters must have the same interface. The primary example of this style is found in the Unix operating system, where filter processes have an interface consisting of one input data stream of characters (stdin) and two output data streams of characters (stdout and stderr). Restricting the interface allows independently developed filters to be arranged at will to form new applications. It also simplifies the task of understanding how a given filter works. 
+ 
+A disadvantage of the uniform interface is that it may reduce network performance if the data needs to be converted to or from its natural format. 
+  3.3 Replication Styles  
+    Table 3-2: Evaluation of Replication Styles for Network-based Hypermedia   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   RR 
+   
+   
+ ++ 
+   
+  +  
+   
+   
+   
+   
+   
+   
+   
+   
+  +  
+   $ 
+ RR 
+   
+  +  
+  +  
+  +  
+  +  
+   
+   
+   
+   
+   
+   
+   
+   
+    3.3.1 Replicated Repository (RR)  
+ 
+Systems based on the replicated repository style [ 6 ] improve the accessibility of data and scalability of services by having more than one process provide the same service. These decentralized servers interact to provide clients the illusion that there is just one, centralized service. Distributed filesystems, such as XMS [ 49 ], and remote versioning systems, like CVS [www.cyclic.com], are the primary examples. 
+ 
+Improved user-perceived performance is the primary advantage, both by reducing the latency of normal requests and enabling disconnected operation in the face of primary server failure or intentional roaming off the network. Simplicity remains neutral, since the complexity of replication is offset by the savings of allowing network-unaware components to operate transparently on locally replicated data. Maintaining consistency is the primary concern. 
+  3.3.2 Cache ($)  
+ 
+A variant of replicated repository is found in the cache style: replication of the result of an individual request such that it may be reused by later requests. This form of replication is most often found in cases where the potential data set far exceeds the capacity of any one client, as in the WWW [ 20 ], or where complete access to the repository is unnecessary. Lazy replication occurs when data is replicated upon a not-yet-cached response for a request, relying on locality of reference and commonality of interest to propagate useful items into the cache for later reuse. Active replication can be performed by pre-fetching cacheable entries based on anticipated requests. 
+ 
+Caching provides slightly less improvement than the replicated repository style in terms of user-perceived performance, since more requests will miss the cache and only recently accessed data will be available for disconnected operation. On the other hand, caching is much easier to implement, doesn't require as much processing and storage, and is more efficient because data is transmitted only when it is requested. The cache style becomes network-based when it is combined with a client-stateless-server style. 
+  3.4 Hierarchical Styles  
+    Table 3-3: Evaluation of Hierarchical Styles for Network-based Hypermedia   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   CS 
+   
+   
+   
+   
+  +  
+  +  
+  +  
+   
+   
+   
+   
+   
+   
+   
+   LS 
+   
+   
+  -  
+   
+  +  
+   
+  +  
+   
+   
+   
+  +  
+   
+  +  
+   
+   LCS 
+ CS+LS 
+   
+  -  
+   
+  ++  
+  +  
+  ++  
+   
+   
+   
+  +  
+   
+  +  
+   
+   CSS 
+ CS 
+  -  
+   
+   
+  ++  
+  +  
+  +  
+   
+   
+   
+   
+  +  
+   
+  +  
+   C$SS 
+ CSS+$ 
+  -  
+  +  
+  +  
+  ++  
+  +  
+  +  
+   
+   
+   
+   
+  +  
+   
+  +  
+   LC$SS 
+ LCS+C$SS 
+  -  
+  ±  
+  +  
+  +++  
+  ++  
+  ++  
+   
+   
+   
+  +  
+  +  
+  +  
+  +  
+   RS 
+ CS 
+   
+   
+  +  
+  -  
+  +  
+  +  
+   
+   
+   
+   
+  -  
+   
+   
+   RDA 
+ CS 
+   
+   
+  +  
+  -  
+  -  
+   
+   
+   
+   
+   
+  +  
+   
+  -  
+    3.4.1 Client-Server (CS)  
+ 
+The client-server style is the most frequently encountered of the architectural styles for network-based applications. A server component, offering a set of services, listens for requests upon those services. A client component, desiring that a service be performed, sends a request to the server via a connector. The server either rejects or performs the request and sends a response back to the client. A variety of client-server systems are surveyed by Sinha [ 123 ] and Umar [ 131 ]. 
+ 
+Andrews [ 6 ] describes client-server components as follows: A client is a triggering process; a server is a reactive process. Clients make requests that trigger reactions from servers. Thus, a client initiates activity at times of its choosing; it often then delays until its request has been serviced. On the other hand, a server waits for requests to be made and then reacts to them. A server is usually a non-terminating process and often provides service to more than one client. 
+ 
+Separation of concerns is the principle behind the client-server constraints. A proper separation of functionality should simplify the server component in order to improve scalability. This simplification usually takes the form of moving all of the user interface functionality into the client component. The separation also allows the two types of components to evolve independently, provided that the interface doesn't change. 
+ 
+The basic form of client-server does not constrain how application state is partitioned between client and server components. It is often referred to by the mechanisms used for the connector implementation, such as remote procedure call [ 23 ] or message-oriented middleware [ 131 ]. 
+  3.4.2 Layered System (LS) and Layered-Client-Server (LCS)  
+ 
+A layered system is organized hierarchically, each layer providing services to the layer above it and using services of the layer below it [ 53 ]. Although layered system is considered a "pure" style, its use within network-based systems is limited to its combination with the client-server style to provide layered-client-server. 
+ 
+Layered systems reduce coupling across multiple layers by hiding the inner layers from all except the adjacent outer layer, thus improving evolvability and reusability. Examples include the processing of layered communication protocols, such as the TCP/IP and OSI protocol stacks [ 138 ], and hardware interface libraries. The primary disadvantage of layered systems is that they add overhead and latency to the processing of data, reducing user-perceived performance [ 32 ]. 
+ 
+Layered-client-server adds proxy and gateway components to the client-server style. A proxy [ 116 ] acts as a shared server for one or more client components, taking requests and forwarding them, with possible translation, to server components. A gateway component appears to be a normal server to clients or proxies that request its services, but is in fact forwarding those requests, with possible translation, to its "inner-layer" servers. These additional mediator components can be added in multiple layers to add features like load balancing and security checking to the system. 
+ 
+Architectures based on layered-client-server are referred to as two-tiered, three-tiered, or multi-tiered architectures in the information systems literature [ 131 ]. 
+ 
+LCS is also a solution to managing identity in a large scale distributed system, where complete knowledge of all servers would be prohibitively expensive. Instead, servers are organized in layers such that rarely used services are handled by intermediaries rather than directly by each client [ 6 ]. 
+  3.4.3 Client-Stateless-Server (CSS)  
+ 
+The client-stateless-server style derives from client-server with the additional constraint that no  session state  is allowed on the server component. Each request from client to server must contain all of the information necessary to understand the request, and cannot take advantage of any stored context on the server. Session state is kept entirely on the client. 
+ 
+These constraints improve the properties of visibility, reliability, and scalability. Visibility is improved because a monitoring system does not have to look beyond a single request datum in order to determine the full nature of the request. Reliability is improved because it eases the task of recovering from partial failures [ 133 ]. Scalability is improved because not having to store state between requests allows the server component to quickly free resources and further simplifies implementation. 
+ 
+The disadvantage of client-stateless-server is that it may decrease network performance by increasing the repetitive data (per-interaction overhead) sent in a series of requests, since that data cannot be left on the server in a shared context. 
+  3.4.4 Client-Cache-Stateless-Server (C$SS)  
+ 
+The client-cache-stateless-server style derives from the client-stateless-server and cache styles via the addition of cache components. A cache acts as a mediator between client and server in which the responses to prior requests can, if they are considered cacheable, be reused in response to later requests that are equivalent and likely to result in a response identical to that in the cache if the request were to be forwarded to the server. An example system that makes effective use of this style is Sun Microsystems' NFS [ 115 ]. 
+ 
+The advantage of adding cache components is that they have the potential to partially or completely eliminate some interactions, improving efficiency and user-perceived performance. 
+  3.4.5 Layered-Client-Cache-Stateless-Server (LC$SS)  
+ 
+The layered-client-cache-stateless-server style derives from both layered-client-server and client-cache-stateless-server through the addition of proxy and/or gateway components. An example system that uses an LC$SS style is the Internet domain name system (DNS). 
+ 
+The advantages and disadvantages of LC$SS are simply a combination of those for LCS and C$SS. However, note that we don't count the contributions of the CS style twice, since the benefits are not additive if they come from the same ancestral derivation. 
+  3.4.6 Remote Session (RS)  
+ 
+The remote session style is a variant of client-server that attempts to minimize the complexity, or maximize the reuse, of the client components rather than the server component. Each client initiates a session on the server and then invokes a series of services on the server, finally exiting the session. Application state is kept entirely on the server. This style is typically used when it is desired to access a remote service using a generic client (e.g., TELNET [ 106 ]) or via an interface that mimics a generic client (e.g., FTP [ 107 ]). 
+ 
+The advantages of the remote session style are that it is easier to centrally maintain the interface at the server, reducing concerns about inconsistencies in deployed clients when functionality is extended, and improves efficiency if the interactions make use of extended session context on the server. The disadvantages are that it reduces scalability of the server, due to the stored application state, and reduces visibility of interactions, since a monitor would have to know the complete state of the server. 
+  3.4.7 Remote Data Access (RDA)  
+ 
+The remote data access style [ 131 ] is a variant of client-server that spreads the application state across both client and server. A client sends a database query in a standard format, such as SQL, to a remote server. The server allocates a workspace and performs the query, which may result in a very large data set. The client can then make further operations upon the result set (such as table joins) or retrieve the result one piece at a time. The client must know about the data structure of the service to build structure-dependent queries. 
+ 
+The advantages of remote data access are that a large data set can be iteratively reduced on the server side without transmitting it across the network, improving efficiency, and visibility is improved by using a standard query language. The disadvantages are that the client needs to understand the same database manipulation concepts as the server implementation (lacking simplicity) and storing application context on the server decreases scalability. Reliability also suffers, since partial failure can leave the workspace in an unknown state. Transaction mechanisms (e.g., two-phase commit) can be used to fix the reliability problem, though at a cost of added complexity and interaction overhead. 
+  3.5 Mobile Code Styles  
+ 
+Mobile code styles use mobility in order to dynamically change the distance between the processing and source of data or destination of results. These styles are comprehensively examined in Fuggetta et al. [ 50 ]. A site abstraction is introduced at the architectural level, as part of the active configuration, in order to take into account the location of the different components. Introducing the concept of location makes it possible to model the cost of an interaction between components at the design level. In particular, an interaction between components that share the same location is considered to have negligible cost when compared to an interaction involving communication through the network. By changing its location, a component may improve the proximity and quality of its interaction, reducing interaction costs and thereby improving efficiency and user-perceived performance. 
+ 
+In all of the mobile code styles, a data element is dynamically transformed into a component. Fuggetta et al. [ 50 ] use an analysis that compares the code's size as a data element to the savings in normal data transfer in order to determine whether mobility is desirable for a given action. This would be impossible to model from an architectural standpoint if the definition of software architecture excludes data elements. 
+    Table 3-4: Evaluation of Mobile Code Styles for Network-based Hypermedia   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   VM 
+   
+   
+   
+   
+   
+  ±  
+   
+  +  
+   
+   
+   
+  -  
+  +  
+   
+   REV 
+ CS+VM 
+   
+   
+  +  
+  -  
+  ±  
+   
+  +  
+  +  
+   
+   
+  -  
+  +  
+  -  
+   COD 
+ CS+VM 
+   
+  +  
+  +  
+  +  
+  ±  
+   
+  +  
+   
+  +  
+   
+  -  
+   
+   
+   LCODC$SS 
+ LC$SS+COD 
+  -  
+  ++  
+  ++  
+  +4+  
+  +±+  
+  ++  
+  +  
+   
+  +  
+  +  
+  ±  
+  +  
+  +  
+   MA 
+ REV+COD 
+   
+  +  
+  ++  
+   
+  ±  
+   
+  ++  
+  +  
+  +  
+   
+  -  
+  +  
+   
+    3.5.1 Virtual Machine (VM)  
+ 
+Underlying all of the mobile code styles is the notion of a virtual machine, or interpreter, style [ 53 ]. The code must be executed in some fashion, preferably within a controlled environment to satisfy security and reliability concerns, which is exactly what the virtual machine style provides. It is not, in itself, a network-based style, but it is commonly used as such when combined with a component in the client-server style (REV and COD styles). 
+ 
+Virtual machines are commonly used as the engine for scripting languages, including general purpose languages like Perl [ 134 ] and task-specific languages like PostScript [ 2 ]. The primary benefits are the separation between instruction and implementation on a particular platform (portability) and ease of extensibility. Visibility is reduced because it is hard to know what an executable will do simply by looking at the code. Simplicity is reduced due to the need to manage the evaluation environment, but that may be compensated in some cases as a result of simplifying the static functionality. 
+  3.5.2 Remote Evaluation (REV)  
+ 
+In the remote evaluation style [ 50 ], derived from the client-server and virtual machine styles, a client component has the know-how necessary to perform a service, but lacks the resources (CPU cycles, data source, etc.) required, which happen to be located at a remote site. Consequently, the client sends the know-how to a server component at the remote site, which in turn executes the code using the resources available there. The results of that execution are then sent back to the client. The remote evaluation style assumes that the provided code will be executed in a sheltered environment, such that it won't impact other clients of the same server aside from the resources being used. 
+ 
+The advantages of remote evaluation include the ability to customize the server component's services, which provides for improved extensibility and customizability, and better efficiency when the code can adapt its actions to the environment inside the server (as opposed to the client making a series of interactions to do the same). Simplicity is reduced due to the need to manage the evaluation environment, but that may be compensated in some cases as a result of simplifying the static server functionality. Scalability is reduced; this can be improved with the server's management of the execution environment (killing long-running or resource-intensive code when resources are tight), but the management function itself leads to difficulties regarding partial failure and reliability. The most significant limitation, however, is the lack of visibility due to the client sending code instead of standardized queries. Lack of visibility leads to obvious deployment problems if the server cannot trust the clients. 
+  3.5.3 Code on Demand (COD)  
+ 
+In the code-on-demand style [ 50 ], a client component has access to a set of resources, but not the know-how on how to process them. It sends a request to a remote server for the code representing that know-how, receives that code, and executes it locally. 
+ 
+The advantages of code-on-demand include the ability to add features to a deployed client, which provides for improved extensibility and configurability, and better user-perceived performance and efficiency when the code can adapt its actions to the client's environment and interact with the user locally rather than through remote interactions. Simplicity is reduced due to the need to manage the evaluation environment, but that may be compensated in some cases as a result of simplifying the client's static functionality. Scalability of the server is improved, since it can off-load work to the client that would otherwise have consumed its resources. Like remote evaluation, the most significant limitation is the lack of visibility due to the server sending code instead of simple data. Lack of visibility leads to obvious deployment problems if the client cannot trust the servers. 
+  3.5.4 Layered-Code-on-Demand-Client-Cache-Stateless-Server (LCODC$SS)  
+ 
+As an example of how some architectures are complementary, consider the addition of code-on-demand to the layered-client-cache-stateless-server style discussed above. Since the code can be treated as just another data element, this does not interfere with the advantages of the LC$SS style. An example is the HotJava Web browser [java.sun.com], which allows applets and protocol extensions to be downloaded as typed media. 
+ 
+The advantages and disadvantages of LCODC$SS are just a combination of those for COD and LC$SS. We could go further and discuss the combination of COD with other CS styles, but this survey is not intended to be exhaustive (nor exhausting). 
+  3.5.5 Mobile Agent (MA)  
+ 
+In the mobile agent style [ 50 ], an entire computational component is moved to a remote site, along with its state, the code it needs, and possibly some data required to perform the task. This can be considered a derivation of the remote evaluation and code-on-demand styles, since the mobility works both ways. 
+ 
+The primary advantage of the mobile agent style, beyond those already described for REV and COD, is that there is greater dynamism in the selection of when to move the code. An application can be in the midst of processing information at one location when it decides to move to another location, presumably in order to reduce the distance between it and the next set of data it wishes to process. In addition, the reliability problem of partial failure is reduced because the application state is in one location at a time [ 50 ]. 
+  3.6 Peer-to-Peer Styles  
+    Table 3-5: Evaluation of Peer-to-Peer Styles for Network-based Hypermedia   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   EBI 
+   
+   
+   
+  +  
+  - -  
+  ±  
+  +  
+  +  
+   
+  +  
+  +  
+  -  
+   
+  -  
+   C2 
+ EBI+LCS 
+   
+  -  
+  +  
+   
+  +  
+  ++  
+  +  
+   
+  +  
+  ++  
+  ±  
+  +  
+  ±  
+   DO 
+ CS+CS 
+  -  
+   
+  +  
+   
+   
+  +  
+  +  
+   
+  +  
+  +  
+  -  
+   
+  -  
+   BDO 
+ DO+LCS 
+  -  
+  -  
+   
+   
+   
+  ++  
+  +  
+   
+  +  
+  ++  
+  -  
+  +  
+   
+    3.6.1 Event-based Integration (EBI)  
+ 
+The event-based integration style, also known as the implicit invocation or event system style, reduces coupling between components by removing the need for identity on the connector interface. Instead of invoking another component directly, a component can announce (or broadcast) one or more events. Other components in a system can register interest in that type of event and, when the event is announced, the system itself invokes all of the registered components [ 53 ]. Examples include the Model-View-Controller paradigm in Smalltalk-80 [ 72 ] and the integration mechanisms of many software engineering environments, including Field [ 113 ], SoftBench [ 29 ], and Polylith [ 110 ]. 
+ 
+The event-based integration style provides strong support for extensibility through the ease of adding new components that listen for events, for reuse by encouraging a general event interface and integration mechanism, and for evolution by allowing components to be replaced without affecting the interfaces of other components [ 53 ]. Like pipe-and-filter systems, a higher-level configuring architecture is needed for the "invisible hand" that places components on the event interface. Most EBI systems also include explicit invocation as a complementary form of interaction [ 53 ]. For applications that are dominated by data monitoring, rather than data retrieval, EBI can improve efficiency by removing the need for polling interactions. 
+ 
+The basic form of EBI system consists of one event bus to which all components listen for events of interest to them. Of course, this immediately leads to scalability issues with regard to the number of notifications, event storms as other components broadcast as a result of events caused by that notification, and a single point of failure in the notification delivery system. This can be ameliorated though the use of layered systems and filtering of events, at the cost of simplicity. 
+ 
+Other disadvantages of EBI systems are that it can be hard to anticipate what will happen in response to an action (poor understandability) and event notifications are not suitable for exchanging large-grain data [ 53 ]. Also, there is no support for recovery from partial failure. 
+  3.6.2 C2  
+ 
+The C2 architectural style [ 128 ] is directed at supporting large-grain reuse and flexible composition of system components by enforcing substrate independence. It does so by combining event-based integration with layered-client-server. Asynchronous notification messages going down, and asynchronous request messages going up, are the sole means of intercomponent communication. This enforces loose coupling of dependency on higher layers (service requests may be ignored) and zero coupling with lower levels (no knowledge of notification usage), improving control over the system without losing most of the advantages of EBI. 
+ 
+Notifications are announcements of a state change within a component. C2 does not constrain what should be included with a notification: a flag, a delta of state change, or a complete state representation are all possibilities. A connector's primary responsibility is the routing and broadcasting of messages; its secondary responsibility is message filtering. The introduction of layered filtering of messages solves the EBI problems with scalability, while improving evolvability and reusability as well. Heavyweight connectors that include monitoring capabilities can be used to improve visibility and reduce the reliability problems of partial failure. 
+  3.6.3 Distributed Objects  
+ 
+The distributed objects style organizes a system as a set of components interacting as peers. An object is an entity that encapsulates some private state information or data, a set of associated operations or procedures that manipulate the data, and possibly a thread of control, so that collectively they can be considered a single unit [ 31 ]. In general, an object's state is completely hidden and protected from all other objects. The only way it can be examined or modified is by making a request or invocation on one of the object's publicly accessible operations. This creates a well-defined interface for each object, enabling the specification of an object's operations to be made public while at the same time keeping the implementation of its operations and the representation of its state information private, thus improving evolvability.  
+ 
+An operation may invoke other operations, possibly on other objects. These operations may in turn make invocations on others, and so on. A chain of related invocations is referred to as an action [ 31 ]. State is distributed among the objects. This can be advantageous in terms of keeping the state where it is most likely to be up-to-date, but has the disadvantage in that it is difficult to obtain an overall view of system activity (poor visibility). 
+ 
+In order for one object to interact with another, it must know the identity of that other object. When the identity of an object changes, it is necessary to modify all other objects that explicitly invoke it [ 53 ]. There must be some controller object that is responsible for maintaining the system state in order to complete the application requirements. Central issues for distributed object systems include: object management, object interaction management, and resource management [ 31 ]. 
+ 
+Object systems are designed to isolate the data being processed. As a consequence, data streaming is not supported in general. However, this does provide better support for object mobility when combined with the mobile agent style. 
+  3.6.4 Brokered Distributed Objects  
+ 
+In order to reduce the impact of identity, modern distributed object systems typically use one or more intermediary styles to facilitate communication. This includes event-based integration and brokered client/server [ 28 ]. The brokered distributed object style introduces name resolver components whose purpose is to answer client object requests for general service names with the specific name of an object that will satisfy the request. Although improving reusability and evolvability, the extra level of indirection requires additional network interactions, reducing efficiency and user-perceived performance. 
+ 
+Brokered distributed object systems are currently dominated by the industrial standards development of CORBA within the OMG [ 97 ] and the international standards development of Open Distributed Processing (ODP) within ISO/IEC [ 66 ]. 
+ 
+In spite of all the interest associated with distributed objects, they fare poorly when compared to most other network-based architectural styles. They are best used for applications that involve the remote invocation of encapsulated services, such as hardware devices, where the efficiency and frequency of network interactions is less a concern. 
+  3.7 Limitations  
+ 
+Each architectural style promotes a certain type of interaction among components. When components are distributed across a wide-area network, use or misuse of the network drives application usability. By characterizing styles by their influence on architectural properties, and particularly on the network-based application performance of a distributed hypermedia system, we gain the ability to better choose a software design that is appropriate for the application. There are, however, a couple limitations with the chosen classification. 
+ 
+The first limitation is that the evaluation is specific to the needs of distributed hypermedia. For example, many of the good qualities of the pipe-and-filter style disappear if the communication is fine-grained control messages, and are not applicable at all if the communication requires user interactivity. Likewise, layered caching only adds to latency, without any benefit, if none of the responses to client requests are cacheable. This type of distinction does not appear in the classification, and is only addressed informally in the discussion of each style. I believe this limitation can be overcome by creating separate classification tables for each type of communication problem. Example problem areas would include, among others, large grain data retrieval, remote information monitoring, search, remote control systems, and distributed processing. 
+ 
+A second limitation is with the grouping of architectural properties. In some cases, it is better to identify the specific aspects of, for example, understandability and verifiability induced by an architectural style, rather than lumping them together under the rubric of simplicity. This is particularly the case for styles which might improve verifiability at the expense of understandability. However, the more abstract notion of a property also has value as a single metric, since we do not want to make the classification so specific that no two styles impact the same category. One solution would be a classification that presented both the specific properties and a summary property. 
+ 
+Regardless, this initial survey and classification is a necessary prerequisite to any further classifications that might address its limitations. 
+  3.8 Related Work  
+  3.8.1 Classification of Architectural Styles and Patterns  
+ 
+The area of research most directly related to this chapter is the identification and classification of architectural styles and architecture-level patterns. 
+ 
+Shaw [ 117 ] describes a few architectural styles, later expanded in Garlan and Shaw [ 53 ]. A preliminary classification of these styles is presented in Shaw and Clements [ 122 ] and repeated in Bass et al. [ 9 ], in which a two-dimensional, tabular classification strategy is used with control and data issues as the primary axes, organized by the following categories of features: which kinds of components and connectors are used in the style; how control is shared, allocated, and transferred among the components; how data is communicated through the system; how data and control interact; and, what type of reasoning is compatible with the style. The primary purpose of the taxonomy is to identify style characteristics, rather than to assist in their comparison. It concludes with a small set of "rules of thumb" as a form of design guidance 
+ 
+Unlike this chapter, the Shaw and Clements [ 122 ] classification does not assist in evaluating designs in a way that is useful to an application designer. The problem is that the purpose of building software is not to build a specific shape, topology or component type, so organizing the classification in that fashion does not help a designer find a style that corresponds to their needs. It also mixes the essential differences among styles with other issues which have only incidental significance, and obscures the derivation relationships among styles. Furthermore, it does not focus on any particular type of architecture, such as network-based applications. Finally, it does not describe how styles can be combined, nor the effect of their combination. 
+ 
+Buschmann and Meunier [ 27 ] describe a classification scheme that organizes patterns according to granularity of abstraction, functionality, and structural principles. The granularity of abstraction separates patterns into three categories: architectural frameworks (templates for architectures), design patterns, and idioms. Their classification addresses some of the same issues as this dissertation, such as separation of concerns and structural principles that lead to architectural properties, but only covers two of the architectural styles described here. Their classification is considerably expanded in Buschmann et al. [ 28 ] with more extensive discussion of architectural patterns and their relation to software architecture. 
+ 
+Zimmer [ 137 ] organizes design patterns using a graph based on their relationships, making it easier to understand the overall structure of the patterns in the Gamma et al. [ 51 ] catalog. However, the patterns classified are not architectural patterns, and the classification is based exclusively on derivation or uses relationships rather than on architectural properties. 
+  3.8.2 Distributed Systems and Programming Paradigms  
+ 
+Andrews [ 6 ] surveys how processes in a distributed program interact via message passing. He defines concurrent programs, distributed programs, kinds of processes in a distributed program (filters, clients, servers, peers), interaction paradigms, and communication channels. Interaction paradigms represent the communication aspects of software architectural styles. He describes paradigms for one-way data flow through networks of filters (pipe-and-filter), client-server, heartbeat, probe/echo, broadcast, token passing, replicated servers, and replicated workers with bag of tasks. However, the presentation is from the perspective of multiple processes cooperating on a single task, rather than general network-based architectural styles. 
+ 
+Sullivan and Notkin [ 126 ] provide a survey of implicit invocation research and describe its application to improving the evolution quality of software tool suites. Barrett et al. [ 8 ] present a survey of event-based integration mechanisms by building a framework for comparison and then seeing how some systems fit within that framework. Rosenblum and Wolf [ 114 ] investigate a design framework for Internet-scale event notification. All are concerned with the scope and requirements of an EBI style, rather than providing solutions for network-based systems. 
+ 
+Fuggetta et al. [ 50 ] provide a thorough examination and classification of mobile code paradigms. This chapter builds upon their work to the extent that I compare the mobile code styles with other network-capable styles, and place them within a single framework and set of architectural definitions. 
+  3.8.3 Middleware  
+ 
+Bernstein [ 22 ] defines middleware as a distributed system service that includes standard programming interfaces and protocols. These services are called middleware because they act as a layer above the OS and networking software and below industry-specific applications. Umar [ 131 ] presents an extensive treatment of the subject. 
+ 
+Architecture research regarding middleware focuses on the problems and effects of integrating components with off-the-shelf middleware. Di Nitto and Rosenblum [ 38 ] describe how the usage of middleware and predefined components can influence the architecture of a system being developed and, conversely, how specific architectural choices can constrain the selection of middleware. Dashofy et al. [ 35 ] discuss the use of middleware with the C2 style. 
+ 
+Garlan et al. [ 56 ] point out some of the architectural assumptions within off-the-shelf components, examining the authors' problems with reusing subsystems in creating the Aesop tool for architectural design [ 54 ]. They classify the problems into four main categories of assumptions that can contribute to architectural mismatch: nature of components, nature of connectors, global architectural structure, and construction process. 
+  3.9 Summary  
+ 
+This chapter has presented a survey of common architectural styles for network-based application software within a classification framework that evaluates each style according to the architectural properties it would induce if applied to an architecture for a prototypical network-based hypermedia system. The overall classification is summarized below in  Table 3-6 . 
+ 
+The next chapter uses the insight garnered from this survey and classification to hypothesize methods for developing and evaluating an architectural style to guide the design of improvements for the modern World Wide Web architecture. 
+    Table 3-6: Evaluation Summary   
+  Style 
+ Derivation 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   PF 
+   
+   
+  ±  
+   
+   
+  +  
+  +  
+  +  
+   
+  +  
+  +  
+   
+   
+   
+   UPF 
+ PF 
+  -  
+  ±  
+   
+   
+  ++  
+  +  
+  +  
+   
+  ++  
+  ++  
+  +  
+   
+   
+   RR 
+   
+   
+ ++ 
+   
+  +  
+   
+   
+   
+   
+   
+   
+   
+   
+  +  
+   $ 
+ RR 
+   
+  +  
+  +  
+  +  
+  +  
+   
+   
+   
+   
+   
+   
+   
+   
+   CS 
+   
+   
+   
+   
+  +  
+  +  
+  +  
+   
+   
+   
+   
+   
+   
+   
+   LS 
+   
+   
+  -  
+   
+  +  
+   
+  +  
+   
+   
+   
+  +  
+   
+  +  
+   
+   LCS 
+ CS+LS 
+   
+  -  
+   
+  ++  
+  +  
+  ++  
+   
+   
+   
+  +  
+   
+  +  
+   
+   CSS 
+ CS 
+  -  
+   
+   
+  ++  
+  +  
+  +  
+   
+   
+   
+   
+  +  
+   
+  +  
+   C$SS 
+ CSS+$ 
+  -  
+  +  
+  +  
+  ++  
+  +  
+  +  
+   
+   
+   
+   
+  +  
+   
+  +  
+   LC$SS 
+ LCS+C$SS 
+  -  
+  ±  
+  +  
+  +++  
+  ++  
+  ++  
+   
+   
+   
+  +  
+  +  
+  +  
+  +  
+   RS 
+ CS 
+   
+   
+  +  
+  -  
+  +  
+  +  
+   
+   
+   
+   
+  -  
+   
+   
+   RDA 
+ CS 
+   
+   
+  +  
+  -  
+  -  
+   
+   
+   
+   
+   
+  +  
+   
+  -  
+   VM 
+   
+   
+   
+   
+   
+  ±  
+   
+  +  
+   
+   
+   
+  -  
+  +  
+   
+   REV 
+ CS+VM 
+   
+   
+  +  
+  -  
+  ±  
+   
+  +  
+  +  
+   
+   
+  -  
+  +  
+  -  
+   COD 
+ CS+VM 
+   
+  +  
+  +  
+  +  
+  ±  
+   
+  +  
+   
+  +  
+   
+  -  
+   
+   
+   LCODC$SS 
+ LC$SS+COD 
+  -  
+  ++  
+  ++  
+  +4+  
+  +±+  
+  ++  
+  +  
+   
+  +  
+  +  
+  ±  
+  +  
+  +  
+   MA 
+ REV+COD 
+   
+  +  
+  ++  
+   
+  ±  
+   
+  ++  
+  +  
+  +  
+   
+  -  
+  +  
+   
+   EBI 
+   
+   
+   
+  +  
+  - -  
+  ±  
+  +  
+  +  
+   
+  +  
+  +  
+  -  
+   
+  -  
+   C2 
+ EBI+LCS 
+   
+  -  
+  +  
+   
+  +  
+  ++  
+  +  
+   
+  +  
+  ++  
+  ±  
+  +  
+  ±  
+   DO 
+ CS+CS 
+  -  
+   
+  +  
+   
+   
+  +  
+  +  
+   
+  +  
+  +  
+  -  
+   
+  -  
+   BDO 
+ DO+LCS 
+  -  
+  -  
+   
+   
+   
+  ++  
+  +  
+   
+  +  
+  ++  
+  -  
+  +  
+   
+      
+ [ Top ]
+   [ Prev ]
+   [ Next ] 
+  
+©  Roy Thomas Fielding , 2000.  All rights reserved.
+  
+ [ How to reference this work. ] 
+   </body> 

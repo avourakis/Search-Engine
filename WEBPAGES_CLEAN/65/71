@@ -1,0 +1,187 @@
+ 
+  Class Processor
+<body>
+  
+ 
+  Class Processor
+ 
+ 
+java.lang.Object
+   |
+   +----Processor
+ 
+    public class  Processor 
+    extends Object
+   
+Represents a processor in the Network
+ 
+     See Also: 
+        Network 
+     
+ 
+    
+      id  
+     
+        NO_PROCESSOR  
+     
+   
+    
+      Processor  (int, Network, int, int, int, TheSimulator)
+     Create a new processor with the specified characteristics
+  
+        Processor  (int, Network, int, int, int, TheSimulator, float, float, float)
+     Create a new processor with the specified characteristics for a LogP network
+
+ 
+
+   
+    
+      addNeighbour  (Processor, int)
+     Add a new neighbour to this processor
+  
+        addOneWayNeighbour  (Processor, int)
+     
+        getNeighbours  ()
+     
+        getPeId  ()
+     
+        handleEvent  (ProcessorEvent)
+     Takes care of events arriving from the Network
+
+        IOCompletionTime  (float)
+     Models contention in the disk associated with this processor 
+	by serializing consecutive requests
+
+ 
+        isIdle  ()
+       
+        isNeighbour  (Processor)
+     
+        toString  ()
+     
+    
+ 
+    
+   
+ NO_PROCESSOR 
+ 
+ public static final int NO_PROCESSOR
+ 
+   
+ id 
+ 
+ public int id
+ 
+  
+ 
+    
+  
+   
+ Processor 
+ 
+ public Processor(int i,
+                   Network  n,
+                  int s,
+                  int bs,
+                  int tsl,
+                   TheSimulator  sim)
+ 
+   Create a new processor with the specified characteristics
+ 
+        Parameters: 
+       i - The processor id
+      n - The newtwork to which the processor belongs
+      bs - The size of the processors communication buffer
+      s - The speed of this processor in some unit
+        
+     
+ Processor 
+ 
+ public Processor(int i,
+                   Network  n,
+                  int s,
+                  int bs,
+                  int tsl,
+                   TheSimulator  sim,
+                  float _L,
+                  float _o,
+                  float _g)
+ 
+   Create a new processor with the specified characteristics for a LogP network
+ 
+     
+ 
+    
+   
+  toString  
+ 
+ public String toString()
+ 
+      Overrides: 
+        toString  in class Object
+     
+    
+  getPeId  
+ 
+ public int getPeId()
+ 
+   
+  getNeighbours  
+ 
+ public int[] getNeighbours()
+ 
+   
+  IOCompletionTime  
+ 
+ public float IOCompletionTime(float dt)
+ 
+   Models contention in the disk associated with this processor 
+	by serializing consecutive requests
+ 
+        Parameters: 
+       dt - - Duration of current request
+        See Also: 
+        Task 
+     
+     
+  handleEvent  
+ 
+ public void handleEvent( ProcessorEvent  pe)
+ 
+   Takes care of events arriving from the Network
+ 
+      
+  addNeighbour  
+ 
+ public void addNeighbour( Processor  p,
+                          int speed)
+ 
+   Add a new neighbour to this processor
+ 
+        Parameters: 
+       p - the new neighbour
+      speed - the speed of the communication link between the two processors
+      
+     
+  addOneWayNeighbour  
+ 
+ public void addOneWayNeighbour( Processor  p,
+                                int speed)
+ 
+   
+  isNeighbour  
+ 
+ public boolean isNeighbour( Processor  p)
+ 
+      Returns: 
+       Wheter processor p is a neighbour of this processor
+     
+    
+  isIdle  
+ 
+ public boolean isIdle()
+ 
+      Returns: 
+       Wheter this processor is currently running a task
+     
+ </body> 

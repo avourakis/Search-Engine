@@ -1,0 +1,92 @@
+ 22.6 Predefined OEChem Functors<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.5 Call-Backs 
+ Up:   22. Predicate Functors 
+ Next:   22.7 Using your own 
+   
+
+
+  
+22.6 Predefined OEChem Functors 
+ 
+
+ 
+There are many useful functors already defined in OEChem.  These can be
+used by programmers with little or no understanding of the details of how
+functors work.  A programmer can simply pass them to one of the many OEChem
+functions which take predicates as arguments with the expectation that they
+will behave as described in the API manual.
+
+  
+The predefined functors in OEChem include:
+   OEAtomBase Functors 
+    OEHasAtomIdx(unsigned int)
+OEHasAtomName(const char *)
+OEHasMapIdx(unsigned int=0)
+OEHasAtomicNum(unsigned int)
+OEIsRGroup(unsigned int=0)
+OENthAtom(unsigned int, unsigned int)
+OEMatchFunc(const char*)
+OEAtomIsInRing
+OEIsChiralAtom
+OEHasStereoSpecified
+OEHasAlphaBetaUnsat
+OEAtomIsInResidue
+OEIsHydrogen
+OEIsHeavy
+OEIsPolar
+OEIsPolarHydrogen
+OEIsCarbon
+OEIsNitrogen
+OEIsOxygen
+OEIsHalogen
+OEIsSulfur
+OEIsPhosphorus
+OEIsAromaticAtom
+    
+ Residue data Functors in OEAtomBases 
+    OEHasChainID(const char *)
+OEHasResidueNumber(unsigned int)
+OEHasFragmentNumber(unsigned int)
+    
+ OEBondBase Functors 
+    OEHasBondIdx(unsigned int)
+OEHasOrder(unsigned int)
+OEBondIsInRing
+OEIsRotor
+OEIsChiralBond
+OEHasBondStereoSpecified
+OEIsAromaticBond
+template&lt;class STLContainer&gt;OEIsMember(const STLContainer &amp;c)
+    
+ OEConfBase Functors 
+    OEHasConfIdx(unsigned int)
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.5 Call-Backs 
+ Up:   22. Predicate Functors 
+ Next:   22.7 Using your own 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,184 @@
+ Program Analyses for Bloat Detection and Optimization 
+
+ 
+
+     Exploiting Systems Support
+for Highly Scalable Program Analyses      
+
+  
+
+   
+
+   About     
+
+       
+
+  How
+to scale sophisticated program analyses to large codebase has been a key
+challenge in the program analysis research for at least a decade. The inability
+of scaling is the major factor that prevents analysis-based techniques (e.g.,
+verification, model checking, and static bug detection) from being widely
+adopted in industry. Program analysis researchers tackle the problem typically
+by developing approximations, trading off analysis capability for scalability.
+However, approximations render analyses less useful and, even with
+approximations, most analyses still cannot scale to large software on the
+computing frontier, such as Hadoop, HDFS, or Spark. My systems-building
+experience enables me to think from a different angle: now that efficient
+systems can be built to process datasets as large as the whole internet or
+human genome, why don't we shift our focus from improving algorithms and making
+better analysis tools to leveraging decades of experience in the systems
+community to develop efficient Big Code analysis systems (not just tools)? We
+hope that with the help of a series of systems-level attempts, we can unleash
+the power of program analysis on big code, helping realize the dream of
+developing fully-verified, bug-free software.       
+
+       
+
+       
+
+   (1)     Graspan: A single-machine,
+disk-based graph system for interprocedural static analyses of large-scale
+systems code         
+
+  There
+is more than a decade-long history of using static analysis to find bugs in
+systems such as Linux. Most of the existing static analyses developed for these
+systems are simple checkers that find bugs based on pattern matching. Despite many
+sophisticated interprocedural analyses, few of them have been employed to
+improve checkers for systems code due to their complex implementations and
+their poor scalability and parallelizability. In this paper, we revisit the
+scalability problem of interprocedural static analysis from a ``Big Data``
+perspective. That is, we turn Big Code analysis into Big Data analytics and
+leverage novel data processing techniques to solve this traditional programming
+language problem. We develop Graspan, a disk-based parallel graph system that
+uses an edge-pair centric computation model to compute dynamic transitive
+closures on large program graphs. We implement fully context-sensitive
+pointer/alias and dataflow analyses on Graspan. An evaluation of these analyses
+on large codebases such as Linux shows that their Graspan implementations scale
+to millions of lines of code and are much simpler than their original
+implementations. Moreover, we show that these analyses can be used to augment
+existing checkers; these augmented checkers uncovered 132 new NULL pointer bugs
+and 1308 unnecessary NULL tests, as well as reported 401 fewer false positives
+in Linux 4.4.0-rc5, PostgreSQL 8.3.9, and Apache httpd 2.2.18. Details can be
+found in our  ASPLOS  '  17  paper.     
+
+       
+
+   (2)
+BigSAT: A distributed SAT solver based on Spark     
+
+  The Boolean Satisfiability (a.k.a. SAT)
+problem is one of the most important problems in mathematical logic and
+computing theory. It serves as the foundation for a wide range of applications,
+including hardware/software verification, model checking, theorem proving, cryptography,
+computational biology, planning, and so on. Despite the significant advances in
+the research of SAT solving over the past decade, modern SAT solvers are still
+far from being satisfactory. Driven by the insight that multi-core systems and
+computing clusters are becoming increasingly accessible to regular developers,
+the aim of the BigSAT project is to develop parallel and distributed solvers
+that leverage these modern computing resources to solve very large SAT
+instances. Although there already exist many parallel solvers, all of these
+existing solvers are based on the Davis Putnam Logemann Loveland (DPLL)
+procedure with clause learning, which performs backtracking-based searching and
+suffers from poor scalability. For example, the fastest parallel solver only
+achieves a 3x speedup on a 32-core machine compared to its sequential version.
+Researchers show empirically that the performance bottleneck of a DBLL solver
+is at its refutation proofs.    
+
+       
+
+  This
+project revisits the SAT problem from a ``Big Data'' perspective and develops a
+resolution-based distributed SAT solver. It makes two major contributions.
+First, we investigate the possibility of employing an older, resolution-based approach
+for parallel computation, called the DP procedure. Different from the DBLL
+approach, the DP procedure consists of a sequence of explicit resolutions to
+eliminate the propositional variables one at a time. The DB procedure has a
+simple logic (i.e., resolution rule), but was considered impractical almost
+immediately after it was invented (in the 1960s) as it requires a very large
+amount of memory, which, by then, was impossible to have in any real machine. Our
+observation is that we have abundant resources today and with these resources
+the DP procedure is easier to parallelize than a DBLL-based approach. Based on
+this insight, we devise a novel distributed algorithm and a ZBBD-based data
+structure for Spark, which allows for ``near-computation`` data storage --- most
+of the data to be read and written are in the storage local to the processors,
+leading to minimized network computation costs. More details will be reported
+here.     
+
+       
+
+  
+
+   
+
+   Papers      
+
+       
+
+   o   
+    Graspan: A Single-machine Disk-based Graph System for
+Interprocedural Static Analyses of Large-scale Systems Code,    
+
+  Kai Wang, Aftab Hussain, Zhiqiang Zuo, Guoqing
+(Harry) Xu, and Ardalan Amiri Sani,    
+
+   ASPLOS'17: 20th International Conference on
+Architectural Support for Programming Languages and Operating Systems,       
+
+  [Slides]    
+
+       
+
+  
+
+   
+
+   People     
+
+         
+
+    o          Kai Wang       
+
+    o         Aftab Hussain        
+
+   o   
+     Zhiqiang Zuo       
+
+   o   
+    Sanaz Alamian      
+
+   o   
+     Harry Xu     
+
+  
+
+   
+
+   Software     
+
+         
+
+  To be added.    
+
+  
+
+   
+
+   Support       
+
+         
+
+  This research is funded in part by NSF under grants CNS-1321179,
+CCF-140982, and CNS-1613023, and by ONR under grants  N00014-14-1-0549
+and N00014-16-1-2913.     
+
+  
+
+   
+
+    main page 
+         
+
+ 
+
+</body> 

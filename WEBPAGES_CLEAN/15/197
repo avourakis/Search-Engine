@@ -1,0 +1,107 @@
+ 
+Ian G. Harris, Projects
+<body>
+
+ 
+   
+        Ian G. Harris  
+       Associate Professor, Department of Computer Science  
+       University of California Irvine  
+  
+  
+ 
+
+
+
+ 
+
+ 
+       Home    
+        Publications    
+        Courses    
+        Projects    
+        Contact    
+  
+
+ 
+
+  
+Short descriptions of some of our current projects.
+   
+  
+ 
+Hardware Assisted Host-based Intrusion Detection
+ 
+
+ 
+We are investigating a technique to implement host-based intrusion
+detection (HIDS) in hardware so that attacks can be detected as soon
+as their behavior deviates from correct system behavior. Our system
+is anomaly-based; a model of the correct system behavior is generated
+at compile-time and any deviations from the correct behavior must
+indicate an attack. We characterize correct system behavior as a finite state machine which accepts all legal system call sequences.
+ 
+
+ 
+  
+
+ 
+The execution of system calls is detected in hardware ( Syscall
+Detector</strong>) by examining the instruction at each clock cycle,
+and the contents of specific internal registers. The legal system call
+sequences are captured in as a finite state machine which is
+implemented in hardware ( Syscall Sequence Recognizer</strong>).
+ 
+
+ 
+  
+
+ 
+In this way, the execution of an illegal call sequence can be detected
+a single clock cycle after it occurs.
+ 
+
+
+
+
+ 
+Directed-Random Security Testing of Network Applications
+ 
+
+ 
+We propose a new directed-random fuzzing system which applies static
+analysis of the target source code to generate fuzzing constraints to
+rapidly expose vulnerabilities. Constraints are identified which will increase the execution frequency of potential vulnerabilities. 
+ 
+
+ 
+  
+
+ 
+Networked applications, which receive network messages as input and respond to those messages, are the most common source of software security vulnerabilities because they are directly exposed to attack via the internet. Networked applications have the property that a large part of their code execution depends directly on the values of fields of the network messages received as input. For example, the behavior of an HTTP server will depend on the request method and header fields, and a TFTP server will depend on the opcode and mode fields. We analyze the source code of the networked application to identify these dependencies and use them to constrain test generation.
+ 
+
+
+
+
+
+ 
+Specification-based Hardware Verification
+ 
+
+ 
+Misunderanding the specification is a significant source of design errors. Detection of these errors requires that tests be generated directly from the specification, in order to identify differences between the specification and the implementation. Transaction Level Models (TLMs) are used to abstractly describe system behavior as a set of functions which encapsulate details of function and communication. TLMs are the most abstract formal description of the specification which we use to generate specification-based test sequences.
+ 
+
+ 
+  
+
+ 
+Transactions describe sequences of input events which trigger a behavior in the correct system. The behavior of a design with a specification-based error would match that of a mutated transaction. We generate tests by mutating existing transactions to create tests which will differentiate teh behavior of correct and erroneous designs.
+ 
+
+   
+
+  
+
+ </body> 

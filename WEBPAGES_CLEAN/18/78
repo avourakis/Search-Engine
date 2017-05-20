@@ -1,0 +1,530 @@
+ 
+PeerViewBrowser
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY:  NESTED  |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.GUI 
+ 
+Class PeerViewBrowser 
+ 
+java.lang.Object
+   java.awt.Component
+       java.awt.Container
+           javax.swing.JComponent
+               javax.swing.JPanel
+                    Raccoon.GUI.PeerViewBrowser 
+ 
+   All Implemented Interfaces:    javax.accessibility.Accessible, java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable 
+    public class  PeerViewBrowser  extends javax.swing.JPanel    
+   PeerViewBrowser:  Sets up the basic visual elements of the
+  TouchGraph LinkBrowser.  Can be run as a stand alone executable, or
+  an applet.  When run as an executable, editing functionality is enabled.
+  The applet only allows for browsing the graphs.
+  
+  BrowserLauncher is the open source browser launcher used by the TouchGraph LinkBrowser
+  Copyright 1999-2001 by Eric Albert (ejalbert@cs.stanford.edu)
+  http://browserlauncher.sourceforge.net/
+  
+
+  
+    Version:  
+   1.20
+
+
+  Modified By Qi Zhong to fit into Raccoon Project at UCI. 
+  Author:  
+   Alexander Shapiro, Qi Zhong 
+  See Also:    Serialized Form     
+
+
+  
+     
+ Nested Class Summary   
+  
+   
+    Nested classes inherited from class javax.swing.JComponent  
+    javax.swing.JComponent.AccessibleJComponent  
+  
+ 
+
+
+  
+    
+ Field Summary   
+    
+  com.touchgraph.graphlayout.interaction.HVScroll   
+    hvScroll   
+
+ 
+            
+    
+  javax.swing.JPopupMenu   
+    lbPopup   
+
+ 
+            
+    
+  com.touchgraph.graphlayout.interaction.LocalityScroll   
+    localityScroll   
+
+ 
+            
+    
+  com.touchgraph.graphlayout.interaction.RotateScroll   
+    rotateScroll   
+
+ 
+            
+    
+  javax.swing.JSplitPane   
+    splitPane   
+
+ 
+            
+    
+  com.touchgraph.graphlayout.interaction.ZoomScroll   
+    zoomScroll   
+
+ 
+            
+  
+   
+    Fields inherited from class javax.swing.JComponent  
+    TOOL_TIP_TEXT_KEY, UNDEFINED_CONDITION, WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, WHEN_FOCUSED, WHEN_IN_FOCUSED_WINDOW  
+  
+   
+    Fields inherited from class java.awt.Component  
+    BOTTOM_ALIGNMENT, CENTER_ALIGNMENT, LEFT_ALIGNMENT, RIGHT_ALIGNMENT, TOP_ALIGNMENT  
+  
+   
+    Fields inherited from interface java.awt.image.ImageObserver  
+    ABORT, ALLBITS, ERROR, FRAMEBITS, HEIGHT, PROPERTIES, SOMEBITS, WIDTH  
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      PeerViewBrowser  () 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JApplet a) 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JApplet app,
+                 ResourceManager  newRM,
+                 SearchEngine  newSE,
+                 QueryEngine  newQE) 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JFrame f) 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JFrame f,
+                 PVNode  node) 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JFrame f,
+                 ResourceManager  newRM,
+                 SearchEngine  newSE,
+                 QueryEngine  newQE) 
+
+ 
+            
+      PeerViewBrowser  (javax.swing.JFrame f,
+                java.lang.String fileName) 
+
+ 
+            
+      PeerViewBrowser  ( ResourceManager  rm) 
+
+ 
+          We set the complet set in PeerViewBrowser and ResourceManager to be the same one 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  javax.swing.JMenuBar   
+    addMainMenuBar  () 
+
+ 
+            
+    
+  void   
+    appletStart  () 
+
+ 
+            
+    
+  void   
+    frameStart  () 
+
+ 
+            
+    
+  java.net.URL   
+    getDocumentBase  () 
+
+ 
+            
+    
+  javax.swing.JPanel   
+    getInfoPanel  () 
+
+ 
+            
+    
+   PVNode    
+    getMyNode  () 
+
+ 
+            
+    
+   ResourceManager    
+    getRM  () 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.TGPanel   
+    getTGPanel  () 
+
+ 
+            
+    
+  void   
+    initSplitPane  () 
+
+ 
+            
+    
+ static void   
+    main  (java.lang.String[] args) 
+
+ 
+            
+    
+  void   
+    processHintURL  (java.net.URL url) 
+
+ 
+          Called by LBNodeHintUI when the user clicks a link. 
+    
+  void   
+    setLocale  (java.lang.String nodeName,
+          int radius) 
+
+ 
+            
+    
+   QueryEngine    
+    setQE  () 
+
+ 
+            
+    
+  void   
+    setQE  ( QueryEngine  newQE) 
+
+ 
+            
+    
+  void   
+    setRM  ( ResourceManager  newRM) 
+
+ 
+            
+    
+   SearchEngine    
+    setSE  () 
+
+ 
+            
+    
+  void   
+    setSE  ( SearchEngine  newSE) 
+
+ 
+            
+    
+ static void   
+    start  ( PVNode  node) 
+
+ 
+            
+  
+   
+    Methods inherited from class javax.swing.JPanel  
+    getAccessibleContext, getUI, getUIClassID, setUI, updateUI  
+  
+   
+    Methods inherited from class javax.swing.JComponent  
+    addAncestorListener, addNotify, addPropertyChangeListener, addPropertyChangeListener, addVetoableChangeListener, computeVisibleRect, contains, createToolTip, disable, enable, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, getActionForKeyStroke, getActionMap, getAlignmentX, getAlignmentY, getAncestorListeners, getAutoscrolls, getBorder, getBounds, getClientProperty, getConditionForKeyStroke, getDebugGraphicsOptions, getDefaultLocale, getGraphics, getHeight, getInputMap, getInputMap, getInputVerifier, getInsets, getInsets, getListeners, getLocation, getMaximumSize, getMinimumSize, getNextFocusableComponent, getPreferredSize, getPropertyChangeListeners, getPropertyChangeListeners, getRegisteredKeyStrokes, getRootPane, getSize, getToolTipLocation, getToolTipText, getToolTipText, getTopLevelAncestor, getTransferHandler, getVerifyInputWhenFocusTarget, getVetoableChangeListeners, getVisibleRect, getWidth, getX, getY, grabFocus, isDoubleBuffered, isLightweightComponent, isManagingFocus, isMaximumSizeSet, isMinimumSizeSet, isOpaque, isOptimizedDrawingEnabled, isPaintingTile, isPreferredSizeSet, isRequestFocusEnabled, isValidateRoot, paint, paintImmediately, paintImmediately, print, printAll, putClientProperty, registerKeyboardAction, registerKeyboardAction, removeAncestorListener, removeNotify, removePropertyChangeListener, removePropertyChangeListener, removeVetoableChangeListener, repaint, repaint, requestDefaultFocus, requestFocus, requestFocus, requestFocusInWindow, resetKeyboardActions, reshape, revalidate, scrollRectToVisible, setActionMap, setAlignmentX, setAlignmentY, setAutoscrolls, setBackground, setBorder, setDebugGraphicsOptions, setDefaultLocale, setDoubleBuffered, setEnabled, setFont, setForeground, setInputMap, setInputVerifier, setMaximumSize, setMinimumSize, setNextFocusableComponent, setOpaque, setPreferredSize, setRequestFocusEnabled, setToolTipText, setTransferHandler, setVerifyInputWhenFocusTarget, setVisible, unregisterKeyboardAction, update  
+  
+   
+    Methods inherited from class java.awt.Container  
+    add, add, add, add, add, addContainerListener, applyComponentOrientation, areFocusTraversalKeysSet, countComponents, deliverEvent, doLayout, findComponentAt, findComponentAt, getComponent, getComponentAt, getComponentAt, getComponentCount, getComponents, getContainerListeners, getFocusTraversalKeys, getFocusTraversalPolicy, getLayout, insets, invalidate, isAncestorOf, isFocusCycleRoot, isFocusCycleRoot, isFocusTraversalPolicySet, layout, list, list, locate, minimumSize, paintComponents, preferredSize, printComponents, remove, remove, removeAll, removeContainerListener, setFocusCycleRoot, setFocusTraversalKeys, setFocusTraversalPolicy, setLayout, transferFocusBackward, transferFocusDownCycle, validate  
+  
+   
+    Methods inherited from class java.awt.Component  
+    action, add, addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener, addInputMethodListener, addKeyListener, addMouseListener, addMouseMotionListener, addMouseWheelListener, bounds, checkImage, checkImage, contains, createImage, createImage, createVolatileImage, createVolatileImage, dispatchEvent, enable, enableInputMethods, getBackground, getBounds, getColorModel, getComponentListeners, getComponentOrientation, getCursor, getDropTarget, getFocusCycleRootAncestor, getFocusListeners, getFocusTraversalKeysEnabled, getFont, getFontMetrics, getForeground, getGraphicsConfiguration, getHierarchyBoundsListeners, getHierarchyListeners, getIgnoreRepaint, getInputContext, getInputMethodListeners, getInputMethodRequests, getKeyListeners, getLocale, getLocation, getLocationOnScreen, getMouseListeners, getMouseMotionListeners, getMouseWheelListeners, getName, getParent, getPeer, getSize, getToolkit, getTreeLock, gotFocus, handleEvent, hasFocus, hide, imageUpdate, inside, isBackgroundSet, isCursorSet, isDisplayable, isEnabled, isFocusable, isFocusOwner, isFocusTraversable, isFontSet, isForegroundSet, isLightweight, isShowing, isValid, isVisible, keyDown, keyUp, list, list, list, location, lostFocus, mouseDown, mouseDrag, mouseEnter, mouseExit, mouseMove, mouseUp, move, nextFocus, paintAll, postEvent, prepareImage, prepareImage, remove, removeComponentListener, removeFocusListener, removeHierarchyBoundsListener, removeHierarchyListener, removeInputMethodListener, removeKeyListener, removeMouseListener, removeMouseMotionListener, removeMouseWheelListener, repaint, repaint, repaint, resize, resize, setBounds, setBounds, setComponentOrientation, setCursor, setDropTarget, setFocusable, setFocusTraversalKeysEnabled, setIgnoreRepaint, setLocale, setLocation, setLocation, setName, setSize, setSize, show, show, size, toString, transferFocus, transferFocusUpCycle  
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+splitPane 
+ 
+public javax.swing.JSplitPane  splitPane  
+        
+hvScroll 
+ 
+public com.touchgraph.graphlayout.interaction.HVScroll  hvScroll  
+        
+zoomScroll 
+ 
+public com.touchgraph.graphlayout.interaction.ZoomScroll  zoomScroll  
+        
+localityScroll 
+ 
+public com.touchgraph.graphlayout.interaction.LocalityScroll  localityScroll  
+        
+rotateScroll 
+ 
+public com.touchgraph.graphlayout.interaction.RotateScroll  rotateScroll  
+        
+lbPopup 
+ 
+public javax.swing.JPopupMenu  lbPopup  
+      
+    
+ Constructor Detail   
+     
+PeerViewBrowser 
+ 
+public  PeerViewBrowser () 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser ( ResourceManager  rm) 
+  We set the complet set in PeerViewBrowser and ResourceManager to be the same one
+ 
+       
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JApplet a) 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JFrame f) 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JFrame f,
+                       java.lang.String fileName) 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JFrame f,
+                        PVNode  node) 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JFrame f,
+                        ResourceManager  newRM,
+                        SearchEngine  newSE,
+                        QueryEngine  newQE) 
+      
+PeerViewBrowser 
+ 
+public  PeerViewBrowser (javax.swing.JApplet app,
+                        ResourceManager  newRM,
+                        SearchEngine  newSE,
+                        QueryEngine  newQE) 
+    
+    
+ Method Detail   
+     
+getTGPanel 
+ 
+public com.touchgraph.graphlayout.TGPanel  getTGPanel () 
+     
+     
+getDocumentBase 
+ 
+public java.net.URL  getDocumentBase () 
+     
+     
+setLocale 
+ 
+public void  setLocale (java.lang.String nodeName,
+                      int radius) 
+     
+     
+processHintURL 
+ 
+public void  processHintURL (java.net.URL url) 
+  Called by LBNodeHintUI when the user clicks a link.
+ 
+     
+      
+addMainMenuBar 
+ 
+public javax.swing.JMenuBar  addMainMenuBar () 
+     
+     
+main 
+ 
+public static void  main (java.lang.String[] args) 
+     
+     
+initSplitPane 
+ 
+public void  initSplitPane () 
+     
+     
+frameStart 
+ 
+public void  frameStart () 
+     
+     
+appletStart 
+ 
+public void  appletStart () 
+     
+     
+start 
+ 
+public static void  start ( PVNode  node) 
+     
+     
+setRM 
+ 
+public void  setRM ( ResourceManager  newRM) 
+     
+     
+setSE 
+ 
+public void  setSE ( SearchEngine  newSE) 
+     
+     
+setQE 
+ 
+public void  setQE ( QueryEngine  newQE) 
+     
+     
+getRM 
+ 
+public  ResourceManager   getRM () 
+     
+     
+setSE 
+ 
+public  SearchEngine   setSE () 
+     
+     
+setQE 
+ 
+public  QueryEngine   setQE () 
+     
+     
+getInfoPanel 
+ 
+public javax.swing.JPanel  getInfoPanel () 
+     
+     
+getMyNode 
+ 
+public  PVNode   getMyNode () 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY:  NESTED  |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

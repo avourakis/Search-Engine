@@ -1,0 +1,151 @@
+ Peer-to-Peer Information Dissemination During Disasters<body>
+
+ 
+ 
+Research
+ 
+ 
+
+ 
+ 
+  Home  
+ 
+ 
+  Research  
+ 
+ 
+  Software  
+ 
+ 
+  Publications  
+ 
+ 
+  Industry  
+ 
+ 
+  Resume  
+ 
+ 
+  Flashback!  
+ 
+ 
+
+ 
+ Peer-to-Peer Flash Dissemination 
+  
+ 
+
+  "Flash"   has many meanings but
+I use it in two specific ways:    (1) Noun : A brief news dispatch or transmission   and as an
+   (2) Adverb   : Happening suddenly or very quickly.
+ 
+Thus, as applied to flash dissemination, it means dissemination of a relatively small
+amount of data very quickly.  What is small is relative, but in my research, I consider
+anything less than 25MB as small.  This is in comparison to 'large' files such as movies and
+OS-distros that are hundreds of MBs of GBs in size.
+   Why is Flash Dissemination (FD) useful and where can it be applied? 
+  
+When you think about it (and you can verify this), close to 90% of files (even excluding system files)
+sitting on your computer are small files (in terms of numbers). Thus, most information that people generate
+and store is in small files. Even cell phone generated video clips (which are becoming increasingly prevelant) are
+small files (less than 10 MB); so are YouTube clips. And when a piece of information becomes
+suddenly popular, you have to handle its distribution scalably. The premise of my thesis is that the optimizations
+and the systems you need for scalably disseminating small files require a different approach and different set of
+optimizations as compared to large file content distribution (aka BitTorrent, Joost, etc.).
+
+  
+In my PhD research, I've demonstarted two uses for FD. In one appplication,
+  RapID (PDF file warning)   distributes
+  Earthquake ShakeMaps  
+to emergency response organizations extremely fast. In experiments run on a
+  Internet Emulator  , we show that RapID
+can disseminate shakemaps (of 200KBs) almost twice as fast as any other system currently
+available.
+ 
+In another application,   Flashback   (
+  research paper  ), we show another reason why distributing
+small content fast is a unique and interesting problem. Again, Flashback performs much better than simply
+adapting a large content distribution protocol (e.g. BitTorrent) for the purpose.
+    How do I believe your numbers (aka, show me the money)?  
+ 
+To make our numbers as convincing as possible we built an   Internet Testbed  
+which we call COIE (for   Crisis on Infinite Earths  
+or Cluster Of Ibm E-servers) using   Modelnet  . The testbed was built on a
+cluster of 15 IBM e-server nodes running Debian and
+  SystemImager  . This testbed
+is capable of real-time emulation of upto 200 virtual internet hosts and one can even individually
+set each virtual node's bandwidth and also inter-node latency.
+ 
+We build real systems and compare them to other real deployed systems on this testbed.  As far as numbers go,
+we feel this is as close as you can get without actually deploying your system on the wide-area internet.  Of course,
+the final proof of the pudding will be in real-world deployment.  We are currently readying Flashback for such a deployment.
+You can help us in visiting the   Flashback web-page   and giving it a try
+and letting us know how it worked for you.
+   
+
+
+ Dynamicity in P2P Networks 
+ 
+From a science perspective, I'm also extremely curious about the fundamental
+properties and characteristics of P2P networks and their relation to other types
+of networks such as ecological, social and technological (WWW, router-network). The
+physics modeling of these networks is another topic that I try to follow to the
+best of my understanding :)
+ 
+In a small study, I investigated how different networks evolve over time.
+using well-known models of network formation such as random graphs and
+power-law graphs. My primary focus was on P2P overlay networks but the results
+that emerged showed that resulting networks are also sometimes observed in nature.
+ 
+With regards to P2P overlays, the main conclusion that emerged is that, it is better
+to design network protocols that do not implicitly
+or explicitly encourage power-law (or rich get richer) behavior.
+The link to this paper can be found   here  .
+ 
+   Middleware Design and Implementation 
+  
+ 
+Previously, I've been involved in enhancing scalability of CORBA middleware part of the
+  DOC Group   led by
+Prof. Douglas Schmidt.
+ 
+I co-designed and implemented the first server-side Asynchronous Method Handling (AMH)
+mechanism for CORBA middleware in
+  TAO  
+AMH solves the problem of stack-blowup on server-side due to large number of long-standing
+requests on middle-tier servers. The solution involved explicitly encapsulating each server
+request into a heap-stored object that freed up stack-space of the server-thread while
+also allowing it to do other work. AMH improves throughput of middle-servers by over
+10% as compared to other traditional synchronous threading designs.
+ 
+Implementation involved designing a new specification for CORBA server-side, changes to the IDL-compiler,
+and the ORB-core of TAO, an industry-strength CORBA middleware that is over 100K lines of C++ code.
+ 
+
+
+ 
+
+ 
+  Current Work 
+ 
+  Flashback  
+ 
+
+  Past Work  
+ 
+ AMH 
+  ZEN 
+  
+
+  Interesting Stuff  
+ 
+ Building and Testing the Next Killer P2P App 
+   How Many Servers Does Google Have? 
+ 
+ 
+
+
+ 
+     HTML  •  CSS  •  508  
+
+  </body> 

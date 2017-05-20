@@ -1,0 +1,174 @@
+ ICS 32 Winter 2017, Notes and Examples: Paths and File Systems<body>
+
+ 
+
+ 
+ICS 32 Winter 2017 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 32 Winter 2017 
+   Notes and Examples: Paths and File Systems 
+
+ 
+
+ 
+
+  What is a file system? 
+
+ If you've ever used a personal computer — a desktop machine or a laptop, for example — there's a good chance that you've interacted with a  file system , even if you've never heard the term before.  A file system is software that manages how information is stored on a storage device such as a hard drive or a USB stick.  There are a number of different kinds of file systems in use — sometimes more than one kind on the same operating system! — but they mostly share the same basic characteristics, while differing mainly in the fine-grained details.  So if you know about those shared characteristics, you'll quickly find yourself at home using just about any file system on just about any operating system. 
+
+ The basic abstraction in a file system is that of a  file .  A file is a container in which a sequence of  bytes  is stored.  Each byte is effectively a sequence of eight "digits" that are either 1 or 0; each of these digits is called a  bit .  The bytes in each file are interpreted differently depending on what kind of file it is, and it should be noted that this is largely a matter of what the program reading the file expects that it should contain (e.g., text, an image, a song); the file system itself is mostly unconcerned with what's in each file, except for the  metadata  associated with the file, which keeps track of things like who owns the file, who has access to the file, and when the file was last modified.  The file system manages the containers in which the bytes are stored, but cares little about the bytes inside of each file, other than to make sure that a file's contents don't change unless you ask for them to be changed. 
+
+ 
+
+ 
+
+  Paths 
+
+ You've no doubt seen before that each file on a file system has a name, which we quite often call its  filename ; the filename is one piece of metadata associated with each file.  But there's more to identifying a file than its name.  Because there are so many files stored on a typical file system — as I was writing this originally, I asked Windows to count how many files are stored on my laptop and found that the answer was about 700,000! — there needs to be some way to keep them all organized, so we can find files not only by their names, but by some other sort of categorization.  While operating systems are gradually adding progressively better search capabilities, there is still an underlying reality that hasn't changed much in the last few decades: File systems are quite often a  hierarchy  of directories, with each directory containing both files and other directories.  So, if we want to uniquely identify a file on our storage devices, we have to specify not only the file's name, but also where the file is stored in that hierarchy; without knowing more about the location of the file, the file system won't easily be able to find it. The location of a file is identified uniquely using a  path . 
+
+ Different operating systems use different conventions for paths, the most common two of which are these: 
+
+  Windows stores each file on a  drive  (e.g., a hard drive or a USB storage device) identified by an uppercase letter.  Quite commonly, a Windows machine's "main" drive (the one where the operating system is stored) will be known as C (for historical reasons that aren't all that interesting anymore), and others will have the letters D, E, and so on.  On each drive is a  root directory , which can contain files and other directories; those directories can contain files and other directories; and so on.  A path on Windows specifies the drive letter, the directory within the root directory that contains the file, the directory within that directory that contains the file, and so on.  The drive letter is followed by a colon and the directories are separated by backslashes, leading to a path like the example below:
+       D:\Examples\32\data\myfile.txt  
+      
+   Unix-based operating systems, which include Mac OS X and various flavors of Linux, use what are sometimes called  POSIX-style paths , which eschew the notion of a drive letter, and instead map certain directories to individual devices behind the scenes.  As on Windows, directories contain files and other directories, which contain files and other directories, and so on.  Unlike of Windows, a forward slash is used (instead of a backslash) to separate one directory from another.  This leads to paths that look like the example below:
+       /home/thornton/Examples/32/data/myfile.txt  
+      
+  The complexities of these rules aside, the important thing to realize is that there are slightly different rules on different operating systems, though the ideas are similar on all of them: that directories form a recursive hierarchy (directories containing other directories, which contain other directories) is fairly standard — even mobile operating systems like Android and iOS have this notion, albeit more or less invisible to users — and the differences are mainly minor details.  Still, if we want to write Python programs that work with file systems correctly regardless of operating system, as you're doing in  Project #1 , you're best off using the right kinds of tools for the job, so that you won't find yourself making assumptions (such as the character that separates directories in a path) that are correct on one operating system and wrong on another. 
+
+ 
+
+ 
+
+  Finding what you need in the Python Standard Library 
+
+ Python is not just a programming language.  When you install Python, you also get the  Python Standard Library , which is a large collection of pre-built components that solve a wide variety of commonly-occurring real-world programming problems, so that you won't have to.  We've talked before about the benefits of using a library that already exists, especially one that's been in use for a long time by a large number of people.  But, as a practical matter, there is a still a problem to be dealt with.  When you have a problem to solve, how do you know whether the Python Standard Library solves it?  And how do you find the right component to use? 
+
+ Of course, one way to solve that problem is simply to use an Internet search engine and poke around online to see what information you can find.  This is a fine approach sometimes, but what you'll find is that you have to develop a sense of what information is believable and reasonable, and what information isn't.  You also have to be wary of when advice is correct but inapplicable, such as someone offering details of Python 2 — an older version of Python that is nonetheless still used quite widely — when you're using Python 3. 
+
+ But I would suggest not giving in to the Google urge immediately.  Especially when you're first learning, there's value in spending a little time hunting for your own solutions to problems.  You tend to find solutions not only to the problem you have now, but to five related problems you don't realize you have yet.  You begin to develop a sense for what kinds of things you would find in the Standard Library, and notice commonalities in the way those components are designed, which can help you write better code yourself.  Learning the "lay of the land" in computing takes time, and there's no short-circuiting that process.  When you talk to people that seem to have these things all figured out already, you don't realize just how much time those people have put into learning their craft.  Don't worry; you'll get to that point, too, but you'll have to put in that time. 
+
+ So I suggest starting by taking a look through the Python Standard Library.  Go to the front page of the library documentation, which you'll find here: 
+
+   Python 3.6 Standard Library  
+  Look through the table of contents.  Don't feel like you have to memorize everything you see, and don't worry if many of the terms are things you don't recognize.  If you see things that you're curious about and you're not in a huge hurry, satisfy your curiosity and take a quick look at them; in so doing, you'll find yourself learning all kinds of terms that you haven't heard before.  But, fundamentally, what you're looking for are things that can help you with the particular problem you have.  So, for example, if you're looking for components that might help you deal with files, filenames, paths, and the like, then see which modules in the Python Standard Library sound like they might apply.  (Go ahead.  Check some of them out now!  I'll wait...) 
+
+ There are several modules in the Python Standard Library that should stand out as you look through the list.  One whole section of the library contains tools used for  File and Directory Access , which sounds like it should definitely have something to do with the problem at hand.  You might also notice a section of the table of contents titled  Generic Operating System Services , too, which might contain useful tools, since file systems are part of the operating system. 
+
+ 
+
+ 
+
+  Manipulating paths using Python's pathlib 
+
+ Having taken a look through the Python Standard Library, you should have noticed a library called  pathlib , whose documentation is linked below: 
+
+   Python 3.6  pathlib  documentation  
+  Take a quick look through that documentation, again focusing on getting a broad idea of what's there and what it can do.  Don't worry if you don't understand everything you're seeing, and don't worry if you feel like a fish out of water because you've never read documentation like this before.  See what things resonate and just get a broad mental picture of what's available.  Then you can use the Python interpreter to experiment with it to find out more about how it works. 
+
+ Creating a Path object 
+
+ Path objects represent paths on a file system.  They aren't files and they aren't strings; they're paths, which means they are explicitly intended to represent the way that a file system keeps track of where a file is.  Since there are substantial commonalities between different kinds of file systems, there can be one kind of object that represents those commonalities.  (Interestingly, there are also ways to represent the differences, as we'll see.  Path objects handle all of those details, so you won't have to.) 
+
+ In a Python interpreter, you first need to import the  pathlib  module and, specifically, it helps to import the  Path  type from it, which you can do like this: 
+
+  
+&gt;&gt;&gt;  from  pathlib  import  Path
+  
+
+ Now, anytime you use the word Path, you're specifically asking for the  Path  type in the  pathlib  library.  Having imported it, you can now create objects of the  Path  type. 
+
+  
+&gt;&gt;&gt; p = Path('D:\\Examples\\data')
+&gt;&gt;&gt; p
+WindowsPath('D:/Examples/data')
+  
+
+ Did you notice what happened when we showed the value of  p  in the interpreter?  Its type appears to have changed!  What we created was a  Path  object, but its type is something else called a  WindowsPath ! 
+
+  
+&gt;&gt;&gt;  type (p)
+&lt;class 'pathlib.WindowsPath'&gt;
+  
+
+ So what happened?  The answer is that creating a  Path  object automatically gives you the right  kind  of  Path  object depending on what operating system you're running.  I ran this example on Windows, which is why I got a  WindowsPath ; if, instead, you did the same thing on Mac OS X or another operating system that uses POSIX-style paths, you'd get a  PosixPath  object instead. 
+
+ Another minor detail to note is that our backslashes got turned into forward slashes.  That's mainly because the various  Path  types endeavor to hide as many of the differences between file systems as possible; internally, when we use  Path  object to get out to the actual file system, they do the right thing in the right circumstance automatically. 
+
+ What can you do with Path objects? 
+
+ There are all kinds of useful things you can do with  Path  objects.  This isn't an exhaustive list, but the examples below should give you an idea of what's available and how to use them. 
+
+ When you manipulate paths, you often find yourself combining them together.  That's easily done using the  Path  type; the  /  operator, when used between two  Path s, combines the two paths together into a single one. 
+
+  
+&gt;&gt;&gt; p = Path('D:\\Examples\\data')
+&gt;&gt;&gt; q = p / Path('myfile.txt')
+&gt;&gt;&gt; q
+WindowsPath('D:/Examples/data/myfile.txt')
+  
+
+ If you want to know if a  Path  object represents something that actually exists on your hard drive, you could just ask it: 
+
+  
+&gt;&gt;&gt; p.exists()
+True
+  
+
+ If you want to know if it's a directory or a file, you can ask it those things, as well. 
+
+  
+&gt;&gt;&gt; p.is_file()
+False
+&gt;&gt;&gt; p.is_dir()
+True
+  
+
+ If it's a file, you might like to open it; that's supported, too.  Opening a  Path  is a lot like the built-in  open  function you've probably seen previously, except that it doesn't need a parameter specifying the location of the file, since the  Path  acts as that location already. 
+
+  
+&gt;&gt;&gt; f = q.open('r')
+&gt;&gt;&gt; f.readlines()
+['Alex\n', 'is\n', 'happy\n', 'today']
+&gt;&gt;&gt; f.close()
+  
+
+ If it's a directory, you might like to know what's in it.  A method called  iterdir  can tell you the answer to that, though there's one wrinkle: it returns something called a  generator  (which is a story for ICS 33), but you can easily turn a generator into a list by simply calling the built-in function  list . 
+
+  
+&gt;&gt;&gt;  list (p.iterdir())
+[WindowsPath('D:/Examples/data/myfile.txt'), WindowsPath('D:/Examples/data/test.txt')]
+  
+
+ Or you could iterate through the result with a  for  loop, rather than making a list out of it: 
+
+  
+&gt;&gt;&gt;  for  x  in  p.iterdir():
+       print(x)
+
+D:\Examples\data\myfile.txt
+D:\Examples\data\test.txt
+  
+
+ There are lots of other things you can do with  Path  objects — get a filename, get a filename's extension, get a path's "parent", and so on — and I'd encourage you to take a look through the documentation to see what's available. 
+
+ Why use  pathlib  and not  os.path ? 
+
+ The  pathlib  library is a relatively recent addition to the Python Standard Library, having been added in version 3.4.  Prior to that, there was a library — which still exists, but is a lot less useful — called  os.path , which provides functions that manipulate strings instead of  Path  objects, but still hide some of the details between file systems, such as combining them with the right kinds of slashes depending on what operating system you're using. 
+
+ But using strings and manipulating them with  os.path  nonetheless leaves you with a lot of room to make mistakes.  Strings are simply text; you can store any text you want in a string, whether it's a valid path or not.  So you're better off using a tool that was built for the job at hand: when you want to manipulate paths, use the  pathlib  library. 
+
+ 
+
+</body> 

@@ -1,0 +1,482 @@
+ OEChem - API Manual Version 1.3.1<body>
+ 
+     
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Up:   OpenEye Documentation 
+ Next:   Front Matter 
+   
+
+
+ 
+ 
+ OEChem - API Manual
+ 
+Version 1.3.1 
+   OpenEye Scientific Software, Inc.   
+ 
+3600 Cerrillos Road, Suite 1107
+ 
+Santa Fe, NM 87507
+ 
+www.eyesopen.com
+ 
+support@eyesopen.com
+ 
+  July 30, 2004</strong> 
+ 
+  
+ 
+
+ 
+
+  
+
+      
+
+     Front Matter 
+     Contents 
+   1. Introduction 
+   2. C++ Compilers and Platforms 
+   2.1 Native Compilers 
+   2.2 GNU C/C++ Compilers 
+   2.3 Third Party Compilers 
+       1 OEChem Library 
+   3. OEChem Classes and Member Functions 
+   3.1 OEAtomBase 
+   3.2 OEBondBase 
+   3.3 OECartesianToInternal 
+   3.4 OECliqueSearch 
+   3.5 OEConfBase 
+   3.6 OEConfBaseT 
+   3.7 OEConfTest 
+   3.8 OEEuler 
+   3.9 OEExprBase 
+   3.10 OEFuzzy 
+   3.11 OEInternalToCartesian 
+   3.12 OELibaryGen 
+   3.13 OEMatch 
+   3.14 OEMatchBase 
+   3.15 OEMatchPair 
+   3.16 OEMCMolBase 
+   3.17 OEMCMolBaseT 
+   3.18 OEMCSFunc 
+   3.19 OEMCSMaxAtoms 
+   3.20 OEMCSMaxBonds 
+   3.21 OEMCSMaxAtomsCompleteCycles 
+   3.22 OEMCSSearch 
+   3.23 OEMol 
+   3.24 OEMolBase 
+   3.25 oemolistream 
+   3.26 oemolostream 
+   3.27 OEQAtomBase 
+   3.28 OEQBase 
+   3.29 OEQBondBase 
+   3.30 OEQMol 
+   3.31 OEQMolBase 
+   3.32 OEQuaternion 
+   3.33 OERotMatrix 
+   3.34 OEResidue 
+   3.35 OESubSearch 
+   3.36 OETrans 
+   3.37 OETransBase 
+   3.38 OETranslation 
+   3.39 OEUniMolecularRxn 
+   3.40 OEVectorBindings 
+     4. OEChem Functions 
+   4.1 OE3DToAtomStereo 
+   4.2 OE3DToBondStereo 
+   4.3 OE3DToInternalStereo 
+   4.4 OEAddExplicitHydrogens 
+   4.5 OEAddMols 
+   4.6 OEAssignAromaticFlags 
+   4.7 OEAssignFormalCharges 
+   4.8 OEAssignHybridization 
+   4.9 OEAssignImplicitHydrogens 
+   4.10 OEAssignMDLHydrogens 
+   4.11 OEAssignResidueNumbers 
+   4.12 OEAssignSerialNumbers 
+   4.13 OEAtomGetResidue 
+   4.14 OEAtomGetSmallestRingSize 
+   4.15 OEAtomIsInAromaticRingSize 
+   4.16 OEAtomIsInRingSize 
+   4.17 OEAtomSetResidue 
+   4.18 OEBondGetSmallestRingSize 
+   4.19 OEBondIsInAromaticRingSize 
+   4.20 OEBondIsInRingSize 
+   4.21 OECalcCartesianCoord 
+   4.22 OECalcInternalCoord 
+   4.23 OECalculateMolecularWeight 
+   4.24 OECanonicalOrderAtoms 
+   4.25 OECanonicalOrderBonds 
+   4.26 OEChemGetRelease 
+   4.27 OEChemGetVersion 
+   4.28 OECenter 
+   4.29 OEClearAromaticFlags 
+   4.30 OEClearPartialCharges 
+   4.31 OECreateAbsSmiString 
+   4.32 OECreateCanSmiString 
+   4.33 OECreateIsoSmiString 
+   4.34 OECreateSlnString 
+   4.35 OECreateSmiString 
+   4.36 OEDefaultImplicitHCount 
+   4.37 OEDefaultMDLHCount 
+   4.38 OEDeleteEverythingExceptTheFirstLargestComponent 
+   4.39 OEDetermineComponents 
+   4.40 OEDetermineConnectivity 
+   4.41 OEDetermineRingSystems 
+   4.42 OEEulerRotate 
+   4.43 OEExactGraphMatch 
+   4.44 OEExpandSuperAtoms 
+   4.45 OEFindRingAtomsAndBonds 
+   4.46 OEFormalPartialCharges 
+   4.47 OEGasteigerInitialCharges 
+   4.48 OEGasteigerPartialCharges 
+   4.49 OEGetAbsTorsion 
+   4.50 OEGetAngle 
+   4.51 OEGetAtomicNum 
+   4.52 OEGetAtomicSymbol 
+   4.53 OEGetAutomorphs 
+   4.54 OEGetAverageWeight 
+   4.55 OEGetBondiVdWRadius 
+   4.56 OEGetCovalentRadius 
+   4.57 OEGetDefaultMass 
+   4.58 OEGetDistance 
+   4.59 OEGetDistance2 
+   4.60 OEGetFileExtension 
+   4.61 OEGetFileType 
+   4.62 OEGetFormatString 
+   4.63 OEGetHybridization 
+   4.64 OEGetIsotopicWeight 
+   4.65 OEGetPackedCoords 
+   4.66 OEGetPaulingVdWRadius 
+   4.67 OEGetPDBAtomIndex 
+   4.68 OEGetPDBAtomName 
+   4.69 OEGetPathLength 
+   4.70 OEGetResidueIndex 
+   4.71 OEGetResidueName 
+   4.72 OEGetSmallestSubtree 
+   4.73 OEGetSubtree 
+   4.74 OEGetSubtree 
+   4.75 OEGetTorsion 
+   4.76 OEHasDoubleBond 
+   4.77 OEHasExplicitHydrogens 
+   4.78 OEHasImplicitHydrogens 
+   4.79 OEHasPartialCharges 
+   4.80 OEHasResidue 
+   4.81 OEHasResidues 
+   4.82 OEHasSingleBond 
+   4.83 OEHasTripleBond 
+   4.84 OEIsCommonIsotope 
+   4.85 OEIsReadable 
+   4.86 OEIsWriteable 
+   4.87 OEKekulize 
+   4.88 OEMacroModelAtomTypes 
+   4.89 OEMacroModelAtomTypeNames 
+   4.90 OEMacroModelTypeElement 
+   4.91 OEMacroModelTypeName 
+   4.92 OEMacroModelTypeNames 
+   4.93 OEMDLClearParity 
+   4.94 OEMDLCorrectBondStereo 
+   4.95 OEMDLHasIncorrectBondStereo 
+   4.96 OEMDLHasParity 
+   4.97 OEMDLPerceiveBondStereo 
+   4.98 OEMDLPerceiveParity 
+   4.99 OEMDLStereoFromBondStereo 
+   4.100 OEMDLStereoFromParity 
+   4.101 OEMolecularFormula 
+   4.102 OENetCharge 
+   4.103 OENewMCMolBase 
+   4.104 OENewMolBase 
+   4.105 OENewQMolBase 
+   4.106 OEParseSmarts 
+   4.107 OEParseSmiles 
+   4.108 OEParseSmirks 
+   4.109 OEPDBOrderAtoms 
+   4.110 OEPerceiveBondOrders 
+   4.111 OEPerceiveChiral 
+   4.112 OEPerceiveResidues 
+   4.113 OEPerceiveSymmetry 
+   4.114 OERandomizeTorsions 
+   4.115 OEReadCDXFile 
+   4.116 OEReadFASTAFile 
+   4.117 OEReadMacroModelFile 
+   4.118 OEReadMDLFile 
+   4.119 OEReadMol2File 
+   4.120 OEReadMolecule 
+   4.121 OEReadMOPACFile 
+   4.122 OEReadOldBinary 
+   4.123 OEReadPDBFile 
+   4.124 OEReadXYZFile 
+   4.125 OEResidueHydrogens 
+   4.126 OERMSD 
+   4.127 OERotate 
+   4.128 OESameChain 
+   4.129 OESameResidue 
+   4.130 OEScrambleMolecule 
+   4.131 OESet3DHydrogenGeom 
+   4.132 OESetDimensionFromCoords 
+   4.133 OESetPackedCoords 
+   4.134 OESetTorsion 
+   4.135 OESmilesAtomCount 
+   4.136 OESubsetMol 
+   4.137 OESuppressHydrogens 
+   4.138 OETheFunctionFormerlyKnownAsStripSalts 
+   4.139 OETranslate 
+   4.140 OETriposAtomNames 
+   4.141 OETriposAtomType 
+   4.142 OETriposAtomTypes 
+   4.143 OETriposAtomTypeNames 
+   4.144 OETriposBondTypeNames 
+   4.145 OETriposTypeElement 
+   4.146 OETriposTypeIndex 
+   4.147 OETriposTypeName 
+   4.148 OETriposTypeNames 
+   4.149 OEWriteCDXFile 
+   4.150 OEWriteFASTAFile 
+   4.151 OEWriteMacroModelFile 
+   4.152 OEWriteMDLFile 
+   4.153 OEWriteMOPACInputFile 
+   4.154 OEWriteMol2File 
+   4.155 OEWritePDBFile 
+   4.156 OEWriteMolecule 
+   4.157 OEWriteXYZFile 
+     5. OEChem Functors 
+   5.1 OEHasIdx 
+   5.2 OEHasAtomName 
+   5.3 OEHasChainID 
+   5.4 OEHasResidueNumber 
+   5.5 OEHasFragmentNumber 
+   5.6 OEHasMapIdx 
+   5.7 OEHasAtomicNum 
+   5.8 OEIsRGroup 
+   5.9 OENthAtom 
+   5.10 OEMatchFunc 
+   5.11 OEIsHydrogen 
+   5.12 OEIsHeavy 
+   5.13 OEIsPolar 
+   5.14 OEIsPolarHydrogen 
+   5.15 OEIsCarbon 
+   5.16 OEIsCAlpha 
+   5.17 OEIsNitrogen 
+   5.18 OEIsOxygen 
+   5.19 OEIsHalogen 
+   5.20 OEIsSulfur 
+   5.21 OEIsPhosphorus 
+   5.22 OEIsAromaticAtom 
+   5.23 OEAtomIsInRing 
+   5.24 OEIsChiralAtom 
+   5.25 OEHasAtomStereoSpecified 
+   5.26 OEHasAlphaBetaUnsat 
+   5.27 OEAtomIsInResidue 
+   5.28 OEHasOrder 
+   5.29 OEBondIsInRing 
+   5.30 OEIsRotor 
+   5.31 OEIsChiralBond 
+   5.32 OEHasBondStereoSpecified 
+   5.33 OEIsAromaticBond 
+   5.34 OEGetNbrAtom 
+   5.35 OEPartPred 
+   5.36 OEIsMember 
+   5.37 OEIsMemberPtr 
+     6. OEChem Constants 
+   6.1 OEAroModel Constants 
+     7. OEChem Template Functions 
+   7.1 OECalcInertialTensor 
+   7.2 OESetCoordsToInertialFrame 
+     8. OEChem Namespaces 
+   8.1 OEAroType 
+   8.2 OECounts 
+   8.3 OEElemNo 
+   8.4 OEExprOpts 
+   8.5 OEExprType 
+   8.6 OEFormat 
+   8.7 OEFuzzVal 
+   8.8 OEIFlavor 
+   8.9 OEOFlavor 
+   8.10 OEHybridization 
+   8.11 OEHydrogenMode 
+   8.12 OEMCMolType 
+   8.13 OEMDLOFlag 
+   8.14 OEMModTypes 
+   8.15 OEMolBaseType 
+   8.16 OEMOPACOFlag 
+   8.17 OEPDBAtomName 
+   8.18 OEPDBIFlag 
+   8.19 OEPDBOFlag 
+   8.20 OEProperty 
+   8.21 OEQMolType 
+   8.22 OEResidueIndex 
+   8.23 OERxnRole 
+   8.24 OESmiFlag 
+   8.25 OETriposType 
+       2 OESystem Library 
+   9. OESystem Classes and Member Functions 
+   9.1 OEBase 
+   9.2 OEBaseData 
+   9.3 OEBitVector 
+   9.4 OEContainer 
+   9.5 OEDots 
+   9.6 OEErrorHandler 
+   9.7 OEErrorHandlerImplBase 
+   9.8 OEInterface 
+   9.9 OEParameter 
+   9.10 OERandom 
+   9.11 OEStopWatch 
+     10. OESystem Functions 
+   10.1 OEBitVectorAnd 
+   10.2 OEBitVectorEqual 
+   10.3 OEBitVectorNot 
+   10.4 OEBitVectorOr 
+   10.5 OEBitVectorSub 
+   10.6 OEBitVectorXor 
+   10.7 OEGetTag 
+   10.8 OEHasTag 
+   10.9 OENumberToString 
+   10.10 OEStringJoin 
+   10.11 OEStringLower 
+   10.12 OEStringMatch 
+   10.13 OEStringSimplifyWhiteSpace 
+   10.14 OEStringStripWhiteSpace 
+   10.15 OEStringTokenize 
+   10.16 OEStringTokenizeQuoted 
+   10.17 OEStringToNumber 
+   10.18 OEStringTranslate 
+   10.19 OEStringUpper 
+   10.20 OETanimoto 
+   10.21 StringTo 
+   10.22 ToString 
+   10.23 OEConfigure 
+   10.24 OECheckHelp 
+   10.25 OEParseCommandLine 
+   10.26 OEParseCommandLineLW 
+   10.27 OEWriteSettings 
+     11. OESystem Templates 
+   11.1 OEAnd 
+   11.2 OEGetDataType 
+   11.3 OEIter 
+   11.4 OEIterBase 
+   11.5 OENot 
+   11.6 OEOr 
+   11.7 OETypeId 
+   11.8 OEUnaryFunction 
+   11.9 OEUnaryPredicate 
+   11.10 OEFactory 
+   11.11 OETypedParameter 
+     12. OESystem Globals 
+   12.1 OEThrow 
+       3 OEMath Library 
+   13. OEMath Constants 
+   13.1 Deg2Rad 
+   13.2 Pi 
+   13.3 Pi2 
+   13.4 Rad2Deg 
+     14. OEMath Template Functions 
+   14.1 OEGeom2DAdd 
+   14.2 OEGeom2DAngle 
+   14.3 OEGeom2DCopy 
+   14.4 OEGeom2DDistance 
+   14.5 OEGeom2DDistance2 
+   14.6 OEGeom2DDotProd 
+   14.7 OEGeom2DMidpoint 
+   14.8 OEGeom2DNormalize 
+   14.9 OEGeom2DSubtract 
+   14.10 OEGeom2DScale 
+   14.11 OEGeom3DAbsTorsion 
+   14.12 OEGeom3DAdd 
+   14.13 OEGeom3DAngle 
+   14.14 OEGeom3DAngleCoord 
+   14.15 OEGeom3DCopy 
+   14.16 OEGeom3DCrossProd 
+   14.17 OEGeom3DDistance 
+   14.18 OEGeom3DDistance2 
+   14.19 OEGeom3DDotProd 
+   14.20 OEGeom3DEulerRotate 
+   14.21 OEGeom3DMidpoint 
+   14.22 OEGeom3DNormalize 
+   14.23 OEGeom3DRotate 
+   14.24 OEGeom3DRotVectorToTransform 
+   14.25 OEGeom3DSubtract 
+   14.26 OEGeom3DScale 
+   14.27 OEGeom3DTorsion 
+   14.28 OEGeom3DTranslate 
+   14.29 OEGeom3DVolume 
+   14.30 OEGeom3DPlanarCoord 
+   14.31 OEGeom3DTetraCoord 
+   14.32 OEGeom3DEulerToRotMatrix 
+   14.33 OEGeomQuaternionMultiply 
+   14.34 OEGeomNormalizeQuaternion 
+   14.35 OEGeomGetQuaternionConjugate 
+   14.36 OEGeom3DQuaternionToRotMatrix 
+   14.37 OEGeom3DMatrixMultiply 
+   14.38 OEGeom3DQuaternionRotate 
+   14.39 OEGeom3DUnitQuaternionRotate 
+       4 OEPlatform Library 
+   15. OEPlatform Classes and Member Functions 
+   15.1 OEDirectoryScan 
+   15.2 oeifstream 
+   15.3 oeigzstream 
+   15.4 oeipstream 
+   15.5 oeisstream 
+   15.6 oeistdstream 
+   15.7 oeistream 
+   15.8 oeiwrapperstream 
+   15.9 OEMutex 
+   15.10 OETryMutex 
+   15.11 oeofstream 
+   15.12 oeogzstream 
+   15.13 oeopstream 
+   15.14 oeosstream 
+   15.15 oeostdstream 
+   15.16 oeostream 
+   15.17 oeowrapperstream 
+   15.18 oestream 
+     16. OEPlatform Functions 
+   16.1 OECloseIStream 
+   16.2 OECloseOStream 
+   16.3 OECompressionAvailable 
+   16.4 OECompress 
+   16.5 OECreateDirectory 
+   16.6 oeendl 
+   16.7 oeends 
+   16.8 oeflush 
+   16.9 OEGetUserName 
+   16.10 OEOpenIStream 
+   16.11 OEOpenOStream 
+   16.12 OERegisterIStream 
+   16.13 OERegisterOStream 
+   16.14 OERenameFile 
+   16.15 OESleep 
+   16.16 OEUncompress 
+   16.17 OEUnlink 
+   16.18 OEUnlinkDirectory 
+   16.19 operator     
+     17. OEPlatform Globals 
+   17.1 oeerr 
+   17.2 oein 
+   17.3 oenul 
+   17.4 oeout 
+       About this document ... 
+   
+        
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Up:   OpenEye Documentation 
+ Next:   Front Matter 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

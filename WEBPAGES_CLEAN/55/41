@@ -1,0 +1,62 @@
+ ICS 160E / EECS 114  - Programming Project 1<body>
+
+ 
+
+ ICS 160E / EECS 114 - Programming Project 1, 50 Points
+ 
+Due: Friday, April 15, 2005, at 7pm,
+using the
+ 
+Checkmate Submission System .
+ 
+
+ 
+
+ 
+ Postfix notation  is an unambiguous 
+way of writing an arithmetic expression without parentheses.
+It is defined so that if 
+  
+ exp1   op   exp2 
+ 
+is a normal fully-parenthesized expression whose operation is
+ op , then the postfix version of this is 
+ 
+ pexp1   pexp2   op 
+ 
+where
+ pexp1  is the postfix version of  exp1  and
+ pexp2  is the postfix version of  exp2 .
+The postfix version of a single number is just that number.
+So, for example, the postfix version of 
+ 
+((5+2)*(8-3))^4 
+ 
+is 
+ 
+5 2 + 8 3 - * 4 ^
+ 
+Write a Java program that evaluates an expression 
+that is input in postfix notation.
+Your program should support numbers input as integers or (floating
+point) doubles, and it should support the following operators:
+  
++, for addition
+   -, for subtraction
+   *, for multiplication
+   /, for division
+   ^, for exponentiation (the power function)
+  
+Note: you may use the following classes in your program:
+    
+java.lang.Math 
+    
+java.util.Stack 
+    
+java.util.Scanner 
+  
+You may  not  use any built-in program for exponentiation by an
+integer, however.  You must write the code for this operator
+yourself, using the fast exponentiation algorithm given in class.
+You should read expressions from System.in and output to System.out.
+</body> 

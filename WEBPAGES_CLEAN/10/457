@@ -1,0 +1,25 @@
+ import java.util.Random;
+
+public class EventGenerator 
+{
+    int avgInterArrivalTime = 20;
+    int avgLoadTime = 10;
+    int avgRideTime = 10;
+    
+    Random prg;
+    long seed = 9999;
+    
+    // set the random seed so that results are the same each time
+    // around. this is useful for debuggin
+    public EventGenerator()
+    {
+	prg = new Random();
+	prg.setSeed( seed );
+    }
+    
+    // sets the average inter-arrival time and average load time and average
+    // ride time for a customer
+    public void setParameters( int a, int l, int r )
+	throws IllegalTimeValueException
+    {
+	if ( a  

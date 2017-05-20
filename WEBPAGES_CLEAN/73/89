@@ -1,0 +1,46 @@
+ 
+      DomParserExample.java on cs122b-2017-winter-project3 – Attachment
+     – Public
+    <body>
+     
+       
+           
+       
+      
+      
+       
+       Login    Preferences    About Trac  
+      
+     
+     
+   
+     
+       
+         Context Navigation 
+             Back to cs122b-2017-winter-project3  
+             
+     
+          cs122b-2017-winter-project3 : DomParserExample.java 
+            File DomParserExample.java,
+                 4.4 KB 
+                (added by cluo8,  2 days  ago) 
+               
+                
+               
+                
+          
+      Line          1        2   import java.io.IOException;     3   import java.util.ArrayList;     4   import java.util.Iterator;     5   import java.util.List;     6        7   import javax.xml.parsers.DocumentBuilder;     8   import javax.xml.parsers.DocumentBuilderFactory;     9   import javax.xml.parsers.ParserConfigurationException;     10        11   import org.w3c.dom.Document;     12   import org.w3c.dom.Element;     13   import org.w3c.dom.NodeList;     14   import org.xml.sax.SAXException;     15        16   public class DomParserExample {     17        18       List&lt;Employee&gt; myEmpls;     19       Document dom;     20        21       public DomParserExample() {     22           //create a list to hold the employee objects     23           myEmpls = new ArrayList&lt;&gt;();     24       }     25        26       public void runExample() {     27        28           //parse the xml file and get the dom object     29           parseXmlFile();     30        31           //get each employee element and create a Employee object     32           parseDocument();     33        34           //Iterate through the list and print the data     35           printData();     36        37       }     38        39       private void parseXmlFile() {     40           //get the factory     41           DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();     42        43           try {     44        45               //Using factory get an instance of document builder     46               DocumentBuilder db = dbf.newDocumentBuilder();     47        48               //parse using builder to get DOM representation of the XML file     49               dom = db.parse("employees.xml");     50        51           } catch (ParserConfigurationException pce) {     52               pce.printStackTrace();     53           } catch (SAXException se) {     54               se.printStackTrace();     55           } catch (IOException ioe) {     56               ioe.printStackTrace();     57           }     58       }     59        60       private void parseDocument() {     61           //get the root elememt     62           Element docEle = dom.getDocumentElement();     63        64           //get a nodelist of &lt;employee&gt; elements     65           NodeList nl = docEle.getElementsByTagName("Employee");     66           if (nl != null &amp;&amp; nl.getLength() &gt; 0) {     67               for (int i = 0; i &lt; nl.getLength(); i++) {     68        69                   //get the employee element     70                   Element el = (Element) nl.item(i);     71        72                   //get the Employee object     73                   Employee e = getEmployee(el);     74        75                   //add it to list     76                   myEmpls.add(e);     77               }     78           }     79       }     80        81       /**     82        * I take an employee element and read the values in, create     83        * an Employee object and return it     84        *      85        * @param empEl     86        * @return     87        */     88       private Employee getEmployee(Element empEl) {     89        90           //for each &lt;employee&gt; element get text or int values of      91           //name ,id, age and name     92           String name = getTextValue(empEl, "Name");     93           int id = getIntValue(empEl, "Id");     94           int age = getIntValue(empEl, "Age");     95        96           String type = empEl.getAttribute("type");     97        98           //Create a new Employee with the value read from the xml nodes     99           Employee e = new Employee(name, id, age, type);     100        101           return e;     102       }     103        104       /**     105        * I take a xml element and the tag name, look for the tag and get     106        * the text content     107        * i.e for &lt;employee&gt;&lt;name&gt;John&lt;/name&gt;&lt;/employee&gt; xml snippet if     108        * the Element points to employee node and tagName is name I will return John     109        *      110        * @param ele     111        * @param tagName     112        * @return     113        */     114       private String getTextValue(Element ele, String tagName) {     115           String textVal = null;     116           NodeList nl = ele.getElementsByTagName(tagName);     117           if (nl != null &amp;&amp; nl.getLength() &gt; 0) {     118               Element el = (Element) nl.item(0);     119               textVal = el.getFirstChild().getNodeValue();     120           }     121        122           return textVal;     123       }     124        125       /**     126        * Calls getTextValue and returns a int value     127        *      128        * @param ele     129        * @param tagName     130        * @return     131        */     132       private int getIntValue(Element ele, String tagName) {     133           //in production application you would catch the exception     134           return Integer.parseInt(getTextValue(ele, tagName));     135       }     136        137       /**     138        * Iterate through the list and print the     139        * content to console     140        */     141       private void printData() {     142        143           System.out.println("No of Employees '" + myEmpls.size() + "'.");     144        145           Iterator&lt;Employee&gt; it = myEmpls.iterator();     146           while (it.hasNext()) {     147               System.out.println(it.next().toString());     148           }     149       }     150        151       public static void main(String[] args) {     152           //create an instance     153           DomParserExample dpe = new DomParserExample();     154        155           //call run example     156           dpe.runExample();     157       }     158        159   }     
+     
+     
+       Download in other formats: 
+        
+           Original Format 
+         
+        
+     
+         
+       Powered by   Trac 0.12.5</strong>  
+        By  Edgewall Software . 
+       Visit the Trac open source project at  http://trac.edgewall.org/  
+     
+  </body> 

@@ -1,0 +1,232 @@
+ CS 295--Run-time Techniques for Efficient and Reliable Program Execution 
+
+ 
+
+   The Project
+FAQ      
+
+         
+
+   Project 1
+(due Friday April 12):     
+
+  Download the soot framework, get yourself familiar with various
+command-line options and phases, and implement an intra-procedural analysis that
+print out all heap load/store statements. Here is an article containing
+instructions to implement an intra-procedural analysis in soot
+http://www.bodden.de/2008/09/22/soot-intra/. Ignore the dataflow analysis
+part--all we need to do in the first project is to implement an
+intra-procedural transform that iterates over the set of all Jimple statements
+and print out those that read and write heap locations.    
+
+       
+
+  Specifically, each Java method in soot is represented by a  SootMethod 
+object. From this object, we retrieve the body of the method by calling   getActiveBody()  .
+This will give us a  Body 
+object, through which we have access to all information of the Java method,
+such as local variables and statements. As we are interested in obtaining the
+statements (i.e., Units), we can use method  getUnits() 
+to get a chain of statements the method contains. Write a while loop that
+iterates over the statements in the chain. In Jimple, each statement is an
+object of interfact  Stmt ,
+which has many different implementing classes. Among these Stmt classes, we are
+interested in  JAssignStmt ,
+which represents assignment statements (e.g., anything of the form a = b). In
+order to identify statements that access the heap, we need to understand what
+the left-hand-side (LHS) and RHS operands are for each statement. To do this,
+we can call methods  getLeftOp() 
+and  getRightOp() 
+on each statement object. These calls return objects of type  Value , which is
+an interface representing all expressions, locals, constants, and references in
+a Java program. We are particularly interested in  InstanceFieldRef ,
+ StaticFieldRef ,
+and  ArrayRef ,
+each of which represents a type of heap access. In particular,    
+
+  If the LHS/RHS of an assignment is
+an InstanceFieldRef, the assignment is of the form a.f = b(heap write) /b = a.f
+(heap read);    
+
+  If the LHS/RHS of an assignment is
+a StaticFieldRef, the assignment is of the form A.f = b (heap write)/b=A.f
+(heap read);    
+
+  If the LHS/RHS of an assignment is
+an ArrayRef, the assignment is of the form a[i] = b (heap write)/b=a[i] (heap
+read);    
+
+         
+
+   The output
+of the analysis should have the following format:     
+
+  Statement a.f = b, heap write; 
+Statement b = a[i], heap read; 
+...    
+
+   ------------------------------------------------------------------     
+
+   Project 2
+(due Sunday May 3)     
+
+  The goal of the second project is to implement an intraprocedural
+constant propagation analysis. There are two versions of the analysis. The
+first one is a MUST analysis that identifies, for each statement of the form x =
+a (where a can be a complex expression), the constant value that x must have.
+This analysis is used widely inside compilers. The second analysis is a MAY
+analysis, which computes, for each statement of the form x = a, all potential
+constant values that x *may* receive at run time.     
+
+  We will implement both versions in the project by instantiating the
+general monotone framework we discussed in the class. You need to first define
+the lattice, the bottom element (i.e., unknown), the top element (i.e.,
+anything), the transfer functions, and the meet operator. Implement a
+worklist-based fixedpoint computation algorithm. Make sure your analysis
+terminates in the presence of loops. Since the analysis is intraprocedural,
+there is no need to analyze call relationships. However, you do need to perform
+worst-case approximation when handling call sites.     
+
+  We consider only simple assignments that manipulate integer values with
++,-,*,/ operations.     
+
+  Note that for the MAY analysis, it is not obvious how to make the
+analysis converge. One simple solution is to do ``widening`` (as discussed in
+abstract interpretation). For variables that are defined inside a loop, we can
+simply assign them a ``top`` lattice element so that the analysis can quickly
+stabilize.     
+
+         
+
+   The output
+of the analysis should have the following format:     
+
+  Statement a = b, the must and may sets for a are {...} and {...} 
+Statement b = c * a, the must and may sets for b are {...} and {...} 
+...    
+
+  Note that the must set must contain one single element and the may set
+might contain multiple elements.    
+
+   ------------------------------------------------------------------     
+
+   Project 3
+(due Wednesday May 22)     
+
+  The goal of the third project is to implement a 0-CFA analysis for Java.
+As discussed in the class, 0-CFA for a functional language computes what
+function values may reach each variable in the program. In the object-oriented
+world, 0-CFA identifies, at each call site, what methods may potentially be
+invoked. Of course, the easiest way to get this information is to simply do a
+class hierarchy analysis (CHA) that identifies, at a call a.f(), the type of a
+and all its subtypes, and returns all of the methods defined in these types. A
+more precise analysis would first compute objects (i.e., allocation sites) that
+variable a points to and return only the methods in the classes instantiated in
+these allocation sites.     
+
+  We will implement this analysis in the project by formulating the
+analysis as a constraint-based system. To simplify the analysis, we assume a
+program only has allocation sites of the form A a = new A(), assignment
+statements of the form a = b, and method calls. This is an interprocedural
+analysis, which means we do need to consider method calls. For each type of
+statement, the following constraints will be generated:    
+
+         
+
+    (1)        A a = new
+A() =&gt; {new A()}     ⊑         pts(a)     
+
+    (2)        a = b =&gt;
+pts(b)     ⊑         pts(a)      
+
+    (3)        r = a.f(b),
+where f`s definition is      
+
+   O f(B p) { ...; return v; }     
+
+         
+
+   =&gt; pts(a)     ⊑         pts(this)     ∧     pts(b)     ⊑         pts(p)     ∧     pts(v)     ⊑         pts(r)      
+
+         
+
+  Build a constraint-graph where each node represents a variable and each
+edge represents a ``subset`` relationship. Develop an iterative algorithm to
+traverse the graph to find the solution.     
+
+  Since this is a flow-insensitive analysis (note that all dataflow
+analyses are *flow-sensitive*), we do not even need a control flow graph. You
+can simply iterate over the statements (i.e. units) to build the constraint
+graph.    
+
+   The output
+of the analysis should have the following format:     
+
+  Call site a.f(...), the methods potentially invoked here are
+&lt;A.f(...)&gt;, &lt;SubA1.f(...)&gt; , &lt;SubA2.f(...)&gt;, etc. 
+Call site b.g(...), the methods potentially invoked here are &lt;B.g(...)&gt;,
+etc.    
+
+   ------------------------------------------------------------------     
+
+   Project 4
+(due Sunday June 9)     
+
+  In this project, we will implement a 1-CFA analysis, based on the 0-CFA
+analysis we have implemented in Project 3. 1-CFA is a context-sensitive
+analysis that distinguishes points-to information of each variable under
+different calling contexts. What we need to do in this project is to create
+copies for nodes in the constraint graph we built in Project 3. Suppose we have
+a method m that has five variables, and m is invoked at six different places (i.e.,
+there are six call sites that may have m as a target in the call graph). For
+each variable in m, we need to create six copies, each representing a calling
+context. At a call site m(a) //c1, we add an edge from a to a copy of the first
+formal parameter node in m representing c1. Because variables for different
+contexts are distinguished, the information passed into the method at one call
+site can only flow back to the same call site, and thus, we have much more
+precise points-to information computed from 1-CFA. The output of the analysis
+should have the same format as 0-CFA.    
+
+   ------------------------------------------------------------------     
+
+   Information
+about the soot framework     
+
+    1.     
+      Soot is a Java compiler infrastructure that takes bytecode
+as input (i.e., .class files) and generates SSA-based intermediate
+representation (i.e., Jimple). You can implement your analysis on top of the
+Jimple representation. Soot also provides an option to do program
+transformation and bytecode rewriting.     
+
+         
+
+    2.     
+      Where can I download it? ( http://www.sable.mcgill.ca/soot/ ).  Here  you can
+find various soot tutorials.     
+
+         
+
+    3.     
+       Soot API .     
+
+         
+
+    4.     
+      The recent release of soot supports the use of option
+``-pp`` to save the effort of explicitly adding all library classes into the
+soot classpath.      
+
+         
+
+         
+
+         
+
+         
+
+       
+
+ 
+
+</body> 

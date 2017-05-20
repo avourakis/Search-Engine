@@ -1,0 +1,59 @@
+ UCI Software Architecture Research - UCI Software Architecture Research: C2 Style Rules<body>
+           
+           
+         
+               Software Architecture      Software Architecture Overview            •    Extensibility     •    Environments     •    Architectural Styles     •    Real Systems         Software Architecture Research            •    Architecture-based Design     •    Architecture Description Languages                    •  Product Line Architectures                    •  Architecture-based Security &amp; Trust     •    Architectural Styles                    •  Internet Scale Architectures                    •  Decentralized Architectures     •    Self-Adaptive, Healing Architectures     •          Architecture to Implementation               Projects            •    Apigen     •    ArchEvol     •    ArchStudio 4     •    EASEL     •    PACE     •    xADL 2.0     •     Legacy Projects          People            •    Richard N. Taylor     •    David F. Redmiles     •    Andr� van der Hoek         Publications          Institute for Software Research   University of California, Irvine      Irvine, CA 92697-3455, USA  arch@ics.uci.edu    
+         
+         
+           
+          
+             C2 Style Rules 
+          
+
+
+     Styles 
+   
+     The  C2 architectural style  is designed to support the particular needs of applications that have a graphical user interface aspect, but it has the potential for supporting other types of applications as well. 
+   
+
+     Component-based styles 
+   
+     Software components may be written in different programming languages. They can more readily be reused and/or substituted with other components in an architecture. 
+   
+
+     Scalability 
+   
+     Components may be of various granularity.  They may be running in a distributed, heterogeneous environment. There is no assumption of shared address space among components and each component may have its own thread(s) of control. 
+   
+
+     Flexibility 
+   
+     Multiple users may be interacting with the system. Multiple dialogs may be active and described in different formalisms. Multiple tool kits and media types may be employed. Architectures may be changed dynamically. A conceptual architecture is distinct from an implementation architecture; multiple implementation architectures may realize the same conceptual architecture. 
+   
+
+     Example C2 Architecture 
+   
+      
+
+     C2 Composition Rules 
+   
+     There are two types of building blocks in C2: components and connectors, i.e., message routing devices. A C2 architecture can informally be described as a network of concurrent components linked together by connectors. Components and connectors both have a defined top and bottom. They may be composed in the following manner: 
+      The top of a component may be connected to the bottom of a single connector. 
+       The bottom of a component may be connected to the top of a single connector. 
+       There is no bound on the number of components or connectors that may be attached to a single connector. 
+       When two connectors are attached to each other, it must be from the bottom of one to the top of the other. 
+      
+
+     C2 Communication Rules 
+   
+     All communication between C2 components is achieved solely by exchanging messages. Each component has a top and bottom domain. The top domain specifies the set of notifications to which a component responds, and the set of requests it emits up an architecture. The bottom domain specifies the set of notifications that a component emits down an architecture and the set of requests to which it responds. Central to the architectural style is a principle of limited visibility or substrate independence: a component within the hierarchy can only be aware of components "above" it, and is completely unaware of the components "beneath" it. 
+   
+
+             
+         
+         
+            
+            This material is based upon work sponsored by a variety of agencies and sources, including the National Science Foundation under Grant No.s  0205724, 0430066, 0438996, and 0524033, the Boeing Company, and, previously, the Air Force Materiel Command, Rome Laboratory, and the Defense Advanced Research Projects Agency under Contract Number F30602-94-C-0218. The content of the information does not necessarily reflect the position or the policy of the Government or any sponsor and no official endorsement should be inferred.  Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+           
+         
+        </body> 

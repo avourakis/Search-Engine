@@ -1,0 +1,20 @@
+ #include "oechem.h"
+#include 
+#include 
+
+using namespace OEChem;
+using namespace std;
+
+int main()
+{
+  char buffer[1024];
+
+  while (cin.getline(buffer,1024))
+  {
+    OEMol mol;
+    if (OEParseSmiles(mol,buffer))
+    {
+      string str;
+      OEAssignAromaticFlags(mol);
+      OECreateCanSmiString(str,mol);
+      cout  

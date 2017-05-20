@@ -1,0 +1,167 @@
+ DataGuard -
+    DataGuard 
+     
+                   
+
+                                              
+                     
+          
+     
+     
+
+
+
+
+
+
+
+             
+        Last Published: 03/12/2008
+                       
+             
+
+
+
+
+
+
+   
+       
+          
+     
+     
+       
+
+
+
+
+
+
+
+                    DataGuard 
+          
+               Home 
+         
+
+     
+               Download 
+         
+
+     
+               Screenshot 
+         
+
+     
+               User Guide 
+         
+
+     
+               People 
+         
+            Overview 
+          
+               Architecture 
+         
+
+     
+               Translational Layer 
+         
+
+     
+               Future works 
+         
+            Documentation 
+          
+               JavaDoc 
+         
+
+     
+               Add a Layer</strong>
+         
+
+     
+               Source Code 
+         
+            
+              
+
+
+
+
+
+
+
+         
+     
+     
+       
+
+
+
+        How to create a new Translation Layer 
+
+    	    Introduction 
+	    	 
+	    		In this section we will explain which are the steps for creating and using
+	    		a new translational layer. So, let's start.
+	    	 
+    	 
+
+    	    Extend AbstractStorageServer 
+    		 
+    			The first step is to create a StorageServer extending the class org.itr_rescue.dataGuard.StorageServer.AbstractStorageServer.
+    			The methods  connect ,  disconnect ,  fetch ,  store ,  delete  must be
+    			override in such a way to interact with the server.
+    		 
+    	 
+
+    	    Add the layer in DataGuard 
+    		 
+    			Now, you have to crate a JLinkLabel; The JLinkLabels are the components which are visible when you start
+    			DataGuard on the right panel. There is one JLinkLabel for each translational layer. The JLinkLabel provide
+    			an hyperlink to the service, a service description and a service icon if available.
+    			So, you have to:
+    		 
+    		 
+    			   Create your JLinkLabel extending org.itr_rescue.dataGuard.ui.JLinkLabel 
+    				 Override the method  mouseClicked  defining what to do when the object is clicked 
+    				  Facultative  - Override methods that define the service description and the service icon 
+    				 Add the service name and the your JLinkLabel's name into resources/properties/services.props 
+    			  
+
+    	    Creating a new Remote View 
+
+		  	The current prototype of DataGuard contains only one Remote View. With this view DataGuard represents
+		  	the hierarchical structure of a file system. So, the view contains file and folder organized in a tree
+		  	structure.
+
+
+    			If you want a different object's representation, feel free to define other remote view. For instance, you can
+    			create a remote view of images based of thumbnails as well as a remote view with a calendar interface.
+    			The Remote View is only the virtual representation of your objects at the server, hence, there are no
+    			limit in the number of different view we can build.
+
+    	 
+
+     
+
+  Roberto Gamboni - March 2008 
+     
+     
+        
+     
+       ©
+          2007
+
+
+
+
+
+
+
+
+   
+       
+          
+     
+  </body> 

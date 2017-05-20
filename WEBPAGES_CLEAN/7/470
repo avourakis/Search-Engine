@@ -1,0 +1,110 @@
+  <body>  This is Google's cache of  http://www.vdlande.com/VHDL/cond_s_a.html . It is a snapshot of the page as it appeared on Aug 4, 2009 21:05:46 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  cond_s_a       
+
+
+VHDL Reference Guide - Conditional Signal Assignment 
+   Conditional Signal Assignment  
+       Concurrent Statement 
+ ---- used in ----&gt; 
+ Architecture 
+          Syntax       
+  
+
+ 
+    signal_name   
+   
+  
+
+
+
+ 
+See LRM section 9.5.1
+
+        Rules and Examples       
+  
+
+ 
+   Each condition is aboolean expression:
+ architecture COND of BRANCH is
+begin
+   Z  5 else
+        B when X   
+   
+  
+
+ 
+   Conditions may overlap, as for the  if 
+statement. The expression corresponding to the first "true" condition is
+assigned.
+ architecture COND of BRANCH is
+begin
+   Z   
+   
+  
+
+ 
+   There must be a final unconditional  else  expression:
+ architecture COND of WRONG is
+begin
+   Z  5;  --illegal
+end COND;  
+   
+  
+
+ 
+   The expressions assigned may be delayed.
+ Transport delay  mode may
+also be specified 
+   
+  
+
+ 
+   Conditional signal assigments may be used to define  tri-state
+buffers , using the  std_logic  and  std_logic_vector 
+type. Note the use of the  aggregate  form for
+a vector bus. 
+architecture COND of TRI_STATE is
+  signal TRI_BIT: std_logic;
+  signal TRI_BUS: 
+             std_logic_vector(0 to 7);
+begin
+  TRI_BIT  'Z');
+end COND;  
+   
+  
+
+ 
+        Synthesis Issues       
+  
+
+Conditional signal assignments are generally synthesisable.
+ 
+A conditional signal assignment will usually result in combinational
+logic being generated. Assignment to 'Z' will normally generate
+tri-state drivers. Assinment to 'X' may not be supported.
+  
+If a signal is conditionally assigned to itself, latches may be
+inferred.
+
+  
+        Whats New in '93       
+
+In  VHDL -93, any signal assigment statement may have an optinal label.
+  
+ VHDL -93 defines an  unaffected  keyword, which indicates a
+condition when a signal is not given a new assignment:
+  label: signal 
+The keywords  inertial and reject  may also be
+used in a conditional signal assignment.
+ 
+A conditional signal assignment can be specified to run as a
+ postponed  process.
+   
+
+  
+   
+   
+   
+ 
+
+  </body> 

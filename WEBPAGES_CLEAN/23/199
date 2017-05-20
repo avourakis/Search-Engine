@@ -1,0 +1,202 @@
+ Premises and Hypothesis 
+                  Next:   Dissertation Contributions 
+ Up:   Introduction 
+  Previous:   Software Uncertainty Modeling 
+  
+   Premises and Hypothesis  
+ 
+   
+  
+To arrive at the approach taken in this dissertation,
+one must follow the statements in this section.
+Most statements, such as ``software complexity hinders
+its understanding'' or ``users get disoriented in
+large hypertext spaces,'' are either widely accepted
+or substantiated later.  These statements therefore
+constitute the  premises  for this dissertation.
+One statement, however, is less accepted and requires
+further investigation: ``Explicit modeling of
+software uncertainties improves human judgment and
+decision making during software development.''
+This statement therefore constitutes the
+ hypothesis  for this dissertation and will be
+further elaborated and validated.
+  
+Our initial observation is that software is extremely
+complex, i.e., that ``software systems are perhaps the
+most intricate of man's handiworks'' [ Bro95 ].
+Software complexity is not only ubiquitous, it is also
+ intrinsic :
+``The complexity of software is an essential property,
+not an accidental one'' [ Bro87 ].  ``By essential
+we mean that we may master this complexity, but we can
+never make it go away'' [ Boo94 ].
+Complexity hinders software understanding, yet understanding
+must be afforded if development is to be successful.
+  
+To manage complexity, software development concerns
+are often separated in time and space.  Thus, software
+is typically developed in distinct phases by different
+teams of developers.  Large-scale software is often
+long-lived and delivered in multiple version, thereby
+comprising a family of related programs [ Par79 ].
+  
+The product of software development is typically a
+large and complex collection of software elements of
+diverse types.  Software artifact collections often
+contain not only millions of source code lines,
+but also versioned releases, volumes of user 
+manuals and documentation, requirements and design
+specifications, test cases and test results, and so forth.
+Moreover, these software objects are typically
+integrated and correlated within themselves and
+with each other in surprisingly intricate and subtle
+ways [ SZ92 ].  This poses
+substantial impediments to software understanding,
+particularly with respect to traceability,
+visualization, and navigation issues, thereby
+leading to the following research question.
+  
+ Research Question :
+   Given the intricacy and complexity of software
+artifact relationships, what can be done to
+improve traceability, visualization, and
+navigation of large artifact collections?
+ 
+ 
+As a first step, it is proposed that software systems
+be viewed as large hypertexts, since hypertext offers
+a coherent and consistent metaphor for viewing both
+inter- as well as intra-artifact relationships
+(cf. [ ZO95 ,  SZ92 ]).
+Here, it suffices to define hypertext informally
+as providing node-and-link views and navigation
+of software artifact collections.  Hypertext is
+defined more formally and completely in
+Chapter    .  We therefore contend
+that a hypertext metaphor of software artifacts
+and relations should improve developer's ability
+to trace or track related elements in large and
+complex software spaces.
+  
+Despite the above, hypertext is no ``silver bullet''
+for relieving software artifact complexities and
+uncertainties.  Specifically, hypertext introduces
+several concerns regarding its efficacy for
+software engineering [ ZO95 ].
+Here, we are particularly concerned with the
+well-known navigation problem of user confusion
+and disorientation in large hypertext spaces as
+well as the fact that hypertext systems generally
+are not designed with software engineering in mind.
+This means that hypertext does not necessarily
+address the unique needs of software developers
+and users nor does it model or make use of the
+unique characteristics of software systems.
+Additional means should, therefore, be provided to further
+facilitate understanding of software artifact collections.
+The following statements concern this facilitation.
+  
+We claim that software engineering is fraught
+with uncertainties.  Software uncertainties
+contribute significantly to the overall complexity 
+and unpredictability of software development.
+Like complexity, uncertainty is inherent to the
+engineering of software systems.  This observation
+is summarized succinctly in [ ZRK96 ] as the 
+ Maxim of Uncertainty in Software Engineering :
+    
+Uncertainty is inherent and inevitable in software processes
+and products.
+ 
+ 
+ 
+Examples of software uncertainties abound - many are provided
+in this dissertation.  Starting in Chapter Four, we focus on
+uncertainties associated with developers' confidence levels
+in software artifacts, including, among others, requirements
+specifications, design elements, code modules, and testing
+information.  These confidence levels fluctuate frequently
+during development.  Their modeling should, therefore,
+include a scheme for confidence revision and updating.
+  
+We now arrive at the high-level statement of the hypothesis
+for this dissertation.
+  
+ High-level Research Hypothesis :
+   Explicitly modeling uncertainty improves human judgment and
+decision making during software development. 
+ 
+ 
+This hypothesis is too vague to be investigated and
+validated directly.  Instead, we require a more specific
+formulation, including a specific technique for software
+uncertainty modeling.
+To model software uncertainties, we turn to artificial
+intelligence research in modeling and management of
+uncertainty.  We select a specific uncertainty modeling
+technique called Bayesian belief networks [ Pea88 ].
+Detailed reasons for this choice are provided in Chapter Four.
+  
+Here, it suffices to say that Bayesian networks
+offer a clear conceptual model of causality among related
+elements and include algorithms for belief revision and
+updating.  This leads to our specific hypothesis below.
+The hypothesis speaks in terms of software artifacts,
+which include, among others, requirements elements,
+design nodes, code modules, and test information,
+relationships among those artifacts, established as
+part of the development process, and confidence
+levels, which reflect developer confidences in
+certain qualities and properties of software artifacts.
+  
+ Specific Research Hypothesis :
+   Bayesian-network models of software artifact uncertainties improves
+understanding of associated confidence levels, compared to simply
+following linked information, ultimately leading to better human
+decision making.
+ 
+ 
+In the long run, we believe that proper adoption and use of
+uncertainty modeling techniques will improve human judgment
+and decision making during software development.  For the
+purposes of this dissertation, we focused on the specific
+hypothesis above and took steps toward its validation,
+as follows:
+   
+An existing software system was selected as case study.
+The system of choice, called CEquencer, is currently
+under development at Beckman Instruments in Fullerton,
+CA.  CEquencer is designed to control and communicate
+with various hardware devices that in turn are used by 
+biologists, chemists, and other scientists to separate
+laboratory specimens into molecular constituents in
+order to determine their DNA sequences.
+CEquencer software artifacts are described in Chapter Five.  
+CEquencer requirements were investigated throughly,
+and a hypertext model as well as a Bayesian-network
+model of those requirements were constructed.  
+A key subsystem of CEquencer, called FSM Run, was
+investigated thoroughly, resulting in a hypertext
+model of software artifacts, including all FSM Run
+code modules as well as related requirements.  
+Software uncertainty information was collected for FSM Run
+artifacts.  The information was elicited from Beckman
+experts and developers and organized in a Bayesian network.  
+Our main hypothesis was evaluated against FSM Run code
+modules and related requirements, as identified in (2)
+above.  In a questionnaire session with the Beckman team,
+developers were asked to trace artifacts and associated
+confidence levels with and without the Bayesian-network
+representation of confidence values.  
+Results were gathered for the case study and analyzed
+for statistical significance.  Results of the
+questionnaire session are summarized in Chapter Six.
+                    Next:   Dissertation Contributions 
+ Up:   Introduction 
+  Previous:   Software Uncertainty Modeling 
+   
+ Hadar Ziv  
+Fri Jun 20 16:22:31 PDT 1997 
+ 
+</body> 

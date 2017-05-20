@@ -1,0 +1,318 @@
+ CHEM.Common.Model.RowItemModel<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Common  ::
+         Module Model  ::
+        Class RowItemModel
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class RowItemModel    
+object --+    
+         |    
+      dict --+
+             |
+             RowItemModel</strong>
+ 
+
+ 
+Generic object class to model rows from database tables. Basically is 
+  just a dictionary mapping column names to values, but extra abstraction 
+  for additional data and functions.    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self ,
+         initData = None ,
+         dataKeys = None )  
+      Initialization constructor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           update ( self ,
+         initData = None ,
+         dataKeys = None )  
+      Same like the constructor but can do at any time to update 
+      (overwrite) or extend the data already in the model. 
+           
+            
+            
+           
+           
+     
+         
+      
+           valuesByName ( self ,
+         columnNames )  
+      Return the values in the dictionary as a list. 
+           
+            
+            
+           
+           
+     
+      Inherited from  dict  :
+       __cmp__ ,
+       __contains__ ,
+       __delitem__ ,
+       __eq__ ,
+       __ge__ ,
+       __getattribute__ ,
+       __getitem__ ,
+       __gt__ ,
+       __hash__ ,
+       __iter__ ,
+       __le__ ,
+       __len__ ,
+       __lt__ ,
+       __ne__ ,
+       __new__ ,
+       __repr__ ,
+       __setitem__ ,
+       clear ,
+       copy ,
+       fromkeys ,
+       get ,
+       has_key ,
+       items ,
+       iteritems ,
+       iterkeys ,
+       itervalues ,
+       keys ,
+       pop ,
+       popitem ,
+       setdefault ,
+       values 
+       
+      Inherited from  object  :
+       __delattr__ ,
+       __reduce__ ,
+       __reduce_ex__ ,
+       __setattr__ ,
+       __str__ 
+       
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         tableName  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Se ...  
+     
+     
+         
+      
+         isNew  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Search ...  
+     
+     
+         
+      
+         mol  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSe ...  
+     
+     
+         
+      
+         index  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Search ...  
+     
+     
+         
+      
+         newCount  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Sea ...  
+     
+     
+         
+      
+         childData  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.Se ...  
+     
+      
+   
+        Properties  
+          [ hide private ]  
+         
+   
+      Inherited from  object  :
+       __class__ 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ,
+         initData = None ,
+         dataKeys = None ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Initialization constructor.  If no parameters provided, will just 
+  create an empty model object.  If a single dictionary parameter is 
+  provided, will copy over the contents into the row item model.  If two 
+  parameters are provided, expect these to be a list of data values and a 
+  list of data names / keys to be added in the row item model.
+    Returns: 
+          
+new empty dictionary
+
+  
+     Overrides:
+      dict.__init__
+     
+       
+  
+ 
+   
+     
+     update ( self ,
+         initData = None ,
+         dataKeys = None ) 
+   
+     
+     
+    
+  
+  Same like the constructor but can do at any time to update (overwrite)
+  or extend the data already in the model.
+    Returns: 
+          
+None
+
+  
+     Overrides:
+      dict.update
+     
+       
+  
+ 
+   
+     
+     valuesByName ( self ,
+         columnNames ) 
+   
+     
+     
+    
+  
+  Return the values in the dictionary as a list.  Unlike the basic 
+  dict.values() method, can provide a list of columnNames to only return 
+  the values keyed by the names provided in that list, and in that 
+  order.
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   tableName 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   isNew 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   mol 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   index 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   newCount 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   childData 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:28 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

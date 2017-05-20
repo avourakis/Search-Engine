@@ -1,0 +1,6 @@
+ # Random slopes and intercepts, no interaction
+model{ 
+ for( i in 1:27){
+   for(j in 1:4){
+    Distance1[ i , j ] ~ dnorm(m[ i , j ], tau)
+    m[ i , j  ]   

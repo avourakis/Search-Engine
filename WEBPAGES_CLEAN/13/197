@@ -1,0 +1,220 @@
+ Inquiry Cycle<body>
+
+ 
+
+ 
+The Inquiry Cycle
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+  Potts+Takahashi+Anton1994-ibra 
+ 
+Colin Potts, Kenji Takahashi, and Annie I. Antón. 
+Inquiry–Based Requirements Analysis. 
+ IEEE Software , 11(2):21–32,
+Mar. 1994. 
+ 
+  Abstract   This approach emphasizes pinpointing where and when information needs occur. Central to this view is the Inquiry Cycle model, a formal structure for describing and supporting discussions about system requirements.  
+  doi:  10.1109/52.268952  
+ 
+ 
+
+
+ What is it? 
+
+  The Inquiry Cycle is a simple, informal pattern
+for improving a set of requirements (or any other document, actually). 
+It uses conversation as a metaphor for the RE (Requirements Engineering) process. 
+It is an effective technique for elaborating a set of requirements,
+examining hidden assumptions, and driving a RE effort towards completion. 
+ 
+
+ 
+The Inquiry Cycle consists of three phases: 
+ 
+   requirements documentation  
+    requirements discussion  
+    requirements evolution  
+  
+and requirements discussion is divided into three steps: 
+ 
+   question  
+    answer  
+    reason for answer  
+  
+These phases and steps are repeated in a cycle
+until the requirements are satisfactory. 
+ 
+
+
+ Example 
+
+ 
+The example gives one pass through the Inquiry Cycle
+for the Meeting Scheduler problem. 
+The part of the documentation that is examined
+is event 3 of Scenario 8;
+a question is asked (Q33),
+resulting in two answers (A9 and A26)
+that address different aspects of the question;
+and the documentation evolves through
+the addition of a new requirement
+and a clarification of existing requirement Rq3.   
+ 
+
+        Documentation 
+     Sc8.3. 
+     "Esther determines the drop-dead date is Friday noon." 
+       Question 
+     Q33. 
+     Are there constraints on the drop range between now and the date range? 
+       Answer 
+     A9. 
+      No meeting is held on weekends. 
+     A26. 
+     Initiator specifies drop-dead date in the future. 
+        It must be at least a day before the end of the date range. 
+        There is one drop-dead date for all participants.  
+       Evolution 
+     C17. 
+     Add new requirement: 
+        "The initiator specifies a drop-dead date when calling the meeting. 
+        If a participant has not replied by the drop-dead date,
+        the scheduler prepares a list of possible meeting times
+        based on the replies it has received." 
+     C19. 
+     Add to Rq3: 
+        "A date range for a meeting must be in the future
+        and the end date must be later than the start date." 
+      Kinds of questions for the Discussion phase 
+
+ 
+The authors found that several kinds of questions
+triggered good requirements discussions: 
+ 
+
+  What-is 
+   
+    Asking for more information about a requirement
+    (not a scenario),
+    and usually answered by a definition. 
+    Example:  "What is meant by 'keeping participants involved'?" 
+   
+   How-to 
+   
+    Asking how some action is performed;
+    usually asked about a scenario. 
+   
+   Who 
+   
+    Confirming who the responsible agent is. 
+   
+   What-kinds-of 
+   
+    Asking for further refinement of a concept,
+    for example "What kinds of meetings should be supported?" 
+   
+   When 
+   
+    Asking about the timing constraints on some event or events. 
+    Example: 
+    "When should the scheduler stop waiting for a participant to respond,\
+    and just go ahead and schedule the meeting?" 
+   
+   Relationships 
+   
+    Asking how one requirement is related to another. 
+    Example: 
+    "What is the relationship between the drop-dead date
+    and the proposed date range for the meeting?"
+   
+   Most discussion-phase questions are about
+the issue under consideration  at the moment,
+but some questions lead to important parenthetical insights,
+not on the topic at hand but (usually)
+about an assumption that no one had thought to question before. 
+Some kinds of these questions are: 
+ 
+
+  What-if 
+   
+    Asking about cases in which an action goes wrong
+    or its preconditions aren't satisfied. 
+    Example: 
+    "What would happen if the latecomer responds with preferences
+    after the meeting has already been scheduled,
+    and the preferences conflict with the schedule?" 
+   
+   Follow-on questions 
+   
+    Questions that arise from asking another question. 
+    An important subcategory is
+     generalizations of follow-on questions 
+    (these are particularly effective). 
+        Example of follow-on questions 
+         Original question: 
+         Is an important participant's attendance vital?   In other words,
+         can the meeting proceed if not all important participants are present? 
+         Follow-on question: 
+         Is an active participant's attendance vital? 
+         Generalization: 
+           Which participants are necessary for the meeting? 
+         A further generalization: 
+           What are the minimum conditions for holding the meeting? 
+          
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010May16Su21:42 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

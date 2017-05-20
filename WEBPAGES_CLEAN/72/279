@@ -1,0 +1,269 @@
+ 
+Index (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+        Package   
+        Class   
+        Use   
+          Tree     
+          Deprecated     
+       Index    
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+
+
+ A   B   C   D   E   F   G   L   N   O   V   Z      
+ A  
+    accept(Visitor)   - 
+Method in class formulaVisited. Conjunction 
+   
+    accept(Visitor)   - 
+Method in class formulaVisited. Disjunction 
+   
+    accept(Visitor)   - 
+Method in interface formulaVisited. Formula 
+  Accepts a visitor.
+    accept(Visitor)   - 
+Method in class formulaVisited. LogicalConstant 
+   
+    accept(Visitor)   - 
+Method in class formulaVisited. LogicalVariable 
+   
+    accept(Visitor)   - 
+Method in class formulaVisited. Negation 
+   
+      
+ B  
+    bind(LogicalVariable, boolean)   - 
+Method in class formula. Environment 
+  Binds a logical variable to a boolean value.
+    bind(LogicalVariable, boolean)   - 
+Method in class formulaVisited. Environment 
+  Binds a logical variable to a boolean value.
+      
+ C  
+    compareTo(Object)   - 
+Method in class formula. Named 
+  Compares two named objects for order, by name.
+    compareTo(Object)   - 
+Method in class formulaVisited. Named 
+  Compares two named objects for order, by name.
+    Conjunction   - Class in  formula   The conjunction ("and") of two subformulas.    Conjunction(Formula, Formula)   - 
+Constructor for class formula. Conjunction 
+  Constructs the conjunction of two subformulas.
+    Conjunction   - Class in  formulaVisited   The conjunction ("and") of two subformulas.    Conjunction(Formula, Formula)   - 
+Constructor for class formulaVisited. Conjunction 
+  Constructs the conjunction of two subformulas.
+      
+ D  
+    Disjunction   - Class in  formula   The disjunction ("and") of two subformulas.    Disjunction(Formula, Formula)   - 
+Constructor for class formula. Disjunction 
+  Constructs the disjunction of two subformulas.
+    Disjunction   - Class in  formulaVisited   The disjunction ("and") of two subformulas.    Disjunction(Formula, Formula)   - 
+Constructor for class formulaVisited. Disjunction 
+  Constructs the disjunction of two subformulas.
+      
+ E  
+    Environment   - Class in  formula   An environment in which to evaluate a formula.    Environment()   - 
+Constructor for class formula. Environment 
+  Constructs a new, empty environment.
+    Environment   - Class in  formulaVisited   An environment in which to evaluate a formula.    Environment()   - 
+Constructor for class formulaVisited. Environment 
+  Constructs a new, empty environment.
+    equals(Object)   - 
+Method in class formula. Named 
+  Compares two named objects for equality, by name.
+    equals(Object)   - 
+Method in class formulaVisited. Named 
+  Compares two named objects for equality, by name.
+      
+ F  
+    Factory   - Class in  formulaVisited   A factory for creating formulas from a reader.    Factory()   - 
+Constructor for class formulaVisited. Factory 
+   
+    factory(PushbackReader)   - 
+Static method in class formulaVisited. Factory 
+  Reads a character stream and returns
+    the formula corresponding to it, if any.
+    formula   - package formula  
+Basic classes implementing propositional and first-order logic formulas.    Formula   - Interface in  formula   The type of all logic formulas.    Formula   - Interface in  formulaVisited   The type of all logic formulas that accept visitors.    formulaVisited   - package formulaVisited  
+Propositional and first-order logic with visitors, singletons, 
+and other patterns used.      
+ G  
+    get(LogicalVariable)   - 
+Method in class formula. Environment 
+  Get the binding of a logical variable.
+    get(LogicalVariable)   - 
+Method in class formulaVisited. Environment 
+  Get the binding of a logical variable.
+      
+ L  
+    LogicalConstant   - Class in  formula   A logical constant, representing true or false.    LogicalConstant(boolean)   - 
+Constructor for class formula. LogicalConstant 
+  Constructs a logical constant.
+    LogicalConstant   - Class in  formulaVisited   A logical constant, representing true or false.    LogicalVariable   - Class in  formula   A logical variable, representing true or false
+  (but we may not know which).    LogicalVariable(String)   - 
+Constructor for class formula. LogicalVariable 
+  Constructs a logical variable.
+    LogicalVariable   - Class in  formulaVisited   A logical variable, representing true or false
+  (but we may not know which).    LogicalVariable(String)   - 
+Constructor for class formulaVisited. LogicalVariable 
+  Constructs a logical variable.
+      
+ N  
+    Named   - Class in  formula   The superclass of all named objects in the package.    Named(String)   - 
+Constructor for class formula. Named 
+   
+    Named   - Class in  formulaVisited   The superclass of all named objects in the package.    Named(String)   - 
+Constructor for class formulaVisited. Named 
+   
+    Negation   - Class in  formula   The negation of a formula.    Negation(Formula)   - 
+Constructor for class formula. Negation 
+  Constructs the negation of a formula
+    Negation   - Class in  formulaVisited   The negation of a formula.    Negation(Formula)   - 
+Constructor for class formulaVisited. Negation 
+  Constructs the negation of a formula
+      
+ O  
+    one()   - 
+Static method in class formulaVisited. LogicalConstant 
+  Returns a logical constant for 1 (true).
+      
+ V  
+    visit(Conjunction)   - 
+Method in interface formulaVisited. Visitor 
+  Calculates the result for a Conjunction.
+    visit(Disjunction)   - 
+Method in interface formulaVisited. Visitor 
+  Calculates the result for a Disjunction.
+    visit(LogicalConstant)   - 
+Method in interface formulaVisited. Visitor 
+  Calculates the result for a LogicalConstant.
+    visit(LogicalVariable)   - 
+Method in interface formulaVisited. Visitor 
+  Calculates the result for a LogicalVariable.
+    visit(Negation)   - 
+Method in interface formulaVisited. Visitor 
+  Calculates the result for a Negation.
+    visit(Conjunction)   - 
+Method in class formulaVisited. VisitorEvaluate 
+  Calculates the result for a Conjunction.
+    A conjunction is true if both its subformulas are true,
+    false if either of its subformulas is false,
+    and unknown otherwise.
+    visit(Disjunction)   - 
+Method in class formulaVisited. VisitorEvaluate 
+  Calculates the result for a Disjunction.
+    A disjunction is false if both its subformulas are false,
+    true if either of its subformulas is true,
+    and unknown otherwise.
+    visit(LogicalConstant)   - 
+Method in class formulaVisited. VisitorEvaluate 
+  Calculates the result for a LogicalConstant.
+    The value of   LogicalConstant.one()    is true, and
+    the value of   LogicalConstant.zero()   is false.
+    visit(LogicalVariable)   - 
+Method in class formulaVisited. VisitorEvaluate 
+  Calculates the result for a LogicalVariable.
+    The value of a logical variable is
+    the value the variable is bound to in the environment,
+    and unknown if the variable is bound to no value.
+    visit(Negation)   - 
+Method in class formulaVisited. VisitorEvaluate 
+  Calculates the result for a Negation.
+    A negation is false if its subformula is true,
+    false if its subformula is true,
+    and unknown if its subformula's value is unknown.
+    visit(Conjunction)   - 
+Method in class formulaVisited. VisitorToString 
+   
+    visit(Disjunction)   - 
+Method in class formulaVisited. VisitorToString 
+   
+    visit(LogicalConstant)   - 
+Method in class formulaVisited. VisitorToString 
+   
+    visit(LogicalVariable)   - 
+Method in class formulaVisited. VisitorToString 
+   
+    visit(Negation)   - 
+Method in class formulaVisited. VisitorToString 
+   
+    Visitor   - Interface in  formulaVisited   A visitor to formulas.    VisitorEvaluate   - Class in  formulaVisited   A visitor that evaluates each formula, returning
+  Boolean.TRUE  if the formula is true,
+  Boolean.FALSE if the formula is false, and
+  null if its value cannot be determined.    VisitorEvaluate(Environment)   - 
+Constructor for class formulaVisited. VisitorEvaluate 
+  Construct a VisitorEvaluate that evaluates formulas
+    in the given environment.
+    VisitorToString   - Class in  formulaVisited   A visitor that produces a string representation for each formula.    VisitorToString()   - 
+Constructor for class formulaVisited. VisitorToString 
+   
+      
+ Z  
+    zero()   - 
+Static method in class formulaVisited. LogicalConstant 
+  Returns a logical constant for 0 (false).
+    A   B   C   D   E   F   G   L   N   O   V   Z  
+
+
+  
+  
+   
+  
+          Overview     
+        Package   
+        Class   
+        Use   
+          Tree     
+          Deprecated     
+       Index    
+          Help     
+     
+  
+ 
+ 
+    
+ PREV 
+ NEXT  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+
+
+ </body> 

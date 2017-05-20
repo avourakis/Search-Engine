@@ -1,0 +1,713 @@
+ WEBDAV Working Group                     Y.  Y. Goland, Microsoft
+         INTERNET-DRAFT                  E. J. Whitehead, Jr., U.C. Irvine
+                       Asad Faizi, Netscape
+                                                 Stephen R. Carter, Novell
+                                                        Del Jensen, Novell
+         Expires January 15, 1997                            July 13, 1997
+
+
+                  Extensions for Distributed Authoring and Versioning
+                                       on the
+                               World Wide Web -- WEBDAV
+
+
+         Status of this Memo
+
+         This document is an Internet-Draft. Internet-Drafts are working
+         documents of the Internet Engineering Task Force (IETF), its
+         areas, and its working groups. Note that other groups may also
+         distribute working documents as Internet-Drafts.
+
+         Internet-Drafts are draft documents valid for a maximum of six
+         months and may be updated, replaced, or made obsolete by other
+         documents at any time. It is inappropriate to use Internet-Drafts
+         as reference material or to cite them other than as "work in
+         progress".
+                   
+         To learn the current status of any Internet-Draft, please check
+         the "1id-abstracts.txt" listing contained in the Internet-Drafts
+         Shadow Directories on ftp.is.co.za (Africa), nic.nordu.net
+         (Europe), munnari.oz.au (Pacific Rim), ds.internic.net (US East
+         Coast), or ftp.isi.edu (US West Coast).
+
+         Distribution of this document is unlimited. Please send comments
+         to the Distributed Authoring and Versioning (WEBDAV) working
+         group at , which may be joined by sending a
+         message with subject "subscribe" to .
+
+         Discussions of the WEBDAV working group are archived at
+         .
+
+
+         Abstract
+         This Document specifies a set of methods and content-types
+         ancillary to HTTP/1.1 for the management of resource properties,
+         simple name space manipulation,
+         simple resource locking (collision avoidance) and resource
+         version control.
+
+
+
+                                  Table of Contents
+
+         Abstract
+         1    Terminology
+         2    Data Model and Methods for DAV Properties
+              2.1  Introduction
+                   2.1.1............................The DAV Property
+                   2.1.2.................Existing Metadata Proposals
+                   2.1.3.................Properties and HTTP Headers
+              2.2  A Property Model for HTTP Resources
+                   2.2.1....................................Overview
+                   2.2.2..........................Property Namespace
+                   2.2.3.........................Property Attributes
+                   2.2.4.....................................Schemas
+              2.3  DAV Schema
+                   2.3.1..............................Live Attribute
+                   2.3.2..........................ReadOnly Attribute
+                   2.3.3....................................Elements
+              2.4  Property Identifiers
+                   2.4.1..........................Problem Definition
+                   2.4.2........................Solution Requirement
+                   2.4.3...........................DAV URL Parameter
+                   2.4.4...............................Name Encoding
+                   2.4.5...........Compatibility with legacy systems
+              2.5  Link XML Element
+                   2.5.1.........................Problem Description
+                   2.5.2.......................Solution Requirements
+                   2.5.3............................Link XML Element
+                   2.5.4.............................Src XML Element
+                   2.5.5.............................Dst XML Element
+                   2.5.6.....................................Example
+              2.6  Properties and Methods
+                   2.6.1......................................DELETE
+                   2.6.2.........................................GET
+                   2.6.3............................PROPPATCH Method
+                   2.6.4.........................................PUT
+                   2.6.5......................................SEARCH
+         3    A Proposal for Collections of Web Resources and Name Space
+         Operations
+              3.1  Observations on the HTTP Object Model
+                   3.1.1........................Collection Resources
+                   3.1.2Creation and Retrieval of Collection Resources
+                   3.1.3.......Source Resources and Output Resources
+              3.2  MKCOL Method
+                   3.2.1.........................Problem Description
+                   3.2.2.......................Solution Requirements
+                   3.2.3.....................................Request
+                   3.2.4....................................Response
+                   3.2.5.....................................Example
+              3.3  INDEX Method
+                   3.3.1.........................Problem Description
+                   3.3.2.......................Solution Requirements
+                   3.3.3.................................The Request
+                   3.3.4................................The Response
+                   3.3.5.......................Response Message Body
+                   3.3.6.....................................Example
+              3.4  Behavior of RFC 2068 Methods on Collections
+                   3.4.1...................GET, HEAD for Collections
+                   3.4.2........................POST for Collections
+                   3.4.3.........................PUT for Collections
+                   3.4.4......................DELETE for Collections
+              3.5  COPY Method
+                   3.5.1.........................Problem Description
+                   3.5.2.......................Solution Requirements
+                   3.5.3.................................The Request
+                   3.5.4................................The Response
+                   3.5.5....................................Examples
+              3.6  MOVE Method
+                   3.6.1.........................Problem Description
+                   3.6.2.......................Solution Requirements
+                   3.6.3.................................The Request
+                   3.6.4................................The Response
+                   3.6.5....................................Examples
+              3.7  Multi-Status Response
+                   3.7.1..........................Problem Definition
+                   3.7.2.......................Solution Requirements
+                   3.7.3.......................Multi-Status Response
+                   3.7.4.....................................Example
+              3.8  ADDREF Method
+                   3.8.1..........................Problem Definition
+                   3.8.2.......................Solution Requirements
+                   3.8.3.................................The Request
+              3.9  DELREF Method
+                   3.9.1..........................Problem Definition
+                   3.9.2.......................Solution Requirements
+                   3.9.3.................................The Request
+              3.10 PATCH Method
+                   3.10.1.........................Problem Definition
+                   3.10.2......................Solution Requirements
+                   3.10.3................................The Request
+                   3.10.4.........application/XML elements for PATCH
+                   3.10.5...............................The Response
+                   3.10.6...................................Examples
+              3.11 Headers
+                   3.11.1......................................Depth
+                   3.11.2................................Destination
+                   3.11.3....................Enforce-Live-Properties
+                   3.11.4.......................Duplicate-Properties
+                   3.11.5..................................Overwrite
+                   3.11.6.............................Destroy Header
+                   3.11.7...................Collection-Member Header
+              3.12 Links
+                   3.12.1..................Source Link Property Type
+         4    State Tokens
+              4.1  Overview
+                   4.1.1.........................Problem Description
+                   4.1.2.......................Solution Requirements
+              4.2  State Token Syntax
+              4.3  State Token Conditional Headers
+                   4.3.1..............................If-State-Match
+                   4.3.2.........................If-None-State-Match
+              4.4  State Token Header
+              4.5  E-Tags
+         5    Locking
+              5.1  Problem Description - Overview
+                   5.1.1..................Exclusive Vs. Shared Locks
+                   5.1.2............................Required Support
+              5.2  LOCK Method
+                   5.2.1...................................Operation
+                   5.2.2The Effect of Locks on Properties and Containers
+                   5.2.3................Locking Replicated Resources
+                   5.2.4..............Interaction with other Methods
+                   5.2.5....................Lock Compatibility Table
+                   5.2.6................................Status Codes
+                   5.2.7.....................................Example
+                   5.2.8....................Lock-Info Request Header
+                   5.2.9........................Owner Request Header
+                   5.2.10............................Time-Out Header
+                   5.2.11.........................State-Token Header
+              5.3  Write Lock
+              5.4  Lock Tokens
+                   5.4.1.........................Problem Description
+                   5.4.2...........................Proposed Solution
+                   5.4.3.......................Lock Token Definition
+              5.5  UNLOCK Method
+                   5.5.1..........................Problem Definition
+                   5.5.2.....................................Example
+              5.6  Discovery Mechanisms
+                   5.6.1.........................Lock Type Discovery
+                   5.6.2.......................Active Lock Discovery
+         6    Version Control
+         7    Internationalization Support
+         8    Security Considerations
+         9    Acknowledgements
+         10   References
+         11   Authors' Addresses
+         Appendix 1 - Content Type Application/XML
+              Syntax
+              XML element
+              Entity-Name
+              Close
+              XML Encoding
+              Markup Modifier
+              XML Syntax Shorthand
+         Appendix 2 - Parameter Syntax for Content-Type Application/XML
+              Schema Content-Type Parameter
+         Appendix 3 - URI Path Encoding
+              Problem Definition
+              Solution Requirement
+              Path Component
+         Appendix 4 - XML URI
+         Appendix 5 - XML elements
+              Ref XML element
+              Namespace
+                   Namespace XML element
+                   AS XML element
+                   Required XML element
+                   The XML URI and Namespace
+
+
+
+         1  Terminology
+
+         Collection - A resource that contains member resources.
+
+         Member Resource - a resource referred to by a collection. There
+         are two types of member resources: external and internal.
+
+         Internal Member Resource - the name given to a member resource of
+         a collection whose URI is relative to the URI of the collection.
+
+         External Member Resource - a member resource with an absolute URI
+         that is not relative to its parent's URI.
+
+         Properties - Also known as small-chunk metadata, a hierarchical
+         set of name/value pairs that describe a resource.
+
+         Live Properties - Properties whose semantics and syntax are
+         enforced by the server. For example, a live "read-only" property
+         that is enforced by the server would disallow PUTs to the
+         associated resource.
+
+         Dead properties - Properties whose semantics and syntax are not
+         enforced by the server. A dead "read-only" property would not be
+         enforced by the server and thus would not be used by the server as
+         a reason to disallow a PUT on the associated resource.
+
+
+
+         2  Data Model and Methods for DAV Properties
+
+         2.1 Introduction
+
+         2.1.1     The DAV Property
+
+         Properties are pieces of data that describe the state of a
+         resource. Properties are data about data. The term property is
+         used within this specification to disambiguate the concept from
+         the overloaded terms "metadata" and "attribute".
+
+         Properties are used within distributed authoring environments to
+         provide for efficient discovery and management of resources. For
+         example, a �subject' property might allow for the indexing of all
+         resources by their subject, and an �author' property might allow
+         for the discovery of what authors have written which documents.
+
+
+         2.1.2     Existing Metadata Proposals
+
+         Properties have a long played an essential role in the maintenance
+         of large document repositories, and many current proposals contain
+         some notion of a property. These include PICS [Miller et al.,
+         1996], PICS-NG, the Rel/Rev draft [Maloney, 1996], Web
+         Collections, XML [Bray, 1997], several proposals on representing
+         relationships within HTML, digital signature manifests (DCMF), and
+         a position paper on Web metadata architecture [Berners-Lee, 1997].
+
+         Some proposals come from a digital library perspective. These
+         include the Dublin Core [Weibel et al., 1995] metadata set and the
+         Warwick Framework [Lagoze, 1996], a container architecture for
+         different metadata schemas. The literature includes many examples
+         of metadata, including MARC [MARC, 1994], a bibliographic metadata
+         format, RFC 1807 [Lasher, Cohen, 1995], a technical report
+         bibliographic format employed by the Dienst system, and the
+         proceedings from the first IEEE Metadata conference describe many
+         community-specific metadata sets.
+
+         Participants of the 1996 Metadata II Workshop in Warwick, UK
+         [Lagoze, 1996], noted that, "new metadata sets will develop as the
+         networked infrastructure matures" and "different communities will
+         propose, design, and be responsible for different types of
+         metadata." These observations can be corroborated by noting that
+         many community-specific sets of metadata already exist, and there
+         is significant motivation for the development of new forms of
+         metadata as many communities increasingly make their data
+         available in digital form, requiring a metadata format to assist
+         data location and cataloging.
+
+
+         2.1.3     Properties and HTTP Headers
+
+         Properties already exist, in a limited sense, within HTTP through
+         the use of message headers. However, in distributed authoring
+         environments a relatively large number of properties are needed to
+         fully describe the state of a resource, and setting/returning them
+         all through HTTP headers is inefficient. Thus a mechanism is
+         needed which allows a principal to identify a set of properties in
+         which the principal is interested and to then set or retrieve just
+         those properties.
+
+         2.2 A Property Model for HTTP Resources
+
+         2.2.1     Overview
+
+         The DAV property model is based on name/value/attribute triples.
+         The name of a property identifies the property's syntax and
+         semantics, and provides an address with which to refer to a
+         property. The value of a property is an octet stream. The
+         attributes of a property are a set of name/value pairs that are
+         not directly addressable. Attributes are retrieved in conjunction
+         with retrieving a property, and are set when changing a property's
+         value. This specification defines two attributes, live, which
+         indicates if the property's syntax and semantics is enforced by
+         the server, and readonly, which indicates that the property's
+         value may be retrieved but not set.
+
+         2.2.2     Property Namespace
+
+
+         2.2.2.1   Problem Definition
+
+         The requirement is to be able to associate a value with a property
+         name on a resource and to be able to directly address that value.
+
+
+         2.2.2.2   Solution Requirement
+
+         Ideally a property namespace should work well with extant property
+         implementations as well as database systems. The DAV property
+         namespace has been specified with the following two facts in mind:
+
+            Namespaces associated with flat file systems are certainly
+               ubiquitous.
+
+            Many databases use a fixed schema mechanism, which makes
+               efficient implementation of hierarchical properties
+               difficult. Specifically, each property has a random set of
+               children; the best a relational database can do is provide
+               a table with name and value, where the value is a series
+               of indexes into other tables and each index represents a
+               specific value. However most RDBS do not provide for table
+               pointers, only index values. Such a system would have to
+               be jury-rigged to handle table pointers. In addition,
+               indexing systems are optimized for a small set of
+               relatively large tables; hierarchical property systems
+               tend toward many properties, each with different numbers
+               and types of children, thus potentially requiring a table
+               for each child.
+
+            It would seem best to implement a flat property namespace,
+            inducing a natural isomorphism between DAV and most native
+            file systems. Adopting such a model should not restrict RDBS
+            from taking full advantage of their search facilities.
+
+            However, it seems that future trends might be toward
+            hierarchical properties. As such, DAV requirements []
+            stipulate that the design of the flat property system MUST
+            be such that it will be possible to add true hierarchical
+            properties later without breaking downlevel clients.
+            Specifically, a flat client MUST be able to speak to a
+            hierarchical server and a hierarchical client MUST be able
+            to speak to a flat server. Worst case either way MUST be
+            that the request fails.
+
+
+            2.2.2.3   Property Names
+
+            A property name identifies both the syntax and semantics of
+            the property's value. It is critical that property names do
+            not collide, e.g., two principals defining the same property
+            name with two different meanings.
+
+            The URI framework provides for a mechanism to prevent
+            namespace collision and for varying degrees of
+            administrative control. Rather than reinvent these desirable
+            features, DAV properties make use of them by requiring that
+            all DAV property names MUST be URIs.
+
+            The property namespace is flat, that is, it is not possible
+            to string together a series of property names in order to
+            refer to a hierarchy of properties. Thus it is possible to
+            refer to a property A but not a property A/B.
+
+            2.2.3     Property Attributes
+
+            The attributes of a property provide information about the
+            property. Note that a property contains information about a
+            resource.
+
+            Attributes consist of name/value pairs whose value MUST be a
+            string. Attributes are not directly addressable, rather they
+            are retrieved and defined in the context of other property
+            operations. For example, if one retrieves a property value,
+            the attributes will also be returned. If one sets a property
+            value, one may also specify the values for its attributes.
+
+            All attributes on a server MUST be live. This means that the
+            server MUST only record attributes with syntax and semantics
+            the server understands and enforces. This normally means
+            that clients can not define new attributes on a property;
+            clients may only make use of the attributes supported by the
+            server.
+
+            If a client submits an attribute when setting a property
+            then the server MUST NOT record the property unless it
+            accepts the values specified for the corresponding
+            attributes. Thus, if a property value is submitted with a
+            live attribute then the server MUST NOT record the value
+            unless the server understands and enforces the syntax and
+            semantics of the property.
+
+
+            2.2.4     Schemas
+
+            A schema is a group of property names, attributes, and XML
+            elements.
+
+            It is often useful to indicate support for a particular
+            schema in a request or a response. Schema discovery is also
+            useful for determining if a system supports a group of
+            properties, attributes, or XML elements. A property does not
+            necessarily contain sufficient information to identify any
+            schema(s) to which it may belong.
+
+            As with property names, schemas MUST use URIs as their
+            names.
+
+            2.3 DAV Schema
+            The DAV Schema is specified as
+            http://www.ietf.org/standards/dav/. This schema is used to
+            indicate support for
+
+            properties and attributes that can be defined on a resource
+               and
+
+            XML elements that can be returned in responses.
+
+            All DAV compliant servers MUST support the DAV schema.
+
+
+            2.3.1     Live Attribute
+
+            Name: http://www.ietf.org/standards/dav/live
+
+            Purpose: To indicate that the property has its syntax and
+            semantics enforced by the resource on which it is recorded.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: Any property
+
+            Values= "=" 
+
+            Description: This attribute is used to indicate that the
+            resource expressing the property understands and enforces
+            the syntax and semantics of the property. The absence of the
+            Live attribute in a response indicates to the client that
+            the corresponding property does not have its syntax and
+            semantics enforced by the resource on which it is recorded.
+            If a live attribute is included when setting the value of a
+            property then the server SHOULD set the property if the
+            property will be live and MUST NOT set the property if the
+            property will not be live.
+
+
+            2.3.2     ReadOnly Attribute
+
+            Name: http://www.ietf.org/standards/dav/readonly
+
+            Purpose: To indicate that a property can be retrieved, but
+            not set through the property mechanism.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: Any property
+
+            Values= "=" 
+
+            Description: This attribute is used to indicate that the
+            property can only be retrieved, not set through the property
+            mechanism. This attribute is not meant as an access control
+            mechanism but rather to reflect the fact that the property
+            is not designed to have its value set through the property
+            mechanism. If this attribute is included when setting the
+            value of a property, the request MUST be rejected since
+            accepting the value would violate ReadOnly attribute. A
+            server MUST NOT effect a property protocol element that is
+            inconsistent or ill-defined with respect to the element's
+            attribute state, were it to be expressed.
+
+
+            2.3.3     Elements
+
+
+            2.3.3.1   Prop XML element
+
+            Name: http://www.ietf.org/standards/dav/prop
+
+            Purpose: To specify the name and value of a property
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: Any
+
+            Values: PropName PropValue
+
+
+            2.3.3.2   PropName XML element
+
+            Name: http://www.ietf.org/stnadards/dav/name
+
+            Purpose: To specify the name of a property, which MUST be a
+            URI.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: Prop
+
+            Values: URI
+
+
+            2.3.3.3   PropValue XML element
+
+            Name: http://www.ietf.org/standards/dav/propvalue
+
+            Purpose: To specify the value of a property.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: Prop
+
+            Values: The contents of a property.
+
+            2.4 Property Identifiers
+
+            2.4.1     Problem Definition
+
+            The addition of DAV properties to the HTTP object model
+            introduces the need for a mechanism to unambiguously refer
+            to either the body of the resource or the properties of a
+            resource.
+
+
+            2.4.2     Solution Requirement
+
+            The mechanism used for referring to the resource body must
+            also be usable for referring to the resource's properties,
+            such that even non-DAV aware clients can retrieve DAV
+            properties.
+
+
+            2.4.3     DAV URL Parameter
+
+            To allow for the specification of property information in
+            the context of an http scheme URL, a switch is needed. The
+            switch indicates that following path segments specify a
+            property location. To this end the "DAV" param is introduced
+            for use with http scheme URLs. The path segment to the right
+            of the DAV param MUST be formatted according to the XML Link
+            standard, described in Appendix 3.
+
+
+            2.4.4     Name Encoding
+
+            Properties on a resource are given URIs as a name. Thus, in
+            order to be able to refer to a property one must be able to
+            put the property's URI into an HTTP URI.
+
+            For example, the author property with full name
+            http://www.w3.org/standards/z39.50/author is defined on
+            http://somewhere.com/resource.
+
+            To create a reference to the author one would perform the
+            following steps.
+
+            Add the DAV parameter to the base URI,
+               http://somewhere.com/resource;DAV.
+
+            Add "/" to refer to the root of the resource's property
+               namespace, http://somewhere.com/resource;DAV/.
+
+            Change the author property's name into parameter format by
+               changing "/"s to "!"s and encasing the entire value in
+               parenthesis. The value must be encased in parenthesis in
+               order to indicate the "/" to "!" translation. The
+               translation "/" to "!" is done in order to prevent
+               confusion over segments boundaries, and to make sure that
+               the syntax for relative URIs remains well-defined.
+               http://somewhere.com/resource;DAV/(http:!!www.w3.org!stand
+               ards!z39.50!author).
+
+            The process is now complete, and the URL can be used in a
+            GET or PATCH to retrieve or alter the value. See appendix 3
+            for more information.
+
+            2.4.5     Compatibility with legacy systems
+
+
+            2.4.5.1   Problem Definition
+
+            The HTTP parameter space is uncontrolled, thus someone may
+            already be using a parameter with a value of "DAV" for some
+            end other than the one described here. Thus a client sending
+            a URI with a DAV param to a server may receive an unexpected
+            or inappropriate response.
+
+
+            2.4.5.2   Solution Requirement
+
+            A mechanism is needed to prevent namespace collisions.
+
+
+            2.4.5.3   Proposed Solution
+
+            All DAV compliant servers MUST honor the DAV param type on
+            http URLs. Thus if a client knows it is talking to a DAV
+            server, it can safely send an http URL with the DAV param.
+
+            The client may send the http URL with the DAV param
+            extension to a server that is not known to be DAV compliant
+            if the client uses PEP [Connolly, 1997] to prevent
+            collisions. The proper PEP header is:
+
+            DAVPEP = "PEP: {{map "DAV"}{strength must}}"
+
+            Note: this PEP header is not compliant with [Connolly,
+            1997]; the PEP authors have indicated they will change the
+            format to make the example legal.
+
+            2.5 Link XML Element
+
+            2.5.1     Problem Description
+
+            A mechanism is needed to associate resources with other
+            resources. These associations, also known as links, consist
+            of three values, a type describing the nature of the
+            association, the source of the link, and the destination of
+            the link. In the case of annotation, neither the source nor
+            the destination of a link need be the resource upon which
+            the link is recorded.
+
+
+            2.5.2     Solution Requirements
+
+            The association mechanism MUST make use of the DAV property
+            mechanism in order to make the existence of the associations
+            searchable.
+
+
+            2.5.3     Link XML Element
+
+            Name: http://www.ietf.org/standards/dav/link
+
+            Purpose: The XML document which is the value of a link.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Values= An XML document which MUST have a src and dst XML
+            element.
+
+            Description: Link is used to provide the source and one or
+            more destinations of the link. The type of the property
+            provides the type of the link. Link is a multivalued
+            element,so multiple Links may be used together to indicate
+            multiple links with the same type.
+
+            2.5.4     Src XML Element
+
+            Name: http://www.ietf.org/standards/dav/src
+
+            Purpose: To indicate the source of a link.
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: http://www.ietf.org/standards/dav/link
+
+            Values= URI
+
+
+            2.5.5     Dst XML Element
+
+            Name: http://www.ietf.org/standards/dav/Dst
+
+            Purpose: To indicate one or more destinations of a link
+
+            Schema: http://www.ietf.org/standards/dav/
+
+            Parent: http://www.ietf.org/standards/dav/link
+
+            Values= URI
+
+
+            2.5.6     Example
+
+            http://www.ietf.org/standards/dav/&gt; D&gt;&gt;
+                 Source&gt;
+                      http://www.ietf.org/standards/
+                                dav/&gt;D&gt;
+                                &gt;
+                                http://www.foocorp.com/Project
+                                /&gt;F&gt;
+                                &gt;
+                                  

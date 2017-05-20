@@ -1,0 +1,103 @@
+ Mode<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Mode  
+ 
+
+  Definition 
+ 
+
+All classes in the C GAL  kernel provide input and output operators for
+IOStreams.  The basic task of such an operator is to produce a
+representation of an object that can be written as a sequence of
+characters on devices as a console, a file, or a pipe. The  enum    Mode   distinguish between three different printing formats.
+  
+
+In    ASCII   mode, numbers 
+e.g. the coordinates of a point or
+the coefficients of a line, are written
+in a machine independent format. 
+In  BINARY  mode, data are written
+in a binary format, e.g. a double is represented
+as a sequence of four byte. The format depends on the machine.
+ The mode   PRETTY 
+serves mainly for debugging as the type of the geometric
+object is written, as well as the data defining the object. For example
+for a point at the origin with  Cartesian  double coordinates, the output
+would be  PointC2(0.0, 0.0) .  At the moment C GAL  does not
+provide input operations for pretty printed data. By default a stream
+is in A SCII  mode.
+  
+
+    
+           
+  
+ enum   Mode  {  ASCII  = 0  
+,  BINARY   
+,  PRETTY   
+};
+         
+           
+
+   
+
+  
+  
+  
+
+  
+
+
+  
+
+
+  
+  
+
+  See Also   CGAL::set_mode     CGAL::set_ascii_mode     CGAL::set_binary_mode     CGAL::set_pretty_mode     CGAL::get_mode     CGAL::is_ascii     CGAL::is_binary     CGAL::is_pretty    
+
+    Next:    Ostream_iterator&lt;T,Stream&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

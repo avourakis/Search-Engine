@@ -1,0 +1,268 @@
+ CHEM.DB.BaseDBPopulator.BaseDBPopulator<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package DB  ::
+         Module BaseDBPopulator  ::
+        Class BaseDBPopulator
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class BaseDBPopulator    Base class to take some kind of input data (probably a file), iterate 
+  through it's contents and process it accordingly, possibly calculating 
+  and formatting different values and then submitting them for output 
+  (probably a database). 
+   The core structure is in the run method, leaving most of the details 
+  to independent processor and iterator preparer objects for each table.  
+  Standard ones are included in this module, but additional processors can 
+  be created and added for customized curation / processing. 
+  The structure of the run method will likely have dependence and map to
+  the schema structure of the output (database), and thus should be 
+  overridden and customized by sub-classes    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Constructor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           loadOptions ( self ,
+         options )  
+      Load any relevant options from the command-line parser. 
+           
+            
+            
+           
+           
+     
+         
+      
+             addProcessor ( self ,
+         processor )  
+           
+            
+            
+           
+           
+     
+         
+      
+             clearProcessors ( self ,
+         tableName )  
+           
+            
+            
+           
+           
+     
+         
+      
+             setIteratorPreparer ( self ,
+         preparer )  
+           
+            
+            
+           
+           
+     
+         
+      
+           prepareIterator ( self ,
+         tableName ,
+         parentObj )  
+      Given a tableName, look for an iterator preparer object previously
+      set in the preparerDict. 
+           
+            
+            
+           
+           
+     
+         
+      
+           processObject ( self ,
+         tableName ,
+         parentObj ,
+         currObj )  
+      Given a tableName, look for a list of processor objects previously
+      added in the processorsDict. 
+           
+            
+            
+           
+           
+     
+         
+      
+           run ( self )  
+      Primary method that traverses through the database schema, 
+      populating it with the input data as it goes. 
+           
+            
+            
+           
+           
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         processorsDict  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingMod ...  
+     
+     
+         
+      
+         preparerDict  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel ...  
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Constructor.  Initialize processor object dictionaries to empty, and 
+  expected processor lists to empty lists. Sub-class should override.
+        
+  
+ 
+   
+     
+     loadOptions ( self ,
+         options ) 
+   
+     
+     
+    
+  
+  Load any relevant options from the command-line parser. Sub-class 
+  should override.
+        
+  
+ 
+   
+     
+     prepareIterator ( self ,
+         tableName ,
+         parentObj ) 
+   
+     
+     
+    
+  
+  Given a tableName, look for an iterator preparer object previously set
+  in the preparerDict.  Assuming it exists, Run the preparer given the 
+  parent object for this set of "children" to iterate over.
+        
+  
+ 
+   
+     
+     processObject ( self ,
+         tableName ,
+         parentObj ,
+         currObj ) 
+   
+     
+     
+    
+  
+  Given a tableName, look for a list of processor objects previously 
+  added in the processorsDict.  Run each of these processors on the current
+  object (currObj), passing its "parent" object as well to 
+  provide contextual information.
+        
+  
+ 
+   
+     
+     run ( self ) 
+   
+     
+     
+     Primary method that traverses through the database schema, populating 
+  it with the input data as it goes.  High level function. Details are left
+  to independent processor objects. 
+  Sub-class MUST override this to follow the respective customized 
+  schema structure
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   processorsDict 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   preparerDict 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:28 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

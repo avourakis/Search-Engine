@@ -1,0 +1,265 @@
+ Notes on Scheme<body>
+  
+ 
+ Information &amp; Computer Science   David G.
+Kay
+ 
+UC Irvine   ICS 141
+  Notes on Scheme   
+  
+ Scheme is a lexically scoped dialect of Lisp  
+   
+ Functional paradigm, but not purely; can do OOP, imperative,
+even logic  
+  
+ Dynamic storage is automatic (automatic garbage collection)  
+  
+ Procedures are first-class objects (and all procedures
+are functions)  
+  
+ Unified numeric types  
+    
+ Programming environment:  Traditionally interactive
+and interpreted, but many non-student-oriented Scheme systems allow building
+standalone applications.  
+   
+ Data in Scheme:  
+   
+ Characters:     A   -   Z
+a   -   z 0   -   9
+% + - * / = ? ! #   
+  
+ Atom:  String of characters without blanks  
+  
+ Numbers (unified), booleans (   #t   ,
+   #f   ), strings,
+characters  
+  
+ List:  Parentheses enclosing any combination of atom(s)
+and list(s).  Nested; empty.  
+   
+  cons    and    list   .   
+null?    (a predicate)  
+  
+  car    and    cdr   
+(IBM 704; contents of address/decrement register).  More mnemonically, "   first   "
+and "   rest   "  
+   
+ Vectors.  Structures.     (define-structure
+rest (name cuisine phone dish price))   
+   
+ =&gt;    (make-rest n
+c p d $)   ; constructor of a rudimentary
+object  
+  
+ =&gt;    (rest? R)   ;
+type checker  
+  
+ =&gt;    (rest-name R)   ;
+selector.  Similarly for cuisine, phone, dish, price  
+    
+ Evaluation of expressions:  (     FUNCTION  
+    ARGUMENTS     ).  Read-eval-print loop.  
+   
+ Quoting:  So you don't evaluate "constants".
+    (quote blah)   ,
+or    'blah   .  
+   
+  if, cond    -- control
+structures for selection.  
+  
+  lambda   ,    let   
+-- creating procedures (which are first-class objects) and local variables  
+  
+  display    and    newline   
+-- to generate output (as a side effect, apart from return value)  
+   
+ Scheme reading list (in roughly ascending order by
+difficulty):  
+   
+  The Schemer's Guide,  2nd ed., by Ferguson
+and Kaufman (Schemers, Inc., 1996)  
+  
+  Simply Scheme,  by Brian Harvey and Matthew
+Wright (MIT Press, 1994)  
+  
+  Concrete Abstractions,  by Hailperin, Kaiser,
+and Knight (PWS, 1999)  
+  
+  The Schematics of Computation  by Manis and
+Little (Prentice-Hall, 1995)  
+  
+  The Little Schemer,  4th ed., by Friedman and
+Felleisen (SRA 1996)  
+  
+  Scheme and the Art of Programming,  by Springer
+and Friedman (McGraw-Hill)  
+  
+  Structure and Interpretation of Computer Programs, 
+2nd ed., by Abelson and Sussman    (MIT/McGraw-Hill, 1996)  
+  
+ See also     http://www.ics.uci.edu/~kay/courses/22/scheme-refs.html    
+    
+ Defining procedures   --lambda   
+    
+  (define Thai?  
+      (lambda (R)  
+         (equal? 'Thai (rest-cuisine
+R))))   
+   
+  (define match-cuisine?   ; Let user specify
+which cuisine  
+      (lambda (R C)      ; to
+check for  
+         (equal? C (rest-cuisine R))))  
+   
+   
+ Define a restaurant collection ADT, as a list of restaurants.  
+    
+ (The following examples take advantage of procedures
+being first-class objects in Scheme.  That is, a procedure can take procedures
+as arguments and can also  return  a procedure.  As you go through
+the following examples, ask yourself, "What is the 'data type'
+of each argument?  What is the type of the returned value?"  In some
+cases, the answer will be, "A procedure [that itself takes some arguments
+and returns some value].") 
+       
+  
+  (define find-thai   ; return the first Thai restaurant
+in RC  
+      (lambda (RC)   
+         (cond   
+            ((null? RC) '())   
+            ((Thai? (first RC))
+(first RC))   
+            (else (find-thai (rest
+RC))))))   
+   
+  (define find-match  ; return restaurant that satisfies
+any 'test?'  
+      (lambda (RC test?)   
+         (cond   
+            ((null? RC) '())   
+            ((test? (first RC))
+(first RC))   
+            (else (find-match
+(rest RC) test?)))))   
+   
+ Call with    (find-match
+RC Thai?)   
+   
+ Define    Chinese?   
+or other predicates to call    find-match   
+with.  
+   
+  (find-match RC   
+      (lambda (R)   
+         (equal? 'Indonesian (rest-cuisine
+R))))   
+    
+ You can use "anonymous lambda" rather than
+making up a name.  
+    
+ A function that returns a function,--this will build
+a checker for any cuisine. 
+   (define make-cuisine-checker     
+      (lambda (C)      ; (make-cuisine-checker
+C) takes a cuisine  
+         (lambda (R)  ;  and returns
+a function that takes a Rest.  
+                     ;   and checks whether its
+cuisine matches C.  
+            (equal? C (rest-cuisine
+R)))))   
+   
+  (define Indonesian? (make-cuisine-checker 'Indonesian))   
+   
+  (find-match RC Indonesian?)   
+   
+  (find-match RC (make-cuisine-checker 'Indonesian))   
+   
+  (define make-checker  
+      (lambda (field-selector comparison-function
+value)  
+         (lambda (R)  
+             (comparison-function (field-selector
+R) value))))   
+   
+  (define cheap? (make-checker rest-price &lt; 10.00))   
+   
+  (find-match RC cheap?)  
+  
+  
+ List manipulation [Assume the restaurant collection
+is a Lisp list]  
+    
+  (define all-cheap?  
+      (lambda (Rlist)  
+         (cond ((null? Rlist) #t)  
+             ((cheap? (first Rlist))
+  
+               (all-cheap?
+(rest Rlist)))  
+             (else #f))))   
+   
+  (define all-cheap-restaurants  
+      (lambda (Rlist)  
+         (cond ((null? Rlist) '())  
+               ((cheap? (first Rlist))  
+                (cons (first Rlist)  
+                        (all-cheap-restaurants
+(rest Rlist))))  
+               (else (all-cheap-restaurants
+(rest Rlist))))))   
+   
+  (define find-all-matches  
+      (lambda (Rlist test?)  
+         (cond ((null? Rlist) '())  
+               ((test? (first Rlist))  
+                (cons (first Rlist)  
+                    (find-all-matches
+(rest Rlist) test?)))  
+               (else (find-all-matches
+(rest Rlist) test?)))))   
+   
+  (define remove-all-matches  
+      (lambda (Rlist test?)  
+         (cond ((null? Rlist) '())  
+               ((test? (first Rlist))  
+                (remove-all-matches
+(rest Rlist) test?))  
+               (else (cons (first Rlist)  
+                       (remove-all-matches
+(rest Rlist)                                       
+ test?))))))   
+    
+ Notice that    find-all-matches   
+and    remove-all-matches   
+are identical except that the actions in the    test?   
+clause and the    else   
+clause are interchanged.  We can combine these by including a boolean parameter
+(true if we want to keep matches, false if we want to remove them) and applying
+some logic to recognize that we want to    cons   
+the first item onto the result of the recursive call if the test and the
+keep-matches parameter are equal--both true or both false.  
+    (define handle-all-matches  
+      (lambda (Rlist test? keep-matches)  
+         (cond  
+           ((null? Rlist) '())  
+           ((equal? keep-matches
+(test? (first Rlist)))  
+            (cons (first
+Rlist)  
+               (handle-all-matches
+(rest Rlist) test? keep-matches)))  
+           (else (handle-all-matches
+(rest Rlist) test? keep-matches)))))  
+    (define find-all-matches  
+      (lambda (Rlist test?)  
+         (handle-all-matches
+Rlist test? #t)))  
+    (define remove-all-matches  
+      (lambda (Rlist test?)  
+         (handle-all-matches
+Rlist test? #f)))   
+  </body> 

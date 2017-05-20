@@ -1,0 +1,95 @@
+ Kernel::OrientedSide_3<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Kernel::OrientedSide_3  
+
+
+A model for this must provide:
+ 
+
+    
+          Oriented_side   
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Plane_3  h,  Kernel::Point_3  p)     
+                
+    returns   ON_ORIENTED_BOUNDARY  ,
+  ON_NEGATIVE_SIDE  , or the constant   ON_POSITIVE_SIDE  ,
+depending on the position of  p   relative to the oriented plane  h .
+                 
+          Oriented_side   
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Tetrahedron_3  t,  Kernel::Point_3  p)     
+                
+    returns   ON_ORIENTED_BOUNDARY  ,
+  ON_NEGATIVE_SIDE  , or the constant   ON_POSITIVE_SIDE  ,
+depending on the position of  p   relative to the oriented tetrahedron  t .
+                 
+          Oriented_side   
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Sphere_3  s,  Kernel::Point_3  p)     
+                
+    returns   ON_ORIENTED_BOUNDARY  ,
+  ON_NEGATIVE_SIDE  , or the   ON_POSITIVE_SIDE  ,
+depending on the position of  p   relative to the oriented sphere  s .
+            
+
+  Refines  AdaptableFunctor  (with two arguments)
+ 
+
+  See Also   CGAL::Plane_3 &lt; Kernel &gt;    CGAL::Sphere_3 &lt; Kernel &gt;    CGAL::Tetrahedron_3 &lt; Kernel &gt;   
+
+    Next:    Kernel::Plane_3   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

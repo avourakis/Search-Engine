@@ -1,0 +1,53 @@
+ /*
+    $Id: appsearch.h 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 03/16/2007
+    Author: Rares Vernica 
+*/
+
+#ifndef _appsearch_h_
+#define _appsearch_h_
+
+#include 
+#include 
+#include 
+
+using namespace std;
+
+class AppSearch 
+{
+public:
+  virtual ~AppSearch() {}
+  virtual void build() = 0;
+  virtual void search(const string &amp;query, const unsigned editdist, 
+                      vector &amp;results) = 0;
+};
+
+string getFilenameQuery(const string pathData, const string nameDataset, 
+                        const unsigned queryCount);
+
+string getFilenameAnswer(const string pathData, const string nameDataset, 
+                         const unsigned queryCount, const unsigned editdist);
+
+bool existQuery(const string pathData, const string nameDataset, 
+                const unsigned queryCount);
+
+void genQuery(const vector &amp;data, 
+              const string pathData, const string nameDataset,
+              const unsigned queryCount);
+
+void readQuery(vector &amp;query,
+               const string pathData, const string nameDataset, 
+               const unsigned queryCount);
+
+void readAnswer(vector &gt; &amp;answer,
+                const string pathData, const string nameDataset, 
+                const unsigned queryCount, const unsigned editdist);
+
+#endif
+ 

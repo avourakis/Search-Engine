@@ -1,0 +1,122 @@
+  <body>  This is Google's cache of  http://www.vdlande.com/VHDL/generate.html . It is a snapshot of the page as it appeared on Oct 4, 2009 23:36:35 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl   generate       
+
+
+VHDL Reference Guide - Generate Statement 
+    Generate  Statement  
+       Concurrent Statement 
+ ---- used in ----&gt; 
+ Architecture 
+          Syntax       
+  
+
+ 
+    label: for parameter in range  generate 
+	concurrent statements
+end  generate  label;
+  
+   
+  
+
+
+
+ 
+See LRM section 9.7
+
+        Rules and Examples       
+  
+
+ 
+   The  for .. generate   statement isd usually used to instantiate
+"arrays" of components. The  generate  parameter may be used to index
+array-type signals associated with component ports:
+ architecture GEN of REG_BANK is
+  component REG
+    port(D,CLK,RESET : in  std_ulogic;
+         Q           : out std_ulogic);
+  end component;
+begin
+   GEN_REG: 
+   for I in 0 to 3  generate 
+      REGX : REG port map
+        (DIN(I), CLK, RESET, DOUT(I));
+   end  generate  GEN_REG;
+end GEN;
+  
+   
+  
+
+ 
+   A label is compulsory with a   generate   statement. 
+ The  for ...  generate   statement is particularily powerful when
+used with integer  generics . 
+   Instance labels inside a   generate   statement do  not 
+need to have an index: 
+REGX(I):	-- Illegal
+  
+  for ..  generate   statements may be nested to create
+two-dimensional instance "arrays". 
+   
+  
+
+ 
+   Another form of   generate   is the  if ...  generate  
+statement. This is usually used within a  for ..  generate  
+statement, to account for irregularity. For instance, a ripple-carry
+adder with no carry-in:
+ 
+architecture GEN of RIPPLE is
+
+  component FULLADD
+    port (A,B,CIN : in bit;
+          SUM, CARRY : out bit);
+  end component;
+
+  component HALFADD 
+  port(A,B : in bit;
+       SUM, CARRY : out bit);
+  end component;
+
+  signal C : bit_vector(0 to 7);
+
+begin
+
+  GEN_ADD: for I in 0 to 7  generate 
+
+    LOWER_BIT: if I=0  generate 
+      U0: HALFADD port map
+         (A(I),B(I),S(I),C(I));
+    end  generate  LOWER_BIT;
+
+    UPPER_BITS: if I&gt;0  generate 
+      UX: FULLADD port map
+         (A(I),B(I),C(I-1),S(I),C(I));
+    end  generate  UPPER_BITS;
+
+  end  generate  GEN_ADD;
+
+  COUT   
+   
+  
+
+ 
+        Synthesis Issues       
+  
+
+ Generate  statements are usually supported for synthesis.
+
+ 
+        Whats New in '93       
+
+In  VHDL -93, a  generate  statement may contain local declarations,
+followed by the kjeyword  begin .
+
+  
+
+  
+   
+   
+   
+ 
+
+  </body> 

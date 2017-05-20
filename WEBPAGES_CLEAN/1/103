@@ -1,0 +1,338 @@
+ 
+PVNode
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.GUI 
+ 
+Class PVNode 
+ 
+java.lang.Object
+   com.touchgraph.graphlayout.Node
+       com.touchgraph.linkbrowser.LBNode
+            Raccoon.GUI.PVNode 
+ 
+   All Implemented Interfaces:    java.io.Serializable 
+    public class  PVNode  extends com.touchgraph.linkbrowser.LBNode implements java.io.Serializable     
+PVNode: class describing a node displayed in PeerViewer.
+  
+
+  
+    Author:  
+   Alexander Shapiro, Qi Zhong 
+  See Also:    Serialized Form     
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+ static int   
+    DEFAULT_PORT   
+
+ 
+            
+  
+   
+    Fields inherited from class com.touchgraph.linkbrowser.LBNode  
+    hint, HINT_BACK_COLOR, HINT_FONT, HINT_TEXT_COLOR, hintHeight, hintIsHTML, hintWidth, MINIMUM_HINT_HEIGHT, url, urlIsLocal, urlIsXML  
+  
+   
+    Fields inherited from class com.touchgraph.graphlayout.Node  
+    AUTO_ID_STRING, BACK_DEFAULT_COLOR, BACK_FIXED_COLOR, BACK_HILIGHT_COLOR, BACK_SELECT_COLOR, BORDER_DRAG_COLOR, BORDER_INACTIVE_COLOR, BORDER_MOUSE_OVER_COLOR, DEFAULT_TYPE, drawx, drawy, justMadeLocal, localEdgeCount, markedForRemoval, SMALL_TAG_FONT, TEXT_COLOR, TEXT_FONT, TYPE_ELLIPSE, TYPE_RECTANGLE, TYPE_ROUNDRECT, x, y  
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      PVNode  () 
+
+ 
+            
+      PVNode  (java.lang.String l) 
+
+ 
+          Should not be called
+  Every node must have an ID 
+      PVNode  (java.lang.String ip,
+       int portNum,
+       java.lang.String l) 
+
+ 
+            
+      PVNode  (java.lang.String id,
+       java.lang.String l) 
+
+ 
+            
+      PVNode  (java.lang.String id,
+       java.lang.String l,
+       java.lang.String u) 
+
+ 
+            
+      PVNode  (java.lang.String id,
+       java.lang.String l,
+       java.lang.String u,
+        PVNodeInfo  pvNodeInfo) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  java.lang.String   
+    getID  () 
+
+ 
+            
+    
+  java.lang.String   
+    getInfo  () 
+
+ 
+            
+    
+  java.lang.String   
+    getIP  () 
+
+ 
+            
+    
+  java.lang.String   
+    getName  () 
+
+ 
+            
+    
+   PVNodeInfo    
+    getNodeInfo  () 
+
+ 
+            
+    
+  int   
+    getPort  () 
+
+ 
+            
+    
+  boolean   
+    isExpanded  () 
+
+ 
+            
+    
+  void   
+    setIsExpanded  (boolean expanded) 
+
+ 
+            
+    
+  void   
+    setNodeInfo  ( PVNodeInfo  newNodeInfo) 
+
+ 
+            
+  
+   
+    Methods inherited from class com.touchgraph.linkbrowser.LBNode  
+    getHeight, getHint, getHintHeight, getHintIsHTML, getHintWidth, getPaintBackColor, getPaintBorderColor, getPaintTextColor, getPaintUnselectedBackColor, getURL, getURLIsLocal, getURLIsXML, getWidth, paint, setHint, setHintHeight, setHintIsHTML, setHintWidth, setNodeHintBackColor, setNodeHintFont, setNodeHintTextColor, setURL, setURLIsLocal, setURLIsXML  
+  
+   
+    Methods inherited from class com.touchgraph.graphlayout.Node  
+    addEdge, containsPoint, containsPoint, edgeAt, edgeNum, getBackColor, getFixed, getFont, getLabel, getLocation, getTextColor, getType, intersects, isVisible, localEdgeNum, paintNodeBody, paintSmallTag, removeEdge, setBackColor, setFixed, setFont, setID, setLabel, setLocation, setNodeBackDefaultColor, setNodeBackFixedColor, setNodeBackHilightColor, setNodeBackSelectColor, setNodeBorderDragColor, setNodeBorderInactiveColor, setNodeBorderMouseOverColor, setNodeTextColor, setNodeTextFont, setNodeType, setTextColor, setType, setVisible  
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+DEFAULT_PORT 
+ 
+public static final int  DEFAULT_PORT  
+    See Also:    Constant Field Values      
+    
+ Constructor Detail   
+     
+PVNode 
+ 
+public  PVNode () 
+      
+PVNode 
+ 
+public  PVNode (java.lang.String l) 
+  Should not be called
+  Every node must have an ID
+ 
+       
+PVNode 
+ 
+public  PVNode (java.lang.String id,
+              java.lang.String l) 
+      
+PVNode 
+ 
+public  PVNode (java.lang.String ip,
+              int portNum,
+              java.lang.String l) 
+      
+PVNode 
+ 
+public  PVNode (java.lang.String id,
+              java.lang.String l,
+              java.lang.String u) 
+      
+PVNode 
+ 
+public  PVNode (java.lang.String id,
+              java.lang.String l,
+              java.lang.String u,
+               PVNodeInfo  pvNodeInfo) 
+    
+    
+ Method Detail   
+     
+setNodeInfo 
+ 
+public void  setNodeInfo ( PVNodeInfo  newNodeInfo) 
+     
+    
+     
+getNodeInfo 
+ 
+public  PVNodeInfo   getNodeInfo () 
+     
+    
+     
+setIsExpanded 
+ 
+public void  setIsExpanded (boolean expanded) 
+     
+    
+     
+isExpanded 
+ 
+public boolean  isExpanded () 
+     
+    
+     
+getIP 
+ 
+public java.lang.String  getIP () 
+     
+    
+     
+getPort 
+ 
+public int  getPort () 
+     
+    
+     
+getInfo 
+ 
+public java.lang.String  getInfo () 
+     
+    
+     
+getID 
+ 
+public java.lang.String  getID () 
+     
+    
+     
+getName 
+ 
+public java.lang.String  getName () 
+     
+    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

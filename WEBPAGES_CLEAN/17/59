@@ -1,0 +1,49 @@
+ 23.5.2 OEWriteMacroModelFile<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.5.1 OEReadMacroModelFile 
+ Up:   23.5 MacroModel File Format 
+ Next:   23.6 XYZ File Format 
+   
+
+
+  
+23.5.2 OEWriteMacroModelFile 
+ 
+
+ 
+    void MyWriteMacroModelMolecule(oemolostream &amp;ofs, OEMolBase &amp;mol)
+{
+  if (! OEHasResidues(mol))
+    OEPerceiveResidues(mol);
+  OEMacroModelAtomTypes(mol);
+  OEWriteMacroModelFile(ofs, mol);
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.5.1 OEReadMacroModelFile 
+ Up:   23.5 MacroModel File Format 
+ Next:   23.6 XYZ File Format 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

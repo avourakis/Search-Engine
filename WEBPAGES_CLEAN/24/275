@@ -1,0 +1,110 @@
+ ch_ns_point<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::ch_ns_point  
+
+     
+     
+     
+  
+ 
+
+  Definition 
+ 
+
+The function   ch_ns_point   finds the points of a given set  
+of input points with minimal and maximal  x  coordinates.
+  
+
+ #include &lt; CGAL/ch_selected_extreme_points_2.h &gt; 
+  
+
+    
+         
+    template &lt;class ForwardIterator&gt;
+         
+            
+           
+void
+         
+          
+             
+     ch_ns_point  (     
+    ForwardIterator first, 
+
+ForwardIterator beyond, 
+
+ForwardIterator&amp; n, 
+
+ForwardIterator&amp; s, 
+
+Traits ch_traits = Default_traits)     
+                
+    traverses the range [ first , beyond ).
+            After execution, the value of
+             n  is an iterator in the range such that  *n      yx   *it  for all iterators  it  in the range. Similarly, for
+             s  the inequality  *s      yx   *it 
+            holds for all iterators in the range.
+            
+
+The default traits class  Default_traits  is the kernel in which the
+type  ForwardIterator::value_type  is defined.
+  
+
+  Requirements 
+ Traits  defines the type  Traits::Less_yx_2  as specified in
+the concept  ConvexHullTraits_2  and the corresponding member
+function that returns an instance of this type.
+ 
+
+  See Also 
+ 
+
+  CGAL::ch_e_point     CGAL::ch_nswe_point     CGAL::ch_n_point     CGAL::ch_s_point     CGAL::ch_w_point     CGAL::ch_we_point  
+  
+
+    Next:    ch_n_point   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

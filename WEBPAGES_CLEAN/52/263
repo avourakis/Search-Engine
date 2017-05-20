@@ -1,0 +1,243 @@
+ Geometry in Action: Mesh Generation<body>
+
+ 
+ 
+  
+ 
+  
+  Mesh Generation 
+
+A key step of the finite element method for numerical computation
+is mesh generation.  One is given a domain
+(such as a polygon or polyhedron; more realistic versions of the problem
+allow curved domain boundaries) and must partition it into
+simple "elements" meeting in well-defined ways.
+There should be few elements, but some portions
+of the domain may need small elements so that the computation
+is more accurate there.  All elements should be "well shaped"
+(which means different things in different situations, but generally
+involves bounds on the angles or aspect ratio of the elements).
+One distinguishes "structured" and "unstructured" meshes by
+the way the elements meet; a structured mesh is one
+in which the elements have the topology of a regular grid.
+Structured meshes are typically easier to compute with
+(saving a constant factor in runtime) but may require more elements
+or worse-shaped elements.  Unstructured meshes are often
+computed using  quadtrees , or
+by  Delaunay triangulation 
+of point sets; however there are quite varied approaches
+for selecting the points to be triangulated.
+
+ There has now been considerable theoretical work in the geometry
+community on these problems, complementing and building on practical
+work in the numerical community.  There is also beginning to be a
+convergence of these communities, in which theoretical work is fed back
+in to practical mesh generation applications.  Theoretically, the
+preferred type of mesh is the triangulation or simplicial complex, but
+in mesh generation practice quadrilaterals or higher dimensional cubical
+element shapes are preferred (both because fewer are typically needed
+and because they have better numerical properties).  Remaining problem areas
+in the theory of meshing
+include triangulations in dimensions higher
+than two, meshes with cubical elements, mesh smoothing,
+mesh decimation and multigrid methods,
+and data structures for efficient implementation of meshing algorithms.
+There has also been some theoretical work on using geometry to partition
+meshes by finding small separators of their underlying graphs.
+
+  The list of pointers here is not intended to be comprehensive;
+see Robert Schneiders' page for more pointers.
+I have tried to include a mixture of research groups working
+on theoretical problems with commercial packages and the issues they raise.
+      BibTeX references from "Mesh
+generation and optimal triangulation"  (survey by M. Bern and D.
+Eppstein in "Computing and Euclidean
+Geometry", World Scientific 1992 &amp; 1995).
+ 
+    Computational Topology .
+Survey paper by Dey, Edelsbrunner, and Guha, presented at the conference
+"Computational Geometry -- Ten Years After".  Includes descriptions of
+applications in image processing, cartography, graphics, solid modeling,
+mesh generation, and molecular modeling.
+ 
+    The
+CUBIT hexahedral mesh generation project  at Sandia Labs
+(and  another web
+page  about CUBIT).
+ 
+    Darren Knight Gallery . Mesh generation meets architectural design.
+ 
+    A Delaunay refinement algorithm for quality
+2-dimensional mesh generation , Jim Ruppert, NASA.
+ 
+    Detail removal .
+ 
+The Queen's U. finite element group  uses medial axes to simplify parts
+to be simulated while maintaining as little error as possible,
+as part of their
+ QUB  mesh
+generation system.
+Presumably similar ideas would also apply to model simplification
+for virtual reality.
+ 
+    Dynamic
+Scene Radiosity .
+Robert Grzeszczuk, U. Chicago, maintains a triangulated mesh
+dynamically, keeping track of the topological changes in
+the pattern of shadow crossings in an image.
+ 
+    Finite Elements Corner .
+ 
+    From
+computational geometry to computational physics , M. Pellegrini,
+ERCIM News, Apr. 1996.
+Marco describes his recent work on algorithms for form
+factors, radiosity, and electrostatics, using integral geometry and
+Monte Carlo methods in place
+of the traditional finite element meshing approach.
+ 
+   " Geometric approaches to mesh generation ",
+by Christoph Hoffman of Purdue,
+argues for a tighter coupling between mesh generation
+and computer aided design.
+ 
+    The Geometry
+Laboratory  at NASA's Langley Research Ctr.
+ 
+
+    Graph partitioning .
+Geometric methods for finding graph separators.
+Lecture notes from CS267, UC Berkeley, on high performance computing.
+This problem has applications in scientific computation,
+and, apparently, in DNA sequencing.
+ 
+    Grid Evolution for Oxidation Simulation .  Sahul, McKenna, and Dutton (in this paper from the NUPAD V Conf.) use adaptive quadtree meshes to simulate semiconductor oxidation.
+ 
+    Grid generation
+thrust , Mississippi State U.
+ 
+    Paul Heckbert's
+collection of mesh generation links .
+ 
+    Hexahedral subdivision .
+William Thurston characterizes the polyhedra which
+can be subdivided into topological cubes meeting face-to-face.
+The same characterization was independently rediscovered
+by Scott Mitchell of Sandia Labs.  For related work,
+see
+" A
+Characterization of the Quadrilateral Meshes of a Surface which
+admit a Compatible Hexahedral Mesh of the Enclosed Volume ",
+Scott Mitchell, 5th MSI Worksh. Comp. Geom.,
+and my paper,
+" Linear Complexity Hexahedral Mesh Generation ".
+ 
+    HEXAR 
+(Cray Research) is an automatic unstructured hexahedral mesh generation package
+that starts working directly from
+computer-aided design (CAD) surface data.
+ 
+    IMA Workshop: Grid Generation and Adaptive Algorithms , April 1997.
+ 
+    Information on finite element mesh generation ,
+Robert Schneiders, Aachen; very comprehensive.
+ 
+    International
+Society of Grid Generation .
+ 
+    LCTS project ,
+package for quality mesh generation and finite elements,
+Roman Galkin.
+ 
+    Mesh generation
+bibliography  with emphasis on anisotropic unstructured triangular
+meshes, P. Heckbert and F. Bossen.
+ 
+    Mesh
+generation mailing list , Steve Owen, CMU.
+ 
+    Mesh generation
+for bioelectric field problems ,
+Oak Ridge Nat. Lab.
+Discusses general mesh generation techniques as well as some
+of the problems arising in this application
+(such as anisotropy of some tissue types).
+ 
+    Mesh
+Generation  research by Paul Chew at Cornell
+ 
+    Mesh
+generation software 
+from  
+Nina Amenta's CG software directory .
+ 
+    Mesh
+generation using relaxation in warped space , P. Heckbert and
+F. Bossen.
+ 
+    Mesh
+Generators , from
+ Ian MacPhedran's hypertext version of Roger Young's finite element resources catalog .
+ 
+    Mesh Reduction , Shastra project, U. Texas.
+ 
+    Meshing Research Corner , Steve Owen, CMU.
+ 
+   Annual Meshing Roundtables: 
+4th Roundtable, Sandia, 1995:
+ conf.
+info.  and
+ papers .  5th Roundtable , Pittsburgh, October 1996.  6th Roundtable , Park City, Utah, October 1997.  7th Roundtable , Detroit, October 1998.  8th Roundtable , Lake Tahoe, October 1999.  9th Roundtable , New Orleans, October 2000.
+ 
+    My own research  on mesh
+generation and optimal triangulation.
+ 
+    Parallel octree mesh generation project ,
+Ralf Diekmann, Paderborn.
+ 
+    QMG , a quadtree-based 2d and 3d mesh generator by Steve Vavasis of Cornell.
+ 
+   Symposia on Trends in Unstructured Mesh Generation:  1st Symp.,
+Joint ASME/ASCE/SES Summer Meeting, Northwestern U., June 1997   2nd Symp.,
+5th US Nat. Cong. Comp. Mech., Boulder, August 1999 
+ 
+    Triangle ,
+an incremental Delaunay-based 2d mesh generator
+by Jonathan Shewchuk of CMU,
+part of the  
+CMU Archimedes project  for unstructured finite element computation.
+ 
+    Triangulation and
+mesh generation  open problems, web pages, and usenet postings, from the
+ Geometry Junkyard .
+ 
+    US
+Patent 4941114  covers an ear-cutting method of constructing
+unstructured triangular meshes.  Another meshing patent,
+ 5214752 ,
+describes an incremental point placement algorithm very similar to the
+provably-good meshing method of one of its inventors (Jim Ruppert).
+ Patent
+5440674  appears to be based on a very similar incremental method of Chew.
+Meshing patents
+ 4797842  and
+ 4933889 
+are based on medial axes.
+ Patent
+5315537  covers a wavefront-based quadrilateral meshing system.
+ Patent
+5345490  covers quadtree- and octree-based meshing.
+ Patent
+553206  describes methods of merging tetrahedra to simplify meshes.
+ 
+     
+Part of
+ Geometry in Action ,
+a collection of applications of computational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file. 
+ </body> 

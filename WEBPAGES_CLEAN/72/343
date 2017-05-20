@@ -1,0 +1,614 @@
+ 
+ResourceManager
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.RM 
+ 
+Class ResourceManager 
+ 
+java.lang.Object
+    Raccoon.RM.ResourceManager 
+ 
+   public class  ResourceManager  extends java.lang.Object    
+DB2LoadDriver : class that keep track of all the resources, such
+ as mapping links, known peers in the network, information for host node
+  
+
+  
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+ static java.util.HashMap   
+    attrMappingHashTable   
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    completeSet   
+
+ 
+            
+    
+   DBConnection    
+    dbConnection   
+
+ 
+            
+    
+   PVNode    
+    myNode   
+
+ 
+            
+    
+   NetModuleImpl    
+    netModule   
+
+ 
+            
+    
+ static int   
+    tmpInt   
+
+ 
+            
+    
+ static java.lang.String   
+    tmpString   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      ResourceManager  ( PVNode  node) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    createMapping  (java.lang.String nodeID) 
+
+ 
+            
+    
+   QueryAnswer    
+    executeQuery  (java.lang.String sqlStmt) 
+
+ 
+            
+    
+   PVInstance    
+    executeSFW  (java.lang.String sqlStmt) 
+
+ 
+            
+    
+   PVInstance    
+    executeSFW  (java.lang.String nodeName,
+           java.lang.String sqlStmt) 
+
+ 
+            
+    
+  java.util.HashMap   
+    getAttrMappingHashTable  () 
+
+ 
+            
+    
+  java.lang.String   
+    getAttrType  (java.lang.String nodeName,
+            java.lang.String relName,
+            java.lang.String attrName) 
+
+ 
+            
+    
+   PVInstance    
+    getInstance  (int index) 
+
+ 
+            
+    
+   PVInstance    
+    getInstance  (java.lang.String relationName) 
+
+ 
+            
+    
+   PVNode    
+    getMyNode  () 
+
+ 
+            
+    
+  java.lang.String   
+    getNodeID  () 
+
+ 
+            
+    
+  java.lang.String   
+    getNodeID  (java.lang.String nodeName) 
+
+ 
+            
+    
+  java.lang.String   
+    getNodeName  () 
+
+ 
+            
+    
+   PVRelation    
+    getRelation  (int index) 
+
+ 
+            
+    
+   PVRelation    
+    getRelation  ( PVSchema  schema) 
+
+ 
+            
+    
+   PVRelation    
+    getRelation  (java.lang.String relationName) 
+
+ 
+            
+    
+  int   
+    getRelationNum  () 
+
+ 
+            
+    
+   PVSchema    
+    getSchema  (int index) 
+
+ 
+            
+    
+   PVSchema    
+    getSchema  (java.lang.String relationName) 
+
+ 
+            
+    
+  boolean   
+    isAttrExist  (java.lang.String nodeName,
+            java.lang.String relName,
+            java.lang.String attrName) 
+
+ 
+            
+    
+  boolean   
+    isMyNodeID  (java.lang.String nodeID) 
+
+ 
+            
+    
+  boolean   
+    isMyNodeName  (java.lang.String nodeName) 
+
+ 
+            
+    
+  boolean   
+    isNodeExist  (java.lang.String nodeName) 
+
+ 
+            
+    
+  boolean   
+    isRelExist  (java.lang.String nodeName,
+           java.lang.String relName) 
+
+ 
+            
+    
+  void   
+    print  (java.lang.String str) 
+
+ 
+            
+    
+  void   
+    rememberMapping  ( PVSchema  searchTableSchema,
+                 PVSchema  resultTableSchema,
+                java.util.Vector mappingResult) 
+
+ 
+            
+    
+  void   
+    retrieveMyNodeSchema  () 
+
+ 
+          This method retrives the schema for MyNode. 
+    
+   PVInstance    
+    rmExecuteSFW  (java.lang.String sqlStmt) 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    searchNeighbor  () 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    searchNeighbor  (java.lang.String nodeID) 
+
+ 
+            
+    
+  void   
+    setDatabse  (java.lang.String systemName,
+           java.lang.String newHost,
+           java.lang.String newPort,
+           java.lang.String newUser,
+           java.lang.String newPasswd,
+           java.lang.String newDBName) 
+
+ 
+            
+    
+  void   
+    setNetModule  ( NetModuleImpl  newNetModule) 
+
+ 
+            
+    
+  void   
+    storeNeighbor  (com.touchgraph.graphlayout.graphelements.GraphEltSet eltSet) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+netModule 
+ 
+public  NetModuleImpl   netModule  
+        
+completeSet 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  completeSet  
+        
+myNode 
+ 
+public  PVNode   myNode  
+        
+dbConnection 
+ 
+public  DBConnection   dbConnection  
+        
+tmpString 
+ 
+public static java.lang.String  tmpString  
+        
+tmpInt 
+ 
+public static int  tmpInt  
+        
+attrMappingHashTable 
+ 
+public static java.util.HashMap  attrMappingHashTable  
+      
+    
+ Constructor Detail   
+     
+ResourceManager 
+ 
+public  ResourceManager ( PVNode  node) 
+    
+    
+ Method Detail   
+     
+setNetModule 
+ 
+public void  setNetModule ( NetModuleImpl  newNetModule) 
+     
+     
+setDatabse 
+ 
+public void  setDatabse (java.lang.String systemName,
+                       java.lang.String newHost,
+                       java.lang.String newPort,
+                       java.lang.String newUser,
+                       java.lang.String newPasswd,
+                       java.lang.String newDBName) 
+     
+     
+executeQuery 
+ 
+public  QueryAnswer   executeQuery (java.lang.String sqlStmt)
+                         throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+     
+executeSFW 
+ 
+public  PVInstance   executeSFW (java.lang.String sqlStmt)
+                      throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+     
+rmExecuteSFW 
+ 
+public  PVInstance   rmExecuteSFW (java.lang.String sqlStmt)
+                        throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+     
+executeSFW 
+ 
+public  PVInstance   executeSFW (java.lang.String nodeName,
+                             java.lang.String sqlStmt)
+                      throws java.sql.SQLException,
+                              PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+retrieveMyNodeSchema 
+ 
+public void  retrieveMyNodeSchema () 
+  This method retrives the schema for MyNode. It is 
+ called at the first time when the program runs.
+ 
+     
+      
+getRelationNum 
+ 
+public int  getRelationNum () 
+     Returns:   number of relations in this local node   
+     
+getSchema 
+ 
+public  PVSchema   getSchema (int index) 
+     Returns:   the schema of the index'th relation in this local node   
+     
+getInstance 
+ 
+public  PVInstance   getInstance (int index) 
+     Returns:   the relation instance of the index'th relation in this local node   
+     
+getRelation 
+ 
+public  PVRelation   getRelation (int index) 
+     
+     
+storeNeighbor 
+ 
+public void  storeNeighbor (com.touchgraph.graphlayout.graphelements.GraphEltSet eltSet) 
+     
+     
+searchNeighbor 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  searchNeighbor (java.lang.String nodeID) 
+     Parameters:    nodeID  - 
+   Returns:   RM.NodeInfoArray   
+     
+searchNeighbor 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  searchNeighbor () 
+     Returns:   RM.NodeInfoArray   
+     
+createMapping 
+ 
+public void  createMapping (java.lang.String nodeID) 
+     Parameters:    nodeID  -    
+     
+getSchema 
+ 
+public  PVSchema   getSchema (java.lang.String relationName) 
+     
+     
+getInstance 
+ 
+public  PVInstance   getInstance (java.lang.String relationName) 
+     
+     
+getRelation 
+ 
+public  PVRelation   getRelation (java.lang.String relationName) 
+     
+     
+getRelation 
+ 
+public  PVRelation   getRelation ( PVSchema  schema) 
+     
+     
+getNodeName 
+ 
+public java.lang.String  getNodeName () 
+     
+     
+getNodeID 
+ 
+public java.lang.String  getNodeID () 
+     
+     
+isMyNodeName 
+ 
+public boolean  isMyNodeName (java.lang.String nodeName) 
+     
+     
+isMyNodeID 
+ 
+public boolean  isMyNodeID (java.lang.String nodeID) 
+     
+     
+getNodeID 
+ 
+public java.lang.String  getNodeID (java.lang.String nodeName)
+                           throws  PVException  
+     Throws: 
+    PVException     
+     
+getAttrType 
+ 
+public java.lang.String  getAttrType (java.lang.String nodeName,
+                                    java.lang.String relName,
+                                    java.lang.String attrName)
+                             throws  PVException  
+     Throws: 
+    PVException     
+     
+isAttrExist 
+ 
+public boolean  isAttrExist (java.lang.String nodeName,
+                           java.lang.String relName,
+                           java.lang.String attrName)
+                    throws  PVException  
+     Throws: 
+    PVException     
+     
+isNodeExist 
+ 
+public boolean  isNodeExist (java.lang.String nodeName)
+                    throws  PVException  
+     Throws: 
+    PVException     
+     
+isRelExist 
+ 
+public boolean  isRelExist (java.lang.String nodeName,
+                          java.lang.String relName)
+                   throws  PVException  
+     Throws: 
+    PVException     
+     
+rememberMapping 
+ 
+public void  rememberMapping ( PVSchema  searchTableSchema,
+                             PVSchema  resultTableSchema,
+                            java.util.Vector mappingResult) 
+     
+     
+getMyNode 
+ 
+public  PVNode   getMyNode () 
+     
+     
+getAttrMappingHashTable 
+ 
+public java.util.HashMap  getAttrMappingHashTable () 
+     
+     
+print 
+ 
+public void  print (java.lang.String str) 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

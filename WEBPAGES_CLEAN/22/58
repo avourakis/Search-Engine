@@ -1,0 +1,203 @@
+ Hobbes Genome Sequence Mapping, UC Irvine<body> 
+  
+   
+   Hobbes   
+  Genome Sequence Mapping  
+  Information Systems Group       Institute for Genomics and Bioinformatics  
+  Bren School of ICS  UC Irvine  
+    
+ 
+  
+ 
+    About  
+  Downloads  
+  Quick Start  
+  Examples  
+  Manual  
+  People  
+  FAQ  
+  Contact  
+  
+
+
+  Manual for Hobbes 1.x 
+ 
+	   Hobbes is a software package for efficiently mapping DNA
+	  snippets (reads) against a reference DNA sequence. It can
+	  map short and long reads, and supports Hamming distance
+	  (only substitutions) and edit distance
+	  (substitutions/insertions/deletions). Hobbes accepts both
+	  single-end and paired-end reads for alignment, and can run
+	  on multiple CPU cores using multithreading. It supports
+	  three input formats (Fastq, Fasta, and text file) and two
+	  output formats ( Bowtie-like  format,  SAM  format). Ambiguous bases
+	  such as the 'N' character are treated as mismatches.   
+ 
+      
+ System Requirements 
+	 
+	   GNU Linux. We developed and tested Hobbes under Ubuntu. 
+	     GCC. Hobbes uses GCC builtin functions. 
+	     CMake. Required for compiling Hobbes (sudo apt-get install cmake).
+	      libbz2 and libz (sudo apt-get install libbz2-dev libbz2-dev). 
+	     Boost-iostreams (sudo apt-get install libboost-iostreams-dev). 
+	     A CPU supporting the  popcount  instruction (check your flags in /proc/cpuinfo). 
+	   
+
+ Compiling Hobbes 
+	 
+	   Download the Hobbes source from  here . 
+	     Extract the contents of the archive (tar -xf file). 
+	     cd into the Hobbes source root directory (hobbes1.3). 
+	     Run "compile_16bitvector.sh" to use 16 bits for Hobbes' bitvectors. 
+	     Run "compile_32bitvector.sh" to use 32 bits for Hobbes' bitvectors. 
+	     Alternatively, run "cmake ." followed by "make". 
+	     The Hobbes binaries are placed in the "build" directory. 
+	   
+       
+
+ Constructing a Hobbes Index 
+ Usage 
+ ./hobbes-index --sref &lt;input fasta file&gt; -i &lt;output index file&gt;  -p &lt;number of threads&gt; -g &lt;gram length&gt; 
+
+ Example 
+./hobbes-index --sref hg18.fa -i hg18.hix -p 4 -g 11
+
+ Options 
+	    -g &lt;int&gt;  
+	     Use given gram length to build a Hobbes index. We recommend a gram length of 11. We support gram lengths up to 16, but the index size will increase dramatically after gram length 13. 
+	      -i &lt;file&gt;  
+	     Create Hobbes index into given file. 
+	      --sref &lt;file&gt;  
+	     Reference sequence file to index in fasta format. 
+	      --dref &lt;dir&gt;  
+	     Uses all fasta files in given directory as reference sequence. File names become chromosome names. 
+	      -p &lt;int&gt;  
+	     Use given number of parallel pthreads to construct the index. 
+	      --noprogress  
+	     Disable progress indicator. 
+	     Mapping Reads with Hobbes 
+ Single-End Reads 
+1) Hamming distance (substitutions only):
+ 
+ ./hobbes -q &lt;input fastq file&gt; --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt; -a --hamming -v &lt;hamming distance&gt; -u &lt;number of reads&gt; -p &lt;number of threads&gt; 
+  
+
+2) Edit distance (substitutions/insertions/deletions):
+  
+ ./hobbes -q &lt;input fastq file&gt; --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt; -a --indel -v &lt;edit distance&gt; -u &lt;number of reads&gt; -p &lt;number of threads&gt;   
+
+Examples:
+  
+ ./hobbes -q reads.fq --sref hg18.fa -i hg18.hix -a --hamming -v 2 -u 10000 -p 4   ./hobbes -q reads.fq --sref hg18.fa -i hg18.hix -a --indel -v 2 -u 10000 -p 4    Paired-End Reads 
+1) Hamming distance (substitutions only):
+ 
+ ./hobbes --pe --seqfq1 &lt;first read fastq file&gt; --seqfq2 &lt;second read fastq file&gt; --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt; -a --hamming -v &lt;hamming distance&gt; --min &lt;minimum insert size&gt; --max &lt;maximum insert size&gt; -u &lt;number of reads&gt; -p &lt;number of threads&gt; 
+  
+
+2) Edit distance (substitutions/insertions/deletions):
+  
+ ./hobbes --pe --seqfq1 &lt;first read fastq file&gt; --seqfq2 &lt;second read fastq file&gt; --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt; -a --indel -v &lt;edit distance&gt; --min &lt;minimum insert size&gt; --max &lt;maximum insert size&gt; -u &lt;number of reads&gt; -p &lt;number of threads&gt; 
+  
+
+Examples:
+  
+ ./hobbes --pe --seqfq1 reads1.fq --seqfq2 reads1.fq --sref hg18.fa -i hg18Hobbes -a --indel -v 2 --min 50 --max 150 -u 10000 -p 4   ./hobbes --pe --seqfq1 reads1.fq --seqfq2 reads1.fq --sref hg18.fa -i hg18.hix -a --indel -v 2 --min 50 --max 150 -u 10000 -p 4    Read Input Options 		   
+	    -q &lt;file&gt;  
+	     Map single-end reads in given fastq file. 
+	      -r &lt;file&gt;  
+	     Map single-end reads in given line-by-line text file. 
+	      -f &lt;file&gt;  
+	     Map single-end reads in given fasta file. 
+	      -c &lt;string&gt;  
+	     Map given single-end read (only maps a single read). 
+	      --seqfq1 &lt;file&gt;  
+	     First fastq file for paired-end reads. Requires --pe. 
+	      --seqfq2 &lt;file&gt;  
+	     Second fastq file for paired-end reads. Requires --pe. 
+	      --gzip  
+	     Reads file is compressed with gzip. 
+	      --bzip2  
+	     Reads file is compressed with bzip2. 
+	     Reference Sequence Options 
+	    --sref &lt;file&gt;  
+	     Reference sequence file in fasta format. 
+	      --dref &lt;dir&gt;  
+	     Uses all fasta files in given directory as reference sequence. File names become chromosome names. 
+	     Hobbes Index Options 
+	    -i &lt;file&gt;  
+	     Use given Hobbes index to perform mapping. 
+	     Mapping Options 
+Hobbes can find all or at most  k  mappings per
+read. Note that the running time varies accordingly.
+ 
+If a read has exact mappings, Hobbes guarantees to find
+them. Otherwise, it finds mapping(s) within the specified distance.
+ 
+By default, Hobbes maps against the forward and reverse reference,
+(see --norc and --nofw).
+      -a  
+	     Find all mapping locations. 
+	      -k &lt;int&gt;  
+	     Find upto 'k' mappings per read (k-mapping mode is only supported in single-end mapping). 
+	      --hamming  
+	     Map reads using using Hamming distance. This is the fastest mode of Hobbes. 
+	      --indel  
+	     Map reads using edit distance. Uses heuristics to speed up the search, and is not guaranteed to find the best possible mapping locations (but very often it does). 
+	      -v &lt;int&gt;  
+	     Distance threshold. Finds reads within given distance threshold (use --hamming for Hammign distance and --indel for edit distance). 
+	      --pe  
+	     Enable paired-end mapping mode. See --seqfq1 and --seqfq2. 
+	      --min &lt;int&gt;  
+	     Minimum insert size for paired-end mappings. 
+	      --min &lt;int&gt;  
+	     Maximum insert size for paired-end mappings. 
+	      -u &lt;int&gt;  
+	     Aligns given number of reads (first ones). By default all the reads are aligned. Required for useful progress indication. 
+	      --norc  
+	     Maps against forward reference only. 
+	      --nofw  
+	     Maps against reverse reference only. 
+	      --cigar  
+	     Provides the cigar of mapping results. Slower than the regular mode. 
+	     Output Options  
+Hobbes supports 2 output formats: a  SAM  output format (default output
+format), and a  Bowtie-like 
+format. Currently, we only support the SAM format for paired-end mapping.
+      -B  
+	     Enables the  Bowtie-like  output
+	      format. 
+	      --sam-nohead  
+	     Enables the SAM output
+	      format. Suppresses the header lines (starting with
+	      '@'). 
+	      --sam-nosq  
+	     Enables the SAM output format. Suppresses the @SQ header lines. 
+	      --mapout &lt;file&gt;  
+	     Prints the mappings to a specified file. By default it is printed to the SAM ouput.  
+	     Other options 
+         
+	    -p &lt;int&gt;  
+	     Runs given number of parallel pthreads to perform the mapping. 
+	      --noprogress  
+	     Disable progress indicator. 
+	      --version  
+	     Prints version information. 
+	      --help  
+	     Prints usage information.  
+	     SAM Output Format 
+       
+       This format outputs Hobbes supported  SAM format . Each line has one read's mappings. Reads that are unmapped are also printed with appropriate flags set. Each line has the following tab separated fields: 
+        
+       
+      	   Name of the read mapped.   SAM bitwise FLAG.     RNAME: Reference sequence name of the mapping. If @SQ header lines are present, RNAME must be present in one of the SQ-SN tag. '*' if there is no mapping.   POS: 1-based leftmost mapping POSition of the first matching base. The first base in a reference sequence has coordinate 1. POS is set as 0 for an unmapped read.   MAPQ: Mapping Quality. A value 255 indicates that the mapping quality is not available. Since we don't support this yet, it's set to 255.   CIGAR: CIGAR string.    RNEXT: Reference sequence name of the NEXT fragment in the template.  Currently unavailable and hence set to`*'.   PNEXT: Position of the NEXT fragment in the template. In single-end alignment, it's set to 0; in paired-end alignment, it's the positon of it's mate pair.   TLEN: Signed insert size, it is set as 0 for single-end reads or when the information is unavailable   SEQ: Read sequence   QUAL: ASCII of base QUALity plus 33 (same as the quality string in the Sanger FASTQ format). Currently, the values are set only if the input file is a fastq file. Else, it is set to '*'.   Optional fields: Fields are tab-separated. For descriptions of all possible optional fields, see the SAM format specification. The fields relevant to hobbes are,    NM:i:&lt;N&gt; - Mapped read has hamming/edit distance of &lt;N&gt;.   XA:Z: &lt;format&gt; - Alternative hits; &lt;format&gt;: (chr,pos,CIGAR,NM;)*, pos has a prefix of '+' if mapping is reported in forward reference strand, and '-'  for the reverse reference strand.      
+      
+       Bowtie Output Format 
+       
+       This format outputs one mapping per line. Each line has the following tab separated fields: 
+        
+          Name of the read mapped.   SAM bitwise FLAG.     RNAME: Reference sequence name of the mapping. If @SQ header lines are present, RNAME must be present in one of the SQ-SN tag. '*' if there is no mapping.   POS: 1-based leftmost mapping POSition of the first matching base. The first base in a reference sequence has coordinate 1. POS is set as 0 for an unmapped read.   MAPQ: MAPping Quality. A value 255 indicates that the mapping quality is not available. Since we don't support this yet, it's set to 255.   CIGAR: CIGAR string.    RNEXT: Reference sequence name of the NEXT fragment in the template.  Currently unavailable and hence set to`*'.   PNEXT: Position of the NEXT fragment in the template. In single-end alignment, it's set to 0; in paired-end alignment, it's the positon of it's mate pair.   TLEN: Signed insert size, it is set as 0 for single-end reads or when the information is unavailable   SEQ: Read sequence   QUAL: ASCII of base QUALity plus 33 (same as the quality string in the Sanger FASTQ format). Currently, the values are set only if the input file is a fastq file. Else, it is set to '*'.   NM:i:&lt;N&gt; - Mapped read has hamming/ edit distance of &lt;N&gt;.     
+ 
+      
+
+   � 2015 ISG | Website maintained by Jongik Kim | Created by  Yun Huang  | Original design   Andreas Viklund      Last Updated on Jul 13, 2015   </body> 

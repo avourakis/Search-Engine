@@ -1,0 +1,584 @@
+   
+  Class Foundation.Objv.MetaClass
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class Foundation.Objv.MetaClass
+ 
+ 
+ java.lang.Object 
+   |
+   +----Foundation.Objv.MetaClass
+ 
+    public class  MetaClass 
+    extends  Object 
+    implements  ObjectClass 
+       
+ 
+    
+      LocalSystem  
+     
+        PID_START  
+     
+        TMW_FULL_TRACE  
+     
+        TMW_SOLO_TRACE  
+     
+        projects_default  
+     
+        tmw_base_dir  
+     
+        tmw_msg_default  
+     
+        tmw_msg_handler  
+     
+        tmw_obj_default  
+     
+        tmw_obj_store  
+     
+   
+    
+      MetaClass  (Integer)
+     
+   
+    
+      AddInheritanceMessage  (TMWMessage)
+     
+        AddInheritanceVariable  (TMWStateVariable)
+     
+        AddInternalHandler  (TMWMessageHandler)
+     
+        AddInternalMessage  (TMWMessage)
+     
+        AddInternalVariable  (TMWStateVariable)
+     
+        AddOperationalMessage  (TMWMessage)
+     
+        Assign  (String, String)
+     
+        Assign  (String, Vector)
+     
+        DeleteInstance  ()
+     
+        FTFull  ()
+     
+        FTFull  (boolean)
+     
+        FTFullAdd  (String)
+     
+        FTFullAddList  (Vector)
+     
+        FTFullRemove  (String)
+     
+        FTFullRemoveList  (Vector)
+     
+        FTOff  ()
+     
+        FTOn  ()
+     
+        FTSolo  ()
+     
+        FTSoloAdd  (String)
+     
+        FTSoloAddList  (Vector)
+     
+        FTSoloRemove  (String)
+     
+        FTSoloRemoveList  (Vector)
+     
+        GetChildren  ()
+     
+        GetClassName  ()
+     
+        GetId  ()
+     
+        GetInheritanceMessages  ()
+     
+        GetInheritanceVariables  ()
+     
+        GetInstances  ()
+     
+        GetInternalHandlers  ()
+     
+        GetInternalMessages  ()
+     
+        GetInternalVariables  ()
+     
+        GetName  ()
+     
+        GetOperationalMessages  ()
+     
+        GetParent  ()
+     
+        GetState  (String)
+     
+        GetStateVector  (String)
+     
+        InClass  (String)
+     
+        InheritedSend  (String, Vector)
+     
+        InitName  (String)
+     
+        InitializedInstance  (Vector, Vector)
+     
+        IsInstance  ()
+     
+        IsParent  (Integer)
+     
+        IsTrue  (Integer)
+     
+        Load  (String, Integer)
+     
+        Lock  ()
+     
+        Lock  (String)
+     
+        NewInstance  (Vector, Vector)
+     
+        NewObject  ()
+     
+        NewObject  (Vector)
+     
+        NewObject  (Vector, Vector)
+     
+        RemoveInheritanceMessage  (String)
+     
+        RemoveInheritanceVariable  (String)
+     
+        RemoveInternalHandler  (String)
+     
+        RemoveInternalMessage  (String)
+     
+        RemoveInternalVariable  (String)
+     
+        RemoveOperationalMessage  (String)
+     
+        ResolveParent  ()
+     
+        Retrieve  (String)
+     
+        Retrieve  (String, boolean)
+     
+        Send  (String, Vector)
+     
+        SetClassName  (String)
+     
+        SetName  (String)
+     
+        Store  ()
+     
+        Unlock  ()
+     
+        Unlock  (String)
+     
+        run  ()
+     
+    
+ 
+    
+   
+ LocalSystem 
+ 
+  public static  Runtime  LocalSystem
+ 
+   
+ PID_START 
+ 
+  public static  Integer  PID_START
+ 
+   
+ projects_default 
+ 
+  public static  String  projects_default
+ 
+   
+ tmw_base_dir 
+ 
+  public static  String  tmw_base_dir
+ 
+   
+ tmw_msg_default 
+ 
+  public static  String  tmw_msg_default
+ 
+   
+ tmw_obj_default 
+ 
+  public static  String  tmw_obj_default
+ 
+   
+ tmw_msg_handler 
+ 
+  public static  String  tmw_msg_handler
+ 
+   
+ tmw_obj_store 
+ 
+  public static  String  tmw_obj_store
+ 
+   
+ TMW_FULL_TRACE 
+ 
+  public static  Integer  TMW_FULL_TRACE
+ 
+   
+ TMW_SOLO_TRACE 
+ 
+  public static  Integer  TMW_SOLO_TRACE
+ 
+  
+ 
+    
+  
+   
+ MetaClass 
+ 
+  public MetaClass( Integer  assign_pid)
+ 
+  
+ 
+    
+   
+  IsTrue  
+ 
+  public static boolean IsTrue( Integer  num)
+ 
+   
+  GetId  
+ 
+  public  Integer  GetId()
+ 
+   
+  GetClassName  
+ 
+  public  String  GetClassName()
+ 
+   
+  GetParent  
+ 
+  public  ObjectClass  GetParent()
+ 
+   
+  IsParent  
+ 
+  public boolean IsParent( Integer  Obj)
+ 
+   
+  IsInstance  
+ 
+  public boolean IsInstance()
+ 
+   
+  InClass  
+ 
+  public boolean InClass( String  ClassName)
+ 
+   
+  SetName  
+ 
+  public void SetName( String  ObjectName)
+ 
+   
+  GetName  
+ 
+  public  String  GetName()
+ 
+   
+  GetState  
+ 
+  public  String  GetState( String  VarName)
+ 
+   
+  GetStateVector  
+ 
+  public  Vector  GetStateVector( String  VarName)
+ 
+   
+  GetChildren  
+ 
+  public  Hashtable  GetChildren()
+ 
+   
+  GetOperationalMessages  
+ 
+  public  Hashtable  GetOperationalMessages()
+ 
+   
+  GetInheritanceMessages  
+ 
+  public  Hashtable  GetInheritanceMessages()
+ 
+   
+  GetInheritanceVariables  
+ 
+  public  Hashtable  GetInheritanceVariables()
+ 
+   
+  GetInternalMessages  
+ 
+  public  Hashtable  GetInternalMessages()
+ 
+   
+  GetInternalVariables  
+ 
+  public  Hashtable  GetInternalVariables()
+ 
+   
+  GetInternalHandlers  
+ 
+  public  Hashtable  GetInternalHandlers()
+ 
+   
+  run  
+ 
+  public void run()
+ 
+   
+  Lock  
+ 
+  public void Lock()
+ 
+   
+  Unlock  
+ 
+  public void Unlock()
+ 
+   
+  Lock  
+ 
+  public void Lock( String  VarName)
+ 
+   
+  Unlock  
+ 
+  public void Unlock( String  VarName)
+ 
+   
+  FTSolo  
+ 
+  public boolean FTSolo()
+ 
+   
+  FTFull  
+ 
+  public boolean FTFull()
+ 
+   
+  FTOn  
+ 
+  public void FTOn()
+ 
+   
+  FTOff  
+ 
+  public void FTOff()
+ 
+   
+  FTSoloAdd  
+ 
+  public void FTSoloAdd( String  Symbol)
+ 
+   
+  FTSoloRemove  
+ 
+  public void FTSoloRemove( String  Symbol)
+ 
+   
+  FTSoloAddList  
+ 
+  public void FTSoloAddList( Vector  Symbols)
+ 
+   
+  FTSoloRemoveList  
+ 
+  public void FTSoloRemoveList( Vector  Symbols)
+ 
+   
+  FTFull  
+ 
+  public void FTFull(boolean TraceAll)
+ 
+   
+  FTFullAdd  
+ 
+  public void FTFullAdd( String  Symbol)
+ 
+   
+  FTFullRemove  
+ 
+  public void FTFullRemove( String  Symbol)
+ 
+   
+  FTFullAddList  
+ 
+  public void FTFullAddList( Vector  Symbols)
+ 
+   
+  FTFullRemoveList  
+ 
+  public void FTFullRemoveList( Vector  Symbols)
+ 
+   
+  Retrieve  
+ 
+  public  String  Retrieve( String  VarName)
+ 
+   
+  Retrieve  
+ 
+  public  Vector  Retrieve( String  VarName,
+                         boolean IsList)
+ 
+   
+  Assign  
+ 
+  public void Assign( String  VarName,
+                      String  Val)
+ 
+   
+  Assign  
+ 
+  public void Assign( String  VarName,
+                      Vector  Vals)
+ 
+   
+  InitName  
+ 
+  public void InitName( String  Name)
+ 
+   
+  SetClassName  
+ 
+  public void SetClassName( String  Name)
+ 
+   
+  Send  
+ 
+  public  Vector  Send( String  Mesg,
+                      Vector  Arguments)
+ 
+   
+  InheritedSend  
+ 
+  public  Vector  InheritedSend( String  Mesg,
+                               Vector  Arguments)
+ 
+   
+  AddOperationalMessage  
+ 
+  public void AddOperationalMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveOperationalMessage  
+ 
+  public void RemoveOperationalMessage( String  MesgName)
+ 
+   
+  AddInheritanceMessage  
+ 
+  public void AddInheritanceMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveInheritanceMessage  
+ 
+  public void RemoveInheritanceMessage( String  MesgName)
+ 
+   
+  AddInheritanceVariable  
+ 
+  public void AddInheritanceVariable( TMWStateVariable  Var)
+ 
+   
+  RemoveInheritanceVariable  
+ 
+  public void RemoveInheritanceVariable( String  VarName)
+ 
+   
+  AddInternalMessage  
+ 
+  public void AddInternalMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveInternalMessage  
+ 
+  public void RemoveInternalMessage( String  MesgName)
+ 
+   
+  AddInternalVariable  
+ 
+  public void AddInternalVariable( TMWStateVariable  Var)
+ 
+   
+  RemoveInternalVariable  
+ 
+  public void RemoveInternalVariable( String  VarName)
+ 
+   
+  AddInternalHandler  
+ 
+  public void AddInternalHandler( TMWMessageHandler  Handler)
+ 
+   
+  RemoveInternalHandler  
+ 
+  public void RemoveInternalHandler( String  HandlerName)
+ 
+   
+  NewInstance  
+ 
+  public  ObjectClass  NewInstance( Vector  Paramters,
+                                  Vector  Values)
+ 
+   
+  InitializedInstance  
+ 
+  public  ObjectClass  InitializedInstance( Vector  Parameters,
+                                          Vector  Values)
+ 
+   
+  GetInstances  
+ 
+  public  Hashtable  GetInstances()
+ 
+   
+  DeleteInstance  
+ 
+  public void DeleteInstance()
+ 
+   
+  NewObject  
+ 
+  public  ObjectClass  NewObject()
+ 
+   
+  NewObject  
+ 
+  public  ObjectClass  NewObject( Vector  Vars)
+ 
+   
+  NewObject  
+ 
+  public  ObjectClass  NewObject( Vector  Vars,
+                                Vector  Vals)
+ 
+   
+  ResolveParent  
+ 
+  public void ResolveParent()
+ 
+   
+  Store  
+ 
+  public boolean Store()
+ 
+   
+  Load  
+ 
+  public boolean Load( String  Name,
+                       Integer  Id)
+ 
+  
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

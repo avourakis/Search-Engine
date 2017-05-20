@@ -1,0 +1,130 @@
+ VHDL Reference Guide - Operators<body>  This is Google's cache of  http://www.vdlande.com/VHDL/operator.html . It is a snapshot of the page as it appeared on Oct 6, 2009 17:39:11 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Operators  
+        Operator 
+ ---- used in ----&gt; 
+ Expression 
+            Syntax        
+  
+
+ 
+See LRM section 7.2
+
+         Rules and Examples        
+  
+
+ 
+        The  logical operators  are predefined for  bit, boolean,
+bit_vector , linear arrays of  boolean, std_logic  and
+ std_logic_vector  types. They return a value of the same type:
+ and, or, nand, nor, xor, not 
+     
+     The  equality  and  inequality  operators are
+predefined for all types, and they return a boolean value:
+ =   -- equal to
+/=  -- not equal to 
+     
+    
+  
+
+ 
+    The other relational operators are predefined for all scalar types,
+and all one-dimensional array types. They also return a boolean value:
+ &lt;   -- less than
+&gt;   -- greater than
+&lt;=  -- less than or equal to
+&gt;=  -- greater than or equal to
+  
+    
+  
+
+ 
+    For arrays of different lengthsm the predefined relational operators
+align the left-hand elements and compare corresponding positions. This
+can lead to unexpected results:
+ constant ARR1 :bit_vector := "0011";
+constant ARR2 :bit_vector := "01";
+-- (ARR1 &lt; ARR2) will return true  
+    
+  
+
+ 
+    The  &amp;  operator is used to concatenate (join) arrays, or join
+new elements to an array:
+ Z_BUS(1 downto 0) &lt;= '0' &amp; B_BIT;
+BYTE &lt;= A_BUS &amp; B_BUS;
+  
+    
+  
+
+ 
+    Add, subtract, multiply and divide are defined for integer and real.
+Both operands must be the same type, and the result is also of the same
+type:
+ signal INT1, INT2: integer := 0;
+signal REAL1, REAL2: real := 6.7;
+...
+INT1  &lt;= INT1 + 3;
+REAL1 &lt;= REAL2 - 2.2;
+INT2  &lt;= INT1 * REAL1;   --illegal
+INT2  &lt;= INT1 * INTEGER(REAL1);
+REAL2 &lt;= REAL1 / 42.3;
+  
+    
+  
+
+ 
+    For physical types (e.g.time), assignments must be dimensionally
+consistant:
+ variable TIME1,TIME2: time;
+...
+TIME1 := TIME2 * 2.5;
+TIME1 := TIME2 / 4;
+TIME1 := 3.6 ns + TIME2;
+TIME1 := TIME2 * 6.67 ns;   --illegal
+  
+    
+  
+
+ 
+    Other numeric operators are exponentiation ( ** ), absolute
+value ( abs ), modulus ( mod ), and remainder ( rem ).
+ 
+    
+  
+
+
+ 
+         Synthesis Issues        
+  
+
+Most predefined operators are synthesisable, providing they are used
+with types accepted by the synthesis tool. See also  type declarations  and  overloading 
+ 
+The following are  not  usually synthesisable, except as part of a
+constant expression: exponentiation (**), division by other than 2, mod,
+rem.
+
+  
+         Whats New in '93        
+
+ xnor  has been added to the logical operators in  VHDL -94. New
+ shift  and  rotate  operators are defined for one-dimensional
+arrays of bit or boolean:
+   sll  -- shift left logical
+ srl  -- shift right logical
+ sla  -- shift left arithmetic
+ sra  -- shift right arithmetic
+ rol  -- rotate left
+ ror  -- rotate right
+ 
+
+ 
+
+  </body> 

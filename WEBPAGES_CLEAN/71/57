@@ -1,0 +1,39 @@
+ Emily Navarro<body>  Assignment 1-1: MakeAGraph    Due date: January 13th 5:00pm   Informatics 122  Software Design II  Winter 2015  Professor Emily Navarro      Overview  
+Your client wants you to create MakeAGraph, a graphing program that creates a wide variety of customized graphs, given a set of data. For example, a user might want to keep track of how their bowling score has improved over time (in the form of a line graph or a scatter plot), or see how many rainy vs. snowy vs. sunny days we have had lately (bar graph), or discover where all their money is going (pie chart).     For this initial version of MakeAGraph, the client wants to keep it simple and support just two modes: scatter plot mode (in which the user can generate a scatter plot) and bar graph mode (in which the user can generate bar graphs). This will be a Java application, run through the console, with textual output only, and input coming from system console (no GUI required).      Scatter Plots  
+A scatter plot is a plot of the values of Y versus the corresponding values of X. For a detailed description of a scatter plot, as well as some examples, see  http://www.mathsisfun.com/data/scatter-xy-plots.html .  A few specifications about scatter plots created by MakeAGraph:   The program should accept as input from the user a set of (x, y) pairs (in any order), labels for the x and y axes, and a graph title, and generate a scatter plot based on the data given.    
+   The graph should be labeled with a title. 
+   Each data point should be represented by an asterisk. 
+   The axes should be labeled. 
+   Units should be shown on both axes (they do not have to end with 0 or 5). 
+   An appropriate scale for each axis should be determined and displayed by the program to accommodate the data. For example, if my x values fall between 45 and 90, the scale for the x-axis should be about 40-something to about 90-something. Choosing a scale of 0-200 or something would not be appropriate for this data. 
+   Here is example data given to make a scatter plot: 
+    Title: Lemonade Sales vs. Temperature 
+     x-axis: Temperature (degrees Fahrenheit) 
+     y-axis: Daily Sales (in US$) 
+     Data: 
+      (80, 28), (45, 10), (50, 20), (60, 28), (55, 20), (85, 55), (90, 55), (90, 62), (70, 28), (70, 36), (75, 36), (80, 47) 
+       Here is an example of the type of scatter plot the program should generate based on the above data: 
+   	  	  	    	  	  	  	  	       	  	   Lemonade Sales vs. Temperature   	  	  	    	  	  	  	  	 | 	  	  	  	  	  	  	  	  	  	 *   	      	  	  	  60    -      	  	  	  	  	 | 	  	  	  	  	  	  	  	  	 * 	 *   	  	  	  	  	 |   	      	  	  	  50    -     Daily Sales (in US$) 	  	 | 	  	  	  	  	  	  	  	 * 	    	  	  	  	  	 |   	      	  	  	  40    - 	    	  	  	  	  	 | 	  	  	  	  	  	 * 	 *   	  	  	  	  	 |   	      	  	  	  30    - 	    	  	  	  	  	 | 	  	  	  	 * 	  	 * 	  	 *   	  	  	  	  	 |   	      	  	  	  20    - 	  	  	 * 	 * 	  	    	  	  	  	  	 |   	  	  	  	  	 |   	      	  	  	  10    - 	  	 *   	  	  	  	  	 |   	        	    	  	   0    - 	 _____________________________________________________   	  	  	  	  	 | 	 | 	 | 	 | 	 | 	 | 	 | 	 | 	 | 	 | 	 |   	  	  	  	  	 40 	 45 	 50 	 55 	 60 	 65 	 70 	 75 	 80 	 85 	 90   	  	  	  	   	  	  	 Temperature (degrees Fahrenheit)         Bar Graphs  
+A bar graph is a way to graphically display data by showing it as bars of different heights. For a detailed description of a bar graph, as well as some examples, see  http://www.mathsisfun.com/data/bar-graphs.html .  A few specifications about bar graphs created by MakeAGraph:   The program should accept as input from the user a set of (category, value) pairs, and generate a bar graph based on the data given.    
+   The graph should be labeled with a title. 
+   Each bar should be represented by a "stack" of asterisks. 
+   The axes should be labeled. 
+   Units should be shown on the numerical axis (they do not have to end with 0 or 5). 
+   Categories should be labeled on the "category" axis. 
+   An appropriate scale for the numerical axis should be determined and displayed by the program to accommodate the data (just like for the scatter plot). 
+   The user should be able to choose an orientation for the bar graph: horizontal or vertical. 
+   Here is example data given to make a bar graph 
+    Title: Student Grades in Informatics 122 
+     x-axis: Grade 
+     y-axis: Number of Students 
+     Orientation: vertical 
+     Data (the bars will appear in the order given here): 
+      (A, 11), (B, 4), (C, 2), (D, 1), (F, 1) 
+       Here is an example of the type of bar graph the program should generate based on the above data: 
+      	  	  	  	  	       	  	   Student Grades in Informatics 122   	  	  	    	  	  	  	  	 | 	  	  	  	  	  	  	  	  	    	      	  	  	  12    -      	  	  	  	  	 | 	  	  	  	  	  	  	  	  	    	  	  	  	  	 | 	 *   	      	  	  	  10    -  	  	 *  Number of Students 	  	 | 	 * 	  	  	  	  	  	  	    	  	  	  	  	 | 	 *   	      	  	  	   8    - 	  	 *   	  	  	  	  	 | 	 * 	  	  	  	    	  	  	  	  	 | 	 *   	      	  	  	   6    - 	  	 *   	  	  	  	  	 | 	 * 	  	  	    	  	  	  	  	 | 	 *   	      	  	  	   4    - 	  	 * 	  	 *   	  	  	  	  	 | 	 * 	  	 *   	  	  	  	  	 | 	 * 	  	 *   	      	  	  	   2    - 	  	 * 	  	 * 	  	 *   	  	  	  	  	 | 	 * 	  	 * 	  	 * 	  	 * 	  	 *   	        	    	  	   0    - 	 _____________________________________________________   	  	  	  	  	  	 A 	  	 B 	  	 C 	  	 D 	  	 F   	  	  	  	   	  	  	  	  	         Grade      Future Changes  
+For future versions of MakeAGraph, the customer may want to include pie charts, line graphs, and possibly other types of charts. They will also want to allow more customization of each graph, such as letting the user set the colors for the background, bars, data points, lines, etc. Keep this in mind as you make your design.   Assignment Details  
+For Assignment 1-1, you are to create a UML, object-oriented design for a software implementation of MakeAGraph. You should provide additional documentation beyond the raw UML diagrams, where needed. Feel free to use any UML or diagramming tool. There is no page limit/requirement, but as a general rule of thumb you should have about a one-page UML diagram with about a half-page to one page of documentation describing how it works, what the different classes do, and  how your design contains the flexibility necessary for the specified future changes .  Bring one  printed copy  of your design to class on January 13th.     This is merely part 1 of this assignment. It will continue for several more lectures. You will be evaluating and implementing each other's designs, so be sure to put your best effort and thought into this.   Grading  
+For Assignment 1, you will be graded on three things:   Understandability: Can someone pick it up and implement it?    
+   Flexibility: Can the design support future changes? 
+   Correctness/completeness: Does the design incorporate all the requirements? 
+ </body> 

@@ -1,0 +1,123 @@
+ AdaptableFunctor<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  AdaptableFunctor  
+ 
+
+  Definition The concept   AdaptableFunctor   defines an adaptable functor,
+  i.e., a functor that can be used with function object adaptors such
+  as binders and composers.
+ 
+
+  Types 
+ 
+
+    
+          AdaptableFunctor ::result_type
+         
+              
+    return type of the
+    functor.
+ 
+
+          
+          AdaptableFunctor ::Arity
+         
+              
+    defines the arity of the functor,
+    i.e., the number of arguments it takes. The class has to be a
+    specialization of   CGAL::Arity_tag &lt;int&gt; , where the template
+    parameter corresponds to the arity of the functor, e.g.
+      CGAL::Arity_tag &lt;2&gt;  for binary functors.
+ 
+
+     
+
+  Operations 
+ 
+
+    
+         
+    type0  
+
+         
+          
+             
+    f.operator() (     
+    type1 a1, 
+
+type2 a2, 
+
+..., 
+
+typen an)    
+     const
+         
+                
+    (as many arguments as defined by  Arity ) 
+
+returns
+     f(a1,...an) .
+            
+
+  Notes  Alternatively, the type  Arity  can be defined
+  in a specialization of   CGAL::Arity_traits &lt;&gt;  for the functor.
+  This is useful where existing classes cannot be changed easily, e.g.
+  the functors from the standard library.
+ 
+
+  Has Models All functors from the standard library, and all
+  functors from the lower dimensional CGAL kernels. For all kernel
+  functors, their arity is listed in the documentation. Some (few) of
+  them are overloaded with operators of different arities; in this
+  case one of these arities has been chosen as default arity. If you
+  want to adapt the functor to a different arity, use the functor
+  adaptor   CGAL::Set_arity &lt;F,a&gt; .
+ 
+
+  See Also   CGAL::Arity_tag &lt;int&gt;    CGAL::Arity_traits &lt;F&gt;    CGAL::Set_arity &lt;F,a&gt;    CGAL::set_arity_0     CGAL::set_arity_1     CGAL::set_arity_2     CGAL::set_arity_3     CGAL::set_arity_4     CGAL::set_arity_5  
+ 
+
+    Next:    Arity_tag&lt;int&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

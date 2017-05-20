@@ -1,0 +1,295 @@
+ 
+ParseEngine
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.QE 
+ 
+Class ParseEngine 
+ 
+java.lang.Object
+    Raccoon.QE.ParseEngine 
+ 
+   public class  ParseEngine  extends java.lang.Object    
+ParseEngine : In the check process, we ask the user to specify 
+ relname for all the attribute. However, it could
+ be improve to add some code to 'guess' the relnames.
+ 
+ 
+ In the queryTree building-up, we build a left-deep
+ tree, which may not be efficient, because cross 
+ operation could happen.
+ 
+ 
+ select push down could be implemented
+  
+
+  
+   
+
+
+
+
+
+
+
+
+  
+     
+ Constructor Summary   
+      ParseEngine  () 
+
+ 
+            
+      ParseEngine  ( QueryEngine  newQE) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  int   
+    CheckCondAttr  ( CONDITION  cond) 
+
+ 
+            
+    
+  int   
+    CheckSelParam  (java.util.Vector selAttrs,
+              java.util.Vector relations,
+              java.util.Vector conditions) 
+
+ 
+            
+    
+   QueryAnswer    
+    getResult  () 
+
+ 
+            
+    
+  boolean   
+    IsLOCAL_SEL  ( CONDITION  cond) 
+
+ 
+            
+    
+  boolean   
+    IsLocalSFW  (java.util.Vector selAttrs,
+           java.util.Vector relations,
+           java.util.Vector conditions) 
+
+ 
+          Check whether the SFW in only about local date 
+    
+  boolean   
+    IsNeighborJoin  ( CONDITION  cond) 
+
+ 
+            
+    
+  void   
+    printf  (java.lang.String s) 
+
+ 
+            
+    
+  int   
+    select  ( NODE  n,
+       java.util.Vector selAttrs,
+       java.util.Vector relations,
+       java.util.Vector conditions) 
+
+ 
+          do the select 
+    
+  void   
+    setDefaultNodeName  (java.lang.String s) 
+
+ 
+            
+    
+  void   
+    Substite  ( QueryNode [] nodeArray,
+         int nNodes,
+          QueryNode  oldNode,
+          QueryNode  newNode) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+
+
+
+  
+     
+ Constructor Detail   
+     
+ParseEngine 
+ 
+public  ParseEngine () 
+      
+ParseEngine 
+ 
+public  ParseEngine ( QueryEngine  newQE) 
+    
+    
+ Method Detail   
+     
+setDefaultNodeName 
+ 
+public void  setDefaultNodeName (java.lang.String s) 
+     
+     
+select 
+ 
+public int  select ( NODE  n,
+                  java.util.Vector selAttrs,
+                  java.util.Vector relations,
+                  java.util.Vector conditions)
+           throws java.sql.SQLException,
+                   PVException  
+  do the select
+ 
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+      
+CheckSelParam 
+ 
+public int  CheckSelParam (java.util.Vector selAttrs,
+                         java.util.Vector relations,
+                         java.util.Vector conditions)
+                  throws  PVException  
+     Throws: 
+    PVException     
+     
+CheckCondAttr 
+ 
+public int  CheckCondAttr ( CONDITION  cond)
+                  throws  PVException  
+     Throws: 
+    PVException     
+     
+IsLOCAL_SEL 
+ 
+public boolean  IsLOCAL_SEL ( CONDITION  cond) 
+     
+     
+IsNeighborJoin 
+ 
+public boolean  IsNeighborJoin ( CONDITION  cond) 
+     
+     
+Substite 
+ 
+public void  Substite ( QueryNode [] nodeArray,
+                     int nNodes,
+                      QueryNode  oldNode,
+                      QueryNode  newNode) 
+     
+     
+printf 
+ 
+public void  printf (java.lang.String s) 
+     
+     
+IsLocalSFW 
+ 
+public boolean  IsLocalSFW (java.util.Vector selAttrs,
+                          java.util.Vector relations,
+                          java.util.Vector conditions) 
+  Check whether the SFW in only about local date
+ 
+     
+      
+getResult 
+ 
+public  QueryAnswer   getResult () 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

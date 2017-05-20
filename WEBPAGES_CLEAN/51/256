@@ -1,0 +1,80 @@
+ <body> 
+ CompSci 267 Homework set #2 
+ 
+   Consider the following two codings with source alphabet
+     {a,b,c,d,e,f} and code alphabet {0,1}.
+     For each code,
+      Is it uniquely decodable?
+        If not, prove it by giving two source messages that encode
+        to the same code message.
+      If it is uniquely decodable, is it a prefix code?
+        If not a prefix code, give an equivalent prefix code with the same
+        lengths of code words changing as few codings as possible.
+                           a   b   c 
+        d   e   f 
+     code 1   01   011   10 
+        1000   0011   0111 
+     code 2   1010   001   101 
+        0001   1101   1011 
+       
+
+
+
+   A full binary tree is  right justified  if, at each level of
+the tree, all the nonterminal vertices appear to the right of all the
+leaf vertices.  Show that there must be a lossless encoding method which
+employs fewer than 0.85 N  codebits to encode each right justified
+tree having  N  leaves, if  N  is sufficiently large.
+   
+   
+
+   Compact codes come from conservative expansions of a trivial code.
+     Prove that, for each compact code  C , there exists exactly
+      one expansion sequence from a trivial code to  C , in which
+      each expansion  S  ⇒  S' 
+      is an expansion of either the longest codelength,  L ,
+      or the codelength  L -1 in  S .
+   
+
+      Write a program to determine
+        the number of compact codes of size 40.
+        
+
+
+
+
+
+   Consider the following generalization of Shannon-Fano coding to
+     create a binary codetree for the set S of words {w i }
+     with associated probabilities {p i }:
+      create root vertex  r  and associate S with it
+      initialize queue Q to contain  r 
+      while Q is not empty do
+          dequeue a vertex  v  having associated set V
+          partition V into two sets V 0  and V 1 
+            so that the sum of probabilities in each set is as
+            nearly equal as possible
+          create two new vertices, v 0 
+            (with set V 0  associated with it) and
+            v 1  (with set V 1  associated with it)
+          attach v 0  and v 1 
+            as sons of  v  via edges labeled 0 and 1
+          if |V 0 | &gt; 1 then enqueue v 0 ;
+            if |V 1 | &gt; 1 then enqueue v 1      
+    Examine the cases when set S contains 4 or 5 words to see
+     how much the compression rate of the codetree created by
+     this approach can exceed entropy.
+   Comment on the practicality and effectiveness of this algorithm
+     as compared with that of Shannon-Fano.
+     
+   
+
+   Use (a) Shannon's method of coding,
+     (b) Shannon-Fano coding,
+     and (c) Huffman coding,
+      to determine the average codelength of
+     (1) a binary code, and (2) a ternary code,
+      for a source having symbol probability distribution
+      .22, .2, .18, .15, .1, .08, .07.
+
+  </body> 

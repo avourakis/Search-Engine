@@ -1,0 +1,73 @@
+ 4.152 OEWriteMDLFile<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.151 OEWriteMacroModelFile 
+ Up:   4. OEChem Functions 
+ Next:   4.153 OEWriteMOPACInputFile 
+   
+
+
+  
+4.152 OEWriteMDLFile 
+ 
+
+ 
+    
+void OEWriteMDLFile(oemolostream &amp;ofs, OEMolBase &amp;mol,
+                    unsigned int flavor = OEMDLOFlag::DEFAULT)
+    
+Write the molecule as a MDL mol format file to the output stream
+ofs.  A number of different MDL format variants are supported by
+the use of the bits in the ``flavor'' parameter.
+
+  
+The  OEMDLOFlag::MCHG  flag is used to instruct the MDL mol
+file writer to write  "M  CHG"  and  "M  RAD"  lines for
+charged/radical atoms in the output connection table, even if the
+charge and radical values of every atom are within the ranges representable
+by the MDL atom block.  By default,  "M  CHG"  and  "M  RAD" 
+lines are only used for connection tables that "overflow" the allowed
+atom block limits.
+
+  
+The  OEMDLOFlag::ISO  flag is used to instruct the OEChem MDL
+mol file writer to write  "M  ISO"  lines for isotopes in the output
+connection table, even if the isotopic masses of every atom are within
+the range representable by the MDL atom block.  By default,  "M  ISO" 
+lines are only used for connection tables that "overflow" the allowed
+atom block limits.
+
+  
+The  OEMDLOFlag::RGP  flag is used to instruct the OEChem MDL
+mol file writer to write out  "M  RGP"  entries for each R-group
+atom,  i.e.  atom with element zero and a non-zero atom map index.
+These atoms are always written with atomic symbol  R# .
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.151 OEWriteMacroModelFile 
+ Up:   4. OEChem Functions 
+ Next:   4.153 OEWriteMOPACInputFile 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

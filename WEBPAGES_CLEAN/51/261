@@ -1,0 +1,310 @@
+ String Formatting<body>
+ 
+ICS 31 • David G. Kay • UC Irvine 
+   String Formatting   
+   
+Are you tired of printing dollars-and-cents 
+amounts in Python that look like  $ 12.0  ?
+Do you want to have precise control over what 
+the text results of your programs look like?
+You're ready to learn  string formatting.</strong>
+ 
+Python, like most programming languages, provides
+a rich set of features for specifying the format of
+text.  They make it possible to format things into
+nicely aligned tables, or smoothly flowing sentences,
+or even rudimentary text-based graphics.
+Formatting specifications aren't conceptually difficult;
+they're not like mutable vs. immutable or navigating
+through lists of namedtuples containing other lists.
+But they are intricate: They control the character-by-character
+arrangement on the page or screen.  
+Since even one extra space can mess up your results,
+string formatting requires us to pay close, meticulous attention.
+ 
+ 
+Suppose we define the Dish namedtuple and some
+Dish objects as follows:
+   from collections import namedtuple
+Dish = namedtuple('Dish', 'name price calories')
+d1 = Dish("Paht Woon Sen", 12.50, 340)
+d2 = Dish("Mee Krob", 9.00, 355)
+d3 = Dish("Escargots", 24.50, 95)
+DL = [d1, d2, d3]  
+ 
+Now suppose we want to display a Dish in this form:
+   Paht Woon Sen ($12.50): 340 cal.  
+This text, and any text we plan to print,
+consists of constant parts (that are the same
+every time we print the results) and
+variable parts (that may change every time,
+depending on the data).
+
+ 
+Here are the variable parts of this string:
+    Paht Woon Sen ($12.50): 340 cal.
+ -------------   -----   ---
+   VARIABLE            VAR         VAR    
+The variable parts are the data values:
+ 'Paht Woon Sen' ,  12.50 , 
+and  340 .
+
+ 
+Here are the constant parts of the same string:
+    Paht Woon Sen ($12.50): 340 cal.
+              ---     ---   -----
+              CONST.        CON.      CONSTANT      
+The constant parts are the three strings
+ ' ($'  (space-parenthesis-dollar sign),
+ '): '  (parenthesis-colon-space), and
+ ' cal.'  (space-c-a-l-period).
+ 
+Next we list the  names  of the variable/data parts.
+These might be Python variable names, or more complicated Python expressions.  In this case, the names are
+ d1.name ,  d1.price , 
+and  d1.calories .
+  
+Next we decide whether we need any precise formatting (a specific number of digits or other precise spacing).  
+We will want these eventually, but for now, let's say no so we can cover some other issues first.
+ 
+ 
+Copy the code below,
+paste it into a Python file, and run it in IDLE:
+   from collections import namedtuple
+Dish = namedtuple('Dish', 'name price calories')
+d1 = Dish("Paht Woon Sen", 12.50, 340)
+d2 = Dish("Mee Krob", 9.00, 355)
+d3 = Dish("Escargots", 24.50, 95)
+DL = [d1, d2, d3]  
+ 
+As we discuss each of the lines of code below,
+copy the line into IDLE and run it.
+ 
+ 
+First we print the variable and constant parts as usual:
+   print(d1.name, " ($", d1.price, "): ", d1.calories, " cal.")  
+This gives us our results, but without fancy formatting.
+The  print()  function automatically prints one space
+to separate each of its arguments; that gives us the
+extra spaces we see when we run the code above.
+
+ 
+Next we try to eliminate the extra spaces using concatenation (+).
+[This will give us an error when we try to concatenate a
+number into a string.  Once you run this code and see the message, comment
+out this line or remove it so the subsequent examples run.]
+   print(d1.name + " ($" + d1.price + "): " + d1.calories + " cal.") 
+  
+With concatenation and calls to  str() , we can control
+the horizontal spacing precisely:
+   print(d1.name + " ($" + str(d1.price) + "): " + str(d1.calories) + " cal.")  
+ 
+The  print()  function automatically prints one space
+to separate each of its arguments; we can change that
+using the  sep=  keyword parameter.  First we separate
+the items with the empty string instead of a space:
+   print(d1.name, " ($", d1.price, "): ", d1.calories, " cal.", sep="")  
+This gets the horizontal spacing right.
+
+ 
+As another illustration, we can separate the items with
+any other separator string we care to specify:
+   print(d1.name, " ($", d1.price, "): ", d1.calories, " cal.", sep="---")  
+ 
+By default (i.e., without our having to give specific instructions),  print()  prints a newline at the end of each invocation (at the end of each call to  print() ).  That's what
+gives us the blank lines each time we call  print()  with no arguments.
+In the code below, we see that each call to  print()  prints its arguments followed by a newline:
+   print('Huey', 'Dewey', 'Louie')
+print('Donald')
+print('Scrooge')
+print()
+print('Daisy')
+print("\n")
+print('Daffy')   
+Notice especially the two blank lines between Daisy and Daffy:  
+One is for the explicit  "\n"  and the second is what  print()  automatically provides.
+ 
+ 
+We can specify different behavior at the end of each
+call to  print()  by using the  end=  
+keyword parameter.
+It says what to print (instead of the usual newline) after the call to  print()  has printed it arguments.
+Saying  end=" " , for example, says, "Keep whatever
+is printed next on the same line as what we just printed."
+   print("--------------------------")
+print('Huey', 'Dewey', 'Louie', end=" ")
+print('Donald', end=" ")
+print('Scrooge')
+print()  
+ 
+As with  sep= , the value of the  end=  
+parameter can be any string:
+   print('Donald', end="Zot! Zot! Zot!")
+print('---&gt; This follows the end= string in the previous line    
+We can do a lot with the techniques we already know,
+but the most powerful tool for formatting text is the
+ format()  method. 
+We will use it in these two situations (although there
+are many more that we won't cover):
+   Specify a particular number of digits to the right of a decimal point (in the example below, two digits, for dollars-and-cents amounts):
+         Paht Woon Sen ($12.50): 340 cal.  
+ 
+ Place values into fixed-sized "fields" to line the values up:
+         Paht Woon Sen  12.50 340
+     Mee Krob        9.00 355
+     Escargots      24.50  95 
+ 
+ 
+  
+Here is the syntax of the  format()  method on strings:
+ 
+ 
+       FORMAT-STRING     .</strong>format(    SERIES-OF-EXPRESSIONS-TO-PRINT    ) 
+ 
+ 
+We wrote above about the constant parts and the variable parts of what we
+want to print.  With the  format()  method, the constant parts go in the format string; the variable parts are the arguments to the method (i.e., they go in the series of expressions).
+ 
+ 
+Here are the semantics:  The  format()  method returns a string,
+which we usually print out (but we could use the string returned by  format() 
+in any other context where a string makes sense, e.g., by assigning it to a variable).
+The string is formatted according to the instructions
+in the format-string, following this pattern:  
+ print(     FORMAT-STRING      .</strong> format(d1.name, d1.price, d1.calories)  
+ 
+The format string looks like the desired output.
+It contains constant parts and variable parts; 
+in the format string each variable part is a placeholder
+or "format specification" (shown below as a dashed line) for the eventual data value
+that will appear in that place.
+   "-------- ($--------): -------- cal."
+   FMT-SPEC       FMT-SPEC       FMT-SPEC     
+Each placeholder (dashed line) is a place where we put a
+ format specification</strong>, which can tell Python which of
+the variable parts to print and how to print it.
+Actual format specifications in Python don't use dashed lines.
+Instead they use curly braces:   { } 
+ 
+ 
+We can combine what we've learned so far into this working
+Python code, which of course you should run:
+   print("{} (${}): {} cal.".format(d1.name, d1.price, d1.calories)  
+ 
+This code says to print the value of  d1.name  where
+the first set of braces appears (at the start of the format string),
+then to print space-parenthesis-dollar-sign, then to print the value
+of  d1.price  where the second set of braces appears,
+then to print a few more characters, then the value of  d1.calories 
+where the third set of braces appears, and then the last few characters in
+the format string. 
+There are three arguments to  format() ; they correspond with
+the three format specifications ( { } ) in the format string.
+ 
+ 
+To control the formatting further, we can say things inside the curly braces.  
+The syntax for each format specification has this form:
+   {     ARGUMENT-SELECTOR      :</strong>     FORMAT-CODE     }   
+To the left of the colon is a value that indicates
+which of the arguments to  format()  to print in that space.
+Usually we just take them in order, but Python allows us to specify them
+in a different order:
+   print("{2:} (${1:}): {0:} cal.".format(d1.calories, d1.price, d1.name)  
+ 
+It's not that common to want to reorder the appearance of the arguments
+in the format string;
+normally we'll leave the left side of the colon empty.
+(But if we didn't at least mention what could go there,
+format strings would seem even stranger than they do already.)
+The code below shows nothing on either side of the colon
+in the format specifications.  It behaves just the same
+as if we'd used  { }  without the colons.
+   print("{:} (${:}): {:} cal.".format(d1.name, d1.price, d1.calories))  
+ 
+If we rarely put anything to the left of the colon in a format specification,
+what can we put to the right of the colon?
+That's where we put the  field width specifications</strong>, the instructions to Python
+for how many characters in the formatted string to devote to each data item.
+The syntax of a field width specification (what can go to the right of the colon
+in a format specification) depends on the type of data being formatted.
+Here are the three main types, for strings, ints, and floats respectively:
+     FIELD-WIDTH     s</strong> 
+    FIELD-WIDTH     d</strong> 
+    FIELD-WIDTH     .</strong>    NUMBER-OF-DECIMAL-PLACES     f</strong>  
+ 
+For example, a format specification of  {:5.2f]  says:
+   Reserve a 5-character field in the result string.
+ 
+ In that field, place a float number with two digits to the right of the decimal point.
+ 
+  
+Try running this example:
+   print("{:} (${:5.2f}): {:} cal.".format(d1.name, d1.price, d1.calories))   Notice that the 5-character field counts one character for the decimal point itself.  
+Note also that there's one colon that's not part of a format specification; it's just printed as a character in the result.
+ 
+ 
+What happens if we use a larger field width than our data requires?
+   print("{:} (${:7.2f}): {:} cal.".format(d1.name, d1.price, d1.calories)) 
+ 
+ 
+  We use 5 of the 7 characters for the number, with the two extra spaces after the dollar sign and before the first digit of the number.  
+ 
+ 
+What if we specify a narrower field than we need?
+   print("{:} (${:3.2f}): {:} cal.".format(d1.name, d1.price, d1.calories))   Python has three choices in this situation:  It could give us an error message;
+it could chop off the value somehow to make it fit in the specified-width field;
+or it could take as many digits as it needs, even if that exceeds the specified
+field width.  Python takes the latter choice, with the reasoning that it's better
+to see the actual value with messed-up formatting than to see only part of the
+value or not to see it at all.
+  
+So in Python, if the field width is too small, Python still takes the number of 
+characters it needs.
+ 
+ 
+In fact, if we always want to take up exactly the space we need for the value,
+with no extra spaces, we use a field width of zero:
+   print("{:} (${:0.2f}): {:} cal.".format(d1.name, d1.price, d1.calories))
+print("{:} (${:0.2f}): {:} cal.".format(d1.name, 3.50, d1.calories))
+print("{:} (${:0.2f}): {:} cal.".format(d1.name, 23424234, d1.calories))  
+ 
+Another use of field width specifications is to line things up in columns like this:
+        Paht Woon Sen  12.50 340
+     Mee Krob        9.00 355
+     Escargots      24.50  95  
+ To do this, we choose a field width that's large
+enough to accommodate the largest value we expect in a given column:
+   print("{:20s}{:6.2f}{:4d}".format(d1.name, d1.price, d1.calories))   This says to place the dish name in a 20-character field,
+the price in a six-character field (with two digits to the right of the
+decimal point), and the number of calories in a 4-character field.
+(By default, strings are aligned with the left edge of their field
+and numbers are aligned with their rightmost digit; this reflects the
+typical practice in typesetting data in tables.)
+ 
+ 
+We can put this in a loop through our list of dishes:
+   for d in DL:
+    print("{:20s}{:6.2f}{:4d}".format(d.name, d.price, d.calories))  
+ 
+Finally, we can write a function that 
+prints our dish information in tabular format with titles:
+   def print_dishlist_info(DL: [Dish]) -&gt; None:  # Just prints
+    """ Print a table with a row for each dish """
+    print("Name                 Price Calories")
+    print("----                 ----- --------")
+    for d in DL:
+        print("{:20s}{:6.2f}{:4d}".format(d.name, d.price, d.calories))
+    return
+print()
+print_dishlist_info(DL)   
+There are many more features to the  format()  method than we have covered here.  String formatting is almost a sub-language of its own within Python.
+You are welcome to explore at python.org or in other reference materials.
+But for the problems or exams in this class, you will not need anything beyond 
+what's on this page.
+ 
+  
+  David G. Kay ,   kay@uci.edu 
+ 
+ Copyright 2014 by David G. Kay.  Permission granted for individual nonprofit use in the study 
+of Python programming.  All other rights reserved. 
+</body> 

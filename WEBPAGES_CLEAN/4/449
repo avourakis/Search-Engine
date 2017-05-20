@@ -1,0 +1,212 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Computational statistics
+ 
+   Approximating center points with iterated Radon points .  
+K. Clarkson , D. Eppstein, 
+ G.L. Miller ,
+ C. Sturtivant , and 
+ S.-H. Teng .   9th ACM Symp. Comp. Geom.,  San Diego, 1993, pp. 91–98 .   Int. J. Comp. Geom. &amp; Appl.  6 (3): 357–377, 1996 .
+ 
+Given a collection of  n  sites,
+a center point is a point (not necessarily a site)
+such that no hyperplane through the centerpoint
+partitions the collection into a very small and a very large subset.
+Center points have been used by Teng and others
+as a key step in the construction of geometric separators.
+One can find a point with this property by choosing
+a random sample of the collection and applying
+ linear programming ,
+but the complexity of that method grows exponentially with the dimension.
+This paper proposes an alternate method that
+produces lower quality approximations (in terms of the size
+of the worst hyperplane partition) but takes time
+polynomial in both  n  and  d. 
+  ( BibTeX  --
+ Citations )
+  
+  
+    Choosing subsets with maximum weighted average . 
+D. Eppstein and 
+ 
+D. S. Hirschberg .  Tech. Rep. 95-12, ICS, UCI, 1995 .  
+ 5th MSI Worksh. on Computational Geometry , 1995, pp. 7–8 .   J. Algorithms  24: 177–193, 1997 .
+ 
+Uses geometric optimization techniques to find, among  n  weighted values,
+the  k  to drop so as to maximize the weighted average of the remaining values.
+The feasibility test for the corresponding decision problem involves
+ k -sets in a dual line arrangement.
+  ( BibTeX  --
+ Full paper  --
+ CiteSeer  --
+ ACM DL )
+  
+    Fast hierarchical
+clustering and other applications of dynamic closest pairs . 
+D. Eppstein.  
+ 9th ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1998, pp. 619–628 .  arXiv:cs.DS/9912014 .   J. Experimental
+Algorithmics  5 (1): 1–23, 2000 .
+ 
+This paper shows how to use my dynamic closest pair data structure
+from " Dynamic Euclidean minimum
+spanning trees " for some non-geometric problems including
+hierarchical clustering,
+ greedy matching ,
+and  TSP heuristics .
+Experiments show variants of my data structures to be faster than
+previously used heuristics.
+  ( Source code and experimental data  -- 
+ BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL  --
+ JEA home page )
+  
+    Regression depth and center points .  N. Amenta ,
+ M. Bern ,
+D. Eppstein, and
+ S.-H. Teng .  arXiv:cs.CG/9809037 .   3rd CGC
+Worksh. Computational Geometry  , Brown Univ., 1998.   Disc. Comp. Geom.  23 (3): 305–323, 2000 .
+ 
+We show that, for any set of n points in d dimensions, there exists a
+hyperplane with
+ regression depth  at least ceiling(n/(d+1)). as had
+been conjectured by Rousseeuw and Hubert. Dually, for any
+arrangement of n hyperplanes in d dimensions there exists a point
+that cannot escape to infinity without crossing at least
+ceiling(n/(d+1)) hyperplanes. We also apply our approach to
+related questions on the existence of partitions of the data into
+subsets such that a common plane has nonzero regression depth in
+each subset, and to the computational complexity of regression
+depth problems.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Multivariate regression depth .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/9912013 .  
+ 16th ACM Symp. Comp. Geom.,  Hong Kong, 2000, pp. 315–321 .  Disc. Comp. Geom.  28 (1): 1–17, 2002.
+ 
+We generalize  regression depth 
+to k-flats. The k=0 case gives the
+classical notion of center points. We prove that
+for any set of n points in R d  there always
+exists a k-flat with depth at least a constant fraction of n. As a
+consequence, we derive a linear-time (1+epsilon)-approximation
+algorithm for the deepest flat.
+The full version of this paper also includes results from
+" Computing the Depth of a Flat ".
+  
+( BibTeX  --
+ SCG paper  --
+ Citations  --
+ CiteSeer )
+  
+    Computing the depth of a flat .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0009024 .  
+ 12th ACM-SIAM Symp. Discrete Algorithms, 
+Washington, 2001, pp. 700–701 .
+ 
+We compute the  regression depth  of a k-flat
+in a set of n d-dimensional
+points, in time O(n d-2 ), an order of magnitude faster than
+the best known algorithms for computing the depth of a point or of a
+hyperplane.
+The results from this conference paper have been merged into the full
+version of
+" Multivariate Regression Depth ".
+  
+( SODA talk slides  --
+ SODA paper  --
+ BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Depth and arrangements . 
+D. Eppstein. 
+Invited talk at DIMACS Worksh. on Data Depth, New Brunswick, NJ, 2003. 
+Invited
+talk at MSRI Introductory Worksh. Discrete &amp; Computational Geometry,
+Berkeley, CA, 2003.
+ 
+Surveys projective duality and its uses in
+ algorithms for robust regression .
+The MSRI talk used the alternative title "Computational geometry and
+robust statistics" but contained essentially the same content.
+  
+( DIMACS talk slides  --
+ video and slides of MSRI talk )
+  
+    Quasiconvex programming . 
+D. Eppstein. 
+Invited talk at DIMACS Worksh. on Geometric Optimization, New Brunswick,
+NJ, 2003. 
+Plenary talk at  ALGO 2004 ,
+Bergen, Norway, 2004.  arXiv:cs.CG/0412046 .  Combinatorial and Computational Geometry , Goodman, Pach, and
+Welzl, eds., MSRI Publications 52, 2005, pp. 287–331.
+ 
+Defines  quasiconvex programming , a form of generalized linear
+programming in which one seeks the point minimizing the pointwise
+maximum of a collection of quasiconvex functions.
+Surveys algorithms for solving quasiconvex programs either numerically
+or via generalizations of the dual simplex method from linear
+programming, and describe varied applications of this geometric
+optimization technique in meshing, scientific computation, information
+visualization, automated algorithm analysis, and robust statistics.
+  
+( DIMACS talk slides  --
+ ALGO talk slides )
+  
+    Deterministic sampling and range counting in geometric data streams .  A. Bagchi ,
+ A. Chaudhary ,
+D. Eppstein, and
+ M. T. Goodrich .  arXiv:cs.CG/0307027 .  20th ACM Symp. Comp. Geom.,  Brooklyn, 2004, pp. 144–151.   ACM Trans. Algorithms  3(2):A16, 2007 .
+ 
+We describe an efficient streaming-model construction of epsilon-nets
+and epsilon-approximations, and use it to find deterministic streaming-model
+approximation algorithms for iceberg range queries and for various
+robust statistics problems.
+  
+( BibTeX  --
+ Citations )
+  
+    Comment on "Location-Scale Depth".  
+D. Eppstein.   J. Amer. Stat. Assoc.  99 (468): 976–979, 2004 .
+ 
+Discusses a paper by Mizera and Müller on depth-based methods
+for simultaneously fitting both a center and a radius to a set of
+sample points, by viewing the points as lying on the boundary of a model
+of a higher dimensional  hyperbolic
+space .  Reformulates their method in
+combinatorial terms more
+likely to be familiar to computational geometers, and discusses
+the algorithmic implications of their work.
+  
+    Squarepants in a tree: sum of subtree clustering and hyperbolic pants decomposition.  
+D. Eppstein.  arXiv:cs.CG/0604034 .  18th ACM-SIAM Symp. Discrete Algorithms, 
+New Orleans, 2007, pp. 29–38.   ACM Trans. Algorithms  5(3): Article 29, 2009 .
+ 
+We find efficient constant factor approximation algorithms for
+hierarchically clustering of a point set in any metric space, minimizing
+the sum of minimimum spanning tree lengths within each cluster, and in
+the  hyperbolic  or Euclidean planes, minimizing the sum of cluster
+perimeters. Our algorithms for the hyperbolic and Euclidean planes can
+also be used to provide a pants decomposition with
+approximately minimum total length.
+  
+( Slides )
+  
+     
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

@@ -1,0 +1,91 @@
+ #include 
+#include 
+#include 
+/*algorithms for MLE of mixture proportions, including NPMLE for interval censored data*/
+#define TINY 1e-100
+#define SMALL 1e-6
+#define LARGE 1e+100
+
+void em(int *n, int *p, double **X, double *wt, double *theta, double *fitted, int *conv){
+  /*EM iteration for MLE of mixture proportions:
+    l(theta) = sum_i=1^n wt_i*log(sum_j=1^p X_ij*theta_j), sum theta_j=1
+    X (n by p): non-negative matrix, each row has AT LEAST ONE POSITIVE ENTRY
+    fitted (n by 1): fitted values; fitted_i=sum_j X_ij*theta_j
+    conv=1 upon convergence
+  */
+  int i, j;
+  double swt, tmp, upper;
+  for(swt=0.0, j=0; j=0, theta2&gt;=0
+  */
+  int i;
+  double new, tmp1, tmp2, c1, c2, upper;
+  for(tmp1=tmp2=0.0, c1=c2=LARGE, i=0; iTINY){
+      new=fitted[i]/diff[i];
+      if(c1&gt;new)
+        c1=new;
+      tmp1+=wt[i]/new;
+    }
+    else if(diff[i]new)
+        c2=new;
+      tmp2+=wt[i]/new;
+    }
+  }
+  tmp1*=c1;
+  tmp2*=c2;
+  if(tmp1+tmp2upper)
+    new=upper;
+  tmp1=new-*theta1;
+  for(i=0; i0.0&amp;&amp;lower&gt;der[j]){
+      lower=der[j];
+      i=j;
+    }
+    if(upperTINY)
+      break;
+  do{
+    for(j=i+1; jTINY)
+        break;
+    if(j&gt;=*p) break;
+    for(k=0; k=0)
+      fitted[i]-=F[j];
+  }
+}  
+
+void sp_fitted(int *n, int *p, int *l, int *u, double *theta, double *fitted){
+  /*calculate fitted values*/
+  int i, j;
+  double *F;
+  F=(double *)malloc(sizeof(double)*(*p));
+  for(F[0]=theta[0], i=1; ik2){
+    j=k2;
+    k2=k1;
+    k1=j;
+  }
+  for(len=0, i=k1+1; i=k2){
+        inds[len]=ll[i][j];
+        diff[len]=-1.0;
+        len++;
+      } 
+    for(j=1; j=l[j]&amp;&amp;i0.0&amp;&amp;lower&gt;der[j]){
+      lower=der[j];
+      i=j;
+    }
+    if(upperTINY)
+      break;
+  do{
+    for(j=i+1; jTINY)
+        break;
+    if(j&gt;=*p) break;
+    sp_cm(n, l, u, wt, ll, uu, theta, &amp;i, &amp;j, fitted);
+    i=j;
+  } while(1);
+}
+
+void alg_npmle(int *n, int *p, int *l, int *u, double *wt, double *theta, int *iter, int *alg){
+  /*algorithms for maximizing sum_i wt_i*log(sum_j X_ij*theta_j)
+    X_ij=1 if l_iu[i]||u[i]&gt;=*p){
+      Rprintf("ERROR: data badly prepared\n");
+      return;
+    }
+  fitted=(double *)malloc(sizeof(double)*(*n));
+  sp_fitted(n, p, l, u, theta, fitted); 
+  for(i=0; i 

@@ -1,0 +1,315 @@
+ Contents<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+   
+   
+   
+   Previous:   Front Matter 
+ Up:   OEChem - C++ Theory 
+ Next:   List of Tables 
+   
+
+    
+Contents 
+ 
+
+
+   Front Matter 
+   List of Tables 
+   1. Introduction 
+   1.1 OEChem and Informatics 
+   1.2 How to Read this Manual 
+   1.3 Getting Started with OEChem Molecules 
+   1.4 Atoms and Bonds 
+     2. Manipulating Molecules 
+   2.1 Creating and Destroying Molecules 
+   2.2 Reusing Molecules 
+   2.3 Creating a Molecule from SMILES 
+   2.4 Generating a SMILES from a Molecule 
+     3. Reading and Writing Molecules 
+   3.1 Using OEChem oemolstreams 
+   3.2 Reading Molecules with Iterators 
+   3.3 Molecular File Formats 
+   3.4 Molecule Input and Output with Files 
+   3.5 Compressed Molecule Input and Output 
+   3.6 Format control from the command line 
+   3.7 Flavored Reading and Writing of Molecules 
+     4. Properties of Molecules 
+   4.1 Stored Properties of Molecules 
+   4.1.1 Dimension 
+   4.1.2 Energy 
+   4.1.3 Rxn 
+   4.1.4 Title 
+     4.2 Derived Properties of Molecules 
+   4.2.1 NumAtoms, NumBonds 
+   4.2.2 GetMaxAtomIdx, GetMaxBondIdx 
+   4.2.3 GetAtom, GetBond 
+   4.2.4 GetAtoms, GetBonds 
+     4.3 Manipulating SD File Tagged Data 
+   4.3.1 Storing SD Data on a Molecule 
+   4.3.2 Retrieving SD Data from a Molecule 
+   4.3.3 Deleting SD Data from a Molecule 
+   4.3.4 SD Data Example 
+     4.4 Properties of Multi-Conformer Molecules 
+   4.4.1 GetConf and GetConfs 
+   4.4.2 Use of the conformer state 
+   4.4.3 Use of the conformers as first-class objects 
+       5. Traversing the Atoms, Bonds of a Molecule 
+   5.1 OEChem Iterators 
+   5.2 Looping over the Atoms and Bonds of a Molecule 
+   5.3 Dereferencing the Iterator 
+   5.4 Looping over the Bonds of an Atom 
+   5.5 Looping over the Neighbors of an Atom 
+   5.6 Looping over the Conformers of a Molecule 
+   5.7 Looping over subsets of Atoms or Bonds 
+     6. Properties of Atoms 
+   6.1 Stored Properties of Atoms 
+   6.1.1 AtomicNum 
+   6.1.2 FormalCharge 
+   6.1.3 ImplicitHCount 
+   6.1.4 Isotope 
+   6.1.5 PartialCharge 
+   6.1.6 Hyb 
+   6.1.7 IntType 
+   6.1.8 Name 
+   6.1.9 Type 
+   6.1.10 RxnRole 
+   6.1.11 MapIdx 
+   6.1.12 InRing 
+   6.1.13 SymmetryClass 
+   6.1.14 Aromatic 
+     6.2 Derived Properties of Atoms 
+   6.2.1 GetDegree 
+   6.2.2 GetExplicitDegree 
+   6.2.3 GetExplicitHCount 
+   6.2.4 GetExplicitValence 
+   6.2.5 GetHvyDegree 
+   6.2.6 GetHvyValence 
+   6.2.7 GetParent 
+   6.2.8 GetTotalHCount 
+   6.2.9 GetValence 
+   6.2.10 GetIdx 
+   6.2.11 IsCarbon 
+   6.2.12 IsConnected 
+   6.2.13 IsHalogen 
+   6.2.14 IsHydrogen 
+   6.2.15 IsMetal 
+   6.2.16 IsNitrogen 
+   6.2.17 IsOxygen 
+   6.2.18 IsPhosphorus 
+   6.2.19 IsPolarHydrogen 
+   6.2.20 IsSulfur 
+       7. Properties of Bonds 
+   7.1 Stored Properties of Bonds 
+   7.1.1 Order 
+   7.1.2 Aromatic 
+   7.1.3 InRing 
+   7.1.4 IntType 
+   7.1.5 Type 
+   7.1.6 Bgn 
+   7.1.7 End 
+     7.2 Derived Properties of Bonds 
+   7.2.1 GetBgnIdx 
+   7.2.2 GetEndIdx 
+   7.2.3 GetNbr 
+   7.2.4 GetParent 
+   7.2.5 IsRotor 
+       8. OEMols and OEGraphMols 
+   8.1 Preparation 
+   8.2 Multi-conformer and single-conformer molecules 
+   8.3 Conformers 
+   8.4 Reading Multi-conformer molecules 
+     9. Atom, Bond and Conformer Indices 
+   10. Creating Atoms, Bonds, and Conformers 
+   10.1 Using NewAtom and NewBond 
+   10.2 Implicit vs. Explicit Hydrogen Atoms 
+   10.3 Updating Implicit Hydrogen Counts 
+   10.4 Making Hydrogen Atoms Implicit 
+   10.5 Making Hydrogen Atoms Explicit 
+   10.6 Sprouting Hydrogens in 3D 
+   10.7 Using NewConf 
+     11. Connectivity Processing 
+   11.1 Determining bonds from 3D coordinates 
+   11.2 Kekule Form Assignment 
+   11.3 Perceiving Bond Orders 
+     12. Ring Processing 
+   12.1 Cycle Membership 
+   12.2 Number of Ring Bonds to an Atom 
+   12.3 Testing for Membership in a Given Ring Size 
+   12.4 Determining Smallest Ring Membership 
+   12.5 Identifying Connected Components 
+   12.6 Identifying Ring Systems 
+   12.7 Smallest Set of Smallest Rings (SSSR) considered Harmful 
+     13. Aromaticity Processing 
+   13.1 Aromaticity and Hückel's
+4n+2 rule 
+   13.2 Aromaticity Models in OEChem 
+   13.3 Clearing Aromaticity 
+     14. Stereochemistry Processing 
+   14.1 Atom Stereochemistry 
+   14.2 Bond Stereochemistry 
+     15. Atom and Bond Typing 
+   15.1 Integer Atom Types and Type Names 
+   15.2 Tripos Atom Typing 
+   15.2.1 OETriposAtomTypes 
+   15.2.2 OETriposAtomTypeNames 
+   15.2.3 OETriposTypeNames 
+   15.2.4 OETriposAtomNames 
+     15.3 Tripos Bond Typing 
+   15.4 Generic Tripos Type Functions 
+   15.5 Writing a Sybyl mol2 file using OEWriteMol2File 
+   15.6 MacroModel Atom Typing 
+   15.7 Generic MacroModel Type Functions 
+     16. Formal and Partial Charges 
+   16.1 Assigning Formal Charges 
+   16.2 Working with Partial Charges 
+   16.3 Determining Net Charge on a Molecule 
+   16.4 Calculating Gasteiger Partial Charges 
+     17. Pattern Matching 
+   17.1 Substructure Search 
+   17.2 Maximum Common Substructure Search 
+   17.3 Clique Search 
+   17.4 OEExprOpts Namespace 
+     18. Coordinate Handling 
+   19. Error Handling 
+   20. Periodic Table Functions 
+   20.1 Obtaining the Atomic Symbol of an Atom/Element 
+   20.2 Obtaining the Atomic Number from an Atomic Symbol 
+   20.3 Properties of the Elements 
+   20.3.1 OEGetAverageWeight 
+   20.3.2 OEGetDefaultMass 
+   20.3.3 OEGetCovalentRadius 
+     20.4 Handling Isotopes 
+   20.4.1 OEIsCommonIsotope 
+   20.4.2 OEGetIsotopicWeight 
+     20.5 Calculating Molecular Weight of a Compound 
+     21. OEQMols and Queries in OEChem 
+   22. Predicate Functors 
+   22.1 Introduction 
+   22.2 operator() and function pointers 
+   22.3 Functors have State 
+   22.4 OEUnaryPredicate 
+   22.5 Call-Backs 
+   22.6 Predefined OEChem Functors 
+   22.7 Using your own Functors in OEChem 
+   22.8 Composition Functors in OEChem 
+   22.9 Predicates as a subset of Functors 
+     23. Molecular File Formats 
+   23.1 SMILES File Format 
+   23.1.1 OEParseSmiles 
+   23.1.2 OECreateCanSmiString 
+     23.2 MDL File Format (SD and Mol) 
+   23.2.1 OEReadMDLFile 
+   23.2.2 OEWriteMDLFile 
+     23.3 Sybyl Mol2 File Format 
+   23.3.1 OEReadMol2File 
+   23.3.2 OEWriteMol2File 
+     23.4 PDB File Format 
+   23.4.1 OEReadPDBFile 
+   23.4.2 OEWritePDBFile 
+     23.5 MacroModel File Format 
+   23.5.1 OEReadMacroModelFile 
+   23.5.2 OEWriteMacroModelFile 
+     23.6 XYZ File Format 
+   23.6.1 OEReadXYZFile 
+   23.6.2 OEWriteXYZFile 
+     23.7 FASTA Sequence File Format 
+   23.7.1 OEReadFASTAFile 
+   23.7.2 OEWriteFASTAFile 
+       24. I/O Utilities 
+   24.1 oestream 
+   24.2 oeistream 
+   24.3 oeostream 
+   24.4 oefstream 
+   24.5 oegzstream 
+   24.6 oesstream 
+   24.7 oestdstream 
+   24.8 OEOpenStream and OECloseStream 
+     25. Miscellaneous Utilities 
+   25.1 OEStopWatch 
+   25.2 OEDots 
+     26. SMILES Line Notation 
+   26.1 Daylight SMILES 
+   26.2 Extensions to Daylight SMILES 
+     27. Biopolymer Residues 
+   27.1 Ontology and Schema Fragility 
+   27.1.1 Biological Hierarchies 
+   27.1.2 Set Theory to the Rescue 
+   27.1.3 OEChem Examples 
+   27.1.4 Data Modeling Bibliography 
+     27.2 Stored Properties of Residues 
+   27.2.1 AlternateLocation 
+   27.2.2 BFactor 
+   27.2.3 ChainID 
+   27.2.4 FragmentNumber 
+   27.2.5 HetAtom 
+   27.2.6 InsertCode 
+   27.2.7 ModelNumber 
+   27.2.8 Name 
+   27.2.9 ResidueNumber 
+   27.2.10 Occupancy 
+   27.2.11 SecondaryStructure 
+   27.2.12 SerialNumber 
+       28. Valence Models 
+   28.1 The MDL Valence Model 
+   28.2 The OpenEye Valence Model 
+   28.2.1 The OpenEye Charge Model 
+   28.2.2 The OpenEye Hydrogen Count Model 
+       29. SMARTS Pattern Matching 
+   29.1 SMARTS Syntax 
+   29.1.1 Atom Primitives 
+   29.1.2 Bond Primitives 
+   29.1.3 Logical Operators 
+       30. Reactions 
+   30.1 Normalization Reactions 
+   30.2 Library Generation 
+     31. OEBinary Version 2 Format 
+   31.1 OEBinary Format Specification 
+     32. OpenEye Command Line Interface 
+   32.1 Compiling a text file into a C++ program 
+   32.2 Configuring OEInterface 
+   32.3 Parsing the Command Line 
+   32.3.1 OEParseCommandLine 
+   32.3.2 OEParseCommandLineLW 
+     32.4 Command line help 
+   32.5 Parameter Categories 
+   32.6 Ordering parameters and Categories 
+   32.7 Requiring Parameters 
+   32.8 Accessing parameter values 
+   32.9 Types of Parameters 
+   32.9.1 Parameters that are of type file 
+   32.9.2 Parameter files 
+   32.9.3 Molecule parameters 
+     32.10 Parameter Ranges and Legal/Illegal Values 
+   32.11 Parameter Aliases/Shortcuts 
+     33. Design Decisions 
+   33.1 Atoms, Bond, Conformers, and Molecules 
+   33.2 Objects and Free-Functions 
+   33.3 Programming Layers: The Deep and Twisted Path 
+     A. Bibliography 
+   About this document ... 
+   
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+   
+   
+   
+   Previous:   Front Matter 
+ Up:   OEChem - C++ Theory 
+ Next:   List of Tables 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,92 @@
+ import java.applet.*;
+ import java.awt.*;
+
+ public class SW extends Applet
+
+ {
+   TextField input1,input2,output1;    
+   Label in1,in2,output; 
+   NextButton nb;
+   TextArea ta;
+   int[][] sim;
+     int gap = -1;
+     int match = 1;
+     int mismatch = -1;
+     int len1, len2;
+     String s1, s2;
+
+   public void init()  // acts as a constructor for Applet
+   {
+     resize(600,400);
+     setLayout(new BorderLayout());
+     in1 = new Label("String one:");
+     in2 = new Label("String two:");
+     input1 = new TextField(20);
+     input2 = new TextField(20);
+     output = new Label("Similarity is ");
+     output1 = new TextField(5);
+     nb = new NextButton("Do Comparison",this);
+     ta = new TextArea(25,25);
+     Panel panel1 = new Panel();
+     Panel panel2 = new Panel(); 
+     panel1.add(in1);
+     panel1.add(input1);
+     panel1.add(in2);
+     panel1.add(input2);
+     panel2.add(nb);
+     panel2.add(output);
+     panel2.add(output1);
+     add("North",panel1);
+     add("South",panel2);
+     add("Center",ta);
+    }
+
+
+  public void putAnswer()
+  { 
+       s1 = input1.getText();
+       s2 = input2.getText();
+    output1.setText(doSimMatch(s1,s2));
+    results(sim,s1,s2,ta);
+   }
+
+    void results(int[][] a,String s1,String s2, TextArea ta)
+	{  
+         String alignment = backtrace(s1,s2,a);
+            ta.setText("");
+            int len1 = s1.length();
+            int len2 = s2.length();
+            ta.appendText("\t");
+            for (int i = 0; i0)
+          {
+             int charMatchScore =
+            (s1.charAt(i-1) == s2.charAt(j-1) )? match : mismatch;
+             if (score == sim[i-1][j-1]+charMatchScore)
+               {
+                   i--;
+                   j--;
+                   align1 = s1.charAt(i)+ align1;
+                   align2 = s2.charAt(j)+ align2;
+               }
+             else if (score == sim[i-1][j]+gap)
+               {
+                 i--;
+                 align1 = s1.charAt(i)+ align1;
+                 align2 = "_"+align2;
+               }
+             else
+               {
+                 j--;
+                 align1 = "_"+ align1;
+                 align2 = s2.charAt(j)+align2;
+               }
+             score = sim[i][j];  
+          }
+        return align1 + "\n"+ align2;
+      }
+
+
+}
+ 
+
+ 

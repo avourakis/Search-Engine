@@ -1,0 +1,79 @@
+ 9.1.17 SetData<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.16 SetBoolData 
+ Up:   9.1 OEBase 
+ Next:   9.1.18 SetDoubleData 
+   
+
+
+  
+9.1.17 SetData 
+ 
+   
+template&lt;typename T&gt; bool SetData(unsigned int tag, const T t)
+template&lt;typename T&gt; bool SetData(const char *tag, const T t)
+    
+These template methods store a copy of primitive or user-defined data passed
+as the second argument with a data tag identifier passed as the first
+argument.  If data of the same type has been stored using the identical tag in
+a previous AddData or SetData call, subsequent calls to SetData will overwrite
+the first instance of data stored with the data tag.  If a call to SetData
+succeeds in storing or overwriting previously stored data the method will
+return true.  SetData will return false if a copy of the data cannot be made.
+If data has been stored previously associated with a data tag, subsequent
+calls to SetData with the identical data tag but with different data type will
+result in a run-time warning being written and a return value of false.  Note
+that these methods will not make copies of data passed by pointer.  Values to
+be passed by pointer, or arrays, should be stored using the following SetData
+methods.
+
+  
+    
+template&lt;typename T&gt;
+bool SetData(unsigned int tag, const T t, unsigned int len)
+template&lt;typename T&gt;
+bool SetData(const char *tag, const T t, unsigned int len)
+    
+These template methods store copies of arrays of primitive or user-defined
+data passed as the second argument with a data tag identifier passed as the
+first argument.  The length of the array (number of elements) is passed as the
+third argument to the method.  If data of the same type has been stored using
+the identical tag in a previous AddData or SetData call, subsequent calls to
+SetData will overwrite the first instance of data stored with the data tag.
+The array copy stored previously will be deallocated and a copy of the new
+array will be stored.  If a call to SetData succeeds in storing or overwriting
+an array stored previously the method will return true.  SetData will return
+false if a copy of the data cannot be made.  If data has been stored
+previously associated with a data tag, subsequent calls to SetData with the
+identical data tag but with different data type will result in a run-time
+warning being written and a return value of false.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.16 SetBoolData 
+ Up:   9.1 OEBase 
+ Next:   9.1.18 SetDoubleData 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

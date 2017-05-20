@@ -1,0 +1,22 @@
+ """FrequencyEstimator.py
+Estimate frequencies of items in a data stream.
+D. Eppstein, Feb 2016."""
+
+class FrequencyEstimator:
+    """Estimate frequencies of a stream of items to a specified accuracy
+    (e.g. accuracy=0.1 means within 10% of actual frequency)
+    using only O(1/accuracy) bytes of memory."""
+
+    def __init__(self, accuracy):
+        self._counts = {}
+        self._howmany = int(1./accuracy)
+        self._total = 0
+
+    def __iadd__(self, key):
+        """FrequencyEstimator += key counts another copy of the key.
+        This operation takes amortized constant time, but the worst-case
+        time may be O(1/accuracy)."""
+        self._total += 1
+        if key in self._counts:
+            self._counts[key] += 1      # Already there, increment its counter.
+        elif len(self._counts)  

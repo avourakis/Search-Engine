@@ -1,0 +1,192 @@
+ box_self_intersection_all_pairs_d<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::box_self_intersection_all_pairs_d  
+
+
+   
+     
+     
+   
+
+   
+
+   
+     
+     
+  
+ 
+
+  Definition 
+ 
+
+The function   box_self_intersection_all_pairs_d   computes the pairwise intersecting boxes
+in a sequence of iso-oriented boxes in arbitrary dimension.
+It does so by comparing all possible pairs of boxes and is thus
+inferior to the fast   CGAL::box_self_intersection_d   algorithm on 
+page    .
+  
+
+The sequence of boxes is given with a forward iterator range. The
+sequences are not modified. For each intersecting pair of boxes a
+ callback  function object is called with the two intersecting
+boxes as argument.
+  
+
+The algorithm is interface compatible with the
+  CGAL::box_self_intersection_d   function. Similarly, we call the
+ value_type  of the iterators the  box handle , which is
+either our box type or a pointer type to our box type.
+  
+
+A  d -dimensional iso-oriented box is defined as the  Cartesian  product
+of  d  intervals. We call the box  half-open  if the  d 
+intervals  { [lo i ,hi i ) | 0    i &lt; d}  are half-open intervals,
+and we call the box  closed  if the  d  intervals  { [lo i ,hi i ]
+| 0    i &lt; d}  are closed intervals. Note that closed boxes support
+zero-width boxes and they can intersect at their boundaries, while
+non-empty half-open boxes always have a positive  volume  and they only
+intersect iff their interiors overlap.  The distinction between closed
+or half-open boxes does not require a different representation of
+boxes, just a different interpretation when comparing boxes, which is
+selected with the  topology  parameter and its two values,
+ CGAL::Box_intersection_d::HALF_OPEN  and
+ CGAL::Box_intersection_d::CLOSED .
+  
+
+The algorithm uses a traits class of the   BoxIntersectionTraits_d  
+concept to access the boxes. A default traits class is provided that
+assumes that the box type is a model of the   BoxIntersectionBox_d  
+concept and that the box handle, i.e., the iterators value type, is
+identical to the box type or a pointer to the box type.
+  
+
+ #include &lt; CGAL/box_intersection_d.h &gt; 
+  
+
+    
+         
+    template&lt; class ForwardIterator, class Callback &gt;
+         
+            
+           
+void
+         
+          
+             
+     box_self_intersection_all_pairs_d  (         
+    ForwardIterator begin, 
+
+ForwardIterator end, 
+
+Callback callback, 
+
+Box_intersection_d::Topology topology = Box_intersection_d::CLOSED)     
+                
+    Invocation of box  intersection  with default box traits
+      CGAL::Box_intersection_d::Box_traits_d &lt;Box_handle&gt; , where
+     Box_handle  corresponds to the iterator value type  of
+     ForwardIterator .
+                 
+         
+    template&lt; class ForwardIterator, class Callback, class BoxTraits &gt;
+         
+            
+           
+void
+         
+          
+             
+     box_self_intersection_all_pairs_d  (         
+    ForwardIterator begin, 
+
+ForwardIterator end, 
+
+Callback callback, 
+
+BoxTraits box_traits, 
+
+Box_intersection_d::Topology topology = Box_intersection_d::CLOSED)     
+                
+    Invocation with custom box traits.
+            
+
+  Requirements 
+ 
+
+    ForwardIterator  must be a forward iterator. We call its
+    value type  Box_handle  in the following. 
+     Callback  must be of the  BinaryFunction  concept. 
+    The  Box_handle  must be convertible to both argument types. The
+    return type is not used and can be  void .
+    The  Box_handle  must be a model of the  Assignable  concept.
+    In addition, if the default box traits is used the  Box_handle  must 
+    be a class type  T  or a pointer to a class type  T , where
+     T  must be a model of the   BoxIntersectionBox_d   concept.
+    In both cases, the default box traits specializes to a suitable
+    implementation.
+     BoxTraits  must be of the   BoxIntersectionTraits_d   concept.
+   
+
+  See Also 
+ 
+
+  CGAL::box_intersection_d     CGAL::box_self_intersection_d     CGAL::box_intersection_all_pairs_d  
+  
+
+  CGAL::Box_intersection_d::Box_traits_d &lt;BoxHandle&gt;    BoxIntersectionBox_d     BoxIntersectionTraits_d  
+  
+
+  Implementation 
+ 
+
+The algorithm is trivially testing all pairs and runs therefore in time
+ O(n 2 )  where  n  is the size of the input sequence. This algorithm
+does not use the id-number of the boxes.
+  
+
+    Next:    BoxIntersectionBox_d   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

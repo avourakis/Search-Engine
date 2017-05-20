@@ -1,0 +1,58 @@
+ 23.6.1 OEReadXYZFile<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.6 XYZ File Format 
+ Up:   23.6 XYZ File Format 
+ Next:   23.6.2 OEWriteXYZFile 
+   
+
+
+  
+23.6.1 OEReadXYZFile 
+ 
+
+ 
+    bool MyReadXYZMolecule(oemolistream &amp;ifs, OEMolBase &amp;mol)
+{
+  mol.Clear();
+  if (OEReadXYZFile(ifs,mol))
+  {
+    OEDetermineConnectivity(mol);
+    OEFindRingAtomsAndBonds(mol);
+    OEPerceiveBondOrders(mol);
+    OEAssignImplicitHydrogens(mol);
+    OEAssignFormalCharges(mol);
+    OEAssignAromaticFlags(mol);
+    return true;
+  }
+  mol.Clear();
+  return false;
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.6 XYZ File Format 
+ Up:   23.6 XYZ File Format 
+ Next:   23.6.2 OEWriteXYZFile 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

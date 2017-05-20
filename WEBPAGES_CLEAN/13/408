@@ -1,0 +1,157 @@
+ LaTeX tips &amp; tricks - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Differences  
+ 
+
+ 
+
+This shows you the differences between two versions of the page.
+ 
+
+ 
+       
+     wiki:latex_tips_tricks [Thu Aug 28 22:19:56 2014]   david   Separate bibliography for appendices      
+     
+     wiki:latex_tips_tricks [Fri Dec  4 00:12:49 2015]  (current)  david   detail why you might want the box code      
+       Line 30: 
+ Line 30:                   ===== Internal hyperlinks =====     ===== Internal hyperlinks =====    -   Include </strong>this in your preamble:  +   You should always refer to figures, sections, theorems, etc. by label instead of by number. These labels are created by code like </strong>       +    </strong>       +   &lt;code latex&gt;\begin{theorem} </strong>       +   \label{thm:my-theorem-name} </strong>       +   The statement of the theorem goes here. </strong>       +   \end{theorem}&lt;/code&gt; </strong>       +    </strong>       +   or </strong>       +    </strong>       +   &lt;code latex&gt;\section{Section title} </strong>       +   \label{sec:my-section-name}&lt;/code&gt; </strong>       +    </strong>       +   etc. This helps keep the numbers matching up correctly when things get renumbered, but it can also be used to make internal hyperlinks so that clicking on the name of a thing will take you to the thing. To do this, include </strong>this in your preamble:                   &lt;code latex&gt;\usepackage{hyperref}&lt;/code&gt;     &lt;code latex&gt;\usepackage{hyperref}&lt;/code&gt;    Line 38: 
+ Line 50:       &lt;code latex&gt;Theorem~\ref{thm:name-of-theorem}&lt;/code&gt;     &lt;code latex&gt;Theorem~\ref{thm:name-of-theorem}&lt;/code&gt;                -  use  +   (which is how you would refer to the label without hyperref), </strong>use                   &lt;code latex&gt;\autoref{thm:name-of-theorem}&lt;/code&gt;     &lt;code latex&gt;\autoref{thm:name-of-theorem}&lt;/code&gt;                -   as </strong>well as  working better when you </strong>change a lemma to a theorem or "Figure" to "Fig." (etc), this produces better hyperlinks: the link covers the whole "Theorem 3" text not just the number.  </strong>  +   As </strong>well as  making it easier to </strong>change a lemma to a theorem or "Figure" to "Fig." (etc), this produces better hyperlinks: the link covers the whole "Theorem 3" text not just the number. In order to get this to work properly for labels that the package doesn't already know about, you may need additional preamble code like    -    </strong>  +      -  In order to get this to work properly for labels that the package doesn't already know about, you may need additional preamble code like  +                     &lt;code latex&gt;\renewcommand{\sectionautorefname}{Section}&lt;/code&gt;     &lt;code latex&gt;\renewcommand{\sectionautorefname}{Section}&lt;/code&gt;       +         +  Labels also work for the items of an enumeration environment, but you may want to use \ref instead of \autoref for these, since the type of thing you want to call it (Case, Property, etc) will probably vary from one enumeration to another.                   ===== Number lines for submissions =====     ===== Number lines for submissions =====    Line 82: 
+ Line 94:                   =====Halmos box at the end of proofs=====     =====Halmos box at the end of proofs=====       +  Using the amsthm package provides a proof environment that puts a box at the end of each proof, but some documentclasses provide their own proof environment and are incompatible with amsthm. If this environment is missing its box, you can modify it to include the box as follows.       +         &lt;code latex&gt;\usepackage{amssymb}     &lt;code latex&gt;\usepackage{amssymb}       \let\doendproof\endproof     \let\doendproof\endproof    Line 91: 
+ Line 105:       &lt;code latex&gt;\DeclareMathOperator{\treewidth}{tw}&lt;/code&gt;     &lt;code latex&gt;\DeclareMathOperator{\treewidth}{tw}&lt;/code&gt;                -  and then whenever you want to use it do something like  +   (in the amsmath package) </strong>and then whenever you want to use it do something like                   &lt;code latex&gt;$\treewidth(G)$&lt;/code&gt;     &lt;code latex&gt;$\treewidth(G)$&lt;/code&gt;    Line 119: 
+ Line 133:                   as well as the usual bibtex command for the main paper. For this extra level of complication in compiling everything it's helpful to use a makefile.     as well as the usual bibtex command for the main paper. For this extra level of complication in compiling everything it's helpful to use a makefile.       +         +  =====LIPIcs format=====       +  See http://11011110.livejournal.com/300115.html for some workarounds to issues with the LIPIcs conference format, including getting lineno to work, lemma numbering in appendices, and inability to use \autoref       +         +  =====TeXShop and multiple files=====       +  If you use TeXShop (a nice OS X graphical user interface front end for LaTeX) and have a project that has been split into multiple files, you should add the line       +  &lt;code latex&gt;% !TEX root = path/to/root.tex&lt;/code&gt;       +  to the start of each file. That way, when you have a source file open, and use the command-key shortcut to compile it, it will compile your root file instead of the one you have open. The same code may work on some other front ends.       +         +  =====Stylizing a word=====       +  To properly define a command that prints a word, perhaps in a different font or style, use        +  &lt;code latex&gt;\usepackage{xspace}       +  \newcommand{\mykeyword}{\emph{my-keyword}\xspace}       +  &lt;/code&gt;       +  Without an xspace, the space character between the command \mykeyword and the next word will be ignored.     
+   
+  
+
+  
+    
+     Trace: 
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/latex_tips_tricks.1409264396.txt.gz · Last modified: Thu Aug 28 22:19:56 2014 by david  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

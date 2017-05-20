@@ -1,0 +1,994 @@
+ Regular Expressions<body>
+
+ 
+
+ 
+Regular Expressions
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+ Table of contents 
+
+ 
+    Introduction  
+    The basics  
+    An ordinary character matches itself  
+    Literal metacharacters  
+    Characters ordinarily invisible  
+    A character class matches any character in the class  
+    Negating a character class  
+    Metacharacters in a class  
+    Universal character class ( . )  
+    Named character classes  
+    Catenated patterns match the first one, then the second  
+    Patterns separated by  |  match one or the other  
+     ?  or optional match  
+     +  or positive closure  
+     *  or Kleene closure  
+    Numeric repetition counts  { m } ,  { m, } , and   { m,n }   
+    Minimal closures  +? ,  *? ,  { m,n  }? , and  { m,  }?   
+    Parenthesized strings match themselves, without the parentheses  
+    Precedence of evaluation  
+    Context  
+     ^  and  $  as line context  
+    Word context  
+    Trailing context with  /   
+    Not regular, but sometimes found in pattern languages  
+     $ k   or  \ k    
+    Some uses of regular expressions  
+    Defining a set of strings  
+    Matching a substring within a string  
+    Replacing a substring  
+    Comparison of some regular expression notations  
+ 
+
+
+ Introduction 
+
+ 
+A regular expression is a  pattern  that can match
+repeating characters or strings,
+and alternative characters or strings. 
+The repetition and alternation are expressed using
+ metacharacters  such as  * ,
+ + , and  | 
+in patterns. 
+Since the metacharacters are themselves characters,
+we use  escaping  with a backslash  \ 
+to distinguish when a metacharacter
+is being used as a regular character that matches itself,
+rather than as a metacharacter with special meaning. 
+Thus,
+ *  is a metacharacter,
+but  \*  represents an asterisk character; 
+and  \  is the escape metacharacter,
+but  \\  represents a single backslash character. 
+Escaping is also used to give some regular characters
+a special meaning,
+such as  \n  to represent a newline
+(in pattern languages that allow a newline to be matched explicitly). 
+ 
+
+ 
+The strings that a regular expression can match
+are sequences of symbols drawn from an
+ alphabet . 
+Usually this alphabet is the set of all characters
+(which is why regular expression notations use backslash to
+escape a metacharacter
+and use it to represent the corresponding alphabet character),
+but the alphabet of a regular expression can be restricted
+(for example, just letters)
+or can be different
+(for example, Greek letters). 
+ 
+
+ 
+ 
+This document presents the  perl 
+regular expression notation
+ 
+(see
+ perl.org ,
+ O'Reilly ). 
+There are a number of similar but not identical regular expression notations; 
+the  perl  regular expression notation
+is an approximate superset of the other common notations,
+so we will present the concepts in terms of  perl 
+and then contrast the other notations. 
+ 
+
+ 
+In this document,
+ patterns  are in boldface sans-serif. 
+ 
+
+
+ The basics 
+
+ An ordinary character matches itself 
+
+ 
+Each ordinary character is a pattern that matches itself. 
+Ordinary characters include letters, digits,
+whitespace such as spaces, tabs, and newlines, and
+other characters that are not metacharacters. 
+ 
+
+    Pattern   Matches    a   a     Literal metacharacters 
+
+ 
+To match a character that is used as a metacharacter
+(such as
+  [  
+  .  
+  (  
+  )  
+  |  
+  *  
+  +  
+  ?  
+  {   )
+precede it with a backslash ( \ ). 
+Since backslash is thus itself a metacharacter,
+to match a backslash, use a doubled backslash. 
+ 
+
+    Pattern   Matches    \\   \    \[   [    \.   .    \*   *     Characters ordinarily invisible 
+
+ 
+Escapes such as
+ \t  (tab) and
+ \n  (newline)
+may appear in  perl  regular expressions,
+as can the other escape sequences
+ \a ,
+ \b ,
+ \e ,
+ \f ,
+ \r ,
+ \ooo  where  o  represents
+an octal digit [0-7],
+and
+ \xXX  where  X  represents
+a hex digit [0-9A-Fa-f]. 
+The octal and hex escapes may be constructed
+to match any character, not just invisible ones. 
+ 
+
+    Pattern   Matches    \t    tab     \x09    tab     \011    tab     \x61   a     A character class matches any character in the class 
+
+ 
+A character class is pattern that matches any one of a set of characters. 
+A character class is usually written by
+listing the characters in the set, enclosed in
+ [ ] . 
+ 
+
+ 
+Consecutive character ranges in a class
+can be written conveniently as the lowest character, a hyphen -,
+and the highest character, like  [a-z]  or
+ [_a-zA-Z0-9] . 
+ 
+
+    Pattern   Matches    [ab]   a  or  b   but nothing else     [a-z]   a  or  b  or  c
+         and so on up to  z     Negating a character class 
+
+ 
+A character class is negated by starting it with  [^ 
+rather than  [ . 
+ 
+
+    Pattern   Matches    [^ab]    any character
+         except   a  or  b    [^^]    any character
+         except   ^     Metacharacters in a class 
+
+ 
+The ordinary metacharacters
+  [  
+  .  
+  (  
+  )  
+  |  
+  *  
+  +  
+  ?  
+  {  
+are treated as regular characters within a character class. 
+However, the class metacharacters  ] - ^ 
+still require special treatment. 
+ 
+
+ 
+ ]  ordinarily marks the end of a class. 
+However,
+a  ]  appearing immediately after the opening
+ [  or
+ [^  of a class
+is considered a regular character appearing as part of the class. 
+ 
+
+ 
+Nothing special has to be done to include  [ 
+as a character in a character class,
+but of course it must be escaped outside a class. 
+ 
+
+ 
+ -  ordinarily indicates a range in a class. 
+If a character class is to include  - ,
+the  -  must be listed
+either first or last in the class. 
+(If the class also includes  ] ,
+which must be listed first, then
+ -  must be last.) 
+ 
+
+ 
+ ^  is also a metacharacter in a class,
+but only if it immediately follows the opening  [ . 
+If a character class is to include  ^ ,
+the  ^  may appear anywhere
+except as the first character. 
+ 
+
+    Pattern   Matches    [a]   a   but nothing else     [ ]a]   ]  or  a
+          but nothing else     [[a]   [  or  a   but nothing else     [ ][ ]   ]  or 
+        [   but nothing else (why?)     \[   [  (not a character class)     [-az]   -  or  a  or  z
+         but nothing else     [az-]   -  or  a  or  z
+         but nothing else     [ ]-az]    any character from  ]  to  a,
+          or  z    [ ]az-]   ]  or  a  or  z
+         or  -  but nothing else     [ab^]   a  or  b  or  ^
+         but nothing else     [ ]az^-]   ]  or  a  or  z
+         or  ^  or  -  but nothing else      
+In  perl ,
+a backslash followed by a non-alphabetic character
+represents that literal character
+(although as we've seen, there are other ways of getting
+all class metacharacters into a class). 
+ 
+
+    Pattern   Matches    [\-a]   -  or  a  but nothing else     [\\a]   \  or  a  but nothing else      Universal character class ( . ) 
+
+ 
+A dot  .  matches any character except newline. 
+ 
+
+    Pattern   Matches    .   a  or  *  or  .  or   
+         (a space)  or ...     \.   .  but nothing else      Named character classes 
+
+ 
+Perl defines a number of named character classes: 
+ 
+
+    \w   [a-zA-Z0-9]    \W   [^a-zA-Z0-9]    \s   [ \t\n]        \S   [^ \t\n]        \d   [0-9]          \D   [^0-9]           
+These can appear as metacharacters
+or as elements of character classes in [ ]. 
+ 
+
+  grep  and some other regular expression languages
+defines a number of self-explanatory named character classes: 
+ [:alnum:] ,
+ [:alpha:] ,
+ [:cntrl:] ,
+ [:digit:] ,
+ [:graph:] ,
+ [:lower:] ,
+ [:print:] ,
+ [:punct:] ,
+ [:space:] ,
+ [:upper:] ,
+and
+ [:xdigit:] . 
+ 
+
+
+ Catenated patterns match the first one, then the second 
+
+
+ 
+Catenation of regular expressions
+is done by writing them one after another: 
+for example  ab  or  .[a-z] . 
+The catenation of two patterns matches
+any string that starts with something the first pattern matches,
+then continues with something the second pattern matches. 
+ 
+
+    Pattern   Matches    abc   abc    [a-z][A-Z]   aA  or  aB  or  Ba
+         or ...      Patterns separated by  |  match one or the other 
+
+
+ 
+If  α  and  β  are patterns,
+then
+ α|β  matches
+anything  α  matches or
+anything  β  matches. 
+ |  is associative
+and can be used for any number of sub-patterns, not just two: 
+ α|β| γ   matches
+anything that  α ,  β ,
+or   γ   match. 
+ 
+
+ 
+ |  operates in a way similar to a character class in
+ [ ] ,
+except that a character class may only contain single characters,
+while  |  may join any two patterns. 
+They are distinguished for implementation reasons: 
+a character class can be recognized without lookahead,
+but recognizing alternation with  | 
+requires an unbounded stack. 
+ 
+
+    Pattern   Matches    (abc)|(bcd)   abc  or  bcd
+         but nothing else     a|b    precisely what  [ab] 
+        matches      A pattern followed by a repetition
+matches some number of times 
+
+ 
+Repetition of a regular expression is done by
+following the expression with a repetition metacharacter or meta-sequence. 
+The complete pattern matches some number of repetitions of
+whatever the original pattern matches. 
+ 
+
+
+  ?  or optional match 
+
+ 
+A pattern followed by  ? 
+matches either the empty string, or
+anything that the pattern matches. 
+ 
+
+ 
+We will use ε to represent an empty string,
+that is, a string of 0 characters. 
+ 
+
+    Pattern   Matches    a?   ε  or  a
+         but nothing else     [ab]?   ε  or  a  or  b
+          but nothing else     (abc)?   ε  or  abc
+         but nothing else     .?    Any single character within a line,
+        or ε       +  or positive closure 
+
+ 
+A pattern followed by  +  matches
+anything that one or more occurrences of the pattern match. 
+ 
+
+    Pattern   Matches    a+   a  or  aa  or  aaa
+         or ...     [ab]+   a  or  b  or  aa
+          or  ba   or  ab  or ...     (abc)+   abc  or  abcabc  or ...     .+   Any non-empty string within a single line      *  or Kleene closure 
+
+ 
+A pattern followed by  *  matches anything that
+0 or more occurrences of the pattern match. 
+If  α  is a pattern, then
+ α*  matches
+everything  α+  matches,
+and in addition matches the empty string. 
+ 
+
+    Pattern   Matches    a*   ε  or  a  or  aa
+          or  aaa  or ...     [ab]*   ε  or  a  or  b
+          or  aa   or  ba   or  ab  or ...     (abc)*   ε  or  abc
+          or  abcabc  or ...     .*    Any string (even an empty one)
+         within a single line      Numeric repetition counts  { m } ,  { m, } , and   { m,n }  
+
+ 
+ perl  and some other languages denote specific numbers of repetitions
+using numbers in braces  { } . 
+A pattern  α  followed by
+ { m  }  matches anything
+that  m  repetitions of  α  matches; 
+a pattern  α  followed by
+ { m,n  }  matches anything
+that  m  to  n  repetitions of  α 
+match;  and
+a pattern  α  followed by
+ { m, }  matches anything
+that  m  or more repetitions of  α  match. 
+ 
+
+ 
+One can see that
+ α*  is equivalent to
+ α{0,} ,
+ α+  is equivalent to
+ α{1,} , and
+ α?  is equivalent to
+ α{0,1} . 
+ 
+
+
+ Minimal closures  +? ,  *? ,  { m,n  }? , and  { m,  }?  
+
+ 
+ + ,  * ,
+ { m,n  } 
+and
+ { m,  } 
+are  greedy : 
+a pattern followed by one of them will match
+all the occurrences possible. 
+The corresponding minimal closures
+ +? ,  *? ,
+ { m,n }? ,
+and
+ { m, }? 
+match the smallest number of occurrences
+that allows the next expression to match. 
+ 
+
+    Pattern   Matches    .*z     All of  azazaz    .*?z    The first  az  only,
+         in  azazaz.     
+Minimal closures do not add any power to regular expressions,
+but can be much more convenient than
+writing the corresponding pattern without them. 
+ 
+
+
+ Parenthesized strings match themselves, without the parentheses 
+
+
+ 
+Parentheses are used in  perl 
+and most other regular expression languages
+to mark off a pattern that is matched as a unit. 
+ 
+
+    Pattern   Matches    (abc)   abc     Precedence of evaluation 
+
+
+ 
+The prefix escape operator  \ 
+always applies to the next character
+(if that is a character that can be escaped). 
+It binds most tightly of all the operators. 
+ 
+
+ 
+The postfix operators  * ,  + ,
+ ? , and  {} 
+apply to the pattern that immediately precedes them. 
+They bind next most tightly. 
+ 
+
+ 
+Catenation (listing one pattern after another) binds next most tightly. 
+ 
+
+ 
+The alternation operator  |  binds least tightly. 
+ 
+
+ 
+Parentheses force matching of everything inside
+before the parenthesized pattern can be combined with anything outside. 
+ 
+
+    Pattern   Matches   Does  not  match 
+       Why    \.+ 
+       .  or  ..  or  ...  or so on  
+       a  or  aa  or so on  
+        \   binds more tightly than 
+           +  
+     ab* 
+       a  or  ab  or  abb  or so on  
+       ε  or  abab  or so on  
+        *   binds more tightly than catenation  
+     (ab)* 
+       ε  or  abab  or so on  
+        
+        The parentheses force   ab 
+           to match as a unit  
+     ab|cd 
+       ab  or  cd 
+       abd  or  acd 
+        catenation   | 
+           binds more tightly than alternation 
+       
+     (ab)|(cd) 
+       ab  or  cd 
+        
+        The parentheses force 
+           ab  and  cd 
+           to match as units 
+       
+      Context 
+
+ 
+Some regular expression languages
+contain operators that indicate context,
+but do not match any characters. 
+ 
+
+
+  ^  and  $  as line context 
+
+ 
+ ^  at the beginning of a pattern
+matches the beginning of a line,
+and  $  at the end of a pattern
+matches the end of a line. 
+ ^  and  $  do not match
+any specific line-starting or line-ending character (such as newline),
+they merely indicate the context of the pattern that contains them. 
+ 
+
+    Pattern   Matches    ^a   a  but only if it begins a line     b$   b  but only if it ends a line     ^c$   c  but only if it is an entire line     ^\^   ^  but only if it begins a line     ^\^\$$   ^$
+         but only if they are an entire line      
+Perl (but not the other languages)
+also have  \A  that matches the beginning of the entire input,
+and  \Z  that matches the end. 
+ 
+
+
+ Word context 
+
+ 
+ perl  provides
+ \b  which matches the empty string
+either at the beginning or the end of a word. 
+The corresponding  \B 
+matches empty strings that are not at word boundaries. 
+ 
+
+ 
+Other notations provide separate patterns for the beginning and end; 
+ perl  apparently does not support these. 
+In such notations,
+ \&lt;  at the beginning of a pattern matches
+the empty string at the beginning of a word,
+and  \&gt;  at the end of a pattern matches
+the empty string at the end of a word. 
+ \&lt;  and  \&gt;  do not match
+any specific word-starting or word-ending character (such as space or tab),
+they merely indicate the context of the pattern that contains them. 
+ 
+
+    Pattern   Matches    \ba 
+   a
+       but only if it begins a word, as in 
+      is a  or  two apples
+   
+      Trailing context with  /  
+
+
+ 
+ perl  does not provide this. 
+In some other notations,
+ α/β 
+matches anything  α  matches,
+but only if followed by something  β  would match. 
+The string that would be matched by  β 
+is used only for context,
+and is not matched by this pattern. 
+ 
+
+
+ Not regular, but sometimes found in pattern languages 
+
+  $ k   or  \ k   
+
+ 
+In some regular-expression-like languages (including perl),
+ \ k  
+may appear in a pattern,
+representing whatever string matched the  k th parenthesized subpattern. 
+ k  is usually limited to 1 through 9. 
+Strictly speaking,
+a pattern including such a reference
+may not be a regular expression in the formal languages sense; 
+such a pattern may instead be
+ context-free  or  context-sensitive 
+(depending on how  \ k   appears in the pattern),
+and of a more powerful class of languages. 
+ 
+
+    Pattern   Matches    ([ab])c 
+       aca  or  bcb
+          Not a regular expression  
+      
+Regular expressions are often used to match and replace text. 
+In the replacement text,
+ $ k   (or in other languages
+ \ k  )
+represents whatever the  k th parenthesized subpattern
+in the pattern matched. 
+The  k th is determined by counting opening parentheses. 
+ 
+
+
+ Some uses of regular expressions 
+
+ Defining a set of strings 
+
+ 
+A regular expression defines a set of strings,
+namely the set of strings that the expression matches completely. 
+We say that the expression defines a  language ,
+namely the set of strings. 
+Such a set is a  regular  language
+(because it is defined by a regular expression); 
+the regular languages are the simplest kind of formal language,
+and each one can be recognized by a  finite state machine . 
+The sets are often but not necessarily infinite. 
+ 
+
+    Expression   Its language    a 
+       { 'a' } 
+     [ab] 
+       { 'a', 'b' } 
+     [ab] 
+       { 'a', 'b' } 
+     [^ab] 
+       { 'c', 'd', ... , 'z', 'A', 'B', ... , 'Z', ' ', '-', ... }
+         (not including 'a' or 'b')  
+     [^ab] 
+       { 'c', 'd', ... , 'z', 'A', 'B', ... , 'Z', ' ', '-', ... }
+         (not including 'a' or 'b')  
+     [ab]* 
+       { '', 'a', 'b', 'aa', 'ab', 'ba', 'bb', 'aaa', ... }
+         (infinite)  
+     (c|(dd)|(eee))+ 
+       { 'c', 'dd', 'eee', 'cc', 'cdd', 'ceee', 'ddc', 'dddd', 'ddeee', ... }
+         (infinite)  
+      Matching a substring within a string 
+
+ 
+Regular expressions are frequently used for matching a part of a longer string. 
+We will use  underscoring  to indicate
+which parts of a string might be matched. 
+ 
+
+    Pattern   Possible matches    i 
+       Elevat i on ga i n
+          400 ft. 
+          Th i s  i s the
+          most travelled tra i l
+           i n the park. 
+     [aeiou]+ 
+       El e v a t io n
+          g ai n 400 ft. 
+          Th i s  i s
+          th e  m o st
+          tr a v e ll e d
+          tr ai l  i n
+          th e  p a rk. 
+     [^aeiou]+ 
+        El e v a t io n
+          g ai n 400 ft. 
+          Th i s  i s
+          th e  m o st
+          tr a v e ll e d
+          tr ai l  i n
+          th e  p a rk.  
+     (ai)|(is) 
+       Elevation g ai n 400 ft. 
+          Th is   is  the most
+          travelled tr ai l in the park. 
+     io?n 
+       Elevat ion  ga in 
+          400 ft. 
+          This is the most travelled trail  in 
+          the park. 
+      Replacing a substring 
+
+ 
+Regular expressions are also frequently used
+in specifying the replacement of substrings with other strings. 
+Such a replacement may be written as a command
+that includes regular expressions. 
+The usual command syntax is:
+ 
+
+ 
+   s/  from  /  to  / 
+ 
+
+ 
+In sophisticated replacement command languages,
+any character can be used in place of the three  / 's,
+as long as it does not appear unescaped in the  from 
+or  to  patterns. 
+Otherwise,
+any  /  needed in the pattern or replacement
+must be escaped with a backslash. 
+A  g  at the end of the command indicates
+global replacement of anything that matches the  from  pattern; 
+otherwise, only the first match is replaced. 
+ 
+
+ 
+Parentheses (or in some notations escaped parentheses)
+may appear in the  from  expression
+to identify sub-expressions
+whose match can be used in the  to  expression. 
+These subexpressions are numbered beginning from 1
+in the order of the left parentheses. 
+The string that matches the first subexpression
+can then be indicated in the  to  expression
+by   
+( \1  in some notations); 
+that matching the second by   ; 
+and so on. 
+ 
+
+ 
+We will use  underscoring  to indicate
+which parts of a string have been replaced. 
+ 
+
+    Command   Applied to   Result    s/i/I/ 
+       This is the most travelled trail
+          in the park. 
+       Th I s is the most travelled trail
+          in the park. 
+     s/i/I/g 
+       This is the most travelled trail
+          in the park. 
+       Th I s  I s the
+          most travelled tra I l
+           I n the park. 
+     s:i(.):i:g 
+       This is the most travelled trail
+          in the park. 
+       Th iss   iss  the
+          most travelled tra ill 
+           inn  the park. 
+      Comparison of some regular expression notations 
+
+ 
+With the several competing versions of traditional Unix commands,
+it's difficult to choose a definitive regular expression notation,
+especially since the Gnu versions have all been made
+roughly as powerful as  perl . 
+The table below approximates the traditional limitations and notations
+of several kinds of regular expressions. 
+ 
+
+    perl  — A recent and powerful string processing language
+   
+     sed  — The Unix stream editor, dating back to the late 1960's
+        (I believe)
+   
+     lex  — The Unix lexical analyzer generator, from the mid 1970's
+   
+     egrep  — The extended version of  grep 
+   
+     grep  — The Unix regular expression pattern matcher
+   
+     sh glob  — The filename globbing language for Unix  sh 
+   
+      
+       perl 
+       lex 
+       sed 
+       egrep 
+       grep 
+       sh glob 
+     Escape 
+       \ 
+       \ 
+       \ 
+       \ 
+       \ 
+       \ 
+     Character class 
+       [ ] 
+       [ ] 
+       [ ] 
+       [ ] 
+       [ ] 
+       [ ] 
+     Negated character class 
+       [^ ] 
+       [^ ] 
+       [^ ] 
+       [^ ] 
+       [^ ] 
+       [^ ] 
+     Universal class 
+       . 
+       . 
+       . 
+       . 
+       . 
+       ? 
+     Kleene closure 
+       * 
+       * 
+       * 
+       * 
+       * 
+        
+     Positive closure 
+       + 
+       + 
+        
+       + 
+        
+        
+     Optional match 
+       ? 
+       ? 
+        
+       ? 
+        
+        
+     Repetition counts 
+       { } 
+       { } 
+        
+       { } 
+        
+        
+     Minimal closures 
+       *? 
+        
+        
+        
+        
+        
+     Subpatterns 
+       ( ) 
+       ( ) 
+       \( \) 
+       ( ) 
+        
+        
+     Alternation 
+       | 
+       | 
+       | 
+       | 
+        
+        
+     Embedded newline 
+       \n 
+       \n 
+       \n 
+        
+        
+        
+     Line context 
+       ^ $ 
+       ^ $ 
+       ^ $ 
+       ^ $ 
+       ^ $ 
+        
+     Word context 
+       \b 
+       \&lt; \&gt; 
+       \&lt; \&gt; 
+       \&lt; \&gt; 
+       \&lt; \&gt; 
+        
+     Trailing context 
+        
+       / 
+        
+        
+        
+        
+     Reusing  k th match 
+       \ k  
+        
+       \ k  
+       \ k  
+        
+        
+     Replacement with  k th match 
+       $ k  
+        
+       \ k  
+        
+        
+        
+     Replacement with entire match 
+       \0 
+        
+       &amp; 
+        
+        
+        
+      
+ perl  regular expressions are usually enclosed in slashes
+( /.../ ),
+in which case any slash in the regular expression
+must be escaped with a backslash. 
+ 
+
+ 
+In  lex  patterns,
+quotes  ' '  escape any special characters between them,
+except for backslash (which may be used to include a quote in a quoted pattern). 
+ 
+
+ 
+In  sed  patterns,
+ .  can match a newline internal to a string
+(although not its terminal newline). 
+Only a limited set of single character escapes
+such as  \t  is provided. 
+ 
+
+ 
+In  sh  filename globbing,
+the universal class ( ? )
+does not include the dot character or / or newline. 
+There is also a universal pattern ( * )
+that matches zero or more occurrences of anything
+ ?  matches. 
+Backslash is used to escape the special meaning of  ^ 
+and  - 
+in a character class. 
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010Mar10We23:00 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

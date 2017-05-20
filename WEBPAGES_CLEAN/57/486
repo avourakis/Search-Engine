@@ -1,0 +1,64 @@
+ // Handle tables of character translation probabilities
+
+import java.util.*;
+
+public class LetterProbability {
+	double prob[][] = new double[26][26];
+	
+	public LetterProbability() {
+		for (int i = 0; i  0.0) {
+				totalWeight += factor;
+				factor /= weight;
+				for (i = 0; i  0) {
+			for (i = 0; i  0.9999) prob[i][j] = 0.9999;
+	}
+	
+	// Find best permutation for given weights
+	// returns char[26]
+	char[] match() {
+		char matches[] = new char[26];
+		boolean processed[] = new boolean[26];
+		double pathWeight[] = new double[26];
+		int codePred[] = new int[26];
+		int textPred[] = new int[26];
+		double bestEndWeight;
+		int bestEnd;
+		int i, j;
+		
+		for (i = 0; i  bestWeight) {
+					bestLet = j;
+					bestWeight = pathWeight[j];
+				}
+				
+				// test whether we have a better complete alternating path
+				if (bestWeight  bestEndWeight) {
+							bestEndWeight = newWeight;
+							bestEnd = j;
+							codePred[j] = bestLet;
+						}
+					} else if (!processed[(int)matches[j]-(int)'A']) { // already matched, not yet in tree
+						int oldMatch = (int)matches[j] - (int)'A';
+						newWeight /= prob[j][oldMatch];
+						if (newWeight &gt; pathWeight[oldMatch]) {
+							pathWeight[oldMatch] = newWeight;
+							textPred[oldMatch] = j;
+							codePred[j] = bestLet;
+						}
+					}
+				}
+			}
+
+			// here with alternating path. use it to rearrange matches
+			while (bestEnd &gt;= 0) {
+				matches[bestEnd] = (char)(codePred[bestEnd]+(int)'A');
+				bestEnd = textPred[codePred[bestEnd]];
+			}
+		}
+		
+		// augmented 26 times, we now have a perfect matching
+		return matches;
+	}
+	
+	// Update probabilities to correspond to locally optimized permutation
+	void adjustPerm(char perm[], double bias) {
+		for (int i = 0; i  

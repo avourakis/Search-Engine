@@ -1,0 +1,48 @@
+ /*
+  $Id: ftable.h 5767 2010-10-19 05:52:31Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 05/20/2006
+  Author: Rares Vernica 
+*/
+
+#ifndef _ftable_h_
+#define _ftable_h_
+
+#include 
+#include  
+
+#include "simfunc/simvect.h"
+
+using namespace std;
+
+typedef map ContFTable;
+
+class FTable {
+private:
+  ContFTable *cont;
+public:
+  FTable(): cont(new ContFTable()) {}
+  FTable(const FTable &amp;t);
+  ~FTable() { delete cont; }
+
+  FTable&amp; operator=(const FTable &amp;t);
+  bool operator==(const FTable &amp;t) const;
+
+  const size_t size() const { return cont-&gt;size(); }
+
+  void insert(SimVect vect) { (*cont)[vect]++; }
+  void erase(SimVect vect);
+
+  const ContFTable::iterator begin() const { return cont-&gt;begin(); }
+  const ContFTable::iterator end() const { return cont-&gt;end(); }
+
+  friend ostream&amp; operator&gt;(istream &amp;in, FTable &amp;t);
+};
+
+#endif
+  

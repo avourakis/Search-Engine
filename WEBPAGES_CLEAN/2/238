@@ -1,0 +1,41 @@
+ Namedtuples in ICS 31<body>
+ 
+  ICS 31 • 
+David G. Kay • 
+UC Irvine 
+ 
+  Namedtuples in ICS 31   
+  Context and background: </strong>Our programs represent things and actions. We represent actions with operators (like +) and functions (like  len() ) and statements (like if/else). We represent things with numbers (e.g., today's high temperature) or strings (e.g., a book's title). 
+ Things in the real world are often more complicated than a single number or string. A college student represented in the college registrar's software might have a name, an ID number, a GPA, a year of birth, and a major. The name and major would be strings, the ID and birth year would be integers, the GPA would be a float. We could use five simple variables for each of the five "fields," or "attributes," of a student, but we'd have to remember to include all five every time we want to do something with all the student's information as a package. To avoid that inconvenience and clutter, Python gives us the namedtuple. We use a namedtuple in our programs for any thing, any object,  that has multiple fields/attributes/components. 
+ In fact, namedtuples let us extend the Python language by building a new data type, e.g., for a student as described above. Once we define the student namedtuple, we can write a program about students, just as we could already write about numbers and strings. 
+  Defining and using namedtuples:</strong> There are four steps to defining and using namedtuples. 
+ First, we have to tell our program we'll be using namedtuples in the first place. We include this line somewhere before we define our first namedtuple. We only need this line once, no matter how many different namedtuuples we'll define.    from collections import namedtuple  
+ Second, we give the "blueprint" for our object—what we'll call this type of object and the names we'll use for its fields/attributes/components. 
+  Student = namedtuple('Student', 'name ID GPA year major')  
+ This says, "Create a new kind of data object called a Student. Each student will have a name, an ID, a GPA, a year, and a major." You don't have to tell Python in advance what types of data each field will be, but it's not a bad idea to write your intentions in a comment. 
+  # name and major are strings, ID and year are ints, GPA is a float  
+ Third, we can create actual objects of our newly-defined type. After the first two steps, we can do this wherever and whenever we need it in our programs. 
+  a_student = Student("Programmer, Paula", 11112222, 3.95, 1997, "COMPSCI")
+s2 = Student("Coder, Calvin", 22223333, 3.22, 1996, "ECON")
+three_student_list = [a_student, s2, Student("Lee, Tom", 33334444, 2.95, 1996, "MATH"))  
+ Fourth, we can use our new Student objects. To get one field, like the GPA, from the Student object sored in  a_student , we use a dot and the field name:  a_student.GPA  
+  print('The student', s2.name, 'majors in', s2.major, 'and has a GPA of', s2.GPA)  
+ To change the field value in a namedtuple, we cannot say  s2.GPA = 4.0 , even though that may seem straightforward. [The reason is that namedtuples in Python are "immutable", meaning you can't poke a new field value directly into an existing namedtupe. Strings in Python are also immutable, but lists are mutable, so you  can  say  L[3] = 17  .]  
+ There are two ways to change the value of a namedtuple's field. The first is to create a whole new Student object, with all the field values
+of the original object except the field(s) you want to change: 
+  s2 = Student(s2.name, s2.ID, 4.0, s2.year, s2.major)  
+ The second is to use the  _replace()  method (note the underscore) and specify the field(s) to change: 
+  s2 = s2._replace(GPA = 4.0) 
+ 
+ Here's a key point that people sometimes confuse: The second step above, calling the  namedtuple()  function, does not create any actual data (any students in this case).
+The third step does that by calling the constructor function, in this case  Student() .
+The second step describes what a Student object looks like and creates the  Student()  constructor function.  But only calling that function constructs an actual Student.
+ 
+  Why not plain tuples?</strong> Python does provide plain/regular/un-named tuples, which also group related values into a single package. But the only way to refer to a field of a plain tuple is with an index number (e.g.,  plain_one[2]  for the third field [remember zero-based indexing] of the tuple called  plain_one ). That's okay for objects with just a couple of fields where everyone can remember the order; (x,y,z) coordinates would be one example. But even with our Student object above, without field names we'd have to remember that GPA is in position [2], the third position, and not position [3] or [4]. It's confusing and error-prone; namedtuples help us avoid those problems. 
+  A namedtuple is not a list:</strong> We use lists for objects of the same type (like a list of temperatures or a list of students). [Python allows other uses of lists, but we have other, better tools for those uses.] We use namedtuples for a single object that consists of multiple data items, possibly of different types (like a student's name, ID, GPA, birth year, and major, or like a book's author, title, publication year, and price). 
+  Example of namedtuples in action: </strong>See the  Restaurants Program . 
+  Official documentation: </strong>You can read the official  documentation about namedtuples on  python.org . It contains additional details and variations that we won't be using, though, so there's a potential for confusion.
+
+  
+ 
+ </body> 

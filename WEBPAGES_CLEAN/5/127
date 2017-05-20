@@ -1,0 +1,50 @@
+ 4.20 OEBondIsInRingSize<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.19 OEBondIsInAromaticRingSize 
+ Up:   4. OEChem Functions 
+ Next:   4.21 OECalcCartesianCoord 
+   
+
+
+  
+4.20 OEBondIsInRingSize 
+ 
+   
+bool OEBondIsInRingSize(const OEBondBase &amp;atm, unsigned int size)
+    
+Determine whether the given bond is in a cycle of the specified size.
+The function  OEFindRingAtomsAndBonds  should have been called before
+calling this function.  If the bond is not in a ring,  i.e. 
+ OEBondBase::IsInRing  returns false, then this function also returns
+false.  This function returns false for all values for size less than
+three.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.19 OEBondIsInAromaticRingSize 
+ Up:   4. OEChem Functions 
+ Next:   4.21 OECalcCartesianCoord 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

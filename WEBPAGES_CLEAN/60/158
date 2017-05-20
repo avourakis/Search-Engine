@@ -1,0 +1,76 @@
+ 3.2 Reading Molecules with Iterators<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.1 Using OEChem oemolstreams 
+ Up:   3. Reading and Writing 
+ Next:   3.3 Molecular File Formats 
+   
+
+
+  
+3.2 Reading Molecules with Iterators 
+ 
+
+ 
+An additional way of reading molecules in OEChem is through the use of
+oemolstream iterators.  OEChem iterators syntactically resemble the  for 
+loops common in most programming languages.
+
+  
+    #include "oechem.h"
+
+using namespace OEChem;
+using namespace OESystem;
+
+int main()
+{
+  OEIter&lt;OEMolBase&gt; mol;
+  oemolistream ims;
+  oemolostream oms;
+
+  for (mol=ims.GetMolBases(); mol; ++mol)
+    oms &lt;&lt; mol;
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+An OEChem iterator of type  OEIter&lt;T&gt; , where T is a type, such as int,
+float, or OEMol, behaves like a pointer to T once it has been assigned.  In
+the example above,  mol  behaves like a  OEMolBase*  during the loop.
+Iterators have functions in addition to those of the iterated type.
+These iterator functions include (1) that  (bool)mol  tests whether the
+iterator has reached the end (for oemolstream iterators this means the end
+of the file), and (2) that  ++mol  advances the iterator to the next
+position.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.1 Using OEChem oemolstreams 
+ Up:   3. Reading and Writing 
+ Next:   3.3 Molecular File Formats 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

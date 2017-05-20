@@ -1,0 +1,81 @@
+ Lab Assignment 2<body>
+
+ 
+ 
+ Animated Smiley 
+ Lab Assignment 2 
+to prepare for Lab Exam 2 
+ 
+ 
+
+ This assignment gives you some more practice in basic Java programming, including practice with  if  statments and simple loops, by enhancing the previous Smiley program to handle animation of a smiley face as it interacts with the walls (boundaries) of the graphics window. 
+
+ 
+  Program Behavior and General Requirements 
+ 
+
+ You are to complete the Java class SmileyAnimation, which weve added to the Smiley program so that smiley faces can be animated.  
+
+ When you run a  (correctly) implemented version of this program, a graphics window appears, with a smiley face in it; the exact shape and color of the face are up to you, within the bounds that the face must be small enough that it can move around within the graphics window and be recognizable as a smiley face.  That smiley heads off towards a wall, an edge of the graphics window. When it hits the wall it should 
+  
+   Change the color of its face to the color of the wall, and the wall color should become the color of the smiley face; in other words, the colors swap.
+  Rebound from the wall, either directly (going back the way it came), or at 45 degrees up or down (if it hit the left or right wall) or 45 degrees left or right (if it hit the top or bottom wall); the direction is randomly chosen and each direction has an equal probability of occurring.
+   This behavior continues for a number of milliseconds, set as a constant in the program; every time the smiley hits a wall, it and the wall swap colors and the smiley rebounds, heading to another wall. 
+ Closing the window ends the program, even if the window is closed while the smiley is still moving. 
+
+
+ 
+  Technical Details 
+ 
+
+ For this assignment, weve again helped you get started by providing some code and lots of comments and documentation. All of your work is to be done in the SmileyAmination class. We provide several already-written classes, in compiled form, that provide functions you will likely need to use in your program. Three of these, SmileyFace, SmileyFacePart, and SmileyDisplay, have public methods you may need to employ, so we included text files, SmileyFace.txt, SmileyFacePart.txt, and SmileyDisplay.txt, that describe those methods. You may be surprised that SmileyFace and SmileyFacePart are not provided in source code form, since you wrote those classes in the last assignment. But that is exactly the point: having written and thoroughly tested them, we can now use their methods to make and manipulate smiley face characterisics without paying attention to the class details; we dont need the source to use the  class capabilities. 
+
+ These files have been collected into an Eclipse project and zipped into an archive called 
+   21Lab2.zip   . Using the same procedure that you followed in the last assignment, import this project into your Eclipse workspace. 
+
+
+ 
+  Testing Tips 
+ 
+
+ Its typically fastest to implement and debug a program when it is done in stages; when something goes wrong, you know it was because of changes made at the current stage, thus reducing the amount of code you have to search to find the mistake. Testing in stages can take many forms. For this assignment, since all the methods you are writing are in one class, testing in stages boils down to adding and testing a method or two at a time, judiciously choosing them so that, as you add them, you are incrementally heading to a completed program. 
+
+ For example, heres an outline of one way to incrementally implement and test your program: 
+  Staert by just constructing and painting the initial smiley face; dont animate it yet.
+  Move the smiley in one, chosen direction (not randomly) and make sure it goes that direction. Change the chosen direction a few times and re-run the program, making sure each time that the smiley face goes where its supposed to go.
+  Using a chosen direction, make the smiley stop at a wall; repeat for all four walls.
+  When the smiley hits a wall, swap the color of the wall with the faces color; repeat for all four walls.
+  Have the smiley hit the wall dead on, swap colors and have the smiley return back the way it came; repeat for all four walls.
+  Have the smiley rebound from a wall at the three angles that can (later) randomly occur; repeat for each angle and each of the four walls.
+  Choose the bounce direction randomly, as described above.
+  Test the whole program with various starting positions, sizes and colors of smiley faces.
+   
+  About Lab Exam 2 
+ 
+
+ Lab exam 2 will be very similar, but perhaps not identical, to the program you are to code for this assignment. You will  implement one or more of the following methods (all are from the SmileyAnimation class): 
+
+  the constructor 
+ animate 
+ hitSomething 
+ adjustColorAndDirection 
+ adjustColor 
+ adjustDirection 
+ hitLeftWall 
+ hitRightWall 
+ hitTopWall 
+ hitBottomWall 
+  Remember to read over  INSTRUCTIONS!.txt  and  program comments before beginning; they will tell you what you are to complete and give any particulars (such as, for example, the characteristics of a smiley face you are to draw or the kind of movement it should exhibit when animated). 
+
+  
+Written by Norman Jacobson for ICS 21 Fall 2006, October 2006.
+ Minor edits by Norman Jacobson, December 2006 and September 2008.
+ Minor edits to reflect use of Eclipse, by Norman Jacobson September 2009. 
+   Includes some text adapted from Alex Thornton's "Lab 2" for ICS 21 Summer 2009.
+ Minor edits by Norman Jacobson September 2010. 
+ Minor revision to make clear that all directions of return after bouncing off a wall
+   have the same probability, by Norman Jacobson November 2010. 
+
+ 
+
+</body> 

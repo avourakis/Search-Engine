@@ -1,0 +1,333 @@
+ draft-ietf-webdav-v1-spec-01<body>
+
+ 
+WEBDAV Working Group                               Y. Goland, Microsoft
+INTERNET-DRAFT                                     E. J. Whitehead, Jr.
+                                                            U.C. Irvine
+
+&lt;draft-ietf-webdav-v1-spec-00&gt;                         November 8, 1996
+
+Expires April, 1997
+
+Author's draft: v0.2 
+ Extensions for Distributed Authoring and Versioning on the World Wide Web  
+ Status of this Memo  
+ This document is an Internet-Draft. Internet-Drafts are working documents of the Internet Engineering Task Force (IETF), its areas, and its working groups. Note that other groups may also distribute working documents as Internet-Drafts.  
+ Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or made obsolete by other documents at any time. It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress".  
+ To learn the current status of any Internet-Draft, please check the " 1id-abstracts.txt " listing contained in the Internet-Drafts Shadow Directories on  ftp.is.co.za  (Africa),  nic.nordu.net  (Europe),  munnari.oz.au  (Pacific Rim),  ds.internic.net  (US East Coast), or  ftp.isi.edu  (US West Coast).  
+ Distribution of this document is unlimited. Please send comments to the WWW Distributed Authoring and Versioning (WEBDAV) working group at &lt; w3c-dist-auth@w3.org&gt; , which may be joined by sending a message with subject "subscribe" to  &lt;w3c-dist-auth-request@w3.org&gt; . Discussions of the WEBDAV working group are archived at  &lt;URL:http://www.w3.org/pub/WWW/Archives/Public/w3c-dist-auth&gt; . The HTTP working group at  &lt;http-wg@cuckoo.hpl.hp.com&gt;  also discusses the HTTP protocol. Discussions of the HTTP working group are archived at  &lt;URL:http://www.ics.uci.edu/pub/ietf/http/&gt;.  General discussions about HTTP and the applications which use HTTP should take place on the  &lt;www-talk@w3.org&gt;  mailing list.  
+ Abstract  
+ TBD  
+ Changes Since Author Draft V0.1  
+  Added Undelete.  
+ Changed Notification section.  
+ Added versioning and access control sections.  
+ Added annotation, attributeset, search, and modifiable attributes. I think attributeset is going to solve the problem with Larry.  
+ Rewrote and rearranged the attribute section.  
+ Changed the source attribute definition.  
+ Added attribute header, shared mode and principal to the terminology section.  
+ Moved the definitions of copy, move, and redirect to the terminology section. I also updated the terminology section to remove references to representation.  
+ Added relationship to the terms section and wrote the relationship section.  
+ Note that the Distributed Authoring commands assume that headers will be used for representation negotiation while the Versioning commands assume that only resources can be referred to and thus a particular representation must be addressable using only a URL. Also note that the versioning mime types contain both request and response formats and that response formats identify themselves. This is not strictly necessary with HTTP as one can tell if a message is a response from context. However for maximum flexibility the mime times provide an indication that it is a response so the mime times could be used with e-mail or other mime delivery systems.  
+ Changed attribute URL syntax to allow attributes to have their own attributes.   1. Introduction  
+ 1.1 Purpose  
+ This specification defines extensions to the HTTP/1.1 [HTTP11] protocol, the URL [URL] specification, and defines subtypes of the Application content type [RFC1521]. Together, these provide a means for augmenting existing facilities for remote authoring with abilities for locking, versioning, relationships, attributes, and listing and manipulation of the URL name space. Capabilities detailed in this specification meet the requirements for Distributed Authoring and Versioning, stated in [ref DA Reqt's][ref Vers. Reqt's].  
+ 1.2 Terminology  
+ Unless otherwise noted below, the use of terminology in this document is consistent with the definitions of terms given in [HTTP11].  
+   attribute header    
+ A header which returns information about the nature of a resource.  
+  attribute set   
+ An attribute set is a defined set of attribute headers. An attribute set is used to indicate which attribute headers a resource provides support for. This does not mean that the resource expresses all of the headers in the set. Attribute sets MUST NOT be used as a substitute for unique naming of attribute headers.  
+  check in   
+ A Check In is a declaration that the principal no longer intends to edit a resource(s).  
+  check out   
+ A Check Out is a declaration by a principal that they intend to edit a resource(s).  
+  command comments   
+ Command Comments associate either a string or a URI with an HTTP message.  
+  copy   
+ A copy performs a byte-for-byte duplication of a resource, making it available at both the original and new location in the URI namespace.  
+  destroy   
+ To destroy a resource is to request that the resource be permanently removed from storage. This differs from delete in that some versioning systems handle delete as a request to no longer make the specified resource editable.  
+  diff   
+ A diff is a mechanism whereby two or more resources are compared and the differences enumerated.  
+  history   
+ The history of a resource is a list of all the versions of the resource along with related information.  
+  merge   
+ A merge is the process whereby information from multiple resources is folded into a single resource. Merges can occur at the client or the server.  
+  move   
+ A move is logically a copy followed by a delete of the source resource.  
+  no-modify lock   
+ A no-modify lock prevents a locked resource from being edited until all no-modify locks are released.  
+  notify request   
+ A notify request instructs the recipient to send information regarding the progress of a request.  
+  principal   
+ The source of a message; for example: persons, computers, and programs.  
+  read lock   
+ A read lock prevents principals who do not posses a read lock on a resource from reading that resource.  
+  redirect   
+ Redirect is used to instruct a server to return one of the 3xx series codes.  
+  relationship   
+ A relationship, or link, is a typed bi-directional attribute header which provides a connection between two or more resources.  
+  representation   
+ "An entity included with a response that is subject to content negotiation... There may exist multiple representations associated with a particular response status." - [HTTP11] Each of these representations is potentially subject to individual modification.  
+  shared mode   
+ Shared mode modifies a lock request such that the lock may be shared between multiple requestors.  
+  write lock   
+ A write lock prevents anyone who does not possess a write lock on a resource from editing that resource.  
+
+ 1.3 Notational Conventions and Generic Grammar  
+ This specification uses the Augmented BNF and Basic Rules as defined in Section 2 of [HTTP11].  
+ 1.4 Mime Format  
+ [This section doesn't really belong in the introduction.  Needs to be moved.]  
+ Mime types sent with POSTs are used to transmit the commands specified in this document. The request-URI, unless specified otherwise, points to a resource that is capable of executing the request.  
+ In addition all the Mime types start the BNF element  MIMEVersion  which is defined as:  
+  MIMEVersion = 1#DIGIT "." 1#DIGIT   
+ The semantics of MIMEVersion is the same as for HTTP-Version defined in section 3.1 of [HTTP11].  
+ 2. Attributes  
+ During distributed authoring it is often necessary to record meta data about a resource, such as a resource's creator, the date of its completion, and the organization responsible for its maintenance. Once created, these attributes can be used to precisely search resources, and create a repository for organizational memory about the resource. Attributes provide meta data capability by allowing named data elements to be created, modified, read, and deleted on a resource.  An attribute on a resource is a pair (name, value) consisting of the attribute's name and value.  
+ The existing HTTP specification uses header fields to transmit meta data.  This specification defines a new type of header field, known as  attribute header  fields, which provide information about a resource's nature, not its content or transmission state.  Attribute header fields consist of a header name and an associated value, and are used to provide attributes on resources.  
+ Rather then inventing a raft of new methods, the current methods will be bent to our purposes. Below, a convention for placing the name of an attribute within a URI is given.  This convention allows existing HTTP methods to be invoked on attributes. So, for example, when a GET is performed on an attribute header URI, the value of the attribute header is returned in the entity-body.  Similarly, a PUT may be used to set the value of an attribute on a resource.  
+ 2.1 Attribute Header URIs  
+ A specification is provided below for describing an attribute header in the context of the URI of the header's associated resource. So, were an attribute header named "FileName" to exist and be associated with the resource  http://foo/bar , it would be uniquely referred to as  http://foo/bar&lt;FileName&gt;.  Headers may also have a hierarchy so the URI  http://foo/bar&lt;Author.FirstAuthor&gt;  would refer to the header "FirstAuthor" which is a child of the header "Author." The "." is used to denote hierarchy because it is legal to use within a token. Note that the name space for headers is actually flat and the use of "." to denote hierarchy is optional. It is only meant to make it easier to group headers. The "&lt;...&gt;" enclosure was chosen because it will not cause a conflict with any currently existing URIs.  
+ To support requests for attributes the definition of a URI must be altered as follows:  
+  URI = ( absoluteURI | relativeURI ) *("&lt;" Attribute "&gt;") ["#" fragment] 
+Attribute = field-name ; See section 4.2 of [HTTP11]   
+ By convention an attribute request which ends in a "." and which does not resolve to a specific attribute name SHOULD be treated as a request for a list of all attributes in that hierarchy.  
+ In order to prevent name space collisions both headers and header prefixes should be registered with a central authority. A header prefix is any legal token that may only be used when it is prefixed to another token. Prefixes should use the "." hierarchy format. Thus Netscape could register the prefix NS and thus be the only organization allowed to create headers which begin with "NS.".  
+ 2.2 Interaction with Existing Methods and Proposed Functionality  
+ This section describes the precise semantics of existing HTTP methods when applied to an attribute header of a resource.  
+ 2.2.1 GET  
+ A GET of an attribute resource MUST return the value of the attribute in the entity body of the response. Type of reponse - TBD  
+ Since attribute headers may grow to very large sizes and may contain octet data, it is not feasible to include attribute headers in the response to a GET on a resource. Therefore attribute headers SHOULD not be transmitted as a response header.  
+ 2.2.2 HEAD  
+ A HEAD method invocation on an attribute resource MUST behave as specified in Section 9.4 (HEAD) of [HTTP11].  Attribute headers SHOULD not be transmitted as a reponse header in the response to a HEAD request.  
+ 2.2.3 POST  
+ A POST may not be performed on an attribute header resource.  
+ 2.2.4 PUT  
+ A PUT on an attribute resource MUST set the value of the attribute to the contents of the entity body, following the semantics specified in Section 9.6 (PUT) of [HTTP11].  
+ 2.2.5 DELETE  
+ A DELETE causes the attribute resource to be made unavailable.  
+ 2.2.6 OPTIONS and TRACE  
+ These methods are unmodified from HTTP/1.1.  
+ 2.2.7 Copy and Move  
+ When a resource is copied, moved, or otherwise manipulated, its attributes are equally affected. However servers make the final determination regarding the state of any attribute header and may choose to not copy, move, etc. any subset of headers when it performs the requested action on a resource.  
+ 2.3 Standard Attributes  
+ The following attributes have their name and semantics defined by this specification.  
+ [TBD - Currently only brief descriptions are included. Once we have decided which ones should survive we will provide MIME types and other information.]  
+  AttributeDirectory  
+ The attribute AttributeDirectory returns a list of all attribute headers on a resource. To retrieve a list of attribute headers associated with the URL http://foo/bar one would send a GET request with a request-URI of /bar&lt;AttributeDirectory&gt;, where Host would equal foo. The same logic applies to PUT, which would be used to set an attribute's value.  
+ AttributeSet  
+ This attribute returns a list of the attribute sets currently being used to describe the resource. Support of an attribute set does not indicate that all of its attributes are being used. For a list of all attributes in use, the AttributeDirectory attribute should be retrieved. For example, if some attributes from the Dublin Core were being used to describe a resource, AttributeSet might contain the value "Dublin", or "DC". The tag used to denote attributes defined in this specification is "RFCxxxx".  
+ CheckedOut  
+ This attribute header returns a SiteMap containing a list of principals who have checked out the resource.  
+ DirectoryName  
+ This attribute returns a name suitable for presentation in a directory. The attribute embeds content headers to indicate language, character set, etc.  
+ History  
+ See History, section 9.2.  
+ Link  
+ Contains information about resources that are related to this resource. A SiteMap representation SHOULD be available. 
+[TBD: Review the SiteMap format and figure out tag formats to define source links.]  
+ Link.Version  
+ This attribSee Version, Section 9.3.  
+ LockInformation  
+ See Lock Discovery, Section 3.2.  
+ Modifiable (this is a weak form of access control query)  
+ Indicates if the principal can modify the resource.  
+ NotifyRequest  
+ See Notify Request, Section 6.  
+ Relationships  
+ See Relationships, Section 5.  
+ Search  
+ The search attribute returns a URI that points to a resource which can handle searching. It is currently expected that the URI returned will be a HTTP URL which points to a search page.  
+ Source  
+ The URI of the resource as stored, without any processing by the server (e.g. without processing of server-side includes).  
+ Version  
+ See Version, Section 9.3.  
+  3. Lock/Unlock  
+ Locks come in three types: write, read, and no-modify. Logically a write lock and a read lock can co-exist on a single resource. This means that one set of principals can edit the resource and another set of principals are the only ones allowed to read it. This may seem "silly" but is actually used in Orange book [ORANGE] compliant environments. A write lock and a no-modify lock can not be used together for obvious reasons. A read lock and a no-modify lock can be used together.  
+ Locks are assigned to a subset of the representations available for a resource. If the lock only applies to a single representation then the lock may be further restricted to only a particular range of the representation. A content-range header is used for this purpose. The range may go off the "end" of the representation. Locks that exceed the end of a representation control the ability to append to the representation.  
+ Locks may be taken out either in exclusive or shared mode. In shared mode anyone with proper access may take out a lock. In exclusive mode only the principal(s) who originally took out the lock may edit the lock. However a new principal can be added to an exclusive lock if the holder of the lock token performs the addition.  
+ If an entire resource is write locked and a lock owner deletes the resource then the write lock remains. So long as the write lock remains the URI can not be edited.  
+ In order to provide for maximum flexibility and ease of administration, lock tokens will be used to track locks. When a lock is taken out a lock token will be returned. A single lock token can represent any number of locks. In future lock requests the same token may have new locks added or old locks removed from it. Lock tokens are not required to be transferable between lock administration resources.  
+ Locks also have time outs associated with them. If no time out value is associated with a lock then the lock will never time out. Otherwise the lock will expire if a number of seconds equal to the time out value passes without the resource being accessed by a lock owner. The time out value may be edited, without affecting the rest of the lock, by submitting a lock request with no Lock Entries.  
+ Finally, locks may be taken out for multiple principals in a single request. The Lock_Owners field allows for tokens to be used to identify multiple principals who are considered owners of the lock. A server SHOULD only allow a lock token to be used in a request if the requestor is an owner of that lock token.  
+ [TBD - We need an error message indicating that the server will not accept certain lock combinations or accept overlapping locks. We also need an error stating that an unlock couldn't be executed because it did not exactly match with a lock.]  
+ Locks will be implemented using POST. The request-URI will be the lock administration resource. The entity-body will be of type application/lock.  
+ 3.1 Definition of Content Type application/lock  
+  LOCK_BODY = Token_Status Time_Out Lock_Owners Lock_Entries 
+Token_Status = (Token_Field | "No Token") 
+Token_Field = "Lock Token" ":" LockToken 
+Time_Out = "Time Out" ":" (*DIGIT | "Never") 
+Lock_Entries = "Lock Entries" ":" *(Lock_URI LockType (("Exclusive" | "Shared") | "Unlock") Headers CRLF) 
+Lock_Owners = "Lock Owner" ":" #Lock_Owner 
+Lock_Owner = token; This is some identifier used to list who owns the lock. 
+Lock_URI = "URI" ":" URI 
+LockToken = Any OCTET but LWS 
+LockType = ("Write" | "Read" | "No-Modify") 
+Headers = #message-header ; As defined in 4.2 of [1]  
+  Examples of type application/lock include:  
+  No Token 
+Time Out: Never 
+Lock Entries: URI http://www.microsoft.com/staff/yarong.html Write Exclusive 
+[Yaron Goland &lt;yarong@microsoft.com&gt;]   
+ This specifies a request for an exclusive write lock on http://www.microsoft.com/staff/yarong.html, held by Yarong Goland. This lock will never automatically time out.  
+ 3.2 Processing a Lock Request  
+ A lock request without a  LockToken    is a new lock request. All the requests in a lock must be granted or a 503 Service Unavailable must be returned. If the lock is granted then the return body should be formated as:  
+  RETURN_LOCK_BODY = LockToken   
+ A lock request with a  LockToken  is a request to extend the lock represented by the lock token. The same rules as specified in the previous paragraph apply.  
+ A lock request with  Unlock  specified for  Lock_Request  means that all locks associated with this token should be removed.  
+ A lock entries with  Unlock  specified means this particular lock should be removed from the token.  
+ The BNF allows for Unlocks to be specified without specifying a lock token. This is not an error. This syntax allows authorized principals to override locks they do not have the token for.  
+ Lock requests MUST be processed as an atomic action or the request must be refused.  
+ When multiple resources are locked under a single token an operation will only be allowed on any of the resources if the remaining locks in the token can be guaranteed to exist for the life of the operation.  
+ 3.3 Lock Discovery  
+ When a lock is taken out the system SHOULD record who owns the lock. Ownership information can be taken from the From header, from identification provided by authentication, or from the LockOwners field.  
+ This information SHOULD be available through the attribute header "LockInformation" which has the mime type application/LockInformation. The format of the mime entity-body is:  
+  LOCKINFORMATION = #(Token_Field Time_Out Lock_Owners Lock_Entries) [Contact_Field] 
+Contact_Field = "Contact" ":" token   
+ The  Contact_Field  is used to provide contact information in case there is a problem with a lock.  
+ An example of a LockInformation attribute is:  
+  LockInformation: 
+Token: a5dzq  
+Time Out: Never  
+[Yaron Goland &lt;yarong@microsoft.com] 
+Lock Entries: URI http://www.microsoft.com/staff/yarong.html Write Exclusive 
+Contact: Lock Administrator &lt;lockadmin@microsoft.com&gt;   
+ The exclusive write lock on http://www.microsoft.com/staff/yarong.html is held by Yaron Goland, has token value a5dqz, and will never time out. If there is a problem with a lock, the Lock Administrator should be contacted.  
+ 4. Name Space Manipulation  
+ 4.1 Copy  
+ A copy performs a byte-for-byte duplication of a resource, making it available at both the original and new location in the URI namespace.  There is no guarantee that the result of a GET on the URL of the resource copy will be identical to a GET on the original resource. For example, copying a script to a new location will often remove it from its intended environment, and cause it to either not work, or produce erroneous output. A copy MUST be atomic.  
+ A copy is performed by sending a POST method to a resource which can perform the copy. The entity-body for the POST method is of content type application/copy, defined in Section 4.1.1.  
+ Before any copied resources are made available through the destination URIs, all copied resources must either be available or return a 503 Service Unavailable response code when referenced.  
+ If the No Overwrite value is specified then that entry in the copy should not occur if the destination URI already exists. If a resource is not copied because a "No Overwrite" flag was used and the resource exists then the request still succeeds.  
+ 4.1.1 Definition of Content Type application/copy  
+  BODY = 1*(Source_URI Headers Destination_URI Headers Type) 
+Source_URI = URI 
+Destination_URI = URI 
+Type = "Overwrite" | "No Overwrite" 
+Headers = #message-header ; As defined in 4.2 of [HTTP11]   
+ Examples of content type application/copy include:  
+  http://www.ics.uci.edu/~ejw/hidden/draft.html 
+Accept-Language: fr, en;q=0.7 
+http://www.ics.uci.edu/~ejw/final_report.html 
+Overwrite   
+ This example specifies a copy of the French language version of http://www.ics.uci.edu/~ejw/hidden/draft.html if available, otherwise any English version, into http://www.ics.uci.edu/~ejw/final_report.html, overwriting the contents of final_report.html if they exist.  
+  http://www.ics.uci.edu/pub/ietf/http/index.html 
+Range: bytes=0-500 
+http://www.ics.uci.edu/~ejw/working.html 
+Range: bytes=0-500 
+Overwrite   
+ This example specifies a copy of the first 500 bytes of /pub/ietf/index.html into /~ejw/working.html, overwriting the first 500 bytes of working.html if they exist.  
+ 4.2 Destroy, Delete, and Undelete  
+ To destroy a resource is to request that the resource and its attribute headers be permanently removed from storage. To delete a resource is to request that the resource no longer be made available for editing. Destory differs from delete in that a versioning system may allow a deleted resource to be visible, but not editable, while a destroy causes the resource, and all knowledge about the resource to be removed from the server.  A destroy is performed by sending a POST message with an entity-body of type application/delete, defined in Section 4.2.1.  
+ An undelete undoes the action of a delete, making a deleted resource available for editing.  An undelete is performed by sending a POST message with  entity-body of content type application/delete, with a listing of the resources to be undeleted.  
+ 4.2.1 Definition of Content Type application/delete  
+  Application/Delete = Request | Response 
+Request = "Request" 1#(URI ("Delete" | "Destroy" | "Undelete")) 
+Response = "Response" 1#(URI ("Delete" | "Destroy" | "Undelete") ("Success" | "Failure") (comment | Status-Line)   
+ Note that this definition allows for the specification of a mix of delete and destroy operations. A "Delete" entry should be treated the same as if a Delete method were sent to the specified URI (as defined in Section 9.7 of [HTTP11]).  
+ An example of content type application/delete is:  
+  Request  
+http://www.ics.uci.edu/~ejw/hidden/draft.html Delete 
+http://www.ics.uci.edu/~ejw/hidden/draft.png Destroy   
+ This specifies a request to make the resource http://www.ics.uci.edu/~ejw/hidden/draft.html unavailable, but not necessarily deleted from the server, and to completely destroy resource http://www.ics.uci.edu/~ejw/hidden/draft.png, erasing it from the underlying storage mechanism.  A possible reponse to this request would be the following reponse entity-body:  
+  Response 
+http://www.ics.uci.edu/~ejw/hidden/draft.html Delete Success 
+http://www.ics.uci.edu/~ejw/hidden/draft.png Destroy Failure 403 Forbidden   
+ 4.3 Move  
+ A move is logically a copy followed by a delete of the source resource.  A move MUST be atomic. A move is performed by sending a POST method to a resource which can perform the move. The entity-body of the POST method is of content type application/move, defined exactly the same as content type application/copy, (Section 4.1.1).  
+ In this case atomicity requires that before the resources are made available at the new location they must no longer be available at the old location. The rest of the atomicity requirements are the same as for copy.  
+ 4.4 Redirect  
+ Redirect is used to instruct a server to redirect all further requests on a resource, or set of resources. A redirection can be used to instruct the server to return one of the following response codes: 301 Moved Permanently, 302 Moved Temporarily, 303 See Other, or 305 Use Proxy. A Redirect request specifies both the reponse code and the URL to which it applies.  
+ To perform a redirect a POST should be performed with the content-type equal to application/redirect, defined in section 4.4.1.  
+ 4.4.1 Definition of Content Type application/redirect  
+ The body of the mime type is defined as TBD. [The mime type will contain the URL being redirected, the code to be used, and the semantics of the entity-body to be returned.]  
+ 5. Relationships  
+ [NOTE: The authors are currently in the middle of a very long and detailed conversation about this section. This section reflects Jim's views on how relationships should be specified. My views are radically different. I want to see relationships specified as attributes in the attribute name space using the normal attribute control mechanisms. I believe documents will have many relationships and it will not be feasible to drag these around in the header. This was the same reasoning that lead to the creation of attributes and why I want relationships to be attributes.] 
+ A relationship specifies how two or more resources are related. Examples of relationships include "author-of," "table of contents," and "specifies." A relationship can exist within a resource, and between  mutliple resources.  These resources may be of any media type, and a relationship can exist between resources of differing media type. When considering relationships which exist between resources, due to the distribution of resources across the Web, it is often the case that the relationship spans multiple servers.  As a result, instead of being stored once, between resources, the endpoints of a relationship must be stored on individual resources.  For the purposes of this specification, a relationship is defined to be a set of relationship endpoints. To create a multiway (or n-ary) relationship, a client must individually create each endpoint of the relationship, specifying at each endpoint which other relationship endpoints (usually on other resources) are part of the relationship.  
+ A hypertext link is a relationship which a client has made available to the user interface so a user can jump to the other endpoints of the relationship using the hypertext point-click-and-traverse user interface style.  A link is always a relationship, but a relationship is not always a hypertext link.  
+ To request the creation of a relationship endpoint, a POST message with entity body of content-type application/relationship should be issued to the administration resource for relationships.  
+ 5.1 Definition of Content Type application/relationship  
+  REL/BODY = Relationship-request | Relationship-response 
+Relationship-request = 1*( Rel-action Rel-token Rel-spec ) 
+Relationship-response = 1*( Rel-action Rel-token Rel-spec Rel-response )   
+  Rel-spec = Rel-URI Link  ; Link is defined in Section 19.6.2.4 of [HTTP11] 
+Rel-URI = "URI" ":" URI 
+Rel-action = "Add" | "Remove" | "Modify" 
+Rel-token = *1("RToken" ":" rtoken)   ; Specifying token for an Add request is optional 
+Rel-status = Status-Code SP Reason-Phrase   ; As defined in [HTTP11] 
+rtoken = token   
+ The ability to specify relationship endpoints on resources of any content type is mostly provided by the Link entity header field defined in 19.6.2.4 of [HTTP11]. The Link entity header field is used in this specification, with minor additions which add the ability to specify that another endpoint belongs to this relationship.  This cabability is provided by an additional  link-param  field, called  peer . The contents of a  peer  field are a sequence of (URI, relationship token) tuples, which list the opposite endpoints of the relationship. The relationship token MUST uniquely identify a relationship endpoint on a particular resource, but does not have to be globally unique across all resources.  
+   ( "peer" "=" 1# "(" &lt;"&gt; URI &lt;"&gt; "," rtoken ")" )  
+An example of content type application/relationship is:  
+   Add 
+URI: http://www.ics.uci.edu/authoring/meeting/intro.html 
+RToken: 1 
+Link: &lt;http://www.ics.uci.edu/authoring/meeting/agenda.html&gt;; rel="Child"; peer=("http://www.ics.uci.edu/authoring/meeting/agenda.html, 2)  
+   Add  
+URI: http://www.ics.uci.edu/authoring/meeting/agenda.html 
+RToken: 2 
+Link: &lt;http://www.ics.uci.edu/authoring/meeting/intro.html&gt;; rel="Parent"; peer=("http://www.ics.uci.edu/authoring/meeting/intro.html", 1)  
+ This defines a binary parent-child relationship between intro.html and agenda.html. From this example, it may seem that having the URI in the peer field is redundant. For binary relationships, this is indeed the case. However, the URI is required for multiway relationships, where more than one peer link needs to be specified in a peer parameter.  
+ 6. Notification  
+ 6.1 Notify Request Header  
+ The Notify Request request-header is used to request that the server send a stream of "102 Process" messages containing updates of the request's status.  
+  Notify_Request = "NotifyRequest" ":"   
+ 6.2 Resource Event Notification  
+ As features such as WebCheck and URLMinder demonstrate, there is a strong interest in receiving notification when a resource changes. What is lacking is a standard means to register interest in receiving notification regarding a resource.  
+ 6.2.1 Definition of Content Type application/ResourceNotification  
+ The following specification proposes the mime type application/RequestNotification which is used to set the attribute RequestNotification. This solves the problem by providing a standardized method to register interest and to specify how one wishes to receive information.  
+  Application/ResourceNotification = 1#(On_Resource Notification_Means On_Event) 
+On_Resource = URI 
+Notification_Means = URI 
+On_Event = #token   
+  On_Resource   specifies the resource for which notification is being requested.  Notification_Means  species a URI which will indicate how to notify the requester.  On_Event  specifies what event must occur in order for the notification to be sent. If no  On_Event  is specified then the server chooses when to notify the requester. 
+ Possible On_Event values include "Deleted", "Accessed", "Faxed", "Printed", "Mailed", "AttributesModified", and "LockLost" ":" LockToken.  
+ 6.2.2 Definition of Content Type application/NotificationData  
+ The actual notification is protocol dependent. However, the content type application/NotificationData is defined as follows:  
+  Application/NotificationData = 1#(On_Resource On_Event)   
+ 7. URI Container  
+ Any resource which has a representation of content type application/container, is defined to be a URI container. Content type application/container will use the SiteMap format.  
+ The advantage of SiteMaps in this context is that they are designed to point to other SiteMaps. In this way a hierarchy can be built and when an operation is performed it will act recursively down the tree.  
+ [TBD - Do we really want to teach every DAV system to do HTML? Perhaps we want to introduce another access mechanism?]  
+ 8. Versioning Mime Types  
+ 8.1 Check In/Out  
+ A Check In is a declaration that the principal no longer intends to edit a resource(s).  A Check Out is a declaration by a principal that they intend to edit a resource(s).  An RCS-style locking check out is performed by issuing a request for a write lock, immediately followed by a request which requests a check-out (as specified below).  A CVS-style non-locking checkout is performed by only issuing a request for a check-out.  
+ 8.1.1 Definition of Content Type application/checkinout  
+  Application/CheckInOut = CheckInOutRequest | CheckInOutResponse  
+CheckInOutRequest = ["Atomic"] "Request" 1#Requests  
+Requests = URI ("CheckIn" | "CheckOut" ("Exclusive" | "Shared"))  
+CheckInOutResponse = "Response" 1#Responses 
+Responses = URI ("CheckIn" | "CheckOut" ("Exclusive" | "Shared"))Status  
+Status = ("Success" | "Failure") comment   
+ If a request contains "Atomic" then all the elements in the request must be granted or rejected.  
+ The "Exclusive" and "Shared" keywords indicate if a check out is exclusive or shared on the specified resource.  
+ [TBD - We can always get rid of the versioning header by overloading Check In and making it a versioning PUT. Though we still need a "UnCheckOut" which is a CheckIn with no body.]  
+ 8.2 Diff/Merge  
+ The purpose of the Diff or Merge is to take all the specified URIs and entities and return a single Diff or a single Merge of the results. Many servers will not be able to handle more than two resources and will return an error if more are specified.  
+ 8.2.1 Definition of Content Type application/DiffMerge  
+  Application/Diff = Body 
+Application/Merge = Body 
+Body = 1#("URI" ":" URI | "Entity" ":" entity-body)   
+ 9. Versioning Headers  
+ 9.1 Command Comments  
+ Command comments are entity headers.  
+  Command_Comment = "Comment" ":" CommentVal 
+CommentVal = URI | comment   
+ This is the standard comment facility used by versioning systems. Servers that do not understand the header or do not wish to make use of the information are free to ignore the information. No specification is made regarding how this information is to be retrieved. It is likely, however, that most systems will make the command comments available through their history attribute.  
+ 9.2 History  
+ History is an attribute header that returns a SiteMap containing the history of the document.  
+ 9.3 Version  
+ The version entity header is used with PUT to create a new version or to begin versioning an entity.  
+  Version = "version" ":" token   
+ When included with a PUT on a new resource it indicates that the resource should be versioned and what version token should be used. The server is not required to accept the version token. The actual version token used along with the URI the resource will be accessible from must be returned in the response body.  
+ When included with a PUT on the URI of a currently existing versioned resource the version entity header indicates that the entity is a new version of that resource. The server will indicate what the URI of the new version of the resource is along with its version token in the response.  
+ If the version entity header is included with other methods then the header should be interpreted as a request for a particular version of the resource. However this interpretation is non-standard as one version is semantically different than another and the header thus may be dropped.  
+ In addition to the version entity header there also exists a version link attribute header. TBD.  
+ Acknowledgements  
+ Roy Fielding, Richard Taylor, Larry Masinter, Henry Sanders, Judith Slein, Dan Connolly, David Durand, Henrik Nielsen. Others, TBD.  
+ References  
+ [HTTP11] R. T. Fielding, J. Gettys, J. C. Mogul, H. F. Nielsen, and T. Berners-Lee. "Hypertext Transfer Protocol -- HTTP/1.1" Internet-Draft draft-ietf-http-v11-spec-07.txt, expires February 12, 1997.  
+ [ORANGE] DoD 5200.28-STD, "Department of Defense Trusted Computer System Evaluation Criteria", December, 1985.  
+ [RFC1521] N. Borenstein, N. Freed. "MIME (Multipurpose Internet Mail Extensions) Part One: Mechanisms for Specifying and Describing the Format of Internet Message Bodies." RFC 1521, Bellcore, Innsoft, September, 1993.  
+ [URL] T. Berners-Lee, L. Masinter, M. McCahill. "Uniform Resource Locators (URL)." RFC 1738, CERN, Xerox PARC, University of Minnesota, December, 1994.  </body> 

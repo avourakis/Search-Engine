@@ -1,0 +1,36 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Seiwald Q &amp; A -- "GET for EDIT" cookies<body> Re: Seiwald Q &amp; A -- "GET for EDIT" cookies 
+ Robert S. Thau  (  rst@ai.mit.edu  )  Tue, 3 Sep 1996 19:53:36 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Yaron Goland: "RE: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+    
+      If I read the spec right, Content-Version reflects the contents
+      of the document.  That is, if the same document is dished up
+      twice it is supposed to have the same Content-Version value.
+
+This may be a silly question, but it's probably not the last time
+you'll hear it, so I might as well ask --- how does this differ from
+an HTTP/1.1 entity tag (as used in the Etag:, If-match:, If-none-match:,
+and If-range: headers)?
+
+(These are opaque tags which are intended to identify different
+variants of a resource for caching purposes.  They come in two
+varieties, "strong" and "weak".  A strong entity tag always denotes
+the exact same set of octets.  A weak one may denote multiple versions
+--- in the colloquial sense --- with minor, semantically insignificant
+differences, which may still differ enough so, for instance, you can't
+mix byte-ranges of different ones willy-nilly).
+
+rst
+ 
+
+  
+     Next message:   Yaron Goland: "RE: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+  </body> 

@@ -1,0 +1,22 @@
+ Victim Cache<body>
+
+  Victim Cache  
+      Mainly used to eliminate conflict miss
+ 
+     Prediction: the memory address of a cache line that is replaced  is likely to be accessed again in near future
+ 
+     Scenario for prediction to be effective: false sharing, ugly address mapping
+ 
+     Architecture implementation: use a on-chip buffer to store the contents of recently replaced cache line
+ 
+     Drawbacks
+ 
+  Ugly mapping can be rectified by cache aware compiler
+  Small size of victim cache, probability of memory address reuse within short period is very low.
+  Experiment shows victim cache is not effective across the board for DI apps.       
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

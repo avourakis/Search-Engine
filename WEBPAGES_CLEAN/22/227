@@ -1,0 +1,203 @@
+ Git Notes<body>   
+  
+   
+
+     
+      
+       
+        
+           Research 
+        
+
+        
+           Projects 
+        
+        
+        
+           News 
+        
+
+        
+           Notes 
+        
+
+        
+           CV 
+        
+       
+      
+        
+
+       
+      
+         
+             /
+          
+             Notes  / Git Notes
+          
+         
+                 
+
+     
+
+
+    
+    Git Notes 
+
+
+  
+   
+    Date: 23 Feb 2013
+   
+  
+  
+ What and Why? 
+
+ These are tid bits of information about  Git  that i frequently use. Some of these are in the from of questions, the answers for which are really simple, but i have an issue in remembering them when it matters the most. Some are tools and learning resources that I personally used/still using. There were a few articles on Git as well in here that i read over time. 
+
+ I decided to jot down all of this information down at one place, along with references, so that i won’t go on a hunt for information, especially when i need it in a giffy. Also, i thought that others might find this useful. :-) 
+
+ And it goes without saying that i will be updating this post constantly. 
+
+ Resources 
+
+   Git Cheatsheet @ http://rogerdudler.github.com/git-guide/ . An Excellent and Simple Git cheatsheet (IMHO). 
+    Pro Git  +  @Amazon . A good book worth owning for learning  git . I think this is an excellent resource when it comes to learning how Git really works, which i think could very well make you a better at using Git. 
+    learn.github.com  
+    try.github.com  
+    github.com/github/gitignore . Contains  .gitignore  files for all kinds of environments. 
+    E-Git . Git plugin for eclipse.  more  
+    LearnGitBranching . A graphical ‘learn-by-doing’ tool for learnig the concepts on git branching. 
+    Must Have Git Aliases: Advanced Examples  
+    MUST READ Article on GIT RESET  
+  Questions 
+
+ Q. How do you perform  git add *  while honoring  .gitignore ? 
+  git add .  add all files and directories recursively in the repo.
+ git add *  will throw an error in the presence of  .gitignore  and files that  .gitignore  tells git to ignore.
+ git add -f *  ignores  .gitignore 
+ http://stackoverflow.com/questions/6612630/git-add-all-ignoring-files-in-gitignore  
+
+ Q. How would you remove a file from the index but not from the working tree? 
+  git rm --cached filename.extention  
+
+ The problem with a simple  git rm filename.extention  is that it removes the file (filename.extention) from the index and the working directory. 
+
+  http://unix.stackexchange.com/questions/1818/how-to-remove-a-file-from-the-git-index  
+
+ Q.  Undo last Git commit  
+
+ Q.  Git check if Pull Needed  
+
+ Q.  Standard to follow when writing Git Commit Messages  
+
+ Interesting Articles on Git 
+
+   A time traveller’s guide to Git  
+    Git Tips From the Pros  
+    Mind Your Git Manners  
+    Using Git and GitHub in a Microsoft Development Team  
+    10 things i hate about Git  
+    Deploying: Add Git support to your IIS server  
+    GIT Commit Good Practice  
+  Tools 
+
+  Git-Process  
+ 
+   Scripts to help work with a streamlined Git process 
+ 
+
+   
+###  E-Git  
+
+ Prereqs: 
+1. Install git on your computer 
+2. Install Eclipse on your computer 
+3. Install egit in Eclipse 
+
+ Steps: 
+
+  Open the Git Repositries View in Eclipse
+      Open Eclipse 
+       Window -&gt; Show View -&gt; Other -&gt; Git Repositories (Under Git) 
+      
+   Clone a repo:
+      Go to Git Repositories view in Eclipse 
+       Click the Button in your view that has “Clone a Git Repository and the clone to this view” as its tooltip. 
+       This will open a window with a form in it. Enter your the path of your git repository in the  URI  field of the form. It should be the first field of the form. 
+       Ideally, this should populate all other fields in the form namely, Host, Repositories Path, Protocol and User. 
+       Enter your password for this repo and click next or hit enter. 
+       Select the branches that you want to clone. Say next. 
+       Change the path in the  Directory  field if you want to clone your project to a different location than the default location that is offered by egit. 
+       You might face issues (you are not able to finish due to an error like “this is not an initialized git repository”) if the directory pointed by that path already exists. In that case, simply delete the directory, say back on egit, and say next again. 
+       Say Finish, and your repository should be cloned for you and you should be able to see it in the Git Repositories view. :) 
+      
+   Import a clone repo into your Eclipse Workspace:
+      Go to the Git Repositories view. 
+       your_repo -&gt; Working Directory 
+       You should find your cloned code in the “Working Directory”. 
+       Right click on the “Working Directory” and select “Import Project…” 
+       This should open up a Wizard to import the git repo into your workspace as a specific repository.  
+ 17a. Select the “Import as general project” option and hit enter or click on Finish. 
+ 17b. If you know that your repo already has an Eclipse Project, then select the “Import Existing Projects” and follow the wizard. 
+      
+   Syncronize to view the changes wrt to the remote
+      Right Click on the Project 
+       Team -&gt; Synchronize Workspace 
+       This should open the syncronize view. You can look at all the files are that out of sync with the remote repo. You can then pull or push the files according to the change. 
+      
+   View the History of the Repo
+      Right Click on your project that was imported from a git repo. 
+       Team -&gt; Show in History 
+      
+   Compare local version of a file with remote
+      Right Click on the file that you want to compare with the remote. 
+       Compare With -&gt; Branch, Tag or Reference… 
+       This should open a Window. 
+       Select “Remote Tracking” to compare with a remote branch. Typically you should see “origin/master”. “origin” is the name of the remote repo from where you cloned the code to begin with. master is the branch on the remote repo with which you are performing the compare or diff. :) 
+      
+  
+
+ 
+	  Tags: 
+	
+		 git 
+		
+			   
+		
+	
+		 faq 
+		
+	
+ 
+ 
+
+ 
+   Related Posts 
+     07 Oct 2015  »  Spider SENSE: Software-Engineering, Networked, System Evaluation  
+    
+        07 Oct 2015  »  Revealing Runtime Features and Constituent Behaviors within Software  
+    
+        01 Oct 2015  »  Attended VISSOFT 2015  
+    
+    
+
+       
+       
+         home  •
+          bitbucket .com  •
+         Linked in   •
+         Instagram  •
+         medium  •
+         stack overflow   •
+          github .com   •
+          arch ives 
+        •
+        Background:  Mt. Ranier , © Vijay Krishna Palepu, 2015
+        
+       
+         
+   
+   
+  
+</body> 

@@ -1,0 +1,62 @@
+ D:\My Documents\Download\flowersweb.html<body>
+
+    UC IRVINE - ICS 125 PROJECT IN SYSTEM DESIGN 
+     PROJECT DESCRIPTION 
+     
+      Error Injection Tool 
+
+ Rajnesh Avtar 
+
+ ABSTRACT 
+
+ Handling error conditions and gracefully recovering from such situations is a critical
+area for any software product. It could involve handling of errors from attached hardware
+or any other software component. However, it is not always possible to re-create all error
+situations and test them. One of the mechanisms for testing the robustness of the code is
+to inject errors and ensure that the code paths are covered.  
+
+ This project will provide an opportunity for students to develop a GUI interface to
+inject various errors in a client server environment. This will allow them to verify the
+error recovery code in the client and the handling of invalid commands in the server. It
+will also provide an opportunity for them to get an experience in inter process
+communications. 
+ 
+
+ Background  
+
+ In any computer system the Input Output system is an essential element. All I/Os have
+to be performed on attached devices. The IOPs written in the system have to handle various
+error conditions possibly returned by these devices. In the Tandem Non-Stop fault tolerant
+systems error recovery is one of the most critical areas of the code. We have to be able
+to tolerate any single point of failure without impacting the customer applications. Thus,
+it is essential for us to be able to test these various error situations. 
+
+ One of the mechanisms to test these error conditions is to develop and use an error
+injector tool. This would provide the capability to inject any error from a normal device
+instead of trying to find devices that are broken and return various error conditions.  
+ 
+
+ Proposal  
+
+ To limit the scope of this project and to remove any dependence on a hardware
+component, it is being proposed that a client server environment be used. Here are the
+various components of the project: 
+
+   A client that creates and sends messages for the server. (To simulate the operations
+    performed by the IOPs it is suggested that the messages use the standard SCSI structures.
+    This will also introduce the students to the SCSI terminology) 
+   A server that processes the messages from the client and replies to these messages. 
+   A GUI based error injection tool that injects errors specified by the user. It sends
+    messages to the client to alter either the outgoing message to the server or incoming
+    reply from the server.  
+   By altering the outgoing message to the server, a normal command is changed and made
+    invalid without changing the client software. This will test the behavior of the server
+    and ensure that it can handle invalid commands. 
+   By altering the incoming response from the server, a normal reply is changed without
+    changing the server software. The client believes that the response from the server
+    indicates an error condition. This will validate and verify the error recovery code in the
+    client software. 
+    
+
+   ICS125 WQ00 Project Opportunities   ICS125 WQ00   David F. Redmiles � Home Page   Department of Information and Computer Science   University of California, Irvine CA 92717-3425   
+</body> 

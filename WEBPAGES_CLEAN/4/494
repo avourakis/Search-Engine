@@ -1,0 +1,313 @@
+ // Copyright 2009 Google Inc.  All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: vladl@google.com (Vlad Losev)
+//
+// The Google C++ Testing Framework (Google Test)
+//
+// This file contains tests verifying correctness of data provided via
+// UnitTest's public methods.
+
+#include "gtest/gtest.h"
+
+#include   // For strcmp.
+#include 
+
+using ::testing::InitGoogleTest;
+
+namespace testing {
+namespace internal {
+
+template 
+struct LessByName {
+  bool operator()(const T* a, const T* b) {
+    return strcmp(a-&gt;name(), b-&gt;name()) ());
+    return test_cases;
+  }
+
+  // Returns the test case by its name.  The caller doesn't own the returned
+  // pointer.
+  static const TestCase* FindTestCase(const char* name) {
+    UnitTest&amp; unit_test = *UnitTest::GetInstance();
+    for (int i = 0; i name(), name))
+        return test_case;
+    }
+    return NULL;
+  }
+
+  // Returns the array of pointers to all tests in a particular test case
+  // sorted by the test name.  The caller is responsible for deleting the
+  // array.
+  static TestInfo const** GetSortedTests(const TestCase* test_case) {
+    TestInfo const** const tests =
+        new const TestInfo*[test_case-&gt;total_test_count()];
+
+    for (int i = 0; i total_test_count(); ++i)
+      tests[i] = test_case-&gt;GetTestInfo(i);
+
+    std::sort(tests, tests + test_case-&gt;total_test_count(),
+              LessByName());
+    return tests;
+  }
+};
+
+#if GTEST_HAS_TYPED_TEST
+template  class TestCaseWithCommentTest : public Test {};
+TYPED_TEST_CASE(TestCaseWithCommentTest, Types);
+TYPED_TEST(TestCaseWithCommentTest, Dummy) {}
+
+const int kTypedTestCases = 1;
+const int kTypedTests = 1;
+#else
+const int kTypedTestCases = 0;
+const int kTypedTests = 0;
+#endif  // GTEST_HAS_TYPED_TEST
+
+// We can only test the accessors that do not change value while tests run.
+// Since tests can be run in any order, the values the accessors that track
+// test execution (such as failed_test_count) can not be predicted.
+TEST(ApiTest, UnitTestImmutableAccessorsWork) {
+  UnitTest* unit_test = UnitTest::GetInstance();
+
+  ASSERT_EQ(2 + kTypedTestCases, unit_test-&gt;total_test_case_count());
+  EXPECT_EQ(1 + kTypedTestCases, unit_test-&gt;test_case_to_run_count());
+  EXPECT_EQ(2, unit_test-&gt;disabled_test_count());
+  EXPECT_EQ(5 + kTypedTests, unit_test-&gt;total_test_count());
+  EXPECT_EQ(3 + kTypedTests, unit_test-&gt;test_to_run_count());
+
+  const TestCase** const test_cases = UnitTestHelper::GetSortedTestCases();
+
+  EXPECT_STREQ("ApiTest", test_cases[0]-&gt;name());
+  EXPECT_STREQ("DISABLED_Test", test_cases[1]-&gt;name());
+#if GTEST_HAS_TYPED_TEST
+  EXPECT_STREQ("TestCaseWithCommentTest/0", test_cases[2]-&gt;name());
+#endif  // GTEST_HAS_TYPED_TEST
+
+  delete[] test_cases;
+
+  // The following lines initiate actions to verify certain methods in
+  // FinalSuccessChecker::TearDown.
+
+  // Records a test property to verify TestResult::GetTestProperty().
+  RecordProperty("key", "value");
+}
+
+AssertionResult IsNull(const char* str) {
+  if (str != NULL) {
+    return testing::AssertionFailure() name());
+  EXPECT_TRUE(IsNull(test_case-&gt;type_param()));
+  EXPECT_TRUE(test_case-&gt;should_run());
+  EXPECT_EQ(1, test_case-&gt;disabled_test_count());
+  EXPECT_EQ(3, test_case-&gt;test_to_run_count());
+  ASSERT_EQ(4, test_case-&gt;total_test_count());
+
+  const TestInfo** tests = UnitTestHelper::GetSortedTests(test_case);
+
+  EXPECT_STREQ("DISABLED_Dummy1", tests[0]-&gt;name());
+  EXPECT_STREQ("ApiTest", tests[0]-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(tests[0]-&gt;value_param()));
+  EXPECT_TRUE(IsNull(tests[0]-&gt;type_param()));
+  EXPECT_FALSE(tests[0]-&gt;should_run());
+
+  EXPECT_STREQ("TestCaseDisabledAccessorsWork", tests[1]-&gt;name());
+  EXPECT_STREQ("ApiTest", tests[1]-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(tests[1]-&gt;value_param()));
+  EXPECT_TRUE(IsNull(tests[1]-&gt;type_param()));
+  EXPECT_TRUE(tests[1]-&gt;should_run());
+
+  EXPECT_STREQ("TestCaseImmutableAccessorsWork", tests[2]-&gt;name());
+  EXPECT_STREQ("ApiTest", tests[2]-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(tests[2]-&gt;value_param()));
+  EXPECT_TRUE(IsNull(tests[2]-&gt;type_param()));
+  EXPECT_TRUE(tests[2]-&gt;should_run());
+
+  EXPECT_STREQ("UnitTestImmutableAccessorsWork", tests[3]-&gt;name());
+  EXPECT_STREQ("ApiTest", tests[3]-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(tests[3]-&gt;value_param()));
+  EXPECT_TRUE(IsNull(tests[3]-&gt;type_param()));
+  EXPECT_TRUE(tests[3]-&gt;should_run());
+
+  delete[] tests;
+  tests = NULL;
+
+#if GTEST_HAS_TYPED_TEST
+  test_case = UnitTestHelper::FindTestCase("TestCaseWithCommentTest/0");
+  ASSERT_TRUE(test_case != NULL);
+
+  EXPECT_STREQ("TestCaseWithCommentTest/0", test_case-&gt;name());
+  EXPECT_STREQ(GetTypeName().c_str(), test_case-&gt;type_param());
+  EXPECT_TRUE(test_case-&gt;should_run());
+  EXPECT_EQ(0, test_case-&gt;disabled_test_count());
+  EXPECT_EQ(1, test_case-&gt;test_to_run_count());
+  ASSERT_EQ(1, test_case-&gt;total_test_count());
+
+  tests = UnitTestHelper::GetSortedTests(test_case);
+
+  EXPECT_STREQ("Dummy", tests[0]-&gt;name());
+  EXPECT_STREQ("TestCaseWithCommentTest/0", tests[0]-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(tests[0]-&gt;value_param()));
+  EXPECT_STREQ(GetTypeName().c_str(), tests[0]-&gt;type_param());
+  EXPECT_TRUE(tests[0]-&gt;should_run());
+
+  delete[] tests;
+#endif  // GTEST_HAS_TYPED_TEST
+}
+
+TEST(ApiTest, TestCaseDisabledAccessorsWork) {
+  const TestCase* test_case = UnitTestHelper::FindTestCase("DISABLED_Test");
+  ASSERT_TRUE(test_case != NULL);
+
+  EXPECT_STREQ("DISABLED_Test", test_case-&gt;name());
+  EXPECT_TRUE(IsNull(test_case-&gt;type_param()));
+  EXPECT_FALSE(test_case-&gt;should_run());
+  EXPECT_EQ(1, test_case-&gt;disabled_test_count());
+  EXPECT_EQ(0, test_case-&gt;test_to_run_count());
+  ASSERT_EQ(1, test_case-&gt;total_test_count());
+
+  const TestInfo* const test_info = test_case-&gt;GetTestInfo(0);
+  EXPECT_STREQ("Dummy2", test_info-&gt;name());
+  EXPECT_STREQ("DISABLED_Test", test_info-&gt;test_case_name());
+  EXPECT_TRUE(IsNull(test_info-&gt;value_param()));
+  EXPECT_TRUE(IsNull(test_info-&gt;type_param()));
+  EXPECT_FALSE(test_info-&gt;should_run());
+}
+
+// These two tests are here to provide support for testing
+// test_case_to_run_count, disabled_test_count, and test_to_run_count.
+TEST(ApiTest, DISABLED_Dummy1) {}
+TEST(DISABLED_Test, Dummy2) {}
+
+class FinalSuccessChecker : public Environment {
+ protected:
+  virtual void TearDown() {
+    UnitTest* unit_test = UnitTest::GetInstance();
+
+    EXPECT_EQ(1 + kTypedTestCases, unit_test-&gt;successful_test_case_count());
+    EXPECT_EQ(3 + kTypedTests, unit_test-&gt;successful_test_count());
+    EXPECT_EQ(0, unit_test-&gt;failed_test_case_count());
+    EXPECT_EQ(0, unit_test-&gt;failed_test_count());
+    EXPECT_TRUE(unit_test-&gt;Passed());
+    EXPECT_FALSE(unit_test-&gt;Failed());
+    ASSERT_EQ(2 + kTypedTestCases, unit_test-&gt;total_test_case_count());
+
+    const TestCase** const test_cases = UnitTestHelper::GetSortedTestCases();
+
+    EXPECT_STREQ("ApiTest", test_cases[0]-&gt;name());
+    EXPECT_TRUE(IsNull(test_cases[0]-&gt;type_param()));
+    EXPECT_TRUE(test_cases[0]-&gt;should_run());
+    EXPECT_EQ(1, test_cases[0]-&gt;disabled_test_count());
+    ASSERT_EQ(4, test_cases[0]-&gt;total_test_count());
+    EXPECT_EQ(3, test_cases[0]-&gt;successful_test_count());
+    EXPECT_EQ(0, test_cases[0]-&gt;failed_test_count());
+    EXPECT_TRUE(test_cases[0]-&gt;Passed());
+    EXPECT_FALSE(test_cases[0]-&gt;Failed());
+
+    EXPECT_STREQ("DISABLED_Test", test_cases[1]-&gt;name());
+    EXPECT_TRUE(IsNull(test_cases[1]-&gt;type_param()));
+    EXPECT_FALSE(test_cases[1]-&gt;should_run());
+    EXPECT_EQ(1, test_cases[1]-&gt;disabled_test_count());
+    ASSERT_EQ(1, test_cases[1]-&gt;total_test_count());
+    EXPECT_EQ(0, test_cases[1]-&gt;successful_test_count());
+    EXPECT_EQ(0, test_cases[1]-&gt;failed_test_count());
+
+#if GTEST_HAS_TYPED_TEST
+    EXPECT_STREQ("TestCaseWithCommentTest/0", test_cases[2]-&gt;name());
+    EXPECT_STREQ(GetTypeName().c_str(), test_cases[2]-&gt;type_param());
+    EXPECT_TRUE(test_cases[2]-&gt;should_run());
+    EXPECT_EQ(0, test_cases[2]-&gt;disabled_test_count());
+    ASSERT_EQ(1, test_cases[2]-&gt;total_test_count());
+    EXPECT_EQ(1, test_cases[2]-&gt;successful_test_count());
+    EXPECT_EQ(0, test_cases[2]-&gt;failed_test_count());
+    EXPECT_TRUE(test_cases[2]-&gt;Passed());
+    EXPECT_FALSE(test_cases[2]-&gt;Failed());
+#endif  // GTEST_HAS_TYPED_TEST
+
+    const TestCase* test_case = UnitTestHelper::FindTestCase("ApiTest");
+    const TestInfo** tests = UnitTestHelper::GetSortedTests(test_case);
+    EXPECT_STREQ("DISABLED_Dummy1", tests[0]-&gt;name());
+    EXPECT_STREQ("ApiTest", tests[0]-&gt;test_case_name());
+    EXPECT_FALSE(tests[0]-&gt;should_run());
+
+    EXPECT_STREQ("TestCaseDisabledAccessorsWork", tests[1]-&gt;name());
+    EXPECT_STREQ("ApiTest", tests[1]-&gt;test_case_name());
+    EXPECT_TRUE(IsNull(tests[1]-&gt;value_param()));
+    EXPECT_TRUE(IsNull(tests[1]-&gt;type_param()));
+    EXPECT_TRUE(tests[1]-&gt;should_run());
+    EXPECT_TRUE(tests[1]-&gt;result()-&gt;Passed());
+    EXPECT_EQ(0, tests[1]-&gt;result()-&gt;test_property_count());
+
+    EXPECT_STREQ("TestCaseImmutableAccessorsWork", tests[2]-&gt;name());
+    EXPECT_STREQ("ApiTest", tests[2]-&gt;test_case_name());
+    EXPECT_TRUE(IsNull(tests[2]-&gt;value_param()));
+    EXPECT_TRUE(IsNull(tests[2]-&gt;type_param()));
+    EXPECT_TRUE(tests[2]-&gt;should_run());
+    EXPECT_TRUE(tests[2]-&gt;result()-&gt;Passed());
+    EXPECT_EQ(0, tests[2]-&gt;result()-&gt;test_property_count());
+
+    EXPECT_STREQ("UnitTestImmutableAccessorsWork", tests[3]-&gt;name());
+    EXPECT_STREQ("ApiTest", tests[3]-&gt;test_case_name());
+    EXPECT_TRUE(IsNull(tests[3]-&gt;value_param()));
+    EXPECT_TRUE(IsNull(tests[3]-&gt;type_param()));
+    EXPECT_TRUE(tests[3]-&gt;should_run());
+    EXPECT_TRUE(tests[3]-&gt;result()-&gt;Passed());
+    EXPECT_EQ(1, tests[3]-&gt;result()-&gt;test_property_count());
+    const TestProperty&amp; property = tests[3]-&gt;result()-&gt;GetTestProperty(0);
+    EXPECT_STREQ("key", property.key());
+    EXPECT_STREQ("value", property.value());
+
+    delete[] tests;
+
+#if GTEST_HAS_TYPED_TEST
+    test_case = UnitTestHelper::FindTestCase("TestCaseWithCommentTest/0");
+    tests = UnitTestHelper::GetSortedTests(test_case);
+
+    EXPECT_STREQ("Dummy", tests[0]-&gt;name());
+    EXPECT_STREQ("TestCaseWithCommentTest/0", tests[0]-&gt;test_case_name());
+    EXPECT_TRUE(IsNull(tests[0]-&gt;value_param()));
+    EXPECT_STREQ(GetTypeName().c_str(), tests[0]-&gt;type_param());
+    EXPECT_TRUE(tests[0]-&gt;should_run());
+    EXPECT_TRUE(tests[0]-&gt;result()-&gt;Passed());
+    EXPECT_EQ(0, tests[0]-&gt;result()-&gt;test_property_count());
+
+    delete[] tests;
+#endif  // GTEST_HAS_TYPED_TEST
+    delete[] test_cases;
+  }
+};
+
+}  // namespace internal
+}  // namespace testing
+
+int main(int argc, char **argv) {
+  InitGoogleTest(&amp;argc, argv);
+
+  AddGlobalTestEnvironment(new testing::internal::FinalSuccessChecker());
+
+  return RUN_ALL_TESTS();
+}
+ 

@@ -1,0 +1,54 @@
+ 15.11.1 Constructors<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.11 oeofstream 
+ Up:   15.11 oeofstream 
+ Next:   15.11.2 append 
+   
+
+
+  
+15.11.1 Constructors 
+ 
+   
+oeofstream()
+oeofstream(int fd)
+oeofstream(const char        *filename)
+oeofstream(const std::string &amp;filename)
+    
+Creates a new oeofstream. If a valid file descriptor ( fd ) is passed to
+the constructor, the stream will use the associated data target for output.
+Otherwise, the constructors expect the name of file to be written to. If the
+named file does not exist, it will be created. If no parameter is passed to the
+constructor, the stream can later be opened using the  open  command
+defined in  OEPlatform::oeostream  or the  openfd  command defined
+in this class.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.11 oeofstream 
+ Up:   15.11 oeofstream 
+ Next:   15.11.2 append 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

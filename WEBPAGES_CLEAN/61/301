@@ -1,0 +1,52 @@
+ Euler's Formula<body>
+     
+  Euler's Formula,
+Proof 11: Ear Decomposition
+ 
+
+A graph is  two-edge-connected  if removing any edge leaves a connected subgraph.
+Two-edge-connectivity is equivalent to the existence of an  ear decomposition :
+a partition of the edges of the graph into a sequence of  ears 
+(simple paths and cycles), with the first ear being a single vertex; the
+start and
+end of each successive ear should be vertices occurring in previous
+ears, but all
+other vertices in an ear should be new.  Such a decomposition can be
+found one ear at a time: start each ear by any unused edge  e  from an
+already-explored vertex, and continue by a shortest path back to another
+already-explored vertex (such a path must exist because  e  cannot
+disconnect the graph).
+ 
+We can use such a decomposition in a proof of the Euler formula for polyhedra:
+  
+The graph G of a polyhedron is two-edge-connected, since if we remove an edge e
+we can still connect its endpoints by a path around the other side of one of the
+two faces of G containing e.
+ 
+Find an ear decomposition of G, and consider the process of forming G by
+adding ears one at a time starting
+from a single vertex.  Initially there is one vertex, one face, and no edges.
+Each new ear forms a path connecting two vertices on the boundary of a face,
+splitting the face in two; the path has one more edge than it has vertices.
+So if the ear has  k  edges, its addition increases V by
+ k -1, E by  k , and F by 1,
+and the result follows by induction on the number of ears.
+  
+Ear decompositions have been especially useful in the design of parallel algorithms,
+since they are easier to find in parallel than are other structural decompositions
+of graphs such as depth first search trees.
+For an example of this see my work on
+ recognizing
+series parallel graphs .
+    
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

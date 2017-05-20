@@ -1,0 +1,104 @@
+ SimSE Details<body>
+ 
+ SimSE Online  
+     
+        
+     Home   |   
+     News   |  
+     Details   |   
+	 Publications   |   
+     Downloads   |   
+	 FAQ   |   
+	 Contribute   |   
+	 Discuss   |   
+     Links   |   
+	 Credits/Contact   
+   
+ 
+
+
+
+   
+Details   
+ 
+ Motivation 
+  Player Experience 
+  Instructor Experience 
+  Architecture 
+  Models 
+  Evaluation 
+ 
+ 
+
+ 
+
+   Details 
+
+     Motivation 
+
+    SimSE is an interactive, graphical, educational software engineering simulation game designed to teach students the processes of software engineering. SimSE address the large gap that exists in traditional software engineering educational techniques—students are exposed to several software engineering concepts and theories in lectures, but have limited opportunity to put these ideas into practice in a typically small software engineering project. SimSE aims to fill this gap by providing students with virtual experiences of participating in quasi-realistic, large-scale software engineering processes. 
+
+     
+
+      
+
+    
+
+      Player Experience  
+
+     SimSE is a single-player game in which the player takes on the role of project manager of a team of developers. As the player manages the process to complete (a particular aspect of) a software engineering project, they can, among other things, hire and fire employees, assign tasks to them, monitor their progress, and purchase tools. The user interface of SimSE is fully graphical, displaying a virtual office in which the software engineering process takes place (see below). This display includes typical office surroundings, such as desks, chairs, computers, and meeting rooms, as well as information about employees (e.g., productivity, current task, energy level), artifacts (e.g., size, completeness, correctness), customers (e.g., satisfaction level), projects (e.g., budget, time), and tools (e.g., number of users, productivity increase factor). Employees “communicate” with the player through pop-up speech bubbles over their heads, in which they inform the player of important information, such as when they have started or completed a task, when a random event has occurred, or to express a response to one of the player’s actions (e.g., quitting because the player has been working them too hard). Players use this information to make decisions and take actions, driving the simulation accordingly. At the end of the game, the player receives a score, indicating how well they performed. 
+
+
+In addition to all of this information, an explanatory tool provides the player with further information about their game, including which rules were triggered when, a trace of events, and the “health” of various attributes (e.g., correctness of the code) over time. Additionally,  the player can run multiple parallel branches of a game--return to any previous point in the game and spawn a new branch, while continuing the original game (and any other simultaneous branches).The explanatory tool is accessible both during and after a game.  
+
+       
+
+       
+
+       
+
+        
+
+    
+
+      Instructor Experience  
+
+     One of the fundamental goals of the SimSE project is to allow customization of the software process models it simulates. Real-world processes vary with different application domains, organizations, and cultures, and therefore SimSE must be able to portray different processes as well. Furthermore, instructors using SimSE may belong to different schools of thought regarding best software engineering practices, and may have different teaching objectives that require different types of models. Therefore, an integral part of SimSE is a process model builder tool that enables instructors to build models of the particular process they wish to simulate. 
+
+       
+
+        
+
+    
+
+      Architecture 
+
+       
+
+       
+
+      Software process simulation models are created using a model builder that allows the specification of employees, artifacts, projects, tools, and customers, as well as activities that these entities can participate in, and rules according to which they behave. Based upon a particular choice of model, a generator interprets the model and automatically generates  code for a state management component, a rule execution component, an explanatory tool, and the graphical user interface, which are inserted into the generic simulation environment. A student can then use this custom-generated simulation environment to practice the situations captured by the chosen model. Both the model builder and the generated simulation environments are written completely in Java.  
+
+       
+
+        
+
+    
+      Models 
+       We currently have six models completed (waterfall, incremental, inspection, rapid prototyping,  Rational Unified Process, and Extreme Programming), which are available for  download . We are always planning the development of additional models.  
+          
+    
+      Evaluation 
+       We have evaluated SimSE in a series of four studies, each of which has served both summative and formative purposes. In other words, these evaluations have told us how SimSE works and doesn't work, as well as told us how to make SimSE better, data which has driven SimSE's ongoing development. The four evaluations were as follows: (1) An initial pilot study in which 28 students played SimSE for a few hours and filled out a survey about their experience; (2) Two quarters of using SimSE as an extra-credit assignment in an introductory software engineering course at UC Irvine, in which students had to play SimSE and answer a set of questions correctly to receive credit; (3) A comparative study in which we had some students play SimSE, some read from a textbook, and some attend lectures, and then compared their performance on pre- and post-tests; and (4) An in-depth observational study in which we observed students playing SimSE in a one-on-one setting and then interviewed them about their experience. A summary of our major findings is listed here (for full results, analyses, and further details about the evaluation setups, see "Comprehensive Evaluation of an Educational Software Engineering Simulation Environment" and "SimSE: A Software Engineering Simulation Environment for Software Process Education" on the  Publications  page): 
+          Students who play SimSE seem to successfully learn the concepts it is designed to teach.  Students in the pilot study felt that SimSE was effective at teaching software process concepts. Students who played SimSE in class were quite successful at answering questions about these concepts correctly. In the comparative study, there was a strong correlation between reported time spent playing SimSE and increase in software process knowledge. All subjects in the observational study were able to recount learned concepts and improve their scores from game to game. 
+           Students find playing SimSE a relatively enjoyable experience.   Students in all evaluations reported that they enjoyed playing SimSE for the most part. Several students in the observational study were visibly enthralled with the game.  
+           Providing students with adequate and proper instruction in playing SimSE is critical.   Subjects from the in-class and comparative studies felt that they did not receive enough guidance to succeed in SimSE. As a result, they experienced some frustration and confusion. In the comparative study, no subject in the SimSE group played as much as they were assigned, partially due to this frustration. In the observational study, it was clear that subjects tended to miss important information if it was not sufficiently emphasized in the instructions. Thus, instruction must be a carefully planned part of SimSE’s use, and should include such extensive measures as holding training sessions and/or providing paper-based handouts.  
+           Students find SimSE repetitive when played for extended periods of time.  Although it was clear from the comparative study that the longer a student plays SimSE, the more they learn, both the comparative study and the in-class usage revealed that a longer playing time also contributes to a feeling of repetitiveness. Because the version of SimSE used in these evaluations included neither the explanatory tool nor adequate instructions, it is anticipated that the addition of these two factors will lessen the need for so many repetitions of the same model when used in classes in the future.  
+           The learning process of a SimSE player involves the theories of Discovery Learning, Learning through Failure, Constructivism, Learning by Doing, Situated Learning, and Keller’s ARCS.   These were the learning theories that were most evident in the observational study, suggesting the applicability of SimSE to different types of learners. Moreover, this information provides us with well-defined guidelines for maximizing SimSE’s effectiveness, as we can aim to maximize the characteristics that are known to promote each of these theories.  
+           SimSE is most educationally effective when used as a complementary component to other teaching methods.  The results of our evaluations strongly suggested that a certain level of existing software process knowledge must be possessed by a student in order for maximal learning to occur. Some of the students in the SimSE group in the comparative study had no prior exposure to software engineering. These students had the overwhelmingly worst improvement from pre- to post-test, compared to other subjects. Their lack of background knowledge, combined with the inadequate instruction given in learning to play SimSE, resulted in the SimSE group improving least from pre- to post-test, compared with the lecture group and reading group (which improved most). In the observational study, it was discovered that the opportunity to put previously learned knowledge into practice (i.e., Learning by Doing and Constructivism) was a major learning-facilitating characteristic of SimSE. Thus, SimSE should be used with other teaching methods that provide this required knowledge, and should not be used as a standalone tool.  
+      
+       SimSE is funded by  NSF grant number DUE-0618869. 
+   
+   SimSE, University of California, Irvine  
+    Copyright ©2010   
+  </body> 

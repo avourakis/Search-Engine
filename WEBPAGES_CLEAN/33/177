@@ -1,0 +1,50 @@
+ 23.2.2 OEWriteMDLFile<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.2.1 OEReadMDLFile 
+ Up:   23.2 MDL File Format 
+ Next:   23.3 Sybyl Mol2 File 
+   
+
+
+  
+23.2.2 OEWriteMDLFile 
+ 
+
+ 
+    void MyWriteMDLMolecule(oemolostream &amp;ofs, OEMolBase &amp;mol)
+{
+  OEClearAromaticFlags(mol);
+  if (!OEMDLHasParity(mol))
+    OEMDLPerceiveParity(mol);
+  OEWriteMDLFile(ofs,mol);
+  ofs &lt;&lt; "$$$$" &lt;&lt; endl;
+}
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   23.2.1 OEReadMDLFile 
+ Up:   23.2 MDL File Format 
+ Next:   23.3 Sybyl Mol2 File 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,233 @@
+ Geometry in Action<body>
+
+ 
+   
+ 
+  
+ From:             ins_acas@jhunix.UUCP  (Catherine Schevon)
+ Newsgroups:      sci.math
+ Subject:         Unfolding Polyhedra
+ Date:            18 Feb 87 18:18:07 GMT
+ Organization:    Johns Hopkins Univ. Computing Ctr.
+   
+The problem of unfolding convex polyhedra, besides being part of
+my thesis, has been open for many years. It was posed originally by 
+G. C. Shephard, University of East Anglia, England.  A precise 
+statement is:
+
+Is it true that every convex 3-polytope has a simple unfolding?
+An unfolding is produced by cutting a collection of the edges of a
+polytope, imagining the polytope as a cardboard model, and flattening
+the faces on a plane.  An unfolding is simple if there is no overlap,
+i.e. the resulting shape on the plane is a simple polygon.
+
+It is conjectured that the answer is "yes".  My advisor (Joseph O'Rourke) 
+and I have proved the existence of simple unfoldings for
+a few very restricted cases.
+
+Observation: The collection of cut edges must form a spanning tree 
+of the 1-skeleton.
+
+Spanning Star Lemma:  If the 1-skeleton contains a spanning
+star, i.e. one vertex is adjacent to all the others, then the unfolding
+using the spanning star as the cut tree is always simple.
+
+Hamiltonian Path Lemma:  If there is a Hamiltonian path spanning
+the 1-skeleton such that all interior vertices of this path have an
+exterior angle  &gt;  pi when flattened, then the unfolding is simple.
+
+We have an infinite class of polytopes for which some spanning trees
+yield non-simple unfoldings.
+
+We have also tried to find a polyhedron that cannot be unfolded.  It's
+not hard if you allow non-convex faces (as in Karl Heuer's example) 
+but surprisingly difficult for convex faces only.  Even a cube with 
+nine spikes on each face turns out to have a simple unfolding.
+
+A few related books that people might find interesting:
+
+Cundy and Rollett, _Mathematical_Models_
+Wenninger, _Polyhedral_Models_
+Grunbaum and Shephard, _Tilings_and_Patterns_
+
+It's a very interesting and difficult problem.  Any information or
+references on it would be much appreciated!  Please respond to
+ schevon@hopkins  and/or  orourke@hopkins  on Arpanet.
+
+			-- Cathy
+ 
+  
+ From:             highrisk@shellx.best.com  (Michael Kelly)
+ Newsgroups:      comp.graphics.algorithms
+ Subject:         How Do I Flatten/Unwrap a 3D Object?
+ Date:            23 Apr 1996 10:14:33 -0700
+ Organization:    High Risk Ventures, Inc.
+   
+I need to be able to flatten/unwrap a 3D object.  That is, given a
+relatively simple object (maybe 30 polys or so), I need to generate a 2D
+image containing outlines of all of the polys laid out next to each other
+(as much as possible).  If there is existing documentation on the algorithm,
+please point me in the right direction.  If there is existing code for
+the algorithm, please point me toward it or send it to me.
+
+Thanks!
+
+-- 
+| Michael A. Kelly                  High Risk Ventures, Inc |
+| President                                    PO Box 70690 |
+|  mkelly@hrvinc.com                         Eugene, OR 97401 |
+|  http://www.hrvinc.com                       (415) 359-4176 |
+   
+ From:             eppstein@ics.uci.edu  (David Eppstein)
+ Newsgroups:      comp.graphics.algorithms
+ Subject:         Re: How Do I Flatten/Unwrap a 3D Object?
+ Date:            23 Apr 1996 14:58:50 -0700
+ Organization:    UC Irvine Department of ICS
+   
+ highrisk@shellx.best.com  (Michael Kelly) writes:
+: I need to be able to flatten/unwrap a 3D object.  That is, given a
+: relatively simple object (maybe 30 polys or so), I need to generate a 2D
+: image containing outlines of all of the polys laid out next to each other
+: (as much as possible).  If there is existing documentation on the algorithm,
+: please point me in the right direction.  If there is existing code for
+: the algorithm, please point me toward it or send it to me.
+
+As Joe O'Rourke will probably also tell you, it is open whether it
+is always possible to do this (unfold the faces of a convex polyhedron into
+a contiguous polygon on the plane).  If your object is non-convex it is
+not always possible, but I don't recall seeing any discussion of the
+problem's computational complexity in that case (I wouldn't be surprised
+if it's NP-complete).
+
+Here is my entry on the subject from "The Geometry Junkyard"
+( http://www.ics.uci.edu/~eppstein/junkyard/ ), lightly edited
+from HTML back into text:
+
+Unfolding convex polyhedra:
+Catherine Schevon discusses whether it is always possible
+to cut a convex polyhedron's edges so its boundary unfolds into a simple
+planar polygon ( http://www.ics.uci.edu/~eppstein/junkyard/unfold.html ).
+Dave Rusin's known math pages include
+another article by J. O'Rourke on the same problem
+( http://www.math.niu.edu/~rusin/known-math/polyhedral/unfolding ).
+-- 
+David Eppstein		UC Irvine Dept. of Information &amp; Computer Science
+ eppstein@ics.uci.edu 	 http://www.ics.uci.edu/~eppstein/ 
+   
+ From:             orourke@grendel.csc.smith.edu  (Joseph O'Rourke)
+ Newsgroups:      comp.graphics.algorithms
+ Subject:         Re: How Do I Flatten/Unwrap a 3D Object?
+ Date:            27 Apr 1996 04:43:54 GMT
+ Organization:    Smith College, Northampton, MA, US
+   
+In article &lt;4ljjqq$1mt@wormwood.ics.uci.edu&gt;,
+David Eppstein &lt; eppstein@ics.uci.edu &gt; wrote:
+&gt; highrisk@shellx.best.com  (Michael Kelly) writes:
+&gt;: I need to be able to flatten/unwrap a 3D object.  That is, given a
+&gt;: relatively simple object (maybe 30 polys or so), I need to generate a 2D
+&gt;: image containing outlines of all of the polys laid out next to each other
+&gt;: (as much as possible).  If there is existing documentation on the algorithm,
+&gt;: please point me in the right direction.  If there is existing code for
+&gt;: the algorithm, please point me toward it or send it to me.
+&gt;
+&gt;As Joe O'Rourke will probably also tell you,  [...]
+
+See if you can get your hands on Fukuda's beautiful code for actually
+performing the unfolding (despite the openeness of whether it is
+always possible).
+
+@unpublished{Fukuda
+, author =      "M. Namiki and K. Fukuda"
+, title =       "Unfolding 3-dimensional convex polytopes: a package for {Mathem
+atica} 1.2 or 2.0"
+, year =        1993
+, note =        "Mathematica Notebook, Univ. of Tokyo"
+}
+ 
+  
+ From:             jeffe@ocarina.CS.Berkeley.EDU  (Jeff Erickson)
+ Newsgroups:      comp.graphics.algorithms
+ Subject:         Re: How Do I Flatten/Unwrap a 3D Object?
+ Date:            29 Apr 96 22:11:58 GMT
+ Organization:    University of California, Berkeley
+   
+ orourke@grendel.csc.smith.edu  (Joseph O'Rourke) writes:
+
+&gt;See if you can get your hands on Fukuda's beautiful code for actually
+&gt;performing the unfolding (despite the openeness of whether it is
+&gt;always possible).
+
+The package is available by anonymous FTP, either from ETH Zürich or
+Tokyo, depending on whether you have a UNIX box or a Mac.
+
+	 ftp://ifor13.ethz.ch/pub/fukuda/mathematica/UnfoldPolytope.tar.Z 
+	 ftp://waka.c.u-tokyo.ac.jp/pub/test/UnfoldPolytope.sea.hqx 
+
+Komei Fukuda's home page has a nice picture of what the package does:
+
+	 http://www.ifor.math.ethz.ch/staff/fukuda/fukuda.html 
+
+Here is the README file from the ETH ftp server.  The author's
+addresses are out of date.  Fukuda's email address is now
+" fukuda@ifor.math.ethz.ch ".  According to hir home page, Namiki's
+email address is now " namiki@waka.c.u-tokyo.ac.jp ".
+
+----------------------------------------------------------------------
+               September, 1994
+    
+    Makoto Namiki*
+    Department of Social Science
+    College of Arts and Sciences, University of Tokyo
+    3-8-1 Komaba, Meguro-ku, Tokyo, 153, Japan
+     namki@is.titech.ac.jp 
+    +81-3-3467-1171 ext. 245
+
+    Komei Fukuda**
+    Graduate School of Systems Management
+    University of Tsukuba, Tokyo
+    3-29-1 Otsuka, Bunkyo-ku, Tokyo 112, Japan
+     fukuda@gssm.otsuka.tsukuba.ac.jp 
+    +81-3-3942-6876
+
+This package contains Mathematica functions to 
+unfold general 3-dimensional convex polytopes.
+The package consisits of four files:
+
+   ReadMe
+   UnfoldGallery-notebook.ma
+   UnfoldPolytope-notebook.ma
+   BadUnfolding-notebook.ma
+   UnfoldPolytope.m
+
+The UnfoldPolytope notebook explains how to use this package
+through examples.  UnfoldGallery-notebook contains some
+unfoldings of some interesting polytopes and Badfolding-notebook
+contains several examples of unfoldings which are of theoretical
+interests.
+
+If your environment does not allow you to use notebooks, 
+we suggest you to get it printed before using the package.  
+For the moment, the notebook environment is supported
+by the Macintosh, NeXT and Windows versions of 
+Mathematica. 
+
+This beta release is designed to run under 
+Version 1.2/2.0./2.1/2.2 of Mathematica. 
+
+Please send your comments, bug reports etc. to:
+
+  Makoto Namiki or Komei Fukuda
+-- 
+Jeff Erickson
+ jeffe@cs.berkeley.edu 
+ http://www.cs.berkeley.edu/~jeffe 
+ 
+  
+Part of
+ Geometry in Action ,
+a collection of applications of computational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Last update: . 
+ </body> 

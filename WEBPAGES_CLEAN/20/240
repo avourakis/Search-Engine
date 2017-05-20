@@ -1,0 +1,411 @@
+ //  
+// $Id: RETree.cpp 1106 2007-04-16 23:20:29Z chenli $
+//
+// RETree.cpp : Defines the entry point for the console application.
+//
+//  Copyright (C) 2004 - 2007 by The Regents of the University of
+//  California
+//
+// Redistribution of this file is permitted under the terms of the GNU
+// Public License (GPL).
+//
+// Date: October, 2004
+//
+// Author: 
+//          Liang Jin (liangj@ics.uci.edu)
+
+#include "stdafx.h"
+#include 
+#include 
+#include 
+#include 
+#include 
+#include 
+#include 
+#include  
+#include "parameters.h"
+#include "index.h"
+#include "distance.h"
+
+using namespace std;
+
+double totalEDTime;
+
+//int pruneinter;
+//int pruneleaf;
+
+//ofstream os;
+
+struct Record* recordset;
+
+int numofNodes;
+
+
+int compare( const void *arg1, const void *arg2 )
+{
+   /* Compare all of both strings: */
+	if( ((struct Record *)arg1)-&gt;numVal &gt; ((struct Record *) arg2)-&gt;numVal)
+		return 1;
+	else if( ((struct Record *)arg1)-&gt;numVal numVal)
+		return -1;
+	else
+		return 0;
+   
+}
+
+void purify(char* incoming)
+{
+	int length = strlen(incoming);
+
+	int counter = 0;
+
+	for(int i=0; i='a' &amp;&amp; incoming[i]numVal = num;
+	q-&gt;numDelta = nDelta;
+	strcpy(q-&gt;strVal, str);
+	q-&gt;strDelta = sDelta;
+	
+	return;
+}
+
+
+
+struct Node* merge(struct Node* nodes[], int startIndex, int endIndex, bool first)
+{
+	struct Node * n = RTreeNewNode();
+
+	numofNodes++;
+	
+	struct Node *old;
+	int i, j;
+	
+	if(first == true)
+	{
+		n-&gt;level = 1; //one level up
+
+		//for each leaf node, combine its num and str val, put in one branch of the parent node
+		for(i = 0; i branch[i].child = old;
+			n-&gt;count++;
+			
+			n-&gt;branch[i].rect.boundary[0] = old-&gt;records[0]-&gt;numVal;
+			n-&gt;branch[i].rect.boundary[NUMDIMS - 1] = old-&gt;records[0]-&gt;numVal;
+
+			for(j = 0; j count; j++)
+			{
+				//update the numerical range
+				if(old-&gt;records[j]-&gt;numVal branch[i].rect.boundary[0])
+					n-&gt;branch[i].rect.boundary[0] = old-&gt;records[j]-&gt;numVal;
+				if(old-&gt;records[j]-&gt;numVal &gt; n-&gt;branch[i].rect.boundary[NUMDIMS - 1])
+					n-&gt;branch[i].rect.boundary[NUMDIMS - 1] = old-&gt;records[j]-&gt;numVal;
+
+				n-&gt;branch[i].rect.realtrie-&gt;AddToTrie(old-&gt;records[j]-&gt;strVal);
+			}
+
+			n-&gt;branch[i].rect.realtrie-&gt;assignDepth();
+
+			(*n-&gt;branch[i].rect.trie) = n-&gt;branch[i].rect.realtrie-&gt;Trie2Str(n-&gt;branch[i].rect.realtrie-&gt;root);
+
+		}
+
+	}
+	else
+	{
+		n-&gt;level = nodes[0]-&gt;level + 1; //one level up
+
+		//for each leaf node, combine its num and str val, put in one branch of the parent node
+		for(i = 0; i branch[i].child = old;
+			n-&gt;count++;
+			
+			n-&gt;branch[i].rect.boundary[0] = old-&gt;branch[0].rect.boundary[0];
+			n-&gt;branch[i].rect.boundary[NUMDIMS - 1] = old-&gt;branch[0].rect.boundary[NUMDIMS - 1];
+
+			for(j = 0; j count; j++)
+			{
+				//update the numerical range
+				if(old-&gt;branch[j].rect.boundary[0] branch[i].rect.boundary[0])
+					n-&gt;branch[i].rect.boundary[0] = old-&gt;branch[j].rect.boundary[0];
+				if(old-&gt;branch[j].rect.boundary[NUMDIMS - 1] &gt; n-&gt;branch[i].rect.boundary[NUMDIMS - 1])
+					n-&gt;branch[i].rect.boundary[NUMDIMS - 1] = old-&gt;branch[j].rect.boundary[NUMDIMS - 1];
+
+				n-&gt;branch[i].rect.realtrie-&gt;MergeTries(old-&gt;branch[j].rect.realtrie-&gt;root);
+			}
+
+			n-&gt;branch[i].rect.realtrie-&gt;assignDepth();
+
+			(*n-&gt;branch[i].rect.trie) = n-&gt;branch[i].rect.realtrie-&gt;Trie2Str(n-&gt;branch[i].rect.realtrie-&gt;root);
+
+		}
+	}
+
+	return n;
+}
+
+
+struct Node** constructParent(struct Node* nodes[], int number, bool first)
+{
+
+	int parentNum = (int)ceil((double)number/MAXCARD);
+	struct Node** parents = new struct Node*[parentNum];
+	for(int i=0; i 1)
+	{
+		if(first)
+		{
+			nodes = constructParent(nodes, number, first);
+			first = false;
+		}
+		else
+		{
+			nodes = constructParent(nodes, number, first);
+		}
+		number = (int)ceil((double)number/MAXCARD);
+	}
+	return nodes[0];
+}
+
+void CompressTrieNode(struct Node* p, int method)
+{
+	int i;
+	if(p-&gt;level == 0)
+	{
+		return;
+	}
+	
+
+	for(i = 0; i count; i++)
+	{
+		int before = p-&gt;branch[i].rect.realtrie-&gt;getNumofNodes(p-&gt;branch[i].rect.realtrie-&gt;root);
+
+		if(method == TOPDOWN)
+			p-&gt;branch[i].rect.realtrie-&gt;CompressTrieTopDown();
+		else
+			p-&gt;branch[i].rect.realtrie-&gt;CompressTrieBottomUp();
+
+		*p-&gt;branch[i].rect.trie = p-&gt;branch[i].rect.realtrie-&gt;Trie2Str( p-&gt;branch[i].rect.realtrie-&gt;root );
+
+		int after = p-&gt;branch[i].rect.realtrie-&gt;getNumofNodes(p-&gt;branch[i].rect.realtrie-&gt;root);
+
+		p-&gt;branch[i].rect.compratio = (float)after / (float)before;
+
+		//convert the trie into a nfa and store it
+		//p-&gt;branch[i].rect.nfa = new NFA();
+		//p-&gt;branch[i].rect.nfa-&gt;ConvertFromTrie(p-&gt;branch[i].rect.realtrie);
+		//end convert to nfa
+
+		//if(p-&gt;level == 1)
+		//	cout branch[i].child != NULL)
+			CompressTrieNode(p-&gt;branch[i].child, method);
+	}
+
+	return;
+}
+
+
+struct Node* loadRETree(int compressmethod)
+{
+	int i, j; //, subindex;
+	//Trie* trie = new Trie();
+
+	ifstream inf(DATAFILE);
+	if (!inf) {
+		cout &gt; temp;
+
+		for(j = 0; j &gt; recordset[i].numVal;
+	}
+	
+	inf.close();
+	
+	qsort(recordset, SIZES, sizeof(struct Record), compare);
+
+	int id = 0;
+	struct Node** leafnodes = new struct Node*[LEAFNODES];
+	
+	for(i = 0; i level = 0;
+
+		n-&gt;isLeaf = true;
+		
+		for(j = 0; j records[j] = &amp;recordset[id];
+			
+			id++;
+		}
+
+		n-&gt;count = j;
+	}
+
+	struct Node* result;
+
+	result = constructTree(leafnodes, LEAFNODES);
+
+	CompressTrieNode(result, compressmethod);
+
+	//ConvertTrieToNFA(result);
+	
+	return result;
+
+}
+
+
+//RETree Query
+bool QueryNumOverlap(struct Query *q, struct Rect *s)
+{
+	if(q-&gt;numVal - q-&gt;numDelta &gt; s-&gt;boundary[NUMDIMS - 1] ||
+	   s-&gt;boundary[0] &gt; q-&gt;numVal + q-&gt;numDelta)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool QueryOverlap(struct Query *Q, struct Rect *S)
+{
+	register struct Rect *s = S;
+	register struct Query *q = Q;
+
+	//add for debug
+	if(s-&gt;compratio numVal - q-&gt;numDelta &gt; s-&gt;boundary[NUMDIMS - 1] ||
+	   s-&gt;boundary[0] &gt; q-&gt;numVal + q-&gt;numDelta)
+	{
+		return false;
+	}
+	
+	bool result = (s-&gt;realtrie)-&gt;getED(q-&gt;strVal, q-&gt;strDelta);
+
+	return result;
+}
+
+
+bool QueryOverlap(struct Query *q, struct Record *r)
+{
+	assert(q &amp;&amp; r);
+
+	
+	if(q-&gt;numVal - q-&gt;numDelta &gt; r-&gt;numVal ||
+	   r-&gt;numVal &gt; q-&gt;numVal + q-&gt;numDelta)
+	{
+		return false;
+	}
+	
+	Distance1 dis;
+	int result = dis.LD(q-&gt;strVal, r-&gt;strVal);
+
+	if(result strDelta)
+		return true;
+	else
+		return false;
+}
+
+
+int RETreeQueryHelper(struct Node *r, struct Query* qr, long* IOCount)
+{
+	register struct Node *n = r;
+	register struct Query *q = qr;
+	int i;
+
+	assert(n);
+	assert(n-&gt;level &gt;= 0);
+	assert(q);
+
+	int hitCount = 0;
+
+	(*IOCount)++;
+	Sleep(10);
+
+	if (n-&gt;level &gt; 0) // this is an internal node in the tree 
+	{
+
+
+		for (i = 0; i count; i++)
+		{
+			//add for reporting result
+			//clock_t tv1, tv2;
+			//double time;
+			//tv1 = clock();
+			
+			//os level branch[i].child != NULL &amp;&amp; QueryOverlap(q, &amp;n-&gt;branch[i].rect))
+			//{
+			//	tv2 = clock();
+			//	time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+			//	os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio branch[i].child, q, IOCount);
+			//}
+			//else
+			//{
+			//	tv2 = clock();
+			//	time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+			//	os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio level &gt; 1)
+			{
+				if (n-&gt;branch[i].child != NULL &amp;&amp; QueryNumOverlap(q, &amp;n-&gt;branch[i].rect))
+				{
+					//tv2 = clock();
+					//time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+					//os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio branch[i].child, q, IOCount);
+				}
+				else
+				{
+					//tv2 = clock();
+					//time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+					//os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio branch[i].child-&gt;level branch[i].child != NULL &amp;&amp; QueryOverlap(q, &amp;n-&gt;branch[i].rect))
+				{
+					//tv2 = clock();
+					//time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+					//os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio branch[i].child, q, IOCount);
+				}
+				else
+				{
+					//tv2 = clock();
+					//time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+					//os branch[i].rect.realtrie-&gt;getNumofNodes(n-&gt;branch[i].rect.realtrie-&gt;root) branch[i].rect.compratio branch[i].child-&gt;level count; i++)
+		{
+			//clock_t tv1, tv2;
+			//double time;
+			//tv1 = clock();
+			
+			//os level records[i] != NULL &amp;&amp; QueryOverlap(q,n-&gt;records[i]))
+			{
+				//tv2 = clock();
+				//time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
+				//os records[i]-&gt;numVal records[i]-&gt;strVal level &gt;= 0);
+	assert(q);
+
+	(*IOCount) = 0;
+	hitCount = RETreeQueryHelper(n, q, IOCount);
+
+	return hitCount;
+}
+
+
+
+
+void DeleteRETree(struct Node* root)
+{
+	struct Node* n = root;
+	assert(n);
+	assert(n-&gt;level &gt;= 0);
+
+	if (n-&gt;level &gt; 0) /* this is an internal node in the tree */
+	{
+
+		for (int i = 0; i count; i++)
+			if (n-&gt;branch[i].child != NULL)
+			{
+				DeleteRETree(n-&gt;branch[i].child);
+			}
+
+		RTreeFreeNode(n);
+	}
+	else /* this is a leaf node */
+	{
+		RTreeFreeLeafNode(n);
+	}
+	return;
+}
+
+int main(int argc, char* argv[])
+{
+	cout &gt; temp;
+
+		purify(temp);
+		
+		inf &gt;&gt; num;
+	
+		RecordToQuery(num, NUMDELTA, temp, STRDELTA, &amp;qr);
+			
+		cout  

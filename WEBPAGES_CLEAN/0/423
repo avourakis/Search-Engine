@@ -1,0 +1,51 @@
+ 4.111 OEPerceiveChiral<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.110 OEPerceiveBondOrders 
+ Up:   4. OEChem Functions 
+ Next:   4.112 OEPerceiveResidues 
+   
+
+
+  
+4.111 OEPerceiveChiral 
+ 
+   
+bool OEPerceiveChiral(OEMolBase &amp;mol)
+    
+This function determines the stereocenters of a molecule.  This
+function uses symmetry classes of a molecule, to determine which atoms
+and bonds are chiral.  This function updates the ``chiral'' Boolean
+property of atoms and bonds.  As a side-effect it also sets the
+``symclass'' property of all the atoms the molecule to be their
+``explicit hydrogen suppressed'' symmetry class, by calling the OEChem
+function  OEPerceiveSymmetry(mol,false) .
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.110 OEPerceiveBondOrders 
+ Up:   4. OEChem Functions 
+ Next:   4.112 OEPerceiveResidues 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

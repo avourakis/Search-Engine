@@ -1,0 +1,395 @@
+ //  
+// $Id: NFA.cpp 1106 2007-04-16 23:20:29Z chenli $
+//
+// NFA.cpp: implementation of the NFA class.
+//
+//  Copyright (C) 2004 - 2007 by The Regents of the University of
+//  California
+//
+// Redistribution of this file is permitted under the terms of the GNU
+// Public License (GPL).
+//
+// Date: October, 2004
+//
+// Author: 
+//          Liang Jin (liangj@ics.uci.edu)
+//
+
+#include "stdafx.h"
+#include "NFA.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+NFA::NFA()
+{
+	this-&gt;Q = 0;
+	nodeNumbersAssigned = false;
+}
+
+NFA::~NFA()
+{
+	for(int i = 0; i nodeNumber = index;
+	}
+}
+
+
+/**
+	 * Performs a deep copy of the automaton.
+	 *
+	 * @return a deep copy of the automaton.
+	 */
+NFA* NFA::clone()
+{
+    //test("clone()");
+	assignNodeNumbers ();
+
+	//Copying nodes.
+	vector newNodes;
+	NFANode* newFinalStateNode;// = new NFANode(EPSILON, true, false);
+    NFANode* newInitStateNode;// = new NFANode(EPSILON, false, true);
+
+	int index, subindex;
+
+	for (index = 0; index name, node-&gt;finalState, node-&gt;initState);
+        newNode-&gt;nodeNumber = node-&gt;nodeNumber;
+		newNode-&gt;level = node-&gt;level;
+		newNodes.push_back (newNode);
+		if (node-&gt;finalState)
+	        newFinalStateNode = newNode;
+        if (node-&gt;initState)
+            newInitStateNode = newNode;
+
+	}
+
+	//Copying transitions.
+	for (index = 0; index branches.size ();
+		for (subindex = 0; subindex branches[subindex];
+
+            NFATransition* edge = new NFATransition ((NFANode*) newNodes[transition-&gt;outNode-&gt;nodeNumber], newNode);
+			newNode-&gt;branches.push_back (edge);
+            ((NFANode*) newNodes[transition-&gt;outNode-&gt;nodeNumber])-&gt;backBranches.push_back(edge);
+		}
+
+
+        node_branches_size = node-&gt;downBranches.size ();
+		for (subindex = 0; subindex downBranches[subindex];
+
+			NFATransition* edge = new NFATransition ((NFANode*) newNodes[transition-&gt;outNode-&gt;nodeNumber] , newNode);
+			newNode-&gt;downBranches.push_back (edge);
+            ((NFANode*) newNodes[transition-&gt;outNode-&gt;nodeNumber])-&gt;upBranches.push_back(edge);
+
+		}
+	}
+
+                //Creating new NFA.
+	NFA* output = new NFA ();
+	output-&gt;Q = Q;
+	output-&gt;nodes = newNodes;
+	output-&gt;finalStateNode = newFinalStateNode;
+    output-&gt;initStateNode = newInitStateNode;
+	//System.arraycopy (specialInAlphabet, 0, output.specialInAlphabet, 0, specialInAlphabet.length);
+
+	return output;
+}
+
+void NFA::insertHead(NFANode* newInitNode){
+
+    initStateNode-&gt;initState = false;
+    NFATransition* edge = new NFATransition(initStateNode,newInitNode );
+    newInitNode-&gt;branches.push_back(edge);
+    initStateNode-&gt;backBranches.push_back(edge);
+
+    initStateNode = newInitNode;
+    nodes.insert(nodes.begin(), newInitNode);
+    Q++;
+	//no recalculation of the number?
+}
+
+void NFA::insertHead(char character){
+    NFANode* newInitNode = new NFANode(character, false, true, 0);
+    initStateNode-&gt;initState = false;
+
+    NFATransition* edge = new NFATransition(initStateNode,newInitNode );
+    newInitNode-&gt;branches.push_back(edge);
+    initStateNode-&gt;backBranches.push_back(edge);
+
+    initStateNode = newInitNode;
+    nodes.insert(nodes.begin(), newInitNode);
+    Q++;
+}
+
+void NFA::printMe(){
+    assignNodeNumbers();
+    for (int i=0; iprintMeAll();
+    }
+}
+
+
+
+//  prepare before we build the graph
+//  add a epsilon before all the node
+//  then reorder the node number
+void NFA::prepareForGraph()
+{
+	assignNodeNumbers();
+    //this-&gt;insertHead(EPSILON);
+	//assignNodeNumbers();
+}
+
+NFANode* NFA::getNode(int index)
+{
+    return (NFANode*)nodes[index];
+}
+
+int NFA::nodeNum()
+{
+	return nodes.size();
+}
+        
+
+void NFA::ConvertFromTrie(Trie* trie)
+{	
+	int i, j, sIndex;
+
+	NFANode* initstate = new NFANode(EPSILON, false, true, 1);
+	nodes.push_back(initstate);
+	initStateNode = initstate;
+	Q++;
+	
+	NFANode* finalstate = new NFANode(EPSILON, true, false);
+
+	TrieNode* trienode;
+
+	NFANode* tempnode[ALPH_SIZE];
+	for(i = 0; i root-&gt;child[i] != NULL)
+		{
+			trienode = trie-&gt;root-&gt;child[i];
+
+			if(trienode-&gt;isCompressed == false)		//not a compressed node
+			{
+				name = trie-&gt;getSingleName(trienode-&gt;names);
+
+				if(name != EPSILON)	//if it's not EPSILON
+					levels[i] = 2;
+				else							//if it's EPSILON, dont increase level
+					levels[i] = 1;
+
+				NFANode* newnode = new NFANode(name, false, false, levels[i]);
+				
+				NFATransition* edge = new NFATransition(newnode, initstate);
+
+				newnode-&gt;backBranches.push_back(edge);
+				initstate-&gt;branches.push_back(edge);
+
+				//nodes.push_back(newnode);
+				insertTo(newnode, levels[i]);
+				Q++;
+
+				tempnode[i] = newnode;
+					
+
+				if(trienode-&gt;count == 0) //if it's the leaf node, add a link to the final state
+				{
+					newnode-&gt;finalState = true;
+
+					//NFATransition *newedge = new NFATransition(finalstate, newnode);
+
+					//newnode-&gt;branches.push_back(newedge);
+					//finalstate-&gt;backBranches.push_back(newedge);
+
+					tempnode[i] = NULL;
+				}				
+								
+			}
+			else	//compressed node
+			{
+
+				NFANode* newparent = initstate;
+
+				levels[i] = 2;
+
+				for(j = 0; j com.depth; j++)
+				{
+					
+					//set the new node as final state
+					NFANode* newnode3 = new NFANode(EPSILON, true, false, levels[i]);
+					
+					
+					for(sIndex = 0; sIndex getNameExist(trienode-&gt;names, sIndex) == true)
+						{
+							NFANode* newnode2 = new NFANode(trie-&gt;getCharFromIndex(sIndex), false, false, levels[i]);
+
+							NFATransition* edge1 = new NFATransition(newnode2, newparent);
+							newparent-&gt;branches.push_back(edge1);
+							newnode2-&gt;backBranches.push_back(edge1);
+
+							NFATransition* edge2 = new NFATransition(newnode3, newnode2);
+							newnode2-&gt;branches.push_back(edge2);
+							newnode3-&gt;backBranches.push_back(edge2);
+
+							//nodes.push_back(newnode2);
+							insertTo(newnode2, levels[i]);
+							Q++;
+						}
+					}
+
+					//nodes.push_back(newnode3);
+					insertTo(newnode3, levels[i]);
+					Q++;
+					
+					//add an edge to the final accepting state
+					//NFATransition *newedge = new NFATransition(finalstate, newnode3);
+					//newnode3-&gt;branches.push_back(newedge);
+					//finalstate-&gt;backBranches.push_back(newedge);
+					
+					newparent= newnode3;
+					levels[i]++;
+				}
+				
+				tempnode[i] = newparent;
+				levels[i]--;
+
+				if(trienode-&gt;count == 0) //if it's the leaf node, add a link to the final state
+				{
+					tempnode[i] = NULL;
+				}
+			}
+		}
+	}
+	
+	for(i = 0; i root-&gt;child[i] != NULL &amp;&amp; tempnode[i] != NULL)
+			ConvertTrie(tempnode[i], trie-&gt;root-&gt;child[i], finalstate, levels[i], trie);
+
+	//finalstate-&gt;level = 100000;
+	//nodes.push_back(finalstate);
+	finalStateNode = finalstate;
+	//Q++;
+
+	return;
+
+}
+
+void NFA::ConvertTrie(NFANode* parent, TrieNode* node, NFANode* finalstate, int level, Trie* trie)
+{
+	int i, j, sIndex;
+
+	TrieNode* datanode;
+
+	NFANode* parents[ALPH_SIZE];
+	for(i = 0; i child[i] != NULL)
+		{
+			datanode = node-&gt;child[i];
+
+			if(datanode-&gt;isCompressed == false)		//not a compressed node
+			{
+				name = trie-&gt;getSingleName(datanode-&gt;names);
+
+				if(name != EPSILON)
+					levels[i] = level + 1;
+				else
+					levels[i] = level;
+				
+				NFANode* newnode = new NFANode(name, false, false, levels[i]);
+					
+				NFATransition* edge = new NFATransition(newnode, parent);
+
+				newnode-&gt;backBranches.push_back(edge);
+				parent-&gt;branches.push_back(edge);
+
+				//nodes.push_back(newnode);
+				insertTo(newnode, levels[i]);
+				Q++;
+
+				parents[i] = newnode;
+
+				if(datanode-&gt;count == 0) //if it's the leaf node, add a link to the final state
+				{
+					//NFATransition *newedge = new NFATransition(finalstate, newnode);
+
+					//newnode-&gt;branches.push_back(newedge);
+					//finalstate-&gt;backBranches.push_back(newedge);
+					newnode-&gt;finalState = true;
+					
+					parents[i] = NULL;
+				}
+				
+			}
+			else	//compressed node
+			{
+				//NFANode* newnode1 = new NFANode(EPSILON, true, false, level);
+				//NFATransition* edge4 = new NFATransition(newnode1, parent);
+				//parent-&gt;branches.push_back(edge4);
+				//newnode1-&gt;backBranches.push_back(edge4);
+
+				NFANode* newparent = parent;
+				//NFANode* newparent = newnode1;
+
+				levels[i] = level + 1;
+
+				for(j = 0; j com.depth; j++)
+				{
+					NFANode* newnode3 = new NFANode(EPSILON, true, false, levels[i]);
+					
+					for(sIndex = 0; sIndex getNameExist(datanode-&gt;names, sIndex) == true)
+						{
+							NFANode* newnode2 = new NFANode(trie-&gt;getCharFromIndex(sIndex), false, false, levels[i]);
+
+							NFATransition* edge1 = new NFATransition(newnode2, newparent);
+							newparent-&gt;branches.push_back(edge1);
+							newnode2-&gt;backBranches.push_back(edge1);
+
+							NFATransition* edge2 = new NFATransition(newnode3, newnode2);
+							newnode2-&gt;branches.push_back(edge2);
+							newnode3-&gt;backBranches.push_back(edge2);
+
+							//nodes.push_back(newnode2);
+							insertTo(newnode2, levels[i]);
+							Q++;
+						}
+					}
+
+					//nodes.push_back(newnode3);
+					insertTo(newnode3, levels[i]);
+					Q++;
+					
+					//add an edge to the final accepting state
+					//NFATransition *newedge = new NFATransition(finalstate, newnode3);
+					//newnode3-&gt;branches.push_back(newedge);
+					//finalstate-&gt;backBranches.push_back(newedge);
+					
+					newparent = newnode3;
+					levels[i]++;
+				}
+
+				parents[i] = newparent;
+				levels[i]--;
+
+				if(datanode-&gt;count == 0)
+				{
+					parents[i] = NULL;
+				}
+				
+			}
+		}
+	}
+
+	for( i = 0; i child[i] != NULL &amp;&amp; parents[i] != NULL)
+		{
+			ConvertTrie(parents[i], node-&gt;child[i], finalstate, levels[i], trie);
+		}
+	}
+
+	return;
+}
+
+void NFA::insertTo(NFANode *node, int level)
+{
+	int i, size;
+	size = nodes.size();
+
+	vector::iterator it;
+	it = nodes.begin();
+	
+	for(i = 0; i level  

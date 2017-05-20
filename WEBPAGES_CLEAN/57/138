@@ -1,0 +1,60 @@
+ 3.25.6 open<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.25.5 Getgz 
+ Up:   3.25 oemolistream 
+ Next:   3.25.7 SetConfTest 
+   
+
+
+  
+3.25.6 open 
+ 
+
+ 
+    
+bool open()
+bool open(const char *fname)
+bool open(const std::string fname)
+    
+Open a file for reading with an input oemolstream.  The fname argument
+specifies the filename of the file to be opened.  The open with no
+arguments may be used to specify that the input oemolstream should read from
+standard in (std::cin).  In this case the format defaults to SMILES.  If an
+argument is used, open sets the file format property of the input
+oemolstream, based upon the extension of the given filename.  If the file
+extension isn't recognized, a warning is issued and the file format is set
+to OEFormat::UNDEFINED.  If the filename is appended with ``.gz'', the
+oemolstream will gunzip it on the fly.  The filename-based file format may be
+overridden by calling oemolistream::SetFormat explicitly with the desired
+file format.  If only a file extension is used as the filename (``.oeb.gz''),
+then std::cin is opened with the format specified by the given extensions.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.25.5 Getgz 
+ Up:   3.25 oemolistream 
+ Next:   3.25.7 SetConfTest 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

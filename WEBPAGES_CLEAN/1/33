@@ -1,0 +1,289 @@
+  
+
+ 
+
+   ICS 31 / CSE 41  Lab 5 - Problem 3   
+
+  Do not post your homework or
+lab solutions anywhere on the Internet - including Dropbox, GitHub, Facebook,
+etc. We will treat that as cheating (supplying solutions to other students is
+cheating). Remember, cheating voids the learning process and that is why
+schools and teachers are so against any form of cheating.  
+
+  Put this template at the top
+of each program file you write and fill in the lab number and problem number
+and your ID, Name for each member of the pair indicating which person was the
+Driver and which was the Navigator for this program:  
+
+  ���  
+
+  ICS 31 Lab   5    Problem   3  
+
+  Driver:  UCI_ID:   11111111    Name:   Peter
+Anteater  
+
+  Navigator:  UCI_ID:   22222222    Name:   Paula
+Anteater  
+
+  ���  
+
+  You will upload one copy of
+your lab program your pair writes this week. Note you must demo each program to
+your TA in your assigned lab to get credit for it. If you run out of time you
+may upload only without TA demo for partial credit.  
+
+     
+
+   We want you to use this in
+each of your programs you write this week.  Note when you run your script
+file, the name will be main, so this will call your main function.   
+
+   if __name__ == "__main__":   
+
+       main()   
+
+     
+
+   Question 3 : File By Grade:    Write a program that reads a input files score.txt.
+This program should create a list of student objects using the class provided
+in the start given below (copy and paste the entire program start into your
+file before you begin).  The program should start by asking the user for
+the number of assignments expected for each student, this number is only used for
+grade calculation.  The program will read each file (score.txt) and
+collect the total number of points for hw and lab for each student. All
+homework and lab scores are contained in score.txt. Once your program has a
+list of students and their respective homework and lab scores, the program
+should create five files, A.txt, B.txt, C.txt, D.txt, F.txt and write the names
+and overall scores of each student to the file corresponding to their overall
+letter grade.   
+
+  This lab must make use of the Student class provided in the
+Pre-Lab.  
+
+  Note: Remember to handle file not found exceptions. See Pre-Lab
+for how.  
+
+  The following calculation can be used to get grades:  
+
+  Homework Percent can thus
+be calculated as:  
+
+  Homework_Points/num_of_assignments  
+
+  Lab Percent can be
+calculated in the same way:  
+
+  Lab_Points/
+num_of_assignments  
+
+      Student�s overall score will be computed using
+the following formula  
+
+  HW_Score_Percent * .5 +
+Lab_Score_Percent * .5  
+
+  The input files are formatted as a name followed by a tab followed
+by a score.  
+
+      i.e. Name + �\t� + Homework_Score + Lab_Score +
+�\n�  
+
+  The output files should be formatted:  
+
+  student.name +
+"\n" + "Overall_Percent: " + str(overall_percent) + "%
+\n"  
+
+  The Breakpoints for each file are:  
+
+      A.txt:  
+
+          overall_percent &gt;= 90  
+
+      B.txt:   
+
+          90 &gt; overall_percent
+&gt;= 80  
+
+  C.txt:   
+
+          80 &gt; overall_percent
+&gt;= 70  
+
+      D.txt:   
+
+          70 &gt; overall_percent
+&gt;= 60  
+
+      F.txt:   
+
+          60 &gt; overall_percent   
+
+     
+
+  Sample Console Output:  
+
+  &gt;&gt;&gt;   
+
+  How many submitted assignments:   3  
+
+  &gt;&gt;&gt;     
+
+  Sample score.txt file: (the text in red)  
+
+  Apple    100   100  
+
+  Cube    69   69  
+
+  Apple    100   50  
+
+  Cube    50   100  
+
+  Apple    100   100  
+
+  Circle    0   100  
+
+  Circle    89   0  
+
+  Circle    88   88  
+
+  Sample Output File Results: (the file contents in red)  
+
+  A.txt:  
+
+            Apple  
+
+  Overall_Percent: 100.0%  
+
+      B.txt:   
+
+          Circle  
+
+  Overall_Percent:
+87.33333333333333%  
+
+      C.txt � File is Empty  
+
+      D.txt � File is Empty  
+
+      F.txt:   
+
+  Cube  
+
+  Overall_Percent:
+39.666666666666664%  
+
+     
+
+  # Please use the start below by copy and paste into your empty
+program file.  
+
+  ���  
+
+  ICS 31 Lab   5    Problem   3  
+
+  Driver:  UCI_ID:   11111111    Name:   Peter
+Anteater  
+
+  Navigator:  UCI_ID:   22222222    Name:   Paula
+Anteater  
+
+  ���  
+
+  class Student:  
+
+  �� Name��� = None  
+
+  �� HW����� = 0  
+
+  �� Lab���� = 0  
+
+  �� Total��� = 0  
+
+     
+
+  def makeStudent(Name: str, HW: int,
+Lab: int, Total: int) -&gt; Student:  
+
+  �� s = Student()  
+
+  �� s.Name� = Name  
+
+  �� s.Total� = Total  
+
+  �� s.Lab�� = Lab  
+
+  �� s.HW��� = HW  
+
+  �� return s  
+
+     
+
+  def get_Get_Scores(file_name: str,
+student_list: list) -&gt; list:  
+
+  �� return [] # Must be written  
+
+     
+
+  def output_A_grade(student_list: list,
+file_name: str, assignments: list):  
+
+  �� return # Must be written  
+
+  def output_B_grade(student_list: list,
+file_name: str, assignments: list):  
+
+  �� return # Must be written  
+
+  def output_C_grade(student_list: list,
+file_name: str, assignments: list):  
+
+  �� return # Must be written  
+
+  def output_D_grade(student_list: list,
+file_name: str, assignments: list):  
+
+  �� return # Must be written  
+
+     
+
+  def output_F_grade(student_list: list,
+file_name: str, assignments: list):  
+
+  �� return # Must be written  
+
+  def main():  
+
+  �� student_list = []  
+
+  �� assignments = int(input("How
+many submitted assignments: "))  
+
+  �� student_list =
+Get_Scores("score.txt", student_list)  
+
+  �� output_A_grade(student_list,
+"A.txt" , assignments)  
+
+  �� output_B_grade(student_list,
+"B.txt" , assignments)  
+
+  �� output_C_grade(student_list,
+"C.txt" , assignments)  
+
+  �� output_D_grade(student_list,
+"D.txt" , assignments)  
+
+  �� output_F_grade(student_list,
+"F.txt" , assignments)  
+
+     
+
+  if __name__ =="__main__":  
+
+  ��� main()  
+
+ 
+
+</body> 

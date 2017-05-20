@@ -1,0 +1,36 @@
+ Theory Seminar, May 18, 2007<body>
+   
+
+ CompSci 269S, Spring 2007: Theory Seminar 
+
+ May 18, 2007, in Bren Hall 1423 
+
+ Guaranteed-Accurate Floating-Point Summation 
+
+ Yong-Kang Zhu 
+
+ Abstract: 
+
+ Summation of many floating-point numbers introduces many rounding
+errors.  When the data are ill-conditioned, the computed sum can be far
+from the exact sum, being overwhelmed with roundoff error.  Dekker and
+Knuth independently invented an algorithm called  AddTwo 
+that adds two floating-point numbers together while simultaneously
+computing the exact roundoff error. Based on  AddTwo , we
+present an algorithm,  SimpleSum , which repeatedly calls
+ AddTwo . Given an array  x  of summands we prove that,
+after finite iterations of the outer loop,  SimpleSum 
+reaches a steady state in which  x  is sorted by increasing
+magnitude, non-overlapping mantissas, and fixed exponents, such that
+from  x n   to  x  1  each element contains
+a smaller-and smaller component of the roundoff error.  That is, the
+converged state of the array contains a full, exact and optimally
+compact representation of the sum of the original array. The algorithm
+works for any floating-point base. 
+
+ Then, we will briefly outline a more sophisticated algorithm based
+on the same principle, that runs in practice in only two "for"
+loops, on average, and a "hybrid" that uses some other ideas to
+run even faster. 
+
+</body> 

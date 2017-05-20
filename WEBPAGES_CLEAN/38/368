@@ -1,0 +1,45 @@
+ CS 261, Spring 2013, Homework 7, Due Thursday, May 30
+
+
+1. The standard deviation of a collection of n data values x_i may be
+calculated by the formula
+
+          n sum(x_i^2) - (sum x_i)^2
+s = sqrt( -------------------------- ).
+                  n (n-1)
+
+(a) Give an example that shows that the standard deviation is not
+decomposable.
+
+    There are many examples. Perhaps the simplest is to choose n=2
+    and to have two data values that are not the same as each other.
+    Then the value of s for the whole set is a nonzero number
+    but for each subset of just one element it is either undefined
+    (because of the division by zero) or zero (if you define
+    s to be zero when the top and bottom of the fraction in its
+    definition are both themselves zero), neither of which helps
+    to find the value of the whole formula.
+
+    By the way, there are many different variations in the definition of the
+    standard deviation or variance, depending on whether you include the
+    square root operation or not and on whether you divide by n or n-1.
+    The details of the definitions don't make a difference for this problem.
+
+(b) Describe a decomposable range querying problem such that the
+standard deviation of the data values within a query range can be
+computed in constant time from the answer to your query.
+(We went through a similar example for the average in the lecture.)
+
+    Return the triple (n, sum x_i, sum x_i^2).
+    If a set S is decomposed into two disjoint subsets A and B,
+    the value for S is the vector sum of the values for A and B,
+    so this is decomposable. And once this triple is known,
+    the value of s can be computed using the formula above.
+
+
+2. In class we saw how to compute the average of any contiguous subarray
+of a one-dimensional matrix by looking up two sums of prefixes of the
+matrix. Suppose that we have a two-dimensional matrix A (such as the
+pixels in a grayscale image), and we store another matrix B of the same
+dimensions, such that the value in B[i,j] is the sum of all entries
+A[x,y] with 0  

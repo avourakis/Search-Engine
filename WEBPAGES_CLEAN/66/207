@@ -1,0 +1,343 @@
+ Dynamo Middleware: FnQ<body>
+		 
+			 
+				 Dynamo Middleware 
+			 
+			 
+				  Navigation
+						   Home  
+							  Documentation   
+							  People  
+							  Publications  
+							  Related Links  
+							  FAQ  
+						  
+					 Downloads
+						   For Internal Use Only  
+							  Dynamo Middleware v0.1  
+							  DVS Kernel  
+							  Dynamo Libraries  
+							  Change log  
+						  
+				  
+			 
+
+  Main Page  |  Data Structures  |  File List  |  Data Fields  |  Globals  
+ libDynamoMiddleware.h File Reference Desktop based Middleware Libraries.  More... 
+ 
+          Data Structures     struct     dynamo_backlight        Contains Backlight information.   More...      struct     dynamo_battery        Contains Battery information.   More...      struct     dynamo_cpu        Contains CPU Information.   More...      struct     dynamo_memory        Contains Memory Information.   More...      struct     dynamo_network        Contains Network Information.   More...        Functions     int    createSharedMemory  (int key, int size)       creates a chunk of shared memory         int    readSharedMemory  (int shmid, void *data, int size)       reads from the shared memory into a structuer         int    writeSharedMemory  (int shmid, void *data, int size)       writes data to the shared memory         int    freeSharedMemory  (int shmid)       releases the memory with id of shmid         int    createSemaphore  (int key)       translate semaphore key to an ID         int    freeSemaphore  (int sem_id)       free specified Semaphore         void    P  (int sid)       acquire semaphore         void    V  (int sid)       release semaphore         int    SendDatagram  (char *targetIP, int targetPort, int localPort, void *buf, int bufsiz)       Sends a Datagram to a remote computer.         int    CreateUDPSocket  (char *localIP, int localPort)       creates a UPD socket         int    UDP_Recv  (int sockfd, void *buf, int size)       Recives a datagram a remote computer.         int    UDP_Send  (int sockfd, char *targetIP, int targetPort, int localPort, void *buf, int bufsiz)       Sends a Datagram to a remote computer.            Detailed Description 
+Desktop based Middleware Libraries. 
+ 
+Dynamo Middleware libraries, provide a easy to use interface for querying system information, utilizing shared memory, and communication framework  
+Copyright (C) 2004 Dynamo Middleware Group  
+version 0.5  
+Authors: Michael Philpott, Shivajit Mohapatra   Function Documentation 
+   
+    
+          int createSemaphore            
+           (  
+           int  
+             key            
+            )  
+            
+           
+       
+       
+     
+     
+
+ 
+translate semaphore key to an ID 
+  
+    Parameters:   
+        key    the Key that the semaphore should be created with         Returns:   the ID to the shared memory    
+       
+    
+          int createSharedMemory            
+           (  
+           int  
+             key ,  
+            
+            
+           int  
+             size  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+creates a chunk of shared memory 
+  
+    Parameters:   
+        key    the Key to the shared memory        size    the size that the shaed memory should be         Returns:   The ID to the shared memory    
+       
+    
+          int CreateUDPSocket            
+           (  
+           char *  
+             localIP ,  
+            
+            
+           int  
+             localPort  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+creates a UPD socket 
+  
+    Parameters:   
+        *localIP    character array of the local IP address        localPort    a port number       
+       
+    
+          int freeSemaphore            
+           (  
+           int  
+             sem_id            
+            )  
+            
+           
+       
+       
+     
+     
+
+ 
+free specified Semaphore 
+  
+    Parameters:   
+        sem_id    the ID of the semaphore to free       
+       
+    
+          int freeSharedMemory            
+           (  
+           int  
+             shmid            
+            )  
+            
+           
+       
+       
+     
+     
+
+ 
+releases the memory with id of shmid 
+  
+    Parameters:   
+        shmid    the id of the shared memory that is being freed       
+       
+    
+          void P            
+           (  
+           int  
+             sid            
+            )  
+            
+           
+       
+       
+     
+     
+
+ 
+acquire semaphore 
+  
+    Parameters:   
+        sid    the ID of the semaphore to obtain       
+       
+    
+          int readSharedMemory            
+           (  
+           int  
+             shmid ,  
+            
+            
+           void *  
+             data ,  
+            
+            
+           int  
+             size  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+reads from the shared memory into a structuer 
+  
+    Parameters:   
+        shmid    the ID of the shared memory        *data    the structure that will be read        size    the size of the item that will be read       
+       
+    
+          int SendDatagram            
+           (  
+           char *  
+             targetIP ,  
+            
+            
+           int  
+             targetPort ,  
+            
+            
+           int  
+             localPort ,  
+            
+            
+           void *  
+             buf ,  
+            
+            
+           int  
+             bufsiz  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+Sends a Datagram to a remote computer. 
+  
+    Parameters:   
+        *targetIP    character array of target computers IP Address        localPort    local port of the UPD socket        targetPort    the remote hosts port        *buf    the information to be sent        bufsiz    the size of the item to be sent       
+       
+    
+          int UDP_Recv            
+           (  
+           int  
+             sockfd ,  
+            
+            
+           void *  
+             buf ,  
+            
+            
+           int  
+             size  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+Recives a datagram a remote computer. 
+  
+    Parameters:   
+        sockfd    pointer to the UDP socket        *buf    address of the structure to fill        size    size of the structure to fill       
+       
+    
+          int UDP_Send            
+           (  
+           int  
+             sockfd ,  
+            
+            
+           char *  
+             targetIP ,  
+            
+            
+           int  
+             targetPort ,  
+            
+            
+           int  
+             localPort ,  
+            
+            
+           void *  
+             buf ,  
+            
+            
+           int  
+             bufsiz  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+Sends a Datagram to a remote computer. 
+  
+    Parameters:   
+        sockfd    pointer to the upd socket        *targetIP    character array of target computers IP Address        targetPort    the remote hosts port        localPort    local port of the UPD socket        *buf    the information to be sent        bufsiz    the size of the item to be sent       
+       
+    
+          void V            
+           (  
+           int  
+             sid            
+            )  
+            
+           
+       
+       
+     
+     
+
+ 
+release semaphore 
+  
+    Parameters:   
+        sid    the ID of the semaphore to release       
+       
+    
+          int writeSharedMemory            
+           (  
+           int  
+             shmid ,  
+            
+            
+           void *  
+             data ,  
+            
+            
+           int  
+             size  
+            
+           )  
+            
+           
+       
+       
+     
+     
+
+ 
+writes data to the shared memory 
+  
+    Parameters:   
+        shmid    the ID of the shared memory to write to        *data    the information to write inot the shared memory        size    the size of the item that will be written       
+     
+			 
+				
+			 
+		 
+	</body> 

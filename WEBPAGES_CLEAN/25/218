@@ -1,0 +1,75 @@
+ 4.108 OEParseSmirks<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.107 OEParseSmiles 
+ Up:   4. OEChem Functions 
+ Next:   4.109 OEPDBOrderAtoms 
+   
+
+
+  
+4.108 OEParseSmirks 
+ 
+   
+bool OEParseSmirks(OEQMolBase &amp;qmol, const char *smirks,
+                   unsigned int opt=OESmartsParseOpts::Default)
+
+bool OEParseSmirks(OEQMolBase &amp;qmol, const char *smirks,
+                   const OEVectorBindings &amp;vecbind,
+                   unsigned int opt=OESmartsParseOpts::Default)
+    
+These functions take a SMIRKS string represented as a pointer to a
+constant character string passed as the second argument to the
+function, parse the string, and populate the query molecule passed as
+the first function argument.  If the SMIRKS string passed to the
+function is valid and is parsed correctly the function will return a
+boolean value of true.  If the SMILES string is invalid, or any
+failure occurs during the parse or perception processes, the function
+will return a boolean value of false.  The second of the two methods
+provides a mechanism for parsing a SMIRKS pattern that contains vector
+bindings.  An  OEVectorBindings  object containing the complete
+set of possible vector bindings that may be contained in a SMIRKS
+pattern, including recursive vector bindings, and passed to the
+ OEParseSmirks  function.  Vector bindings will be resolved while
+the SMIRKS pattern is being parsed.  The final argument is currently
+unused, but allows for future extension and control of the SMIRKS
+parser.
+
+  
+ OEParseSmirks  is functionally nearly identical to
+ OEParseSmarts .  The only significant difference in how SMARTS
+and SMIRKS are parsed is the handling of the ''[H]'' expression.
+SMARTS interprets ''[H]'' as an atom that has a total hydrogen count
+of exactly one.  SMIRKS interprets ''[H]'' as an explicit hydrogen.
+The  OEParseSmirks  function therefore parses ''[H]'' differently
+than would  OEParseSmarts , and performs additional validity
+checks of the SMIRKS string.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.107 OEParseSmiles 
+ Up:   4. OEChem Functions 
+ Next:   4.109 OEPDBOrderAtoms 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

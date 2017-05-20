@@ -1,0 +1,52 @@
+ /* 
+$Id$
+
+Copyright (C) 2007 by The Regents of the University of California
+
+Redistribution of this file is permitted under
+the terms of the *GNU* Public License (*GPL*) 	
+
+Date: 04/08/2007
+Author: Yiming Lu 
+*/
+
+#include 
+#include 
+#include 
+#include 
+#include 
+#include  
+#include "filtertree.h"
+#include "../util/input.h"
+
+using namespace std;
+
+const string DICTFILE = "data/trec.sel.ls.0.words.txt";
+const string PATTERNFILE = "data/trec.sel.ls.0.words.query.200.bin";
+const string ANSWERFILE = "data/trec.sel.ls.0.words.answer.200.2.bin";
+
+int main()
+{
+    //dictionary
+    vector words;
+    readString(words, DICTFILE);
+    //build Index
+    AppSearch *filter = new FilterTree(2, &amp;words, standardFunction);
+    filter-&gt;build();
+    //query
+    vector queryIDs;
+    readUnsignedBin(queryIDs, PATTERNFILE);
+    vector results;
+    for(unsigned i = 0; i search( words[queryIDs[i]], 2, results);
+    }
+    //save the index
+    ((FilterTree*)filter)-&gt;saveIndex("index_file");
+    //report the performance result	
+    ((FilterTree*)filter)-&gt;reportAnalyses();
+    delete filter;
+    return 0;			
+}
+
+
+
+  

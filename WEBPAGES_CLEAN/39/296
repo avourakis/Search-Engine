@@ -1,0 +1,82 @@
+ Chimera 2 - Testing the installation...<body>
+
+  Testing the installation...  
+
+ 
+This section describes a brief way to test out the Chimera 2.0 servers.
+
+ 
+
+ Preparing the Chimera 2.0 website 
+
+  Create a directory named  chimera  under the namespace of a
+local WWW server. (For the test, any directory will do, if a WWW server
+is not immediately available.)
+  Create a set of directories within the directory. Each directory
+represents a distinct Chimera 2.0 hyperweb. Directories within
+directories are considered subwebs of the parent hyperweb. For example
+create the directories  web1, web1/web1.1, web2, web2/web2.1,web2/web2.2,
+web3, web3/web3.1, web3/web3.1/web3.1.1, etc.  You can also give
+these hyperwebs more meaningful names.
+   Launching the Hyperweb Manager 
+
+  Change to the  chimera  directory created above.
+  Launch the Hyperweb Manager with the command
+ 
+ java -Dchimera.hyperwebmanager.java=/opt/jdk-1.1.2/bin/java
+chimera.hyperwebManager -gui http://pyramides.ics.uci.edu/chimera/ 
+ 
+  You will need to modify the path for the java 1.1.x interpretor and the
+machine name of the URL to match your local configuration.
+   The hyperweb manager's main window will soon appear, followed by the
+hyperweb server and Chimera server. (The hyperweb manager automatically
+launches a hyperweb server on start-up. When you shut
+the hyperweb manager down, it will automatically shut this other server
+down as well.) 
+
+ Launching the Chimera Server 
+
+  Launch the Chimera server with the command
+ 
+ java chimera.chimeraServer
+  
+  Select the  Servers  panel of the Chimera server.
+  Select the name of the machine listed in the panel. (It should be the
+name of the machine you are running these servers on.) If no names are
+listed in the panel, type the name of the machine in the text edit
+field located at the bottom of the panel and hit return. This will add
+the name to the list. Once added, the machine name can be selected.
+  The Chimera server will request the webs for the selected hyperweb
+manager's website and display them within the  Webs  panel.
+  Select a web, and the Chimera server will take you to the
+ Links  panel.
+  Try creating a few links.
+  Shut the hyperweb manager down and relaunch it.
+  Verify that the links you created persisted between sessions.
+  Finally, launch a WWW browser. Enter the following URL:
+ 
+http://pyramides.ics.uci.edu:4009/hyperwebs/
+ 
+  You will need to change the name of the machine listed in the URL to
+match your local configuration. The hyperweb manager has a dedicated port
+number of 4009. This number is registered with the Internet
+Assigned-Numbers Authority.
+  The hyperweb manager will respond by generated an HTML page describing
+the Chimera 2.0 website.
+   Where to go from here? 
+
+ 
+The Chimera 2.0 release does not come with any integrated clients, so
+the next step after these tests would be to look at the API to the
+Chimera server. This API is used to develop Chimera clients. Stay tuned to
+the  What's New  page for information
+about upcoming example clients and a Chimera 2.0 tutorial. 
+ 
+
+     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

@@ -1,0 +1,474 @@
+ Program 2<body>
+
+ 
+ Program 2 
+ Implementing Queue/Priority Queue/Set 
+    (and their iterators) with Linked Lists 
+ 
+ 
+  ICS-46: Data Strcuture Implementation and Analysis
+ 
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+This programming assignment is designed to ensure that you know how to
+  implement three templated classes ( Queue ,  Priority Queue ,
+  and  Set ) with linked lists.
+Your implementations will also include fully-functional iterators for
+  these classes.
+You will be writing lots of small code fragments that traverse and mutate
+  linked lists.
+ 
+You must write all your implementations using linked lists: a linear-linked
+  list for  LinkedQueue , a header linked list for
+   LinkedPriorityQueue , and a trailer linked list for  LinkedSet .
+You can test these implementations by using the standard drivers and
+  GoogleTests (provided with the download) that we will use when grading your
+  code for correctness; recall that you can augment the GoogleTest with whatever
+  code you want, to aid your debugging: a GoogleTest is just a C++ program.
+You can also test the code you wrote for Programming Assignment #1 (using
+  array implementations of these classes) by substituting these linked list
+  implementations -typically by changing a few  #include  and
+   typedef  statements.
+  
+Write and use the  insertion  ( &lt;&lt; ) operator and  str() 
+  method in each class for debugging.
+In a header list, show  HEADER  instead of the value in the front/header
+  node, as that node is not really  in  the collection represented by the
+  list; likewise, in a trailer list, we show  TRAILER  for the value in
+  the rear/trailer node, for the same reason.
+Note that there are few tested requirements for what these operators/methods
+  return, but this code will make debugging easier, and we may examine it by
+  hand.
+After enqueueing/inserting  a ,  b , and  c ,
+  my  LinkedQueue 's  str()  prints as
+   linked_queue[a-&gt;b-&gt;c](used=3,front=0x642498,rear=0x6424b8,mod_count=3) ;
+  my  LinkedPriorityQueue 's  str()  prints as
+   linked_priority_queue[HEADER-&gt;a-&gt;b-&gt;c](used=3,front=0x3f2498,mod_count=4) ;
+  and my  LinkedSet 's  str()  prints as
+   linked_set[c-&gt;b-&gt;a-&gt;TRAILER](used=3,front=0x7424c8,trailer=0x742498,mod_count=3) .
+  
+You should download the 
+   program2  project folder and use it to create a
+  CLion project.
+  You will write the required methods in the  linked_queue.hpp , 
+   linked_priority_queue.hpp , and  linked_set.hpp , files in this
+  project, and submit each separately in Checkmate.
+The project folder also contains three pairs of  .hpp  and  .cpp 
+  files: a driver/GoogleTest pair for each class that you will write, and the
+   driver.cpp  file which has a  main  function that can be made to
+  run any of the three drivers.
+  
+
+ Important:  Only one of the  .cpp  files with a  main  method
+  can be active/compiling at any time.
+In the download, only the  driver.cpp  file is active; the GoogleTests are
+  inactive.
+To make a progam inactive, select it (in the editor tab), use the  Ctrl-a 
+  command to select all its lines, and then type  Ctrl-/  (or click
+   Source  at the top left of the menu and choose  Toggle Comment ):
+  ever line will now appear in a comment (so the  main  function is
+  commented-out); by using these same instructions, you can toggle back those
+  lines to not have comments.
+  
+I recommend that you work on this assignment in pairs.
+Try to find someone who lives near you, with similar programming skills,
+  and work habits/schedule: e.g., talk about whether you prefer to work
+  mornings, nights, or weekends; what kind of commitment you will make to submit
+  program early.
+  
+Only  ONE STUDENT  should submit the assignment (all parts of it).
+If students work in pairs,  BOTH NAMES  and their UCInetID names must
+  appear in a comment at the top of each submitted program.
+For example if Romeo Montague (whose UCInetID is romeo1) submitted a program
+  that he worked on with his partner Juliet Capulet (whose UCInetID is jcapulet)
+  the comment at the top of each submitted file would appear as:
+     // Submitter: romeo1(Montague, Romeo)
+  // Partner  : jcapulet(Capulet, Juliet)
+  // We certify that we worked cooperatively on this programming
+  //   assignment, according to the rules for pair programming  
+If you do not know what the terms  cooperatively  and/or
+   rules for pair programming  mean, please read about
+   Pair Programming  
+  before starting this assignment.
+If the names do not appear at the top of all your submissions in exactly this
+  form, points will be deducted.
+If you are submitting by yourself, you may omit all lines but the first
+  ( Submitter ).
+Please  do  turn in each program  as you finish it , so that I can
+  accurately assess the progress of the class as a whole during this assignment;
+   do not  turn in all the programs at the same time.
+ 
+Print this document and carefully read it, marking any parts that contain
+  important detailed information that you find (for review before you turn in
+  the files).
+  
+  
+This assignment has 3 parts: pairs should work on each part together, not split
+  them up and do them separately.
+Part 1 is worth 42 points; part 2 is worth 9 points; part 3 is worth 9 pts.
+This skewing of points towards the simpler parts means students finishing the
+  first part correctly will have a 70% average (a C-); those finishing
+  the first 2 parts correctly will have an 85% average (a B); but to get A on
+  this  assignment requires solving all parts correctly.
+Remember I'm going to be running MOSS on the parts of this assignment,
+  to check for program similarity.
+  
+ Important:  The courselib contains array implementations for all these
+  data types; although this assignment requires you to use linked lists, there
+  are still  many strong similarities  at a high level in all these
+  implementations.
+So, I encourage you to examine these implementations closely, and understand
+  them; possibly, experiment with them (using their drivers or GoogleTests),
+  while you are writing your linked list implementations: this advice is
+  especially true as you begin to study, understand, and implement iterators.
+Please feel free about asking questions about these methods -both their syntax
+  and semantics- on the appropriate Messageboard.
+  
+    
+       Queues (42 pts)  
+ 
+Queues are implemented by simple FIFO data structures (adhering to the
+  First-In/First-Out order property).
+We can implement queues efficiently with linked lists, by using two instance
+  variables that refer to nodes in a linked list:  front  points to the
+  first node in the linked list;  rear  points to the last node in the
+  linked list (which might point to the same node as  front ).
+Nodes are removed from the front and added to the rear, so these are the
+  two "hot spots" for a queue.
+The  enqueue  and  dequeue  operations should each be O(1).
+ 
+Although we can easily compute the number of values in linked list by
+  traversing it, instead we will declare and update an extra instance variable 
+  named  used  to cache the size (incrementing and decrementing it, as
+  values are successfully added/removed from the queue), so we will not have
+  to traverse the list to compute its size.
+  
+The file  linked_queue.hpp  declares the appropriate constructors, methods,
+  operators, and instance variables in a form similar to the array
+ implementations in the  courselib .
+Notice how the  LN  class is first declared  private  (before
+   Iterator ) and then defined  private , inside the templated
+   LinkedQueue  class.
+I suggest copying/pasting all the code from the  array_queue.hpp 
+  file, and then translating all this code from using arrays to using linked
+  lists.
+Pay close attention to ensure  all instance variables  receive values in
+  the constructors and are used/set correctly in queries and commands.
+  
+Use  delete  to recycle  LN  nodes; your code should create no
+  garbage.
+  
+Read the material in the  Iterators  section of this assignment, which
+  discusses the iterators needed for all the classes that you will write.
+These iterators perform the the same operations in every class, but they are
+  implemented differently based on the kind of linked list implementation.
+  
+ Special Requirements: 
+    operator= : Initially, to simplify its implementation, you can
+   clear  the left-hand side (target) queue and then  enqueue  all the
+  values from the right-hand side queue into it.
+But to get full credit for this method (and save time/space in your code), you
+  must reuse whatever  LN  nodes are already in the target, to minimize the
+  number of calls to  new : if more nodes are needed in the target,
+  allocate them; if fewer are needed in the target, delete the extra nodes.
+My solution used a pointer to a pointer; its body has 14 lines of code.
+So for example; if we declared  a  and  b  to be
+   LinkedQueue  and  a  contained 2 nodes and  b  contained
+  5 nodes, then  a = b;  would reuse the 2 nodes in  a  (copying the
+  first 2 values stored in  b  there) and extend that list by 3 nodes
+  (copying the remaining 3 values stored in  b  there).
+Likewise,  b = a;  would reuse the first 2 nodes in  b  (copying the
+  only 2 values stored in  a  there) and delete the remaining 3 nodes
+  in  b 's original list.
+   
+Finally, read the  testing  section below as well.
+  
+    
+       Priority Queues (9 pts)  
+ 
+Priority Queues can be implemented by a variety of data structures (where the
+  highest priority value is always removed first).
+How does a specific priority queue determine which value has the highest
+  priority?
+We supply the priority queue with a  gt  (greater-than) function that
+  computes whether or note its first argument has a greater priority than its
+  second argument.
+This  gt  can be passed to the constructor or instantiated in the
+  template.
+So, we cannot ask, "What is the priority of a value." But, we can ask "Does the
+  priority of a first value have a higher priority than a second value", by
+  calling the  gt  function.
+For example, we cannot determine the priority of a  std::string  value, but
+  we can determine whether one  std::string  value has a higher
+  priority than another  std::string  value.
+ 
+We can implement priority queues simply (although not very efficiently; you will
+  implement priority queues with max-heaps, a more efficient data structure, in
+  Programming Assignment #3) with one instance variable, which points to a
+  linked list whose first value is the one with the highest priority value, and
+  whose remaining values occur in order of decreasing priority; when adding a
+  value to a priority queue, we insert it at the correct spot in the list,
+  keeping the list ordered from highest to lowest priority; when removing the
+  highest priority value from a  priority queue, we always remove it from the
+  front.
+  
+Instead of a standard linked list, you must  implement the priority queue
+  using a "Header node" at the front of the linked list. 
+Doing so should simplify writing some of the more complicated methods: enqueuing
+  an element onto the priority queue and erasing a value via an Iterator.
+Hint: my  enqueue  method used four lines to put the  element  into
+  an  LN  and insert it into the correct position in the header linked
+  list (followed by 3 more lines of bookkeeping code).
+  
+Although we can easily compute the number of values in linked list by
+  traversing it, instead we will declare and update an extra instance variable 
+  named  used  to cache the size (incrementing and decrementing it, as
+  values are successfully added/removed from the queue), so we will not have
+  to traverse the list to compute its size.
+  
+The file  linked_priority_queue.hpp  declares the appropriate constructors,
+  methods, operators, and instance variables in a form similar to the array
+  implementations in the  courselib .
+Notice how the  LN  class is first declared  private  (before
+   Iterator ) and then defined  private , inside the templated
+   LinkedPriorityQueue  class.
+I suggest copying/pasting the methods from the  array_priority_queue.hpp 
+  file, and then translating these methods from using arrays to using linked
+  lists; as an alternative, you might want to copy the  linked_queue.hpp 
+  file you wrote in part 1: it has the same methods and it already does some
+  linked list processing: but the forms of some declarations are different.
+Pay close attention to ensure  all instance variables  receive values in
+  the constructors are are used/set correctly in queries and commands.
+  
+Use  delete  to recycle  LN  nodes; your code should create no
+  garbage.
+Note, that the constructors for this class might throw exceptions; if one does,
+  it should recycle the allocated header node first.
+  
+Read the material in the  Iterators  section of this assignment, which
+  discusses the iterators needed for all the classes that you will write.
+These iterators perform the the same operations in every class, but they are
+  implemented differently based on the kind of linked list implementation.
+  
+ Special Requirements: 
+    copy  constructor and  operator= :
+The  enqueue  operation for this implementation of a priority queue is
+  O(N), so enqueuing N values is O(N^2).
+When writing the  copy  constructor and  operator= , use the fact
+  that "the linked lists being copied are already in order" to make these
+  operations O(N): don't just enqueue the N values into the priority queue.
+ 
+   For the  copy  constructor: if the  gt  function for the object
+  being constructed is the same as the function for the priority queue to copy,
+  we can copy the values in the linked list, retaining the same order, in time
+  O(N); but if the  gt  function is different, then just enqueue the
+  value onto the new priority queue.
+ 
+   For  operator= , copy the  gt  function on the right-hand side
+  priority queue into the  gt  function for the (target) left-hand side
+  priority queue (because after assignment, these priority queues must be ==;
+  the  gt s may already be the same).
+  Handle storage allocation as described for regular queues above, reusing
+  allocated  LN  nodes in the target whenever possible.
+   
+To print the value of a function pointer (see  gt ), first cast it to the
+  standard type  void *  that is understoody by C++. Write
+   std::cout 
+   
+Finally, read the  testing  section below as well.
+  
+    
+       Sets (9 pts)  
+ 
+Sets can be implemented by a variety of data structures.
+We can implement sets simply (although not very efficiently; you will implement
+  sets with hash table, a more efficient data structure, in Programming
+  Assignment #4) with one instance variable, which points to a linked list of
+  values in the set.
+Remember that a set's order is not important: e.g., when we  insert  an
+   element  into a  set , we are free to put it anywhere in the
+  linked list; put it somewhere easy by writing short/efficient code.
+ 
+Instead of a standard linked-list, you must  implement the set using a
+  "Trailer node" at the rear of the linked list. 
+It is useful to declare a  trailer  instance variable that always points
+  to this node (be careful: erasing the value in the node before the
+  trailer node requires updating  trailer ; also, every linked list has
+  its own/different trailer node).
+Having a trailer node should simplify erasing a value from the set (in the
+  class method, but even more so in the iterator methods, using the standard
+  code/trick covered in the discussion of trailer lists).
+Hint: my  erase_at  helper method embodies this code, and is called both
+  by the  erase  methods in both the  LinkedSet  and  Iterator 
+  clases.
+  
+Although we can easily compute the number of values in linked list by
+  traversing it, instead we will declare and update an extra instance variable 
+  named  used  to cache the size (incrementing and decrementing it, as
+  values are successfully added/removed from the set), so we will not have
+  to traverse the list to compute this value.
+  
+The file  linked_set.hpp  declares the appropriate constructors, methods,
+  operators, and instance variables in a form similar to the array
+  implementations in the  courselib .
+Notice how the  LN  class is first declared  private  (before
+   Iterator ) and then defined  private , inside the templated
+   LinkedSet  class.
+I suggest copying/pasting the methods from the  array_set.hpp  file,
+  and then translating these methods from using arrays to using linked lists.
+Pay close attention to ensure  all instance variables  receive values in
+  the constructors are are used/set correctly in queries and commands.
+  
+Use  delete  to recycle  LN  nodes; your code should create no
+  garbage.
+  
+Read the material in the  Iterators  section of this assignment, which
+  discusses the iterators needed for all the classes that you will write.
+These iterators perform the the same operations in every class, but they are
+  implemented differently based on the kind of linked list implementation.
+  
+ Special Requirements: 
+    copy  constructor and  operator= : The  insert  operation
+  is O(N), because it must check whether or not the element is already in the
+  set, so inserting N values into a set is O(N^2).
+When writing the  copy  constructor and  operator= , use the fact
+  that "the linked lists being copied/compared are already sets, with no
+  duplicates" to make these operations O(N); recall, the "order in which these
+  values appear in the list" is  irrelevant.
+ 
+   For the  copy  constructor: we can copy the values in the linked list,
+  resulting in a new list in the same order, in time O(N); we know the
+  set/linked list being copied has no duplicates, so not duplicate checking
+  should be tested.
+ 
+   For  operator= : handle storage allocation as described for regular
+  queues above, reusing allocated  LN  nodes in the target whenever
+  possible.
+   
+Finally, read the  testing  section below as well.
+  
+    
+       Iterators  
+ 
+Fundamentally, iterators operate similarly for each data type: they allow
+  programmers to traverse the data type, examining (and even dequeueing/erasing)
+  the values inside the data type, one after the other.
+Each uses a cursor to remember its place inside the data type, as it traverses
+  it: the array implementations used  int s for cursors; the linked-list
+  implementations use pointers for cursors.
+ 
+Once iterators are created (indexing the first value, or if there is none,
+  indexing "one beyond the last value") we can use them to examine or erase
+  the current value, increment them (to access the next value), and check
+  whether a cursor has reached "one beyond the last value".
+We often do this with either explictly in  for  loops or implicitly in
+   for-each  loops (we do the latter more frequently).
+  
+Note that if we  erase  a value, the cursor will temporarily refer to
+  its next value (with  can_erase  set to  false ): we  must call
+  one form of the ++ operator to increment the cursor  before we can
+  examine or erase another value, but doing so does right after calling
+   erase  will not change the cursor, because  erase  has already
+  advanced the cursor refer to its next value.
+  
+Observe their similarity in all implementations among all the  Iterator 
+  classes and their methods.
+I recommend writing and testing the code for both  ++  operators before
+  writing code for an iterator's  erase  method.
+This will allow you to test loops using iterators, so long as the body of the
+  loop does not call  erase  on the iterator.
+After your code for these operators is working correctly, write code for
+  calling  erase  on an iterator, and update the code in the  ++ 
+  operators where necessary, to work correctly with  erase .
+  
+Note that iterators for the  LinkedQueue  and  LinkedPriorityQueue 
+  classes produce values in the order that they would be dequeued: FIFO for a 
+ queue and priority ordering for a priority queue.
+Given how these linked lists represent these classes (queue: front to rear;
+  priority queue: highest to lowest priority), the order of iterating through
+  these classses is the same as the order of traversing their linked list
+  implementation from front to rear.
+  
+There are four GoogleTest functions that focus on iterators:
+ iterator_plusplus  focuses on the two forms of  ++  operators
+  and does  not  call the iterator's  erase ;
+ iterator_simple  does  not  call the iterator's  erase ;
+ iterator_erase  does call the iterator's  erase ; and
+ iterator__exception_concurrent_modification_error  ensures that mutating
+  the data structure forces any active iterator to stop working (unless the
+  mutation was done by that iterator's  erase ).
+  
+For the  linked_set  class
+  
+  the use of a trailer list will often make Iterator code easier to write: it
+  requires only a  current  instance variable, not one for  prev .
+In general, you should hand-simulate/debug your iterator code for the following
+  cases:
+    erasing the first value (maybe several in a row at the front)
+     erasing non-consecutive values inside (with multiple  ++ 
+         operators between calls)
+     erasing consecutive values  (with single  ++ 
+         operators between calls)
+     erasing the last value (maybe several in a row at the end)
+   
+You can study how these semantics are coded in the array implementations of
+  these data types, which are similiar but simpler than how they are coded with
+  linked lists (because we can more easily manipulate  int  array cursors:
+    i-1  and  i+1 ).
+For linked list implementations, implementing  erase  on iterators is
+  typically more complicated, but more EFFICIENT: values removed in the middle
+  of contiguous arrays require shifting, causing the complexity class of
+   erase  to be O(N) in arrays while being only O(1) in linked lists.
+  
+    
+       Testing  
+ 
+There are various ways to test each of the classes you are writing in this
+  programming assignment.
+First, though, you should write all the methods, paying careful attention to
+  the array implementations and previously written linked list implementations.
+For some, you might just boiler-plate simple code that is not correct, but
+  allows the methods to compile, allowing other methods in the classes to be
+  tested.
+ 
+The easiest way to start testing//debugging is by using the driver program.
+It allows you to perform any method call supported by the templated classes,
+  and see the state of the class (or view the debugger).
+Of course, 
+ you must get the  insertion  (&lt;&lt;) operator and str() method to
+  work before using it to debug the other methods. 
+  
+After you test and debug your code with the driver, try running the appropriate
+  GoogleTest code.
+Again, this form of testing is useful only as you approach a finished solution.
+We will use the GoogleTest, and visual inspection, to grade this assignment.
+ Important Note : While you are debugging your classes, you can edit the
+  GoogleTest (for example, putting  std::cout  statements at strategic
+  points), but don't accidentally remove any of the assertions, otherwise you
+  won't be fully checking your code the way we will.
+All debugging  std::cout  should end in  std::endl  to flush the
+  output stream: that ensures the output it displayed before executing the next
+  statement (which may throw an exception, and thus the output buffer may not
+  be flushed).
+Remember to remove all these  std::cout  statements before submitting your
+  code for grading.
+  
+When you run the GoogleTest, initially choose small values for the first and
+  third prompts (just press return to the second prompt) or comment-out these
+  prompts and assign small values to these variables instead.
+Besides an indication of which tests pass and fail, the console window
+  will show a speed for the speed test (which will vary depending on how
+  fast a machine you run your code on): don't worry about it.
+When your code is passing all the tests, put in values like  10,000  for
+  these prompts.
+  
+
+  
+   </body> 

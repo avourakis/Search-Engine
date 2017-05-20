@@ -1,0 +1,68 @@
+ 16.11 OEOpenOStream<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   16.10 OEOpenIStream 
+ Up:   16. OEPlatform Functions 
+ Next:   16.12 OERegisterIStream 
+   
+
+
+  
+16.11 OEOpenOStream 
+ 
+   
+oeostream *OEOpenOStream(const char *target)
+    
+Creates and returns an oeostream capable of writing to the specified
+ target  parameter. The  target  parameter is initially parsed to
+determine whether a colon delimited protocol was specified. If no protocol was
+specified, it is assumed that the  target  parameter refers to a filename.
+If a protocol was specified, the function checks to see whether an output
+stream allocator and deallocator have been registered to handle to the
+appropriate protocol. If the specified protocol has been registered, the
+appropriate output stream will be created and returned, otherwise the function
+will return 0. Allocators and deallocators for specific protocols can be
+registered using the  OEPlatform::OERegisterOStream  function.
+
+  
+Example:
+    
+oeostream *os = OEOpenOStream("pipe: uniq &gt; output.txt");
+    
+In addition, this function will attempt to assess whether or not the output
+data target expects compressed data. If the expected format is supported, the
+appropriate compression wrapper stream will be used to dynamically compress the
+data.
+
+  
+All streams created with this function MUST be closed with the
+ OEPlatform::OECloseOStream  function.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   16.10 OEOpenIStream 
+ Up:   16. OEPlatform Functions 
+ Next:   16.12 OERegisterIStream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

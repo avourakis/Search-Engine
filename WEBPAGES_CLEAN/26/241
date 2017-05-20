@@ -1,0 +1,139 @@
+ 26.2 Extensions to Daylight SMILES<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   26.1 Daylight SMILES 
+ Up:   26. SMILES Line Notation 
+ Next:   27. Biopolymer Residues 
+   
+
+
+  
+26.2 Extensions to Daylight SMILES 
+ 
+
+ 
+The OEChem SMILES parsers support several minor extensions to Daylight
+syntax.  Each of these extensions and its motivations are listed
+below.
+
+  
+    Quadruple Bond</strong> 
+ In addition to ``-'', ``='' and ``#'' for specifying single, double and
+triple bonds respectively, OEChem also supports ``$'' for specifying
+quadruple bonds.  An example would be octachlorodirhenate (III), which
+is written as `` [Rh-](Cl)(Cl)(Cl)(Cl)$[Rh-](Cl)(Cl)(Cl)Cl ''.
+
+ 
+  
+  Unquoted and Additional Elements</strong> 
+ In addition to the standard Daylight unquoted elements, B, C, N, O, F,
+P, S, Cl, Br and I, OEChem's SMILES readers also allow H, D and T to
+specify hydrogen, deuterium and tritium.  Additionally, to support
+Syracuse SMILES, ``CL'' and ``BR'' are considered ``Cl'' and ``Br''.  The
+periodic table is also extended from 102 to 109 elements,  i.e. 
+ [Sg]  for Seaborgium, with the addition of  [D]  and
+ [T]  representing  [2H]  and  [3H]  respectively.
+
+ 
+OEChem may support `` Na '', `` Li '' and `` K '' as
+unquoted elements to support Syracuse SMILES at some point in the future.
+
+  
+  
+  Aromatic Tellurium</strong> 
+ In order to support OpenEye's aromaticity model, which allows
+Tellurium to be aromatic, the SMILES parser has been extended to
+support `` [te] '', such as in tellurophene, `` [te]1cccc1 '',
+which follows in the sequence furan (`` o1cccc1 ''),
+thiophene (`` s1cccc1 '') and selenophene (`` [se]1cccc1 '').
+
+ 
+  
+  Atom Maps in Molecules</strong> 
+ Traditionally, SMILES atom maps,  i.e.   [Pb:1] , are only ever
+used and
+specified in reaction molecules,  [Pb:1]»[Au:1] .  However, OEChem
+extends this notion to allow atom maps to be used in discrete molecules.
+This is often useful for denoting significant sites or attachment points
+in a molecule.  Traditionally in SMILES, isotopes of element zero have
+been used to perform role, however in OEChem both  [*:1]  and
+ [1*]  may be used.
+
+ 
+  
+  RGroup Attachment Points</strong> 
+ As a short hand to support specifying templates for combinatorial
+libraries, and to support existing Cactus and JChem/Marvin usage,
+OEChem allows ``[R2]'' to be used as short-hand for [*:2].  For
+inquiring minds, the SMILES [R2:3] is interpreted as [*:3] or [R3],
+with the last specification taking priority.
+
+ 
+  
+  External Bond Attachment Points</strong> 
+ OEChem SMILES also allows supports external closures, or potentially
+unsatisfied "ring closures".  These have the syntax, ampersand followed
+by a ring closure specification,  i.e.  an optional bond order followed
+by either a digit or a `%' character and two digits.  The index space
+of external bonds and ring closures is separate, so that the ring
+closure ``2'' and the external attachment point ``&amp;2'' are unrelated.
+
+ 
+When external attachment points are paired within a SMILES string,
+they behave identically to ring closures, just using a separate index
+space.  Hence, the SMILES ``c&amp;1ccccc&amp;1'' is interpreted the same
+way as ``c1ccccc1'', and ``C&amp;1.C&amp;1'' is interpreted like ``C1.C1'',
+i.e the SMILES ``CC''.
+
+  
+However, unlike ring closures, unpaired external attachment points
+are allowed and are interpreted like RGroup attachment points above.
+Hence, the SMILES `` CC&amp;1 '' (on its own) is equivalent to the RGroup
+attachment SMILES  CC[R1] , which is equivalent to the atom mapped
+molecule  CC[*:1] .
+
+  
+The major advantage of these semantics, inspired by Daylight's CHUCKLES,
+is that it allows convenient enumeration of combinatorial libraries
+using string concatenation.  For example, three components of a library
+may be specified as `` C&amp;1CCC&amp;2 '', `` F&amp;1 '' and
+`` Br&amp;2 ''.  The using the same notation
+`` C&amp;1CCC&amp;2.F&amp;1.Br&amp;2 '' is interpreted as the reaction
+product,  i.e.  `` FCCCCBr ''.
+
+  
+As with ring closures, bond orders may be specified after the ampersand
+and before the closure index, `` C&amp;=1 '', and two digit closures are
+indicated by a ' % ' prefix,  i.e.  `` C&amp;%12 '' or
+`` C&amp;=%12 ''.
+
+  
+  
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   26.1 Daylight SMILES 
+ Up:   26. SMILES Line Notation 
+ Next:   27. Biopolymer Residues 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

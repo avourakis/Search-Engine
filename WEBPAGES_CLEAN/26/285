@@ -1,0 +1,69 @@
+ 3.12.2 AddStartingMaterial<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.1 Constructors 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.3 operator() 
+   
+
+
+  
+3.12.2 AddStartingMaterial 
+ 
+   
+unsigned int AddStartingMaterial(OESystem::OEIter&lt;OEMolBase&gt;&amp;,
+                                 unsigned int reacnum,
+                                 bool umatch=true)
+unsigned int AddStartingMaterial(OESystem::OEIterBase&lt;OEMolBase&gt;*,
+                                 unsigned int reacnum,
+                                 bool umatch=true)
+unsigned int AddStartingMaterial(const OEMolBase &amp;mol,
+                                 unsigned int reacnum,
+                                 bool umatch = true)
+    
+The  AddStartingMaterial  methods are used to initialize the
+starting materials corresponding to a reaction component (reactant).
+An iterator over molecules or a single molecule may be passed as the
+first argument to the overloaded methods.  Subsequent calls to the
+ AddStartingMaterial  methods append to the list of starting
+materials set in prior calls.  The second argument specifies the
+reactant to which the starting materials correspond.  A copy of the
+staring material molecules are stored internally with the atom maps
+from the reactant pattern.  This is done for efficiency, as each
+product molecule requires very little computational work to be done
+because of the starting material preprocessing.  The final argument is
+used to control the pattern matching of the reactant pattern to the
+staring material.  If the value passed is true, only matches that
+contain a unique set of atoms relative to previously identified
+matches are used.  If the value is false, every possible match
+including those related by symmetry will be used.  Reactant patterns
+are unique matched by default.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.1 Constructors 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.3 operator() 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

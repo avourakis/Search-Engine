@@ -1,0 +1,94 @@
+ A Donation to the Music Archive<body>
+
+ 
+ 
+ A Donation to the Music Archive 
+ Lab Assignment 4 
+to prepare for Lab Exam 4 
+ 
+ 
+
+ This lab gives you practice with simple nested data structures and formatted console output. You also gain additional practice in using ArrayLists and classes others have written. 
+
+ 
+  Program Requirements 
+ 
+
+ A serious collector of recorded music has left his collection to a music archive. Youve been hired to create a title index and some media counts for the collection, using the information from a file that lists the donated items. The archive needs the title index to easily find items; it needs the counts to determine how many storage shelves are required for each kind of media. 
+
+ The archive has begun making a catalog of the donated items. A catalog entry consists of an accession number (a unqiue identifier), the works title, and the kind of media the music is on, such as paper (a book or pages of sheet music) or vinyl record(s). An accession number is no more than 10 characters, and can be made up of digits and/or letters (and no other symbols). The title is no longer than 50 characters and always starts with a capital letter; it never contains a semicolon (for reasons that will become clear shortly). The media categories are each designated by a single uppercase letter:
+  
+Letter   Category
+C        Compact media
+P        Paper (sheet music, books)
+V        Shellac &amp; vinyl records
+W        Wax cylinder
+ 
+ 
+  Technical Details 
+ 
+ Youve worked out with your archive contact that the input file given to you will be a text file, called  music.txt . Each donated items information is on one line (and there is only donated item per line). Each line will have the form   acccession number ;   title ;  media category code   
+that is, a line is formed by an accession number, a title, and a media category code, with these three fields separated by a semicolon (;) and a space. (There is no ; or space at the end of the line.) Each line will end with the standard PC end-of-line mark—that is, a carriage return character followed by a line feed character; in Java terms, the characters  \r\n . 
+
+  The provided music file will have been run though a testing program to ensure its format is correct and that its fields follow the specifications given for them. You can be confident that the music file will be in the correct format to be fed into your program. 
+
+ In the Eclipse project, you will find the MusicFile, a class containing the methods needed to properly process the music fileto open it, read a line of information from it, and close it. Since MusicFile is provided as a class file, the project also contains the document  MusicFileDoc.txt ; it describes MusicFiles public methods.
+ 
+
+ The index is to be placed into a text file called  index.txt . It will have the information about each musical item on one line, nicely formatted, and be in alphabetical order by title. The details of writing to and formatting the lines of the index file have been encapsulated in the class IndexFile, which has already been written and is in the project file;   IndexFileDoc.txt  documents its public methods. 
+
+ The counts are to be displayed in the console window in a neat, easy-to-read arrangement, after the index file is constructed (and stored). Each count is labeled so the user knows the media to which the count refers.  
+
+ The actual list of music will be provided to you at a later date, as the cataloging of the collection is ongoing. So, you will have to test your program using a fake list. Weve provided one for you, called  music.txt . You should also test your program on other test lists you put together, ones designed to try and break your program. (And if they do not break your code, then you have reasonably certainty that the indexing part of your program works correctly.) Especially, try music files that are empty; have one, two or three items; place one item in every bucket; add a new item before all items in a bucket or after all items in a bucket...any and all cases that might uncover a potential mistake. 
+
+ The programs major steps are straight-forward: 
+   Construct the music file, index file, and structure to sort the music items, the MusicList. 
+  Open the music file; for each line of the music file, read in its fields and make a MusicItem object out of them.  
+ Place that item into the intermal MusicList structure; MusicList is cleverly structured so that when an item is added to it, that item is in the correct order with respect to the others.  
+ As you read each item, examine its media code and update the appropriate count.  
+ Once all items are read, open the index file. Then, for each item in the music list, pass it to the method that writes a line to the index file. 
+Close the files when you process the last item on the music list. Print a message telling the user the name of the index file (so the user can find it). 
+ Print out the media counts, and compute and print the count of all the items,
+all labeled so the user knows whats what. 
+  When you create  index.txt  for the first time (or re-create it when it has been deleted) you will likely need to select your project folder and issue the  Refresh  command (its in the  File  menu, among other places) to see it in the Package Explorer.
+
+  After you run the program, if you open  index.txt  in the editing window, you may very well be told the resource is out of sync with the file system... . This occurs because the editor has the old version of the file in its memory, but knows the version on disk has changed. Just hit F5 to display the current contents of the index file. And if you run the program with  index.txt  file open in the editor window, when you go back to look at its contents (after the program completes) youll likely see a dialog box warning you that The file...has been changed on the file system and asking if you want to replace the editor contents with these changes? Click on  Yes ; you will then see the current contents of  index.txt  in the window. 
+
+ The files discussed above, along with a number of Java skeleton programs weve provided, are in the zipped Eclipse project file
+   21Lab4.zip   . Using the same procedure that you followed previously, unzip the file and import this project into your Eclipse workspace. 
+
+
+ A hint: You will probably find the String method  compareTo()  quite useful.  s.compareTo(t) , with  s  and  t  being Strings, returns 0 if  s  and  t  have the same value, a number less than 0 if  s  comes before  t  in alphanumeric order, and a number greater than 0 if  s  comes after  t . This method comes in handy when figuring out where to place a music item in the music list so that ordering by title is maintained. 
+
+ An admonition: There are two methods in the ArrayList class called  add .  add(item)  adds an item to the end of an ArrayList.  add(i, item)  adds an item at position  i  of an ArrayList, moving all items from  i  to the end of the list over by one. You will likely need to use both of these in your program; do not confuse them! 
+
+ 
+  About Lab Exam 4 
+ 
+
+ Lab Exam 4 will be very similar, but perhaps not identical, to the program you have been asked to write for this assignment. The lab exam will ask you to complete one or more of the following methods: 
+
+  The Bucket constructor 
+ Bucket.addItem 
+ The MusicItem constructor 
+ The MusicList constructor 
+ MusicList.addItem 
+ MusicList.updateCounts 
+ The MusicManager constructor 
+ MusicManager.makeIndexAndDisplayCounts 
+ MusicManager.makeMusicIndex() 
+ MusicManager.writeMusicIndex() 
+ MusicManager.displayCounts 
+   
+ Written by Norman Jacobson for ICS 21 Fall 2004, July 2004.
+ Minor revisions, by Norman Jacobson for ICS21 Winter 2005, December 2004.
+ Rvised to reflect encapsulation of file handling routines, by Norman Jacobson for ICS21 Fall 2006, November 2006.
+ Minor edits for clarity, by Norman Jacobson, December 2006 and September 2008
+ Minor editing to reflect use of Eclipse and for improved clarity, by Norman Jacobson, September 2009. 
+   Includes some text adapted from Alex Thornton's Lab 4 for ICS 21 Summer 2009.
+ Minor typos fixed, by Norman Jacobson, September 2010.
+ Revised to remove requirement of status messages (processing is fast enough that users    will not wonder if program is hung up), and to make explicit the requirement to display
+   the name of the index file, by Norman Jacobson, December 2010.
+ 
+
+</body> 

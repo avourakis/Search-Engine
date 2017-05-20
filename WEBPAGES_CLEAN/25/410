@@ -1,0 +1,129 @@
+    Encryption 
+
+ In this assignment you will learn how to hide your words and
+files, in the form of packets, from those prying eyes and ears of
+Eve.  To do this you will be using  pretty good privacy (PGP)  to encrypt and/or sign
+the email correspondences with 
+ your Class Reader, Patrick Flynn .
+  As we've gone over in class, encryption is the process of
+securing communication and doing so involves just a few easy steps.
+ 
+     Instructions  
+ The first step is to determine the  operating system (OS)  that you will be using.
+Once you've completed that difficult task, it's on to using
+Thunderbird to encrypt your emails. You can of course use other
+clients to encrypt your mail, in which case, you may ignore the steps
+described below. The steps below assume that you are using Thunderbird.
+
+ 
+     Thunderbird  
+
+ 
+ Thunderbird  will 
+allow you (with a bit of
+tinkering) to "securely" send emails, through the use of an
+encryption algorithm, to your friend "Bob." For this assignment, 
+ your Class Reader, Patrick Flynn ,
+will be the recipient, of course.
+ 
+   Step 1:  Download  Thunderbird  and install it.
+To configure Thunderbird for your email service, 
+follow the appropriate instructions below (or use those for your
+email provider):
+
+  
+ 
+Gmail Thunderbird setup instructions 
+ 
+ 
+ 
+UCI Thunderbird setup instructions 
+ 
+ 
+ ICS
+Thunderbird setup instructions .
+
+     Step 2:  Download a PGP program.
+   Windows Users:  Download  Gpg4win .
+   Mac Users:  Download  Mac GPG 
+
+     Step 3:  
+   Windows Users:  Follow the on screen instructions for
+installing Gpg4win.  When the "Choose Components" box shows up, all
+you need to select is  GnuPG  and  GPA .  Optionally, you
+can select the manuals at the bottom if you want to read more about
+encryption or keep them for future reference.  Remember the location
+you install GPG in as you will need it shortly.
+     
+  
+     Mac Users:  Install Mac GPG.
+
+       Step 4:  Download the  Enigmail  extension for Thunderbird and save it
+somewhere.
+   Step 5:  Once you've downloaded Enigmail, in
+Thunderbird open Tools -&gt; Add-ons -&gt; Install, and then choose
+the Enigmail extension file.
+   Step 6:  When you've restarted Thunderbird with
+Enigmail installed, you will see an OpenPGP menu item. Open it and go
+to Preferences. There you'll find a dialog to point to your GnuPGP
+binary. Click Browse. On my machine, GPG was installed under Program
+Files\GNU\GnuPG\gpg2.exe.  For Mac, it's most likely in
+/usr/local/bin/gpg.  In order for other people to send you encrypted
+messages, they will need your public key.  There are a number of  keyservers  which host such public keys, but for
+our purposes we will be using pgp.mit.edu.  Go to the
+ Keyserver  tab and make sure pgp.mit.edu is listed in the
+dialogue box.  If you don't see a  Keyserver  tab, click on
+ Expert Settings .
+
+   Step 7:  Now you'll need to generate your
+public/private key pair. From the OpenPGP menu item, choose Key
+Management. From the Generate menu, choose New Key Pair. Choose the
+email address you want to create a key for, and set a passphrase. You
+can set the expiration term for your key or set it to never expire,
+it's your choice. Hit the "Generate Key" button, and relax - it can
+take a few minutes.
+   Step 8:  When it's done, you have the chance to
+generate a "revocation certificate." This certificate can invalidate
+your public key just in case your private key is ever compromised. Go
+ahead and get your revocation certificate and save it.
+   Step 9:  Publish your key by selecting it in the key
+management window, clicking the  Keyserver  tab and selecting
+ Upload Public Keys .
+       Sending Encrypted/Signed Emails  
+
+ Now that you've followed these instructions,
+it's time to let 
+ your Class Reader, Patrick Flynn ,
+know that you are capable of sending encrypted messages.
+Of course, this process should be done from your email account
+for which the public key is published. 
+ 
+   Step 1:  Before you can send an encrypted message to 
+ your Class Reader, Patrick Flynn ,
+you must obtain his public key.  To get this, open the Key
+Management window, click Keyserver, and select  Search for
+Keys .  Type in his email address 
+(pflynn@ics.uci.edu) then click search. You will find his public key there,
+import it. Just to make sure, his public key id is 82483CCA; you
+can check it out if there are duplicated names.
+You can also find his PGP public key from
+the web site for
+ your Class Reader, Patrick Flynn .
+   Step 2:  Compose an email. Just to avoid confusion,
+here is the format of the email you will have to make. 
+  Make the title as Homework8
+  For the content, please wish 
+Patrick a great new year, 
+and include your name and student ID as it appears in the class roster.
+
+     Step 3:  Click the OpenPGP tab, and select both
+ Encrypt  and  Sign  message.
+   Step 4:  Click Send. You will then be prompted to
+select the recipient's key. Do so, and click OK.  You may be prompted
+with questions about sending in plaintext or HTML, choose plaintext.
+   Step 5:  You're done!  
+Now you know how to send encrypted messages.
+   
+This page is derived from an assignment by Chris Bronk at Rice
+University.
+ 

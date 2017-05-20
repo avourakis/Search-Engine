@@ -1,0 +1,28 @@
+ Any Ordering Issues<body>
+
+ 
+   
+               
+            
+            
+            
+            
+             
+            
+          Slide 13 of 14 
+ 
+
+      Notes:  </strong>       
+The spec provides only for client-maintained orderings.
+  
+Server-maintained orderings would probably be based on property values, and so are equivalent to DASL search with a sort-by element.  (A search would probably be less efficient than a PROPFIND with members returned in accordance with a collection ordering.)
+  
+What if a server wants to provide server-maintained orderings?
+  
+Currently, it can�t.  The only values for DAV:orderingtype are unordered, custom, and a client-specified semantics.  For any collection that is ordered, if the client doesn�t specify the position of some collection member that it adds, the server is required to put it at the end of the ordering.
+  
+Do we want to change this so that it�s possible for a server to provide server-maintained orderings?
+  
+If so, how?
+  
+We could allow servers to advertise the server-maintained orderings they can provide in OPTIONS.  Then if the value of DAV:orderingtype is one of those, the server maintains the ordering and fails any request that contains a Position header for that collection. </body> 

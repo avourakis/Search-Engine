@@ -1,0 +1,73 @@
+ user.websites.chimera2.concepts.links<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Links  
+
+ Links are sets of  anchors . All of the other
+concepts discussed in this overview provide the foundation for the power
+of Chimera links. Since anchors are associated only at a conceptual level
+with  objects  and  views ,
+links can forge paths between a wide range of information. Links can contain
+any number of anchors. Viewers can directly create links and anchors to
+them using the Chimera API. The end-user authors links by employing the
+following process. 
+
+  Using a link editor, the user creates a new empty link.
+    The user selects the new link to make it  active . The active
+  link is shared between all of a user's clients.
+    The user can then add anchors to the active link from any active client
+  by selecting the appropriate anchor and invoking the  Add_Anchor_To_Active_Link 
+  operation. Almost all Chimera clients provide access to this operation
+  in some fashion, typically by using a pull-down or pop-up menu.
+   The default link traversal semantics for Chimera is to send a link traversal
+event to all clients which manage the destination anchors of the link. Developers,
+however, can customize the semantics of link traversal for an application,
+or suite of applications. For more information, see the  on-line
+documentation . 
+
+ Developer Information 
+
+ The available operations on links are listed below. For more information
+see the  on-line documentation . 
+
+      addAnchor(link, anchor)  
+ Adds the specified anchor to the specified link.     addAnchorToActiveLink(anchor)  
+ Adds the specified anchor to the active link.     containsAnchor(link, anchor)  
+ Returns  TRUE  if the specified anchor contains the specified
+link.     createLink()  
+ Creates a new empty link in the active hyperweb.     deleteLink(link)  
+ Deletes the specified link in the active hyperweb.     getActiveLink()  
+ Returns the active link (or null, if no link is currently active).     getAnchors(link)  
+ Retrieves the anchors contained in the specified link.     getLinks()  
+ Retrieves all of the links contained in the active hyperweb.     getLinksWith(anchor)  
+ Retrieves all of the links which contain the specified anchor.     numberOfAnchors(link)  
+ Returns the number of anchors contained in the specified link.     numberOfLinks()  
+ Returns the number of links contained in the active hyperweb.     numberOfLinksWith(anchor)  
+ Returns the number of links which contain the specified anchor.     removeAnchor(link, anchor)  
+ Removes the specified anchor from the specified link.     setActiveLink(link)  
+ Informs the Chimera server that the specified link is active.     traverseLink(link, anchor)  
+ Initiates a link traversal on the specified link starting from the specified
+anchor.         Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

@@ -1,0 +1,122 @@
+ Using VHDL to Design a Sequential Circuit 
+
+ 
+
+  Lab 2    
+
+  Sequential Circuit
+Design    
+
+               
+
+
+
+     Due               dates:    see Labs table           
+
+
+
+       
+
+     
+
+ The objective of this lab assignment is to design a sequential circuit. You
+will submit your specification and your VHDL code through EEE, as in Lab
+1.  
+
+     
+
+ Please read  ALL 
+instructions carefully.  Only   properly submitted 
+assignments will be graded. 
+
+     
+
+    Specification        
+
+  Your task is to design a 3-bit counter
+that counts by 5 (increments by 5). The initial value is 0, the next value is 5
+after the clock, etc. The output value on clock I  is 
+(5*I) modulo 8.     
+
+ The design should consist of 2 parts, a combinational circuit that
+"computes" the next counter value based on the current value (e.g.
+function F) and a D flip-flop based 4-bit register storing the count. 
+
+ First, specify the counter logic with a truth table, e.g. Next =  F( Current) as in Next and Current state. Write down sum of
+products expression for F. Feel free to simplify the expression.  
+
+ Second, draw a diagram connecting F to the register, the reset and clock signals.
+ 
+
+     
+
+   Design   
+
+ Download   lab2.zip   and unpack it.  
+
+ The by-5 counter module (that is, the lab2 entity) has two 1-bit inputs ( clk  and  reset_N ) and one 3-bit
+output (count). The rising edge of the clock signal increments the counter to
+the next value. The reset signal    reset_N    sets the output of the
+counter to 0  asynchronously ,
+which means counter value changes to 0 immediately after reset signal arrives,
+regardless of the clock. Remember,  reset_N  is a
+low-active signal. 
+
+  Your VHDL design should consist of
+combinational logic implemented using concurrent signal assignments in the
+architecture body and a register update process.     
+
+ The top level of your design should be called  lab2  and needs to have the following
+ports (in  the
+same order  as given here, with  the same names ):    
+
+  Inputs :  clk :  std_logic   reset_N :  std_logic    
+
+  Outputs : 
+count:  std_logic_vector  (2  downto 
+0)  
+
+ Name and order of the ports in your design is important.  To receive full
+credit please follow the order and assign names as above.    
+
+     
+
+    Verification   Due together with the design.      
+
+ Your test bench should generate a clock signal. The clock cycle period
+should be 10 ns.  
+
+ First, verify the counting functionality by applying at least 10 clock
+signals to the counter. You should try to start counting from different values.
+Take 2 screen shots for 2 different initial values. 
+
+ Second, verify the reset signal can reset the counter to zero
+asynchronously. Also verify that the counter would start counting again after
+the reset signal is removed. The reset signal may not necessarily change at the
+same time as the clock. Take a screen shot of the waveform. 
+
+
+  
+
+   
+
+
+         
+
+         
+
+   What you should produce in this lab:   
+    
+
+       
+
+  Please submit the specification,
+including the  truth-table , the logic expressions
+and a block diagram.    
+
+ Please submit t he
+VHDL design and test-bench and 3 screen shots.     
+
+ 
+
+</body> 

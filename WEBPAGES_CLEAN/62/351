@@ -1,0 +1,116 @@
+ Ucigame - Java Game Library<body>
+
+  Ucigame - Java Game Library  
+
+ 
+ Home  |
+ Getting Started  |
+ Reference  |
+ Introduction to Java  |
+ Gallery 
+ 
+
+ 
+Welcome to Ucigame (pronounced oo-see- ga' -mee).
+ 
+
+ 
+Ucigame is a Java package (library, API) that makes simple computer games easy to write.
+Ucigame games are 2D and sprite based.
+Follow the links above to learn about Ucigame.
+ 
+
+ 
+The latest version of Ucigame is date-stamped 2010.12.16a.
+You can  download ucigame.jar  which
+includes everything you need to write your own Ucigame games.
+ 
+
+ 
+If you are curious about the source code, you can
+ download ucigame-source.zip 
+(the zip contains slightly out of date source code).
+ 
+
+ Contact 
+
+ 
+You can email the creator of Ucigame, Dan Frost,
+at  danfrost  &amp;part  ucigame.org .
+ 
+
+
+ Change log 
+
+ 
+Changes since 2010.12.16 version:
+ 
+  Fixed a problem with startScene xxx  not always running before the
+first loop of draw xxx .
+   
+Changes since 2009.10.15 version:
+ 
+  Several improvements to the web site, including a section in Getting
+	Started about Eclipse.
+   
+Changes since 2008.05.30a version:
+ 
+  Added new method Ucigame.setIconImage().
+  Fixed a bug with Sprite.checkIfCollidesWith() and Sprite.collided().
+  Better reporting of Exceptions thrown by user code in Ucigame.draw()
+	and Ucigame.drawSceneName().
+  Improved handling of Exceptions thrown during initialization
+	(usually out-of-memory issues).
+  Prevented Sprite.getImage() and Sound.getSound() from being run
+    in field initialization, before the beginning of setup().
+   
+Changes since 2008.05.30 version:
+ 
+  A bug in Sprite.setToFrame() was fixed.
+  Method Sprite.reset() renamed to Sprite.restart().
+   
+Changes since 2008.02.16b version:
+ 
+  Add the following methods to Sprite for support of animation
+	sequences: defineSequence(), currSequence(), play().
+	Removed playAnimationOnce(); its functionality is now part of play().
+  Modified keyboard.typematicOn() and keyboard.typematicOff() to
+    accept key indicators (e.g. keyboard.UP) as parameters.
+  Added new method keyboard.lastCharacter() which returns a String
+    holding the last printable character typed on the keyboard.
+   
+Bug fixes since 2008.02.16a version:
+ 
+
+  Fixed bug which prevented a tiled Sprite from operating correctly.
+  Corrected documentation to list the Sprite constructor for tiled Sprites.
+  Created a Sprite constructor with parameters (Image, width, height).
+   
+Bug fix since 2008.02.16 version:
+ 
+
+  Fixed bug which prevented startScene from working when running as an applet.
+   
+Changes since 2007.11.13 version:
+ 
+  Many collision detection bug fixes, especially for PIXELPERFECT.
+  Added onKeyRelease() callback method.
+  Sprite.x() and Sprite.y() now return the exact double values, and
+    new methods xPixel() and yPixel() return ints reflecting the pixel
+    location of the Sprite.
+   
+Changes since 2007.09.12 version:
+ 
+  Numerous small improvements to web pages.
+  Several bug fixes, particularly to the "edge" sprites TOPEDGE,
+	BOTTOMEDGE, LEFTEDGE, and RIGHTEDGE.
+  Made Ucigame fully compatible with Jave 1.5.
+  Added three public constructors for Sprite.
+  Added six parameter versions of Sprite.font() and canvas.font(),
+	which set the font color.
+  Added improved mouse support: mouse.isAltDown(), mouse.isControlDown(),
+	mouse.isMetaDown(), mouse.isShiftDown(), mouse.wheelClicks(),
+	mouse.button(), and codable method onMouseWheelMoved().
+  Added better control over animation with
+	Sprite.reset(), Sprite.setToFrame(), and Sprite.playAnimationOnce().
+  </body> 

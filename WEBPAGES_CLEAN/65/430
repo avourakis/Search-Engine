@@ -1,0 +1,178 @@
+ // Cryptogram solver, David Eppstein, UC Irvine, September 2000.
+// UI written by Steve Trottier and modified by DE
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.util.zip.*;
+import java.net.*;
+import java.io.*;
+
+public class Cryptogram extends java.applet.Applet
+{	
+	Checkbox editFreely = new Checkbox( "Edit Cryptogram", true );
+	EditFreelyWatcher editFreelyWatcher = new EditFreelyWatcher();
+	TextArea cryptogramArea = new TextArea( "", 1, 1, TextArea.SCROLLBARS_NONE );
+	TextField attributionField = new TextField();
+	Button undoChanges = new Button( "Undo Changes" );
+	Button importRandom = new Button( "Import Random Cryptogram" );
+	Button stop = new Button( "Stop" );
+	Button solve = new Button( "Solve" );
+	int knownPuzzle = 0;
+
+	CryptChar[] cryptPositions;
+	CryptChar[] attribPositions;
+	CryptChar[] alphaPositions;
+	CryptChar[] reversePositions;
+	
+	CryptChar alpha(char c) {
+		if (WordPatterns.letter(c)) return alphaPositions[(int)c - (int)'A'];
+		else return new CryptChar(c);
+	}
+	CryptChar ralpha(char c) {
+		return reversePositions[(int)c - (int)'A'];
+	}
+	
+
+	public void init()
+	{	setBackground( Color.white );
+		editFreely.setBackground( Color.white );
+		//setBackground( Color.lightGray );
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout( layout );
+		c.insets = new Insets( 4,4,4,4 );
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.weightx = 1.0;
+		Panel p = new Panel();
+		layout.setConstraints( p, c );
+		add( p );
+		p.setLayout( new FlowLayout() );
+		p.add( editFreely );
+		p.add( undoChanges );
+		c.weightx = 0.0;
+		Label l = new Label( "Cryptogram:" );
+		c.anchor = GridBagConstraints.WEST;
+		layout.setConstraints( l, c );
+		add( l );
+		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets( 0,4,4,4 );
+		layout.setConstraints( cryptogramArea, c );
+		add( cryptogramArea );
+		c.fill = GridBagConstraints.NONE;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.anchor = GridBagConstraints.WEST;
+		l = new Label( "Attribution:" );
+		layout.setConstraints( l, c );
+		add( l );
+		c.anchor = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.weightx = 1.0;
+		layout.setConstraints( attributionField, c );
+		add( attributionField );
+		p = new Panel();
+		c.gridheight = GridBagConstraints.REMAINDER;
+		layout.setConstraints( p, c );
+		add( p );
+		p.add( importRandom );
+		p.add( solve );
+		p.add( stop );
+
+		undoChanges.setEnabled( false );
+		Font f = new Font( "Courier", Font.PLAIN, 12 );
+		cryptogramArea.setFont( f );
+		attributionField.setFont( f );
+		TextAreaWatcher textAreaWatcher = new TextAreaWatcher();
+		cryptogramArea.addKeyListener( textAreaWatcher );
+		attributionField.addKeyListener( textAreaWatcher );
+		editFreely.addItemListener( editFreelyWatcher );
+		undoChanges.addActionListener( new UndoChangesButtonWatcher() );
+		importRandom.addActionListener( new ImportRandomButtonWatcher() );
+		stop.addActionListener( new StopButtonWatcher() );
+		solve.addActionListener( new SolveButtonWatcher() );
+		solve.setEnabled( true );
+		stop.setEnabled( false );
+		cryptogramArea.requestFocus();
+		cryptogramArea.setCursor( new Cursor( Cursor.TEXT_CURSOR ) );
+		attributionField.setCursor( new Cursor( Cursor.TEXT_CURSOR ) );
+		
+		alphaPositions = new CryptChar[26];
+		reversePositions = new CryptChar[26];
+		for (char ch = 'A'; ch 0 )
+						hasFocus.setCaretPosition( hasFocus.getCaretPosition()-1 );
+				}
+			}
+		}
+	}
+
+	// handle "Edit Freely" checkbox state changes
+	// when changed from checked to unchecked, set up cryptogram strings
+	public class EditFreelyWatcher implements ItemListener
+	{	public void itemStateChanged( ItemEvent e )
+		{	if ( !editFreely.getState() )
+			{	setStrings( cryptogramArea.getText().toUpperCase(),
+								attributionField.getText().toUpperCase() );
+
+				clearTranspositions();
+				cryptogramArea.setText( getCryptogramAreaString() );
+				attributionField.setText( getAttributionFieldString() );
+				undoChanges.setEnabled( true );
+			}
+			else
+			{	undoChanges.setEnabled( false );
+				knownPuzzle = 0;
+			}
+		}
+	}
+	
+	// set up cryptPositions without necessarily changing display
+	public void setStrings(String s, String t) {
+		cryptPositions = new CryptChar[s.length()];
+		for ( int i=0; i 0; i--) {
+			do {
+				int j = (int)(Math.random()*(i+1));
+				alphaPositions[i].swap(alphaPositions[j].getCurrent());
+				cryptogramArea.setText( getCryptogramAreaString() );
+				attributionField.setText( getAttributionFieldString() );
+			} while (alphaPositions[i].getOriginal() == alphaPositions[i].getCurrent());
+		}
+	}
+
+	// handle "Undo" button presses
+	public class UndoChangesButtonWatcher implements ActionListener
+	{	public void actionPerformed( ActionEvent e ) {
+			clearTranspositions();
+			cryptogramArea.setText( getCryptogramAreaString() );
+			attributionField.setText( getAttributionFieldString() );
+		}
+	}
+
+	// handle "Import Random" button presses
+	public class ImportRandomButtonWatcher implements ActionListener {
+		private Vector puzzleList = null;
+
+		public void actionPerformed( ActionEvent e ) {
+			importRandom.setEnabled(false);
+			solve.setEnabled(false);
+			setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
+			if (puzzleList == null) loadPuzzles();
+			int n = puzzleList.size();
+			if (n  globalBad ||
+						 (nBad == globalBad &amp;&amp; nBadAuth &gt; globalBadAuth) ||
+						 (nBad == globalBad &amp;&amp; nBadAuth == globalBadAuth &amp;&amp; prob  bestProb &amp;&amp; matchable(curWord,match.theWord,used)) {
+				bestProb = match.freq;
+				bestWord = match.theWord;
+			}
+		}
+		
+		// did we find a replacement?
+		if (bestProb &gt; 0.0) {
+			for (int i = 0; i = 0 &amp;&amp; c = 26) continue;
+			int d = (int) decode.charAt(i) - (int)'A';
+			if ((used &amp; (1 

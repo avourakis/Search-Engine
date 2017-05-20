@@ -1,0 +1,26 @@
+ #include "oechem.h"
+
+#include 
+
+using namespace std;
+using namespace OEChem;
+using namespace OESystem;
+
+int main()
+{
+  OEGraphMol m1,m2;
+
+  OEParseSmiles(m1, "c1cc(O)c(O)cc1CCN");
+  OEParseSmiles(m2, "c1c(O)c(O)c(Cl)cc1CCCBr");
+
+  OEMCSSearch mcss(m1,OEExprOpts::DefaultAtoms,OEExprOpts::DefaultBonds);
+
+  unsigned int count;
+  OEIter match;
+  for (count=1,match = mcss.Match(m2);match;++match,count++)
+  {
+    OEIter &gt; apr;
+
+    cout GetAtoms();apr;++apr)
+      cout pattern-&gt;GetIdx() GetAtoms();apr;++apr)
+      cout target-&gt;GetIdx()  

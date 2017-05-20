@@ -1,0 +1,76 @@
+ 15.7.2 operator <body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.7.1 Constructors 
+ Up:   15.7 oeistream 
+ Next:   15.7.3 close 
+   
+
+
+  
+15.7.2 operator     
+ 
+   
+virtual oeistream &amp;operator &gt;&gt; (oeistream&amp; (f)(oeistream&amp;))
+virtual oeistream &amp;operator &gt;&gt; (oestream&amp;  (f)(oestream&amp;))
+    
+Use of these operators executes the specified function (f) on the stream in
+question. In order for proper compilation and execution, the specified function
+must be prototyped according to the API shown above.
+
+  
+    
+virtual oeistream &amp;operator &gt;&gt; (oeostream &amp;)
+    
+This operator sends all of the remaining input on the stream to the specified
+oeostream.
+
+  
+    
+virtual oeistream &amp;operator &gt;&gt; (bool &amp;)
+virtual oeistream &amp;operator &gt;&gt; (char &amp;)
+virtual oeistream &amp;operator &gt;&gt; (signed char &amp;)
+virtual oeistream &amp;operator &gt;&gt; (unsigned char &amp;)
+virtual oeistream &amp;operator &gt;&gt; (std::string &amp;)
+virtual oeistream &amp;operator &gt;&gt; (short &amp;)
+virtual oeistream &amp;operator &gt;&gt; (int &amp;)
+virtual oeistream &amp;operator &gt;&gt; (long &amp;)
+virtual oeistream &amp;operator &gt;&gt; (unsigned short &amp;)
+virtual oeistream &amp;operator &gt;&gt; (unsigned int &amp;)
+virtual oeistream &amp;operator &gt;&gt; (unsigned long &amp;)
+virtual oeistream &amp;operator &gt;&gt; (float &amp;)
+virtual oeistream &amp;operator &gt;&gt; (double &amp;)
+    
+These operators read the next whitespace-delimited token on the input stream,
+converts it into the appropriate data type, and stores that value in the
+specified parameter. The use of these operators on non-text streams is
+undefined.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.7.1 Constructors 
+ Up:   15.7 oeistream 
+ Next:   15.7.3 close 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

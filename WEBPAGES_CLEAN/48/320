@@ -1,0 +1,64 @@
+ /*
+  $Id: ftable.cc 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 05/20/2006
+  Author: Rares Vernica 
+*/
+
+#include "ftable.h"
+
+FTable::FTable(const FTable &amp;t) 
+{
+  cont = new ContFTable();
+  *cont = *t.cont;
+}
+
+FTable&amp; FTable::operator=(const FTable &amp;t)
+{
+  if (this == &amp;t)
+    return *this;
+  *cont = *t.cont;
+  return *this;
+}
+
+bool FTable::operator==(const FTable &amp;t) const
+{
+  if (this == &amp;t)
+    return true;
+  if (*cont == *t.cont)
+    return true;
+  return false;
+}
+
+void FTable::erase(SimVect vect)
+{
+  if (cont-&gt;find(vect) != cont-&gt;end()) 
+    {
+      if ((*cont)[vect] != 0) 
+        {
+          (*cont)[vect]--;
+        }
+      if ((*cont)[vect] == 0) 
+        {
+          cont-&gt;erase(vect);
+        }
+    }
+}
+
+ostream&amp; operatorsize() begin(); it != t.cont-&gt;end(); ++it) 
+    {
+      out first second &gt;(istream &amp;in, FTable &amp;t)
+{
+  unsigned sz;
+  in &gt;&gt; sz;
+  for (unsigned i = 0; i &gt; vect &gt;&gt; cnt;
+      (*t.cont)[vect] = cnt;
+    }
+  return in;
+}
+ 

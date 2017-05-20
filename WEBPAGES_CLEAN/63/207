@@ -1,0 +1,62 @@
+ 12.2 Number of Ring Bonds to an Atom<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.1 Cycle Membership 
+ Up:   12. Ring Processing 
+ Next:   12.3 Testing for Membership 
+   
+
+
+  
+12.2 Number of Ring Bonds to an Atom 
+ 
+
+ 
+To provide an example of how one might use the above functions, the
+code below returns the number of ring bonds attached to an atom.  This
+is useful for identifying ring fusion atoms (ring bond count = 3) and
+potential spiro-atoms (ring bond count     4).
+
+  
+    unsigned int MyAtomRingBondCount(const OEAtomBase *atm)
+{
+  unsigned int count = 0;
+  OEIter&lt;OEBondBase&gt; bond;
+  for (bond=atm-&gt;GetBonds(); bond; ++bond)
+    if (bond-&gt;IsInRing())
+      count++;
+  return count;
+}
+    
+Once again, the example function above requires that the function
+OEFindRingAtomsAndBonds has previously been called on this molecule,
+typically by the high-level readers.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.1 Cycle Membership 
+ Up:   12. Ring Processing 
+ Next:   12.3 Testing for Membership 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

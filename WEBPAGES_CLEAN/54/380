@@ -1,0 +1,96 @@
+ Chimera 2.0 Tutorial:Starting the Chimera Server on the Client Side<body>
+ 
+
+ Starting the Chimera Server on the Client Side 
+
+   
+Now that you have created some webs and have the Chimera Website running, 
+you are now ready to start the client side
+of your Chimera system.  The client applications you will use with
+Chimera are dependent on a program called the Chimera Server.  This
+server runs in the same environment as your 
+client applications, and it provides access to Chimera.  To understand 
+why the Chimera Server is in place on the client end
+of the system, consider the following.
+ 
+
+  Rationale for the Chimera Server  
+
+  When you started the Chimera Website
+and its associated three servers, you were providing the general
+services of Chimera, in this case to yourself.  Since Chimera
+is freely available, there could be a multitude of Chimera Websites
+running, each providing different contents (i.e. different 
+webs, links, etc.).  Further, these Chimera Websites can 
+be located on a LAN or WAN, thus they could be running on different machines
+or accounts than where you are.  Client applications have the potential
+of being connected in arbitrary locations.  This could be problematic
+if your applications are connected to different websites and webs.  These
+inconsistencies can lead to a situation where your applications become 
+disconnected to each other.
+ 
+
+ 
+To control this complexity, a server is provided which provides you with
+the ability to direct your client applications to particular websites 
+and webs.  This server is the Chimera Server and all client applications
+look for it as their conduit to Chimera.
+ 
+
+ Starting the Chimera Server from different Platforms 
+
+ 
+To start the Chimera Server in your user's environment you need to 
+execute the program chimeraServer from 
+anywhere (any directory) you wish in your account.  
+The Java byte-code for the 
+Chimera Server is located in the chimera.jar file which you used to
+start the Chimera Website earlier in the tutorial.  
+ 
+
+  You must have the following in the CLASSPATH environment variable 
+so that your Java interpretor can execute the chimeraServer program.
+ 
+
+   swing 1.0.1
+       JSDK 1.0.1
+	 
+	Note: JDK 1.2 (currently in beta 3) contains JSDK and swing, you will
+	not need the above two packages if you are using JDK 1.2.
+       HTTPClient 0.3
+       Rivendell 0.6
+       MSXML 1.8
+
+	 (see 
+	 Preparing your System for Chimera  
+	to see how to include the packages listed above.)
+	 
+
+       chimera2b2.jar (see
+	 Downloading Chimera  
+	to see how to include chimera.jar)
+    Depending on what platform you are using, you will start the Chimera 
+Server differently:
+ 
+
+   Using Unix, enter chimeraServer to start the Chimera Server.
+	   
+
+       Using Windows NT, enter the following in the
+	command line interface to start the Chimera Server.
+	  java chimera.chimeraServer 
+
+    The Chimera Server should appear as the following window.
+ 
+
+   
+
+  Note: the window will appear slightly differently on different platforms.
+
+   
+You now have the Chimera Server running for your client applications,
+the next step is to establish the communication connection between
+this server and the Chimera Website you are interested in.
+ 
+
+</body> 

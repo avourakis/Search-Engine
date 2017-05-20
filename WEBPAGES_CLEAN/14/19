@@ -1,0 +1,144 @@
+ 29.1.1 Atom Primitives<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   29.1 SMARTS Syntax 
+ Up:   29.1 SMARTS Syntax 
+ Next:   29.1.2 Bond Primitives 
+   
+
+
+  
+29.1.1 Atom Primitives 
+ 
+
+ 
+  
+    Symbol  
+  Description  
+  Arg?  
+  Default Value  
+    A  
+ Non-aromatic (aliphatic) atom 
+ No 
+   
+    a  
+ Aromatic atom 
+ No 
+   
+    D  n  
+ Degree (explicit connections) 
+ Yes 
+ (No default) 
+    H  n  
+ Total hydrogen count 
+ Optional 
+ Exactly one 
+    h  n  
+ Implicit hydrogen count 
+ Optional 
+ Exactly one 
+    R  n  
+ Ring count  29.1   
+ Optional 
+ Any ring atom 
+    r  n  
+ Smallest ring size 
+ Optional 
+ Any ring atom 
+    v  n  
+ Valence (total bond order) 
+ Yes 
+ (No default) 
+    X  n  
+ Connectivity (total connections) 
+ Yes 
+ (No default) 
+    #  n  
+ Atomic number 
+ Yes 
+ (No default) 
+    +  n  
+ Positive charge 
+ Optional 
+ +1 cation (    is +2, etc) 
+    -  n  
+ Negative charge 
+ Optional 
+ -1 anion (    is -2, etc) 
+    ^  n  
+ Atomic hybridization  29.2   
+ Yes 
+ (No default) 
+    @  
+ Anticlockwise local chirality 
+ No 
+   
+    @@  
+ Clockwise local chirality 
+ No 
+   
+    @  n  
+ Chirality class 
+ Optional 
+ Anticlockwise 
+    n  
+ Explicit atomic mass 
+ No 
+   
+   
+
+ 
+
+  
+
+  
+    Footnotes 
+   ... count 29.1   
+ The semantics of the ring count primitive,  R , differs
+slightly between Daylight SMARTS and OpenEye SMARTS.  In Daylight semantics,
+ R  n  means that an atom is in  n  rings of the chosen SSSR.
+As the choice of SSSR is non-deterministic, this interpretation can cause an
+arbitrary set of atoms to match depending upon input order.  For example, in
+the symmetric molecule, cubane, four of the eight atoms will appear in two
+SSSR rings, and half of the atoms appear in three, but the choice is
+made almost randomly.  Rather than attempt to reproduce these weak
+semantics, OpenEye strengthens the definition of  R  n  to mean the
+number of ring bonds to an atom, which is graph invariant and therefore
+independent of a molecule's input order.  Notice, that the interpretation
+of  [R]  and  [R0] , i.e. ring membership, remains the same.
+Similarly, Daylight  [R1]  is approximately equal to OpenEye  [R2] ,
+and Daylight  [R2]  is approximately equivalent to OpenEye  [R3] .
+
+ 
+  ... hybridization 29.2   
+ The atomic hybridization primtive,  ^ , is an OpenEye
+extension that is not available in Daylight SMARTS, but can be implemented using
+recursive SMARTS.
+
+ 
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   29.1 SMARTS Syntax 
+ Up:   29.1 SMARTS Syntax 
+ Next:   29.1.2 Bond Primitives 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

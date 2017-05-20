@@ -1,0 +1,2381 @@
+ Logic Terms and Concepts<body>
+
+ 
+
+ 
+Logic Terms and Concepts
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+ 
+    Map of the basic concepts of logic
+   
+ 
+
+
+
+
+    Table of Contents      atomic sentence  
+                   bearer  
+                   bind  
+                   bound variable  
+                   closed sentence  
+                   compact  
+                   compactness theorem  
+                   complete  
+                   completeness theorem  
+                   conjunction  
+                   consistent  
+                   denotation  
+                   designation  
+                   disjunction  
+                   domain  
+     
+       dot  
+                   elementary statement  
+                   existential quantification  
+                   existential quantifier  
+                   first-order logic  
+                   formula  
+                   free variable  
+                   function  
+                   Gödel's first incompleteness theorem  
+                   Gödel's first inconsistency theorem  
+                   identity  
+                   iff  
+                   implication  
+                   inconsistent  
+                   interpretation  
+     
+       invalid  
+                   language  
+                   logical equivalence  
+                   logical symbol  
+                   material biconditional  
+                   material conditional  
+                   material implication  
+                   meta-logical  
+                   metavariable  
+                   model  
+                   name  
+                   negation  
+                   non-logical symbol  
+                   open sentence  
+                   paradoxes of classical logic  
+     
+       parenthesization  
+                   predicate  
+                   propositional variable  
+                   quantification  
+                   quantifier  
+                   reference  
+                   satisfiable  
+                   schema  
+                   second-order logic  
+                   sentence  
+                   sentence letter  
+                   Skolem-Löwenheim theorem  
+                   sound  
+                   statement  
+                   statement letter  
+     
+       structure  
+                   tautology  
+                   term  
+                   theory  
+                   truth table  
+                   truth value  
+                   truth-functional  
+                   universal quantification  
+                   universal quantifier  
+                   unsatisfiable  
+                   valid  
+                   variable  
+                   well-formed formula  
+     
+      Speaking in “logic” 
+
+
+ 
+Pronouncing logic is as easy as  αβγ . 
+Just follow the examples below. 
+ 
+
+  Pronouncing logic 
+    Logic    Pronunciation  
+      true  
+        true 
+      ⊤  
+        true 
+      ⊥  
+        false 
+       F   
+        false 
+       ff   
+        false 
+       tt   
+        true 
+      a  
+        A 
+       ¬ b   
+        not B 
+       d ∧ ⊤    
+        D and true 
+       c  ∨ ⊥  
+        C or false 
+       ∀x (x = x)   
+        For every x, x equals x 
+       ∃y (y ≠ y)   
+        For some y, y does not equal y 
+      ⊢  
+        S is valid 
+       R ⊢ S   
+        R implies S 
+       R ⇔ S   
+        R is logically equivalent to S  
+      Logical and meta-logical 
+
+ 
+It is important to distinguish
+logical statements, operators, and relationships
+from meta-logical statements, operators, and relationships. 
+Logical statements are those that state something about
+objects in the domain of discourse,
+or something about a logical relationship between sentence variables. 
+Meta-logical statements,
+on the other hand,
+say something about one or more logical statements. 
+Examples:
+“ A ∧ B ” and
+“ ¬ (¬ A ∨ ¬ B) ”
+are logical statements;
+“ ‘ A ∧ B  is logically equivalent to
+‘ ¬ (¬ A ∨ ¬ B) ’ ”
+is a meta-logical statement. 
+ 
+
+ 
+Quine characterizes this as a distinction between mentioning and using
+[ Quine1982-ml  p.50],
+or perhaps more vigorously
+as a difference between stating and naming. 
+When I state that  A ∧ B 
+and that  ¬ (¬ A ∨ ¬ B) ,
+I have used those two logical statements, not mentioned them. 
+When I state that
+“ A ∧ B  is logically equivalent to
+ ¬ (¬ A ∨ ¬ B) ”,
+on the other hand,
+I have named the two statements (by presenting them in quotes),
+not used them,
+and I have said something about the statements
+(by naming them and stating a relationship). 
+ 
+
+ 
+The authors whose work is collated here
+keep this distinction in part
+by being quite specific about what the syntactic form
+of a logical statement is,
+and thus excluding all other statements. 
+Thus all meta-logical statements
+can be syntactically distinguished from logical statements,
+if one follows the rules fastidiously. 
+See  formula ,  sentence  in
+the glossary below. 
+ 
+
+
+ Summary of presentations of logic 
+
+ 
+This section summarizes in tabular form
+some of the notation and usage for the authors discussed here. 
+ 
+
+  Logical symbols 
+    Citation  
+        true  
+        false  
+        not  
+        and  
+        or  
+        if  
+        iff  
+        univ.  
+        exist.  
+        ident.  
+      [ Bell+DeVidi+Solomon2001-lo ]
+       
+        ⊤  
+        ⊥  
+         ¬   
+         ∧   
+         ∨   
+         →    
+         
+         
+         
+         
+      [ Barwise+Etchemendy1992-lfol ]
+       
+        TRUE   
+        FALSE  
+         ¬   
+         ∧   
+         ∨   
+         →   
+         ↔   
+         ∀x   
+         ∃x    
+        =  
+      [ Boolos+Jeffrey1989-cl ]  
+        1   
+        0  
+        -   
+        &amp;   
+        v  
+         →   
+         ↔   
+         ∀x   
+         ∃x    
+        =  
+      [Kleene1967-ml]  
+        t   
+        ƒ  
+        ¬  
+        &amp;  
+        ∨  
+        ⊃  
+        ∼  
+       ∀x  
+       ∃x  
+         
+      [ Quine1982-ml ]  
+        ⊤  
+        ⊥  
+          p  , -  
+         pq   
+         ∨   
+         →   
+         ↔   
+         
+         
+         
+      (Hilbert)  
+         
+         
+         
+        &amp;  
+         
+         →   
+         
+         
+         
+         
+      [ Whitehead+Russell1910-13-pm ]
+       
+         
+         
+         ~   
+         
+         ∨   
+         ⊃   
+         ≡   
+         (x)   
+         (∃x)    
+         
+      (Peano)  
+         
+         
+         -   
+         
+         
+         ⊃   
+         
+         
+         ∃   
+         
+      (Pierce)  
+         
+         
+          p    
+         
+         
+         
+         
+         
+         
+         
+       Notable variations from current logical syntax 
+    Description                 
+        Example          
+        Citations  
+      Negation by overbar  
+          p    
+         Quine1982-ml , (Pierce)  
+      Conjunction by catenation   
+         ab   
+         Quine1982-ml   
+      Grouping by  dots   
+         a.b∨ c       
+         Quine1982-ml ,
+         Whitehead+Russell1910-13-pm , (Peano)  
+       Logical terminology 
+    [ Boolos+Jeffrey1989-cl ]  
+        [ Barwise+Etchemendy1992-lfol ]
+       
+        [ Quine1982-ml ]  
+        [ Bell+DeVidi+Solomon2001-lo ]
+       
+      not  
+       negation  
+      and  
+       conjunction  
+      or  
+       disjunction  
+      if ... then  
+       material implication   
+        implication  
+      iff  
+       material biconditional   
+        biconditional  
+       Meta-logical symbols 
+    Citation    
+        implies   
+        valid   
+        equivalent   
+        interpretation  
+      [ Boolos+Jeffrey1989-cl ]  
+        ⊢  
+        ⊢  
+         ≅   
+         I   
+      [ Barwise+Etchemendy1992-lfol ]
+       
+         
+         
+         ⇔    
+         
+           General non-logical symbol usage 
+    Citation    
+        name   
+        function   
+        sentence   
+        predicate  
+      [ Boolos+Jeffrey1989-cl ]  
+        a b c ...   
+        f(a)   
+        S   
+        xLy xFy ...  
+      [ Barwise+Etchemendy1992-lfol ]
+       
+        a b c ...   
+        ab(a) bc(a,b) ...   
+         
+        A(a) B(a,b) ...  
+      [ Quine1982-ml ]  
+         
+         
+         
+        Fx Gy ...   
+      Glossary of basic terminology 
+
+  atomic sentence 
+     
+    Any of the following
+    [ Boolos+Jeffrey1989-cl  p.102]:
+       a  sentence letter 
+        (see  non-logical symbol );
+       
+        two  terms  joined by  = 
+        (see  logical symbol );
+    or
+       
+        an  n -place
+         predicate  letter and
+        an  n -tuple of  terms 
+      (see  non-logical symbol ). 
+       
+     
+    An atomic sentence has no component  sentences 
+    or  formula e;
+    the components of  =  and other predicates are
+     term . 
+    Boolos and Jeffrey distinguish atomic sentences,
+    for which there are no corresponding formulae,
+    from other sentences,
+    which correspond to formulae but have no
+     free variables . 
+     
+    See  sentence . 
+     
+     
+
+   bearer 
+     
+    See  designation . 
+     
+
+   bind 
+     
+    A  quantifier  is said to
+     bind  the variable
+    that is its parameter
+    [ Barwise+Etchemendy1992-lfol 
+    p.115]. 
+     Free  occurrences of the variable
+    in the subformula of the quantification
+    are bound by the quantifier. 
+     
+
+   bound variable 
+     
+    A  bound variable  is one
+    whose relation to the objects of the domain is specified. 
+    In first-order logic,
+    variables are bound by  quantifiers ;
+    any variable that is not bound by a quantifier
+    is a  free variable 
+    whose relation to the objects of the domain
+    is unknown. 
+     
+    In a  formula   ∀x F  or
+     ∃x F ,
+    the  variable   x  is bound. 
+     
+     
+    See  free variable ,
+     quantifier ,
+     variable . 
+     
+     
+
+   closed sentence 
+     
+    See  sentence . 
+     
+
+   compact 
+     
+    A logic is  compact  if
+    for any countable set of sentences Δ,
+    there is a finite subset δ of Δ such that
+    δ is unsatisfiable iff Δ is unsatisfiable. 
+     
+
+   compactness theorem 
+     
+    (Of first-order logic.) 
+    An enumerable set θ of sentences is unsatisfiable
+    if and only if
+    there is a finite subset of θ
+    that is unsatisfiable
+    [ Boolos+Jeffrey1989-cl  p.140]. 
+     
+
+   complete 
+     
+    A  theory  T is complete if
+    for every possible sentence A in the language of T,
+    either A or ¬A (or both) is a theorem of T
+    [ Boolos+Jeffrey1989-cl  p.177]. 
+     
+    Informally,
+    a formal system is complete if
+    every true statement can be derived in it. 
+     
+     
+    A theory is complete and  consistent  if
+    for every possible sentence A in the language of T,
+    exactly one of A or ¬A is a theorem of T
+    [ Boolos+Jeffrey1989-cl  p.177]. 
+     
+     
+    Compare  consistent . 
+    See  Gödel's
+    first inconsistency theorem .
+     
+     
+
+   completeness theorem 
+     
+    (Of first-order logic.) 
+    If an enumerable set Δ of sentences is unsatisfiable,
+    then there is a finite derivation from Δ
+    containing a contradiction
+    [ Boolos+Jeffrey1989-cl  p.131]. 
+     
+
+   conjunction 
+     
+    A  conjunction  is a  formula 
+    composed of two subformulae;
+    the conjunction is true if and only if
+    both its subformulae are true. 
+
+      Truth table for conjunction 
+         α   
+             β   
+             α ∧ β   
+          true   
+            true   
+            true  
+          true   
+            false  
+            false  
+          false  
+            true   
+            false  
+          false  
+            false  
+            false  
+          
+    A conjunction is frequently written as
+     α ∧ β . 
+    Some other notations are listed in
+    the  table of logical symbols . 
+     
+     
+    A useful mnemonic for  ∧  is that it resembles
+    the ‘A’ in “and”. 
+     
+     
+
+   consistent 
+     
+    A theory is  consistent 
+    if there is no theorem of the theory whose negation
+    is also a theorem
+    [ Boolos+Jeffrey1989-cl  p.173]. 
+     
+    Informally,
+    a system is consistent
+    if there is no sentence A
+    for which it is possible to derive both A and ¬A in the system. 
+     
+     
+    See  satisfiable . 
+     
+     
+
+   denotation 
+     
+    See  designation . 
+     
+
+   designation 
+     
+    For a  name ,
+    the object in the  domain 
+    that the name designates
+    [ Boolos+Jeffrey1989-cl  p.99]. 
+     
+    Synonyms: 
+     bearer ,
+     denotation ,
+     reference . 
+     
+     
+
+   disjunction 
+     
+    A  disjunction  is a  formula 
+    composed of two subformulae;
+    the disjunction is false if and only if
+    both its subformulae are false. 
+
+      Truth table for disjunction 
+         α   
+                   β   
+                   α ∨ β   
+          true    
+            true    
+            true  
+          true    
+            false   
+            true  
+          false   
+            true    
+            true  
+          false   
+            false   
+            false  
+          
+    A disjunction is frequently written as
+     α ∨ β . 
+    Some other notations are listed in
+    the  table of logical symbols . 
+     
+     
+    The  ∨  symbol is not an arbitrary choice,
+    but rather derives from the Latin  vel 
+    whose meaning corresponds to disjunction
+    [ Quine1982-ml  p.12]. 
+    (Latin also possesses a word  aut 
+    for exclusive or – A or B but not both.)
+     
+     
+
+   domain 
+     
+    A collection of entities (about which we wish to reason). 
+     
+    Example:
+    in logic, a domain that is frequently of interest
+    is the domain of the integers and their operations and relations. 
+     
+     
+    Also called  universe ,  universe of discourse . 
+     
+     
+
+   dot 
+      (Deprecated.) 
+    Quine [ Quine1982-ml ] sometimes uses
+    a system of  dot s
+    to express grouping, instead of parentheses. 
+    Where parentheses enclose groups,
+    dots divide groups;
+    where parentheses nest to indicate deeper grouping,
+    dots are doubled (or, presumably, tripled or stacked even higher)
+    to divide still larger groups. 
+    This notation is obsolete. 
+     
+    Example:
+     
+     
+      s ∨ (p ∧ (q → r) ↔ (p ∨ q) ∧ r) ∧ t
+     
+    would be “dotted” as
+     
+      s ∨ : p ∧ . q → r . ↔ . p ∨ q . ∧ r : ∧ t
+     
+    [ Quine1982-ml  p.30,
+    written with  ∧  for conjunction]. 
+     
+    Church uses a single dot to mean the same as
+    a left bracket at that location and a right bracket
+    at the end of the sentence
+    [ Church1958-iml  p. 42]. 
+     
+     
+
+   elementary statement 
+     
+    See  sentence letter . 
+    [ Bell+DeVidi+Solomon2001-lo 
+    p.6-7]. 
+     
+
+   existential quantification 
+     
+    A  formula  constructed from a
+     variable   x 
+    (the parameter of the quantification)
+    and a subformula  F . 
+    The  existential quantification  is true if and only if
+    the subformula  F  is true
+    for at least one possible value of the variable  x 
+    (some object in the  domain ). 
+     
+    An existential quantification is written as  ∃x F ;
+    occasionally the notation  ∃x.F  is seen,
+    but it is obsolete (see  dot ). 
+     
+     
+    The quantifier  ∃x  is said to
+     bind   x 
+    (see  bound variable ,
+     free variable ). 
+    Any unbound instance of  x  in
+     F 
+    becomes bound in  ∃x (F) . 
+     
+     
+    See
+     existential quantifier ,
+     quantification ,
+     universal quantification . 
+     
+     
+
+   existential quantifier 
+     
+    ∃x
+    for some variable x. 
+     
+
+   first-order logic 
+     
+    A logic in which quantification is restricted to domain objects
+    [ Bell+DeVidi+Solomon2001-lo 
+    p. 122]. 
+     
+    See  second-order logic . 
+     
+     
+
+   formula 
+       (Plural  formulae  or  formulas .)
+     
+    A syntactically-correct utterance in a logical language
+    that may contains zero or more  free variables . 
+     
+     
+    Utterances with precisely zero free variables
+    are also called  sentences . 
+     
+     
+    For Boolos and Jeffrey, a formula is one of the following,
+    where  α ,
+    and  β  are also formulae
+    [ Boolos+Jeffrey1989-cl  p.101]:
+     
+
+      Formulae 
+        1.   
+             -α    
+            (negation)  
+          2.   
+             (α&amp;β)   
+            (conjunction)  
+          3.  
+             (α v β) 
+           
+            (disjunction)  
+          4.   
+             (α→ β)   
+            (material implication)  
+          5.   
+             (α↔ β)   
+            (material biconditional)  
+          6.   
+             ∀v α    
+            (universal)  
+          7.   
+             ∃v α    
+            (existential)  
+          
+    In addition, any  atomic sentence 
+    is a formula. 
+     
+     
+    Barwise and Etchemendy define formulae similarly,
+    but using their own  logical symbols 
+    [ Barwise+Etchemendy1992-lfol 
+    p.117]. 
+     
+     
+    Quine uses  open sentence  for this concept
+    [ Quine1982-ml  p.134]. 
+     
+     
+    Compare  sentence . 
+     
+     
+
+   free variable 
+     
+    A  variable  in a formula  F 
+    is said to be  free 
+    (or  unbound ) in  F 
+    if it is not a  bound variable  in
+     F . 
+     
+    A free variable is one whose relation to the objects in the domain
+    is unknown. 
+     
+     
+    See  bound variable ,
+     variable . 
+     
+     
+
+   function 
+     
+    A  function  takes one or more  terms 
+    and produces a  term . 
+     
+    Compare  predicate  which takes one or more domain objects
+    and produces either true or false. 
+     
+     
+
+   Gödel's first incompleteness theorem 
+     
+    There is no  consistent ,
+     complete , axiomatizable extension of Q
+    (a specific axiomatization of the natural numbers)
+    [ Boolos+Jeffrey1989-cl  p.179]. 
+     
+    Informally,
+    the proof uses what is termed the Gödel statement, G,
+    which is
+    "G cannot be proven true." 
+    If G can be proven under the extension of Q,
+    then the extension would be inconsistent
+    (as G states that it can't be proven); 
+    and if G can't be proven,
+    then it is true, and the extension is incomplete. 
+     
+     
+    Formally,
+    the proof proceeds by representing any possible statement in the language
+    by a number,
+    so that (after a number of intermediate stages)
+    provability of statements reduces to
+    decidability of the set of numbers corresponding to them. 
+    (I was told by my logic professor that only a few dozen people
+    in the world, including himself, really understand this proof
+    in its entirety.) 
+     
+     
+
+   Gödel's first inconsistency theorem 
+     
+     
+
+   identity 
+     
+    The  identity  predicate
+    is a binary  predicate  that is true
+    only for two references to the same object. 
+    We write  R 1  = R 2  ,
+    where  R 1   and
+     R 2   are  names  or
+     functions 
+    [ Boolos+Jeffrey1989-cl  p.96]. 
+     
+    Compare  logical equivalence 
+    which is a  meta-logical  comparison
+    of two sentences. 
+     
+     
+
+   iff 
+     
+    An abbreviation for “if and only if”. 
+     
+    See  logical equivalence ,
+     material biconditional . 
+     
+     
+
+   implication 
+     
+    Sentence  S 1    implies 
+    sentence  S 2  
+    if for every  interpretation 
+     I 
+    that is an interpretation of both sentences,
+     S 2   is true in
+     I  if
+     S 1   is true in
+     I 
+    [ Boolos+Jeffrey1989-cl  p.104]. 
+     
+    If sentence  S 1   implies
+    sentence  S 2  ,
+    we write
+     S 1  ⊢ S 2  
+    [ Boolos+Jeffrey1989-cl  p.104]. 
+     
+     
+    Implication can be generalized to sets
+     ΓS 1 ,S 2 ,...,S n } 
+    of sentences:
+     Γ  implies
+    sentence  S n+1   if
+    for every  I  that is an interpretation of
+    all  n+1  sentences,
+     S n+1   is true in
+     I  if
+    each of  S 1 ,S 2 ,...,S n  
+    is true in  I . 
+     
+     
+    Implication is a  meta-logical  operation,
+    not to be confused with the logical formula of
+     material implication . 
+     
+     
+
+   inconsistent 
+     
+    See  unsatisfiable . 
+     
+
+   interpretation 
+     
+    An  interpretation  gives meaning
+    to the  non-logical symbols  of a language. 
+    Boolos and Jeffrey define an interpretation as
+    [ Boolos+Jeffrey1989-cl  p.98-99]:
+       A  domain  that is a non-empty set of objects
+        that the  variables  of the language range over. 
+        Synonyms:   universe ,  universe of discourse . 
+       
+        A  designation 
+      for each  name  in the language;
+        the designation is an entity in the domain. 
+        Synonyms:   bearer ,  denotation ,  reference . 
+       
+        A  function  for
+        each function symbol in the language. 
+        The function for an  n -place function symbol
+        maps every  n -tuple of domain objects
+        to an object. 
+       
+        A  truth-value  for each
+         sentence letter  in the language
+        (true or false). 
+       
+        A  characteristic function  for each
+         predicate  letter in the language. 
+        The characteristic function for
+        an  n -place predicate letter
+        maps every  n -tuple of domain objects
+        to either true or false. 
+       
+      
+    An interpretation may also be viewed as a operator
+    that takes a sentence and gives either true or false. 
+    Boolos and Jeffrey write this operation on sentence  S 
+    as  I(S) 
+    [ Boolos+Jeffrey1989-cl  p.101]. 
+     
+     
+    Interpretations are also known as  models 
+    (but see glossary entry for  model )
+    or  interpretation . 
+     
+
+      The domain and range of logical and non-logical symbols 
+        Symbol   
+            Domain and range  
+          variable  
+               →  objects in the domain  
+          name  
+             →  a specific object in the domain
+           
+          function symbol  
+               n -tuple of domain objects
+             →  domain object
+             
+          predicate letter  
+             n -tuple of domain objects
+           →  true or false
+           
+          sentence letter  
+               →  true or false  
+          
+    See  model . 
+     
+     
+
+   invalid 
+     
+    A sentence is  invalid 
+    if it is false in every interpretation.
+     
+    See  satisfiable ,
+     unsatisfiable ,
+     valid . 
+     
+     
+
+   language 
+     
+    Boolos and Jeffrey use  language  to refer to
+    a collection of non-logical symbols which,
+    together with the usual logical symbols,
+    may be used to construct formulae and sentences
+    about a particular  domain 
+    [ Boolos+Jeffrey1989-cl  p.97]. 
+     
+
+   logical equivalence 
+     
+    Two sentences  S 1   and
+     S 2   are  logically equivalent 
+    if for every  I  that is
+    an  interpretation 
+    of both  S 1   and
+     S 2  ,
+     I(S 1 ) =
+     I (S 2 ) 
+    [ Boolos+Jeffrey1989-cl  p.107,
+     Quine1982-ml  p.60]. 
+     
+    Logical equivalence is a  meta-logical  relationship,
+    not to be confused with the logical operation
+     material biconditional . 
+     
+     
+
+   logical symbol 
+     
+    Any of the connectives, quantifiers, and other symbols
+    common to all first-order logic languages;
+    For Boolos and Jeffrey these are
+    the  variables  (enumerably infinitely many) and
+     
+     -
+     &amp;
+     v
+      → 
+      ↔ 
+      ∃ 
+      ∀ 
+     =
+     (
+     )
+     ,
+     
+    [ Boolos+Jeffrey1989-cl  p.97]. 
+    Compare  non-logical symbol . 
+    The  table of logical symbols 
+    lists the logical symbols
+    (other than variables) used by various authors. 
+     
+    Various authors use different terminology
+    for the logical operators,
+    summarized in the
+     table of logical terminology . 
+     
+     
+    Various authors also use different rules for
+     parenthesization . 
+     
+     
+
+   material biconditional 
+       (Deprecated.) 
+    A  material biconditional  is a  formula 
+    composed of two subformulae; 
+    the material biconditional is true if and only if
+    both subformulae are true
+    or both subformulae are false. 
+    It is sometimes described as the logical expression of
+    “ α  if and only if
+     β ”; 
+    however,
+    usually  logical equivalence 
+    is what is meant. 
+
+      Truth table for material biconditional 
+         α   
+             β   
+             α ↔ β   
+          true    
+            true    
+            true  
+          true    
+            false   
+            false  
+          false   
+            true    
+            false  
+          false   
+            false   
+            true  
+          
+    A material biconditional is almost universally written as
+     α ↔ β . 
+    Other notations are listed in
+    the  table of logical symbols . 
+     
+     
+     α ↔ β 
+    is logically equivalent to
+     (α ∧ β) ∨
+    (¬ α ∧ ¬ β) ,
+    and is probably best considered to be an abbreviation for it. 
+     
+     
+    The material biconditional is a logical formula,
+    not to be confused with the  meta-logical 
+    relation of  logical equivalence . 
+    Perhaps because of this potential confusion,
+    the material biconditional does not seem to be used as commonly now
+    as in the past. 
+     
+     
+
+   material conditional 
+     
+    See  material implication . 
+     
+
+   material implication 
+       (Deprecated.) 
+    A  material implication  is a  formula 
+    composed of two subformulae,
+    called its  antecedent  and  consequent ;
+    the antecedent is the subformula on the left. 
+    The material implication is true if and only if
+    its consequent is true or its antecedent is false. 
+    It is sometimes described as the logical expression of
+    “if  α  then
+     β ”; 
+    however,
+    usually  implication  is closer to what is meant. 
+
+      Truth table for material implication 
+         α   
+             β   
+             α → β   
+          true    
+            true    
+            true  
+          true    
+            false   
+            false  
+          false   
+            true    
+            true  
+          false   
+            false   
+            true  
+          
+    A material implication is frequently written as
+     α→β . 
+    Some other notations are listed in
+    the  table of logical symbols . 
+     
+     
+     α → β 
+    is logically equivalent to
+    (¬  α ) ∨  β ,
+    and is probably best considered as an abbreviation for it. 
+    Many authors have noted that
+    a material implication seems to be making
+    a statement about one thing causing another
+    (“if  α  then
+     β ”),
+    but in fact doesn't have anything to do with causality. 
+    See
+     paradoxes of classical logic . 
+     
+     
+    The material implication is a logical formula,
+    not to be confused with the  meta-logical 
+    relation of  implication . 
+    Perhaps because of this potential confusion
+    and the recognition that material implication
+    isn't appropriate for describing cause and effect,
+    the material implication does not seem to be used as commonly now. 
+     
+     
+    Also known as  conditional . 
+     
+     
+
+   meta-logical 
+     
+     Formula e and  sentences 
+    express properties of domain objects,
+    or make statements about sentence variables and truth values;
+     meta-logical  utterances express properties of
+    or refer to
+    formulae and sentences. 
+     
+    The meta-logical operators and properties include
+     implication ,
+     satisfiab ility
+     valid ity,
+     logical equivalence ,
+    and
+     interpretation . 
+    See also  metavariable . 
+     
+     
+
+   metavariable 
+     
+    A  metavariable  is a variable (in the general sense)
+    that refers to a formula
+    [ Epstein2001-pl  p.13]. 
+     
+    Compare  variable ;
+     sentence letter ,
+     name . 
+     
+     
+
+   model 
+     
+    A  model  of a sentence is
+    an  interpretation  in which that sentence is true
+    [ Boolos+Jeffrey1989-cl  p.105]. 
+     
+
+   name 
+     
+    A  name  designates to a particular object
+    in the domain of the language
+    [ Boolos+Jeffrey1989-cl  p.98-99,
+     Barwise+Etchemendy1992-lfol 
+    p.10]. 
+     
+    It is possible for an object to have more than one name;
+    but each name refers to only one object. 
+     
+     
+    See  non-logical symbol ,
+     interpretation . 
+     
+     
+
+   negation 
+     
+    A  negation  is a  formula 
+    composed of a single subformulae;
+    the negation is true if and only if
+    the subformula is false. 
+
+  Truth table for negation 
+     α   
+               ¬ α   
+            true    
+        false  
+            false   
+        true  
+            
+    A negation is frequently written as  ¬ α . 
+    Some other notations are listed in
+    the  table of logical symbols . 
+     
+     
+
+   non-logical symbol 
+     
+    Any of the symbols of a particular logic language. 
+    Boolos and Jeffrey divide these into
+     names ,
+     function  symbols,
+     sentence letters ,
+    and
+     predicate  letters
+    (and appropriate the term  language 
+    to mean a set of non-logical symbols)
+    [ Boolos+Jeffrey1989-cl  p.97]. 
+    See  interpretation . 
+     
+    Of course, each language may have its own conventions
+    for the use of its symbols;
+    the language of arithmetic uses its own functions and predicates
+     2+3×4 ,  5^2 , and
+     6&lt;4 ,
+    as does set theory  a ∈ b  and
+     T ∪ U . 
+    General, non-specific usage for various texts
+    is summarized in
+    the  table of non-logical syntax . 
+     
+     
+
+   open sentence 
+     
+    See  formula . 
+     
+
+   paradoxes of classical logic 
+     
+     Material implication 
+    produces some results that are, well, odd. 
+    These paradoxes were pointed out by C. I. Lewis in 1912
+    (before Whitehead and Russell had even gotten
+    all three of their volumes published). 
+       Anything materially-implies a true thing,
+        whether or not the first thing is connected with the second
+        or whether or not the first thing is even true. 
+         
+          α→(β→α)  
+         
+        Examples that are true since strawberries are red: 
+         
+           If the moon is made of green cheese then strawberries are red. 
+           
+            If the sky is blue then strawberries are red. 
+           
+          
+        A false thing materially-implies anything and everything. 
+         
+          ¬α→(α→β)  
+         
+        Examples that are true since the moon is not made of green cheese: 
+         
+           If the moon is made of green cheese then strawberries are red. 
+           
+            If the moon is made of green cheese then pigs can fly. 
+           
+          
+      
+    One may argue that each of these examples is obviously true,
+    assuming that material implication is what was meant. 
+    That doesn't seem to be very useful, though. 
+    Why use → to express "if ... then ..."
+    if it doesn't mean what people ordinarily mean by "if ... then ..."? 
+    Reasoning almost always uses
+    some property of the things being reasoned about
+    that is not included in their truth values,
+    and on that basis it is not helpful to try to express that reasoning
+    using →. 
+     
+     
+    [ Epstein2001-pl  p. 89 ff.]
+     
+     
+
+   parenthesization 
+     
+    It is safest
+    to completely parenthesize,
+    but this it tedious both for writer and reader
+    and in practice parentheses are omitted whenever possible. 
+    Unfortunately there is no single convention for doing so. 
+     
+    It appears universal that ¬ binds the tightest
+    and always applies to the next symbol, negation,
+    or parenthesized expression; 
+    and that ∧ and ∨ bind tighter than any remaining operators. 
+    However there is no established custom
+    for the relative priority of ∧ and ∨. 
+    It appears safest to use parentheses to disambiguate them. 
+    Here are some conventions, beginning with the most recent: 
+     
+       [ Bell+DeVidi+Solomon2001-lo 
+        p.8]: 
+        ¬ tightest, then ∧, then ∨, then →. 
+       
+        [ Epstein2001-pl  p.14]: 
+        ¬ binds tightest,
+        then ∧ and ∨ next (and of equal strength, in order left to right),
+        then any other logical operator. 
+       
+        [ Barwise+Etchemendy1992-lfol 
+        p. 42]: 
+        parentheses are  required  in expressions containing both ∧
+        and ∨. 
+       
+        [ Quine1982-ml  p.29]: 
+        negation tightest, then conjunction, then all others. 
+       
+        [ Kleene1967-ml  p.7]: 
+        ¬ tightest, then ∨, then ∧, then ⊃, then ∼. 
+       
+      
+    See the  table of logical symbols . 
+     
+     
+
+   predicate 
+     
+    A  predicate  takes one or more domain objects
+    and produces either true or false as a result. 
+    Predicates are thus what connects objects and
+     formula e. 
+     
+
+   propositional variable 
+     
+    A variable whose value may be true or false
+    and which represents any proposition
+    “whose internal structure won’t be under consideration”
+    [ Epstein2001-pl  p.13]. 
+     
+    Also known as a  sentence letter . 
+     
+     
+
+   quantification 
+     
+     Quantification  is used to state properties
+    of a  formula 
+    over all objects in a domain. 
+    The existential quantification
+    ∃x F(x)
+    is true if
+    there is some object  a  in the domain
+    for which F( a ) is true,
+    and
+    the universal quantification
+    ∀x F x 
+    is true if
+    F(x) is true for every object in the domain,
+    or more exactly it
+    there is no object  a  in the domain
+    for which F( a ) is false. 
+     
+    Quantifiers use  variables  as parameters
+    to direct the ranging over the domain. 
+    A quantifier is said to  bind  the variable
+    that is its parameter
+    [ Barwise+Etchemendy1992-lfol 
+    p.115]. 
+     
+     
+
+   quantifier 
+     
+    Either an
+     existential quantifier 
+    or a
+     universal quantifier . 
+    A quantifier is used to make an assertion
+    about the application of a formula
+    to every object in the domain: 
+    either that the formula is true for every object in the domain
+    (a  universal quantification )
+    or that it is true for some object in the domain
+    (an  existential quantification ). 
+    A quantifier also  binds  its
+     variable . 
+     
+
+   reference 
+     
+    See  designation . 
+     
+
+   satisfiable 
+     
+    A sentence  S  is  satisfiable 
+    if there is some interpretation in which  S  is true
+    [ Boolos+Jeffrey1989-cl  p.104]. 
+     
+    Satisfaction can be generalized to sets
+     ΓS 1 ,S 2 ,...,S n } 
+    of sentences:
+     Γ  is satisfiable if
+    there is an interpretation  I 
+    that satisfies every sentence in  Γ 
+    [ Boolos+Jeffrey1989-cl  p.105]. 
+    (Note that by this definition
+    ∅ is satisfiable.)
+     
+     
+    Quine uses  consistent  for the closely related concept of
+    a truth-functional schema that is true for at least one
+    interpretation of its (sentence) letters;
+    he names the three possibilities
+     inconsistent  (false for every sentence letter interpretation),
+     consistent  (true for some interpretation),
+    and
+     valid  (true for all interpretations). 
+    [ Quine1982-ml  p.40]. 
+     
+     
+    Compare  unsatisfiable ,
+     valid . 
+     
+
+        Always true
+         
+          valid 
+         
+          satisfiable 
+         
+         Sometimes true, sometimes false
+         
+          unsatisfiable 
+         
+         Always false
+         
+          invalid 
+         
+          
+
+   schema 
+       (Plural  schemata  or  schemas .)
+     
+    In appearance like a formula,
+    but in which letters stand not for atomic sentences
+    but for subformula whose specifics are abstracted away for now
+    [ Quine1982-ml  p.33]. 
+     
+     
+    A schema thus stands for (typically) an infinite number
+    of actual formulae,
+    in which each letter of the schema
+    has been replaced by some subformula. 
+     
+     
+    Where the letters of the schema are replaced
+    only by “true” or “false”,
+    no complication ensues. 
+    However,
+    where the letters are replaced by formulae,
+    caution must be used
+    as the formulae may not be independent of each other. 
+    For example,
+    an inconsistent schema remains inconsistent
+    (and a valid schema remains valid)
+    if its letters are replaced by formulae;
+    but a consistent schema does not necessarily remain consistent
+    if its letters are replaced by formulae,
+    because the dependence among the subformulae
+    may make some lines of the schema’s truth table impossible
+    [ Quine1982-ml  p.44]. 
+     
+     
+    Epstein uses  metavariables 
+    as components of formulae;
+    a formula containing one or more metavariables
+    appears to be indistinguishable from a schema. 
+     
+     
+    Epstein also uses “schema” as its own plural,
+    rather than either “schemata” or “schemas.”
+     
+     
+
+   second-order logic 
+     
+    A logic in which quantification is extended beyond domain objects
+    to functions, predicates, and/or operations
+    [ Bell+DeVidi+Solomon2001-lo 
+    p. 122]. 
+     
+    A well-known example of a second-order statement is
+    Leibniz's definition of identity
+    ∀x ∀y [ x=y ↔ ∀P (Px ↔ Py) ]
+     
+     
+    See  first-order logic . 
+     
+     
+
+   sentence 
+     
+    A  sentence  is a  formula 
+    containing no  free variables 
+    [ Boolos+Jeffrey1989-cl  p.101,
+     Barwise+Etchemendy1992-lfol  p.115]
+     
+    A sentence has one of the following seven forms,
+    and contains no free variables
+    [ Boolos+Jeffrey1989-cl  p.101]. 
+    In the list of forms,
+     S ,  S 1  , and
+     S 2   are also sentences; 
+     F  is a  formula ; 
+     L S   is
+    a  sentence letter ; 
+     L P1  ,
+     L P2  ,
+     L P3  , ... are
+    one-, two-, three-, ... place  predicate  letters; 
+    and  T 1  ,
+     T 2  , ... are  terms . 
+     
+
+      Sentences 
+        1.   
+             -S   
+            ( negation )  
+          2.   
+             (S 1 &amp;S 2 )   
+            ( conjunction )  
+          3.  
+             (S 1  ∨ S 2 )   
+            ( disjunction )  
+          4.   
+             S 1 → S 2 )   
+            ( material implication )  
+          5.   
+             (S 1 ↔ S 2 )   
+            ( material biconditional )  
+          6.   
+             ∀v F   
+            ( universal )  
+          7.   
+             ∃v F   
+            ( existential )  
+          8.   
+             L S    
+            ( sentence letter )  
+          9.   
+             T 1 =T 2    
+            ( identity  predicate)  
+         10.   
+             L P1  T 1   or   T 1  L P2  T 2  
+               or   L P3 (T 1 ,T 2 ,T 3 ) 
+               or ...
+           
+            ( predicate )  
+           
+    Because a sentence may have no  free variables ,
+    the  formula   F  in
+    items 6 and 7 must have (at most) one free variable,
+    and it must be the quantifier parameter  v . 
+     
+     
+    Quine uses  statement  or  closed sentence  for this concept,
+    and  open sentence  for what we are terming a  formula 
+    [ Quine1982-ml  p.134]. 
+     
+     
+    Compare  formula . 
+     
+     
+
+   sentence letter 
+     
+    A  sentence letter  is a constant reference standing
+    for either true or false
+    [ Boolos+Jeffrey1989-cl ]. 
+     
+    This is termed an  elementary statement  or
+     statement letter  by
+    Bell  et al. 
+    [ Bell+DeVidi+Solomon2001-lo  p.6-7],
+    and a  propositional variable  by Epstein,
+    who says they stand for any proposition
+    “whose internal structure won’t be under consideration”
+    [ Epstein2001-pl  p.13]. 
+     
+     
+    Compare  name  which is a constant reference to
+    a domain object. 
+     
+     
+    See  interpretation  which
+    (among other things)
+    assigns true or false to each sentence letter. 
+     
+     
+
+   Skolem-Löwenheim theorem 
+     
+    (Of first-order logic.) 
+    If an enumerable set Δ of sentences has a model,
+    then it has a model with an enumerable domain
+    [ Boolos+Jeffrey1989-cl  p.131]. 
+     
+
+   sound 
+     
+    A proof system or decision process is  sound 
+    if it classifies as  valid 
+    only those sentences that are in fact valid. 
+     
+
+   statement 
+       See  sentence . 
+     
+
+   statement letter 
+     
+    See  sentence letter . 
+    [ Bell+DeVidi+Solomon2001-lo 
+    p.6-7]. 
+     
+
+   structure 
+     
+    See  interpretation . 
+     
+
+   tautology 
+     
+    A truth-functional  schema  is a  tautology 
+    if it is true for every interpretation of its
+     (sentence) letters . 
+     
+    Compare  valid . 
+     
+     
+
+   term 
+     
+    A  term  is something that refers to a domain object
+    (see  interpretation ):
+    either a  name ,
+    or an  n -place  function  symbol
+    applied to an  n -tuple of terms as its parameters
+    [ Boolos+Jeffrey1989-cl  p.102]. 
+     
+
+   theory 
+     
+    A  theory   T  is
+    a set of all sentences in some language  K 
+    that are implied by  T  itself
+    [ Boolos+Jeffrey1989-cl  p.106]. 
+     
+    A theory always contains all valid sentences of  K ,
+    as these are implied by any set of sentences of  K . 
+    Thus, for example,
+    every theory contains  ∀x (x=x) 
+    as this is valid in every language. 
+    These sentences can be thought of as the basis of the theory,
+    and that the theory, which by definition
+    is closed under the operation of  implication ,
+    can be constructed by applying implication successively
+    using the sentences already in the theory. 
+     
+     
+    Note that in general there are true sentences in  K 
+    that are not in a particular theory  T . 
+    In particular, for every theory of
+    any language that includes the language of arithmetic,
+    there are true statements that are not in the theory. 
+    See  complete . 
+     
+     
+
+   truth table 
+     
+    A table presenting a collection of true and false values
+    for the components of a sentence,
+    and the corresponding values of the sentence. 
+    Some examples of simple truth tables
+    appear at the entries for
+     conjunction ,  disjunction ,
+    and  negation . 
+    In these tables,
+    the components are simply  sentence letters . 
+     
+    Truth tables are also used
+    for analyzing more complex sentences by hand. 
+    Then the truth values of the smallest sub-sentences
+    are filled in under the operator that defines them,
+    continuing to larger sub-sentences until the entire table is filled
+    (or until the desired result is obtained,
+    for example demonstrating  satisfiability ). 
+    An example table appears below:
+    first the possible values for  A ,
+     B , and  C  are entered,
+    then the values for  (A∧B)  and
+     ¬ C ;
+    finally, the values for  (A∧B)∨ ¬ C 
+    are entered
+    under the  ∨ 
+    [ Barwise+Etchemendy1992-lfol 
+    p.53-4]. 
+     
+
+  Empty table 
+    A    
+         B   
+            C    
+         (A∧B)   
+            ∨    
+         ¬ C   
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+           
+         
+         
+         
+         
+          
+             A, B, and C entered 
+    A    
+         B   
+            C    
+         (A∧B)   
+            ∨    
+         ¬ C   
+         T  
+       T  
+       T   
+         
+         
+         
+         T  
+       T  
+       F   
+         
+         
+         
+         T  
+       F  
+       T   
+         
+         
+         
+         T  
+       F  
+       F   
+         
+         
+         
+         F  
+       T  
+       T   
+         
+         
+         
+         F  
+       T  
+       F   
+         
+         
+         
+         F  
+       F  
+       T   
+         
+         
+         
+         F  
+       F  
+       F   
+         
+         
+         
+            (A∧B) ,
+ ¬ C  entered 
+        A    
+         B   
+            C    
+         (A∧B)   
+            ∨    
+         ¬ C   
+         T  
+       T  
+       T   
+        T   
+         
+        F  
+         T  
+       T  
+       F   
+        T   
+         
+        T  
+         T  
+       F  
+       T   
+        F   
+         
+        F  
+         T  
+       F  
+       F   
+        F   
+         
+        T  
+         F  
+       T  
+       T   
+        F   
+         
+        F  
+         F  
+       T  
+       F   
+        F   
+         
+        T  
+         F  
+       F  
+       T   
+        F   
+         
+        F  
+         F  
+       F  
+       F   
+        F   
+         
+        T  
+            (A∧B)∨ ¬ C  entered 
+    A    
+         B   
+            C    
+         (A∧B)   
+            ∨    
+         ¬ C   
+         T  
+       T  
+       T   
+        T   
+        T   
+        F  
+         T  
+       T  
+       F   
+        T   
+        T   
+        T  
+         T  
+       F  
+       T   
+        F   
+        F   
+        F  
+         T  
+       F  
+       F   
+        F   
+        T   
+        T  
+         F  
+       T  
+       T   
+        F   
+        F   
+        F  
+         F  
+       T  
+       F   
+        F   
+        T   
+        T  
+         F  
+       F  
+       T   
+        F   
+        F   
+        F  
+         F  
+       F  
+       F   
+        F   
+        T   
+        T  
+          
+
+   truth value 
+     
+    Either true or false. 
+     
+    The  table of logical symbols 
+    lists the symbols used
+    by various authors for true and false. 
+     
+     
+
+   truth-functional 
+     
+    Having a truth value that depends solely upon
+    the truth values of its components
+    and the structure in which these components are combined. 
+     
+    All formulae as defined here are truth-functional
+    (e.g.  conjunction ,
+     disjunction ,
+     material biconditional , etc.),
+    but natural language sentences are generally not
+    (e.g. “Don’t crush that dwarf,
+    hand  me  the pliers”). 
+     
+     
+    “Being truth-functional means that
+    the truth value of a complex sentence built up using these connectives
+    depends on nothing more than
+    the truth values of the simpler sentences from which it is built”
+    [ Barwise+Etchemendy1992-lfol 
+    p.35]. 
+     
+     
+
+   universal quantification 
+     
+    A  formula  constructed from
+    a  variable   x 
+    (the parameter of the quantification)
+    and a subformula  F . 
+    The  universal quantification  is true if and only if
+    the subformula  F  is true
+    for all possible values of the variable  x 
+    (all objects in the  domain ). 
+     
+    A universal quantification is written as  ∀x (F) ;
+    occasionally this notation is seen  ∀x.F ,
+    but it is obsolete (see  dot ). 
+     
+     
+    The quantifier  ∀x  is said to
+     bind   x 
+    (see  bound variable ,
+     free variable ). 
+    Any unbound instance of  x  in
+     F 
+    becomes bound in  ∃x (F) . 
+     
+     
+    See
+     universal quantification ,
+     quantification ,
+     existential quantifier . 
+     
+     
+
+   universal quantifier 
+     
+    ∀x
+    for some variable x. 
+     
+
+   unsatisfiable 
+     
+    A formula is  unsatisfiable 
+    if it is not satisfiable;
+    that is,
+    if it is true for no interpretation. 
+     
+    See  satisfiable ,  valid . 
+     
+     
+
+   valid 
+     
+    A sentence is  valid 
+    if it is true in every interpretation
+    [ Boolos+Jeffrey1989-cl  p.104]. 
+     
+    If  S  is valid, we write
+     ⊢S 
+    [ Boolos+Jeffrey1989-cl  p.104]. 
+     
+     
+    Compare  tautology . 
+     
+     
+    See  satisfiable ,
+     unsatisfiable . 
+     
+     
+
+   variable 
+     
+    A letter that can refer
+    to any object in the domain of an
+     interpretation . 
+    Variables are a part of the
+     logical symbols . 
+    A variable  v  in
+    a  formula   F  becomes
+     bound 
+    if  F  is a subformula of a
+     quantifier 
+    whose parameter is  v ;
+    otherwise,  v  is
+     free . 
+     
+    See  bound variable ,
+     free variable ;
+    compare  metavariable ,
+     name ,
+     sentence letter . 
+     
+     
+
+   well-formed formula 
+     
+    A  well-formed formula ,
+    also called a  wff  (pronounced “wiff”),
+    is a syntactically-correct formula
+    [ Epstein2001-pl  p.13]. 
+     
+    The concept of a wff seems to demand that
+    a formula may potentially be ill-formed;
+    other authors appear to use “formula” for “wff,”
+    or for emphasis use “syntactically correct formula.”
+     
+     
+
+  Historical notes 
+
+ 
+A somewhat biased and incomplete summary
+of the history of logic:
+ 
+
+ 
+The study of logic dates back about two and a half millennia to Aristotle. 
+From the perspective of the current day,
+Aristotleian logic seems to consist of
+some propositional logic without a good notation
+and a proof system in which the inference rule
+is essentially the subset operation. 
+From this substantial beginning
+nothing of much interest developed
+until Frege developed a first-order formal logic
+that supported quantifiers and n-ary predicates and functions,
+and in which semantics followed syntax. 
+For a time logic appeared to be primarily the study of mathematical proof systems,
+led by Whitehead and Russell and to a lesser extent Hilbert. 
+Gödel’s Incompleteness Theorem gave this program a severe setback,
+but the view that logic is the handmaiden to mathematical proof
+continues to thrive
+(to some extent, for example,
+in Bell  et al. 
+[ Bell+DeVidi+Solomon2001-lo ]). 
+The main thrust of logic, however,
+shifted to computability and related concepts,
+models and semantic structures,
+expressiveness,
+extensions of classical logic for other situations,
+and the study of logical systems as subjects of interest in their own right. 
+ 
+
+ 
+One of the motivations for the present work
+is the diversity in symbology, terminology,
+and ontology of concepts among prominent authors. 
+Thus is is of interest to see where and when
+various approaches originated,
+and consider how they have affected the present day. 
+Most of the information about symbols and approaches from before 1950
+are from Quine [ Quine1982-ml ],
+who gives a historical note at the end of most sections. 
+ 
+
+ 
+(It is interesting to note how the points of view of various authors,
+including me,
+is expressed in their views of what was important in the history of logic. 
+One important point of view is
+“logic as the basis of mathematical proofs”;
+this point of view seems to go along with the idea that
+modern logic began with Boole, and that Frege was unimportant.)
+ 
+
+
+ Examples 
+
+   ‘Anyone who loves himself loves someone’ 
+     {L: loves } 
+     
+     ∀x (xLx → ∃y xLy)  
+    [ Boolos+Jeffrey1989-cl  p.96]. 
+     
+   
+
+    ‘None of Alma’s lover's lovers love her’ 
+     {a: Alma ,
+    L: loves } 
+     
+     ∀x
+    [ ∃y (xLy &amp; yLa) → −xLa]  
+    [ Boolos+Jeffrey1989-cl  p.96]. 
+    I would say that this is expressed by
+     
+     
+     ∀x [ −∃y (xLy &amp; yLa) → xLa] 
+     
+   
+
+    ‘Nobody has more than one father’ 
+     {F: ‘is
+    a father of’ } 
+     
+     ∀x ∀y ∀z
+    [ (xFz&amp;yFz) → x=y]  
+    [ Boolos+Jeffrey1989-cl  p.96]. 
+     
+   
+
+    ‘Alma loves her paternal grandfather’ 
+     {a: Alma ,
+    F: ‘is a father of’ ,
+    L: loves } 
+     
+      aLf(f(a))  
+    [ Boolos+Jeffrey1989-cl  p.97]. 
+     
+   
+
+    ‘Everyone thinks everyone is an only child’ 
+    
+    [Kripke, quoted in
+     Preti2003-k  p.5]. 
+   
+
+  References 
+
+  Barwise+Etchemendy1992-lfol 
+   
+  Jon Barwise and John Etchemendy. 
+   The Language of First-Order Logic.  
+  Third edition.
+  CSLI Publications, Stanford, California. 
+  1992. 
+   
+   
+   
+   Bell+DeVidi+Solomon2001-lo 
+   
+  John L. Bell, David DeVidi, and Graham Solomon. 
+   Logical options.  
+  Broadview, Peterborough, Ontario. 
+  2001. 
+   
+   
+   
+   Boolos+Jeffrey1989-cl 
+   
+  George S. Boolos and Richard C. Jeffrey. 
+   Computability and Logic.  
+  Third edition.
+  Cambridge University Press. 
+  1989. 
+   
+   
+   
+   Church1958-iml 
+   
+  Alonzo Church. 
+   Introduction to Mathematical Logic.  
+  Second edition.
+  Princeton University Press. 
+  1958. 
+   
+   
+   
+   Epstein2001-pl 
+   
+  Richard L. Epstein. 
+   Propositional Logics.  
+  Second edition.
+  Wadsworth, Belmont, CA, USA. 
+  2001. 
+   
+   
+   
+   Kleene1967-ml 
+   
+  Stephen Cole Kleene. 
+   Mathematical Logic.  
+  Wiley and Sons. 
+  1967. 
+   
+   
+   
+   Preti2003-k 
+   
+  Consuelo Preti. 
+   On Kripke.  
+  Wadsworth. 
+  2003. 
+   
+   
+   
+   Quine1982-ml 
+   
+  W. V. Quine. 
+   Methods of Logic.  
+  Fourth edition.
+  Harvard University Press. 
+  1982. 
+   
+   
+   
+   Tarski1949-ilmd 
+   
+  Alfred Tarski. 
+   Introduction to Logic and to the Methodology of Deductive Sciences.  
+  Second edition.
+  Oxford University Press, New York. 
+  1949. 
+   
+   
+   
+   Whitehead+Russell1910-13-pm 
+   
+  A. N. Whitehead and B. Russell. 
+   Principia mathematica.  
+  Cambridge University Press. 
+  1910-13. 
+   
+   
+   
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010May16Su21:42 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

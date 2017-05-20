@@ -1,0 +1,32 @@
+ ### Change this line when the data is on website
+msm = read.csv("http://www.ics.uci.edu/~zhaoxia/teaching/stat120c/Data/msmdata.csv")
+###
+
+# First acquire the relevant n and p
+n = dim(msm)[1]
+p = dim(msm)[2]
+
+# Set x and y for simplicity
+x = msm$Pressure
+y = msm$Calcium
+
+# Solve for \hat{beta}_1 and \hat{beta}_0
+beta1 = sum( ( x - mean(x) ) * ( y - mean(y) ) )/sum( ( x - mean(x) )^2 )
+beta0 = mean(y) - beta1 * mean(x)
+
+# Solve for the unbiased estimate for sigma^2
+yhat = beta0 + beta1*x
+MSE = sum( (y - yhat)^2 )/(n-2)
+
+# Test the null hypothesis that beta_1 = 0 vs. beta_1 != 0
+test.stat = beta1/sqrt( MSE / sum( ( x - mean(x) )^2 ) )
+alpha = 0.05
+
+# Rejection region approach
+cutoff = qt( c(alpha/2, 1-alpha/2), df = n - 2 )
+(test.stat = cutoff[2])
+# The result above is TRUE so we reject the null hypothesis
+
+# p-value approach
+p.value = 2*pt( test.stat, df = n - 2, lower.tail = F)
+p.value  

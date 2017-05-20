@@ -1,0 +1,75 @@
+ 4.4 OEAddExplicitHydrogens<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.3 OE3DToInternalStereo 
+ Up:   4. OEChem Functions 
+ Next:   4.5 OEAddMols 
+   
+
+
+  
+4.4 OEAddExplicitHydrogens 
+ 
+   
+void OEAddExplicitHydrogens(OEMol &amp;mol,
+                            bool polarOnly=false, bool set3D=true)
+void OEAddExplicitHydrogens(OEMCMolBase &amp;mol,
+                            bool polarOnly=false, bool set3D=true)
+void OEAddExplicitHydrogens(OEMolBase &amp;mol,
+                            bool polarOnly=false, bool set3D=true)
+    
+Convert the implicit hydrogens on the atoms of a molecule to explicit
+hydrogen atoms.  Zero or more new atoms are created with atomic number
+ OEElemNo::H , and new bonds are created to connect these to the parent
+atom with a single bond.  This function also resets the implicit hydrogen
+count to zero.  If the ``polar only'' argument is true, this function
+does nothing if the atom is not polar,  i.e.  when
+ OEAtomBase::IsPolar  returns false.
+
+  
+The sprouted hydrogens are initially given the same co-ordinates as their
+parent atom.  However, if the ``set3D'' parameter is true, the default,
+and the given molecule has three dimensional co-ordinates ( i.e. 
+ OEMolBase::GetDimension  returns a value of three or more), this
+routine automatically calls the  OESet3DHydrogenGeom  function.
+
+  
+    
+bool OEAddExplicitHydrogens(OEMolBase &amp;mol, OEAtomBase *atm);
+    
+The form of the  OEAddExplicitHydrogens  function operates only on
+the specified  OEAtomBase .  This function creates a new
+ OEAtomBase  for every implicit hydrogen on ``atm'', as given
+by  atm-&gt;GetImplicitHCount() .  The new hydrogen atoms are given
+the same co-ordinates as their parent, ``atm''.  This function
+currently always returns true.  To set the 3D geometry of these atoms,
+call the  OESet3DHydrogenGeom  function.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.3 OE3DToInternalStereo 
+ Up:   4. OEChem Functions 
+ Next:   4.5 OEAddMols 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

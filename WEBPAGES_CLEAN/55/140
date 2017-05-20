@@ -1,0 +1,96 @@
+ 
+  Class RunTaskEvent
+<body>
+  
+ 
+  Class RunTaskEvent
+ 
+ 
+java.lang.Object
+   |
+   +---- SimEvent 
+           |
+           +---- TaskEvent 
+                   |
+                   +----RunTaskEvent
+ 
+    public class  RunTaskEvent 
+    extends  TaskEvent 
+   
+This event is sent to a task in order to run it.
+ 
+     See Also: 
+        Task 
+     
+ 
+    
+      RunTaskEvent  (Object, EventDestination, float, long, int, float)
+      Constructs a run task event.
+   
+    
+      getPEId  ()
+      Returns the identifier for processing element to run task on.
+        getTimeSlice  ()
+      Returns the length of the time slice.
+        toString  ()
+      Returns a string representation of this object.
+    
+ 
+    
+  
+   
+ RunTaskEvent 
+ 
+ public RunTaskEvent(Object from,
+                     EventDestination to,
+                     float time,
+                     long taskId,
+                     int peId,
+                     float timeSlice)
+ 
+   Constructs a run task event.
+ 
+        Parameters: 
+       from - sender of event.
+      to - receiver of event.
+      time - time stamp.
+      taskId - global task identifier of destination task.
+      peId - identifier for processing element to run task on.
+      timeSlice - length of time slice.
+          
+    
+ 
+    
+   
+  getPEId  
+ 
+ public int getPEId()
+ 
+   Returns the identifier for processing element to run task on.
+ 
+        Returns: 
+       the identifier for processing element to run task on.
+     
+     
+  getTimeSlice  
+ 
+ public float getTimeSlice()
+ 
+   Returns the length of the time slice.
+ 
+        Returns: 
+       the length of the time slice.
+     
+     
+  toString  
+ 
+ public String toString()
+ 
+   Returns a string representation of this object.
+ 
+        Returns: 
+       a string representation of this object.
+        Overrides: 
+        toString  in class  SimEvent 
+     
+  </body> 

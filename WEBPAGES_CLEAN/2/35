@@ -1,0 +1,553 @@
+ Defining Functions in Modules
+
+In the scripts we have written, we have already used many functions imported
+from various modules (at least builtins, prompt, predicate, math, goody, and
+random: can you name a function used from each of these modules)? We have also
+seen some functions in the lectures, although not really examined their details.
+For example, in many of the lectures on control structures, we used functions
+to capture the computation of a full script. In this lecture we will explore
+how to write functions in our own scripts, and write functions in modues that
+we can use as libraries by importing into our scripts. But first, we will learn
+two simple statements, return and raise, and very importantly, review Python's
+rules for binding arguments to parameters.
+
+We start by defininig the EBNF for Python's return statement, which is the only
+new statement that we must know to write functions (although we will also cover
+the raise statement later in this lecture, to show how code -typically
+functions- can raise exceptions.
+
+  return_statement  float:
+    if x  float
+to specify that this function will return a reference to a float value object.
+
+These annotations are NOT CHECKED by Python (much more on this topic later in
+ICS-31 and throughout the entire 30s sequence). Annotations are, like comments,
+for our benefit only. To Python the following function definition, without
+annotations, has exactly the same meaning
+
+def min(x,y):
+    if x  and a special module object
+   respectively.
+
+Now debug the program again. But this time when the debugger indicates it is
+about to execute the second line, using the step-into button (the arrow going
+between two little blocks). Note that the focus (the highlighted line that
+Python indicates it will execute next) shifts to the first line of the min
+function: the if statement. So instead of stepping over the line of code that
+called the  function (and executing all its code, including the entire function
+call) we step into the function, to watch it execute in detail.
+
+  Again, look at the Variables tab/window. The debugger has shifted focus to the
+  function and shows its parameter names (x and y) and their bindings (the
+  values 90.0 and 95.0 if you entered the values I did above). So, the function
+  has been called and the arguments have been transmitted/passed to their
+  parameters, but it has not executed the function's body yet.
+
+  Now look at the Debug tab and look under "Main Thread". The first indented
+  entry on my computer shows "min [functions.py:4]" indicating that Python is
+  currently executing the min function on line 4 of the script (that is the line
+  the min's if statement appears on, when I cut/pasted the code into a script).
+  I put this script into a module named "functions", so the line beneath this
+  one says " [functions.py:10]". If we click that entry, the debugger
+  shifts its focus to the line in the script where this function is called (in
+  my script on line 10): it is highlighted, and the Variable tab/window again
+  shows the name in the module. Click "min [functions.py:4]" again and the focus
+  shifts back to the min function: its statement and variables.
+
+So, in this way we can carefully examine the execution of a function (if we
+want) and flip back and forth between the body of a function and the statement
+in the module that called it: in the former we can see the parameters, in the
+later the arguments.
+
+Using the step-over button (there are no function calls in min, so technically
+we can use either step- button) watch how it executes the if, then executes the
+return statement in the if's first block. When we step-over the return statement
+
+  (1) "min [functions.py:4]" disappears from under Main Thread in the Debug tab
+
+  (2) Focus returns to the statement calling min, and the Variables tab is
+      updated 
+
+The function is done and we are back to the statement in our program that called
+the min function.
+
+So, we have now learned what we can control how we use the debugger to execute
+functions in our scripts: step-over executes the entire function without
+showing us any details; step-into treats the function like a mini-scipt that we
+can step through just like any script (once the parameters are bound to their
+matching arguments). This gives us a coarse-grained or fine-grained control of
+our functions when we step through them. In fact, we can step into any function
+that we write or import.
+
+If we are finished stepping inside a function, and we want to return to the
+statement that called the function, we can easily do so by using the step-return
+button (the arrow going out from between two little blocks). Rerun the debugger
+and after stepping into min, immediately step-return out of it.
+
+Note that the stepping operations are used so often, they are also bound to
+the keys F5, F6, F76, and F8 (stop-into, step-over, step-return, and resume).
+
+Also, we can set a [un]conditionial breakpoint on any line INSIDE a function,
+and the debugger will stop there whenever it calls the function and reaches that
+line (just as it would for setting breakpoints in a script).
+
+Finally, before we leave this interlude, go back to the PyDev perspective.
+Then replace the call to min in the script with the following (which includes
+just one argument).
+
+cost  = min(.90*price)
+
+Rerun this script. Python can still execute the first statement, which prompts
+for the price. But when Python tries to execute the second statement it will
+detect that it cannot successfully call the min function, because min's header
+lists two parameters (and neither with a default argument) but the rewitten
+call now contains only one argument. Because it cannot successfully initialize
+all the parameter names, Python raises the TypeError exception and prints the
+following.
+
+Traceback (most recent call last):
+  File "C:\Users\Pattis\workspace\zexperiment\functions.py", line 10, in 
+    cost  = min(.90*price)
+TypeError: min() missing 1 required positional argument: 'y'
+
+What this exception means by TypeError is that the prototype of min (which
+really means the header, showing two parameters) is not successfully matched by
+this call to min, which transmits/passes just one argument. This is not the
+kind of exception that we write a try/except to handle: something is wrong with
+our script and we need to fix it to call min with the correct number of
+arguments.
+
+Likewise, if we changed the same line to
+
+cost  = min(.90*price, price-5., "Can't you give me a better value?")
+
+Python would detect that it cannot successfully call the min function (the call
+now supplies three arguments, but the function still only defines two parameter
+names) so Python will raise the following exception.
+
+Traceback (most recent call last):
+  File "C:\Users\Pattis\workspace\zexperiment\functions.py", line 10, in 
+    cost  = min(.90*price, price-5., "Can't you give me a better value?")
+TypeError: min() takes 2 positional arguments but 3 were given
+
+Of final interest, if we changed the same line to (function name is now mini)
+
+cost  = mini(.90*price, price-5.)
+
+Eclipse would show this line as a syntax error because there is no mini function
+even defined. But Python will still execute the script if we tell it to run the
+script. Wen it reaches this line it will detect an error and raise the
+following exception.
+
+Traceback (most recent call last):
+  File "C:\Users\Pattis\workspace\zexperiment\functions.py", line 10, in 
+    cost  = mini(.90*price, price-5.)
+NameError: name 'mini' is not defined
+
+So, Eclipse indicates some errors before running our script and some after
+Python starts running the script. If we run a script for which Eclise indicates
+an error, Python will raise an exception when it reaches that error. Generally
+we try to fix all the errors Eclipse shows before telling Python to run the
+Script.
+
+Finally, if we really wanted to write a simple discount function, we could write
+it along with min, as
+
+def discount(price):
+    return minimum(.90*price,price-5.00)
+
+Here, discount returns the minimum of the price calculated two ways. Our script
+would become
+
+price = prompt.for_float('Enter price of item as dollars.cents')
+cost  = discount(price)
+print('The sale cost of this item is',cost)
+
+In fact, we don't need to store the computed discount, and can write the 2-line
+script
+
+price = prompt.for_float('Enter price of item as dollars.cents')
+print('The sale cost of this item is', discount(price))
+
+We could even "simplify" this to have no price name, by calling discount
+directly on whatever value the user input:
+
+print('The sale cost of this item is', 
+      discount(prompt.for_float('Enter price of item as dollars.cents')))
+
+But I would argue that this is too compact and would prefer either of the
+scripts written above it.
+
+------------------------------
+
+Equivalent min functions
+
+Here is a second way to write an equivalent min function. Ideally, a function
+should contain just one return statement, at its end. In fact, we can prove
+mathematically that there is always a way to write any function with just one
+return statement. But sometimes functions are easier to write (and understand)
+if they have multiple return statements.
+
+Thus, we will adopt a more pragmatic approach, putting simplicity as the
+paramount aspect of the code that we write: if multiple return statements make
+a function simpler to write and easier to understand, use them. But be able to
+argue why; don't just use them because you are sloppy. I would argue, for
+example, that the min function defined above, which has two return statements,
+is simpler than the one below, which has only one return statement.
+
+def min (x,y):
+    if x  str:
+     return (singular if number == 1 else plural)
+#    if number == 1:
+#        return singular
+#    else:
+#        return plural
+
+We can call this function as follows
+
+print(brush_count, number_match(brush_count,'brush','brushes'))
+
+It might be more useful to write the following function, which doesn't repeat
+the 'brush' part of 'brush' and 'brushes'. It is an art to determine the the
+most useful form of a function. Think and experiment.
+
+def number_match_suffix(number : int, root : str, plural_suffix : str) -&gt; str:
+    return root + ('' if number == 1 else plural_suffix)
+
+Which we can call as follows
+
+print(brush_count, number_match_suffix(brush_count,'brush','es'))
+
+Of course, it would be problematic to print 1 goose vs. 2 geese with
+number_match_suffix, but easy to do with the original number_match.
+
+What all these uses have in common is that we started with a very simple if/else
+statement whose blocks did the same things: returning or printing. If this is
+the case, we can often simplify the code with an if expression. Once students
+learn about conditional expressions, they try to remove every if statement,
+converting it to a conditional expression: it OK to try, but if you fail or end
+up with something that looks much more complex, stick with the if/else
+statement.
+
+------------------------------
+
+Polymorphic Functions
+
+Let's return to an issue dealing with annotations. All versions of the min
+function require of their parameters only that their argument values can be
+compared using the  bool:
+    return  (year%4 == 0 and year%100 != 0) or year%400 == 0
+
+def is_leap_year (year : int) -&gt; bool:
+    if  year%400 == 0:
+        return True
+    elif year%100 == 0
+        return False
+    elif year%4:
+        return True
+    else:
+        return False
+
+This function hides a very messy calculation inside a well-named and easy to
+call function. A year is a leap year if it is divisible by 4 but not 100, unless
+it is also divisible by 400; this function is correct for the next few thousand
+years. It has just one parameter: the year on which to do the calculation, and
+always returns a bool (True or False) value.
+
+def distance (x1 : float, y1 : float, x2 : float, y2 : float) -&gt; float:
+    return math.sqrt( (x1-x2)**2 + (y1-y2)**2 )
+
+Actually, this function works with combination of ints and floats, but it always
+returns a float result (because of of the square root: even math.sqrt(4)
+returns a result of 2.0 (a float). We could write it more succinctly as
+
+def distance (x1,y1, x2,y2) -&gt; float:
+    return math.sqrt( (x1-x2)**2 + (y1-y2)**2 )
+
+This function computes the simple Euclidean distance between two points on a
+plane, which must be specified as four parameters: the X- and Y-coordinate of
+each point (although a better function would use two parameters, each an
+instance of a Point class, to represent these four values; we will get to using
+and defining classes soon). Some functions have quite a few parameters (see
+below for even more).
+
+def in_circle (point_x, point_y,  center_x, center_y, radius,) -&gt; bool:
+    return distance(center_x,center_y,point_x,point_y) = 90:
+        return 'A'
+    elif test_percent &gt;= 80:
+        return 'B'
+    elif test_percent &gt;= 70:
+        return 'C'
+    elif test_percent &gt;= 60:
+        return 'D'
+    else:
+        return 'F'
+
+We will soon be able to write code that can read student names and test scores
+from a file, and we could use this function to help us print the name and grade
+of every student.
+
+We have already used the factorial function that we imported from the math
+library. If it were not there, we could write it ourselves, as follows.
+
+def factorial(n : int) -&gt; int:
+    answer = 1
+    for i in irange(2,n):
+        answer *= i
+    return answer
+
+This function is interesting because it defines two local names (answer and i,
+along with its parameter n). We accumulate the product of all the integers 1 up
+to n in the local name answer, by initializing it and repeatedly multiplying it
+by the next integer; finally we return the value it has accumulated.
+
+When writing functions, beginners sometimes have difficulty determining when to
+define a parameter name and when to define a local name. Here is where thinking
+about prototypes helps: any information that must be communicated to the
+function by arguments must be stored in a parameter; local names help in the
+computation, but do not need to be initialized by arguments. We need n to
+specify the factorial that we are computing, but answer is always initialized
+to 1 and i comes from iterating over an irange. Functions should have the fewest
+number of parameters necessary; if a name can be defined locally, it should be.
+Remember that when functions terminate, all parameter names and local names
+disappear.
+
+Here are two more functions we defined in the for loop lecture.
+
+def vowel_count(s : str) -&gt; int:
+    count = 0
+    for c in s:
+        if c in 'aeoiuAEIOU':
+            count += 1
+    return count
+
+
+def is_legal(word : str, dict_file_name : str) -&gt; bool:
+    # look for a word in the dictionary file
+    for l in open(dict_file_name):
+        if word == l.rstrip():	# found it; legal
+            return True
+
+    return False		# couldn't find it in the dictionary: illegal
+
+The  first returns a count of the vowels in its parameter s (using local names
+count and c), initializing and accumulating the answer in the local name count.
+
+The second determines if its word parameter is legal, by looking for it on every
+line in in the file whose name is dict_file_name. There is only one local name,
+l, which iterates over the lines in the file, whose rstipped values are compared
+to word for equality. Here the return statements each use literals: either True
+if one of the lines is found to be the word, and False (outside/after the loop, 
+executed after the loop terminates) if no line had the word. Note that the
+return True statement that appears in the for loop, when executed, terminates
+the function, and therefore also terminates the for loop it is in: it does not
+have to execute a break statement to terminate the loop: once it knows the
+answer, it can execute return and be done with the function.
+
+Here are two similar is_legal functions (notice how each uses else:) one of
+which is CORRECT and one of which is INCORRECT. Can you spot the wrong one? More
+importantly, can you explain why it is wrong? They are different only in the
+indentation of the else: return False
+
+def is_legal(word : str, dict_file : str) -&gt; bool:
+    for l in open(dict_file):
+        if word == l.rstrip():
+            return True
+        else:				# Here is the else: note its indentation
+           return False
+
+
+def is_legal(word : str, dict_file : str) -&gt; bool:
+    for l in open(dict_file):
+        if word == l.rstrip():
+            return True
+    else:				# Here is the else: note its indentation
+        return False
+
+In the first case, it starts the loop and based on the first word it reads,
+returns True or False, without examining any other words. This is wrong. In
+the second case, the else: is part of the for loop, and is executed if the loop
+finishes without executing a break statement: there are no break statements in
+this loop the return False is always executed if the loop finishes without
+returning True.
+
+Here is a function that returns how many time its test_number parameter must go
+through the collatz process before it becomes 1.
+
+def cycle_count(test_number : int) -&gt; int:
+    count = 0
+    while test_number != 1:
+        count += 1
+        if test_number % 2 == 0:
+            test_number = test_number//2
+        else:
+            test_number = 3*test_number + 1
+
+    return count
+
+It initializes count to 0, increments it during each iteration of the loop
+(before deciding how to update test_number) and finally returns the resulting
+value stored in count.
+
+And finally, here is a functional version of prompting for an int and trapping
+user-entry errors. Of course, the entire purpose of this function is to do
+safe input, so it does prompting and printing (in the case of errors) unlike any
+of these other functions. If you compare this code with the original, you will
+see that we added a prompt string (named message) as a parameter, and we
+directly return the result of calling int(string_rep), which either returns the
+correct int value or raises an exception that is handled and therefore stays
+within the loop. The exception interrupts the return statment.
+
+def prompt_for_int(message : str) -&gt; int:
+    while True:
+        try:
+            string_rep = input(message+': ')
+            return int(string_rep)
+        except ValueError:
+            print('Entry error (',string_rep,') is not a legal int')
+
+An example call is
+
+x = prompt_for_int('Enter x')
+
+These 10 functions appear in a functionproject download that accompanies this
+lecture. We can create a project containing this module, and then write
+another module in that project to import its functions, call them, and print
+the returned values. Or, we can just print the values returned by calling these
+functions inside the module they appear in. See below for more details.
+
+------------------------------------------------------------------------------
+
+Functions in scripts/Functions in modules
+
+Some functions fulfill a very specific purpose in the module in which they are
+written. Other functions are more general, and might be reused in more than
+one script. We can place these general functions in a module and place the
+module in the courselib folder, so we can reuse its functions. Any module in
+the courselib is automatically available for import into our scripts, or any
+other modules. I have written a variety of general-purpose modules that are
+already in the courselib. It makes sense to catergorize similar functions and
+put them in the same module: it makes it easier for programmers to remember
+what to import and from where.
+
+It is a bit too early in your programming career to be thinking about writing
+general-purpose functions: I'm more concerned that you know how to call the
+general purpose functions already in Python's (and the courselib) library. Also,
+by using general purpose functions, you'll get some insight into what makes
+reusable/library functions, and when it comes time to write your own, you'll
+have acquired some programming taste.
+
+One final word of caution. If you put functions/modules into your courselib, we
+will not have access to this code when we grade your assignments. So if you are
+asked to submit a script, you must put all the functions you wrote for that
+assignment in the script Don't submite code that imports from any modules you
+yourself wrote in courselib.
+
+------------------------------------------------------------------------------
+
+EBNF details/review (named parameters and default arguments)
+
+In this lecture we have discussed parameter/argument binding, but only for
+simple functions (where the parameters are bound to their matching argument
+by position). We have seen other functions (notably print) where we specify
+some parameters by position and others by names; and if we don't specify the
+names of these parameters, they are initialized with default arguments.
+
+As we become more sophisticated as programmers, and write more generally useful
+functions, we are more likely to write functions that specify default arguments
+for some parameter, and call these functions using a combination of positional
+and named arguments. To this end we review the EBNF for defining and calling
+functions. These details appear in Chapter 4; see sections 4.2/4.3 for details.
+
+qualified-name   annotation]
+
+Paraphrased, each function name and its parameter are indentifiers, with the
+parameters separated by commas. Each parameter can optionally be annotated and
+have a default argument.
+
+expression     int:
+    if n =0, 'math.factorial: n ('+str(n)+') must be non-negative'
+
+Notice the test is opposite, saying what must be True for the exception NOT to
+be raised. We will continue to discuss exceptions throughout the quarter; for
+now, it is enough that you know how to raise exceptions with if/raise or with
+assert, and how to handle them with try-except statements.
+
+Meanwhile, it is very easy to experiment with raise and assert in the Python
+interpreter.
+
+------------------------------------------------------------------------------
+
+Statements that don't do anything
+
+It is possible to write something like x+1 as a statement in Python. This
+instructs Python to compute the value x+1, but not store it anywhere (no
+assignment statement) or print it (no print statement). Typically a statement
+like this is an intent error: we meant to store or print the result.
+
+It is common for begining programmers to forget to write return for their
+return statements, and just write expression whose value should be returned.
+Recall that if the last statement in a function is not a return statement, then
+Python will return None for the function.
+
+For example if we wrote the INCORRECT function
+
+def f(x):
+    x+1
+
+Calling print(f(1)) would print None. It does not return the value of x+1, it
+computes that value and then does nothing with it. And since the end of the
+function's body has now been executed, Python automatically returns None.
+
+Here is the CORRECT way to write this function.
+
+def f(x):
+    return x+1
+
+Calling print(f(1)) would print 2.
+
+------------------------------------------------------------------------------
+
+A bit of magic for a later lecture
+
+The predicate module defines the function length_equal. If we call this function
+with an int, it returns a function object: this function object takes a string
+as a parameter and returns a boolean, whether the strings length is equal to
+specified length.
+
+Thus, we can write either:
+
+f = length_equal(3)    # f refers to the function object length_equal(3) returns
+print( f('abc') )      # Call the function object with the string 'abc'
+
+which prints True; or we can write
+
+print( length_equal(3)('abc') )
+
+Here length_equal(3) returns a reference to a function object, by following it
+with ('abc') we are calling that function object with the string 'abc'.
+
+Here is how the length_equal function is defined. 
+
+def length_equal(i):
+    def len_eq(s):
+        return len(s) == i
+    return len_eq
+
+Notice inside length_equal, the name len_eq is bound to a function that has a
+str parameter and returns a bool result; then the length_equal function returns
+a reference to this function object.
+
+This a a very powerful feature in Python, but confusing to beginning
+programmers. So, we will see it a few times before we need it.
+
+------------------------------------------------------------------------------
+
+1) What does the following print?
+
+def wtf():
+    return 0
+    return 1
+
+print(wtf(),wtf())
+ 

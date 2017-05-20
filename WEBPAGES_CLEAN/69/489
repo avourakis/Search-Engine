@@ -1,0 +1,20 @@
+ Memory Footprint Analysis<body>
+
+  Memory Footprint Analysis  
+      
+ 
+     Based on a combination of analysis and profiling information, the compiler can figure out that in the previous example: 
+ 
+  Data structure is a linked list. 
+  It is going to be accessed/defined sequentially.
+  It contains no cycles. 
+       Using this information the compiler would generate reconfigurability instructions to
+ 
+  Allocate the list elements in contiguous memory locations, aligned modulo the cache size.
+  Configure the cache so that line size is maximized, direct mapping is used, and  cache size is maximized (or transformed into compiler-controlled on-chip memory w/o a replacement policy; in this case, compiler would generate explicit code for loading/replacing data).       
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

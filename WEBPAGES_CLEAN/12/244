@@ -1,0 +1,69 @@
+ 3.18.1 operator()<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.18 OEMCSFunc 
+ Up:   3.18 OEMCSFunc 
+ Next:   3.18.2 CreateCopy 
+   
+
+
+  
+3.18.1 operator() 
+ 
+   
+double operator()(const OEMolBase &amp;pattern, const OEMolBase &amp;target,
+                  OEAtomBase **atoms, OEBondBase **bonds)
+    
+Scoring function.  This method is called automatically by the
+ OEMCSSearch  class when a common subgraph of two molecules is
+identified.  The pattern (query) molecule and target molecule
+currently being matched are passed as the first and second arguments
+to the function.  The arrays of pointers to atoms and bonds hold the
+atom and bond correspondences between the pattern and target.  The
+arrays are the length of the maximum atom and bond indices of the
+pattern molecule.  The indices of the atoms and bonds in the pattern
+molecule can be used to look up the corresponding atoms and bonds in
+the target molecule.  Subgraphs may not include all pattern atoms.
+Array positions for unmatched atoms and bonds are assigned to the hex
+value 0x0.
+
+  
+The integer part of the double precision floating point value returned
+by the method is used to determine maximal common subgraphs.  All
+integer part scores which are smaller than the maximum computed value
+for any subgraph are discarded by  OEMCSSearch .  The decimal part
+of the floating point value returned by the method is used to sort the
+matches found by  OEMCSSearch .  For example, by scoring matches using
+the function (number of atoms + (number of bonds/100)), all matches
+which have the same number of subgraph atoms would be retained but the
+matches would be returned in order of decreasing number of bonds
+matched.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.18 OEMCSFunc 
+ Up:   3.18 OEMCSFunc 
+ Next:   3.18.2 CreateCopy 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

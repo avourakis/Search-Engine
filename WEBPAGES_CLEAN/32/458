@@ -1,0 +1,279 @@
+ ICS 33 Summer 2013, Project #3: Careful With That Axe, Eugene<body>
+
+ 
+
+ 
+ICS 33 Summer 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 33 Summer 2013 
+   Project #3:  Careful With That Axe, Eugene  
+
+ 
+
+ 
+
+  Due date and time:   Friday, August 9, 11:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ In the United States and various parts of the world,  lotteries  offer people the chance to make a very inexpensive purchase of a ticket in hopes of reaping a windfall if they win the jackpot, which is quite often many millions of times the cost of the ticket.  The odds of winning are infinitesimal, of course; as a practical matter, playing seems to make little sense, but some players enjoy the brief dream of better days before discovering that, yet again, they haven't won.  And there's always that chance... 
+
+ This project is centered around the concept of lotteries.  It continues our exploration into some of the deeper areas of Python that allow us to create abstractions that we can use cleanly and clearly in other parts of a program.  As we've seen previously, we should prefer to keep the little details of our program as localized as possible; if we can solve a problem once and not have to think about it again, that's a lot better than having to solve it over and over again.  Additionally, any time we can eliminate redundant code from a program, we're always better off.  The level of care required is more than you might be accustomed to, but is one of the key skills you need to build if you want to successfully write programs tens or hundreds of times the size of the programs we've been writing in ICS 31, 32, and 33. 
+
+ In particular, we'll cross a few bridges we've not yet crossed: 
+
+  Writing a potentially infinite set of similar classes without having to write them one by one.  Computers excel at boring, repetitive work, so we should write programs to do that kind of work; writing many classes that are largely identical is one of the many examples of the kind of work you can automate easily in Python. 
+   Making your classes more "bullet-proof," by prohibiting misuse and "failing fast" when objects of your classes are used in ways that don't make sense.  Objects of built-in types like lists and tuples fail immediately (and tell you why) when you try to use them in ways you shouldn't; objects of your classes should do that, too. 
+   Expanding your ability to write unit tests, including tests that expect exceptions to be raised, which you may not have written previously. 
+  
+
+ 
+
+  Background on lotteries 
+
+ This project is centered around the concept of a  lottery .  As is often the case when you dive into a new problem domain, one of the first hurdles to clear is to understand the concepts and terminology relevant to the domain. 
+
+  A  lottery game  involves the selling of  tickets , each of which contains a set of numbers selected by a person (or, sometimes, selected randomly by a computer instead).  The numbers are generally integers chosen in a fairly small range.
+      Note the fact that a ticket is a  set  of numbers, meaning that the order in which the numbers are selected is considered irrelevant. 
+      
+   At a prescribed time, a  drawing  is held, in which one more set of numbers is selected randomly.  A ticket is a winner if it contains the same set of numbers selected in the drawing.  Often, there are lesser winners, who receive a smaller prize for matching some, but not all, of the numbers. 
+   While most lottery games are fairly similar, they are differentiated by a few parameters:
+  	  A  name , such as  Powerball  or  Mega Millions .  This is primarily a marketing concept, but one that is nonetheless a well-known differentiator. 
+  	   A  number count , which specifies how many numbers a player must choose (and how many will be chosen during the drawing). 
+       A  number range , which specifies the range in which the chosen numbers must reside. 
+  	 
+  For example, the lottery game  BooLotto  might have a number count of 6 and a number range of 1..45, meaning that players must select six numbers between 1 and 45 (inclusive) and that the drawing will be selected according to the same rules.  (There are more complex rules in some lottery games involving additional numbers that follow special, separate rules, but we won't model those kinds of rules in this project.) 
+  
+   A lottery game is won by anyone who selected the same numbers that were selected during the drawing.  This is generally pretty rare, though the odds vary substantially from one game to another, depending on its parameters. 
+   A ticket sold for one lottery game is not good in another, even if the numbers match the ones selected in another game's drawing, and even if the other game has the same rules (i.e., the same number count and the same number range). 
+  
+
+ 
+	
+  The program 
+
+ One of the important skills we've been developing this quarter (and in ICS 32) is the ability to practice what software engineers call  separation of concerns , which is a fancy way of saying that we ought to think about smaller problems in isolation whenever possible, and that we should write our solutions in a way that prevents us from having to think hard about the details of those problems again when we're solving bigger ones.  Writing large programs is all about taming complexity, but it's difficult sometimes to catch on to this concept when you're working on large programs for the first time. 
+
+ To give you experience with this concept more directly, this project is focused on tool-building rather than asking you to write a complete program.  You will write one module,  lotterysets , which contains one of many tools you might use in writing a program having to do with lotteries.  Since you'll want to be sure that your  lotterysets  module is working correctly, but since you have no larger-scale program to provide the context to test it, you'll also be doing what lots of real software developers do: writing a complete set of unit tests (using Python's built-in  unittest  module) to accompany it. 
+
+ 
+
+ 
+
+  Lottery sets 
+
+ As we always should when we write Python programs, we should be on the lookout for higher-level concepts that we can turn into classes or functions.  Right away, when thinking about lotteries, the concept of a set of lottery numbers — we'll call them  lottery sets  — emerges.  Different lottery games have different rules; in our program, they each have a different name, a different number count, and a different number range.  But they all revolve around the same basic concept: a collection of unique numbers in a particular range. 
+
+ When we write programs, one of our goals is to map a concept like this to an internal representation.  Python provides some built-in choices: 
+
+  We could represent them as lists of integers, but the problem with lists is that they can be any size, store any kind of element, and the numbers would not be required to be unique.  Additionally, lists can be modified after they're created, meaning that a program bug could cause the set of numbers to be changed after a ticket was sold. 
+   We could represent them as tuples of integers, but we would have problems similar to those with lists, except that tuples can't be modified once they're built. 
+   We could represent them as sets of integers.  Using sets would eliminate the problem of potential duplication — elements of a set must be unique — but do nothing to require the correct size or that the numbers are in the appropriate range.  And sets, like lists, can be modified after they're created. 
+  In the end, nothing quite works.  That isn't to say that you couldn't make one of these choices and live with it, but you would have to impose implicit restrictions — throughout your program, everywhere you created or used a lottery set — to ensure that they followed the appropriate rules (e.g., that they contained only the right number of unique integers in the appropriate range).  When restrictions like this are spread throughout a program, the chances of making a mistake go up dramatically; if you have to enforce the same rule in twenty places, there's a pretty good chance you're going to forget a couple of them.  And, even worse, the penalty for forgetting in one place will often be bugs that manifest themselves in other places, making debugging more difficult. 
+
+ When the types built into Python don't solve our problems, a better approach is to create our own types.  As we've seen, we can do this by writing  classes , in which we carefully implement all of the necessary behavior, along with all of the rules and restrictions, in one place.  Once we've finished and tested our classes, we end up with complete, polished tools that feel more like the built-in classes in Python, but ones that are tailored to the problem that we're solving. 
+
+ Implementing lottery set classes 
+
+ A better alternative would be to create new kinds of objects that represent lottery sets.  Since each game is different — it has different rules that must be followed — and since lottery sets for one game are incompatible with lottery sets for another, we'll create a  separate class  for each game. 
+
+ This may sound onerous, but it's not as bad as it sounds.  Remember that classes are also objects in Python — objects of the type  class  — and that, like other kinds of objects, they can be created while a program runs.  Since our lottery set classes are largely the same, we'll write a function that builds a new class and returns it to us.  Like any other class, we can then use it as a constructor to build objects of our new class, which will cause the  __init__  method of our new class to be called, just like any other time we create an object.  From there, we can use our new object just like any other; we call access its attributes and call methods on it. 
+
+ 
+
+ 
+
+  Your 'lotterysets' module 
+
+ You are required to build a Python module called  lotterysets  (in a file called  lotterysets.py ), which implements (at least) the things described below.  This module provides a set of tools that you can use in the rest of a program having to do with lotteries, whenever you want to represent sets of lottery numbers; the tools are polished and "fail fast" when they're used in ways that are against the rules of the game, so that you could be confident, in the rest of a larger program, that these problems are solved once and for all. 
+
+ Your  lotterysets  module is required to contain the following functions and classes, along with any other utility functions or classes you find necessary in order to implement the functionality described below. 
+
+  An exception class called  LotterySetError .  LotterySetErrors will be raised whenever one of the functions or methods in your  lotterysets  module fails.  Objects of the LotterySetError should carry error messages with them, so their backtraces, if displayed, will briefly explain what the problem is (e.g., "invalid index: 7" or "number out of allowable range: 55").  (Remember that exceptions are a way that your code can communicate with other code about failure, and also, in the case of exceptions that aren't caught, with the programmers who write that other code, so they'll know as much as possible about the reason for it and what they might do to fix it.  Concise, clear error messages are a big part of that.) 
+   A function  make_lottery_set_type , whose job is to create a new  class  of lottery set.  The  make_lottery_set_type  function takes three parameters, in this order:
+      A string specifying the name of the lottery game for which a lottery set class should be built (e.g.,  'SuperLotto' ). 
+       An integer specifying the number count for the lottery game.  The integer would need to be at least 1, but there is no upper limit on it. 
+       A two-element tuple of integers specifying the ( minimum ,  maximum ) numbers allowed in the set.  The maximum would need to be at least as large as the minimum (e.g., the tuple  (5, 4)  would be illegal, while the tuple  (1, 49)  would be fine). 
+     
+    So, for example, if you called  make_lottery_set_type('BooLotto', 6, (1, 50)) , the result would be a  class  whose objects represent a lottery set specifically for the BooLotto game; those lottery sets would require 6 numbers in the range 1..50.  Once you had that class, you could create objects from it like any other class:
+      
+    BooLotto = make_lottery_set_type('BooLotto', 6, (1, 50))
+    booset1 = BooLotto([10, 15, 22, 31, 38, 46])  
+   
+   The class returned by  make_lottery_set_type  must support  all  of the following functionality:
+      Three class variables:
+          A class variable  set_size  that specifies how many numbers must be in a set of this type. 
+           A class variable  min_set_number  that specifies the minimum number allowed in this set. 
+           A class variable  max_set_number  that specifies the maximum number allowed in this set. 
+          
+       The ability to create an object of the lottery set class given a  sequence  of numbers as a parameter to its constructor.  (Note that there are many kinds of  sequences  in Python, e.g., lists, tuples, sets.  Any is fine here.)  The sequence must:
+          Contain only integers 
+           Be the same length specified in  set_size  
+           Contain integers that are all in the allowable range (i.e., at least  min_set_number , at most  max_set_number ) 
+           Contain unique integers (i.e., the same number does not show up twice) 
+          
+       A method  full_match  that takes another lottery set as a parameter and returns True if it is a  full match  (meaning that it contains the same numbers) and False otherwise.
+          If the other set is incompatible (i.e., it is a set of numbers belonging to a different game), this method should raise a LotterySetError. 
+          
+       A method  match_count  that takes another lottery set as a parameter and returns an integer specifying how many numbers appear in both sets.
+          If the other set is incompatible (i.e., it is a set of numbers belonging to a different game), this method should raise a LotterySetError. 
+          
+       The ability to generate a  canonical representation  so that an object of your class can be viewed in the Python interpreter.  The canonical representation  must  be a string containing legal Python code to create an equivalent object. 
+       The ability to ask for the set's length using the built-in  len  function; the length of a set is its size (i.e., how many numbers are in it). 
+       The ability to compare two sets to see if they're equal (using the == operator) or not equal (using the != operator).  Two sets are equal if they are part of the same game, have the same size, the same minimum and maximum, and the same set of numbers. 
+       The ability to see if a particular number is in the set (or not) using the  in  and  not in  operators. 
+       Objects of the class should be  iterable  and  reverse iterable , meaning (among other things) that it is possible to iterate through the numbers in the set using a  for  loop.  When iterating through the numbers, they are always returned in ascending order (i.e., smallest to largest); when reverse-iterating the numbers, they are returned in descending order (i.e., largest to smallest). 
+      
+  We'll be testing your submission by running a set of automated tests that verify the functionality described above.  Note that spelling, capitalization, and the use of underscores are all important here.  These may seem like insignificant details, but it's vital to get them right when you want to write code that interoperates with code written by others.  In this case, you want your  lotterysets  module to interoperate with our automated tests; you'll need to follow the requirements in this section as carefully as you can, so that our calls to your functions and methods will work as written.  Any function or method whose name you've misspelled is one or more tests of ours that will fail due to the name not matching what we've written in our tests.
+
+  A few examples of using your module in the Python interpreter 
+
+ So you can get a sense for some of the requirements above, here is an example of how you might interact with your  lotterysets  module in the Python interpreter once you're finished.  This is not an exhaustive example, so don't feel as though you're necessarily done when your output matches the example.  Note that parts of the tracebacks are elided (e.g., no source code line numbers are shown), since your line numbers and error messages may differ from mine. 
+
+  
+&gt;&gt;&gt;  from  lotterysets  import  *
+&gt;&gt;&gt; BooLotto = make_lottery_set_type('BooLotto', 6, (1, 30))
+&gt;&gt;&gt; b1 = BooLotto([3, 6, 9, 12, 15, 18])
+&gt;&gt;&gt;  len (b1)
+6
+&gt;&gt;&gt; b2 = BooLotto([3, 6, 9, 12])
+ Traceback (most recent call last):
+    ...
+LotterySetError: not enough numbers 
+&gt;&gt;&gt; b2 = BooLotto([4, 6, 8, 10, 12, 14])
+&gt;&gt;&gt; b1 == b2
+ False 
+&gt;&gt;&gt; b1 == BooLotto([15, 9, 18, 3, 6, 12])
+ True 
+&gt;&gt;&gt; 15  in  b1
+ True 
+&gt;&gt;&gt; 17  in  b2
+ False 
+&gt;&gt;&gt; b1
+make_lottery_set_type('BooLotto', 6, (1, 30))([3, 6, 9, 12, 15, 18])
+&gt;&gt;&gt; b1 == make_lottery_set_type('BooLotto', 6, (1, 30))([3, 6, 9, 12, 15, 18])
+ True 
+&gt;&gt;&gt; b1.match_count(b2)
+2
+&gt;&gt;&gt; b1.full_match(b2)
+ False 
+&gt;&gt;&gt; LesserLotto = make_lottery_set_type('LesserLotto', 6, (1, 25))
+&gt;&gt;&gt; x1 = LesserLotto([3, 6, 9, 12, 15, 18])
+&gt;&gt;&gt; b1.full_match(x1)
+ Traceback (most recent call last):
+    ...
+LotterySetError: incompatible set types (BooLotto and LesserLotto) 
+  
+
+ 
+
+ 
+
+  Unit testing 
+
+ As in the previous project, you will be required to write unit tests using Python's built-in  unittest  module.  This time, you need only demonstrate that your  lotterysets  module works as specified in the requirements in the previous section.  Remember that unit testing is about isolating small, individual features in separate test methods, so, for example, you would need more than one test method to adequately test a method like  full_match .  In addition to correctness, we'll be grading you on the quality and completeness of the tests you write, so don't leave this task for the last minute; you might well want to write the tests as you go (or even use test-driven development, if you're so inclined). 
+
+ Write your tests in a separate module called  lotterysets_tests  (in a file called  lotterysets_tests.py ).  It's generally wise to keep unit tests separate from the code under test, because we don't generally include unit tests with the final product we might deliver to a customer. 
+	
+ Writing a unit test that asserts that an exception will be raised 
+
+ We've seen previously that  assertions  are the mechanism we use to check our expections when writing unit tests using the built-in  unittest  module.  For example, if, at some point in our test, we expect two values to be equal, we use  assertEquals , like this: 
+
+  
+ # I should point out that there's no value in writing unit tests of
+# functionality that's already built into Python; this simply demonstrates
+# the technique 
+ def  test_two_strings_are_the_same_when_they_contain_the_same_characters(self):
+    self.assertEquals('Boo', 'Boo')
+  
+
+ But what if we want to assert that a block of code raises an exception?  One way to do it is manually: use  try / except / else  and force the test to fail if no exception is raised: 
+
+  
+ def  test_accessing_list_elements_out_of_bounds_fails(self):
+    x = [1, 2, 3, 4, 5]
+
+     try :
+        x[6] = 10
+     except  IndexError:
+         pass 
+     else :
+        self.fail('IndexError not raised as it should have been')
+  
+
+ In a  unittest  test method,  self.fail  causes the test to fail immediately and display the error message you pass to it.  So, in this case, we're saying "If we end up in the  else  block, it's because the exception we expected to be raised wasn't, so the test has failed." 
+
+ That's a lot of boilerplate to represent a pretty simple concept.  We expect the attempt to set the element at index 6 to raise an IndexError, so it would be nice if we could say that more directly.  And, indeed, we can;  assertRaises  provides just the right tool for the job. 
+
+  
+ def  test_accessing_list_elements_out_of_bounds_fails(self):
+    x = [1, 2, 3, 4, 5]
+
+     with  self.assertRaises(IndexError):
+        x[6] = 10
+  
+
+ The parameter to  assertRaises  indicates what kind of exception we expect will be raised.  We place the call to  assertRaises  into a  with  statement as a way to surround the entire code block that we expect to raise an exception; in general, we're best off keeping that code block as short as possible, so that we're asserting that the appropriate part of the code raises an exception (to prevent false positives or false negatives from other unrelated code).  Notice, in this case, that I set up the list separately, then asserted that the indexing operation would raise an exception. 
+
+ The  assertRaises  method will be something you'll need when you test the variety of error cases in your  lotterysets  module. 
+
+ 
+
+ 
+
+  Sanity-checking your 'lotteryset' module 
+
+ In order for us to test your  lotterysets  module, it will be vital that you spell names the same way we expect — the name of the module, the name of your  make_lottery_set_type  function, the names of methods and class variables, and so on, are all important.  To ensure that your  lotterysets  module contains the right parts, I've put together a set of "sanity-check" unit tests.  These tests don't check that your functionality is correct, but they do verify that the right parts are present (e.g., that you have functions and methods with the right names, a LotterySetException class that can be created by passing an error message to its constructor, and so on). 
+
+ The sanity-check tests are in the module linked below. 
+
+   lotterysets_sanitycheck_tests.py  
+   Do not  include these sanity-check tests in your own set of unit tests; your unit tests should instead focus on whether the necessary functionality does what it should. 
+
+ From a practical perspective, if things like spelling errors seem inconsequential to you, it's important to realize that the burden of detail you carry when you write a program is much different than the one you carry when you write prose to be read by another person.  People know that "lotterysets", "lottery_sets", and "my_lottery_sets" all mean pretty much the same thing, but Python sees them as completely distinct.  Programming demands a higher level of attention to those kinds of details, though it's a kind of thinking that will become more familiar and automatic as you write more programs. 
+
+ 
+
+ 
+
+  Limitations 
+
+ Third-party libraries — i.e., anything not included in a standard Python 3.3.2 installation — are strictly off-limits in this project.  Other than the standard Python library, all of the code should be written solely by you. 
+
+ 
+
+ 
+
+  Deliverables 
+
+ Put your name and student ID in a comment at the top of each of your  .py  files, then submit all of the files to Checkmate.  Take a moment to be sure you've submitted all of your files and be sure you submit the right version; we will only be able to accept the files you submit before the deadline, so forgetting to submit one (or submitting the wrong version) can have a significant impact on the score you receive for this project. 
+
+ Follow  this link  for a discussion of how to submit your project via Checkmate. 
+
+ Can I submit after the deadline? 
+
+ Yes, it is possible, subject to the late work policy for this course, which is described in the section titled  Late work  at  this link . 
+
+ 
+
+ 
+
+   Originally written by Alex Thornton, Summer 2013 
+  
+
+</body> 

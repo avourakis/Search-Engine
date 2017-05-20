@@ -1,0 +1,191 @@
+ eCACTI: An Enhanced Power Estimation Model for On-chip Caches<body> 
+ enhanced CACTI (eCACTI)  
+
+  [ Home  |
+
+ Technical report  |
+ How-to FAQ  |
+ Download eCACTI  ]
+ 
+   Table of Contents  
+    
+  What can be done? </strong>
+      
+  How to run it? </strong>
+  
+      
+  What are the stats printed in eCACTI? </strong>
+      
+  What are the stats printed in eCACTI with verbose option? </strong>
+     
+   What can be done?  
+  For a given set of cache parameters, cache size (C), block size (B),
+    associativity (A), and technology, eCACTI can be used to:  
+       (1) estimate power dissipation (both static and dynamic) in caches
+     				 for both read and write operations 
+       (2) estimate the cache read access time  
+       (3) estimate the cache area  
+       (4) find the optimal cache configuration in terms of the sextuplet
+    (Ndwl, Ndbl, Nspd, Ntwl, Ntbl, Ntspd)
+   
+ 
+ Back to Top 
+ 
+   How to run it?  
+  eCACTI was developed on Sun OS 5.8. It can be run command line
+in the following way:  
+    eCACTI  C  B  A  TECH  NSubbanks  [paramFile]  
+           (or)  
+    eCACTI  C  B  A  TECH  RWP  ERP  EWP  NSubbanks  [ParamFile]  
+where, C is the cache size, B is the block size, A is the
+associativity, TECH is the technology in microns.  
+paramFile is an   optional input  file that can be used to specify few other parameters.
+  Parameters that can specified in paramFile are the following:    -verbose      # turn verbose on; default is off.   -config      &amp;lt Ndwl &amp;gt:&amp;lt Nspd &amp;gt :&amp;lt Ndbl &amp;gt :&amp;lt Ntwl &amp;gt :&amp;lt Ntspd &amp;gt :&amp;lt Ntbl &amp;gt        
+                  # find the area, power, and, access time for the specified configuration  
+                  # default is to   explore all configurations   and find optimal power configuration   -dualVt      # specifies that the cache design is based on dual-Vt technology  
+                  # default is NO dual-Vt technology   
+A sample parameter file and command line arguments for running eCACTI are
+indicated below.   For these specified inputs, eCACTI estimates the
+power, area, and access time for cache of size   16 KB,
+block size 32 B,
+and associativity of 2 in 0.13u technology and for 1:1:2:1:1:4 configuration.  
+The input also requests verbose and the estimates for dualVt technology
+based cache design.     Example command line arguments:    
+eCACTI  16384  32  2  0.13  1  params     Example parameter file (params) contents:   
+-verbose  
+-config 1:1:2:1:1:4  
+-dualVt    
+ 
+ Back to Top 
+ 
+   What are the stats printed with eCACTI? 
+   Following is the output of eCACTI for the following command line arguments.     Command:   eCACTI  16384  32  2  0.13  1   Output:   
+--------------------------------  
+---------- eCACTI 1.0 ----------   
+--------------------------------   
+Cache Subarray Parameters (C, B, A): (16384 B, 32 B, 2)  
+Number of Subarrays: 1  
+Ports (RW, R, W): (1, 0, 0)  
+Technology: 0.13 um, Vdd: 1.1 V   
+#Cache configurations expressed in (Ndwl, Nspd, Ndbl, Ntwl, Ntspd, Ntbl) format    
+Optimal Power-AccessTime-Area Config: (1, 1, 1, 4, 1, 1)    
+Power Stats:  
+------------  
+Read hit power: 94.0955 mw  
+Write hit power: 92.8738 mw   
+Read miss power: 182.2022 mw  
+Write miss power: 102.2757 mw   
+Timing Stats:  
+-------------  
+Access time: 1.49748 ns  
+Cycle time (wave pipelined):  0.700554 ns   
+Area Stats:  
+-----------  
+Aspect ratio (height/width): 1.082291  
+Total area one subarray : 0.010465 cm^2
+ 
+   
+  What are the stats printed in eCACTI with verbose option? 
+   Following is the output of eCACTI for the following command line arguments 
+(file params has -verbose option).
+   Command:   eCACTI  16384  32  2  0.13  1  params  Output:   
+-------------------------------- 
+---------- eCACTI 1.0 ---------- 
+--------------------------------  
+Cache Subarray Parameters (C, B, A): (16384 B, 32 B, 2) 
+Number of Subarrays: 1 
+Ports (RW, R, W): (1, 0, 0) 
+Technology: 0.13 um, Vdd: 1.1 V  
+#Cache configurations expressed in (Ndwl, Nspd, Ndbl, Ntwl, Ntspd, Ntbl) format  
+Area efficient configuration: (1, 1, 32, 16, 1, 1) 
+  Area = 3.777677, Time = 5.488263 ns, Power = 10287.37 (6118.55033 4168.81488) mW; 6716.21 (6038.79672 677.40940) mW; 
+
+Optimal time configuration: (1, 1, 1, 2, 1, 8) 
+  Area = 70.620714, Time = 0.841453 ns, Power = 236.50 (113.63572 122.86573) mW; 132.49 (112.54673 19.94412) mW;  
+Lowest power configuration: (1, 1, 4, 1, 1, 4) 
+  Area = 66.791649, Time = 1.463368 ns, Power = 61.41 (42.96684 18.44211) mW; 35.73 (32.75304 2.97417) mW;  
+Optimal Power-AccessTime-Area Config: (1, 1, 1, 4, 1, 1)  
+Power Stats: 
+------------ 
+Read hit power: 94.0955 mw 
+Write hit power: 92.8738 mw  
+Read miss power: 182.2022 mw 
+Write miss power: 102.2757 mw  
+Timing Stats: 
+------------- 
+Access time: 1.49748 ns 
+Cycle time (wave pipelined):  0.700554 ns  
+Area Stats: 
+----------- 
+Aspect ratio (height/width): 1.082291 
+Total area one subarray : 0.010465 cm^2    
+Power Components (dyn, lkg mW): 
+-------------------------------  
+#NOTE: The power values are for a cache read hit  
+ Total Power all Banks :    76.3,   16.39  
+  Data Array Split: 
+  ----------------- 
+        decode :   0.587,  0.3759 
+      wordline :  0.3529, 0.0007582 
+       bitline :   52.34,   13.37 
+       bitline :   3.242,  0.8357 
+     sense_amp :  0.7294,  0.5283 
+  read_control :  0.1605, 0.001591 
+ write_control :       0, 0.001606  
+     tag comparison :  0.3516, 0.01415 
+         mux driver :   2.254, 0.02931 
+       sel inverter : 0.008325,       0 
+ data output driver :   6.199,   0.4265  
+Time Components: 
+---------------- 
+ data side (with Output driver) (ns): 0.836819 
+ tag side (with Output driver) (ns): 1.49748 
+ subbank address routing delay (ns): 0 
+ decode_data (ns): 0.147709 
+ wordline and bitline data (ns) : 0.458511 
+ sense_amp_data (ns): 0.134875 
+ decode_tag (ns): 0.700554 
+ wordline and bitline tag (ns): 0.238861 
+ sense_amp_tag (ns): 0.082875 
+ compare time (ns): 0.165663 
+ mux driver (ns): 0.165914 
+ sel inverter (ns): 0.0478887 
+ data output driver (ns): 0.095724 
+ total_out_driver (ns): 0 
+ total data path (without output driver) (ns): 0.741095 
+ total tag path is set assoc (ns): 1.40176  
+Area Components: 
+---------------- 
+ Aspect Ratio Total height/width: 1.082291  
+ Data array (cm^2): 0.008745 
+ Data predecode (cm^2): 0.000043 
+ Data colmux predecode (cm^2): 0.000010 
+ Data colmux post decode (cm^2): 0.000000 
+ Data write signal (cm^2): 0.000052  
+ Tag array (cm^2): 0.001494 
+ Tag predecode (cm^2): 0.000043 
+ Tag colmux predecode (cm^2): 0.000010 
+ Tag colmux post decode (cm^2): 0.000000 
+ Tag output driver decode (cm^2): 0.000015 
+ Tag output driver enable signals (cm^2): 0.000052  
+ Percentage of data ramcells alone of total area: 69.940943 % 
+ Percentage of tag ramcells alone of total area: 4.371309 % 
+ Percentage of total control/routing alone of total area: 25.687748 %  
+ Subbank Efficiency : 74.312252 
+ Total Efficiency : 79.870352   
+ Total area One Subbank (cm^2): 0.010465  
+ Total area subbanked (cm^2): 0.009737
+ 
+ 
+ Back to Top 
+ 
+
+    
+  
+ Copyright University of California, Irvine, 2004. 
+For problems or questions regarding this web, contact  
+ Mahesh Mamidipaka  . 
+Last updated: 10/06/04. 
+  
+ 
+</body>         

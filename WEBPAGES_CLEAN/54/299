@@ -1,0 +1,58 @@
+ 4.107 OEParseSmiles<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.106 OEParseSmarts 
+ Up:   4. OEChem Functions 
+ Next:   4.108 OEParseSmirks 
+   
+
+
+  
+4.107 OEParseSmiles 
+ 
+   
+bool OEParseSmiles(OEMolBase &amp;mol, const char *str, bool canon=false)
+    
+The  OEParseSmiles  function takes a SMILES string represented as
+a constant character string passed as the second argument, and
+populates the molecule instance passed as the first function argument.
+If the SMILES string is invalid, or any failure occurs during the
+parse or perception processes, the function will return a boolean
+value of false.  If the string is parsed correctly, the function will
+return a boolean value of true.  The final argument to the method can
+be used to circumvent the post-process kekulization test.  Passing a
+boolean true value to the final argument indicates to the parser that
+the SMILES string is canonical, and the data contained in the string
+can be trusted.  If the SMILES string passed to the function is known
+to be canonical and valid, then passing a boolean true to the final
+argument circumvents the sanity checking normally applied to verify
+SMILES strings.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.106 OEParseSmarts 
+ Up:   4. OEChem Functions 
+ Next:   4.108 OEParseSmirks 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

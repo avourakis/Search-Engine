@@ -1,0 +1,261 @@
+ // Persistence of Vision Ray Tracer Scene Description File
+// File: Board.pov
+// Vers: 3
+// Desc: Fanorona board covered with black pieces
+// Date: 15 June 1997
+// Auth: David Eppstein, Dept. Inf. &amp; Comp. Sci., UC Irvine
+
+// ==== Standard POV-Ray Includes ====
+#include "colors.inc"	// Standard Color definitions
+#include "textures.inc"	// Standard Texture definitions
+#include "woods.inc"
+#include "glass.inc"
+
+// set viewer's position in the scene
+camera
+{
+  location   // position of camera 
+  direction 3.5*z            // which way are we looking  &amp; zoom
+  up        y                // which way is +up 
+  right     400/225*x 		 // which way is +right  and aspect ratio
+  look_at    // point center of view at this point 
+}
+
+// light sources
+light_source
+{
+  0*x // light's position (translated below)
+  color red 1  green 1 blue 1  // light's color
+  translate 
+}
+light_source
+{
+  0*x // light's position (translated below)
+  color red 0.5  green 0.5 blue 0.5  // light's color
+  translate 
+}
+
+// game board
+box
+{
+	  // one corner position   // other corner position 
+	texture { T_Wood11 }
+}
+
+// stripe parameters
+#declare stripe1 = texture {
+	pigment { color red 0.4 blue 1 green 0.4 }
+	finish {
+		specular 0.7
+		roughness 0.05
+	}
+}
+#declare eps=0.05
+#declare ht=0.001
+
+// horizontal stripes
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+
+// vertical stripes
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+box
+{
+	
+	
+	texture { stripe1 }
+}
+
+// first set of diagonal stripes
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate 45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate 45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate 45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate 45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate 45*y
+	translate 
+}
+
+// second set of diagonal stripes
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate -45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate -45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate -45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate -45*y
+	translate 
+}
+box
+{
+	
+	
+	texture { stripe1 }
+	rotate -45*y
+	translate 
+}
+
+// the pieces
+#declare piece = cylinder {
+	, , 0.35
+		texture {
+		pigment { color rgbf  }
+		finish {
+			F_Glass3
+			specular 0.2
+//			roughness 0.03
+			reflection 0.3
+		}
+	}
+}
+#declare pcol = union {
+	object { piece translate  }
+	object { piece translate  }
+	object { piece translate  }
+	object { piece translate  }
+	object { piece translate  }
+}
+
+union {
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+	object { pcol translate  }
+}
+
+ 

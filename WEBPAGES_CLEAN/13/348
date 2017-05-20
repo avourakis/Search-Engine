@@ -1,0 +1,62 @@
+ 3.24.20 NewBond<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.24.19 NewAtom 
+ Up:   3.24 OEMolBase 
+ Next:   3.24.21 NumAtoms 
+   
+
+
+  
+3.24.20 NewBond 
+ 
+
+ 
+    
+virtual OEBondBase *NewBond(OEAtomBase *src, OEAtomBase *dst,
+                            unsigned int order=0)
+    
+Create a new bond.  The ``src'', ``dst'' and ``order'' arguments are used to
+specify the begin atom, the end atom and the bond order of the new
+bond.  This method returns a pointer to the newly created bond.  The
+atoms specified as begin and end atoms must belong to the current
+molecule.  Additionally, a NULL pointer, (OEAtomBase*)0, may be passed
+as either the begin or end atom (but not both), allowing that atom to
+be specified later using OEBondBase::SetBgn or OEBondBase::SetEnd
+respectively.  This helps when creating molecules for applications in
+which the ordering of atoms and/or bonds is significant.
+
+  
+After creating new bonds, it may be necessary to call the
+ OEFindRingAtomsAndBonds  and  OEAssignAromaticFlags  functions
+to update the ``in ring'' and ``aromatic'' properties of the atoms and
+bonds in the modified molecule.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.24.19 NewAtom 
+ Up:   3.24 OEMolBase 
+ Next:   3.24.21 NumAtoms 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

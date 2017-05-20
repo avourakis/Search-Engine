@@ -1,0 +1,107 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Version identifier in URL<body> Version identifier in URL 
+ Jim Whitehead  (  ejw@ics.uci.edu  )  Tue, 28 May 1996 13:49:51 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Andre van der Hoek: "Re: Version identifier in URL." 
+    Previous message:   David J. Fiander: "Re: Welcome to www-vers-wg mailing list!" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Maybe reply:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe reply:   Robert C. Pettengill: "Re: Version identifier in URL" 
+    Maybe reply:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Dave Long: "Re: Version identifier in URL" 
+    Maybe reply:   Jim Whitehead: "Re: Version identifier in URL" 
+    Maybe reply:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Scot Malloy: "Re: Version identifier in URL" 
+    Maybe reply:   Fabio Vitali: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Fabio Vitali: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+
+    
+One aspect of the versioning of WWW content which appears in all
+work/proposals to date is a versioned HTTP GET method.  A versioned GET
+supports browsing of an arbitrary version of an entity, a basic
+requirement.  Examples of this include (references are to work which is
+available from the working group home page, at URL:
+&lt; http://www.ics.uci.edu/~ejw/versioning/ &gt;)
+
+Pettengill &amp; Arango:
+  - add a ",{version_identifier}" suffix to the end of a URL to specify the
+version identifier
+
+MKS:
+  - add a ";version={version_identifier}" suffix to the end of a URL
+
+Whitehead:
+  - add a ";v={version_identifier}" suffix to the end of a URL
+
+ From these examples, you can see that there is a basic similarity to all
+approaches.
+
+I would like to suggest we adopt the MKS approach for specifying version
+identifiers in a versioned GET operation as a usage convention for our
+future work.  I like the MKS approach because it uses a semicolon (;) to
+separate the version specification from the rest of the path (this is
+superior to a (,) because a comma is not a reserved character according to
+the URL specification in RFC 1738 "Uniform Resource Locators", and hence
+might legally be part of a path), and because the use of a full "version"
+tag is more readable, and is less likely to have a name collision with
+another URL usage convention than the "v" tag.
+
+Note that this convention only specifies the version of the entity, and
+does not specify the version of each directory in the heirarchy leading to
+that entity.
+
+Comments?
+
+- Jim Whitehead &lt; ejw@ics.uci.edu &gt;
+ 
+
+  
+     Next message:   Andre van der Hoek: "Re: Version identifier in URL." 
+    Previous message:   David J. Fiander: "Re: Welcome to www-vers-wg mailing list!" 
+
+    Next in thread:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Maybe reply:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe reply:   Robert C. Pettengill: "Re: Version identifier in URL" 
+    Maybe reply:   Marty Cagan/Continuus Software Corporation: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Maybe reply:   Larry Masinter: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe reply:   Dave Long: "Re: Version identifier in URL" 
+    Maybe reply:   Jim Whitehead: "Re: Version identifier in URL" 
+    Maybe reply:   Kenji Takahashi: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Scot Malloy: "Re: Version identifier in URL" 
+    Maybe reply:   Fabio Vitali: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+    Maybe reply:   Fabio Vitali: "Re: Version identifier in URL" 
+    Maybe reply:   David J. Fiander: "Re: Version identifier in URL" 
+
+  </body> 

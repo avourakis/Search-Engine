@@ -1,0 +1,402 @@
+   
+  Class c2.framework.Architecture
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Architecture
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +---- c2.framework.Component 
+                   |
+                   +----c2.framework.Architecture
+ 
+    public class  Architecture 
+    extends  Component 
+   
+A C2 architecture is a network of components hooked together by
+connectors.  Components and connectors may be added to an architecture,
+removed from it, welded together, and detached from each other. 
+Hierarchical architectures are supported by allowing an entire
+architecture to act as a single component in a new, bigger
+architecture.    
+NOTE: This class should not be used directly.  Use either 
+SimpleArchitecture or one of its derived classes.
+     See Also: 
+        Component ,  Connector ,  SimpleArchitecture 
+     
+ 
+    
+      components  
+     Components in the architecture.
+        connectors  
+     Connectors in the architecture.
+   
+    
+      Architecture  ()
+     
+        Architecture  (String, Class)
+     
+   
+    
+      addComponent  (Component)
+     Adds a component to the architecture.
+        addConnector  (Connector)
+     Adds a connector to the architecture.
+        Components  ()
+     Accesses the components in the architecture.
+        Connectors  ()
+     Accesses the connectors in the architecture.
+        create  (String, Class)
+     Creates and initializes an instance of the Architecture.
+        detachBottom  (Component)
+     Detaches the bottom side of a component from the connector, if any, to
+which it was previously welded.
+        detachBottom  (Connector)
+     Detaches the bottom side of a connector from all components and connectors
+to which it was previously welded.
+        detachComponent  (Component)
+     Detaches both the top and bottom sides of a component from connectors, if 
+any, to which it was previously welded.
+        detachConnector  (Connector)
+     Detaches both the top and bottom sides of a connector from all 
+components and connectors to which it was previously welded.
+        detachTop  (Component)
+     Detaches the top side of a component from the connector, if any, to
+which it was previously welded.
+        detachTop  (Connector)
+     Detaches the top side of a connector from all components and connectors
+to which it was previously welded.
+        finish  ()
+     Finishes architecture's execution by calling the finish() method on 
+all of its components and connectors.
+        finished  ()
+     Tests whether all components and connectors in an architecure have 
+finished executing.
+        removeComponent  (Component)
+     Removes a component from the architecture.
+        removeConnector  (Connector)
+     Removes a connector from the architecture.
+        start  ()
+     Starts up architecture's execution by calling the start() method on 
+all of its components and connectors.
+        toString  ()
+     Displays the architecture (components, connectors, and their
+interconnections) textually.
+        unweld  (Component, Connector)
+     Detaches a component from the connector below.
+        unweld  (Connector, Component)
+     Detaches a component from the connector above.
+        unweld  (Connector, Connector)
+     Detaches all links between two connectors.
+        unweld  (Connector, Vector)
+     Detaches multiple components and/or connectors from the connector above.
+        unweld  (Vector, Connector)
+     Detaches multiple components and/or connectors from the connector below.
+        weld  (Component, Connector)
+     Welds a component on top of a connector.
+        weld  (Connector, Component)
+     Welds a component under a connector.
+        weld  (Connector, Connector)
+     Welds two connectors together, from the bottom of one to the top of the
+other.
+        weld  (Connector, Vector)
+     Welds multiple components and/or connectors below a connector.
+        weld  (Vector, Connector)
+     Welds multiple components and/or connectors to the top of a connector.
+    
+ 
+    
+   
+ components 
+ 
+  protected  Vector  components
+ 
+   Components in the architecture.
+     
+ connectors 
+ 
+  protected  Vector  connectors
+ 
+   Connectors in the architecture.
+    
+ 
+    
+  
+   
+ Architecture 
+ 
+  public Architecture()
+ 
+   
+ Architecture 
+ 
+  public Architecture( String  name,
+                       Class  portClass)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  name,
+                      Class  portClass)
+ 
+   Creates and initializes an instance of the Architecture.
+      Parameters: 
+       name - Name of the architecture.
+      portClass - The type of communication ports used in the
+architecture.
+         Overrides: 
+        create  in class  Component 
+        See Also: 
+        Port ,  FIFOPort 
+         
+  Components  
+ 
+  public  Vector  Components()
+ 
+   Accesses the components in the architecture.
+      Returns: 
+       The components in the architecture.
+         
+  Connectors  
+ 
+  public  Vector  Connectors()
+ 
+   Accesses the connectors in the architecture.
+      Returns: 
+       The connectors in the architecture.
+         
+  start  
+ 
+  public void start()
+ 
+   Starts up architecture's execution by calling the start() method on 
+all of its components and connectors.
+      Overrides: 
+        start  in class  Brick 
+         
+  finish  
+ 
+  public void finish()
+ 
+   Finishes architecture's execution by calling the finish() method on 
+all of its components and connectors.
+      Overrides: 
+        finish  in class  Brick 
+         
+  finished  
+ 
+  public boolean finished()
+ 
+   Tests whether all components and connectors in an architecure have 
+finished executing.
+      Returns: 
+       true if no components or connectors are executing any longer.
+        Overrides: 
+        finished  in class  Brick 
+         
+  addComponent  
+ 
+  public void addComponent( Component  c)
+ 
+   Adds a component to the architecture.
+      Parameters: 
+       c - Component to be added.
+         
+  addConnector  
+ 
+  public void addConnector( Connector  c)
+ 
+   Adds a connector to the architecture.
+      Parameters: 
+       c - Connector to be added.
+         
+  removeComponent  
+ 
+  public void removeComponent( Component  c)
+ 
+   Removes a component from the architecture.
+      Parameters: 
+       c - Component to be removed.
+         
+  removeConnector  
+ 
+  public void removeConnector( Connector  c)
+ 
+   Removes a connector from the architecture.
+      Parameters: 
+       c - Connector to be removed.
+         
+  weld  
+ 
+  public void weld( Component  comp,
+                    Connector  conn)
+ 
+   Welds a component on top of a connector.
+      Parameters: 
+       comp - C2 component.
+      conn - C2 connector.
+          
+  unweld  
+ 
+  public void unweld( Component  comp,
+                      Connector  conn)
+ 
+   Detaches a component from the connector below.
+      Parameters: 
+       comp - C2 component.
+      conn - C2 connector.
+          
+  weld  
+ 
+  public void weld( Connector  conn,
+                    Component  comp)
+ 
+   Welds a component under a connector.
+      Parameters: 
+       comp - C2 component.
+      conn - C2 connector.
+          
+  unweld  
+ 
+  public void unweld( Connector  conn,
+                      Component  comp)
+ 
+   Detaches a component from the connector above.
+      Parameters: 
+       comp - C2 component.
+      conn - C2 connector.
+          
+  weld  
+ 
+  public void weld( Connector  conn1,
+                    Connector  conn2)
+ 
+   Welds two connectors together, from the bottom of one to the top of the
+other.
+      Parameters: 
+       conn1 - Top C2 connector.
+      conn2 - Bottom C2 connector.
+          
+  unweld  
+ 
+  public void unweld( Connector  conn1,
+                      Connector  conn2)
+ 
+   Detaches all links between two connectors.
+      Parameters: 
+       conn1 - Top C2 connector.
+      conn2 - Bottom C2 connector.
+          
+  weld  
+ 
+  public void weld( Vector  brick_set,
+                    Connector  conn)
+ 
+   Welds multiple components and/or connectors to the top of a connector.
+      Parameters: 
+       brick_set - Set of C2 components and/or connectors.
+      conn - C2 connector.
+          
+  unweld  
+ 
+  public void unweld( Vector  brick_set,
+                      Connector  conn)
+ 
+   Detaches multiple components and/or connectors from the connector below.
+      Parameters: 
+       brick_set - Set of C2 components and/or connectors.
+      conn - C2 connector.
+          
+  weld  
+ 
+  public void weld( Connector  conn,
+                    Vector  brick_set)
+ 
+   Welds multiple components and/or connectors below a connector.
+      Parameters: 
+       conn - C2 connector.
+      brick_set - Set of C2 components and/or connectors.
+          
+  unweld  
+ 
+  public void unweld( Connector  conn,
+                      Vector  brick_set)
+ 
+   Detaches multiple components and/or connectors from the connector above.
+      Parameters: 
+       conn - C2 connector.
+      brick_set - Set of C2 components and/or connectors.
+          
+  detachTop  
+ 
+  public void detachTop( Component  comp)
+ 
+   Detaches the top side of a component from the connector, if any, to
+which it was previously welded.
+      Parameters: 
+       comp - C2 component.
+         
+  detachBottom  
+ 
+  public void detachBottom( Component  comp)
+ 
+   Detaches the bottom side of a component from the connector, if any, to
+which it was previously welded.
+      Parameters: 
+       comp - C2 component.
+         
+  detachComponent  
+ 
+  public void detachComponent( Component  comp)
+ 
+   Detaches both the top and bottom sides of a component from connectors, if 
+any, to which it was previously welded.
+      Parameters: 
+       comp - C2 component.
+         
+  detachTop  
+ 
+  public void detachTop( Connector  conn)
+ 
+   Detaches the top side of a connector from all components and connectors
+to which it was previously welded.
+      Parameters: 
+       conn - C2 connector.
+         
+  detachBottom  
+ 
+  public void detachBottom( Connector  conn)
+ 
+   Detaches the bottom side of a connector from all components and connectors
+to which it was previously welded.
+      Parameters: 
+       conn - C2 connector.
+         
+  detachConnector  
+ 
+  public void detachConnector( Connector  conn)
+ 
+   Detaches both the top and bottom sides of a connector from all 
+components and connectors to which it was previously welded.
+      Parameters: 
+       conn - C2 connector.
+         
+  toString  
+ 
+  public  String  toString()
+ 
+   Displays the architecture (components, connectors, and their
+interconnections) textually.
+      Overrides: 
+        toString  in class  Component 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

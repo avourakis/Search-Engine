@@ -1,0 +1,43 @@
+ HelpOnMacros/ImageLink - UAI '08 Workshop: Probabilistic Reasoning Systems  
+     
+
+
+ 
+ Search: 
+ 
+
+   Login    
+
+
+   HelpOnMacros    ImageLink  
+  
+
+
+   FrontPage    RecentChanges    FindPage    HelpContents    HelpOnMacros/ImageLink  
+    
+
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+    
+   
+                        /EmbedObject    /ImageLink    /Include     /MailTo     /MonthCalendar               Contents   
+ ImageLink is gone in MoinMoin 1.6.1   
+ How to make links using images in 1.6.1+          
+  ImageLink is gone in MoinMoin 1.6.1 
+   The ImageLink macro was used to work around some link markup deficiencies in MoinMoin up version 1.5.x.       Starting with 1.6.0, it was replaced by better link/transclusion markup. The migration scripts converted all old content from 1.5 to the new syntax of 1.6, including replacing usage of ImageLink macro by builtin new syntax.       Problem: this does not stop wiki users using the ImageLink macro, thus it was removed from the distribution archive for release 1.6.1 (you can still get it from  MacroMarket  if you insist on using it). We should have done this for 1.6.0 of course, but well, it was overlooked. If you used moin 1.6.0 and your users have added ImageLink macro calls to the content of your wiki, please use full text search to locate them and replace them as you see below.       
+  How to make links using images in 1.6.1+ 
+     Old way:           &lt;&lt;ImageLink(image,target[,width=width[,height=height]][,alt=alttag])&gt;&gt;      New way:           [[target|{{image|alt|width=123 height=456}}]]      You see, this is a quite natural way:       usually you write  [[target|text]]  when you want to use some text label      if you rather want an image "label", you just use the image markup instead of the text      the markup for showing (transcluding) an image is  {{image|alt|params}}          
+  
+  
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+     MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

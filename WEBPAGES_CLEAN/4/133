@@ -1,0 +1,60 @@
+ Euler's Formula<body>
+     
+  Euler's Formula,
+Proof 14: Noah's Ark
+ 
+
+Portions of this proof are from  Bishop and
+Goldberg .
+
+ 
+Define a height function on the surface of the polyhedron as follows:
+Choose arbitrary heights for each vertex.
+In each edge, choose a height for one interior point greater
+than that of the two endpoints, and interpolate the remainder
+of the edge linearly between the chosen point and the endpoints.
+In each face, choose a height for one interior point, greater
+than all heights on its boundary; interpolate the heights in the rest
+of the face linearly on line segments from the chosen point to the boundary.
+The result is a continuous function with V+F+E critical points:
+V local minima at the vertices, E saddles at the chosen points of edges,
+and F local maxima at chosen points of faces.
+ 
+Now view the surface as an initially bone dry earth on which there is
+about to fall a deluge which ultimately covers the highest peak.  We
+count the number of lakes and connected land masses formed and destroyed
+in this rainstorm to obtain the result.
+  
+For each local minimum there will be one lake formed.
+For each saddle there will either be two lakes joined or a single lake
+doubling back on itself and disconnecting one land mass from another
+(let J and D denote the number of times these events happen respectively).
+For each peak a land mass will be eliminated.
+Initially there is one land mass, and in the final sitation there is one global lake.
+Thus we have 1+D-F=0 and 0+V-J=1.
+Combining these two equations with the fact that D+J=E yields the result.
+  
+
+One can either view the rainfall as (unnaturally) causing the global water levels
+to always be at the same height, so that two lakes reach a saddle at the same time;
+or one can take a more realistic viewpoint and say that the rainfall may
+vary arbitrarily over the globe, but when one lake reaches a saddle the water will
+spill over it (and the lake will not rise) until the lake on the other
+side of the saddle reaches the same height.
+ 
+This proof is close to self-dual, the biggest asymmetry being in the
+definition of the height function.
+As usual, the Jordan curve theorem is involved, in the fact that a lake
+doubling back on itself creates an island. The principle of classifying the singular points (peaks, saddles, and valleys) for a height function defined on a surface is the main idea behind Morse theory, but this proof dates back much earlier than Morse, to an 1863 publication of Möbius.
+     
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

@@ -1,0 +1,247 @@
+   
+  Class c2.framework.Connector
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Connector
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +----c2.framework.Connector
+ 
+    public class  Connector 
+    extends  Brick 
+     Connectors   encapsulate the means by which components communicate
+with one another.  
+The Connector class provides the simplest implementation of a connector.
+It allows several components (and other connectors) to be added above
+and below the connector by maintaining a list of Ports.
+Any request received from below
+is broadcast to all components (or connectors) above.  Any notificaiton
+received from above is broadcast to all components (or connectors) below.
+  
+The ConnectorThread class provides the same functionality, but runs in
+its own thread of control.   
+To declare a new connector, inherit from Connector and override the the
+handle() and send() methods.  handle() can be used to filter messages.
+send() may be used to limit message broadcasting.   
+  
+	class MyConnector extends Connector {
+	    protected void handle(Request r) {
+		  // filter the request
+	    }
+	    protected void handle(Notification n) {
+		  // filter the notification
+	    }
+	}
+ 
+To use a connector, create an instance of it and call the start() method:
+ 
+	MyConnector c = new MyConnector("Test");
+	c.start();
+	...
+ 
+    See Also: 
+        Port ,  Message ,  ConnectorThread 
+     
+ 
+    
+      bottom  
+     
+        top  
+     
+   
+    
+      Connector  ()
+     
+        Connector  (String)
+     
+   
+    
+      addBottomPort  (Port)
+     Adds a port to the bottom of the connector.
+        addTopPort  (Port)
+     Adds a port to the top of the connector.
+        bottomPortAt  (int)
+     Returns the port at the specified index, null if the index is invalid.
+        bottomPorts  ()
+     Returns a list of the bottom ports of the connector.
+        create  (String)
+     
+        handle  (Notification)
+     This method is invoked when the brick receives a   notification  
+from a brick below it.
+        handle  (Request)
+     This method is invoked when the brick receives a   request  
+from a brick below it.
+        newMessage  (Port)
+     This method is invoked when the brick receives a new request or
+notification.
+        removeBottomPort  (Port)
+     Removes a port from the bottom of the connector.
+        removeTopPort  (Port)
+     Removes a port from the top of the connector.
+        send  (Notification)
+     Broadcasts the specified notification to all components (or connectors)
+below the connector.
+        send  (Request)
+     Broadcasts the specified request to all components (or connectors) above
+the connector.
+        topPortAt  (int)
+     Returns the port at the specified index, null if the index is invalid.
+        topPorts  ()
+     Returns a list of the top ports of the connector.
+        toString  ()
+     Returns a String representation of the Connector, including the 
+connector's type, name, and list of top and bottom ports.
+    
+ 
+    
+   
+ top 
+ 
+  protected  Vector  top
+ 
+   
+ bottom 
+ 
+  protected  Vector  bottom
+ 
+  
+ 
+    
+  
+   
+ Connector 
+ 
+  public Connector()
+ 
+   
+ Connector 
+ 
+  public Connector( String  name)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  name)
+ 
+   
+  addTopPort  
+ 
+  public void addTopPort( Port  p)
+ 
+   Adds a port to the top of the connector.  A new port is added for
+each component (or connector) communicating with the connector.
+     
+  addBottomPort  
+ 
+  public void addBottomPort( Port  p)
+ 
+   Adds a port to the bottom of the connector.  A new port is added for
+each component (or connector) communicating with the connector.
+     
+  removeTopPort  
+ 
+  public void removeTopPort( Port  p)
+ 
+   Removes a port from the top of the connector.
+     
+  removeBottomPort  
+ 
+  public void removeBottomPort( Port  p)
+ 
+   Removes a port from the bottom of the connector.
+     
+  topPorts  
+ 
+  public  Vector  topPorts()
+ 
+   Returns a list of the top ports of the connector.
+     
+  bottomPorts  
+ 
+  public  Vector  bottomPorts()
+ 
+   Returns a list of the bottom ports of the connector.
+     
+  newMessage  
+ 
+  protected void newMessage( Port  p)
+ 
+   This method is invoked when the brick receives a new request or
+notification.
+      Overrides: 
+        newMessage  in class  Brick 
+         
+  handle  
+ 
+  protected synchronized void handle( Request  r)
+ 
+   This method is invoked when the brick receives a   request  
+from a brick below it.
+      Overrides: 
+        handle  in class  Brick 
+         
+  handle  
+ 
+  protected synchronized void handle( Notification  n)
+ 
+   This method is invoked when the brick receives a   notification  
+from a brick below it.
+      Overrides: 
+        handle  in class  Brick 
+         
+  send  
+ 
+  protected void send( Request  r)
+ 
+   Broadcasts the specified request to all components (or connectors) above
+the connector.  Override this method to provide alternative behavior.
+      Parameters: 
+       r - The request to broadcast.
+        Overrides: 
+        send  in class  Brick 
+         
+  send  
+ 
+  protected void send( Notification  n)
+ 
+   Broadcasts the specified notification to all components (or connectors)
+below the connector.  Override this method to provide alternative
+behavior.
+      Parameters: 
+       r - The request to broadcast.
+        Overrides: 
+        send  in class  Brick 
+         
+  bottomPortAt  
+ 
+  protected synchronized  Port  bottomPortAt(int n)
+ 
+   Returns the port at the specified index, null if the index is invalid.
+     
+  topPortAt  
+ 
+  protected synchronized  Port  topPortAt(int n)
+ 
+   Returns the port at the specified index, null if the index is invalid.
+     
+  toString  
+ 
+  public  String  toString()
+ 
+   Returns a String representation of the Connector, including the 
+connector's type, name, and list of top and bottom ports.
+      Overrides: 
+        toString  in class  Brick 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

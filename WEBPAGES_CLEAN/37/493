@@ -1,0 +1,156 @@
+ Halfedge Data Structure<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+  
+  
+ Chapter 30 Halfedge Data Structure 
+
+  
+
+ Lutz Kettner   
+
+  Summary 
+ 
+
+A halfedge data structure (abbreviated as   HalfedgeDS  , or
+ HDS  for template parameters) is an edge-centered data structure
+capable of maintaining incidence informations of vertices, edges and
+faces, for example for planar maps or polyhedral surfaces. It is a
+combinatorial data structure, geometric interpretation is added by
+classes built on top of the halfedge data structure.  These classes
+might be more convenient to use than the halfedge data structure
+directly, since the halfedge data structure is meant as an
+implementation layer.  See for example the   CGAL::Polyhedron_3  
+class in Chapter    .
+  
+
+The data structure provided here is known as the
+FE-structure [ Wei85 ], as
+halfedges [ Män88 ,  BFH95 ] or as the doubly connected edge
+list (DCEL) [ dBvKOS97 ], although the original reference for
+the DCEL [ MP78 ] describes a related but different data
+structure. The halfedge data structure can also be seen as one of the
+variants of the quad-edge data structure [ GS85 ]. In
+general, the quad-edge data can represent non-orientable 2-manifolds,
+but the variant here is restricted to orientable 2-manifolds only. An
+overview and comparison of these different data structures together
+with a thorough description of the design implemented here can be
+found in [ Ket99 ].
+  
+
+  Concepts 
+ 
+
+  HalfedgeDS &lt;Traits,Items,Alloc&gt;    HalfedgeDSItems     HalfedgeDSVertex     HalfedgeDSHalfedge     HalfedgeDSFace  
+  
+
+  Classes 
+ 
+
+  CGAL::HalfedgeDS_default &lt;Traits, HalfedgeDSItems ,Alloc&gt;    CGAL::HalfedgeDS_list &lt;Traits, HalfedgeDSItems ,Alloc&gt;    CGAL::HalfedgeDS_vector &lt;Traits, HalfedgeDSItems ,Alloc&gt; 
+  
+
+  CGAL::HalfedgeDS_min_items     CGAL::HalfedgeDS_items_2  
+  
+
+  CGAL::HalfedgeDS_vertex_base &lt;Refs&gt;    CGAL::HalfedgeDS_halfedge_base &lt;Refs&gt;    CGAL::HalfedgeDS_face_base &lt;Refs&gt; 
+  
+
+  CGAL::HalfedgeDS_vertex_min_base &lt;Refs&gt;    CGAL::HalfedgeDS_halfedge_min_base &lt;Refs&gt;    CGAL::HalfedgeDS_face_min_base &lt;Refs&gt; 
+  
+
+  CGAL::HalfedgeDS_items_decorator &lt;HDS&gt;    CGAL::HalfedgeDS_decorator &lt;HDS&gt;    CGAL::HalfedgeDS_const_decorator &lt;HDS&gt; 
+  
+
+  Links to the Reference Sections 
+ 
+
+   
+  HalfedgeDS&lt;Traits,Items,Alloc&gt;     
+
+   
+  HalfedgeDSFace     
+
+   
+  HalfedgeDSHalfedge     
+
+   
+  HalfedgeDSItems     
+
+   
+  HalfedgeDSVertex     
+
+   
+  HalfedgeDS_const_decorator&lt;HDS&gt;     
+
+   
+  HalfedgeDS_decorator&lt;HDS&gt;     
+
+   
+  HalfedgeDS_default&lt;Traits,HalfedgeDSItems,Alloc&gt;     
+
+   
+  HalfedgeDS_face_base&lt;Refs&gt;     
+
+   
+  HalfedgeDS_face_min_base&lt;Refs&gt;     
+
+   
+  HalfedgeDS_halfedge_base&lt;Refs&gt;     
+
+   
+  HalfedgeDS_halfedge_min_base&lt;Refs&gt;     
+
+   
+  HalfedgeDS_items_2     
+
+   
+  HalfedgeDS_items_decorator&lt;HDS&gt;     
+
+   
+  HalfedgeDS_min_items     
+
+   
+  HalfedgeDS_list&lt;Traits,HalfedgeDSItems,Alloc&gt;     
+
+   
+  HalfedgeDS_vector&lt;Traits,HalfedgeDSItems,Alloc&gt;     
+
+   
+  HalfedgeDS_vertex_base&lt;Refs&gt;     
+
+   
+  HalfedgeDS_vertex_min_base&lt;Refs&gt;     
+
+    Next chapter:  2D Triangulations  
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

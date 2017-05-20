@@ -1,0 +1,107 @@
+ Informatics 122 Winter 2013, Code Examples<body>
+
+ 
+
+ 
+Informatics 122 Winter 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ Informatics 122 Winter 2013 
+   Code Examples 
+
+ 
+
+ 
+
+  Code examples, from lecture and otherwise 
+
+ Over the course of the quarter, I'll be providing commented code examples for you.  You are not permitted to copy and paste any of this code into your own projects.  These examples are mostly to give you clean and well-documented examples of some of the things we cover in lecture (and possibly a few things that we don't, time permitting), so that you can be free in lecture to avoid trying to take detailed notes when we're writing code together, instead concentrating on understanding the process and the bigger-picture concepts at work. 
+
+ These examples are mostly posted as Git repositories containing Eclipse projects, where the code is in the  src  folder.  You can download the repositories in one of two ways: 
+
+  Via the Git command line tools, using the command  git clone .  For each repository, the  git clone  command is provided.  Run that command from the command line in whatever directory you want the repository to be downloaded into. 
+   Directly from within an Eclipse workspace using EGit.  Instructions for that are provided below. 
+    Lecture Date(s) 
+     Description / Command to Download 
+     Th 1/24 
+     
+      A Git repository detailing the step-by-step progress through my implementation of last year's Assignment #1 user interface, which closely mirrors what you're working on in  Project #2 , except that it contains some extra commands that are not included this year.  git clone http://www.ics.uci.edu/~thornton/inf122/git/Assignment1UI.git 
+       
+     Tu 1/29 
+        Th 1/31 
+        Tu 2/5 
+     
+      The examples from lecture related to the use of design patterns  git clone http://www.ics.uci.edu/~thornton/inf122/git/PatternsExamples.git 
+     
+     Th 2/7 
+     
+      The example from lecture related to the use of dependency injection (and, specifically, constructor-based injection of dependencies)  git clone http://www.ics.uci.edu/~thornton/inf122/git/DependencyInjection.git 
+     
+     Tu 2/12 
+      Using the bit.ly API from Java  
+     Tu 2/19 
+     
+      Detecting code smells in a design, and what to do about it  git clone http://www.ics.uci.edu/~thornton/inf122/git/CodeSmellsAndRefactoring.git 
+     
+     Th 2/21 
+     
+      Building fluent APIs (or, why writing a method called  is  isn't crazy)  git clone http://www.ics.uci.edu/~thornton/inf122/git/FluentAPIs.git 
+     
+      
+
+ 
+
+  Importing a Git repository into an Eclipse workspace using EGit 
+
+ Code examples in this course are provided as Git repositories, which will allow you not only to see the final product, but also the step-by-step process by they were developed — warts and all!  As this course is largely about the process of discovering a good design, being able to see that whole process is much more instructive than only seeing where we ended up. 
+
+ While you can certainly use only the  git  command line tool to look through our code examples — by using  git checkout  to switch from one commit to another — a simpler approach is to use EGit within Eclipse, which provides graphical tools for navigating a repository's history.  You can checkout individual commits and your entire Eclipse project will change to look just like it did at that point in time; this is a great way to explore a code example step by step. 
+
+ The first thing to overcome, however, is importing a Git repository from this web site into an Eclipse workspace using EGit.  Instructions for that follow. 
+
+  Open the Eclipse workspace where you want the code example to be imported. 
+   Right-click in a blank area of Package Explorer and choose  Import... . 
+   A  "Select"  dialog will pop up, allowing you to select what kind of project you want to import.  A tree of options is displayed.  Open  Git  and select  Projects from Git , then click  Next &gt; . 
+   (At this point, on Windows, you might get a warning about the HOME environment variable.  You can safely ignore this.) 
+   Next, the  Select a Git Repository  dialog will pop up, where you can choose the repository you'd like to import.  The first step is to download the repository, so click the  Clone...  button.
+      The  Source Git Repository  dialog pops up.  Fill in these values, then click  Next &gt; :
+           URI : URI for the Git repository (e.g.,  http://www.ics.uci.edu/~thornton/inf122/git/Assignment1UI.git ). 
+            Protocol : From the dropdown list, select  http . 
+            Port ,  User , and  Password : Leave these fields blank. 
+            Store in Secure Store : Leave this box unchecked 
+          
+       Next, the  Branch Selection  dialog will ask what branch you want to clone.  The right choice here, for these code examples, will always be  master , so check that and click  Next &gt; . 
+       Finally, fill in the  Directory  where you want the repository to be downloaded to your machine, choose  master  as the  Initial Branch , and click  Finish . 
+       Now the Git repository should have been downloaded to your machine, so the next order of business is to import it into your Eclipse workspace. 
+      
+   Back in the  Select Git Repository  dialog, the repository you downloaded should now be included in the list.  Select it and click  Next &gt; , then continue clicking  Next &gt;  until you can click  Finish , then click  Finish , accepting all defaults along the way. 
+   You should now see an Eclipse project representing the downloaded repository.  You're ready to explore the code example! 
+  
+
+ 
+
+  Exploring a repository's history in Eclipse using EGit 
+
+ The chief benefit of distributing code examples as Git repositories is that it allows you to see the progression of work that was done — how the code looked at various stages, commit comments that explain why we did what we did.  Exploring the  history  of a repository in EGit is simple, but there are a couple of tricks that are worth playing. 
+
+ With your Eclipse workspace open and an Eclipse project that is associated with a Git repository already created — see the steps above — right-click on the Eclipse project (e.g.,  Assignment1UI ), select  Team , then  Show in History .  This brings up the  History  view, which allows you to view the history of a repository.  I find it handy to move the History view into the same area of the window as my editor, so it is large enough that I can find my way around, but you can put it wherever you want. 
+
+ Once you've got the History view opened, make sure the toolbar button  Show All Branches and Tags  — a tooltip pops up for each button, so you can use those to find the right one — is highlighted.  This will allow you to see the full history even as you traverse through it. 
+
+ Selecting individual commits in the list at the top of the History view will show you what files were updated in the selected commit and what the commit comment was.  Right-clicking on a file in the list of updated files reveals a menu with the useful option  Compare with Version in Ancestor , which will show you in a fairly intuitive, graphical way how a file was changed in the selected commit. 
+
+ Right-clicking a commit and selecting  Checkout  — equivalent to the  git checkout  command from the command line — will update your Eclipse project accordingly, so that it will appear to contain the files as they appeared in whatever commit you checked out.  Note that this will leave you in a  detached HEAD  state, just as it would from the command line, so you'll be able to view code but will not be able to commit changes to it. 
+
+ 
+
+</body> 

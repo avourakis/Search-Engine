@@ -1,0 +1,570 @@
+  Protocol Design Document<body> 
+
+ Distributed Authoring and Versioning Protocol  
+
+   Version 0.1    
+
+   Jim Cunningham (jfc@netscape.com)    
+
+   Asad Faizi (asad@netscape.com)    
+
+   Netscape Corp.      
+
+  This documents intends to address some of the issues with adding new distributed authoring and versioning functionality by implementing new methods. This is by no means a complete DAV spec. It only attempts to answer some of the questions regarding new methods. Netscape welcomes and appreciates any feedback on this document.   
+
+  Please send any comments to   Asad Faizi  . 
+
+ Thank you 
+
+ 
+       MetaData      
+
+  
+   
+
+   Function 
+
+   Get Attribute Sheet       Functional Definition 
+
+ Retrieves a file representing the full attribute sheet (i.e. all available attributes) for the resource named by URL.     Request 
+
+ The  Method  is  GETATTRIBUTES .  The Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource whose property sheet is requested.
+ The  Request Header Fields  must include the following header in addition to those usually supplied: 
+
+   Content-Attributes  specifies the property whose value is needed. The user may specify a comma separated list of attributes or "*" if all the attributes are needed. 
+    Content-Attributes: attribute1, attribute2, attribute3,... | *     
+   Response 
+
+ If the request is successful, the server must return the following Status-Code in the Status-Line of its response:   200 OK. Request successfull. The resource's property sheet is attached with the response. 
+  The header of the response contains Content-Attribute followed by a comma separated list of &lt;attribute-name&gt; &lt;attribute-value&gt; pairs. 
+
+   Content-Attributes:  "&lt;"attribute-name"&gt;" "&lt;"attribute-value"&gt;"     separated by comma (,). 
+
+ If the checkout is not successful, the server must return one of the following Status-Codes in the Status-Line of its response:  
+
+  400 Bad Request. A required header is missing or invalid, or the request is invalid.  
+
+ 401 Unauthorized. The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt.  
+
+ 403 Forbidden. The client is forbidden to checkout the specified resource, possibly because revsision control is not enabled for it.   
+
+ 404 Not Found. The resource or version of the resource specified by Request-URI was not found by the server.   
+
+ 500 Server Error. The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.   
+
+ 501 Not Implemented. The server does not implement functionality required by the given operation, and is aware that it cannot do so.     
+   . 
+
+   Function 
+
+   Set Attribute Sheet       Functional Definition 
+
+ Uploads editable attributes from the property sheet for the resource named by URL. 
+   Rquest 
+
+ The  Method  is  SETATTRIBUTES .  The Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource whose property sheet is requested.
+ The  Request Header Fields  must include the following header in addition to those usually supplied: 
+
+   Content-Properties  The user provides a comma separated list of &lt;attribute-name&gt; &lt;attribute-value&gt; pairs as the value of this header. 
+    Content-Properties:  "&lt;"property name"&gt;" "&lt;"property value"&gt;"     
+   Response 
+
+ If the request is successful, the server must return the following Status-Code in the Status-Line of its response:   200 OK. Request successfull. The resource's property sheet is attached with the response. 
+  If the checkout is not successful, the server must return one of the following Status-Codes in the Status-Line of its response:  
+
+  400 Bad Request. A required header is missing or invalid, or the request is invalid.  
+
+ 401 Unauthorized. The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt.  
+
+ 403 Forbidden. The client is forbidden to checkout the specified resource, possibly because revsision control is not enabled for it.   
+
+ 404 Not Found. The resource or version of the resource specified by Request-URI was not found by the server.   
+
+ 500 Server Error. The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.   
+
+ 501 Not Implemented. The server does not implement functionality required by the given operation, and is aware that it cannot do so.     
+   . 
+
+ 
+  
+
+   Revision Control    
+
+  
+   
+
+   Function 
+
+   Checkout       Functional Description 
+
+ Retrieves a specified version of the resource named by URL, and may lock it for editing. 
+   Request 
+
+ The  Method  is  CHECKOUT .  The Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource to checkout.  The  Request Header Fields  must include the following header in addition to those usually supplied: 
+
+   Content-Lock  specifies the status of lock. The user may define the if the checked-out resource should be locked, in which case the value of Content-Lock is ON, otherwise Off.       Content-Lock: "On" | "Off"       The  Request Header Fields  must include only one of   the following headers in addition to those usually supplied:  
+
+   Content-Version  specifies the version tag of the resource to checkout. The value "head" indicates the default-published version, as in the case: 
+     Content-Version: head  
+   or  
+
+  Content-Label  specifies a label, previously associated with a specific version of the resource, to identify the version for checkout.  
+
+   Content-Label: label  
+   
+   Response 
+
+ If the checkout is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was checked out (and a lock was established).    It must also return the following response headers, if they are available:  
+
+   Content-Version  specifies the version tag of the resource that was checked out. ("head" in the request should be translated to a specific version tag in the response).  
+
+   Content-Version: head  
+   and/or  
+
+  Content-Label  specifies any label which was previously associated with this specific version of the resource.  
+
+   Content-Label: label  
+   If the checkout is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to checkout the specified resource, possibly because revsision control is not enabled for it.  
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   . 
+
+   Function 
+
+   Checkin       Functional Description 
+
+ Uploads a specified version of the resource named by URL, and unlocks it. 
+   Request 
+
+ The  method  is  CHECKIN . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource to checkin.  The  Request Header Fields  must include the following header in addition to those usually supplied: 
+
+   Content-Version  specifies the version tag of the resource to checkin. The user may specify a certain version or may use "head". The value "head" indicates the default-published version, as in the case: 
+     Content-Version: head | version-number      Content-Lock  specifies the status of lock. The user may define the if the checked-in resource should be locked, in which case the value of Content-Lock is ON, otherwise Off.  
+
+   Content-Lock: "On" | "Off"       Content-Comment  specifies the comments provided by the user to be associated with this particular version.  
+
+   Content-Comments: comments      
+   Response 
+
+ If the checkin is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was checked in (and a lock was removed).    If the request is successful, the server must also return the following response headers, if they are available:  
+
+   Content-Version  specifies the (possibly new) version tag of the resource that was checked in. ("head" in the request should be translated to a specific version tag in the response).  
+
+   Content-Version: version      and/or  
+
+  Content-Label  specifies any label which was previously associated with this specific version of the resource.  
+
+   Content-Label: label  
+   If the checkin is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to checkin the specified resource, possibly because revsision control is not enabled for it, or no lock was previously established.  
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   . 
+
+   Function 
+
+   Unlock       Functional Definition 
+
+ Removes a lock from the specified version of the resource named by URL. 
+   Request 
+
+ The  method  is  UNLOCK . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource to unlock.  The  Request Header Fields  must include only one of   the following headers in addition to those usually supplied:  
+
+   Content-Version  specifies the version number of the resource be locked. The value "head" indicates the default-published version:      Content-Version: version   
+
+  or  
+
+  Content-Label  specifies a label, previously associated with a specific version of the resource, to identify the version locking.  
+
+  Content-Label: label  
+  
+   Response 
+
+ If the unlock is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was unlocked, or no lock had been previously established on it. 
+  If the unlock is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to unlock the specified resource, possibly because revsision control is not enabled for it.  
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   . 
+
+   Function 
+
+   Lock       Functional Definition 
+
+ Set a lock to the specified version of the resource named by URL.     Request 
+
+ The  method  is  LOCK . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource to be locked.  The  Request Header Fields  must include only one of the following headers in addition to those usually supplied:  
+
+   Content-Version  specifies the version number of the resource be locked. The value "head" indicates the default-published version:      Content-Version: version   
+
+  or  
+
+  Content-Label  specifies a label, previously associated with a specific version of the resource, to identify the version locking.  
+
+  Content-Label: label  
+  
+   Response 
+
+ If the lock is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was locked, or lock had been previously established on it. 
+  If the lock is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to lock the specified resource, possibly because revsision control is not enabled for it.  
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   . 
+
+   Function 
+
+   Default       Functional Definition 
+
+ Makes the specified version of the resource named by URL the default-published version of that resource when a version is not explicitly specified (such as in response to a normal GET). 
+   Request 
+
+ The  method  is  DEFAULT . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource to make the head. 
+
+ The  Request Header Fields  must include only one of   the following headers in addition to those usually supplied:  
+
+   Content-Version  specifies the version number of the resource to become default-published. 
+     Content-Version: version      or  
+
+  Content-Label  specifies a label, previously associated with a specific version of the resource, to identify the version to become default.  
+
+   Content-Label: label  
+   
+   Response 
+
+ If the default is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The version specified of the resource was made the default version, or it already was the default version.    If the default is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. This may occur if another user has a lock on the resource, or on the current default version of the resource.  
+
+  403 Forbidden . The client is forbidden to default the specified version of the resource, possibly because revsision control is not enabled for it. 
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+    .  
+
+   Function 
+
+   Revision Log       Functional Definition 
+
+ Returns information summarizing the version history and checkin/out logs of the resource named by URL. 
+   Request 
+
+ The  method  is  REVLOG . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource of which the log is requested.
+ The  Request Header Fields  must include the following header in addition to those usually supplied.   
+
+   Content-Log  The user may specify a particular revision number or "*" for all revisions of this particular resource, or X.Y.* for all the versions of the branch Y of root X.      Content-Log: RevNum | * | X.Y.*     
+   Response 
+
+ If the log is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The log is successfully returned.    Server also returns a space seperated list of all the versions of the requested resource. 
+
+ If the log is not successful, the server must return one of the following
+ Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to provide log of the specified resource, possibly because revsision control is not enabled for it. 
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   Note 
+
+ Logs are different from Property Sheet information. Log refers to information pertaining to revision control aspects of the documents only.     . 
+
+   Function 
+
+   Label       Functional Description 
+
+ Associates a text label with a given version of a resource.     Request 
+
+ The  method  is  LABEL . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the resource of which the log is requested.
+ The  Request Header Fields  must include the following headers in addition to those usually supplied:  
+
+   Content-Version  specifies the specific version of the resource to which the label is to be applied.  
+
+  Content-Version: version   
+
+   and   
+
+  Content-Label  is the label to be applied.  
+
+  Content-Label: label  
+  
+   Response 
+
+ If the label is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The label is successfully associated.    If the log is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to perform lable operation to the specified resource, possibly because revsision control is not enabled for it. 
+
+  404 Not Found . The resource or version of the resource specified by  Request-URI  was not found by the server.  
+
+   500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+   501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.   
+  
+   Note 
+
+ Labels is not part of the meta data and hence not accessable through GETPROPERTY. It is very specific to revision control     
+  
+
+   File Management    
+
+  
+   
+
+   Function 
+
+   Index Directory       Functional Description 
+
+  Obtains an index of resources and their corresponding properties which reside beneath a given URI in the server's content store. One example is to obtain a list of files which reside in a server directory (or URI which ends with a / separator).      Request 
+
+  The request's Method must be INDEX. The Protocol must be HTTP/1.0. The Request-URI must correspond to the location of the resource which is requested to be indexed.    The Request Header Fields may include the following header:  
+
+   Content-Index  specifies a template for the index to follow, in order to include additional properties in the index response. For instance, including the following header with an index request:      Content-Index: "filename" "content-type" "checked-in"     Instructs the server to return an index of the resources in the specified directory, listed with the resource's filename, content type, and its checked-in status. The client may request a list of available properties (to be included in a subsequent index request) by including the Content-Index header without any property values. 
+ 
+   Response 
+
+ If the server is able to index the given resource, it must return the following  Status-Code  in the  Status-Line  of its response: 
+
+   200 OK . This indicates that the response which follows contains a listing of objects contained in the specified resource, as well as their properties. 
+  A successful response must include the following  Entity Header Field :  
+
+   Content-type  must be set to the constant  text/plain .    The  Entity-Body  must consist of a series of lines, in ASCII text. Each line corresponds to a resource within the resource being indexed.  
+
+ If the request header  Content-Index  is included in the request with property parameters, the BNF for this response is defined as follows: 
+
+   Entity-body = *(resource)   
+
+  [template ["]property name["] [SP ["]property name["] ...] ( LF | CRLF )]   
+
+  resource = [SP ["]property["] ...]( LF | CRLF )     The first line,  template , indicates the template which the index will follow for returning properties along with the resource description. This template line should be identical to the requested template line, although it is not a strict requirement (for instance, if the client requests an invalid property). The client should use the response template line to determine property names. If the  template  line is omitted, the default attributes are assumed to be of the form:  
+
+   template "filename" SP "content-type" SP "size" SP "last-modification" CRLF     Following the single optional  template  line are the series of  resource  lines, one for each resource.  
+
+ The defined properties include: 
+
+  filename = The name of the resource, encoded using the  URL encoding rules . For more information, refer to  RFC 1945.   
+
+ content-type = The  MIME type  of the specified resource. The special keyword  directory  is used to designate filesystem directories or their equivalents. 
+
+ size = The size in octets of the resource. The server may choose to respond with a single hyphen character ( - ) if it does not know the size of the resource. 
+
+ last-modification = The date of last modification of this resource, specified as the number of seconds since January 1, 1970 00:00:00 UTC. The server may choose to respond with a single hyphen character ( - ) if it does not know the size of the resource.  
+
+ property = Any additional properties which the server chooses to include which represent meta-information about the resource.    For each   property of a given  resource  which does not have a value, the value  ""  is returned.  
+
+ If the request header  Content-Index  is included in the request without any property parameters, such as in the case:  
+
+   Content-Index:  
+  Then the response consists of a file of type text/plain with a single line: 
+
+   [template [SP ["]property name["] ...] ( LF | CRLF )]  
+  Where the template includes the list of all property names available for indexing. 
+
+ If the request header  Content-Index    is  not  included in the request, the BNF for this response is defined as follows:  
+
+   Entity-body = *(resource)   
+
+  resource = filename SP content-type SP size SP last-modification ( LF | CRLF )  
+  If the server is unsuccessful in indexing the given resource, it must respond with one of the following  Status-Codes  on the  Status-Line  of its response: 
+
+   401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to  HTTP Basic Authorization  in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The server is unable or unwilling to index the given resource for the requesting client.  
+
+  404 Not Found . The server was unable to locate the specified resource. 
+
+  500 Server Error . The server encountered an internal error while processing the request, or does not implement indexing of the specified resource and is not aware of the missing functionality.  
+
+  501 Not Implemented . The server does not have the functionality required to index the given resource, and is aware that it lacks it.    
+   . 
+
+   Function 
+
+   Create Directory       Functional Description 
+
+ The  MKDIR  method is used to create a new container object in the content store. For many servers, this will be a filesystem directory from the underlying operating system.     Request 
+
+ The request's  Method  must be  MKDIR . The  Protocol  is  HTTP/1.1 . The  Request-URI  must be the URI of the new directory or container to create.
+ It is recommended, but not required, that the server create all containers higher in the URI hierarchy to the specified URI before creating the new URI. For example, if the request asks for  /foo/bar  to be created, and  /foo  does not exist, the server must either create  /foo  before creating  /foo/bar  and return success as defined below, or it must return an error as defined below. The server is not required to implement container creation for all or even any of its URIs. For some content stores, it might not make sense or the concept of containers or directories might not directly apply.   
+   Response 
+
+ If the container creation is successful, the server must return the following  Status-Code  in the  Status-Line  of the response: 
+
+   201 Created . The directory, and any of its parent directories, were created and are now ready for use. No deferred creation is allowed.    If the container creation is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of the response: 
+
+   401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to  HTTP Basic Authorization  in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The server was unwilling or unable to create the directory. The directory could not be created, because it either already exists, or the creation of the directory and its parents failed.  
+
+  500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+  501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.    
+   . 
+
+   Function 
+
+   Destroy Resource       Functional Description 
+
+ The  DESTROY  method is used to schedule the parmenant removal of the resource, and delete revision archive.     Request 
+
+ The request's  Method  is  DESTROY . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the location of the archieve to be removed. 
+   Response 
+
+ If the destruction is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The specified resource, and any resources beneath it, has been scheduled for removal at a later time. Servers are not required to remove the content immediately. 
+  If the deletion is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to  HTTP Basic Authorization  in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The requesting client is not allowed to remove the specified resource. 
+
+  404 Not Found . The server cannot find the requested resource.  
+
+  500 Server Error . The server encountered an internal error which prevents it from removing the specified resource. Or, the server does not implement removal of the type of resource which was requested to be removed and is unaware that it does not know how to do so.  
+
+  501 Not Implemented . The server is does not know how to remove the specified content, and is aware that it is unable to do so.    
+   . 
+
+   Function 
+
+   Move Resource       Functional Description 
+
+ The  MOVE  method schedules the movement of a given resource from its current URI location to a new URI location.     Request 
+
+ The request's  Request-Method  must be  MOVE . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the location of the resource which is requested to be moved.  The  Request Header Fields  must include the following header in addition to those usually supplied: 
+
+   New-URI  specifies the new URI to which the resource specified by  Request-URI  should be moved.    The server is not required to provide clients with automatic redirection from the old URI to the new one. The server is also allowed to selectively implement the relocation of resources and to refuse to move certain document types at its own discretion. For more information on request redirection, please refer to  RFC 1945.   
+ 
+   Response 
+
+ If the relocation is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was scheduled to be moved. The server may carry out the movement immediately or at some future time, but guarantees that the movement will occur. 
+  If the relocation is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid. 
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to  HTTP Basic Authorization  in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The client is forbidden to manipulate content in either the source or destination.  
+
+  404 Not Found . The resource specified by  Request-URI  was not found by the server. 
+
+  500 Server Error . The server encountered an internal error while trying to service the request, or does not implement the required functionality and does not know that it cannot do so.  
+
+  501 Not Implemented . The server does not implement movement of the given resource, and is aware that it does not know how to do so.    
+   . 
+
+   Function 
+
+  Remove Directory      Functional Description 
+
+ The  RMDIR  method is used to schedule the removal of empty container objects from the content store. For many servers, this will be a filesystem directory from the underlying operating system.     Request 
+
+ The request's  Method  must be  RMDIR . The  Protocol  is  HTTP/1.1 . The  Request-URI  must be the URI of the directory or container to remove.
+ Servers are not required to implement this method on all resources in the content store. Further, if the requested container is not empty, the server is free to reject the request to remove the container until the contents have been emptied using the  DELETE  command.   
+   Response 
+
+ If the container removal is successful, the server must return the following  Status-Code  in the  Status-Line  of the response: 
+
+   200 OK . The specified container was either removed, or scheduled for removal at a later time. The removal is guaranteed to take place at some point in the future.  
+  If the container removal is not successful, the server must return one of the following  Status-Codes  in the  Status-Line  of the response:  
+
+   401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to  HTTP Basic Authorization  in this case. The client may either send a new request with the required credentials, or abort the attempt. 
+
+  403 Forbidden . The server was unwilling or unable to remove the directory. The directory could not be removed, possibly because it's not empty. 
+
+  404 Not Found . The specified container could not be found in the content store. 
+
+  500 Server Error . The server encountered an internal error which prevented it from carrying out the request, or the required functionality is not implemented and the server is unaware of its existence.  
+
+  501 Not Implemented . The server does not implement functionality required by the given operation, and is aware that it cannot do so.    
+   . 
+
+   Function 
+
+   Copy Resource       Functional Description 
+
+ Schedules the copying of a given resource from its current URI location to a new URI location. 
+   Request 
+
+ The  method  is  COPY . The  Protocol  is  HTTP/1.1 . The  Request-URI  must correspond to the location of the resource which is requested to be copied.
+ The Request Header Fields must include the following header in addition to those usually supplied: 
+
+   New-URI  specifies the new URI to which the resource specified by Request-URI should be copied.  
+  The server is not required to provide clients with automatic redirection from the old URI to the new one. The server is also allowed to selectively implement the relocation of resources and to refuse to copy certain document types at its own discretion. 
+ 
+   Response 
+
+ If the copy is successful, the server must return the following  Status-Code  in the  Status-Line  of its response:    200 OK . The resource was scheduled to be copied. The server may carry out the copy immediately or at some future time, but guarantees that the copy will occur.  
+  If the copy is not successful, the server must return one of the following Status-Codes in the Status-Line of its response:  
+
+   400 Bad Request . A required header is missing or invalid, or the request is invalid.  
+
+  401 Unauthorized . The request is valid, but the proper credentials have not been provided by the client. The server and client are required to follow all rules pertaining to HTTP Basic Authorization in this case. The client may either send a new request with the required credentials, or abort the attempt.  
+
+  403 Forbidden . The client is forbidden to manipulate content in either the source or destination.   
+
+  404 Not Found . The resource specified by Request-URI was not found by the server.  
+
+  500 Server Error . The server encountered an internal error while trying to service the request, or does not implement the required functionality and does not know that it cannot do so.   
+
+  501 Not Implemented . The server does not implement copy of the given resource, and is aware that it does not know how to do so    
+   . 
+
+ 
+  </body> 

@@ -1,0 +1,141 @@
+   
+  Class c2.framework.ComponentThread
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.ComponentThread
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +---- c2.framework.Component 
+                   |
+                   +----c2.framework.ComponentThread
+ 
+    public class  ComponentThread 
+    extends  Component 
+    implements  Runnable 
+    
+A component that runs in its own thread of control.  
+See the Component class for details on components.   
+     See Also: 
+        Component 
+     
+ 
+    
+      sem  
+     
+        t  
+     
+   
+    
+      ComponentThread  ()
+     
+        ComponentThread  (String, Class)
+     
+   
+    
+      create  (String, Class)
+     Initializes the component.
+        finish  ()
+     Immediately stops the execution of the component or connector (even
+if it has outstanding messages to process).
+        finished  ()
+     Returns true if the component or connector is idle (ie that it is
+not processing any messages).
+        newMessage  (Port)
+     This method is invoked when the component receives a new request or
+notification.
+        run  ()
+     The run method is called when the thread is created.
+        start  ()
+     Start the component or connector running.
+    
+ 
+    
+   
+ t 
+ 
+  protected  Thread  t
+ 
+   
+ sem 
+ 
+  protected  Semaphor  sem
+ 
+  
+ 
+    
+  
+   
+ ComponentThread 
+ 
+  public ComponentThread()
+ 
+   
+ ComponentThread 
+ 
+  public ComponentThread( String  name,
+                          Class  portClass)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  name,
+                      Class  portClass)
+ 
+   Initializes the component.
+      Overrides: 
+        create  in class  Component 
+         
+  newMessage  
+ 
+  protected void newMessage( Port  p)
+ 
+   This method is invoked when the component receives a new request or
+notification.
+      Overrides: 
+        newMessage  in class  Component 
+         
+  start  
+ 
+  public void start()
+ 
+   Start the component or connector running.
+      Overrides: 
+        start  in class  Brick 
+         
+  finish  
+ 
+  public void finish()
+ 
+   Immediately stops the execution of the component or connector (even
+if it has outstanding messages to process).
+      Overrides: 
+        finish  in class  Brick 
+         
+  finished  
+ 
+  public boolean finished()
+ 
+   Returns true if the component or connector is idle (ie that it is
+not processing any messages).
+      Overrides: 
+        finished  in class  Brick 
+         
+  run  
+ 
+  public void run()
+ 
+   The run method is called when the thread is created.  It waits
+(on a semaphor) for requests and notifications to arrive, and calls
+the appropriate handle() method to process them.
+    
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

@@ -1,0 +1,54 @@
+ 
+      SepiaDoc –
+      Group
+    <body>  Back to Index    
+        
+           
+AppString &gt; AppStringDoc
+ 
+ SEPIA 
+ Overview 
+ 
+The module contains the implementation of the technique presented in [1] and [2].
+ 
+ Usage 
+ 
+For compiling instructions, please see CompileDoc.
+ 
+ 
+An example of how to use the module is available in  src/sepia/example.cc .
+ 
+ Interface 
+ 
+The main class of the module is Sepia which is declared in  src/sepia/sepia.h .
+ 
+ 
+The main methods of Sepia are:
+ 
+   Sepia(const vector&lt;string&gt; &amp;dataset, 
+        unsigned thresholdMin,
+        unsigned thresholdMax);
+  Sepia(const vector&lt;string&gt; &amp;dataset,
+        const string &amp;filename);
+
+  void build();
+  void saveData(const string &amp;filename) const;
+  
+  float getEstimateSelectivity(const string &amp;query, unsigned editdist) const;
+  
+The main idea is that the user can create a Sepia object by specifying a vector of strings (dataset) and a few extra parameters (for details see [1]) or load an existing one from a file. If the object was not loaded, then it needs to be built. Next, the user has the option of saving the object to a file. In order to estimate the selectivity of a given string, the user calls  select . 
+ 
+ Performance 
+ 
+The performance results are available in [1] and [2].
+ 
+ Contributors 
+  Rares Vernica
+    
+[1] Liang Jin and Chen Li: Selectivity Estimation for Fuzzy String Predicates in Large Data Sets. VLDB 2005: 397-408  
+[2] Liang Jin, Chen Li, Rares Vernica: SEPIA: estimating selectivities of approximate string predicates in large Databases. VLDB J. 17(5): 1213-1229 (2008)
+ 
+
+        
+        
+           Back to Index   </body> 

@@ -1,0 +1,71 @@
+ 9.1.2 AddData<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.1 Constructors 
+ Up:   9.1 OEBase 
+ Next:   9.1.3 Clear 
+   
+
+
+  
+9.1.2 AddData 
+ 
+
+ 
+    
+template&lt;typename T&gt;
+bool AddData(unsigned int tag, const T t)
+template&lt;typename T&gt;
+bool AddData(const char *tag, const T t)
+    
+These template methods associate and store a copy of the data passed as the
+second argument with the tag identifier given as the first argument.  Integer
+tags should be allocated using the OEGetTag (Section  10.7 ) function.
+Multiple calls to AddData of a OEBase derived class instance will result in
+multiple copies of data being stored.  The AddData method does not overwrite
+data stored by previous calls.
+
+  
+    
+template&lt;typename T&gt;
+bool AddData(unsigned int tag, const T t, unsigned int len)
+template&lt;typename T&gt;
+bool AddData(const char *tag, const T t, unsigned int len)
+    
+These template methods associate and store a copy of the data pointed to by
+the second argument with the tag identifier given as the first argument.  The
+third argument passed to the method is used to denote the length of the array
+pointed to by the second argument.  The array length must be specified so that
+data can be copied directly.  Integer tags should be allocated using the
+OEGetTag (Section  10.7 ) function.  Multiple calls to AddData of a
+OEBase derived class instance will result in multiple copies of data being
+stored.  The AddData method does not overwrite data stored by previous calls.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.1 Constructors 
+ Up:   9.1 OEBase 
+ Next:   9.1.3 Clear 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

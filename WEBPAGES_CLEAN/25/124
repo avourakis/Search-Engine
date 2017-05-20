@@ -1,0 +1,117 @@
+ """LCA.py
+
+Range minimization and tree least common ancestor data structures
+with linear space and preprocessing time, and constant query time,
+from Bender and Farach-Colton, "The LCA Problem Revisited",
+Proc. LATIN 2000 (pp.88-94), http://www.cs.sunysb.edu/~bender/pub/lca.ps
+
+Some experimentation would be needed to determine how large a query
+range needs to be to make this faster than computing the min of the range
+directly, and how much input data is needed to make the linear space
+version pay off compared to the much simpler LogarithmicRangeMin that
+it uses as a subroutine.
+
+D. Eppstein, November 2003.
+"""
+
+import unittest,random
+from collections import defaultdict
+from UnionFind import UnionFind
+
+# 2to3 compatibility
+try:
+    xrange
+except:
+    xrange = range
+
+def _decodeSlice(self,it):
+    """Work around removal of __getslice__ in Python 3"""
+    if type(it) != slice:
+        raise ValueError("Can only access LCA object by slice notation")
+    left,right,stride = it.indices(len(self))
+    if stride != 1:
+        raise ValueError("Stride not permitted in LCA")
+    return left,right
+
+class RangeMin:
+    """If X is any list, RangeMin(X)[i:j] == min(X[i:j]).
+    Initializing RangeMin(X) takes time and space linear in len(X),
+    and querying the minimum of a range takes constant time per query.
+    """
+
+    def __init__(self,X):
+        """Set up structure with sequence X as data.
+        Uses an LCA structure on a Cartesian tree for the input."""
+        self._data = list(X)
+        if len(X) &gt; 1:
+            big = list(map(max, self._ansv(False), self._ansv(True)))
+            parents = {i:big[i][1] for i in range(len(X)) if big[i]}
+            self._lca = LCA(parents)
+
+    def __getitem__(self,it):
+        """When called by X[left:right], return min(X[left:right])."""
+        left,right = _decodeSlice(self,it)
+        if right  xi:
+                stack.pop()
+            output[xi[1]] = stack[-1]
+            stack.append(xi)
+        return output
+
+    def _lca(self,first,last):
+        """Function to replace LCA when we have too little data."""
+        return 0
+
+class RestrictedRangeMin:
+    """Linear-space RangeMin for integer data obeying the constraint
+        abs(X[i]-X[i-1])==1.
+    We don't actually check this constraint, but results may be incorrect
+    if it is violated.  For the use of this data structure from LCA, the
+    data are actually pairs rather than integers, but the minima of
+    all ranges are in the same positions as the minima of the integers
+    in the first positions of each pair, so the data structure still works.
+    """
+    def __init__(self,X):
+        # Compute parameters for partition into blocks.
+        # Position i in X becomes transformed into
+        # position i&amp;self._blockmask in block i&gt;&gt;self.blocklen
+        self._blocksize = _log2(len(X))//2
+        self._blockmask = (1 &gt; self._blocksize
+        lastblock = (right - 1) &gt;&gt; self._blocksize
+        if firstblock == lastblock:
+            i = left &amp; self._blockmask
+            position = self._blocks[firstblock][i:i+right-left][1]
+            return self._data[position + (firstblock  firstblock + 1:
+                best = min(best, self._blockrange[firstblock+1:lastblock])
+            return best
+
+    def _blockid(self,XX):
+        """Return value such that all blocks with the same
+        pattern of increments and decrements get the same id.
+        """
+        blockid = 0
+        for i in range(1,len(XX)):
+            blockid = blockid*2 + (XX[i] &gt; XX[i-1])
+        return blockid
+
+class PrecomputedRangeMin:
+    """RangeMin solved in quadratic space by precomputing all solutions."""
+
+    def __init__(self,X):
+        self._minima = [PrefixMinima(X[i:]) for i in range(len(X))]
+
+    def __getitem__(self,it):
+        """When called by X[left:right], return min(X[left:right])."""
+        left,right = _decodeSlice(self,it)
+        return self._minima[left][right-left-1]
+
+    def __len__(self):
+        return len(self._minima)
+
+class LogarithmicRangeMin:
+    """RangeMin in O(n log n) space and constant query time."""
+
+    def __init__(self,X):
+        """Compute min(X[i:i+2**j]) for each possible i,j."""
+        self._minima = m = [list(X)]
+        for j in range(_log2(len(X))):
+            m.append(list(map(min, m[-1][:-1 

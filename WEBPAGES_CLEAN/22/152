@@ -1,0 +1,261 @@
+ 
+DBConnection
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.RM 
+ 
+Class DBConnection 
+ 
+java.lang.Object
+    Raccoon.RM.DBConnection 
+ 
+   Direct Known Subclasses:     DB2LoadDriver ,  InformixLoadDriver ,  SQLLoadDriver  
+    public abstract class  DBConnection  extends java.lang.Object    
+    DBConnection:   An abstract class to work 
+ as the a driver of database. Different types of 
+ DBMSs have to implement different drivers.
+  
+ Notice, do not import com.mysql.jdbc.* 
+ or you will have problems!
+  
+
+  
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+  java.sql.Connection   
+    conn   
+
+ 
+            
+    
+ static java.lang.String   
+    NULL_STR   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      DBConnection  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    closeStmtAndRS  () 
+
+ 
+            
+    
+   PVInstance    
+    excuteSFW  (java.lang.String sqlStmt) 
+
+ 
+            
+    
+   QueryAnswer    
+    executeQuery  (java.lang.String sqlStmt) 
+
+ 
+            
+    
+   PVInstance    
+    getInstance  (java.lang.String tableName) 
+
+ 
+            
+    
+   PVRelation    
+    getRelation  ( PVSchema  schema) 
+
+ 
+            
+    
+   PVRelation    
+    getRelation  (java.lang.String tableName) 
+
+ 
+            
+    
+   PVSchema    
+    getSchema  (java.lang.String tableName) 
+
+ 
+            
+    
+   PVInstance    
+    resultSetToInstance  (java.sql.ResultSet rs) 
+
+ 
+          change a result to the PVInstance format 
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+NULL_STR 
+ 
+public static final java.lang.String  NULL_STR  
+    See Also:    Constant Field Values        
+conn 
+ 
+public java.sql.Connection  conn  
+      
+    
+ Constructor Detail   
+     
+DBConnection 
+ 
+public  DBConnection () 
+    
+    
+ Method Detail   
+     
+executeQuery 
+ 
+public  QueryAnswer   executeQuery (java.lang.String sqlStmt)
+                         throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+     
+closeStmtAndRS 
+ 
+public void  closeStmtAndRS () 
+     
+     
+getSchema 
+ 
+public  PVSchema   getSchema (java.lang.String tableName) 
+     
+     
+getInstance 
+ 
+public  PVInstance   getInstance (java.lang.String tableName) 
+     
+     
+resultSetToInstance 
+ 
+public  PVInstance   resultSetToInstance (java.sql.ResultSet rs) 
+  change a result to the PVInstance format
+ 
+     
+      
+getRelation 
+ 
+public  PVRelation   getRelation (java.lang.String tableName) 
+     
+     
+getRelation 
+ 
+public  PVRelation   getRelation ( PVSchema  schema) 
+     
+     
+excuteSFW 
+ 
+public  PVInstance   excuteSFW (java.lang.String sqlStmt)
+                     throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

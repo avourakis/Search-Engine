@@ -1,0 +1,499 @@
+ for Statements
+
+
+Python has a general fo" loop statement that we use in a variety of programming
+contexts. In this lecture, we will learn and explore how to use a for loop to
+iterate over characters in a string, integers in a range, and lines in a file
+(each line is a string; and we will learn some string methods that are useful
+in this context). As we learn about new types in Python (e.g., tuples, lists,
+sets, and dicts) we will find that many of them (all of these) allow us to use
+a for loop to iterate over their values as well.
+
+For loops are called definite loops, because when they execute the number of
+iterations is known and there is a guarantee that the loop will terminate: i.e.,
+they know the amount of data that they will process, so they know the number of
+iterations they will perform: all the characters in a string; all the numbers
+in a range; all the lines in a file.
+
+In the next lecture we will study while loops, which are called indefinite
+loops: at the time they start they do not know how many iterations they will
+perform (and if written incorrectly, they might never terminate: what we call
+an infinite loop). While loops use a boolean-condition to determine when to
+terminate.
+
+Loops are powerful constructs. There is little that we've programmed up to
+this point in the course that we couldn't do more easily by hand or with a
+pocket calculator. But once we know about loops, it is easy to solve problems
+on the computer that include lots of data, that we could solve only clumsily
+with simpler tools.
+
+The EBNF for a for_statement is quite simple to state (compared to the the
+repetition and options in the EBNF for if_statement). Note that like an if
+statement, its first line ends with a : indicating that a block (indented)
+follows. Here is the simplest version of the EBNF for a for statement.
+
+  for_statement ')  #note argument matching print's end parameter
+
+produces the result
+
+  a-&gt;b-&gt;c-&gt;
+
+Copy, paste, and run this code in Eclipse. Experiment with all the code in this
+lecture. We will now explore most of the interesting aspects of the for loop
+in this section (using strings) so it is quite long. The range and open
+sections that follow are much shorter, not because they are simpler or less
+powerful, but because we will have learned most of what we need to know about
+for loops by seeing how they process strings.
+
+We can adapt our trace tables to include for loops too.
+
+Statement         |  c  | Console   | Explanation
+------------------+-----+-----------+---------------------------------------
+Initial state     |     |           | Nothing interesting in the intial state
+for c in 'abc':   | 'a' |           | Start loop; bind c to 'a'(1st in iterable)
+print(c,end='-&gt;') |     | a-&gt;       | print c's value with -&gt; at end
+...for c in 'abc':| 'b' |           | Continue loop; bind c to 'b'(next in ...)
+print(c,end='-&gt;') |     | a-&gt;b-&gt;    | print c's value with -&gt; at end
+...for c in 'abc':| 'c' |           | Continue loop; bind c to 'c'(next in ...)
+print(c,end='-&gt;') |     | a-&gt;b-&gt;c-&gt; | print c's value with -&gt; at end
+...for c in 'abc':|     |           | Terminate loop; no next value in iterable
+
+Here we preface all loop iterations after the start by ...
+
+We can also use a variable to refer to a string object. The script below
+
+s =  'abc'  
+for c in s:
+    print(c,end='-&gt;')
+
+produces exactly the same output. Think about expressions and what they
+evaluate to: the value of a string literal and the value of a name bound to the
+same string literal both evaluate to the same string object.
+
+Note that there is nothing special about the name c. The great programmer
+Shakespeare (who wrote some of the greatest scripts) had it right when he said,
+
+   "What's in a name? That which we call a rose by any other name would
+    smell as sweet."
+
+Examine the following for loop that uses i, not c, for the identifer (and also
+uses i in the print statement in its body). Also notice that in this script,
+the for loop is the first statement in a block (of 3 statements), so when the
+for loop terminates, Python will continue executing code in the block that is
+the script, and print more information. Here it prints the value of i AFTER THE
+THE LOOP TERMINATES (still on the same line as the other values printed,
+because of end='-&gt;'); but print(i) specifies no end= so after printing this
+value it advances to the next line where it prints 'done'. Running this script
+
+for i in 'abc':
+    print(i,end='-&gt;')
+print(i)
+print('done')
+
+produces the result
+
+  a-&gt;b-&gt;c-&gt;c
+  done
+
+Examine the trace table written above to see that the for loop identifier
+stores 'c' when the loop terminates, so c is what is (re)printed.
+
+Although it is generally a VERY BAD IDEA to refer to the identifier used in the
+for loop AFTER THE FOR LOOP TERMINATES, Python does allow it. But pragmatic
+rules for programming dictage that we should refer to that identifier ONLY
+INSIDE THE block THAT IS THE BODY OF ITS for LOOP.
+
+Here is one more interesting example that illustrates why we should not refer
+to the for loop identifier after the loop. Here the same code above, but with
+the loop iterating over and empty (0-character) string.
+
+for i in '':
+    print(i,end='-&gt;')
+print(i)
+print('done')
+
+What happens? Python executes the loop zero times and then raises an exception:
+NameError: name 'i' is not defined. Why? The iterable contains no characters,
+so the for loop terminates without i every being bound to a value, so when
+Python tries to print i's value after the loop, Python must raise an exception.
+The body of the for loop is executed 0 times (another way to say "is not
+executed"), because the string is empty: there is no first character in an
+empty string.
+
+Let's go back to a slightly extended version of the original example, and fix
+it, illustrating looping over string slices.
+
+s =  'abcde'  
+for c in s:
+    print(c,end='-&gt;')
+
+produces the result
+
+  a-&gt;b-&gt;c-&gt;d-&gt;e-&gt;
+
+It is a bit strange to have that extra -&gt; at the end (leading to nothing).
+Really it would make more sense to print '-&gt;' only between characters in the
+string, with the last character on the line not followed by "-&gt;'
+
+So let's suppose that we specify that we want to write a script that prints
+every character in a string, with the characters SEPARATED by -&gt; (and no -&gt; at
+the end). For this example, we want to print: a-&gt;b-&gt;c-&gt;d-&gt;e. This is actually
+a hard problem to solve perfectly. You might think we could solve it by using
+sep instead of end in the code above; a good guess, and something to try, but
+
+s =  'abcde'  
+for c in s:
+    print(c,sep='-&gt;')
+
+produces the result
+
+  a
+  b
+  c
+  d
+  e
+
+Do you know why? You should be able to predict this result with your knowledge
+of how the print function works and the difference between what the sep and end
+parameters control, and what values end defaults to when not specified in a
+print function.
+
+Instead, we will attempt to solve this problem first by writing the following
+code.
+
+s =  'abcde'  
+print(s[0],end='')
+for c in s[1:]:
+    print('-&gt;'+c,end='')  # could also write print('-&gt;',c,sep='',end='')
+
+In fact, it produces the result we want
+
+  a-&gt;b-&gt;c-&gt;d-&gt;e
+
+Python prints the first letter; then to execute the for loop it must compute
+the iterable object by the expression s[1:]; recall that this specifies a slice
+of string s that contains all characters from index 1 to the end; so here it
+evaluates to the string 'bcde'. So Python binds c to each of these values,
+printing -&gt; prefacing each c. Therefore it produces the correct result. 
+
+Note that we need to print 5 letters and four arrows; if each loop prints a
+letter and arrow, then there will be the same number of each. But, we need to
+print one more letter than arrow, so we need a print statement outside the
+loop (either before, as we showed it, or after).
+
+There is a famous problem in computer science called the fence-post problem,
+which relates to this issue. If we want to build a 30 foot fence with
+horizontal rails that are 3 feet wide, how many rails and fenceposts do we
+need? Here is a picture
+
+   +---+---+---+---+---+---+---+---+---+---+
+   |   |   |   |   |   |   |   |   |   |   |
+
+Most students just divide 30 by 3 and get 10. And inded we need 10 rails to
+span 30 feet, but the number of fenceposts we need is 11; that might be hard to
+see in the picture above, but it is much simpler to see below, in a 3 foot wide
+fence.
+
+   +---+
+   |   |
+
+Obviously we need 2 fenceposts and 1 rail. In fact we always need one more
+fencepost than rail. Just as we printed one more letter than arrow separator.
+
+So, we are almost done, but not quite. We should think about/test "strange"
+cases. What would happen if we set s = 'a' (just one character) and ran this
+script? Our script should work correctly in all cases, no matter how many 
+characters are in the string s. Here, because there is one character, the script
+should print that one character and be done: print no -&gt; because with only one
+character, there is nothing to separate. Can you predict what will happen?
+
+What happens is that we print the a, the first character in index 0, then we
+evaluate s[1:] but for a one character string s, the result here is the empty
+string, so the for loop executes its body 0 times. So the result is this script
+prints just a, which is correct.
+
+Now let's look at an even "stranger" case. What would happen if we set s = ''
+the empty string and ran this code? Can you predict what will happen?
+
+Python will raise an exception when it tries to index s[0] in the first print
+function.  Because s is the empty string, it contains no characters (there are
+no character at any index, not even at index 0). So using 0 as an index forces
+Python to raise an exception: IndexError: string index out of range. It raises
+this same exception in the Python interpreter if we write ''[0]. What do we
+want the script to print in this case? We want it to print nothing, because
+there are no characters in the string: it should print neither a character nor
+a separator.
+
+Here is one script to solve the problem
+
+s =  ''  
+if s != '':
+    print(s[0],end='')
+    for c in s[1:]:
+        print('-&gt;'+c,end='')  # could also write print('-&gt;',c,sep='',end='')
+
+By using an if statement, we execute the code we wrote before, but only when we
+know s is not the empty string (we could have also written this boolean
+expression as len(s) &gt; 0 and gotten the same behavior). Now the script works
+correctly for the empty string and strings with 1 or more characters.
+
+Actually, another version of this script that is also correct/equivalent in
+execution is
+
+s =  ''  
+if s != '':
+    print(s[0],end='')
+for c in s[1:]:
+    print('-&gt;'+c,end='')  # could also write print('-&gt;',c,sep='',end='')
+
+Instead of a script with an if statement controlling a print function and a for
+loop statement, this code has an if statement controlling only a print function;
+the for loop statement is always executed after the if is finished: but for any
+strings with 0 or 1 characters, the for loop's body is executed 0 times
+(because s[1:] is the empty string). 
+
+So which script is simpler/easier to understand? Some would say the first
+because the if controls/(groups together) the two statments; some would say the
+second because the if controls only what it must control. Both perspectives have
+merit. What is most important is that we can prove the two are equivalent. Note
+the first is like [print loop] and the second like [print]loop. We will discuss
+programming pragmatics throughout the quarter.
+
+Of course, we should generalize this script (to make testing easier) to prompt
+the user for a string to test, and then do the computation on it.
+
+import prompt
+s =  prompt.for_string('Enter string to test')  
+if s != '':
+    print(s[0],end='')
+    for c in s[1:]:
+        print('-&gt;'+c,end='')  # could also write print('-&gt;',c,sep='',end='')
+
+------------------------------
+
+Let's use a for loop (and an if) to solve another problem: counting how many
+vowels are in a string. This script will also include the in operator, which
+here determines whether or not a character is in (one of the characters in) a
+string. Finally, it shows a common idiom of for counting something conditionally
+in Python. Here is the script to count and print the number of vowels in any
+string input by the user.
+
+import prompt
+s =  prompt.for_string('Enter string to test')  
+count = 0
+for c in s:
+    if c in 'aeoiu':
+         count += 1
+print('There were', count, 'vowels in:', s)
+
+Let's write a trace table for hand-simulation of this code, using what we know
+both about hand-simulating both for loops and if statements. To save space we
+will omitt the input/output (so no Console column)
+
+Statement        |   s    | c |count | Explanation
+-----------------+--------+---+------+---------------------------------------
+Initial state    | 'amen' |   |      | Initialized from prompt
+count = 0        |        |   |   0  | Create and intialize name
+for c in s:      |        |'a'|      | Start loop; bind c to 'a' (1st in s)
+if c in 'aeoiu': |        |   |      | True: execute next block
+count += 1       |        |   |   1  | increment count; block/if finished
+...for c in s:   |        |'m'|      | Continue loop; bind c to 'm' (2nd in s)
+if c in 'aeoiu': |        |   |      | False: skip next block
+...for c in s:   |        |'e'|      | Continue loop; bind c to 'e' (3rd in s)
+if c in 'aeoiu': |        |   |      | True: execute next block
+count += 1       |        |   |   2  | increment count; block/if finished
+...for c in s:   |        |'n'|      | Continue loop; bind c to 'n' (4th in s)
+if c in 'aeoiu': |        |   |      | False: skip next block
+...for c in s:   |        |   |      | Terminte loop; no next value in s
+
+At this point, the script would print the information that it accumulated in the
+variable count: print('There were', count, 'vowels in:', s) prints
+
+  There were 2 vowels in: amen
+
+This computation really belongs in a function, which we could write as follows
+(which I slightly generalized to count vowels in both upper- and lower-case).
+Notice that the body of the function contains most of the code from the script,
+embedded in a function defintion (which we have seen, but not discussed
+formally yet).
+
+def vowel_count(s : str) -&gt; int:
+    count = 0
+    for c in s:
+        if c in 'aeoiuAEIOU':
+             count += 1
+    return count
+
+After defining this function, we might call it in the following script
+
+import prompt
+s =  prompt.for_string('Enter string to test')  
+print('There were', vowel_count(s), 'vowels in:', s)
+
+We might also call it in the following context
+
+import prompt
+s =  prompt.for_string('Enter string to test')  
+if vowel_count(s) == len(s):
+    print('All vowels!')
+
+IMPORTANT:
+
+Note that most functions (whether we write them or find them in a library) do
+not perform input/prompting or output/printing, unless that is their primary
+purpose: all the functions in the prompt class and the print function itself.
+Typically it is the script that performs these operations, in conjunction with
+calling the function to compute its value.
+
+A good way to think about a function is that its "inputs" come from the
+arguments matching its parameters and its "output" is the result that it
+returns. Note that in both scripts calling the vowel_count function, we prompt
+the user for a string (s) and then pass it (use it as an argument) when calling
+the vowel_count function. In the first script we call vowel_count in a print
+function to print its value: in the second script we call vowel_count to
+control whether or not another message is printed.
+
+But vowel_count itself does no prompting or printing.
+
+If we prompt or print a value in the function, we lose versatility. Let the
+code calling the function determine what informtion to give it and what to do
+with the  resulting value (printing it for using it in some other context).
+Let the function be simple and useful in its form.
+
+Here is one final similar function for computing whether or not all the letters
+in a string are capitalized.
+
+def all_caps(s : str) -&gt; bool:
+    # look for a counterexample: a non-upper-case character
+    for c in s:
+        if c not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            return False  # found a counterexample
+
+    # found no counterexamples
+    return True
+
+------------------------------------------------------------------------------
+
+Iterating over ranges of integers
+
+In this section we will see how to iterate over ranges of integers, using
+objects constructed from range and irange. Note that range is automatically
+imported from Python's builtins module; irange is defined in my goody module,
+and is normally imported as from goody import irange (so we can use its name
+by itself, just like range).
+
+First let's look at the syntax for constructing range and irange objects, then
+we will discuss their semantics, see exmples of their use, and explore the exact
+rules Python applies when these iterators are in for loops.
+
+  start   0 and next &gt; stop, produce no more values; terminate the loop
+      if step  0 and ls[0] =! '*':
+        print(ls)
+
+Here I needed to use the stripped line twice: once in the if statement and 
+again in the print function call. So I have decided to define an extra name,
+ls, to store a reference to the line stripped; and then use that name ls where
+necessary. Note the boolean expression is a call to the find method, which
+returns the index (remember they start at 0) of the first '*' in the string (or
+a -1 if * does not occur in the string). So this boolean expression evaluates
+to True exactly when strings that have a * in their first position (at index 0).
+Note that for an empty string, the find method always returns -1, and hence the
+boolean expression is always False for empty strings.
+
+So, this script would print as follows (missing from above is the line:
+*Good direct start)
+
+------------------------------
+Dear Jack:
+I want a man who knows what love is all about.
+You are generous, kind, and thoughtful.
+...more lines
+------------------------------
+
+The following script reads a file that has one word on each line, and computes
+the average word length for all the words in that file. The file dictionary.txt
+has this correct forma.
+
+word_count = 0  # accumulate count of all words/lines read
+length_sum = 0  # accumulate # of all characters in these words
+
+for l in open('dictionary.txt'):
+    word_count += 1
+    length_sum += len(l.rstrip())
+
+print('Word count =',word_count)
+print('Length sum =',length_sum)
+print('Average length =',length_sum/word_count)
+
+Notice that since I used l.rstrip() just once in this script, I did not define
+a new name to refer to its value. This script would run almost instantaneously
+(on this file of about 25,000 words) and print the following.
+
+Word count = 25094
+Length sum = 181268
+Average length = 7.223559416593608
+
+Here is a simlar verion that reads a file of numbers (one per line) and
+computes the sum and the average of the numbers read from the file. Remember
+that open produces a sequence of string values: we use the int(...) conversion
+function on each line: e.g., int('123') is the int 123.
+
+count = 0
+sum   = 0
+
+for l in open('numbers.txt'):
+   count += 1
+   sum   += int(l.rstrip()) # strip the '\n' and determine int equivalent of str
+
+print('Count =',count)
+print('Sum =',sum)
+print('Average =',sum/count)
+
+As a final example, here is a function that determines whether a word is legal
+according to a specified dictionary file.
+
+def is_legal(word : str, dict_file : str) -&gt; bool:
+    # look for a word in the dictionary file
+    for l in open(dict_file):
+        if word == l.rstrip():	# found it; legal
+            return True
+
+    return False		# couldn't find it in the dictionary: illegal
+
+print('Is immature a legal word?',is_legal('immature','dictionary.txt'))
+print('Is immatur  a legal word?',is_legal('immatur' ,'dictionary.txt'))
+    
+Using this function, you could you write a script that read a file of words
+(1 word per line) and printed all the illegal/misspelled words.
+
+
+------------------------------------------------------------------------------
+
+Closing:
+
+We should now have a good understanding a working knowledge of for loops, and
+how to write code using for loops iterating over strings, integer ranges, and
+files. Because it is so easy to repeat code over and over again in loops, even
+though the work done in each block that is the body of the loop may be small,
+we can specify loops that do large amounts of work by repeating that simple
+calculation many times.
+
+------------------------------------------------------------------------------
+
+Problems
+
+1) What happens:
+  s = 'abc':
+  for c in s:
+      print(c)
+      s = 'xyz'    
+
+2) Rewrite code to print a-&gt;b-&gt;c-&gt;d-&gt;e with the extra print statement after the
+loop, not before it; make it go to the next line after printing this last value
+as well (not stay on the current line as needed in the loop).
+
+3) Write a scripts that prompts the user for a word and file name (both are
+strings) and reads the file, printing every line that contains the word;
+enhance this code to print the number of the line in the file: so if only the
+100th line in a file contained the word, it would print as line 100.
+ 

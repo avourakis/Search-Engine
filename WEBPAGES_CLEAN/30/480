@@ -1,0 +1,188 @@
+ First Draft
+
+				Introducing Java
+
+In this lecture we will explore a bit of the Java language: I chose Java
+because I know it better than C++ (both, like Python, are still changing and
+evolving). The main point of this lecture is to show a more conventional
+language similar to Python (still in the same general family: object-oriented
+languages that use statements to compute their results) but with some
+differences.
+
+I have tried to discuss the most important and interesting differences between
+these language, broadly broken into four main areas.
+
+  1) Compilation and compile-time vs. run-time issues
+  2) Syntax differences
+  3) Static vs dynamic typing
+  4) Built-in vs Class Supplied Data Structures
+
+Note that you all should have Java installed on your computers (to run Eclipse)
+so you can use Eclipse to write and run Java programs. I suggest buying older
+editions of Java texbooks authored by Horstmann or Savitch (cheaper than the
+most current editions).
+
+------------------------------------------------------------------------------
+
+Compilation
+
+As with Python, Java translates programs into a special instruction set that
+runs on the Java Virtual Machine (JVM). In fact, the JVM is so well-known that
+other languages are translated to run on the JVM. Java programs run 5 times as
+fast as Python programs (and C++ programs run another factor of 5 faster) but
+with a price: there are important Python programming features (e.g., eval and
+exec) that Java does not support (and likewise, C++ doesn't support certain
+features that makes checking/debugging Java programs easier*). So this is an
+example of languages trading-off power and ease of programming for speed of
+execution. 
+
+-----
+*For example, Python checks its lists (and Java its arrays) for indexes that
+are out of bounds, and raises an exception if they are. Typically it reports an
+illegal index error at run-time (Java further reports the illegal index used;
+Python just says the index is illegal without reporting its value). When an
+illegal index is used with a C++ array, typically there is no runtime error:
+instead C++ just uses the information in its memory where the value at the
+illegal index would appear if it were in the array; what is actually there, in
+the computer's memory, is some random/garbage value. So the program keeps
+running, although it is likely the bad data will corrupt the computation. By
+avoiding checking indexes, C++ allows correct programs (e.g., ones doing no
+illegal indexing) to run faster. But incorrect programs don't fail when the
+error occurs: instead they keep excuting and maybe fail later, but often instead
+print wrong results (or worse, incorrectly buy/sell a stock, or catastrophically
+decide to launch a nuclear attack, because of an incorrect program).
+-----
+
+Python reads and translates imported modules on the fly, while it is runing
+programs. Java breaks running programs into two separate processes: compiling
+programs first (translating them into JVM instructions) and then running these
+instructions on the JVM. Errors are categorized as to when they occur: at
+compile-time or at run-time. The program that does the compilation is called
+the Java Compiler.
+
+Certain Java errors are called syntax or compile-time errors; others are called
+execution or run-time errors. Actually Python has the concept of syntax errors
+(even if there is no separate compile-time/run-time distinction). For example
+in Python, if we misspell a keyword or name, or indent a block incorrectly,
+Python reports the error, but only when we run the program; although the
+Eclipse editor often flags such errors for us before we run our program:
+indicating that if we run it, Python will find an error. Likewise, when Java
+compiles a program, Java checks it for the same kinds of errors (and more; see
+below). But, we cannot run Java software until all its files compile correctly.
+
+------------------------------------------------------------------------------
+
+Important Syntactic Differences
+
+Python and Java are similar languages in that both define statements that are
+executed in sequences known as blocks. The syntax of Python requires that each
+statement is on a different line and that blocks are indented. The syntax of
+Java requires that statements are separated by semicolons (so one can easily
+have multiple statements per line or one statement covering multiple blocks)
+and that blocks (of more than one statement) must appear in the {} braces. Java
+promotes a certain format for writing blocks (so that the code is clearly
+indented and actually looks like Python code) but such style rules are not
+required of programmers writing in the language. In fact, style rules for 
+Java and C++ are a bit different.
+
+Python	   	     	 Java
+
+if x = the
+arrays's length (given in Java by writing x.length, which is equivalent to
+Python's len(x)), is checked and raises an exception.
+
+Note that the compiler allows us to call lb[5].bool() because each value in
+the lb array is of type LikeBoolean, and we can call .bool() on any value of
+the LikeBoolean type (based on the interface specifying that method).
+
+Java has an isinstance function that can determine whether a value comes from
+a specific type (or any of its subclasses).
+
+Unlike Python, Java does not build in lists, sets, or dictionaries. But its
+standard library includes interfaces that describe these data types and
+classes (sometimes multiple classes) that implement these interfaces. The
+interfaces are List, Set, and Map (which is like a dictionary, mapping a key
+to a value) and example classes that we can use that implement these interfaces
+interfaces, are ArrayList, HashSet, and HashMap.
+
+Because these data structures are supplied as classes, there is no special
+syntax for using them (e.g., no {} to create maps or [] to access/set maps).
+So instead of code like graph[source] we must write graph.get(source). And
+instead of graph[from] = destinations we must write
+graph.put(from,destintations)
+
+Some people say, it is "only syntax". But it does make codes a bit harder to
+read, understand, and write, especially when the key/value is more complicated.
+
+I don't have enough time to go into how these classes are used, but here is
+Java code that solves the Reachability problem from Programming Assignment #1
+in ICS-33. Note that Map&gt; (for defininig the graph) defines
+a type which is a Map from String to a Set containing String. If we were to try
+to put a key or associated value in the map that violated these type
+specification is, the Java compiler would detect and report an error at
+compile-time.
+
+------------------------------------------------------------------------------
+
+import edu.uci.ics.pattis.introlib.Prompt;
+import edu.uci.ics.pattis.introlib.TypedBufferReader;
+import edu.uci.ics.pattis.ics23.collections.*;
+
+import java.util.StringTokenizer;
+import java.io.EOFException;
+
+
+public class Reachable {
+
+    private static void printGraph(Map&gt; edges, String label) {
+        System.out.println("\n"+label);
+        List sources = new ArrayList(edges.keys());
+        Collections.sort(sources);
+        for (String source : sources)
+            System.out.println("  "+source+" -&gt; "+edges.get(source));
+       }
+
+
+    private static Set reachable(Map&gt; graphMap, String start) {
+        Set   reachable = new ArraySet();
+        Queue toSearch  = new ArrayQueue();
+
+        toSearch.add(start);
+    
+        while (!toSearch.isEmpty()) {
+            String nextToProcess = toSearch.remove();
+            reachable.add(nextToProcess);
+            Set destinations = graphMap.get(nextToProcess);
+           if (destinations != null)
+              for (String candidate : destinations)
+                  if (!reachable.contains(candidate))
+                      toSearch.add(candidate);
+        }
+    
+        return reachable;
+    }
+
+
+    public static void main(String[] args) {
+        Map&gt; graphMap = new ArrayMap&gt;();
+        TypedBufferReader       tbr      = new TypedBufferReader("Enter name of file with graph");
+
+        for(;;)
+            try {
+                StringTokenizer st = new StringTokenizer(tbr.readLine(),";");
+                String from = st.nextToken();
+                String to   = st.nextToken();
+                Set destinations = graphMap.get(from);
+                if (destinations == null) {
+                    destinations = new ArraySet();
+                    graphMap.put(from,destinations);
+                }
+                destinations.add(to);
+            } catch (EOFException e) {break;}
+
+        printGraph(graphMap, "Graph: source -&gt; {destination} edges");
+        String start = Prompt.forString("\nEnter node to start from");
+        System.out.println("Node(s) reachable from " + start + " = " + reachable(graphMap,start));
+    }
+}
+ 

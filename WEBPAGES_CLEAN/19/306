@@ -1,0 +1,177 @@
+ Graphs<body>
+
+ 
+
+ 
+Graphs
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+ 
+A  directed graph  is
+a set of nodes (or vertices)
+and
+a set of edges (disjoint from the nodes),
+where each edge has an initial node and a terminal node. 
+ 
+ 
+More formally,
+a directed graph is a quadruple
+( V ,  E ,  α ,  β ), where
+ 
+    V  is a (possibly infinite) set of nodes,
+   
+     E  is a set of edges, disjoint from
+     V ,
+   
+     α  and  β  are two mappings from each edge
+     e   ∈   E ,
+    with  α ( e )  ∈   V 
+    the  origin 
+    (or  initial vertex ) of  e 
+    and   β ( e )   ∈   V 
+    the  terminal 
+    (or  end vertex ) of  e . 
+     α ( e ) and  β ( e )
+    are the
+     endpoints  of  e . 
+   
+  
+An  undirected graph  is
+a set of nodes (or vertices)
+and
+a set of edges (disjoint from the nodes),
+where each edge has two endpoints, not distinguished from each other. 
+ 
+ 
+More formally,
+an undirected graph is a triple
+( V, E,   δ ), where
+ 
+    δ  is a mapping from each edge  e   ∈   E 
+    to two nodes (not necessarily distinct)
+     v1   ∈   V  and
+     v2   ∈   V .
+     v1  and  v2 
+    are the
+     endpoints  of  e . 
+   
+  
+Two directed graphs
+( V, E,   α ,  β ) and
+( V', E',   α ',  β ')
+are  isomorphic  if
+there are bijections
+ g:V→V'  and
+ h:E→E' 
+such that for each  e  ∈  E ,
+ 
+ 
+   α '( h ( e ))= g ( α ( e ))
+and
+   β '( h ( e ))= g ( β ( e ))
+ 
+
+ 
+A  loop  is an edge
+both whose endpoints are equal. 
+ 
+ 
+A graph contains  multiple edges 
+when two edges share corresponding endpoints. 
+If a directed graph has no multiple edges,
+then for it  E  ⊆  V × V .
+ 
+ 
+A graph is  simple  if
+it contains neither loops nor multiple edges. 
+ 
+
+ 
+Informally, a partial graph is obtained by deleting some edges,
+and a subgraph is obtained by deleting some nodes
+and any edges that are their endpoints.
+ 
+ 
+ G '=( V', E',   α ',  β ')
+is a  partial graph  of
+ G =( V, E,   α ,  β )
+if
+ 
+    V' = V ,
+   
+     E'  ⊆  E ,
+    and
+   
+    ∀e ∈ E' :
+   α '( e ) =  α ( e ) and
+   β '( e ) =  β ( e )
+   
+  
+ G' 
+is a  subgraph  of
+ G 
+if
+ 
+    V'  ⊆  V ,
+   
+     E'  = { e  ∈  E  |
+     α ( e ) ∈  V'  and
+     β ( e ) ∈  V'  },
+    and
+   
+    ∀e ∈ E' :
+   α '( e ) =  α ( e ) and
+   β '( e ) =  β ( e )
+   
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010Feb24We20:58 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

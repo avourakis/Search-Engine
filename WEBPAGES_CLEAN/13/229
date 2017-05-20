@@ -1,0 +1,265 @@
+ try/except Statements
+
+
+In this lecture we will examine the last of the statements outlined in the the
+lecture on if statements: the try_except_statement (which I sometimes refer to
+as try/except). Here is a refresher of what statements were in that group,
+which form the core of statements in Python. There are not many of them, but
+when used together we can write scripts that solve complicated tasks.
+
+  statement 
+    print(a_name_that_is_not_bound_to_anything) # raises NameError
+NameError: name 'a_name_that_is_not_bound_to_anything' is not defined
+
+(actually sometimes the order of the information printed gets jumbled; don't
+ worry and try to reconstuct the order of events by looking at the code).
+
+Again, the first print statement works, but the second raises a NameError
+exception (so Python abandons execution of all alter statements in block-try).
+Python does not find an except_clause with this exception name. There is a 
+finally: block-finally option, so it is executed (always). Then, the
+try_except_statement terminates. Python prints a trace of the exception
+(showing the execution history of the statements: here line 3 raised the
+NameError exception) in the script and terminates the program
+  
+So, with this code we can test all sorts of variants of try/except. If you have
+questions, try to alter this code and execute it to answer them.
+
+------------------------------------------------------------------------------
+
+A real problem solved by try/except
+
+Now let's move on to a real example of a problem that is solved by try/except.
+It illustrates how the kind of code in the prompt.for_int function works. If
+you look at this code in the prompt module you will likely not understand it
+(because it is built with components that we haven't  learned yet) but we can
+study one carefully chosen aspect of its code: how Python rejects non-integer
+values.
+
+The purpose of the code below (normally put in a function) is to prompt the
+user to enter a string (using the input function available in Python, although
+I prefer using the prompt.for_string function in my library); if the string
+entered can't be converted to an int, then we must keep prompting the user until
+he/she enters a string that represents a legal integer. Because we don't know
+how many times we must prompt the user (once, twice, ...) before he/she enters
+a legal integer, this is a indefinite loop, so we write a while True: loop
+that contains a try/except). Here is the code, followed by an analysis of how
+it works for legal and illegal inputs.
+
+while True:
+    try:
+        string_rep = input('Enter int: ')
+        answer = int(string_rep)	   # int(...) may raise ValueError
+        break
+    except ValueError:
+        print('Entry error (',string_rep,') is not a legal int')
+
+print(1 + answer) # use answer: it is guaranteed to be bound to an int object
+
+How did I know to put ValueError in the except_clause? The first time I wrote
+this code I had to find out what exception was raised when the user enters an
+string that cannot be converted to an integer. Here is how I did it: I started
+the Python interpreter and entered int('a') and saw it raise the ValueError
+in a traceback. Here is an example of Python running the script above, where I
+enter a string that can be converted to an integer.
+
+  Enter int: 5
+  6
+
+What happens in the code above for this example: Python starts the while True:
+loop and executes its block; its block is a single try/except, so it executes
+the block after try. The first statement is Python's prompt to the user, and
+I entered 5 (which input returns as the string '5'); the second statement calls
+the int conversion function (successful for '5') which returns a reference to
+an int object with the value 5, which is bound to the name answer. The third
+statement is a break, which terminates the loop so Python next does the print
+function call after the loop, which prints a value 1 bigger than answer. Why is
+this break naked (not inside an if)? Why is it not always executed? See the
+description below, for when the user enters "bad" information.
+
+Here is an example of Python running the script, where I enter a two "bad"
+strings (they cannot be converted to integers) before entering a good one.
+
+Enter int: x
+Entry error ( x ) is not a legal int
+Enter int: 1,024
+Entry error ( 1,024 ) is not a legal int
+Enter int: 1024
+1025
+
+What happens in the code above for this example: Python starts the while True:
+loop and excecutes its block; its block is a single try/except, so it executes
+the block after try. The first statement is Python's prompt to the user, and
+I enter x (which input returns as the string 'x'); the second statement calls
+the int conversion function, but it is unsuccessful for 'x' and raises the
+ValueError exception. So Python never gets to execute the break statement
+because it stops executing the block-try to handle the exception. The clause
+except ValueError: ... handles this exception by printing an error message. Now
+the try/except is finished executing, which means the block in the while True is
+finished executing, so the while loop takes control and executes its block (the
+try/except) again.
+
+Now Python executes the try/except again, so it executes the block after try.
+The first statement is Python's prompt to the user, and I enter 1,024 (which
+input returns as the string '1,024'); the second statement calls the int
+conversion function, but it is unsuccessful for '1,024' and again raises the
+ValueError exception. Again, Python never gets to the break statement. The
+except ValueError: clause handles this exception by printing an error message.
+Now the try/except is finished executing, which means the block in the while
+True is finished executing, so the while loop executes its block (the
+try/except) again.
+
+Now Python executes the try/except again, so it executes the block after try.
+The first statement is Python's prompt to the user, and I enter 1024 (which
+input returns as the string '1024'); the second statement calls the int
+conversion function (successful for '1024') which returns a reference to an
+int object with the value 1024, which is bound to the name answer. The third
+statement is a break, which terminates the loop so Python next does the print
+function call after the loop, which prints a value 1 bigger than answer.
+
+In summary the while True: loop repeatedly prompts the user as many times as
+necessary. For each non-legal integer entered, calling the int(...) function
+raises an exception, which causes the break statement to NOT be executed (which
+keeps Python in the loop). Finally, when the int(...) does not raise an
+exception, the break statement is executed and the loop terminates, and the
+name answer (now referring to an integer object) can be used in later code.
+
+Of course, you will never need to write this code in your programs because the
+prompt.for_int method has code like this in it! But now you know a bit about
+the magic that is inside prompt.for_int.
+
+This is an example of a while that loops until there is no exception. The loop
+(and try/except) discussed below has a different structure: its while loops
+until there is an exception. We classify the first as exception continues loop
+and the second as exception terminates loop.
+
+------------------------------------------------------------------------------
+
+Example of a for_statement translated into a while_statement
+
+In this section we are going to get some insight into, but not a complete
+understanding of, how Python translates a for_statement into a while_statement
+along with a try_except_statement (and the special StopIteration exception). To
+simplify this discussion and make it clearer, we are going to start by using
+the simplest form of the for loop, discarding the else: block-else.
+
+  for index in iterable:
+      block-body
+
+Python translates this for loop into the following code, which we will see
+does what we know the for loop to do.
+
+  hidden_name = iter(iterable)
+  while True:
+      try:
+          index = next(hidden_name)
+          block-body
+      except StopIteration:
+          break
+
+
+The function iter(...) takes an iterable (so far the iterables that we have
+studieds are strings, ranges/iranges, and opens -for iterating over lines in
+files) and creates an object that will produce all the values, one at a time
+when the next(...) function is called. The iter(...) and next(...) functions
+work a bit magically (for our present understanding of them), but we will study
+their details in ICS-33.
+
+You can experiment a bit with the iter/next functions by executing the
+following code
+
+s = 'abc'
+i = iter(s)
+print(1,next(i))
+print(2,next(i))
+print(3,next(i))
+print(4,next(i))
+
+It prints
+  1 a
+  2 b
+  3 c
+and then prints the following (because next(...) raises the StopIteration
+exception.
+
+Traceback (most recent call last):
+  File "C:\Users\Pattis\workspace\zexperiment\test.py", line 6, in 
+    print(4,next(i))
+StopIteration
+
+The object that we can call next on is bound to the name hidden_name (because
+Python creates a special name for us that we cannot refer to); this code calls
+the next(...) function on hidden_name: each time it is called, next returns the
+next value in the iterable. When hidden_name has no more values to produce,
+calling next on it raises a special exception named StopIteration, which the
+try/except handles: its block breaks out of the while loop (so the loop is then
+terminated).
+
+For example, if itererable were 'abc' then the first time next(hidden_name)
+was called it would return 'a'; the second time 'b'; the third time 'c'; the
+fourth time next(hidden_name) was called it would raise the StopIteration
+exception. Note this exception name does not end in Error, because it does
+not really signal an error, just the end of the definite iteration. So
+exceptions include more than just errors.
+
+Study this equivalence carefully. Python executes a while True: loop, which has
+a try/except statement inside (just like in the example in the previous
+section), but now the break is in the except StopIteration: clause. Each
+iteration of the loop binds the result produced by next(hidden_name) to index
+and then executes block-body.
+
+This rebinding/block-body execution continues until calling next(...) raises the
+StopIteration exception, which is handled in the except StopIteration: clause
+by executing a break statement and thus terminating the loop
+
+Here is a concrete example, the simple for loop
+
+for c in 'abc'
+    print(c)
+
+is translated into
+
+hidden_name = iter('abc')
+while True:
+    try:
+        c = next(hidden_name)
+        print(c)
+    except StopIteration:
+        break
+
+Copy this code into a Python module and executed it.
+
+So the first time through the loop, next(...) returns 'a' which is bound to c
+and then printed; the second time through the loop, next(...) returns 'b' which
+is bound to c and then printed; the third time through the loop, next(...)
+returns 'c' which is bound to c and then printed; the fourth time through the
+loop next(...) raises the StopIteration exception, which is caught by the
+exception StopIteration: clause, which executes a block of just one statement
+-the break statement- which terminates the loop. So both loops print the three
+strings 'a', 'b', 'c'.
+
+So this while/try/except combination executes equivalently to your knowledge of
+how the for loop executes.
+
+Try executing both scripts in Eclipse and observe they always produce
+equivalent results (even with ranges/iranges and opens). Use the Debug
+perspective to explore how this happens. Or, try the following script, which
+explains its execution with extra print statements.
+
+hidden_name = iter('abc')
+while True:
+    try:
+        c = next(hidden_name)
+        print('next returns',c)
+        print(c)
+    except StopIteration:
+        print('StopIteration exception raised')
+        break
+
+------------------------------------------------------------------------------
+
+Two loose ends
+
+1) Recall the EBNF for except_clause
+
+  except_clause  

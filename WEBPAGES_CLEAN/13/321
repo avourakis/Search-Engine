@@ -1,0 +1,710 @@
+ 
+NODE
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.QE 
+ 
+Class NODE 
+ 
+java.lang.Object
+    Raccoon.QE.NODE 
+ 
+   public class  NODE  extends java.lang.Object    
+NODE : A node in the parse tree. Used for extended-SQL parser.
+  
+
+  
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+ static int   
+    DEFAULT_SQL_TYPE   
+
+ 
+            
+    
+  int   
+    kind   
+
+ 
+            
+    
+ static int   
+    MAXNODE   
+
+ 
+            
+    
+ static int   
+    N_ATTRTYPE   
+
+ 
+            
+    
+ static int   
+    N_CONDITION   
+
+ 
+            
+    
+ static int   
+    N_CREATEINDEX   
+
+ 
+            
+    
+ static int   
+    N_CREATETABLE   
+
+ 
+            
+    
+ static int   
+    N_DELETE   
+
+ 
+            
+    
+ static int   
+    N_DROPINDEX   
+
+ 
+            
+    
+ static int   
+    N_DROPTABLE   
+
+ 
+            
+    
+ static int   
+    N_HELP   
+
+ 
+            
+    
+ static int   
+    N_INSERT   
+
+ 
+            
+    
+ static int   
+    N_LOAD   
+
+ 
+            
+    
+ static int   
+    N_PRINT   
+
+ 
+            
+    
+ static int   
+    N_QUERY   
+
+ 
+            
+    
+ static int   
+    N_RELATION   
+
+ 
+            
+    
+ static int   
+    N_RELATTR   
+
+ 
+            
+    
+ static int   
+    N_RELATTR_OR_VALUE   
+
+ 
+            
+    
+ static int   
+    N_SET   
+
+ 
+            
+    
+ static int   
+    N_UPDATE   
+
+ 
+            
+    
+ static int   
+    N_VALUE   
+
+ 
+            
+    
+ static int   
+    nodeptr   
+
+ 
+            
+    
+ static int   
+    TO_EXT_SQL   
+
+ 
+            
+    
+ static int   
+    TO_STD_SQL   
+
+ 
+            
+    
+   Union    
+    u   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      NODE  (int newKind) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+ static  NODE    
+    attrtype_node  (java.lang.String attrname,
+              java.lang.String type) 
+
+ 
+            
+    
+ static  NODE    
+    condition_node  ( NODE  lhsRelattr,
+               java.lang.Integer op,
+                NODE  rhsRelattrOrValue) 
+
+ 
+            
+    
+ static  NODE    
+    create_index_node  (java.lang.String relname,
+                  java.lang.String attrname) 
+
+ 
+            
+    
+ static  NODE    
+    create_table_node  (java.lang.String relname,
+                  java.util.Vector attrlist) 
+
+ 
+            
+    
+ static  NODE    
+    delete_node  (java.lang.String relname,
+            java.util.Vector conditionlist) 
+
+ 
+            
+    
+ static  NODE    
+    drop_index_node  (java.lang.String relname,
+                java.lang.String attrname) 
+
+ 
+            
+    
+ static  NODE    
+    drop_table_node  (java.lang.String relname) 
+
+ 
+            
+    
+ static  NODE    
+    help_node  (java.lang.String relname) 
+
+ 
+            
+    
+ static  NODE    
+    insert_node  (java.lang.String relname,
+            java.util.Vector valuelist) 
+
+ 
+            
+    
+ static java.util.Vector   
+    list_node  ( NODE  n) 
+
+ 
+            
+    
+ static  NODE    
+    load_node  (java.lang.String relname,
+          java.lang.String filename) 
+
+ 
+            
+    
+ static  NODE    
+    newnode  (int kind) 
+
+ 
+            
+    
+ static java.util.Vector   
+    prepend  ( NODE  n,
+        java.util.Vector list) 
+
+ 
+            
+    
+ static  NODE    
+    print_node  (java.lang.String relname) 
+
+ 
+            
+    
+  void   
+    printf  (java.lang.String s) 
+
+ 
+            
+    
+ static  NODE    
+    query_node  (java.util.Vector relattrlist,
+           java.util.Vector rellist,
+           java.util.Vector conditionlist) 
+
+ 
+            
+    
+ static  NODE    
+    relation_node  (java.lang.String relname) 
+
+ 
+            
+    
+ static  NODE    
+    relation_node  (java.lang.String nodename,
+              java.lang.String relname) 
+
+ 
+            
+    
+ static  NODE    
+    relattr_node  (java.lang.String relname,
+             java.lang.String attrname) 
+
+ 
+            
+    
+ static  NODE    
+    relattr_node  (java.lang.String nodename,
+             java.lang.String relname,
+             java.lang.String attrname) 
+
+ 
+            
+    
+ static  NODE    
+    relattr_or_value_node  ( NODE  relattr,
+                       NODE  value) 
+
+ 
+            
+    
+ static  NODE    
+    set_node  (java.lang.String paramName,
+         java.lang.String string) 
+
+ 
+            
+    
+  java.lang.String   
+    toString  () 
+
+ 
+            
+    
+ static  NODE    
+    update_node  (java.lang.String relname,
+             NODE  relattr,
+             NODE  value,
+            java.util.Vector conditionlist) 
+
+ 
+            
+    
+ static  NODE    
+    value_node  (int type,
+           java.lang.Object value) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+nodeptr 
+ 
+public static int  nodeptr  
+        
+MAXNODE 
+ 
+public static final int  MAXNODE  
+    See Also:    Constant Field Values        
+N_CREATETABLE 
+ 
+public static final int  N_CREATETABLE  
+    See Also:    Constant Field Values        
+N_CREATEINDEX 
+ 
+public static final int  N_CREATEINDEX  
+    See Also:    Constant Field Values        
+N_DROPTABLE 
+ 
+public static final int  N_DROPTABLE  
+    See Also:    Constant Field Values        
+N_DROPINDEX 
+ 
+public static final int  N_DROPINDEX  
+    See Also:    Constant Field Values        
+N_LOAD 
+ 
+public static final int  N_LOAD  
+    See Also:    Constant Field Values        
+N_SET 
+ 
+public static final int  N_SET  
+    See Also:    Constant Field Values        
+N_HELP 
+ 
+public static final int  N_HELP  
+    See Also:    Constant Field Values        
+N_PRINT 
+ 
+public static final int  N_PRINT  
+    See Also:    Constant Field Values        
+N_QUERY 
+ 
+public static final int  N_QUERY  
+    See Also:    Constant Field Values        
+N_INSERT 
+ 
+public static final int  N_INSERT  
+    See Also:    Constant Field Values        
+N_DELETE 
+ 
+public static final int  N_DELETE  
+    See Also:    Constant Field Values        
+N_UPDATE 
+ 
+public static final int  N_UPDATE  
+    See Also:    Constant Field Values        
+N_RELATTR 
+ 
+public static final int  N_RELATTR  
+    See Also:    Constant Field Values        
+N_CONDITION 
+ 
+public static final int  N_CONDITION  
+    See Also:    Constant Field Values        
+N_RELATTR_OR_VALUE 
+ 
+public static final int  N_RELATTR_OR_VALUE  
+    See Also:    Constant Field Values        
+N_ATTRTYPE 
+ 
+public static final int  N_ATTRTYPE  
+    See Also:    Constant Field Values        
+N_VALUE 
+ 
+public static final int  N_VALUE  
+    See Also:    Constant Field Values        
+N_RELATION 
+ 
+public static final int  N_RELATION  
+    See Also:    Constant Field Values        
+TO_STD_SQL 
+ 
+public static final int  TO_STD_SQL  
+    See Also:    Constant Field Values        
+TO_EXT_SQL 
+ 
+public static final int  TO_EXT_SQL  
+    See Also:    Constant Field Values        
+DEFAULT_SQL_TYPE 
+ 
+public static final int  DEFAULT_SQL_TYPE  
+    See Also:    Constant Field Values        
+u 
+ 
+public  Union   u  
+        
+kind 
+ 
+public int  kind  
+      
+    
+ Constructor Detail   
+     
+NODE 
+ 
+public  NODE (int newKind) 
+    
+    
+ Method Detail   
+     
+newnode 
+ 
+public static  NODE   newnode (int kind) 
+     
+     
+create_table_node 
+ 
+public static  NODE   create_table_node (java.lang.String relname,
+                                     java.util.Vector attrlist) 
+     
+     
+create_index_node 
+ 
+public static  NODE   create_index_node (java.lang.String relname,
+                                     java.lang.String attrname) 
+     
+     
+drop_index_node 
+ 
+public static  NODE   drop_index_node (java.lang.String relname,
+                                   java.lang.String attrname) 
+     
+     
+drop_table_node 
+ 
+public static  NODE   drop_table_node (java.lang.String relname) 
+     
+     
+load_node 
+ 
+public static  NODE   load_node (java.lang.String relname,
+                             java.lang.String filename) 
+     
+     
+set_node 
+ 
+public static  NODE   set_node (java.lang.String paramName,
+                            java.lang.String string) 
+     
+     
+help_node 
+ 
+public static  NODE   help_node (java.lang.String relname) 
+     
+     
+print_node 
+ 
+public static  NODE   print_node (java.lang.String relname) 
+     
+     
+query_node 
+ 
+public static  NODE   query_node (java.util.Vector relattrlist,
+                              java.util.Vector rellist,
+                              java.util.Vector conditionlist) 
+     
+     
+insert_node 
+ 
+public static  NODE   insert_node (java.lang.String relname,
+                               java.util.Vector valuelist) 
+     
+     
+delete_node 
+ 
+public static  NODE   delete_node (java.lang.String relname,
+                               java.util.Vector conditionlist) 
+     
+     
+update_node 
+ 
+public static  NODE   update_node (java.lang.String relname,
+                                NODE  relattr,
+                                NODE  value,
+                               java.util.Vector conditionlist) 
+     
+     
+relattr_node 
+ 
+public static  NODE   relattr_node (java.lang.String relname,
+                                java.lang.String attrname) 
+     
+     
+relattr_node 
+ 
+public static  NODE   relattr_node (java.lang.String nodename,
+                                java.lang.String relname,
+                                java.lang.String attrname) 
+     
+     
+condition_node 
+ 
+public static  NODE   condition_node ( NODE  lhsRelattr,
+                                  java.lang.Integer op,
+                                   NODE  rhsRelattrOrValue) 
+     
+     
+value_node 
+ 
+public static  NODE   value_node (int type,
+                              java.lang.Object value) 
+     
+     
+relattr_or_value_node 
+ 
+public static  NODE   relattr_or_value_node ( NODE  relattr,
+                                          NODE  value) 
+     
+     
+attrtype_node 
+ 
+public static  NODE   attrtype_node (java.lang.String attrname,
+                                 java.lang.String type) 
+     
+     
+relation_node 
+ 
+public static  NODE   relation_node (java.lang.String relname) 
+     
+     
+relation_node 
+ 
+public static  NODE   relation_node (java.lang.String nodename,
+                                 java.lang.String relname) 
+     
+     
+list_node 
+ 
+public static java.util.Vector  list_node ( NODE  n) 
+     
+     
+prepend 
+ 
+public static java.util.Vector  prepend ( NODE  n,
+                                       java.util.Vector list) 
+     
+     
+toString 
+ 
+public java.lang.String  toString () 
+     
+     
+printf 
+ 
+public void  printf (java.lang.String s) 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

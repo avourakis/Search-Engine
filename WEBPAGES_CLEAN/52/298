@@ -1,0 +1,57 @@
+ ICS 160E / EECS 114  - Programming Project 4<body>
+
+ 
+
+ ICS 160E / EECS 114 - Programming Project 4, 50 Points
+ 
+Due: Friday, June 10, 2005, at 7pm,
+using the
+ 
+Checkmate Submission System .
+ 
+
+ 
+
+ 
+In this project you are to write a Java program that 
+builds the routing tables for all the
+computers in a network, based on shortest-path routing.
+The input for this problem is the connectivity information for the
+network, given as follows:
+  
+ IP_Address :  IP_Address1   IP_Address2  ...   IP_AddressN 
+ 
+which indicates that
+the computer at address  IP_Address 
+can get to the addresses 
+ IP_Address1   IP_Address2  ...   IP_AddressN  in one
+hop, as in the following example:
+ 
+241.12.31.14: 241.12.31.15 241.12.31.18 241.12.31.19
+ 
+The routing table for the computer
+at  IP_Address  is a set of pairs 
+( IP_AddressA, IP_AddressB ), 
+which indicates that to route from  IP_Address  to go to 
+ IP_AddressA  the next computer to send to (on the shortest path
+to  IP_AddressA ) is  IP_AddressB .
+Your program should output the routing table for each computer, as
+shown as follows (for the computer at address 241.12.31.14):
+ 
+241.12.31.14: 
+	(241.12.31.15,241.12.31.15)
+	(241.12.31.16,241.12.31.19)
+	(241.12.31.17,241.12.31.18)
+	(241.12.31.18,241.12.31.18)
+	(241.12.31.19,241.12.31.19)
+ 
+
+ 
+Note: you may use the following class in your program:
+     
+java.util.Scanner 
+  
+You should read network topology connectivity information
+from System.in and output the routing table for each address
+to System.out.
+</body> 

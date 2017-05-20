@@ -1,0 +1,404 @@
+ WWW Configuration Management Home Page<body>
+ Versioning and Configuration Management of 
+World Wide Web Content 
+
+  
+This page was previously the home page for a working group on
+adding versioning and configuration management capabilities to
+the World Wide Web.  This working group has now been split -- the
+current working group is now focusing on remote configuration management
+of web content.  Discussion of WWW versioning issues now takes place
+in the
+ 
+WWW Distributed Authoring and Versioning Working Group (webdav) .
+ 
+
+ 
+This page is still an excellent resource for pointers to work on
+WWW versioning and configuration management, as well as hypertext
+versioning.
+ 
+
+  Discussion List 
+
+ Discussion of the addition of configuration management
+capabilities to the World Wide Web takes place on the discussion list
+&lt;www-vers-wg@ics.uci.edu&gt;.  Requests to join this discussion list
+may be sent to
+ 
+&lt;www-vers-wg-request@ics.uci.edu&gt; 
+ .  Discussion on this list is also
+ 
+archived . 
+
+ Existing Work and Proposals 
+ 
+  
+Four Lessons Learned from Managing World Wide Web Digital Libraries , 
+Robert Pettengill and Guillermo Arango  
+This early paper describes a development and maintenance process for a
+"digital document library" (a.k.a., a collection of WWW content), the
+need to make this process repeatable and as automated as possible, and
+the use of separate maintenance and publications areas for visibility
+control.  More relevant to this audience, the paper describes the need
+for using version control on web content, the addition of a ",version"
+to the requested URL, and explains the use of CGI scripts to
+provide versioned access to a document collection. 
+
+ 
+  Mortice Kern Systems (MKS) 
+ Integrity Engine   
+Integrity Engine Data Sheet   
+MKS has developed HTTP server extensions for checkin, checkout, and
+locking operations on specific entities.  Individual versions of an
+entity may be accessed by specifying the version with the addition of
+";version=" at the end of the requested URL.  The MKS approach,
+described in a  
+white paper , makes no modifications to HTTP, and
+instead decorates the requested URL with the information of the
+desired operation. 
+
+ 
+  P3 Software 
+ web://keeper   
+P3 software has performed an integration of the P3 Configuration
+Management system with the
+ 
+Apache  server, which P3 has named
+ web://keeper ,
+thus allowing GETs of versioned
+URLs on any object within a P3 repository. 
+
+ 
+  
+WWW Versioning Support, draft proposal (v 0.1) 
+( Postscript )
+ 
+Jim Whitehead  
+This working draft describes a proposal for extending the HTTP
+protocol with four new methods, FLAG, LOCK, UNLOCK, and USE, and
+describes how they are used to provide style-independent versioning
+with semantics controlled by the client.  Two appendicies give
+examples of how the RCS and CVS styles are implemented using these
+methods.  The proposal also describes a new entity type, the
+ configuration , which allows the versions of a collection of
+related entities to be described in a single file.
+ 
+
+ 
+  NTT Software Laboratories, Palo Alto   
+NTT Software Laboratories in Palo Alto (SPLA) recently announced on
+the HTTP Working Group mailing list that they have completed a
+prototype of an HTTP server which manages versions and configurations
+of web objects.  While they apparently have a white paper which is
+written in Japanese, and is currently undergoing translation into
+English, some technical details were reported in the post.  The
+versioning and configuration functions were implemented using LINK,
+PUT, and "related methods".  Clients which understand how to use
+these new functions have also been developed. 
+
+ The NTT server is written in Perl.  Two clients were developed, one
+using MetaCard, a GUI builder, along with a libwww library extended
+to handle the additional methods.  The other client was written in
+Java. 
+
+ 
+  
+Authoring Tools Breakout Session  at
+ 
+WWW4   
+Detecting Update Conflicts in HTTP   
+
+The authoring tools breakout session identified the "lost update"
+problem (when people performing parallel development on an entity
+overwrite each other's changes) as an open issue requiring attention.
+David Long of NaviSoft and Dan Connolly of W3C subsequently produced a
+W3C working draft on the lost update problem titled,
+ 
+Detecting Update Conflicts in HTTP .  This working draft presents
+four levels at which this problem may be resolved: do nothing, detect
+lost updates, prevent lost updates, and fairly prevent lost updates. 
+
+ 
+  
+Formal Modeling of a Resource-Leasing Extension to HTTP  
+Rafal Boni, Rohit Khare, and Matthew Levine  
+This paper describes a check-out/check-in scheme for HTTP which
+aims to guarantee exclusive write access to a resource while it
+is checked-out.  The scheme described does not handle parallel
+development of resources.  The paper begins with a 
+detailed discussion of the four-levels of potential resolution
+of the lost update problem identified at the authoring tools
+breakout session. 
+
+ 
+  
+Using Versioning to Support Collaboration on the WWW , 
+Fabio Vitali,
+ 
+David G. Durand   
+
+This paper, presented at the
+ 
+WWW4  conference, presents a different, interesting perspective
+on how versioning of WWW content may be performed.  Their approach is
+motivated by how to support asynchronous collaboration in the creation
+and editing of text documents, which they feel requires extremely
+fine-grain versioning.  This paper describes VTML, the Versioned Text
+Markup Language, which is a markup language for describing the version
+history of a document.  The VTML approach has the drawback that it
+only applies to HTML content, and does not address the versioning
+of bitmap images, an important class of web content. 
+
+ 
+  
+Original Design Issues: Versioning , 
+Tim Berners-Lee  
+The World Wide Web Consortium has an archive of notes dating from the
+ 
+original design  of the web in 1990.  One of the issues is
+"keeping track of previous versions of nodes and their relationships." 
+
+ 
+  
+Livelink Library for Document Management   Open Text Corporation   
+This marketing blurb for the Livelink
+Library, a component of Open Text's Livelink Intranet product,
+describes web content versioning capabilities including
+a change history, viewing of previous versions, and a lock-based
+overwrite protection scheme.  Unfortunately, it is impossible
+to determine the underlying technical approach from the
+information presented. 
+
+ Distributed Web Content Authoring Tools 
+
+ 
+  
+Microsoft 
+ 
+FrontPage   
+FrontPage: A Technical Overview   
+Microsoft FrontPage, formerly Vermeer FrontPage, is an HTML editor
+which can save work to an HTTP server which has been augmented with
+the FrontPage server extensions.
+ 
+Section C  of the FrontPage technical overview describes the
+FrontPage server extensions in more detail, including its use of
+the POST method for writing content to an HTTP server. 
+
+ The   Internet
+Development  site at Microsoft offers a wealth of additional
+material.  Documents are available which describe Microsoft API calls
+in the client side to go over the web to talk to server-side.  It also
+provides access to beta and alpha releases.  Content changes daily.
+The  
+overview paper  is pretty interesting, since it may provide a
+convergence for document objects at a higher level than DMA provides -
+that is, cross-net delivery of content at the UI object level via OLE. 
+
+ 
+  America Online PrimeHost 
+ AOLpress 
+and  AOLserver  
+Documentation for
+ 
+AOLpress  and
+ 
+AOLserver   
+
+The AOL PrimtHost hosting Service, formerly known as GNN Hosting
+Service, fromerly known as NaviSoft, provides a service for using
+their GNNpress software to publish web pages on their server for a
+monthly fee.  Since you can currently
+The America Online PrimeHost hosting service, formerly known as the
+GNN Hosting Service, which in turn was formerly known as NaviSoft,
+provides a service for using their AOLpress software to publish web
+pages on their server for a monthly fee.  Since you can currently
+ download
+fully-functional , but non-supported versions of their AOLpress and
+AOLserver tools, it is also possible to experiment with these
+tools. 
+
+ AOLpress employs the PUT method to write content to the AOLserver,
+which implements access control features which control, among other
+methods, who can PUT to particular namespaces within the server.  The
+ 
+documentation  for the AOLserver describes how it distinguishes
+BROWSE, PUT, MKDIR and DELETE as different administrative rights on
+operations.
+ 
+
+ 
+  Netscape 
+ 
+Navigator Gold   
+Navigator Gold Data Sheet   
+Netscape Navigator Gold provides authoring of HTML documents, along with
+publishing capability.  Navigator Gold uses the FTP protocol to write
+content into the namespace of the HTTP server. 
+
+ Hypertext Versioning Literature 
+
+ The topic of hypertext versioning has been researched outside of
+the WWW context within the academic hypertext community for several
+years, and offers many insights into the WWW versioning problem.
+Versioning of hypertexts was addressed by Ted Nelson in Literary
+Machines, and in Engelbart's NLS journal facility in the 60's and
+70's.  This issue was revisited and given renewed importance
+by Frank Halasz in his extremely influential paper, "Reflections
+on NoteCards: Seven Issues for the Next Generation of Hypermedia
+Systems," published in Communications of the ACM in July, 1988, in
+which he lists hypertext versioning as issue number 5.  These
+issues were reexamined in a
+ 
+keynote address  given by Halasz at
+Hypertext'91. 
+
+ 
+  
+Proceedings of the Workshop on Versioning in Hypertext Systems , at 
+ACM European Conference on Hypermedia Technology (ECHT'94) 
+David Durand, Anja Haake, David Hicks, Fabio Vitali  
+The proceedings from this workshop features papers on hypertext
+versioning in technical documentation, legal applications, and
+design, giving both requirements and solutions in these areas.
+ 
+
+ 
+  
+Palimpsest: A Data Model for Revision Control 
+( Postscript ) 
+David Durand 
+In Proceedings of the CSCW'94 Workshop on Collaborative Hypermedia
+Systems, Chapel Hill, NC, available as GMD Studien Nr. 239. Gesellschaft f r
+Mathematik und Datenverarbeitung MBH 1994.  
+The intellectual precursor to VTML, Palimpsest is a data model for
+flexible merging and tracking of individual changes to shared hypertext
+or multimedia documents.  This work is motivated by providing support for
+collaborative hypertext editors where multiple people may be working on the
+same document simultaneously. 
+
+ 
+  
+Version Control in Hypertext Systems , 
+David L. Hicks, John J. Leggett, and John L. Schnase  
+This paper, published as a technical report of the
+ Hypermedia Research Lab  at
+Texas A&amp;M University in 1991, is an early, influential paper which
+examines many different versioning systems, and then describes
+how the Personal Information Environment (PIE) system (described in
+"A Layered Approach to Software Design," by Ira P. Goldstein, and
+Daniel G. Bobrow, published in the book "Interactive Programming
+Environments," edited by David R. Barstow, Howard E. Schrobe, and
+Erik Sandewall.) layered data model can be used for hypertext
+versioning.  The paper also gives requirements for hypertext
+versioning. 
+
+ 
+  
+VerSE: Towards Hypertext Versioning Styles , 
+Anja Haake and David Hicks, 
+Proc. Hypertext'96, the Seventh ACM Conference on Hypertext, 1996,
+pages 224-234.   
+Under CoVer: The Implementation of a Contextual Version Server for
+Hypertext Applications, 
+Anja Haake, 
+Proc. 1994 European Conference on Hypermedia Technology (ECHT'94),
+pages 81-93.   
+Take CoVer: Exploiting Version Support in Cooperative Systems, 
+Anja Haake and Jörg M. Haake, 
+Proc. ACM INTERCHI'93, Conference on Human Factors in Computing Systems,
+1993, pages 406-413.   Anja Haake  has been
+performing excellent research on hypertext versioning for several
+years at GMD-IPSI.  The papers listed above represent her most recent
+work, and provide a comprehensive description of her research.  
+ 
+
+ 
+ 
+Structural and Cognitive Problems in Providing Version Control for Hypertext,
+ 
+Kasper Østerbye, 
+Proc. Fourth ACM Conference on Hypertext (ECHT'92), 1992, pages 33-42.  
+This paper is notable for its clear distinction between structural
+(data modeling) and cognitive (interface) issues of hypertext versioning,
+and its detailed discussion of each.
+It also describes the versioning facilities of the HyperPro system.
+ 
+
+ Relevant Software Configuration Management Literature 
+
+ There is a large literature on software configuration management,
+including proceedings from the six software configuration management
+workshops (the most recent of which was
+ 
+SCM6 , held in conjunction with the
+ 
+18th International Conference on Software Engineering (ICSE18) ).
+Papers on SCM also appear in the proceedings of ICSE.  Papers listed
+below are ones that either have particular relevance to WWW versioning
+and configuration management, or provide relevant background material.
+ 
+
+ 
+  
+Configuration Management Models in Commercial Environments  
+Peter H. Feiler 
+Software Engineering Institute Technical Report CMU/SEI-91-TR-7  
+This early survey of configuration management tools contains an
+excellent breakdown of these systems into four configuration
+management models, or styles: checkout/checkin, composition, long
+transaction model, and the change set model. 
+
+ 
+  
+A Generic Peer-to-Peer Repository for Distributed Configuration Management 
+ 
+André van der Hoek 
+Proceedings of the 18th International Conference on Software Engineering,
+Berlin, Germany, March, 1996.  
+This paper presents the NUCM system which allows for a NUCM client to
+contact a distributed SCM repository and interact with it using
+primitive operations, upon which are implemented higher-level CM styles.
+If an analogy is made between a client of the NUCM system and a
+user-agent, and between a NUCM repository and an HTTP server, this
+paper has tremendous relevance for WWW versioning and CM. 
+
+ 
+  
+Distributed Revision Control Via the World Wide Web  
+Jürgen Reuter, Stefan U. Hänßgen, James J. Hunt, and
+Walter F. Tichy 
+Proceedings of the Sixth International Workshop on Software Configuration
+Management, Berlin, Germany, March, 1996.  
+This paper describes a forms-based interface to the RCE (Revision
+Control Engine, essentially an API to an RCS-like core of functionality)
+which allows checkout, checkin, and viewing the version history of
+artifacts in a distributed manner via the WWW.  The system described
+in this paper does not modify the HTTP protocol, instead relying
+on custom MIME types (and associated helper applications) along with
+point-to-point socket connections to handle the file tranfers
+associated with checkout and checkin operations. 
+
+ 
+  
+Configuration Management Yellow Pages  
+André van der Hoek  
+
+This is simply the best one-stop index to the burgeoning SCM tools
+market, general information pages on CM, conferences on CM, job
+openings, public-domain CM systems, consulting, education,
+reviews, and more!  Outrageously comprehensive. 
+
+  
+ 
+University of California, Irvine   
+Jim Whitehead &lt;ejw@ics.uci.edu&gt;   
+Department of Information and Computer Science  
+247 ICS2 #3425  
+Irvine , CA  92697-3425  
+ 
+ 
+Last modified: 07 Feb 1997
+ 
+</body> 

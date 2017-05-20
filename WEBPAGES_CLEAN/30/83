@@ -1,0 +1,97 @@
+  Chimera Concepts - Objects<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Objects  
+
+  Viewers  display objects. Objects are bits
+of application-specific information used to generate  views .
+A Chimera object can be practically anything, including an image file, a
+relational database, a sound file, an internal data structure, or a value
+calculated by an application at run-time. From this list, it should be apparent
+that an object can be either persistent or transient. Chimera places no
+restrictions on the format of a viewer's objects. In fact, Chimera has no
+knowledge of the format or type of any object manipulated by its integrated
+viewers. It may seem odd, then, that Chimera provides the object concept
+at all. However, this lack of knowledge of the explicit type of an object
+enables Chimera to link a diverse set of media types. Therefore it is important
+to clearly define the modeling power provided by objects. 
+
+ The object concept is used as a reference to application-specific data.
+It is  not  the data itself, but rather contains the information necessary
+for a viewer to relocate or recompute the data. Like a viewer, the object
+has an associated name. Typically, if the object refers to a file or Internet
+resource, the name of the object is a URL specifying the location of that
+resource. An object also has an associated MIME-type. This specifies the
+format of the object and allows Chimera to monitor the creation of views.
+In particular, Chimera will not allow a view to be created if the viewer
+does not support the MIME-type specified by the object. If additional information
+is required to locate an object besides the object's name,  attribute-value
+pairs  can be created on the object instance to store this information. 
+
+     In some cases, viewers synthesize information from more than one object
+in order to create a view. For instance, a flight simulator can create an
+artificial horizon view based off the pitch and roll values of the simulation.
+In order to accurately model this situation within Chimera three object
+instances would be created. One each for the pitch and roll objects, and
+one for their combination. Views can then be created for each of these objects
+allowing anchors to be associated with each separately. The combination
+object is known as a  composite  and is created by instantiating a
+new object instance and adding the pitch and roll objects to it. Since you
+can add composites to other composites, hierarchies can be formed to model
+hierarchical data objects. Views can then be created on any part of the
+hierarchy. 
+      Developer Information 
+
+ The available operations on objects are listed below. For more information
+see the  on-line documentation . 
+
+      addObject(object, object)  
+ Adds the specified object to the target object. The target object is now
+considered a composite object.     createAnchor(object)  
+ Creates a new anchor on the specified object. This anchor is considered
+ view-independent .     createObject(String, String)  
+ Creates a new object in the active hyperweb. The first string specifies
+the object's name (typically a URL pointing to the object), while the second
+string specifies the object's MIME type.     deleteObject(object)  
+ Delete's the specified object from the active hyperweb. Note, the Chimera
+server proactively maintains the consistency of the Chimera hyperweb, thus
+this operation will also remove any views which contain the specified object,
+which in turn will delete any anchors associated with those views, etc.     getAnchors(object)  
+ Returns a list of anchors associated with the specified object in the active
+hyperweb.     getMIMEtype(object)  
+ Returns the object's MIME type.     getObject(String)  
+ Returns the object with the specified name.     getObjectName(object)  
+ Returns the object's name.     getObjects()  
+ Returns all of the objects for the active hyperweb.     getObjects(object)  
+ Returns all of the objects stored in the specified composite.     isComposite(object)  
+ Returns  TRUE  if the object is a composite.     numberOfAnchors(object)  
+ Returns the number of anchors associated with the specified object.     numberOfObjects()  
+ Returns the number of objects contained in the active hyperweb.     numberOfObjects(object)  
+ Returns the number of objects contained in the specified composite.     objectExists(String)  
+ Checks to see if an object with the specified name exists in the active
+hyperweb.     objectExists(object)  
+ Checks to see if an object with the specified object id exists in the active
+hyperweb.         Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

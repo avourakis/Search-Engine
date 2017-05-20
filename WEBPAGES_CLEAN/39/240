@@ -1,0 +1,129 @@
+   
+  Class c2.comp.StackADTThread
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.comp.StackADTThread
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +---- c2.framework.Component 
+                   |
+                   +---- c2.framework.ComponentThread 
+                           |
+                           +----c2.comp.StackADTThread
+ 
+    public class  StackADTThread 
+    extends  ComponentThread 
+   
+StackADTThread class. 
+Implements a stack abstract date type (ADT) in its own 
+thread of control.  It accepts requests for modifying and accessing the 
+stack from components in a C2 architecture below it, and notifies such 
+components of its internal state changes.   
+   StackADTThread's C2 Message Interface 
+StackADTThread's methods should not be invoked directly in a C2
+architecture.  Instead, the ADT's functionality is accessed via C2
+requests. In response to those requests, the ADT emits notifications of
+its internal state changes. 
+  
+    Incoming Notifications 
+       none
+    Outgoing Requests 
+       none
+    Incoming Requests 
+       push (Object value);
+       pop  ();
+       top  ();
+       get_state ();
+    Outgoing Notifications 
+       pushed (Object value);
+       popped (Object value);
+       top    (Object value);
+       state  (Stack stack);
+       empty  ();
+ 
+   
+ 
+    
+      stack  
+     Stack ADT.
+   
+    
+      StackADTThread  ()
+     
+        StackADTThread  (String)
+     
+   
+    
+      create  (String)
+     Initializes the StackADTThread.
+        handle  (Notification)
+     Handles notifications received from components above.
+        handle  (Request)
+     Handles C2 requests received from components below 
+StackADTThread in an architecture.
+    
+ 
+    
+   
+ stack 
+ 
+  protected  Stack  stack
+ 
+   Stack ADT.
+    
+ 
+    
+  
+   
+ StackADTThread 
+ 
+  public StackADTThread()
+ 
+   
+ StackADTThread 
+ 
+  public StackADTThread( String  _name)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  _name)
+ 
+   Initializes the StackADTThread.
+     
+  handle  
+ 
+  public synchronized void handle( Request  r)
+ 
+   Handles C2 requests received from components below 
+StackADTThread in an architecture.  Manipulates the ADT and 
+notifies components below of the results of operations on 
+the stack and/or the state of the stack.
+      Parameters: 
+       r - C2 request.
+        Overrides: 
+        handle  in class  Component 
+         
+  handle  
+ 
+  public synchronized void handle( Notification  n)
+ 
+   Handles notifications received from components above.  Assumes that
+StackADTThread is at the top of an architecture and
+receives no notifications; hence, this is an empty method.
+      Parameters: 
+       n - C2 notification.
+        Overrides: 
+        handle  in class  Component 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

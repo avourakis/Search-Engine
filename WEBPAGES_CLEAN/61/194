@@ -1,0 +1,400 @@
+ Deterministic selection<body>
+ ICS 161: Design and Analysis of Algorithms 
+Lecture notes for February 1, 1996 
+
+
+   
+
+ Graph algorithms 
+
+ What is a graph?  
+
+ It's an abstract notion, used to represent the idea of some kind
+of connection between pairs of objects. A graph consists of: 
+
+  A collection of "vertices", which I'll usually draw as small
+circles on the blackboard, and 
+
+ A collection of "edges", each connecting some two vertices.
+I'll usually draw these as curves on the blackboard connecting the
+given pair of vertices. 
+ 
+
+For this definition it doesn't matter what the vertices or edges
+represent -- that will be different depending on what application
+the graph comes from. It also doesn't matter how I draw the graph,
+the only part that matters is which pairs of vertices are connected
+with each other. 
+
+  There are two different types of graph that we'll commonly
+see. 
+
+     
+
+ In one type, known as an  undirected graph  it doesn't
+matter which end of the graph is which -- the relation between the
+two is symmetric. In that case I'll just draw the edges as an
+undecorated curve. 
+
+ For instance, suppose we draw a graph with one vertex for every
+person in the U.S., and one edge connecting any two people who have
+shaken hands with each other. If I've shaken hands with you, you've
+shaken hands with me, so each edge is symmetric. It seems to be
+true that graphs like this have very small {\em diameter}: you can
+connect any two people with a very short chain of handshakes. 
+
+    
+ 
+
+ In the other type of graph, known as a  directed graph ,
+an edge goes from one of the vertices, towards the other. In this
+case I'll draw an arrowhead at the vertex towards which the edge is
+going. If we drew a graph like the handshake graph described above,
+but instead connected two people if one had written a letter to the
+other, the result would be directed: if I've written a letter to
+you, you may not have written a letter back to me. 
+  Whenever we talk about graphs, we'll use  n  to denote the
+number of vertices, and  m  to denote the number of edges.
+This notation is confusing, but I'll stick with it because it's
+very standard. We'll also use V(G) to denote the set of vertices of
+a graph G, and E(G) to denote the set of edges. 
+
+ Some more examples of graphs 
+
+     
+
+ Any tree is a graph. In fact trees can be defined as the
+undirected graphs that are connected (there is a path between any
+two vertices) and acyclic (there aren't any sequences of edges that
+go around in a loop). (It is also possible to define trees in terms
+of directed graphs.) Any connected graph has at least  n -1
+edges, and any acyclic graph has at most  n -1 edges, so any
+tree has exactly  n -1 edges. 
+
+    
+ 
+
+ In the last lecture, we saw a notation for decision trees in
+which I connected two circles (representing objects to be sorted)
+by a downward edge if a comparison had been done and had found that
+one was greater than the other. This is an example of a directed
+graph. 
+
+ The same comparison graph notation is useful in solving homework
+3.19, which asked you to find an element among the smallest  
+k  values among an  n -value set. A simple method which
+uses exactly  n - k  comparisons is just to find the
+minimum of the first  n - k +1 values in the list. To
+prove this is optimal, suppose we have found some value  x 
+that we know to be in the smallest  k  values. Therefore, we
+must be able to show from the comparisons we have made that at
+least  n - k  other values are larger than it. So if we
+draw the comparison graph of the comparisons we've made,  x 
+must be part of a connected region of  n - k +1 values
+(counting  x  itself), so this region has to have at least  
+n - k  edges and we must have made that many
+comparisons. 
+
+    
+ 
+
+ Our third example of a graph is a "family tree". We draw a
+vertex for each member of a family, and a directed edge from each
+parent to each child. This is not really a tree [exercise: give two
+reasons why not] but in many families has a structure similar to a
+tree. Typical graph algorithm problems for this example would be to
+determine how two people are related, or to draw this graph as a
+nice picture of the family tree. 
+
+    
+ 
+
+ We can represent airline schedules as a graph, in which the
+vertices correspond to airports, and edges correspond to flights.
+Unlike the previous examples, there is some extra information here
+that we can attach to the graph; for instance we might store the
+time, cost, and airline for each flight. A typical graph algorithm
+problem here might be to find the cheapest route from city A to
+city B, allowing stops in between. 
+
+    
+ 
+
+ A VLSI circuit design consists of a collection of components
+(gates or transistors) connected by wires. We can think of the
+components as vertices, and the wires as edges. A typical problem
+is to translate the list of electrical connections into the design
+for a chip. 
+
+    
+ 
+
+ Another problem in electronics comes from printed circuit board
+manufacturing. A PC board is made of fiberglass, with wires
+connecting places for chips to be plugged in. One step of making PC
+boards involves drilling holes where the chips go, and other holes
+connecting wires in different layers of the board. We want to be
+able to plan the movement of a drill from one hole to the next, so
+it doesn't spend too much time moving. 
+
+ We can make a graph, in which the vertices represent holes, and
+each two vertices are connected by an edge labeled with the amount
+of time it would take to move the drill from one hole to the other.
+This is a  complete graph  since it has every possible edge
+that could be there. In this representation, our drill scheduling
+problem becomes one of finding the shortest path through this graph
+that visits every vertex exactly once. This is a famous problem,
+the  traveling salesman problem . As we will see much later in
+the class, this is an example of an  NP-complete problem ,
+which is evidence that there doesn't exist a good algorithm to
+solve it exactly. However you can find a path that's pretty close
+to the optimal solution, using  minimum spanning trees  (to be
+explained next week). 
+
+    
+ 
+
+ In compiler design, one problem that a compiler must deal with
+is, for each variable in your code, to find a machine register that
+can store the value of that variable. Typically you can't just
+assign them one-to-one because there are likely to be more
+variables than registers. But if two variables are used in
+different parts of code, it's safe to combine them and store them
+both in the same register. We can draw a graph in which variables
+correspond to vertices, and an edge shows that two variables exist
+at the same time. Then register assignment becomes a  graph
+coloring  problem. Again this is NP-complete but reasonable
+heuristics are known for the graphs occurring in this application. 
+
+    
+ 
+
+ Our final example comes from task scheduling -- suppose you are
+managing a project consisting of a sequence of several tasks to be
+performed (the example I used in class was writing, revising,
+handing out and grading a midterm; another comes from compiler
+design again: determining what order to perform a sequence of
+instructions). Some tasks have to be performed before others, but
+it is not always the case that there is one fixed global order that
+you have to do everything in. Here we can draw a graph in which a
+vertex represents a task, and a directed edge says we have to do
+one task before the other. This is pretty similar in some ways to
+the comparison graph we drew when analyzing decision trees. One
+important graph problem ( topological sorting  consists of
+finding some global ordering consistent with these local
+constraints. Another is determining, if you had enough people to
+work on as many different tasks as possible at once, how much time
+would it take to do the whole job; this is equivalent to finding a
+ longest path  in the graph. We'll see later a longest path
+algorithm that uses topological sorting as an important
+subroutine. 
+ 
+
+As we have seen, all of these many problems can be reformulated as
+graph problems. This hides the unnecessary complications of the
+problem, making the important structure more obvious and making it
+easier to find a solution. Translation to a graph problem also has
+the advantaged that several different real world problems could end
+up looking like the same graph problem, so finding a good algorithm
+for that one problem could have many applications. 
+
+ Representation of Graphs 
+
+In order to perform graph algorithms in a computer, we have to
+decide how to store the graph. When I talk about graphs to you,
+I'll draw a diagram with circles and lines on the blackboard, but
+computers aren't very good at interpreting that sort of input.
+Instead we need a representation closer to the abstract definition
+of a graph. There are several possibilities, with different uses. I
+didn't go over all of them in the lecture (I left out the incidence
+list and incidence matrix.) 
+
+     
+
+  Object oriented representation . The most obvious thing
+to do is just to copy the definition I gave of a graph. Have some
+structure for each vertex (representing whatever information you
+want to store there), and another structure for each edge (with
+pointers to the two vertices it connects). This representation is a
+little difficult to work with, because unless the edges are ordered
+more carefully it will be difficult to find the ones you want. 
+
+ As an example we might have a graph with four vertices (which
+I'll call A, B, C, and D) and four edges: (A,B), (C,D), (B,C),
+(C,A). The object oriented representation would just have a list or
+array of structures for each of these objects. 
+
+ The total space used by this representation is just O(m+n),
+since there is a constant amount of space (one structure) per
+vertex or edge. Most operations in this representation involve
+scanning the whole list of edges, and take time O(m). 
+
+    
+ 
+
+  Adjacency list  In the adjacency list representation,
+each vertex keeps a linked list of the neighboring vertices. The
+edges don't really appear at all. In the same graph above, the
+lists for each vertex would be: 
+
+ 
+    A: B, C
+    B: A, C
+    C: D, B, A
+ 
+
+This representation makes it much easier to find the edges
+connected to any particular vertex. Its space is still also small:
+O(m+n), since the total length of all the lists is 2m (each edge
+appears twice, once for each of its endpoints). It is also quite
+fast for many applications. The slowest operation that might
+commonly be used is testing whether a pair of vertices is connected
+by an edge; this has to be done by scanning through one of the
+lists, but you could speed it up by sorting the adjacency lists and
+using binary search. Another disadvantage is that each edge is
+listed twice, so if the edges carry any extra information such as a
+length it may be complicated to keep track of both copies and make
+sure they have the same information. 
+
+    
+ 
+
+  Incidence list . By combining the adjacency list and the
+object oriented representation, we get something with the
+advantages of both. We just add to the object oriented
+representation a list, for each vertex, of pointers to the edges
+incident to it. If I don't specify a representation, this is
+probably what I have in mind. The space is a little larger than the
+previous two representations, but still O(m+n). 
+
+    
+ 
+
+  Adjacency matrix . In some situations we are willing to
+use a somewhat larger data structure so that we can test very
+quickly whether an edge exists. We make an n x n matrix M[i,j],
+with rows and columns indexed by vertices. If edge (u,v) present,
+we put a one in cell M[u,v]; otherwise we leave M[u,v] zero.
+Finding the neighbors of a vertex involves scanning a row in O(n)
+time, but to test if an edge (u,v) exists just look in that entry,
+in constant time. To store extra information like edge lengths, you
+can just use more matrices. For the same graph above, we'd have a
+matrix 
+
+ 
+    0 1 1 0
+    1 0 1 0
+    1 1 0 1
+    0 0 1 0
+ 
+
+This is occasionally useful for performing graph computations by
+linear algebra. For instance, if you take the kth power of this
+matrix, an entry will be nonzero if and only if the corresponding
+vertices are connected by a path of k edges. For undirected graphs,
+the matrix will be symmetric. 
+
+    
+ 
+
+  Incidence matrix . This is another matrix, but generally
+it is rectangular rather than square (n x m); the rows are indexed
+by vertices and the columns by edges. Just like the adjacency
+matrix, we put a one in a cell when the corresponding vertex and
+edge are incident. Therefore every column will have exactly two
+ones in it. For a directed graph, you can make a similar matrix in
+which every column has one +1 and one -1 entry. This matrix is
+usually not symmetric. For the same graph, the incidence matrix is 
+
+ 
+    1 0 1 0
+    1 1 0 0
+    0 1 1 1
+    0 0 0 1
+ 
+ 
+  Connectivity 
+
+As a warmup to graph algorithms, we'll start with a simple problem:
+is a graph connected? Is there always an airline route from A to B?
+Is everyone in the family tree related to everyone else? Can your
+scheduling task be split into two parts that can be done by
+different departments of your company? 
+
+ As a rough outline, we start with some vertex x, and build a
+list of the vertices you can get to from x. Each time we find a new
+vertex to be added to this list, we check its neighbors to see if
+they should be added as well. Finally, we check whether the list
+covers the whole graph. In pseudocode: 
+
+ 
+    test-connected(G)
+    {
+    choose a vertex x
+    make a list L of vertices reachable from x,
+    and another list K of vertices to be explored.
+    initially, L = K = x.
+
+    while K is nonempty
+        find and remove some vertex y in K
+        for each edge (y,z)
+            if (z is not in L)
+            add z to both L and K
+
+    if L has fewer than n items
+        return disconnected
+    else return connected
+    }
+ 
+
+To analyze the algorithm, first notice that the outer loop happens
+n times (once per vertex). The time for the inner loop (finding all
+unreached neighbors) is more complicated, and depends on the graph
+representation. One key step (testing whether z is in L) seems like
+it might be slow, but can be done quickly by keeping a bit on each
+vertex that says whether it's in L or not. 
+
+  For the object oriented representation, each execution of the
+inner loop involves scanning through all m edges of the graph. So
+the total time for the algorithm is O(mn). 
+
+ For the adjacency matrix representation, each execution of the
+inner loop involves looking at a single row of the matrix, in time
+O(n). So the total time for the algorithm is O(n^2). 
+
+ In the adjacency list (or incidence list) representation, each
+element on each list is scanned through once. So the total time on
+all executions of the inner loop is the same as the total length of
+all adjacency lists, which is 2m. Note that we don't multiply this
+by n, even though this is a nested loop -- we just add up the
+number of times each statement is executed in the overall
+algorithm. The total time for the algorithm is O(m+n) 
+ 
+
+At the end of the algorithm, the list L tells you one  connected
+component  of the graph (how much of the graph can be reached
+from x). With some more care, we can find all components of G
+rather than just one component. 
+
+ If graph is connected, we can modify the algorithm to find a
+tree in G covering all vertices (a  spanning tree ): For each
+z, let parent(z) be the vertex y corresponding to the time at which
+we added z to L. This gives a graph in which each vertex except x
+is connected to some previous vertex, and any such graph must be a
+tree. 
+
+ When analyzing the algorithm, we didn't pay attention to what
+order we put vertices into K and removed them again, but different
+orders produce different trees. If we put vertices at end of K,
+take them off front (so K acts like a queue) we get "breadth first
+search". Then the parent of z is always as close to x as possible
+so this gives shortest paths from x to everything else, and the
+tree is short and bushy. If instead we add and remove vertices at
+the same end of K (so K acts like a stack) we get "depth first
+search". This tends to produce long stringy spanning trees with
+some useful properties that we'll see later. 
+
+   ICS 161  --  Dept.
+Information &amp; Computer Science  --  UC Irvine   Last update: 
+  
+</body> 

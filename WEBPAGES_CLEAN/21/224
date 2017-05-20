@@ -1,0 +1,216 @@
+ ICS 31 Lab 6<body>
+  ICS 31 • DAVID G. KAY • UC IRVINE • FALL 2016  
+   Lab Assignment 6   
+ 
+  This assignment is due by 10:00 p.m. on Friday, November 4. There's a lot to do, so get an early start.  
+   Preparation</strong>  (Do this part individually, before coming to lab): 
+
+ Read  sections 4.1 and 4.2; some of this is material we've already seen. Do the practice problems and exercises  4.12, 4.15, 4.17, and 4.18. Everyone should be able to do these independently. They don't require creative algorithmic thinking; you just need to look at the sections in the text to see how various language features work. If you run into trouble, check with your TA right away. 
+ Read the web page on  String Formatting  and the  format()  method. 
+
+   
+   Lab Work</strong>  (Do this part with your partner in lab) 
+  (a) </strong>Choose a partner for this assignment and register your partnership using the  partner app , ideally by Monday. Remember that you'll choose a different partner for each lab assignment, so you'll work with this partner only this week. Make sure you know your partner's name (first and last) and contact information (Email or cellphone or whatever) in case one of you can't make it to lab. 
+  (b)</strong> Prepare your  lab6.py  file as in previous labs, including a line like this:  
+ 
+#  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab asst 6.
+ 
+  (c)</strong> Python exercises:
+
+
+
+   (1)</strong> Implement the function  contains  that takes as input two strings. The function checks if
+the second string occurs in the first string. If the second string does occur, the function
+returns True; if not, it returns False.   Here are two  assert  statements to check your code, but you should
+include at least two more:   assert contains('banana', 'ana')
+assert not contains('racecar', 'ck')  
+ [Note: It's possible to code this with one simple expression
+in the  return  statement.] 
+
+
+
+
+
+
+
+  (2)</strong> Implement the function  sentence_stats  that takes in a
+string as a parameter and prints out these statistics about the
+string: its length in characters, its length in words, and the average length of each
+word.  (We'll say that a word is any substring that's delimited by white space, after punctuation has been eliminated.  You might find it helpful to write a function
+that translates all punctuation marks to blanks.)
+ 
+
+  &gt;&gt;&gt; sentence_stats('I love UCI')
+Characters: 10
+Words: 3
+Average word length: 2.66666666665
+
+&gt;&gt;&gt; sentence_stats('***The ?! quick brown fox:  jumps over the lazy dog.')
+Characters: 52
+Words: 9
+Average word length: 3.888888888888889  
+
+
+
+  [Note: The two examples above show expressions (calls to  sentence_stats() ) evaluated in the Python Shell window, which you can tell by the  &gt;&gt;&gt;  prompt. You can do this if you've previously run the  .py  file containing the definition of  sentence_stats()  (or if you've typed that definition into the Python Shell window by hand, which isn't recommended because there's no easy way to edit out any typos). You could also produce the same results by defining and calling the function in your  .py  file and then running that file. (We're not using  assert  statements here because  sentence_stats()  has side effects, namely printing.)]  
+  (3)</strong> Implement the function  initials  that takes as input a string representing a full
+  name (e.g.,   Robert B. Qwerty ) and returns the initials of the name in all capital letters (e.g.,  RBQ ).
+ 
+
+  assert initials('Bill Cody') == 'BC'
+assert initials('Guido van Rossum') == 'GVR'
+assert initials('alan turing') == 'AT'  
+
+
+  (d)</strong> We've said that software models the real world. One aspect of the real world that we sometimes want to model is randomness. If we're writing software to play a card game, we don't want the same cards to come up every time we play. If we're designing a simulation (let's say of the flow of customers through a supermarket, to determine how many checkers we need on duty), we don't want one customer to arrive like clockwork every 30 seconds; we want a more realistic and less predictable flow of traffic. 
+ We achieve randomness in software using a  random number generator</strong>. Python has a library of functions dealing with randomness; it's called  random . The  randrange  function generates random integers in a specified range, so that  randrange(5)  returns a number that's either 0, 1, 2, 3, or 4 (like  range()  in Python,  randrange()  refers to numbers starting at zero and going up to, but  not including,  its argument). When given two arguments, the  randrange  function uses the first as the lower bound of the range, so   randrange(1,5)  returns a number that's either 1, 2, 3, or 4. 
+  (d.1)</strong> Start with the statement  from random import randrange . Then write a simple for-loop that prints out 50 random numbers between 0 and 10 (inclusive—so you want some 10s in your results). Next, write a simple for-loop that prints out 50 random numbers between 1 and 6 inclusive (like rolling standard six-sided dice). Check your results carefully: With 50 numbers, you should have a few of each possibility; if one value (especially the first or the last) doesn't show up at all, your code isn't correct. 
+  (d.2)</strong> Many dice games roll two six-sided dice at once, resulting in totals ranging from 2 (sometimes called "snake eyes" because of the single dot on each of the dice) to 12 (sometimes called "boxcars" after the rectagular cars on freight trains). 
+ Write a function called  roll2dice  that takes no parameters and returns a number that reflects the random roll of two dice. [Hint: It's not quite as simple as returning one random number between 2 and 12 inclusive. With two real dice, some results occur more frequently than others.] Test your function by calling it 50 times in a for-loop, printing the result each time. (You'll note that precise testing of code involving randomness is hard, because the whole point is that you have unpredictable data each time. But the next part of this problem shows one approach to this problem.) 
+  (d.3)</strong> Write a function called  distribution_of_rolls  that takes one number—the number of times to roll two dice—and prints the distribution of the values of those rolls in the form shown below. The output below is a possible output from  distribution_of_rolls(200) .  
+ Distribution of dice rolls
+
+ 2:     7 ( 3.5%)  *******
+ 3:    14 ( 7.0%)  **************
+ 4:    15 ( 7.5%)  ***************
+ 5:    19 ( 9.5%)  *******************
+ 6:    24 (12.0%)  ************************
+ 7:    35 (17.5%)  ***********************************
+ 8:    24 (12.0%)  ************************
+ 9:    28 (14.0%)  ****************************
+10:    18 ( 9.0%)  ******************
+11:     9 ( 4.5%)  *********
+12:     7 ( 3.5%)  *******
+-----------------------------
+      200 rolls 
+ Here are some details: We introduced output formatting in class; there are more details in the textbook(s) and especially in the  String Formatting document . You'll need a list of numbers for counting each of the possible rolls; think about an easy way to get to the tally for roll  n  (it's not good to have 11 separate variables,  count2s ,  count3s ,  count4s ,  and so on). The histogram above shows 200 rolls; if you wanted to try it with much larger numbers, you could scale the histogram differently so that one star counts for, say, 20 rolls. 
+  (e) </strong> Cryptography</strong> is the science of secret writing—messages that
+other people can't understand unless they have a secret  key</strong>.
+Diplomats and generals have used cryptography for thousands of years; e-commerce
+uses it today for secure web transactions.
+We can  encrypt</strong> a message and then send it (even by means that
+might reveal the encrypted message to unauthorized parties) to someone authorized;
+if that person has the key, he or she
+can easily  decrypt</strong> it.  (There are also techniques that an
+unauthorized person can use to try to "break" the encryption and read the
+message without the key.  That's called  cryptanalysis</strong> or
+codebreaking.  There are many different ways of encrypting messages; some
+are more susceptible to cryptanalysis than others.) 
+ A  cipher</strong> is one category of encryption methodology.
+  Ciphers take characters in the message and transform them into other
+  characters.  One kind of simple cipher is a  substitution cipher</strong>,
+  for example substituting 'b' for each 'a', 'c' for each 'b', and so on;
+  in this cipher, "cat" would become "dbu".
+  (We can contrast ciphers with  codes</strong>; the
+  technical distinction is that codes work with words or phrases, at
+  the level of meaning.  In World War II, the US Army used soldiers
+  who spoke the Navajo language to transmit messages over the radio;
+  none of the opponents could understand Navajo (or even recognize
+  what language it was).  That's a code. By contrast, the World War II computer-assisted codebraking activity portrayed in the recent movie  The Imitation Game  focused on the German "Enigma Cipher.")  Computational encryption
+employs ciphers. 
+
+ A  Caesar cipher</strong> (named after Roman emperor
+Julius Caesar, who is said to have originated it) works like the
+example described above.  Each letter in the original message
+(called the  plaintext</strong>) is changed to a different
+letter.  The example above ('a' becomes 'b', 'b' becomes 'c', and
+so on) is one example; we could say its key is 1, because each letter
+moves 1 position later in the alphabet.  There are 26 possible
+Caesar ciphers (one of which doesn't change the plaintext message).
+The encrypted message is called the  ciphertext</strong>.
+So encrypting the message "hi there" with a Caesar cipher whose key is 3 would give the ciphertext "kl wkhuh".
+   (e.1) </strong>Write the two functions  Caesar_encrypt  and
+   Caesar_decrypt .  Each takes two arguments:
+  a string containing the message (the plaintext for encryption,
+  the ciphertext for decryption) and an int for the key,
+  indicating how far down the alphabet to find each substitute letter.
+  The encryption function returns the ciphertext;
+  the decryption function returns the plaintext.
+  
+  As always, follow the design recipe.  In particular
+  make up enough examples to test both your understanding
+  of the functions' behavior and the match between your
+  code and that behavior.  Here are two more details:
+  In the plaintext, turn any upper-case letters into
+  lower-case letters.  In both the plaintext and the
+  ciphertext, leave non-letters unchanged.
+  
+  With the right tools, each function can be written in two lines of
+  code (plus function headers and docstrings).  Think for
+  a while about how to write this; if you're still stuck,
+  you may wish to consult these hints (one at a time):
+  (i) It's convenient to have a
+  global constant called  ALPHABET  that contains
+  all 26 lower-case letters in order.  (ii) To do the work,
+  you'll want to use the  translate()  method;
+  look it up to make sure you understand how to use it.
+  Seeing what arguments it takes may suggest some of the
+  things you need to compute.
+  (iii) It would also be convenient to have a function that
+  takes a number and produces a "rotated" alphabet with the
+  specified number of characters taken off the front and
+  added on to the end of the string.
+  
+  Okay, it's time.  Write the functions and test them.
+    
+   (e.2)</strong>
+
+Each partner should do this part independently:
+Make up a message without telling your partner what it is.
+Encrypt the message with a key of your choosing.  Copy the
+encrypted message into an Email message and send it to your
+partner; put the key in the subject line[*].  When you receive
+the Email your partner sent you, decrypt it using the key
+you received.
+   [*] It is not good security to include the key with the
+  message.  Of course that doesn't matter to us here in lab.
+  But in real life, this would be like writing your PIN on your ATM card.  Key distribution</strong> is an issue in modern
+  cryptography; you need a secure and independent way to get
+  the key to the intended recipient of the ciphertext.
+   (e.3) </strong>If you have time, you could check that the key is in
+  the correct range (0 to 25) or, better yet, make keys
+  greater than 25 "wrap around" so that, for example,
+   Caesar_encrypt("cat", 29) 
+  returns the same thing as  Caesar_encrypt("cat", 3) .
+  (Hint:  Use the  %  (mod) operator.)
+   (f)</strong> Suppose you have a list of strings containing English text, like this: 
+ [ "Four score and seven years ago, our fathers brought forth on",
+  "this continent a new nation, conceived in liberty and dedicated",
+  "to the proposition that all men are created equal.  Now we are",
+  "   engaged in a great 		civil war, testing whether that nation, or any",
+  "nation so conceived and so dedicated, can long endure.        " ] 
+ There might be additional spacing or punctuation, as shown in the last two lines above. 
+  (f.1) </strong>Write the function  print_line_numbers  that takes a list of strings and prints each string preceded by a line number: 
+ 1:  Four score and seven years ago, our fathers brought forth on
+2:  this continent a new nation, conceived in liberty and dedicated
+3:  to the proposition that all men are created equal.  Now we are
+4:     engaged in a great 		civil war, testing whether that nation, or any
+5:  nation so conceived and so dedicated, can long endure. 
+ If there are 10 lines or more, the text won't line up nicely. Use the  format  method to print each line number in a five-character-wide field. (A nifty enhancement would be to make the line number field width exactly as long as it has to be to display the longest line number.) 
+  (f.2) </strong>Write the function  stats  that takes a list of strings and prints statistics as follows: 
+  16824   lines in the list
+   483   empty lines
+    53.7 average characters per line
+    65.9 average characters per non-empty line 
+ Follow the formatting shown. 
+  (f.3)</strong> Write the function  list_of_words  that takes a list of strings as above and returns a list of individual words with all white space and punctuation removed (except for apostrophes/single quotes). 
+ Look at the string operations and list operations to determine which of them you'll need for this task. 
+  (g)</strong> Go back to your restaurants program from last week (modified to handle menus—lists of Dish structures). You may start with the code that either partner submitted. Getting up to speed with code that someone else initially wrote is a real-world programmer's skill; most real programming is modifying or extending an already-existing product. But it's also okay to start fresh and make the dishlist/menu modifications from scratch; sometimes that's the best approach, even when you already have some code that does the task, because if the existing code isn't solid—if it doesn't work as it should, or if it's too hard to understand—it makes no sense to try to build more code on that shaky foundation. Besides, it won't take you nearly as long the second time because you've already thought about the issues and you've already learned something from the mistakes you've made. (Donald Knuth of Stanford, who might be America's most famous computer scientist, once suggested this as a software development method: Write the code and get it working; then throw it away and write it again from scratch. His point was that people tend to cling to code they've already written, even if it's bad code that's dragging down their further development. Starting afresh frees the programmer from the burden of previous bad design decisions and allows "getting it right this time.") 
+ Call the new copy of the restaurants program  restaurants6.py  . 
+  (g.1)</strong> Modify the program so that whenever a Restaurant is displayed, an additional line is included: 
+ 
+Average price:  $12.45.  Average calories:  455.6 
+ Follow the formatting shown above. 
+  (g.2)</strong> Add a command to the main menu that allows the user to search for (and display) all the restaurants that serve a specified cuisine along with the average price of (all the menus of the restaurants that serve) that cuisine. 
+  (g.3)</strong> Add a command to the main menu that allows the user to search for (and display) all the restaurants that serve a dish whose name contains a given word or phrase. (This is more realistic than forcing the user to type the exact name of the dish; here, at least, the user can just type "fava beans" and match all the dishes that include that phrase.) 
+  (h) </strong>Remember that each partner must complete a partner evaluation form and submit it individually. Do this using the  partner app . Make sure you know your partner's name, first and last, so you can evaluate the right person.
+  
+Please complete your evaluation by the end of the day on Friday, or Saturday morning at the latest. It only takes a couple of minutes and not doing it hurts your participation score.
+   What to turn in:</strong> Submit via Checkmate two files: your   lab6.py  file containing your solutions to parts (c), (d), (e) and (f), and a separate Python file containing your modified restaurants program from part (g). Remember what we've said in previous labs about rereading the assignment and rerunning your Python files. 
+ Also remember that each student must complete a partner evaluation form; these evaluations contribute to your class participation score. Get in the habit of doing this every week on Friday after you've submitted your assignment; the survey closes on Saturday. If you miss it, or if you forget to indicate your partner's name, you won't get credit for filling it out.  (Missing one may not have a significant effect on your grade, but these are easy points that everyone else is getting.) 
+   
+  Written by David G. Kay in Fall 2012 for ICS 31, based in part on assignments from ICS H21 and Informatics 41. Modified by David G. Kay, WInter 2013  Fall 2013, and Winter 2014. Python exercises by David Lepe, edited by David G. Kay, Winter 2014, Fall 2014, Winter 2015, Fall 2015.  
+    David G. Kay ,  kay@uci.edu      
+Wednesday, November 2, 2016 8:34 AM
+  
+</body> 

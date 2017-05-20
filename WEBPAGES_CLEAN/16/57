@@ -1,0 +1,63 @@
+ 11. Connectivity Processing<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.7 Using NewConf 
+ Up:   OEChem - C++ Theory 
+ Next:   11.1 Determining bonds from 
+   
+
+
+  
+11. Connectivity Processing 
+ 
+
+ 
+OEChem provides several functions for determine the connectivity
+and/or bond orders from various input file formats.  For correct
+molecule processing, OEChem requires all the covalent bonds to be
+represented in a molecule and each bond to have a defined bond order,
+1 for single, 2 for double, 3 for triple and 4 for quadruple.  Given
+this explicit Kekulé representation of a molecule, OEChem can perceive
+and re-perceive high order attributes such as ring membership or
+aromaticity as defined by different aromaticity models (definitions of
+aromaticity).
+
+  
+Alas, unlike MDL's SD file format, not all file formats explicitly
+specify a Kekulé form of a molecule with explicit bond orders.  The
+routines below attempt to deduce such a representation from the
+information that is available in such file formats.
+
+  
+
+      Subsections</strong> 
+
+   11.1 Determining bonds from 3D coordinates 
+   11.2 Kekule Form Assignment 
+   11.3 Perceiving Bond Orders 
+   
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.7 Using NewConf 
+ Up:   OEChem - C++ Theory 
+ Next:   11.1 Determining bonds from 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

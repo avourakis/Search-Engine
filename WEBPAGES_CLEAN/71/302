@@ -1,0 +1,101 @@
+ 28.2.2 The OpenEye Hydrogen Count Model<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   28.2.1 The OpenEye Charge 
+ Up:   28.2 The OpenEye Valence 
+ Next:   29. SMARTS Pattern Matching 
+   
+
+
+  
+28.2.2 The OpenEye Hydrogen Count Model 
+ 
+
+ 
+OpenEye's hydrogen count valence model is used by OEChem when neither hydrogen
+counts nor valence are specified.  The typical uses are reading molecules from
+PDB or XYZ format files without explicit hydrogens.  This functionality is
+invoked by  OEAssignImplicitHydrogens , which must always be followed by
+a call to  OEAssignFormalCharges .  This valence model is unique in that
+it only partially updates hydrogen counts, assuming the unfilled valences
+will be corrected by OpenEye's charge valence model above.  In MDL's model
+for example, a neutral sodium atom is assumed to have one implicit hydrogen,
+ i.e.  sodium hydride instead of sodium metal.  In OpenEye's hydrogen
+count valence model, a disconnected sodium atom is assumed to be a sodium
+cation,  [Na+] .  When reading from PDB files, this is a very reasonable
+assumption.
+
+  
+Note that although the OpenEye hydrogen count valence model often sets charge
+and protonation states to physiological conditions, it is neither intended to
+be a pKa nor ionization state predictor.  Instead, it is a normalization.  Much
+like many registry system (and the MDL valence model) will convert
+ C(=O)[O-]  to  C(=O)O  for registration purposes, this valence
+model converts the opposite direction to  C(=O)[O-] .
+
+  
+
+   Carbon is always assumed to be at least four valent, and therefore
+neutral.
+
+ 
+  
+ Nitrogens that are conjugated (have double bonds, or have neighbors that
+have double bonds, in their Kekulé representations) are assumed at least
+three valent and neutral, whilst all other nitrogens are assumed to be
+(minimum) four valent, with a +1 formal charge.
+
+ 
+  
+ Oxygens are assumed to be at least two valent and neutral, unless they
+have a single bond to an atom that is doubly bonded to oxygen, in which case
+its assumed to be one valent, with a -1 formal charge.
+
+ 
+  
+ Sulfur is assumed to always be at least two valent.
+
+ 
+  
+  
+All other elements are assumed to have no implicit hydrogens, and the formal
+charge as specified by the OpenEye charge model.  This models all disconnected
+halogens as halide anions, and when disconnected the metals listed above as
+cations.
+
+  
+These rules are sufficient to reasonably protonate proteins read from PDB
+files.  However, as described above, these rules are not intended to be a
+comprehensive rule-based pKa predictor.  Users interested in predicting
+physiological ionization, and protonation/disassociation state enumeration
+should contact OpenEye Scientific Software about our tools for exactly this
+task.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   28.2.1 The OpenEye Charge 
+ Up:   28.2 The OpenEye Valence 
+ Next:   29. SMARTS Pattern Matching 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

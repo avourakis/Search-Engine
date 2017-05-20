@@ -1,0 +1,96 @@
+ Replicators: HighLife<body>
+
+
+  Replicators : B36/S23 (HighLife) 
+
+This near-relative of Conway's Life was the first interesting rule in
+which a replicator was discovered, by Nathan Thompson in 1994.
+The replicator (shown in its symmetric phase) operates in a
+one-dimensional diagonal 2-unit grid, replicating itself every 12 generations.
+
+       
+
+Rows of replicators can be capped off by blocks or eaters, resulting in
+arbitrarily high-period oscillators.
+
+      
+   
+    
+
+Since HighLife is so similar to life, it has
+ many
+of the same spaceships , including the small c/4 diagonal glider.
+An alternate method of capping a row of replicators produces glider guns
+of arbitrarily high periods.
+
+       
+
+Another method of capping a row of replicators, by a single
+blinker, produces a spaceship known as the  bomber. 
+The bomber moves diagonally 4 positions every 24 generations,
+after which a blinker appears in the same position on the other side
+of the bomber.
+
+       
+
+Two side-by-side bombers can form puffers such as these two rakes,
+which leave sideways- and backwards-going trails of gliders.
+
+      
+   
+    
+
+Dirtier puffers, spewing irregular patterns of blinkers and biloafs,
+can be formed by capping a row of replicators in yet another way.
+
+       
+
+It's even possible for a puffer based on a bomber and replicator to spew
+out a trail of rows of replicators.  Each row copies itself
+perpendicularly to the motion of the puffer.  The pattern evolves to
+form a large 
+ Sierpinski triangle 
+filled with replicators.  The growth rate of the pattern
+(number of live cells after n generations) is O(n log 2 3 ),
+where the exponent is the fractal dimension of the Sierpinski triangle.
+
+       
+
+It's possible to use replicator-based oscillators to make a gun
+that periodically shoots bombers
+
+       
+
+or a "breeder" that shoots sideways glider rakes, producing a quadratic
+growth rate.
+
+       
+
+Finally, Dean Hickerson has found a " push
+reaction " in which two sets of replicators push a blinker forward
+eight units diagonally.  Since the bomber reaction allows replicators to
+pull a blinker the same amount, it should be possible to set up
+arbitrarily-slow replicator-based spaceships in which two sets of
+replicators push a blinker at the front end, and each pull a blinker at
+the other end.   However, the likely size of these things is so huge
+(exponential in the period, leading to a pattern size of around
+2 36  replicator units for Dean's reaction with the shortest
+possible repeat time) that no explicit example has been made. 
+ETA January 2013: After the discovery of better reactions, Adam Goucher,
+Helmut Postl, and others have
+explicitly constructed "basilisks", spaceships of this type, with speeds c/24, c/32,
+c/63, and c/69. In principle infinitely
+many other speeds should also be possible. Goucher even constructed a
+basilisk gun, for the c/24 basilisk.
+
+ For more detailed descriptions of many more interesting patterns in this
+rule,
+see  David
+Bell's article on HighLife .
+
+   
+ Replicators  --
+ Cellular Automata  --
+ D. Eppstein  --
+ UCI Inf. &amp; Comp. Sci. 
+ </body> 

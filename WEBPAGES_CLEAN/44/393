@@ -1,0 +1,293 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Low-dimensional linear programming and LP-type problems
+ 
+   Dynamic three-dimensional linear programming . 
+D. Eppstein.  Tech. Rep. 91-53 , ICS, UCI, 1991.  32nd IEEE Symp. Foundations of Comp. Sci., 
+San Juan, Puerto Rico, 1991, pp. 488–494.  ORSA J. Computing  4: 360–368, 1992
+(special issue on computational geometry).
+ 
+Uses Dobkin-Kirkpatrick hierarchies to perform
+ linear programming 
+queries in the intersection of several convex polyhedra.
+By maintaining a collection of halfspaces as several subsets,
+represented by polyhedra, this leads to algorithms for a dynamic
+linear program in which updates change the set of constraints.
+The fully dynamic results have largely been subsumed
+by Agarwal and Matoušek, but this paper also includes
+polylog time results for semi-online problems,
+and uses them to give a fast randomized algorithm for the planar
+2-center problem (later improved by various authors, most recently
+in " Faster Construction of Planar Two-Centers ",
+which re-uses the data structures described here).
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Approximating center points with iterated Radon points .  
+K. Clarkson , D. Eppstein, 
+ G.L. Miller ,
+ C. Sturtivant , and 
+ S.-H. Teng .   9th ACM Symp. Comp. Geom.,  San Diego, 1993, pp. 91–98 .   Int. J. Comp. Geom. &amp; Appl.  6 (3): 357–377, 1996 .
+ 
+Given a collection of  n  sites,
+a center point is a point (not necessarily a site)
+such that no hyperplane through the centerpoint
+partitions the collection into a very small and a very large subset.
+Center points have been used by Teng and others
+as a key step in the construction of geometric separators.
+One can find a point with this property by choosing
+a random sample of the collection and applying
+ linear programming ,
+but the complexity of that method grows exponentially with the dimension.
+This paper proposes an alternate method that
+produces lower quality approximations (in terms of the size
+of the worst hyperplane partition) but takes time
+polynomial in both  n  and  d. 
+  ( BibTeX  --
+ Citations )
+  
+    The centroid of points with approximate weights .  M. Bern ,
+D. Eppstein, 
+ L. J. Guibas ,
+J. Hershberger, 
+ S. Suri , and 
+ J. Wolter .   3rd Eur. Symp. Algorithms, 
+Corfu, 1995 . 
+Springer,  Lecture Notes in
+Comp. Sci.  979, 1995, pp. 460–472.
+ 
+Given a set of points with weights that are not known precisely,
+but are known to fall within some range, considers the possible
+weighted centroids arising from different choices of weights
+in each range.  The combinatorics of this problem are closely
+connected with those of
+ zonotopes .
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+  
+    Choosing subsets with maximum weighted average . 
+D. Eppstein and 
+ 
+D. S. Hirschberg .  Tech. Rep. 95-12, ICS, UCI, 1995 .  
+ 5th MSI Worksh. on Computational Geometry , 1995, pp. 7–8 .   J. Algorithms  24: 177–193, 1997 .
+ 
+Uses geometric optimization techniques to find, among  n  weighted values,
+the  k  to drop so as to maximize the weighted average of the remaining values.
+The feasibility test for the corresponding decision problem involves
+ k -sets in a dual line arrangement.
+  ( BibTeX  --
+ Full paper  --
+ CiteSeer  --
+ ACM DL )
+  
+    Optimal point placement for mesh smoothing .  N. Amenta ,
+ M. Bern ,
+and D. Eppstein.  
+ 8th ACM-SIAM Symp. Discrete
+Algorithms,  New Orleans, 1997, pp. 528–537 .  Symp.
+Computational Geometry Approaches to Mesh Generation ,
+SIAM 45th Anniversary Mtg., Stanford, 1997.  arXiv:cs.CG/9809081 .  
+ J. Algorithms  30: 302–322, 1999 (special issue for SODA 1997) .
+ 
+We study  finite element mesh  smoothing
+problems in which we
+move vertex locations to optimize the shapes of nearby
+triangles.  Many such problems can be solved in linear time using
+ generalized linear programming ; we also give
+efficient
+algorithms for some non-LP-type mesh smoothing problems.
+One lemma may be of independent interest: the locus of points in R d 
+from which a d-1 dimensional convex set subtends a given solid angle
+is convex.
+  ( BibTeX  --
+ SODA paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Setting parameters by example . 
+D. Eppstein.  arXiv:cs.DS/9907001 .   40th
+IEEE Symp. Foundations of Comp. Sci. , 1999, pp. 309–318 .  
+ SIAM J. Computing  32 (3): 643–653, 2003 .
+ 
+We introduce a class of "inverse parametric optimization"
+problems, in which one is given both a parametric optimization problem
+and a desired optimal solution; the task is to determine parameter
+values that lead to the given solution.  We use
+ low-dimensional linear programming 
+and geometric sampling techniques to solve
+such problems for
+ minimum spanning trees ,
+ shortest paths , and
+other optimal subgraph problems, and discuss applications in
+multicast routing, vehicle path planning, resource allocation, and board
+game programming.
+  ( BibTeX  --
+ Citations  --
+ ACM DL (FOCS)  --
+ ACM DL (SJC) )
+  
+    Optimal Möbius transformations for information visualization
+and meshing .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0101006 .   7th Worksh. Algorithms and Data
+Structures,  Providence, Rhode
+Island, 2001 . 
+Springer,  Lecture Notes in
+Comp. Sci.  2125, 2001, pp. 14–25.
+ 
+We give linear-time
+ quasiconvex programming 
+algorithms for finding a Möbius transformation of a
+ set of spheres 
+in a unit ball or on the
+surface of a unit sphere that maximizes the minimum size of a
+transformed sphere. We can also use similar methods to maximize the
+minimum distance among a set of pairs of input points. We apply these
+results to vertex separation and symmetry display in spherical
+ graph drawing , viewpoint selection in
+ hyperbolic  browsing, and element size
+control in conformal structured
+ mesh generation .
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ WADS talk slides  --
+ ACM DL )
+  
+    Optimization over zonotopes and training support vector machines .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0105017 .   7th Worksh. Algorithms and Data
+Structures,  Providence, Rhode
+Island, 2001 . 
+Springer,  Lecture Notes in
+Comp. Sci.  2125, 2001, pp. 111–121.
+ 
+We use the
+ ellipsoid method 
+to develop (theoretically) efficient algorithms
+for optimizing linear functions on intersections of
+ zonotopes ,
+and show how to apply this to train soft-margin support vector classifiers.
+  
+( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ WADS talk slides  --
+ ACM DL )
+  
+    Optimized color gamuts for tiled displays .  M. Bern 
+and D. Eppstein.  arXiv:cs.CG/0212007 .  
+ 19th ACM Symp. Comp. Geom.,  San Diego, 2003, pp. 274–281 .
+ 
+We consider the problem of finding a large color space that can be
+generated by all units in multi-projector tiled display systems. Viewing
+the problem geometrically as one of finding a large parallelepiped
+within the intersection of multiple parallelepipeds, and using
+colorimetric principles to define a volume-based objective function for
+comparing feasible solutions, we develop an algorithm for finding the
+optimal gamut in time O(n 3 ), where n denotes the number of
+projectors in the system. We also discuss more efficient
+ quasiconvex programming  algorithms for
+alternative objective functions based on
+maximizing the quality of the color space extrema.
+  
+( BibTeX  --
+ SCG talk slides )
+  
+    Quasiconvex analysis of backtracking algorithms . 
+D. Eppstein.  arXiv:cs.DS/0304018 .  15th ACM-SIAM Symp. Discrete Algorithms, 
+New Orleans, 2004, pp. 781–790.   ACM Trans. Algorithms  2 (4): 492–509 (special issue for SODA 2004), 2006 .
+ 
+We consider a class of multivariate recurrences frequently arising
+in the worst case analysis of Davis-Putnam-style
+ exponential time
+backtracking algorithms  for NP-hard problems. We describe a
+technique for proving asymptotic upper bounds on these recurrences,
+by using a suitable weight function to reduce the problem to that of
+solving univariate linear recurrences; show how to use  quasiconvex programming  to determine the weight
+function yielding the smallest
+upper bound; and prove that the resulting upper bounds are within a
+polynomial factor of the true asymptotics of the recurrence. We
+develop and implement a multiple-gradient descent algorithm for the
+resulting quasiconvex programs, using a real-number arithmetic
+package for guaranteed accuracy of the computed worst case time
+bounds. 
+  
+The journal version uses the longer title "Quasiconvex analysis of
+multivariate recurrence equations for backtracking algorithms".
+  
+( BibTeX  --
+ SODA talk slides  --
+ Citations )
+  
+    Quasiconvex programming . 
+D. Eppstein. 
+Invited talk at DIMACS Worksh. on Geometric Optimization, New Brunswick,
+NJ, 2003. 
+Plenary talk at  ALGO 2004 ,
+Bergen, Norway, 2004.  arXiv:cs.CG/0412046 .  Combinatorial and Computational Geometry , Goodman, Pach, and
+Welzl, eds., MSRI Publications 52, 2005, pp. 287–331.
+ 
+Defines  quasiconvex programming , a form of generalized linear
+programming in which one seeks the point minimizing the pointwise
+maximum of a collection of quasiconvex functions.
+Surveys algorithms for solving quasiconvex programs either numerically
+or via generalizations of the dual simplex method from linear
+programming, and describe varied applications of this geometric
+optimization technique in meshing, scientific computation, information
+visualization, automated algorithm analysis, and robust statistics.
+  
+( DIMACS talk slides  --
+ ALGO talk slides )
+  
+    Hyperbolic geometry, Möbius transformations, and geometric optimization . 
+D. Eppstein.  Invited
+talk at MSRI Introductory Worksh. Discrete &amp; Computational Geometry ,
+Berkeley, CA, 2003.
+ 
+Describes extensions of computational geometry algorithms to  hyperbolic
+geometry , including an output-sensitive 3d Delaunay triangulation
+algorithm of Boissonat et al. and
+my own research on
+ optimal Möbius transformation .
+  
+( Citations )
+  
+    Minimum dilation stars.  
+D. Eppstein and
+ K. Wortman .  arXiv:cs.CG/0412025 .  21st ACM Symp. Comp. Geom.,  Pisa, 2005, pp. 321–326.   Comp. Geom. Theory &amp; Applications  37 (1): 27–37, 2007 .
+ 
+We show how to test the dilation of a star, embedded in a Euclidean
+space of bounded dimension, in time O(n log n),
+and how to find the star center that has the minimum dilation for
+a given set of leaf points in randomized expected time
+O(n log n).
+For two-dimensional points, we can find the minimum dilation center,
+constrained to be one of the input points, in time
+O(n 2 α(n)  log 2 n).
+The unconstrained center placement algorithm involves
+ quasiconvex programming , and is used
+as a subroutine in the constrained center placement algorithm.
+  
+( SoCG05 talk slides  --
+ Citations  --
+ BibTeX )
+  
+     
+ Geometry  --
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

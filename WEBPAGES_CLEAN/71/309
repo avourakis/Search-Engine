@@ -1,0 +1,149 @@
+   
+Algorithms for Egyptian Fractions
+  
+ 
+    
+References
+ 
+ 
+  
+ [Bee93]
+   L. Beeckmans.  The splitting algorithm for Egyptian fractions.
+  J. Number Th.
+ 43, 1993,  pp. 173­185.
+ This paper contains a proof that the
+ splitting method  terminates; Wagon
+ [Wag91]  credits the same result to Graham and Jewett.
+  
+  
+ [Ble72]
+   M. N. Bleicher.  A new algorithm for the expansion of continued fractions.
+  J. Number Th.
+ 4, 1972, pp. 342­382.
+ Defines two methods for Egyptian fraction representation: what he
+calls the Farey sequence method, which is equivalent to the
+ continued fraction method  described here, and what he calls the continued fraction method, which is a variant of what
+we call the
+ grouped continued fraction method .
+  
+ [Bre54]
+   R. Breusch.  A special case of Egyptian fractions, solution to advanced problem 4512.
+  Amer. Math. Monthly 
+ 61, 1954, pp. 200­201.
+ Shows that every x/y with y odd has an
+Egyptian fraction representation with all denominators odd, by using a method similar to the
+ binary remainder method  but using the base 5(3^k) instead of 2^k.
+  
+ [BW84]
+   T. H. Byers and M. S. Waterman. Determining all optimal and near-optimal solutions when
+solving shortest path problems by dynamic programming.
+  Oper. Res.
+ 32, 1984, pp. 1381­1384.
+ Byers and Waterman describe a simple algorithm for finding short paths in
+a graph, used in our implementation of the
+ grouped continued fraction method .
+  
+ [Epp94]
+    D. Eppstein.  Finding the k shortest paths.
+   35th IEEE Symp. Foundations of Computer Science,
+ 1994, pp. 154­165.
+ I describe what is theoretically the fastest known algorithm for the shortest path problem used in the
+ grouped continued fraction method , however my technique is rather more complex than that of
+ [BW84]  and has not been implemented in
+ Mathematica.
+   
+ [Guy81]
+   R.K. Guy.
+ Unsolved Problems in Number Theory.
+  Springer-Verlag, 1981, pp. 87­93.
+ Guy lists a number of questions about Egyptian fractions, including the following:
+   Does 4/y have a 3-term representation for all y?
+ Does 5/y?  Does x/y for x sufficiently large relative to y?
+   Does the odd greedy method terminate?
+   What different denominators are possible in a t-term representation of one?
+Do all positive-density sets of integers have a subset forming the denominators of a representation of one?
+  If we assign to each of the integers one of a finite set  of colors, can we pick a single color that can be used as the denominators for representations of all rationals?
+  Guy also provides a long bibliography.
+  
+ [KW91]
+   V. Klee and S. Wagon.
+ Old and New Unsolved Problems in Plane Geometry and Number Theory.
+ Math. Assoc. of America, 1991, pp. 175­177 and 206­208.
+ Concentrates  primarily on the question of
+ whether the odd greedy method halts ; notes that a similar method for finding representations with even denominators does halt; contains a number of further references.
+  
+ [Mor69]
+   L. J. Mordell.
+ Diophantine Equations.
+ Academic Press, 1969, pp. 287­290.
+ Discusses the question of
+ whether 4/y has a three-term representation ; describes methods of finding such representations depending on the value of n modulo various small primes.
+  
+ [NZ80]
+   I. Niven and H.S. Zuckerman.
+ An Introduction to the Theory of Numbers.
+ 4th ed., Wiley, 1980, p. 200.
+ They describe in an exercise here the secondary sequences used in the
+ continued fraction methods  of Egyptian fraction representation.
+  
+ [Ste54]
+   B. M. Stewart.  Sums of distinct divisors.
+  Amer. J. Math.
+ 76, 1954, pp. 779­785.
+ Uses the
+ binary remainder method  to find representations with all denominators even.  Also, like
+ [Bre54] , uses a method similar to the binary remainder method (using base 35(3^k))
+to find odd representations of fractions with odd denominators.
+  
+ [Ste92]
+   I. Stewart. The riddle of the vanishing camel.
+  Scientific American,
+ June 1992, pp. 122­124.
+ Stewart shows that any rational has only a finite number of t-term Egyptian fraction representations, for any fixed number t, and describes a
+ brute force method  for finding all such representations.
+  
+ [Tak21]
+   T. Takenouchi.
+On an indeterminate equation.
+  Proc. Physico-Mathematical Soc. of Japan
+ (3rd ser.) 3, 1921, pp. 78-92.
+ In this paper, discovered for me by Stefan Bartels, Takenouchi proves that any number with a k-term unit fraction representation has a representation in which all terms are distinct. Bartels writes "Takenouchi does not state the theorem itself but gives a proof to it. He uses the fact that the sum of the denominators of the representation increases and the fact that the number of representations of a given length is finite.  As far as I know this article has not been recognized in the meantime. I found some proofs (done in the 60s) which for example prove that n/m can be
+represented as a sum of n Egyptian fractions. This shows that the article is (was) quite unknown in mathematical literature."
+  
+ [TY90]
+   G. Tenenbaum and H. Yokota. Length and denominators of Egyptian fractions.
+  J. Number Th.
+ 35, 1990, pp. 150­156.
+ This paper provides good simultanous bounds on the number of terms and the denominators of an Egyptian fraction representation, as discussed in the section on the
+ binary remainder method .
+  
+ [Vos85]
+   M. Vose.  Egyptian fractions.
+  Bull. Lond. Math. Soc.
+ 17, 1985, p. 21.
+ Shows that every x/y has a t-term representation where t=O(Sqrt Log[y]).  The technique is similar to the
+ binary remainder method .
+  
+[Wag91]
+  S. Wagon.
+ Mathematica in Action.
+  W.H. Freeman, 1991, pp. 271­277.
+ Wagon implements the
+ greedy and odd greedy methods,
+ and describes the
+ splitting method.
+ He also mentions the open problem of
+ whether the odd greedy method always terminates
+ for the special case of fractions with numerator 2.
+  
+      Egyptian Fractions,
+  Number Theory,
+  David Eppstein,
+  ICS,
+  UC Irvine
+    Formatted by
+ nb2html  and
+ filter .
+Last update:
+.
+     

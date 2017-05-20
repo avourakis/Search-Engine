@@ -1,0 +1,46 @@
+ 
+      SAXParserExample.java on cs122b-2017-winter-project3 – Attachment
+     – Public
+    <body>
+     
+       
+           
+       
+      
+      
+       
+       Login    Preferences    About Trac  
+      
+     
+     
+   
+     
+       
+         Context Navigation 
+             Back to cs122b-2017-winter-project3  
+             
+     
+          cs122b-2017-winter-project3 : SAXParserExample.java 
+            File SAXParserExample.java,
+                 2.9 KB 
+                (added by cluo8,  5 days  ago) 
+               
+                
+               
+                
+          
+      Line          1        2   import java.io.IOException;     3   import java.util.ArrayList;     4   import java.util.Iterator;     5   import java.util.List;     6        7   import javax.xml.parsers.ParserConfigurationException;     8   import javax.xml.parsers.SAXParser;     9   import javax.xml.parsers.SAXParserFactory;     10        11   import org.xml.sax.Attributes;     12   import org.xml.sax.SAXException;     13        14   import org.xml.sax.helpers.DefaultHandler;     15        16   public class SAXParserExample extends DefaultHandler {     17        18       List&lt;Employee&gt; myEmpls;     19        20       private String tempVal;     21        22       //to maintain context     23       private Employee tempEmp;     24        25       public SAXParserExample() {     26           myEmpls = new ArrayList&lt;Employee&gt;();     27       }     28        29       public void runExample() {     30           parseDocument();     31           printData();     32       }     33        34       private void parseDocument() {     35        36           //get a factory     37           SAXParserFactory spf = SAXParserFactory.newInstance();     38           try {     39        40               //get a new instance of parser     41               SAXParser sp = spf.newSAXParser();     42        43               //parse the file and also register this class for call backs     44               sp.parse("employees.xml", this);     45        46           } catch (SAXException se) {     47               se.printStackTrace();     48           } catch (ParserConfigurationException pce) {     49               pce.printStackTrace();     50           } catch (IOException ie) {     51               ie.printStackTrace();     52           }     53       }     54        55       /**     56        * Iterate through the list and print     57        * the contents     58        */     59       private void printData() {     60        61           System.out.println("No of Employees '" + myEmpls.size() + "'.");     62        63           Iterator&lt;Employee&gt; it = myEmpls.iterator();     64           while (it.hasNext()) {     65               System.out.println(it.next().toString());     66           }     67       }     68        69       //Event Handlers     70       public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {     71           //reset     72           tempVal = "";     73           if (qName.equalsIgnoreCase("Employee")) {     74               //create a new instance of employee     75               tempEmp = new Employee();     76               tempEmp.setType(attributes.getValue("type"));     77           }     78       }     79        80       public void characters(char[] ch, int start, int length) throws SAXException {     81           tempVal = new String(ch, start, length);     82       }     83        84       public void endElement(String uri, String localName, String qName) throws SAXException {     85        86           if (qName.equalsIgnoreCase("Employee")) {     87               //add it to the list     88               myEmpls.add(tempEmp);     89        90           } else if (qName.equalsIgnoreCase("Name")) {     91               tempEmp.setName(tempVal);     92           } else if (qName.equalsIgnoreCase("Id")) {     93               tempEmp.setId(Integer.parseInt(tempVal));     94           } else if (qName.equalsIgnoreCase("Age")) {     95               tempEmp.setAge(Integer.parseInt(tempVal));     96           }     97        98       }     99        100       public static void main(String[] args) {     101           SAXParserExample spe = new SAXParserExample();     102           spe.runExample();     103       }     104        105   }     
+     
+     
+       Download in other formats: 
+        
+           Original Format 
+         
+        
+     
+         
+       Powered by   Trac 0.12.5</strong>  
+        By  Edgewall Software . 
+       Visit the Trac open source project at  http://trac.edgewall.org/  
+     
+  </body> 

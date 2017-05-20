@@ -1,0 +1,379 @@
+ 
+QueryEngine
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.QE 
+ 
+Class QueryEngine 
+ 
+java.lang.Object
+    Raccoon.QE.QueryEngine 
+ 
+   Direct Known Subclasses:     SimQueryEngine  
+    public class  QueryEngine  extends java.lang.Object    
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+   NetModuleImpl    
+    netModule   
+
+ 
+            
+    
+   ParseHelper    
+    ph   
+
+ 
+            
+    
+   ResourceManager    
+    rm   
+
+ 
+            
+    
+   parser    
+    sqlParser   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      QueryEngine  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+   QueryAnswer    
+    doLocalQuery  ( QueryCriteria  qc) 
+
+ 
+            
+    
+   QueryAnswer    
+    doQuery  ( PVNode  pvNode,
+        java.lang.String inputSQL,
+        boolean isExtendQuery) 
+
+ 
+            
+    
+   PVInstance    
+    executeSFW  (java.lang.String nodeName,
+           java.lang.String sqlStmt) 
+
+ 
+            
+    
+  java.util.HashMap   
+    filter  (java.util.HashMap attrMappingHashTable,
+       java.lang.String nodeName) 
+
+ 
+            
+    
+  int   
+    GetAttrType  (java.lang.String nodeName,
+            java.lang.String relName,
+            java.lang.String attrName) 
+
+ 
+          get the type of attribute. 
+    
+   ResourceManager    
+    getResourceManager  () 
+
+ 
+            
+    
+  void   
+    initParser  () 
+
+ 
+            
+    
+  java.util.HashSet   
+    intersect  (java.util.HashSet setA,
+          java.util.HashSet setB) 
+
+ 
+            
+    
+  boolean   
+    isAttrExist  (java.lang.String nodeName,
+            java.lang.String relName,
+            java.lang.String attrName) 
+
+ 
+            
+    
+  boolean   
+    isLocalQuery  (java.lang.String localNodeName,
+             java.util.Vector nodeArr) 
+
+ 
+            
+    
+  boolean   
+    isRelExist  (java.lang.String nodename,
+           java.lang.String relname) 
+
+ 
+            
+    
+  java.util.Vector   
+    searchCandidateTable  (java.lang.String localNodeName,
+                     java.util.Vector attrArr,
+                     java.util.HashMap attrMappingHashTable) 
+
+ 
+            
+    
+  void   
+    setNetModule  ( NetModuleImpl  newNetModule) 
+
+ 
+            
+    
+  void   
+    setResourceManager  ( ResourceManager  newRM) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+netModule 
+ 
+public  NetModuleImpl   netModule  
+        
+rm 
+ 
+public  ResourceManager   rm  
+        
+sqlParser 
+ 
+public  parser   sqlParser  
+        
+ph 
+ 
+public  ParseHelper   ph  
+      
+    
+ Constructor Detail   
+     
+QueryEngine 
+ 
+public  QueryEngine () 
+    
+    
+ Method Detail   
+     
+initParser 
+ 
+public void  initParser () 
+     
+     
+setNetModule 
+ 
+public void  setNetModule ( NetModuleImpl  newNetModule) 
+     
+     
+setResourceManager 
+ 
+public void  setResourceManager ( ResourceManager  newRM) 
+     
+     
+getResourceManager 
+ 
+public  ResourceManager   getResourceManager () 
+     
+     
+doQuery 
+ 
+public  QueryAnswer   doQuery ( PVNode  pvNode,
+                           java.lang.String inputSQL,
+                           boolean isExtendQuery)
+                    throws java.sql.SQLException,
+                            PVException  
+     Returns:   QE.QueryAnswer
+   Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+isLocalQuery 
+ 
+public boolean  isLocalQuery (java.lang.String localNodeName,
+                            java.util.Vector nodeArr) 
+     
+     
+searchCandidateTable 
+ 
+public java.util.Vector  searchCandidateTable (java.lang.String localNodeName,
+                                             java.util.Vector attrArr,
+                                             java.util.HashMap attrMappingHashTable) 
+     
+     
+intersect 
+ 
+public java.util.HashSet  intersect (java.util.HashSet setA,
+                                   java.util.HashSet setB) 
+     
+     
+filter 
+ 
+public java.util.HashMap  filter (java.util.HashMap attrMappingHashTable,
+                                java.lang.String nodeName) 
+     
+     
+doLocalQuery 
+ 
+public  QueryAnswer   doLocalQuery ( QueryCriteria  qc)
+                         throws java.sql.SQLException 
+     Throws: 
+   java.sql.SQLException    
+     
+isRelExist 
+ 
+public boolean  isRelExist (java.lang.String nodename,
+                          java.lang.String relname)
+                   throws  PVException  
+     Throws: 
+    PVException     
+     
+executeSFW 
+ 
+public  PVInstance   executeSFW (java.lang.String nodeName,
+                             java.lang.String sqlStmt)
+                      throws java.sql.SQLException,
+                              PVException  
+     Throws: 
+   java.sql.SQLException 
+   PVException      
+     
+isAttrExist 
+ 
+public boolean  isAttrExist (java.lang.String nodeName,
+                           java.lang.String relName,
+                           java.lang.String attrName)
+                    throws  PVException  
+     Throws: 
+    PVException     
+     
+GetAttrType 
+ 
+public int  GetAttrType (java.lang.String nodeName,
+                       java.lang.String relName,
+                       java.lang.String attrName)
+                throws  PVException  
+  get the type of attribute. We'll use the information 
+  sored in the Schema in each node and then convert the 
+  typeName into enum type
+ 
+     Throws: 
+    PVException     
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

@@ -1,0 +1,299 @@
+ Scheme Finger Exercises<body>
+  
+ 
+ I NTRODUCTION TO  CS *UC
+I RVINE  * D. G. K AY    S CHEME
+ F INGER  E XERCISES  *  PAGE
+   
+ 
+ Introduction to Computer Science * UC Irvine
+* David G. Kay  
+ 
+  S CHEME  F INGER
+ E XERCISES    
+  
+ 
+ We provide these short exercises to give you
+practice with some of the fundamental mechanics of Scheme.  We recommend
+that you try exercises in each section.  The later exercises in each section
+are more complex than the earlier ones, so if you feel comfortable with
+the topics, just try the last exercise or two in a section.  If you find
+that you can't do them quickly and correctly, try the earlier ones first
+ Of course you should ask your TA or instructor if you'd like further
+explanation.  [Since these are brand new, it is just barely possible that
+some errors have crept in.  If you think you've found one, please contact
+ kay@uci.edu .]  
+ 
+ The answers appear on this page in white text;
+you can view them by selecting or highlighting the area below the problem.
+ You'll get the greatest benefit by using pencil and paper to write
+down your own answer before looking at ours; otherwise, it's too easy
+just to browse through, thinking, "Yes, that looks right," without
+building your own essential understanding.  
+ 
+ If we don't show the definition of a function
+here, that function is predefined in (built into) DrScheme; the Help Desk
+will describe it.  
+   
+ Simple and nested arithmetic expressions. 
+What is the value of each expression?  
+    
+ (+ 25 30)   
+   55  
+   
+ (+ 40 50 60) 
+   150  
+   
+ (- 15 5) 
+   10  
+   
+ (- 5 15) 
+   -10  
+   
+ (* 5 (+ 2 3)) 
+   25  
+   
+ (/ 100 (- 7 2)) 
+   20  
+   
+ (* (- 10 2) (+ 1 4)) 
+   40  
+   
+ (+ (- 12 4) (* 2 (+ 5 1))) 
+   20  
+   
+ (+ (* (- 5 3) 6) 3) 
+   15  
+   
+ (+ (* 5 6) (/ (* 6 4) (- 20 (* 7 2))) (- 5
+10)) 
+   29  
+    
+ Defining constants.  What is the value returned
+at the end of each sequence of expressions?  
+    
+    (define SIZE 15)  
+    (+ 1 SIZE)  
+   16  
+   
+ (define HEIGHT 10) 
+   (define WIDTH 20) 
+   (* WIDTH HEIGHT) 
+   200  
+    
+ Defining functions.  What is the value returned
+at the end of each sequence of expressions?  
+    
+ (define triple 
+      (lambda (num) 
+         (* 3 num))) 
+   (triple 5) 
+   15  
+   
+ (define area 
+      (lambda (height width) 
+         (* height width))) 
+   (area 10 12) 
+   120  
+   
+ (define total-pennies 
+      (lambda (dollars cents) 
+         (+ (* dollars 100) cents))) 
+   (total-pennies 5 43) 
+   543  
+   
+ ;; [Same definition of total-pennies] 
+   (total-pennies 43 5) 
+   4305  
+   
+    (define SECONDS-PER-MINUTE
+60)  
+    (define MINUTES-PER-HOUR 60)  
+    (define HOURS-PER-DAY 24)  
+    (define total-seconds  
+       (lambda (days hours minutes seconds)  
+          (+    seconds   
+             (*    SECONDS-PER-MINUTE
+  
+                (+   
+minutes   
+                   (*
+   MINUTES-PER-HOUR   
+                     
+(+ hours (* HOURS-PER-DAY days))))))))   
+    
+ Boolean expressions with relational operators.
+ What is the value of each expression?  
+    
+ (= 12 (* 4 3)) 
+   true  
+   
+ (&gt; 12 (* 4 4)) 
+   false  
+   
+ (&lt;= (* 5 4) (* 3 7)) 
+   true  
+   
+ (&lt; (* 6 3) (* 9 2)) 
+   false  
+    
+ Boolean expressions with predicate functions.
+ What is the value of each expression?  As you evaluate each sub-expression,
+ask yourself what type of value (number, boolean, ...) the function returns.  
+    
+ (even? 16) ; Is the input an even number? 
+   true  
+   
+ (odd? (* 6 3)) 
+   false  
+   
+ (number? (= 5 (+ 3 2))) ; Is the input a number? 
+   false; = returns a boolean, not a number  
+   
+ (equal? (negative? (- 10 5)) (odd? (* 4 2))) 
+   true; both inputs to equal? are false  
+    
+ Boolean expressions with logical operators.
+ What is the value of each expression?  
+    
+ (and (= 5 (+ 4 1)) (even? 12)) 
+   true  
+   
+ (and (odd? 17) (odd? 18) (odd? 19)) 
+   false  
+   
+ (and (even? 100) (odd? 101) (even? 102) (odd?
+103)) 
+   true  
+   
+ (and (odd? 2) (odd? 4) (odd? 6)) 
+   false  
+   
+ (or (= 5 (+ 4 1)) (even? 12)) 
+   true  
+   
+ (or (odd? 17) (odd? 18) (odd? 19)) 
+   true  
+   
+ (or (even? 100) (odd? 101) (even? 102) (odd?
+103)) 
+   true  
+   
+ (or (odd?2) (odd? 4) (odd? 6)) 
+   false  
+   
+ (not (odd? 13)) 
+   false  
+   
+ (not (even? 13)) 
+   true  
+   
+ (not (= (+ 4 3) 7)) 
+   false  
+   
+ (not (= (* 4 2) 9)) 
+   true  
+   
+ (or (odd? 14) (and (= (+ 6 1) 7) (&lt; (+ 6
+2) 9))) 
+   true  
+   
+ (and (or (= (+ 6 1) 7) (&lt; (+ 6 2) 9)) 
+        (odd? 14)) 
+   false  
+   
+ (define A true) 
+   (define B false) 
+   (equal?   (not (and A B)) 
+         (or (not A) (not B))) 
+   true; in fact, this is one of DeMorgan's
+laws.  It's true no matter what A and B are.  
+   
+ (define A false) 
+   (define B false) 
+   (equal?   (not (or A B)) 
+         (and (not A) (not B))) 
+   true; this is another of DeMorgan's laws.  
+    
+ Cond expressions.  What is the value returned
+by each expression?  
+    
+ (cond 
+      ((= 6 (- 5 1)) 17) 
+      (else 18)) 
+   18  
+   
+ (cond 
+      ((even? (* 5 4)) 21) 
+      (else 20)) 
+   21  
+   
+  
+    
+ Expression types:  What  type  of value
+(number, boolean, symbol) does each expression return?  
+    
+ Include some conds.  
+    
+ Symbols.  
+   
+ What type.  
+   
+ Structure definitions  
+   
+ Structure manipulations--constructors  
+   
+ Structure manipulations--field selectors  
+   
+ Structure manipulations--type-checking predicates  
+   
+ What type  
+   
+ Function definitions  
+    
+ lambda; 1 arg, 2 args, 3 args  
+    
+ Function calls  
+   
+ What type returned?  
+   
+ List stuff  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+     
+ 
+  
+  
+  David G. Kay ,
+  406B Computer Science
+    University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --    (949) 824-5072  
+ --  Fax   (949) 824-4056  
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Sunday, October 9, 2005 -- 8:48 AM  
+</body> 

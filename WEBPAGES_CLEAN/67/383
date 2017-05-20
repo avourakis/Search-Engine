@@ -1,0 +1,31 @@
+ /* log scale compaction of word frequencies
+   use -lm option when compiling!
+   usage: freq min max
+
+   any frequencies below min are threshholded
+   but any frequencies above max cause an error
+*/
+
+#include 
+
+static void usage()
+{
+  fprintf(stderr,"usage: a.out minfreq maxfreq\n");
+  exit(0);
+}
+
+main(int ac, char **av)
+{
+  int min, max;
+  double logscale;
+  double logmin;
+  double log(double);
+  int atoi(char *);
+  int c;
+
+  if (ac != 3) usage();
+
+  min = atoi(av[1]);
+  max = atoi(av[2]);
+  if (max  255) fprintf(stderr,"frequency too large\n");
+    if (n  

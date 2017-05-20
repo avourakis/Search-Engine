@@ -1,0 +1,412 @@
+ Point_3&lt;Kernel&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Point_3&lt;Kernel&gt;  
+ 
+
+  Definition An object of the class   Point_3 &lt; Kernel &gt;  is a point in the three-dimensional
+Euclidean space     3  .
+ 
+
+Remember that   Kernel ::RT  and   Kernel ::FT  denote a
+ RingNumberType  and a  FieldNumberType , respectively. For the kernel
+model   Cartesian &lt;T&gt; , the two types are the same. For the
+kernel model   Homogeneous &lt;T&gt; ,   Kernel ::RT  is equal
+to  T , and   Kernel ::FT  is equal to
+  Quotient &lt;T&gt; .
+  
+
+  Types 
+ 
+
+    
+          Point_3 &lt; Kernel &gt;::Cartesian_const_iterator
+         
+              
+    An iterator for enumerating the
+      
+
+Cartesian
+
+ coordinates of a point.
+ 
+
+     
+
+  Creation 
+ 
+
+    
+          Point_3 &lt; Kernel &gt; p (   Origin   ORIGIN );
+         
+              
+    introduces a point with  Cartesian  coordinates (0,0,0) .
+ 
+
+          
+             
+     Point_3 &lt; Kernel &gt; p (     
+      Kernel ::RT hx,  Kernel ::RT hy,  Kernel ::RT hz,  Kernel ::RT hw = RT(1));     
+              
+    introduces a point  p  initialized to  (hx/hw,hy/hw, hz/hw) .  Precondition:   hw       0.
+ 
+
+     
+
+  Operations 
+ 
+
+    
+         
+    bool  
+
+         
+          
+         
+    p.operator== (  q)
+         
+                
+    Test for equality: Two points are equal, iff their  x ,  y  and  z 
+        coordinates are equal.
+                 
+         
+    bool  
+
+         
+          
+         
+    p.operator!= (  q)
+         
+                
+    Test for inequality.
+            
+
+There are two sets of coordinate access functions, namely to the
+homogeneous and to the 
+
+Cartesian
+
+ coordinates. They can be used
+independently from the chosen kernel model.
+  
+
+    
+           
+ Kernel ::RT
+         
+          
+         
+    p.hx ()
+         
+          
+    returns the homogeneous  x  coordinate.
+            
+           
+ Kernel ::RT
+         
+          
+         
+    p.hy ()
+         
+          
+    returns the homogeneous  y  coordinate.
+            
+           
+ Kernel ::RT
+         
+          
+         
+    p.hz ()
+         
+          
+    returns the homogeneous  z  coordinate.
+            
+           
+ Kernel ::RT
+         
+          
+         
+    p.hw ()
+         
+          
+    returns the homogenizing coordinate.
+            
+
+Note that you do not loose information with the homogeneous
+representation, because the  FieldNumberType  is a quotient.
+  
+
+    
+           
+ Kernel ::FT
+         
+          
+         
+    p.x ()
+         
+          
+    returns the  Cartesian   x  coordinate, that is  hx/hw .
+            
+           
+ Kernel ::FT
+         
+          
+         
+    p.y ()
+         
+          
+    returns the  Cartesian   y  coordinate, that is  hy/hw .
+            
+           
+ Kernel ::FT
+         
+          
+         
+    p.z ()
+         
+          
+    returns the  Cartesian   z  coordinate, that is  hz/hw .
+            
+
+The following operations are for convenience and for compatibility
+with code for higher dimensional points. Again they come in a
+
+
+Cartesian
+
+ and in a homogeneous flavor.
+  
+
+    
+           
+ Kernel ::RT
+         
+          
+         
+    p.homogeneous ( int i)
+         
+                
+    returns the i'th homogeneous coordinate of  p , starting with 0.  Precondition:   0   i    3 .
+                 
+           
+ Kernel ::FT
+         
+          
+         
+    p.cartesian ( int i)
+         
+                
+    returns the i'th  Cartesian  coordinate of  p , starting with 0.  Precondition:   0   i    2 .
+                 
+          Kernel ::FT  
+
+         
+          
+         
+    p.operator[] ( int i)
+         
+                
+    returns  cartesian(i) .  Precondition:   0   i    2 .
+                 
+           
+Cartesian_const_iterator
+         
+              
+         
+    p.cartesian_begin ()
+         
+                
+    returns an iterator to the 
+
+Cartesian
+
+ coordinates 
+        of  p , starting with the 0th coordinate.
+                 
+           
+Cartesian_const_iterator
+         
+              
+         
+    p.cartesian_end ()
+         
+          
+    returns an off the end iterator to the 
+
+Cartesian
+
+ 
+        coordinates of  p .
+                 
+           
+int
+         
+          
+         
+    p.dimension ()
+         
+          
+    returns the dimension (the constant 3).
+                 
+           
+ Bbox_3 
+         
+          
+         
+    p.bbox ()
+         
+          
+    returns a bounding box containing  p .
+                 
+           
+ Point_3 &lt; Kernel &gt;
+         
+          
+         
+    p.transform (   Aff_transformation_3 &lt; Kernel &gt; t)
+         
+                
+    returns the point obtained by applying  t  on  p .
+            
+
+  Operators 
+ 
+
+The following operations can be applied on points:
+  
+
+    
+         
+    bool  
+
+         
+          
+         
+    operator&lt; (  p,  q)
+         
+                
+    returns true iff  p  is lexicographically smaller than  q 
+       (the lexicographical order being defined on the  Cartesian 
+       coordinates).
+                 
+         
+    bool  
+
+         
+          
+         
+    operator&gt; (  p,  q)
+         
+                
+    returns true iff  p  is lexicographically greater than  q .
+                 
+         
+    bool  
+
+         
+          
+         
+    operator&lt;= (  p,  q)
+         
+                
+    returns true iff  p  is lexicographically smaller or equal to
+ q .
+                 
+         
+    bool  
+
+         
+          
+         
+    operator&gt;= (  p,  q)
+         
+                
+    returns true iff  p  is lexicographically greater or equal to
+ q .
+                 
+          Vector_3 &lt; Kernel &gt;  
+
+         
+          
+         
+    operator- (  p,  q)
+         
+                
+    returns the difference vector between  q  and  p . 
+        You can substitute   ORIGIN   for either  p  or  q , 
+        but not for both.
+                 
+          Point_3 &lt; Kernel &gt;  
+
+         
+          
+         
+    operator+ (  p,   Vector_3 &lt; Kernel &gt; v)
+         
+                
+    returns the point obtained by translating  p  by the 
+        vector  v .
+                 
+          Point_3 &lt; Kernel &gt;  
+
+         
+          
+         
+    operator- (  p,   Vector_3 &lt; Kernel &gt; v)
+         
+                
+    returns the point obtained by translating  p  by the 
+        vector - v .
+            
+
+  See Also 
+ 
+
+  Kernel::Point_3  
+  
+
+    Next:    Ray_3&lt;Kernel&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

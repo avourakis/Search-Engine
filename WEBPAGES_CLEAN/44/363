@@ -1,0 +1,44 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Cookies! What are they and do we need them?<body> Re: Cookies! What are they and do we need them? 
+ Roy T. Fielding  (  fielding@liege.ICS.UCI.EDU  )  Mon, 02 Sep 1996 17:48:08 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Larry Masinter: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Dave Long: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Maybe in reply to:   David G. Durand: "Cookies! What are they and do we need them?" 
+
+
+    
+&gt;   I don't really think that we should be trying to standardize a policy for
+&gt; this, as it seems a higher-level issue than basic versioning support, but
+&gt; the idea is that I might check the same file out 3 times from the same
+&gt; server, creating 3 virtual sessions. When I later check the file back in, I
+&gt; may need to attach a particular update to a particular checkout operation.
+&gt; The cookie enables this (did I get it right, Chris?).
+&gt; 
+&gt;   The kind of solution that youare thinking of does not allow that kind of
+&gt; control: a server could let me check out v 2.1 of /docs/misc more than
+&gt; once, and on check in the "Derived-from:" header does not uniquely identify
+&gt; which of the 3 checkouts is being affected. This is because they would all
+&gt; share the same "Derived-from:" header.
+
+I should clarify this.  The value of Content-Version and Derived-From
+is an opaque string or token.  There is no reason why the server could
+not produce a different Content-Version for each checkout (although
+there is also no reason why it needs to, since the notion of virtual
+sessions implies forking a resource, which is better expressed as a
+different action upon committing those changes rather than as a pre-fork
+every time the resource is checked out).  In any case, it is impossible
+for Cookies to be more expressive than Content-Version, since anything
+that can be placed in a Cookie can also be placed in an opaque string.
+
+.....Roy
+ 
+
+  
+     Next message:   Larry Masinter: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Dave Long: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Maybe in reply to:   David G. Durand: "Cookies! What are they and do we need them?" 
+
+
+  </body> 

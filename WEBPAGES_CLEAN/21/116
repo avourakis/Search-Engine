@@ -1,0 +1,288 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Selected publications
+ 
+   Sparse dynamic programming . 
+D. Eppstein,
+ Z. Galil ,
+ R. Giancarlo ,
+and  G.F. Italiano .  
+ 1st ACM-SIAM Symp. Discrete Algorithms, 
+San Francisco, 1990, pp. 513–522 . 
+"Sparse dynamic programming I: linear cost functions",  J. ACM 
+39: 519–545, 1992. 
+"Sparse dynamic programming II: convex and concave cost functions",  J. ACM  39: 546–567, 1992.
+ 
+Considers sequence alignment and RNA structure problems
+in which the solution is constructed by piecing together
+some initial set of fragments (e.g. short sequences that match exactly).
+The method is to consider a planar point set formed by
+the fragment positions in the two input sequences,
+and use plane sweep to construct a cellular decomposition of the plane
+similar to the rectilinear Voronoi diagram.
+  
+( BibTeX  --
+ Citations to conference version  --
+ Citations to SDP I  --
+ Citations to SDP II )
+  
+    Provably good mesh generation .  M. Bern ,
+D. Eppstein, and 
+ 
+J. Gilbert .  31st IEEE Symp. Foundations of Comp. Sci., 
+St. Louis, Missouri, 1990, pp. 231–241.  J. Comp. Sys. Sci.  48: 384–409, 1994 (special issue for 31st FOCS).
+ 
+In this paper, we construct triangulations of point sets and polygons by
+using quadtrees to add extra vertices to the input. As a result we can
+guarantee that all triangles have angles bounded
+away from zero, using a number of triangles within a constant of
+optimal; this was the first paper to provide simultaneous bounds on mesh
+element quality and mesh complexity of this form, and therefore the
+first to provide finite element mesh generation algorithms that
+guarantee both the robustness of the algorithm against unexpected input
+geometries and the quality of its output.
+  
+In the same paper we also use quadtrees to triangulate planar point sets
+so that all angles are non-obtuse, using linearly many triangles, and to
+triangulate higher dimensional point sets with no small solid angles and
+a number of simplices within a constant of optimal.  Also, we can
+augment any higher dimensional point set so the Delaunay triangulation
+has linear complexity.
+  
+In later follow-up work, I showed that the same
+technique can also be used to find a triangulation whose edges have  total length within a constant factor of
+optimal . Bern, Mitchell, and Ruppert
+showed that alternative methods can be used to triangulate any polygon
+without obtuse angles; see " Faster circle packing
+with application to nonobtuse triangulation " for an algorithmic
+improvement to their technique. Additionally, with Bern, Chew, and
+Ruppert, we showed that  any point set in
+higher dimensions can be triangulated with nonobtuse simplices .
+Bern and I surveyed these and related results in our paper " Mesh generation and optimal triangulation ".
+  ( BibTeX  --
+ Citations  --
+ Preliminary copy of journal version  --
+ MIT hypertext bibliography  --
+ CiteSeer  --
+ ACM DL (JCSS) )
+  
+    Sparsification--A technique for speeding up dynamic graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and A. Nissenzweig.  33rd IEEE Symp. Foundations of Comp. Sci.,  Pittsburgh, 1992, pp. 60–69. 
+Tech. Rep. RC 19272 (83907), IBM, 1993. 
+Tech. Rep. CS96-11, Univ. Ca' Foscari di Venezia, Oct. 1996.   J. ACM  44 (5): 669–696, 1997 .
+ 
+Uses a divide and conquer on the edge set of a graph, together with the
+idea of replacing subgraphs by sparser certificates, to make various
+dynamic algorithms as fast on dense graphs as they are on sparse graphs.
+Applications include random generation of spanning trees
+as well as finding the  k 
+ minimum weight spanning trees 
+for a given parameter  k. 
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ ACM DL )
+  
+    Finding the  k  shortest paths . 
+D. Eppstein.  35th IEEE Symp. Foundations of Comp. Sci.,  Santa Fe, 1994, pp. 154–165.  Tech. Rep. 94-26 , ICS, UCI, 1994.  
+ SIAM J. Computing  28 (2): 652–673, 1998 .
+ 
+This paper presents an algorithm that finds multiple short paths connecting
+two terminals in a graph
+(allowing repeated vertices and edges in the paths)
+in constant time per path after a preprocessing stage
+dominated by a single-source shortest path computation.
+The paths it finds are the  k  shortest in the graph, where  k  is a
+parameter given as input to the algorithm.
+  
+The  k  shortest paths problem has many important applications for finding
+alternative solutions to geographic path planning problems, network
+routing, hypothesis generation in computational linguistics, and
+sequence alignment and metabolic pathway finding in
+bioinformatics. Although there have been many papers on the
+ k  shortest paths problem before and after this one, it has become
+frequently cited in those application areas.
+Additionally, it marks a boundary in the theoretical study of the problem:
+prior theoretical work largely concerned how quickly the problem could
+be solved, a line of research that was closed off by the optimal time
+bounds of this paper. Subsequent work has focused instead
+on devising efficient algorithms for more complex alternative
+formulations of the problem that avoid the repeated
+vertices and other shortcomings of the alternative paths produced by
+this formulation.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ Graehl implementation  --
+ Jiménez-Marzal implementations  --
+ Shibuya implementation  --
+ Martins implementation  --
+ Cliff OpenStreetMap demo  --
+CiteSeer:
+ TR '94 ,
+ SJC '98  --
+ ACM DL )
+  
+    The crust and the beta-skeleton: combinatorial curve
+reconstruction .  N. Amenta ,
+ M. Bern ,
+and D. Eppstein.   Graphical Models &amp; Image Processing  60/2 (2): 125–135, 1998 .
+ 
+We consider the problem of "connect the dots": if we have an unknown
+smooth curve from which sample points have been selected, we would like
+to find a curve through the sample points that approximates the unknown
+curve.  We show that if the local sample density is sufficiently high, a
+simple algorithm suffices: form the Delaunay
+triangulation of the sample points together with their Voronoi vertices,
+and keep only those Delaunay edges connecting original sample points.
+There have been many follow-up papers suggesting alternative methods,
+generalizing the problem to the reconstruction of curves with sharp
+corners or to curves and surfaces in higher dimensions, etc.
+  ( BibTeX  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    
+ 
+    Diameter and treewidth in minor-closed graph families . 
+D. Eppstein.  arXiv:math.CO/9907126 .  Algorithmica  27: 275–291, 2000
+(special issue on treewidth, graph minors, and algorithms).
+ 
+This paper introduces the  diameter-treewidth
+property  (later known as  bounded local treewidth ): a
+functional relationship between the diameter of its graph and its treewidth.
+Previously known results imply that planar graphs have
+bounded local treewidth; we characterize the
+other minor-closed families with this property. Specifically,
+minor-closed family F has bounded local treewidth if and only if there
+exists an  apex graph  G that is not in F; an apex graph is a graph
+that can be made planar by removing a single vertex.
+The minor-free families that exclude an apex graph (and therefore have
+bounded local treewidth) include the bounded-genus
+graphs (for which, as with planar graphs, we show a linear bound for the
+treewidth as a function of the diameter) and K 3,a -free graphs.  As
+a consequence, subgraph isomorphism for subgraphs of bounded size and
+approximations to several NP-hard optimization problems can be computed
+efficiently on these graphs, extending previous results for planar
+graphs.
+  Some of these results
+were announced in the conference version of
+" subgraph isomorphism for planar graphs and related
+problems " but not included in the journal version. Since its
+publication, there have been many more works on local treewidth. The class of
+problems that could be solved quickly on graphs of bounded local
+treewidth was extended and classified by Frick and Grohe, " Deciding first-order
+properties of locally tree-decomposable structures ",  J. ACM 
+48: 1184–1206, 2001;
+the proof that bounded local treewidth is equivalent to having an
+excluded apex minor was simplified, and the dependence of the treewidth
+on diameter
+improved, by a subsequent paper of Demaine and Hajiaghayi, " Diameter and
+treewidth in minor-closed graph families, revisited ",  Algorithmica 
+40: 211–215, 2004. The concept of local treewidth is the basis for the
+theory of  bidimensionality , a general framework for
+fixed-parameter-tractable algorithms and approximation algorithms in
+minor-closed graph families; for a survey, see Demaine and Hajiaghayi,
+" The
+bidimensionality theory and its algorithmic applications ",  The
+Computer J.  51: 292–302, 2008.
+  ( BibTeX  --
+ Citations )
+  
+    Dynamic generators of topologically embedded graphs . 
+D. Eppstein.  arXiv:cs.DS/0207082 .  
+ 14th ACM-SIAM Symp. Discrete Algorithms, 
+Baltimore, 2003, pp. 599–608 .
+ 
+We describe a decomposition of graphs embedded on 2-dimensional
+manifolds into three subgraphs: a spanning tree, a dual spanning tree,
+and a set of leftover edges with cardinality determined by the genus of
+the manifold.  This tree-cotree decomposition allows us to find
+efficient data structures for
+ dynamic graphs  (allowing updates
+that change the surface), better constants in bounded-genus graph
+separators, and efficient algorithms for tree-decomposition of
+bounded-genus bounded-diameter graphs.
+  
+( BibTeX  --
+ SODA talk slides  --
+ Citations )
+  
+    Quasiconvex analysis of backtracking algorithms . 
+D. Eppstein.  arXiv:cs.DS/0304018 .  15th ACM-SIAM Symp. Discrete Algorithms, 
+New Orleans, 2004, pp. 781–790.   ACM Trans. Algorithms  2 (4): 492–509 (special issue for SODA 2004), 2006 .
+ 
+We consider a class of multivariate recurrences frequently arising
+in the worst case analysis of Davis-Putnam-style
+ exponential time
+backtracking algorithms  for NP-hard problems. We describe a
+technique for proving asymptotic upper bounds on these recurrences,
+by using a suitable weight function to reduce the problem to that of
+solving univariate linear recurrences; show how to use  quasiconvex programming  to determine the weight
+function yielding the smallest
+upper bound; and prove that the resulting upper bounds are within a
+polynomial factor of the true asymptotics of the recurrence. We
+develop and implement a multiple-gradient descent algorithm for the
+resulting quasiconvex programs, using a real-number arithmetic
+package for guaranteed accuracy of the computed worst case time
+bounds. 
+  
+The journal version uses the longer title "Quasiconvex analysis of
+multivariate recurrence equations for backtracking algorithms".
+  
+( BibTeX  --
+ SODA talk slides  --
+ Citations )
+  
+    Steinitz theorems for orthogonal polyhedra . 
+D. Eppstein and
+E. Mumford.  arXiv:0912.0537 .  26th Eur. Worksh. Comp. Geom. , Dortmund, Germany, 2010.   26th ACM Symp. Comp. Geom.,  Snowbird, Utah, 2010, pp. 429–438 .   J. Computational Geometry  5 (1): 179–244, 2014 .
+ 
+We provide a graph-theoretic characterization of three classes of
+nonconvex polyhedra with axis-parallel sides, analogous to Steinitz's
+theorem characterizing the graphs of convex polyhedra.
+  
+The journal version has the slightly different title "Steinitz theorems
+for simple orthogonal polyhedra".
+  
+( Slides )
+  
+    
+ 
+    A Möbius-invariant power diagram and its applications to soap
+bubbles and planar Lombardi drawing . 
+D. Eppstein.  Invited talk at EuroGIGA Midterm
+Conference , Prague, Czech Republic, 2012.   Discrete
+Comput. Geom.  52 (3): 515–550, 2014 (Special issue for SoCG 2013) .
+ 
+This talk and journal paper combines the results from
+" Planar Lombardi drawings for
+subcubic graphs " and " The graphs of
+planar soap bubbles ".
+It uses three-dimensional hyperbolic geometry to define a partition of
+the plane into cells with circular-arc boundaries, given an input
+consisting of (possibly
+overlapping) circular disks and disk complements, which remains
+invariant under Möbius transformations of the input. We use this
+construction as a tool to construct planar Lombardi drawings of
+all 3-regular planar graphs; these are graph drawings in which the edges
+are represented by circular arcs meeting at equal angles at each vertex.
+We also use it to characterize the graphs of two-dimensional soap bubble
+clusters as being exactly the 2-vertex-connected 3-regular planar graphs.
+  
+     
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

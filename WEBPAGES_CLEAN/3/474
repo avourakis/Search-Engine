@@ -1,0 +1,76 @@
+ 3.22.1 Constructor<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.22 OEMCSSearch 
+ Up:   3.22 OEMCSSearch 
+ Next:   3.22.2 operator= 
+   
+
+
+  
+3.22.1 Constructor 
+ 
+   
+OEMCSSearch()
+    
+Default constructor.
+
+  
+    
+OEMCSSearch(const char *smarts)
+    
+Construct an instance of an OEMCSSearch object using a SMARTS pattern.
+The SMARTS pattern is parsed into a query molecule (OEQMolBase).
+
+  
+    
+OEMCSSearch(const OEQMolBase &amp;qmol)
+    
+Construct an instance of an OEMCSSearch object using a query molecule.
+
+  
+    
+OEMCSSearch(const OEMolBase &amp;mol, unsigned int a, unsigned int b)
+    
+Construct an instance of an OEMCSSearch object using a molecule and
+expression options.  The atom and bond expression options passed as
+the second and third arguments to the method are defined in the
+OEExprOpts namespace.  The expression options are used to convert the
+atom and bond data into expression trees which are used during the
+common subgraph search.
+
+  
+    
+OEMCSSearch(const OEMCSSearch &amp;mcs)
+    
+Copy constructor.  Copies the contents of the passed OEMCSSearch
+object into a newly constructed OEMCSSearch instance.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.22 OEMCSSearch 
+ Up:   3.22 OEMCSSearch 
+ Next:   3.22.2 operator= 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

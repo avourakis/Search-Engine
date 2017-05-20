@@ -1,0 +1,85 @@
+ Python: module src.inputgen<body>
+
+             src  .inputgen</strong>       index   /home/todd/release/pdb2pqr-1.1.0/src/inputgen.py       inputgen class 
+  
+Create an APBS input file using psize data 
+  
+Written by Todd Dolinsky based on original sed script by Nathan Baker 
+  
+    ---------------------------- 
+  
+PDB2PQR -- An automated pipeline for the setup, execution, and analysis of 
+Poisson-Boltzmann electrostatics calculations 
+  
+Nathan A. Baker (baker@biochem.wustl.edu) 
+Todd Dolinsky (todd@ccb.wustl.edu) 
+Dept. of Biochemistry and Molecular Biophysics 
+Center for Computational Biology 
+Washington University in St. Louis 
+  
+Jens Nielsen (Jens.Nielsen@ucd.ie) 
+University College Dublin 
+  
+Additional contributing authors listed in documentation and supporting 
+package licenses. 
+  
+Copyright (c) 2003-2006.  Washington University in St. Louis.   
+All Rights Reserved. 
+  
+This file is part of PDB2PQR. 
+  
+PDB2PQR is free software; you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation; either version 2 of the License, or 
+(at your option) any later version. 
+  
+PDB2PQR is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+GNU General Public License for more details. 
+  
+You should have received a copy of the GNU General Public License 
+along with PDB2PQR; if not, write to the Free Software 
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA 
+  
+----------------------------  
+ 
+         Modules</strong>                  
+     src.psize     string     sys           
+         Classes</strong>                  
+     Elec 
+     Input 
+    
+        class  Elec</strong>            
+  An object for the ELEC section of an APBS input file         
+ Methods defined here:     __init__</strong> (self, size, method, asyncflag)   Initialize the variables that can be set in this object 
+Users can modify any of these variables (that's why 
+they're here!)       __str__</strong> (self)   Return the elec statement as a string. Check the method 
+to see which keywords to use.       
+        class  Input</strong>            
+  The input class.  Each input object is one APBS input file.         
+ Methods defined here:     __init__</strong> (self, pqrpath, size, method, asyncflag)   Initialize the input file class.  Each input file contains 
+a PQR name, a list of elec objects, and a list of strings 
+containing print statements.  For starters assume two 
+ELEC statements are needed, one for the inhomgenous and 
+the other for the homogenous dielectric calculations. 
+  
+Users can edit the elec statements and the print statements. 
+  
+This assumes you have already run psize, either by 
+     size.runPsize(/path/to/pqr) or 
+  
+     size.parseString(string) 
+     size.setAll() 
+  
+Parameters 
+    pqrpath:   The path to the PQR file (string) 
+    size:      The Psize object (psize) 
+    method:    The method (para, auto, manual, async) to use 
+    asyncflag: 1 if async is desired, 0 otherwise       __str__</strong> (self)   Return the text of the input file       printInputFiles</strong> (self)   Make the input file(s) associated with this object          
+         Functions</strong>                  
+     main</strong> ()      splitInput</strong> (filename)   Split the parallel input file into multiple async file names 
+  
+Parameters 
+    filename:  The path to the original parallel input 
+               file (string)       usage</strong> ()   Display the usage information for this script      </body> 

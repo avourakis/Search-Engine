@@ -1,0 +1,122 @@
+ Qiang Liu<body>
+   
+ Qiang Liu 
+  home  
+  Publications  
+  CV (PDF)  
+  TA (CS178)  
+ 
+ 
+ 
+ Qiang Liu 
+ 
+   
+     
+  Qiang Liu  
+Ph.D. Candidate  
+Advisor:  Prof. Alexander Ihler   Information &amp; Computer Science    University of California at Irvine    qliu1(at)uci.edu  
+    ("Qiang" sounds like "Chee-ah-ng", and "Liu" as "l-yo")       
+  
+      
+    New.          
+ I will be an assistant professor in the 
+ Department of Computer Science 
+at 
+ Dartmouth College  starting in Summer 2015.  
+   PhD positions are available .   Please    email me     if interested. 
+   
+ Workshops co-organized:  
+    Crowdsourcing: Theory, Algorithms and Applications, NIPS’13 ,  
+ 
+   Machine Learning Meets Crowdsourcing, ICML’13 . 
+ 
+   
+             
+  
+ Research 
+ My research area is machine learning and statistics, with interests spreading over the pipeline of 
+ data collection  (mainly  crowdsourcing ), 
+ learning , 
+ inference , 
+ decision making , 
+and various  applications  
+under the framework of probabilistic graphical models. 
+ 
+ 
+    Crowdsourcing .  
+All machine learning processes start from data collection. Crowdsourcing is a modern approach to collect large amounts of labeled data by hiring anonymous workers through online platforms such as Amazon Mechanical Turk. 
+Unfortunately, the crowdsourced workers are often unreliable and uncontrollable, raising many challenging computational questions, such as how to aggregate labels from workers with different expertise, how to combine and balance noisy (but cheap) crowdsourced labels and accurate (but expensive) expert labels, and how to crowdsource complicated objectives such as protein structures.  
+   We reform the problem of aggregating crowdsourced labels into a standard inference problem on a factor graph, which we solve using a class of variational inference algorithms. We show that both the naïve majority voting method and a previous algorithm by Karger et al. 2012 are special cases of one of our belief-propagation-type algorithms with special priors. We demonstrate significant improvement on the performance by using better priors, see  NIPS2012 ,  code.   
+ 
+    Control items with known answers can be used to evaluate workers’ performance, and hence improve the combined results on the target items with unknown answers. This raises the problem of how many control items to use when the total number of items each workers can answer is limited: more control items evaluates the workers better, but leaves fewer resources for the target items that are of direct interest, and vice versa. We perform theoretical analysis and provide surprisingly simple answers for this problem, see  here.  
+ 
+    A preliminary thought on combining structured labels such as the protein folding, see  here.  
+ 
+   
+  
+ 
+ 
+    Learning .  
+Learning refers to constructing probabilistic models from empirical data, either to estimate the model parameters with predefined model structures, or even to estimate the model structures solely from data? I am interested in developing efficient, possibly distributed, learning algorithms, that perform well on real world data. 
+   Here is an efficient distributed learning algorithm based on smartly combining local estimators defined by pseudo-likelihood components: 
+ ICML2012 . 
+ 
+    Here is a structure learning algorithm for recovering scale-free networks, thought to appear commonly in the real world: 
+ AISTATS2011  (notable paper award). 
+ 
+    Here are some earlier works on contrastive divergence and MCMC-MLE: 
+ ICML2010 ; 
+ AISTATS2010 . 
+ 
+   
+ 
+ 
+    Inference . 
+With given graphical models, either handcrafted or learned from data, inference refers to answering queries, such as marginal probability (or partition function), maximum a posteriori (MAP) estimation, or marginal MAP, the hybrid of marginalization and MAP. I am interested in developing efficient inference algorithms, mostly based on variational methods and in the form of belief-propagation-like message passing algorithms. 
+   Marginal MAP is notoriously difficult even on tree-structured graphs. We developed a general variational dual representation for marginal MAP, and propose a set of variational approximation algorithms, including an interesting “mixed-product” BP that is a hybrid of max-product, sum-product and a special “argmax-product” message updates, and a convergent proximal point algorithm that works by iteratively solving pure marginalization tasks. See 
+ JMLR2013 ; 
+ UAI2011 
+ (Slides) . 
+ 
+    We proposed an efficient approximate inference algorithm for calculating the log-partition function that unifies Rina Dechter's “one-pass” mini-bucket algorithm with iterative variational algorithms, such as tree reweighted BP. Our method inherits the advantages of both, and easily scales to large clique sizes. Our algorithm can provide both upper and lower bounds for the log-partition function. See  ICML2011 . 
+ 
+    Tree reweighted BP provides an upper bound on the log-partition function, while naïve mean field and structured mean field give lower bounds. We show that tree reweighted BP provably gives a lower bound if its weights are set to take negative values in a particular way. We also show that such “negative” tree reweighted BP reduces to structured mean field as the weights approach infinity. For the full story, see  UAI2010 . 
+ 
+   
+ 
+ 
+    Structured decision making .  
+In practice, we often need to take a sequence of actions to achieve a predefined goal, usually under uncertain environments where information is observed sequentially and interactively as we progress. Decision networks (also called influence diagrams) are graphical model style representations of such structured decision making problems under uncertainty. Just like Bayesian networks generalize Markov chains or hidden Markov chains, decision networks generalize Markov decision processes (MDP), or partially observable decision processes (POMDP). Unfortunately, the problem of finding the optimal actions for decision networks is much more challenging than answering queries on Bayesian networks, especially in cases where limited information is observed or where multi-agent cooperation is required (such as in robot soccer games). 
+   We extend the powerful variational inference framework for solving decision networks, based on which we propose an efficient BP-type algorithm and a convergent proximal point algorithm. Our framework enables us to translate basically any variational algorithm to solve influence diagrams. See  UAI2012.  
+ 
+   
+ 
+ 
+    Applications .   I am interested in applying these machine learning methods in many application areas. 
+   Natural language processing: 
+   How well can computers solve the SAT sentence completion question? This is the work I involved when I was interning in Microsoft Research Redmond,  ACL2012.  
+ 
+  
+    Sensor networks: 
+   Here is a distributed algorithm for learning parameters in sensor networks:   ICML2012 . 
+ 
+  My algorithm for solving influence diagrams provides a powerful way to design optimal decentralized detection networks:   UAI2012 . 
+ 
+  
+    Bioinformatics: 
+     PNAS2012 ;   AISTATS2011 ;    Bioinformatics2010  .  
+ 
+  
+   
+            
+ 
+        
+
+ 
+ 
+Page generated 2014-07-25 19:13:38 PDT, by  jemdoc .
+( source )
+ 
+ 
+ 
+  </body> 

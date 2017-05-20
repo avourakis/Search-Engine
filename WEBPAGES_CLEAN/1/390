@@ -1,0 +1,98 @@
+ aolibPE/Demo - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   aolibPE    Demo  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    aolibPE/Demo  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+  aolibPE step-by-step instructions 
+     In the following we provide step-by-step instructions on how to use the  aolibPE  algorithm on an example problem instance. This example is based on Windows, but the steps for Linux are almost the same.       
+  Downloading and running the algorithm 
+     Download the archive with the executable from the algorithm's  page . Since we assume a Windows operating system here, we need  this  file.       Unpack the archive contents (the binary and a sample parameter file) into a directory of your choice, say  C:\aolib\ .       Obtain an  Ergo  file of a  P(e)  problem instance, for instance from our local  Repository . For this example we pick  BN_11  from the UAI'06 competition. Don't forget to download the respective  evidence  file, too.       The problem instance and evidence file come in gzip'ed form, so unpack them to the same directory as the algorithm executable; in our case  C:\aolib\ .  1        Open a command line (In Windows: Choose "Run" in the start menu and enter  cmd ) and navigate to the directory where we put the files by entering  cd C:\aolib\ .       Run the algorithm by specifying the problem file, the evidence file, the parameter file and the output file, as described on the algorithm's  page . We'll use the parameter file that comes with the program file. If we wish to have the result output into the file  BN_11.out , the command line call in our case will be (all on one line):                   aolibPE
+      BN_11.erg
+      BN_11.erg.evid
+      paramsPE.txt
+      BN_11.out      
+  Algorithm output 
+   The algorithm will run and, depending on the speed of your computer, the result should be returned shortly afterwards. The output should look somewhat like this:                                                                                                           [elim = 10]
+  [iBound = 22]
+  [be = 1]
+  [usePruning = 0]iBound = 22
+  usePruning = 0
+  SWITCH TO BE = true
+  file = BN_11.simple
+   Starting to read file ... 
+   Done reading file. 
+  
+   initial number of variables   : 105
+   number of non-barren variables: 55
+   scaling factor = 1.01423e+304 Induced width: -1
+  
+   BEGIN AO SEARCH  -----------------------------------------
+     time limit: -1
+     silent mode: true
+     DETAILS
+      -int: time -0.79646, nodes 0       done: 0 %
+     out of time: false
+     component probability of evidence: 3.06314e+303
+     CPU time (search):          4.70867e-05
+     number of expansions:        0
+     number of AND expansions:    0
+     number of OR expansions:     0
+   END AO SEARCH    -----------------------------------------
+  
+   scaling factor = 426327 Induced width: 15
+  
+   BEGIN AO SEARCH  -----------------------------------------
+     time limit: -1
+     silent mode: true
+     DETAILS
+      -int: time -0.813329, nodes 0       done: 0 %
+     out of time: false
+     component probability of evidence: 1.69837e+294
+     CPU time (search):          0.522059
+     number of expansions:        0
+     number of AND expansions:    0
+     number of OR expansions:     0
+   END AO SEARCH    -----------------------------------------
+  
+  Log probability of evidence: -39.3718
+  TIME: 
+     - Read file time:       0.0100231
+     - Preprocessing time:   0.0222144
+     - Solving time:         0.52244
+                           --------------------------------
+     - TOTAL                 0.554951      In addition to this diagnostic output, the log probability of evidence has been written to the file  BN_11.out .  aolibPE  also outputs (or appends) a summary of its computation to the files  shortResults.txt  and  longResults.txt , which you should feel free to look at.             If your archiver doesn't support GZIP, a copy of gunzip for the command line is available [ http://csp.ics.uci.edu/files/gunzip.exe  here].   ( 1 )        aolibPE/Demo  (last edited 2008-03-10 19:07:37 by  localhost ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

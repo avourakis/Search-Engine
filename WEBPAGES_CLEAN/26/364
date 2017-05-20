@@ -1,0 +1,30 @@
+ ICS 125 COMPAQ Project Description<body>
+
+    UC IRVINE - ICS 125 PROJECT IN SYSTEM DESIGN 
+     PROJECT DESCRIPTION 
+     
+      
+   ICS 125 Project Proposal:  
+NonStop S-Series Simulator "Problem Control Panel" 
+    From Mark Johnson and Henry Tsai; NonStop Division of Compaq Computer Corporation. 
+   Proposal: 
+    Compaq NonStop S-Series computers are very large multiprocessors.  Specially trained Service specialists service them.  Today, the training classes include labs where students can diagnose and repair hardware problems introduced into the lab equipment.  Unfortunately, the lab equipment is very costly, so students have very limited time to practice problems on very small hardware systems.  This project extends a software simulator to add a "Problem Control Panel" so the instructor can inject hardware problems into the simulator. 
+    Background:   
+    The S-Series simulator is built of a number of components:             TSM Service Application GUI:	This C++ application is normally used to communicate with a real S-Series server via http over TCP/IP.  The application is able to build a complete model of the system in a proprietary object model and update the model via http messages.  
+The GUI allows operators to monitor the state of the system, and also to perform various actions on objects in the system.  Actions might include starting a disk drive (UP), or requesting a test of the power distribution system (redundant power scrub). 
+   Dynamic Configuration File:	Also known as .dcf files or snapshots.  These are text files with a complete description of a real computer system snapshot.  They are loaded into the TSM Service Application GUI to construct the initial state of any simulation run. 
+   Simulation Engine:	The simulation engine is built from a short C++ program.  This code reads the Systems, Actions and Commands XML files described below and sends the XML statements in them to the TSM client to implement the system simulation. 
+   Systems XML file:	This file contains the configuration parameters for the simulated systems. 
+   Actions XML file:	This file is used to simulate the implemented TSM actions.  Actions are simulated by getting the action request from the GUI, then locating that action response commands in the Actions file.  The response commands simulate the response expected from the action.  
+   Commands XML file:	Today, this file contains a sequence of state change CCNs that are sent to the TSM GUI whenever a cntrl/shft d is typed by the user of the GUI.           The image at the end of this report shows a typical TSM GUI display.  An example of a .dcf file used to produce the image is attached to the electronic version of the proposal. 
+    Proposal: 
+    Provide a GUI program that allows an training class instructor to select a specific problem to inject into the simulator.  The output of the "Problem Control Panel" is a set of commands that sends the state changes associated with the problem to the TSM GUI. 
+ The project team will design the GUI and build it.  The will also design the interface to the existing simulator.  (The simplest solution would be to create a new "commands" file and force the existing simulator to read it.  However, the team may find this less than satisfying.)  The project team should at least be able to inject the problems already described in the existing commands files.  In addition, the team could decide to add more interesting failures or state changes and build the XML needed to generate these changes. 
+ The entire existing simulator package will be supplied both as a runnable set of binaries, support and control files, and also as a full set of C++ source (on the Microsoft visual C++ toolset).  All code runs on Win2000 or WinNT industry standard desktop or Notebook computers.  The project will include a TOI (Transfer Of Information) to let the team learn the key interfaces and control syntax. 
+    View of TSM GUI showing small development system with disk actions 
+  
+     
+
+ 
+   ICS125 FQ01 Project Opportunities   ICS125 FQ01   David F. Redmiles Home Page   Department of Information and Computer Science   University of California, Irvine CA 92717-3425   
+</body> 

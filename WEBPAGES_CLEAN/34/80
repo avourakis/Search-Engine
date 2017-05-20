@@ -1,0 +1,198 @@
+ Paradice: I/O Virtualization at the Device File Boundary 
+ 
+ Paradice: I/O Virtualization at the Device File Boundary 
+ 
+   Table of Contents 
+     JavaScript must be enabled in your browser to display the table of contents.   
+ 
+ 
+ 
+ 
+ 
+  In Unix-like operating systems, everything is abstracted as a file.
+ Device files  are the files that abstract I/O devices. We have been
+exploring virtualization of I/O devices using device files as the
+boundary.
+Paradice is our I/O paravirtualization solution that uses the device file
+boundary. You can find more details on Paradice in our ASPLOS’14 paper:  
+  Ardalan Amiri Sani, Kevin Boos, Shaopu Qin, and Lin Zhong, "I/O
+Paravirtualization at the Device File Boundary," in Proc. ACM ASPLOS,
+March 2014.
+( PDF )  
+ 
+ 
+ 
+ People 
+ 
+   
+ 
+ Ardalan Amiri Sani  (Lead Student)
+ 
+ 
+ 
+ 
+ Kevin Boos 
+ 
+ 
+ 
+ 
+Shaopu Qin
+ 
+ 
+ 
+ 
+ Lin Zhong 
+ 
+ 
+  
+ 
+ 
+ 
+ 1. Supported hypervisors 
+ 
+  Paradice was originally released for the Xen hypervisor (as also
+reported in our ASPLOS’14 paper). We have also ported Paradice to run on
+the KVM hypervisor. Paradice on KVM is currently in beta release as we
+are debugging it. You can find the instructions and a discussions of
+limitations for each hypervisor below.  
+   
+ 
+ Paradice on Xen 
+ 
+ 
+ 
+ 
+ Paradice on KVM
+  (beta release) 
+ 
+ 
+  
+ 
+ 
+ 
+ 2. ChangeLog 
+ 
+   
+ 
+May 12, 2014: version 1.0 is released.
+ 
+ 
+ 
+ 
+September 4, 2014: Beta support for KVM released.
+ 
+ 
+  
+ 
+ 
+ 
+ 3. Supported Features 
+ 
+  The released source code only supports a subset of
+functionalities/features reported in the paper. The rest of
+features/functionalities will be supported in future releases as they
+are thoroughly tested. Please see below for
+more details.  
+   
+ 
+Full virtualization of device file operations, needed to paravirtualize an
+  I/O device at the device file boundary. The code currently has been
+  tested only with 32-bit x86 with PAE.
+ 
+ 
+ 
+ 
+Required extensions to Xen. (Xen 4.2.2)
+ 
+ 
+ 
+ 
+Required extensions to KVM.
+ 
+ 
+ 
+ 
+Kernel modules needed for virtualization using
+  the Xen and KVM hypervisors.
+ 
+ 
+ 
+ 
+Required extensions to the Linux kernel. (Kernel 3.2.0.33)
+ 
+ 
+ 
+ 
+Support for Radeon GPUs and input devices. However, note that only
+  Radeon HD 6450 has been fully tested with the released code.
+ 
+ 
+ 
+ 
+Support for fault isolation for most file operations except for
+  ioctls (only for the Xen hypervisor).
+ 
+ 
+ 
+ 
+Seamless switching between guest VMs graphical sessions (only for the
+ 
+ 
+ 
+ 
+KVM hypervisor).
+ 
+   
+ 
+Future release plan. The following features are currently missing. They will be released
+after they are thoroughly tested.
+
+ 
+ 
+  
+ 
+ 
+ 
+Seamless switching between guest VMs graphical sessions for the Xen
+ 
+ 
+ 
+ 
+hypervisor.
+ 
+ 
+ 
+ 
+Support for other I/O devices including the camera, audio devices, and
+  Ethernet card (for the netmap framework). This feature requires the device
+  info modules for these devices.
+ 
+ 
+ 
+ 
+Fault isolation support for ioctls. This requires the list of memory
+  operations required by ioctls of each driver (for Xen).
+ 
+ 
+ 
+ 
+Device data isolation. This will require extension to the hypervisor
+  and modification to the driver (for Xen).
+ 
+ 
+ 
+ 
+Support for Intel GPUs.
+ 
+ 
+  
+ 
+ 
+ 
+   
+ 
+ 
+Last updated 2014-09-13 21:07:57 CDT
+ 
+ 
+</body> 

@@ -1,0 +1,56 @@
+ 11.3.2 operator =<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.3.1 Constructors 
+ Up:   11.3 OEIter 
+ Next:   11.3.3 operator == 
+   
+
+
+  
+11.3.2 operator = 
+ 
+
+ 
+    
+OEIter&lt;T&gt;&amp; operator = (OEIterBase&lt;T&gt; *rhs)
+OEIter&lt;T&gt;&amp; operator = (OEIter&lt;T&gt; &amp;rhs)
+    
+The assignment operator initializes the OEIter to the given OEIterBase,
+typically returned by an OEChem or OESystem function.  If the OEIter
+has already been initialized, the internal OEIterBase is destroy and
+replaced with the new value.
+
+  
+An OEIter may be assigned the value of another OEIter in which case
+a copy of the rhs iterator is made using the  OEIter&lt;T&gt;::Copy 
+method.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.3.1 Constructors 
+ Up:   11.3 OEIter 
+ Next:   11.3.3 operator == 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

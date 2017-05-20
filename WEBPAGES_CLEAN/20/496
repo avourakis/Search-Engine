@@ -1,0 +1,67 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: An attempt at taxonomy<body> Re: An attempt at taxonomy 
+ Dave Long  (  dave@sb.aol.com  )  Tue, 03 Sep 1996 14:12:06 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Roy T. Fielding: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Yaron Goland: "RE: An attempt at taxonomy" 
+    Maybe in reply to:   Dave Long: "An attempt at taxonomy" 
+
+
+    
+Perhaps I should clarify -- my intent was not to isolate discussion,
+rather, since there is considerable overlap in list membership, to
+reduce the amount of duplicate mailing.  If we did have a clear sense
+of what threads would be discussed on which list, I think it would help,
+not hinder, the goal of arriving at orthogonal protocols.
+
+In any event, since there is no consensus on a suitable division, I
+also agree that the lists ought to be combined.
+
+-Dave
+
+sorry, I can't resist: how about this division?
+
+distributed authoring covers workspace issues:
+	- retrieval of documents
+	- changing them
+	- lock mechanism
+
+version control covers repository issues:
+	- configuration of branches/tips
+	- release/promotion of a version
+	- lock policies
+
+Authoring in the absence of versioning means that one may
+manually set locks to control concurrency, and GETs retrieve
+a resource, and PUTs replace it.
+
+Authoring in the absence of version control, but with versioning,
+means that one may manually set locks to control concurrency,
+GETs (by default) retrieve the tip of a branch (but can retrieve
+previous revisions), and PUTs result in a new tip revision along
+that branch.
+
+Authoring with version control means that one interacts with the
+CM system (acquiring these cookies we've been discussing) to
+define which branch one sees oneself (setting up the "workspace")
+and to define which branches others see (release/promotion).
+In addition, the CM system may implicitly set and release locks
+to control concurrency, according to its policies.
+
+Authoring with version control probably also implies that one's
+current activities are visible in some way to oneself and
+others.  "what am I working on", "who has this URL locked,
+and what are they working on", etc.
+
+(I hope that what I've stated here as "branch/tip" is equally
+applicable to change-set, etc. systems...)
+ 
+
+  
+     Next message:   Roy T. Fielding: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Yaron Goland: "RE: An attempt at taxonomy" 
+    Maybe in reply to:   Dave Long: "An attempt at taxonomy" 
+
+
+  </body> 

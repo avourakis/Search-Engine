@@ -1,0 +1,107 @@
+ /* 
+$Id$
+
+Copyright (C) 2007 by The Regents of the University of California
+
+Redistribution of this file is permitted under
+the terms of the *GNU* Public License (*GPL*) 	
+
+Date: 04/08/2007
+Author: Yiming Lu 
+*/
+
+#include "buckethead.h"
+
+Buckets::Buckets( )
+{
+    map = new HashTable();       
+}
+
+
+Buckets::~Buckets()
+{
+	if(map != NULL)
+    {
+   	 /*
+      *  loop through entire table
+   	  */
+        HashTable::const_iterator iter;
+        for ( iter = map-&gt;begin(); iter != map-&gt;end(); iter++ )
+        {
+        	delete iter-&gt;second;
+        }
+        delete map;
+    }
+}
+
+
+void Buckets::addToHashTable(const char *gram, 
+							 unsigned stringID, 
+							 unsigned short position, 
+							 unsigned short stringLength)
+{
+    string tempGram(gram);
+    //get the hashcode for gram
+    unsigned key = hashString(tempGram);			   
+    
+    HashTable::const_iterator iter;
+    iter = map-&gt;find(key);	
+    //If the index doesn't have such gram 
+    if ( iter == map-&gt;end() )
+    {
+        LengthBucket *bucket = new LengthBucket(stringID,
+                                                position, 
+											    stringLength);
+	    map-&gt;insert(make_pair(key, bucket));
+    }   
+    //If the index already has such gram
+    else 
+    {
+        LengthBucket *bucket = (LengthBucket*)iter-&gt;second;
+	    bucket-&gt;insertIntoGroups(stringID, position, stringLength);
+    }      
+}
+
+
+LengthBucket *Buckets::getMatchedBuckets(const char *gram)
+{
+    string tempGram(gram);
+    //get the hashcode for gram
+    unsigned key = hashString(tempGram);
+    //Check to see if the gram is already in bucket 
+    HashTable::const_iterator iter;
+    iter = map-&gt;find(key);
+    if ( iter != map-&gt;end() ) 
+    {
+        return 	(LengthBucket*)iter-&gt;second;
+    }
+    return NULL;
+}
+
+unsigned Buckets::getMemory()
+{
+    unsigned memOfMap = 8 * (map-&gt;size());
+    HashTable::const_iterator iter;
+    for( iter = map-&gt;begin(); iter != map-&gt;end(); iter++ ) 
+    {
+        memOfMap += iter-&gt;second-&gt;getMemory();
+    }
+    return (memOfMap + sizeof(*this));
+}
+
+ostream &amp;operator size() begin(); iter != bucket.map-&gt;end(); iter++) 
+    {
+        output first )second) &gt; (istream &amp;input, Buckets &amp; bucket)
+{
+	//num of buckets	
+    unsigned size;
+    input &gt;&gt; size;
+    //buckets
+    for(unsigned i = 0; i &gt; key;
+	    input &gt;&gt; (*lengthBucket);	
+	    bucket.map-&gt;insert(make_pair(key, lengthBucket));
+    }
+    return input;	
+}
+
+ 

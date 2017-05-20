@@ -1,0 +1,72 @@
+ Troubleshooting Java/Eclipse/Python Installation<body>
+
+ 
+ Troubleshooting Java/Eclipse/Python Installation 
+ 
+  
+  
+This is the first quarter large numbers of students are installing Java,
+  Python, and Eclipse.
+As I hear about problems and find workarounds, I will add them here, in the
+  appropriate sections.
+Note that these workarounds are not guaranteed, but they have worked in some
+  circumstances.
+  
+   Running Eclipse 
+   Problem : Eclipse cannot run and prints the error message:  "Version 1.6.0_65 of the JVM is not suitable for this product. Version: 1.7 or greater is required." 
+ 
+ Workaround : Go the the following 
+ Java Website  and download an install the  Mac OS X x64 
+sofware: the download is named  jdk-6u67-macosx-x64.dmg  which shows as
+about 186 MB.
+After doing this, if you still get the same error message when starting Eclipse,
+  delete Eclipse, redownload it, and reinstall it.
+  
+    Problem : Eclipse cannot locate the JRE.
+The following error message will appear when Eclipse starts.
+ 
+   
+ Workaround : You need to manually set the  PATH  system variable
+      to include the location of your JRE.
+    Normally Eclipse does this automatically.
+    Before following the instructions below, find the directory that contains
+       Java .
+  
+   Click the  Start  button
+  Click  Control Panel  entry (on the upper right)
+  Click the  System  text/icon (near the end: they are alphabetical)
+  Click the  Advance System Settings  shield (upper left)
+  On the  System Properties  pop-up window select the  Advanced  tab
+      (it is probably already selected) and click the
+       Environmental Variables...  button.
+  In the  Environmental Variables  pop-up window select  PATH 
+      under  Variable  in the top pane (it is probably already selected)
+      and click the  Edit  for that pane.
+  In the  Edit User Variable  pop-up window, the  Variable name: 
+      text box should show  PATH  and the  Variable value:  text
+      box should show the current value of  PATH , which may be too big
+      to fit on the screen.
+  Put the cursor at the end of the   Variable value:  text box and
+      type a semicolon and the path to the  bin  folder in the  jre7 
+      folder in the  Java  folder you found.
+  Click the various  OK  buttons in the 3 pop-up windows.
+  
+In the picture below, my  PATH  variables started with
+   C:\Program files  so I added at the end
+   ;C:\Program Files (x86)\Java\jre7\bin  which is where I installed Java.
+ 
+   
+Try running Eclipse again and see if you get the same error message; if you do,
+   try rebooting and running Eclipse again.
+  
+    Problem : Eclipse cannot locate the JNI shared library.
+The following error message will appear when Eclipse starts.
+ 
+   
+ Workaround : I've been told this is often caused by installing
+   incompatible version of Java and Eclipse: specifically a 32-bit version
+   of one and a 64-bit version of the other.
+Go back and follow the instructions for downloading and installing Java and
+  Eclispe (heck, do it for Python too), ensuring you are using the 32-bit
+  versions of both.
+   </body> 

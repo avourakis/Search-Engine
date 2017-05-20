@@ -1,0 +1,155 @@
+ Asst. 3 * Syntax, Vars, Real F.P<body>
+  
+ 
+   This assignment is due on Monday, February
+7, by 7:00 p.m. in the locking box in CS 189.  Turn in everything you have
+completed at that time; we can't grade straggling assignments.  
+ 
+  Summary:   In this assignment you will
+work with some realistic functional programs.  You'll also get experience
+with BNF and with issues of scoping and binding.  
+ 
+  Readings and review questions:   This
+assignment covers more of Sebesta, chapters 3 and 4.  You should know the
+answers to the review questions listed below, but you do not have to turn
+them in.  This list should help you identify some of the more important
+concepts in the text.  (On the other hand, don't infer that the topics
+we skip or omit are entirely  un important.)  
+ 
+ Chapter 3:  1, 7, 8, 14  
+ 
+ Chapter 4:  1, 2, 4, 6-14, 16, 18-23.  
+ 
+  Part I:   Syntax description  
+ 
+  (a)   In the Sebesta text, do the following
+problems in the problem set starting on page 152: pick one of the five parts
+of problem 2; pick two of the four parts of problem 4; problem 6; problem
+8; problem 10; and problem 11 (which, as written, is a trick question).  
+ 
+  (b)   Write an EBNF grammar for HTML
+documents.  You don't have to cover all of HTML; just handle about ten
+of the most popular tags (including &lt;A&gt;&lt;/A&gt;) in their basic
+forms.  Use  | boxed text |  instead of &lt;angle brackets&gt;
+for your nonterminals, so you don't get confused with the angle brackets
+that are part of HTML itself.  
+ 
+  Part II:   Scoping and binding  
+ 
+ In the Sebesta text, do the following problems
+in the problem set starting on page 189 (this is labeled "problem set,"
+not "review questions."): 2, 4, 6, 9.  Draw two contour models
+for problem 9 (one for static scoping, one for dynamic), as we did in class;
+it will help a lot.  The other problems in the section aren't required,
+but if you don't feel comfortable with the scoping issues you should
+try to work them out.  
+ 
+  Part III:   Functional programming in
+real programs  
+ 
+  (a)   Attached to this assignment is
+a simple Scheme program to maintain a database of restaurant objects.  It's
+available on the lab server.  Load the program into EdScheme (click the
+lambda button) and play around with it for a while:  Evaluate   (restaurants)  
+in the transcript window and give commands to add, remove, print, and search
+for restaurants.  (Represent restaurant names either as double-quoted strings
+or as Lisp lists of symbols--just keep to one representation consistently.)
+ You don't have to turn anything in to demonstrate your experimentation.  
+ 
+  (a.1)   Modify the program code so that
+it gives the user an additional menu choice:  
+ 
+    c:  Clear all the restaurants from
+the collection  
+ 
+ When the user types '  c  ',
+the program should remove all the restaurants from the collection (so that
+if the next command were '   p   ',
+for example, nothing would be printed).  
+ 
+ This will require modifications or additions
+in a few places; you can do the main part of the work very easily indeed,
+with a single function call.  The key is to think functionally, not of changing
+values but of describing or creating the new value.  
+ 
+  (a.2)   The search command currently
+allows the user to search only for restaurants by name.  We know that   collection-select  
+allows much more flexible searching, however.    
+ 
+ Modify the   search-collection  
+routine in the main program to give the user a choice of searching by name
+or by cuisine.  If the user chooses to search by cuisine, prompt for the
+type of cuisine and perform the requested search with appropriate calls
+to   collection-select  .
+  [Hint:  Consider using some of the code on the second page of the "Notes
+on Scheme" handout.]  
+ 
+  (a.3)   Now, ask yourself how much code
+it would have taken to accomplish the same thing in C++.  You don't
+have to write an answer, but it's worth thinking about.  
+ 
+  (b)   Also attached to this assignment
+is an implementation of binary search trees in Scheme.  It, too, is available
+on the server.  Load it and experiment with it.  
+ 
+  (b.1)   What happens when you add a
+duplicate item (an item whose value is already in the tree)?  
+ 
+  (b.2)   Enhance the implementation by
+adding a "count" field to each node, so that when a duplicate
+is added, the count is increased, and when an item is deleted, its count
+is decreased (and the node isn't actually deleted until the count reaches
+zero).  
+ 
+  (b.3)   After saving a copy of your
+code from  (b.2) , modify it to implement "lazy deletion"
+of nodes:  Instead of actually removing a node from the tree when its count
+gets to zero, just mark it as deleted (and alter the routines for searching
+and adding appropriately).  This is useful in situations where the same
+values enter and leave the tables repeatedly.  Turn in your final code for
+this part on paper and electronically, to the ICS 141 dropbox on the Masterhit
+server in the lab, labeled clearly with your name and student ID.  
+ 
+  (b.4)   Go back to the original binary
+search tree code, before you made your modifications for parts  (b.2) 
+and  (b.3) .  Note that   bst-add  
+and   bst-delete  
+have a common structure.  Combine them, as we did with   find-all-matches  
+and   remove-all-matches  
+in the "Notes on Scheme" handout.  You can do this on paper; you
+do not have to turn it in electronically.  
+ 
+  (b.5)   (extra credit)  Once lazy deletion
+and a count field are implemented, handling normal (non-lazy) deletion is
+just a question of doing something different when the node's count gets
+to zero.  Modify your code from  (b.3)  to let the user specify when
+creating the tree whether it should use lazy or normal deletion.  You'd
+need to modify the "constructor" to take another parameter (whose
+value would be either   'lazy  
+or   'normal  --or,
+you could make it an  optional  parameter, using normal deletion as
+the default case).  You'd store with each new tree an indication of
+which kind of deletion it uses, and you'd do that kind of deletion when
+called for.  
+ 
+  (b.6)   (extra credit)  Allow for more
+complex values (like structures) in the tree, in essence building a "templated
+class."  You'll need to supply key-selector and key-comparison
+functions when you create a tree.  
+ 
+  (b.7)   (extra credit)  Implement your
+favorite tree-balancing algorithm.  
+ 
+  (c)   (extra credit)  Find as many indications
+as you can in the Sebesta text that Sebesta doesn't "get"
+functional programming or Scheme--that he doesn't treat Scheme as completely
+or seriously as other popular languages.  Look for omissions and subtleties
+in the wording.   
+ 
+  (d)   For some examples of the practical
+applications of functional programming, check out the web site  Functional Programming in the Real World ,
+   http://www.cs.bell-labs.com/~wadler/realworld/   .
+ You should also take a look at    www.scheme.com   ,
+which describes a Scheme implementation that claims to generate code with
+the same performance as C.  There's nothing to turn in for this.  
+ </body> 

@@ -1,0 +1,57 @@
+ // lookup - find paragraph containing string in file
+// David Eppstein / Columbia University / 11 Feb 1986
+
+// Edit history:
+// wormwood:/i0/di/ua/eppstein/public_html/161/lookup/lookup.c, 27 Feb 1996
+//   Make this code compile again (C++ has changed between 1988 and now)
+//   and strip out some unnecessary junk to make better example for ICS 161
+// gar:/u/tom/eppstein/src/match/lookup.c, 29-Jan-1988 12:33:16 by eppstein
+//   Rewrite in C++, split out string match code
+// garfield:/u/tom/eppstein/src/bin/lookup.c,  2-Oct-1987 13:39:34 by eppstein
+//   Add -c case sensitivity, -r print rest of file after match.
+// garfield:/usr1/eppstein/src/bin/lookup.c, 12-Dec-1986 16:26:43 by eppstein
+//   Save start of paragraph in a buffer instead of using fseek().
+//   Stop using getenv("LOOKUP") -- user must always give file.
+// garfield:/usr1/eppstein/src/lookup.c, 14-May-1986 16:03:16 by eppstein
+//   Treat form feed the same as linefeed (and xlate to lfd on output)
+// garfield:/usr1/eppstein/src/lookup.c, 13-Feb-1986 by eppstein
+//   Create this file (actually this was done on the DEC20).
+
+#include "match.h"
+#include "lineb.h"
+#include 
+
+
+// Return the lowercase version of a char; set csense = 0 to disable.
+
+int csense = 'a' - 'A';		// assume case insensitive
+
+inline char casify(char c)
+{
+    if (c &gt;= 'A' &amp;&amp; c  2 &amp;&amp; argv[1][0] == '-') {
+	argc--;
+	const char * cp = *++argv;
+	while (*++cp != '\0') switch (*cp) {
+	case 'c':
+	    csense = 0;
+	    break;
+
+	case 'r':
+	    rest = 1;
+	    break;
+
+	default:
+	    usage();
+	}
+    }
+    if (argc != 2) usage();
+
+    // Get target string, casify it, and make a string matcher.
+
+    for (char * cp = argv[1]; *cp != '\0'; cp++) *cp = casify(*cp);
+    string_match target(argv[1]);
+
+    // Process standard input.
+    process(cin, target);
+}
+ 

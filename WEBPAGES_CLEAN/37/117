@@ -1,0 +1,69 @@
+ Web Server Performance under User Impatience<body>
+
+              
+       
+       Scott Jordan       
+               Department of Computer Science  
+            University of California, Irvine 
+           
+           
+     
+      
+           
+                     
+                       Web Server Performance under User Impatience    
+                            
+               
+           
+      Web users are notoriously impatient, willing to wait only a few seconds 
+      before aborting a pending web request. This behavior unnecessarily taxes web 
+      server resources, which are dedicated to a connection that ultimately does not 
+      complete. While this is not as problematic at well-provisioned or 
+      lightly-trafficked web servers, where all incoming requests can be serviced with 
+      little or no queuing time required, such behavior is extremely detrimental to 
+      poorly-provisioned or very busy web servers, where server deadlock may occur and 
+      no users are adequately served. 
+       In this work, we analytically derive, using queuing models, a service 
+        ordering for web servers that is useful under these extreme conditions and that 
+        takes into account the impatience of web users. The ordering is based on a 
+        revenue generation model that assumes a web server earns some amount from 
+        processing a user request to completion. This amount diminishes exponentially 
+        with the time spent in queue and in service at the web server. In such cases, a 
+        greedy algorithm maximizes server revenue and outperforms "fair" algorithms such 
+        a first-in-first-out by several orders of magnitude when server load is high. 
+        These performance gains continue even when the server passes into an overload 
+        situation, allowing the web server to operate even when completely saturated. 
+        These results are verified both analytically and via simulation, and have been 
+        shown to be useful for general Markovian queuing systems as well. 
+       
+            An Optimal Service Ordering for a World 
+          Wide Web Server   (with A.C. Dalal),  ACM Performance Evaluation Reviews , 
+          vol. 29 no. 2, September 2001, pp. 8-13.
+         
+            Optimal Scheduling in a Queue with 
+          Differentiated Impatient Users   (with A.C. Dalal),  Performance 
+            Evaluation , vol. 59 no. 1, January 2005, pp. 73-84.
+         
+               Portions of this work  were supported by  NSF. 
+        Any opinions, findings, conclusions or recommendations expressed in this 
+        material are those of the author(s) and do not necessarily reflect the views of 
+        the National Science Foundation or IEEE. This material is presented to ensure 
+        timely dissemination of scholarly and technical work. Copyright and all rights 
+        therein are retained by authors or by other copyright holders. All persons 
+        copying this information are expected to adhere to the terms and constraints 
+        invoked by each author's copyright. One print or electronic copy may be made for 
+        personal use only. Permission must be obtained from the copyright holder for 
+        systematic or multiple reproduction, distribution to multiple locations via 
+        electronic or other means, duplication of any material in these papers for a fee 
+        or for commercial purposes, modification of the content of these papers, 
+        reprinting or republishing of this material for advertising or promotional 
+        purposes or for creating new collective works for resale or redistribution to 
+        servers or lists, and to reuse any copyrighted component of this work in other 
+      works. 
+      
+      
+        Scott Jordan   
+     last modified January 10, 2017 
+      UCI  
+        CS    Networked Systems   
+    </body> 

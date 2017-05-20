@@ -1,0 +1,77 @@
+ Euler's Formula<body>
+     
+  Euler's Formula,
+Proof 18: Hyperplane Arrangements
+ 
+
+ This proof comes from  a 1997 paper by Jim Lawrence .  It applies to convex polytopes in  R  d ,
+and resembles in some ways the  valuation proof .
+
+  If A is a finite set of hyperplanes in  R  d ,
+it partitions  R  d  into  faces , sets of points
+that are all contained within the same set of hyperplanes, and that are on the same side of all hyperplanes that do not contain them.  Lawrence defines an A-polyhedron to be any union of faces, and he defines a function χ
+from A-polyhedra to integers, where if f is a face then χ(f)=(-1) dim f , and if P is an A-polyhedron composed of faces f i 
+then χ(P)=sum χ(f i ).
+
+  It is not difficult to see that χ has the same value for P in an
+arrangement A for which P is an A-polytope; for, adding any superfluous
+hyperplane to the arrangement merely splits some faces into two
+same-dimension faces and one face of one lesser dimension, which does
+not change the total value of χ for those faces, and removing any
+hyerplane merely reverses this process.  Consequentially, if P is any
+nonempty intersection of finitely many open halfspaces then
+&amp;chi(P)=(-1) dim P , for A can be assumed to be the arrangement
+of boundary hyperplanes of the halfspaces defining P, for which P is a face.
+In particular, from the intersection of zero halfspaces we obtain
+χ( R  d )=(-1) d . Also, it is obvious from the construction that the value of χ
+on a disjoint union of polyhedra is simply the sums of its values on the individual polyhedra making up the union.
+
+  We can now calculate the Euler characteristic of a closed
+d-dimensional convex polyhedron P, by embedding P on a hyperplane missing the
+origin in  R  d+1 , forming the infinite cone C of
+positive scalar multiples of points in P, and computing X(P)=χ(C).  This
+valuation (when viewed in terms of the arrangement of hyperplanes
+through the facets of this cone) includes a term of the form
+(-1) k  for every k-dimensional face of P,
+including 1 for the empty face (corresponding to the apex of the cone),
+-1 for the vertices (rays forming edges of the cone, which are
+1-dimensional faces of the arrangement), etc.
+
+  By additivity,
+
+  
+X(P) = χ( R  d+1 ) - χ( R  d+1 \C)
+= (-1) d+1  - χ(union H i ),
+ 
+
+ where H i  is the open halfspace bounded by the i'th hyperplane
+on the side of that hyperplane away from C.
+We already know the value of the first of these two terms,
+and the second can be calculated by inclusion-exclusion as
+
+  
+-sum S subset [1,n]  (-1) |S| χ(intersection i in S  H_i)
+ 
+
+ summed over all nonempty subsets of the halfspaces H i .
+But all such subsets have nonempty intersection (they contain the cone complementary to C) and are open convex polyhedra, so we can simplify the sum above to
+
+  
+-sum i=1  n  (-1) i  (n choose i) (-1) d+1 
+= (-1) d+1 ,
+ 
+
+ which exactly cancels the χ( R  d+1 ) term
+leaving X(C)=0.
+     
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

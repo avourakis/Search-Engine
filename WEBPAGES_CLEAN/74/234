@@ -1,0 +1,55 @@
+ /*
+    $Id: input.cc 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 02/16/2007
+    Author: Rares Vernica 
+*/
+
+#include "input.h"
+
+#include 
+#include 
+
+void readString(vector &amp;data, 
+                 const string filenameData, 
+                 const unsigned count)
+{
+  ifstream fileData(filenameData.c_str());
+  if (!fileData) {
+    cerr  &amp;data, 
+                       const string filenameData)
+{
+  ifstream fileData(filenameData.c_str(), ios::in | ios::binary);
+  if (!fileData) {
+    cerr (&amp;e), sizeof(unsigned));
+    if (fileData.eof())
+      break;
+    data.push_back(e);
+  }
+    
+  fileData.close();
+}
+
+bool existFileBin(const string &amp;filename)  
+{
+  ifstream file(filename.c_str(), ios::in | ios::binary);
+  if (!file) 
+    return false;
+  file.close();
+  return true;
+}
+
+bool existFile(const string &amp;filename) 
+{
+  ifstream file(filename.c_str(), ios::in);
+  if (!file) 
+    return false;
+  file.close();
+  return true;
+}
+ 

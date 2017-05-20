@@ -1,0 +1,113 @@
+ 10.1 Using NewAtom and NewBond<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10. Creating Atoms, Bonds, 
+ Up:   10. Creating Atoms, Bonds, 
+ Next:   10.2 Implicit vs. Explicit 
+   
+
+
+  
+10.1 Using NewAtom and NewBond 
+ 
+
+ 
+Whilst using SMILES is a convenient method of specifying a molecule,
+OEChem contains functions that allow molecules to be constructed from
+atoms and bonds explicitly.  The following example shows how to create
+the molecule water.
+
+  
+Atoms are created by calling the OEMolBase method,  NewAtom() , and
+Bonds are created by calling the OEMolBase method,  NewBond() .
+ OEMolBase::NewAtom  takes the atomic number of the atom to create and
+returns a pointer to an OEAtomBase, and  NewBond  takes two OEAtomBase*
+and a integer bond order as arguments, and returns a pointer to an
+OEBondBase result.
+
+  
+The atoms and bonds of a molecule are automatically deleted when their
+parent molecule is destroyed.
+
+  
+    #include "oechem.h"
+
+using namespace OEChem;
+
+int main()
+{
+  OEAtomBase *o, *h1, *h2;
+  OEBondBase *b1, *b2;
+  OEMol mol;
+
+  o  = mol.NewAtom(8);
+  h1 = mol.NewAtom(1);
+  h2 = mol.NewAtom(1);
+
+  b1 = mol.NewBond(o,h1,1);
+  b2 = mol.NewBond(o,h2,1);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+In the example source code, the atomic numbers of oxygen, 8, and
+hydrogen, 1, are explicitly encoded in the program.  To make this code
+easier to read and less error prone, OEChem provides symbolic
+constants for the first 109 elements in the include file  elemno.h .
+This defines the atomic symbols in the C++ namespace OEElemNo with the
+appropriate values.
+
+  
+    #include "oechem.h"
+
+using namespace OEChem;
+
+int main()
+{
+  OEAtomBase *o, *h1, *h2;
+  OEBondBase *b1, *b2;
+  OEMol mol;
+
+  o  = mol.NewAtom(OEElemNo::O);
+  h1 = mol.NewAtom(OEElemNo::H);
+  h2 = mol.NewAtom(OEElemNo::H);
+
+  b1 = mol.NewBond(o,h1,1);
+  b2 = mol.NewBond(o,h2,1);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10. Creating Atoms, Bonds, 
+ Up:   10. Creating Atoms, Bonds, 
+ Next:   10.2 Implicit vs. Explicit 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

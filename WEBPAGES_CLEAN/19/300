@@ -1,0 +1,62 @@
+ 4.44 OEExpandSuperAtoms<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.43 OEExactGraphMatch 
+ Up:   4. OEChem Functions 
+ Next:   4.45 OEFindRingAtomsAndBonds 
+   
+
+
+  
+4.44 OEExpandSuperAtoms 
+ 
+   
+bool OEExpandSuperAtoms(OEMolBase &amp;mol)
+    
+The  OEExpandSuperAtoms  function expands (or instantiates) the
+recognized super-atoms in a connection table.  Superatoms are commonly
+found in MDL mol files and some SMILES variants as a way of specifying
+a common functional group by a single superatom.  This function replaces
+each pseudo atom with the set of atoms and bonds it represents.
+
+  
+Currently this function expands the 20 naturally occuring amino acids
+and ``Abu'' (2-amino butyric acid).  Additional superatoms, such as common
+protecting groups, may be supported in the future.  Unrecognized superatoms
+are unmodified by this function.
+
+  
+This function determines connectivity for multi-valent superatoms from
+2D co-ordinates when available, and failing that from atom indices,  i.e. 
+the order in which atoms are created.  These heuristics allow correct
+interpretation of most common uses of superatoms, such as the SMILES
+variant `` [Ala][Asn][Thr] ''.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.43 OEExactGraphMatch 
+ Up:   4. OEChem Functions 
+ Next:   4.45 OEFindRingAtomsAndBonds 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

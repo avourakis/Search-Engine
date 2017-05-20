@@ -1,0 +1,119 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Name space munging ... blech!<body> Name space munging ... blech! 
+ Jim Whitehead  (  ejw@ics.uci.edu  )  Tue, 11 Jun 1996 18:02:16 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Larry Masinter: "Re: Re2: what's doable in Web version control" 
+    Previous message:   Fabio Vitali: "Re: Version identifier in URL" 
+
+    Next in thread:   Larry Masinter: "Re: Name space munging ... blech!" 
+    Maybe reply:   Larry Masinter: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+    
+Late last Friday night, Fabio Vitali, after giving an excellent overview of
+all proposals for describing the particular version of a resource within a
+URL, then started defending name space munging:
+
+&gt;On the other hand,
+&gt;         http://host/dir/projectX/1.5/Macintosh/French/file.c 
+&gt;         http://host/dir/projectX/file.c/1.5/Macintosh/French 
+&gt;         http://host/dir/projectX/French/Macintosh/1.5/file.c 
+&gt;         http://host/dir/projectX/French/Macintosh/1.5/file.c/george 
+&gt;         http://host/dir/projectX/French/Macintosh/1.5.file.c/draft/2.1 
+&gt;
+&gt;are all non ambiguous and may well refer to exactly the same resource. Hey,
+&gt;I think it is even possible to simply use the file system for them!
+
+Adding specific semantics to the name space is a bad idea, for the
+following reasons.
+
+1) Legacy problem: Existing sites containing hundreds of thousands of pages
+(the current size of many large corporation intranets) will be completely
+unwilling to change their existing name space to gain the advantages of
+versioning.  This is because they would be required to rewrite the
+destination URL of all anchors to versioned documents:
+
+For example,
+
+&lt;A HREF=" http://foo.bar.com/top/middle/doc.html "&gt;
+
+would need to be changed to:
+
+&lt;A HREF=" http://foo.bar.com/top/middle/1.5/doc.html "&gt;
+
+In thousands of documents.  This then provides a powerful disincentive for
+the adoption of our versioning technology by the groups who would most
+benefit.
+
+In contrast, the ";version={version id}" or "?version={version id}" schemes
+do not modify the name space and hence would not require modification of
+existing documents.
+
+2)  Competing name space semantics: What gives us the right to partition
+the name space for HTTP servers which employ versioning?  How can we
+guarantee that our partitioning of the name space will not contain
+collisions with other name space partitionings required by other
+technologies, present or future?  We cannot.  In fact, this particular
+partitioning of the name space already collides with existing naming
+practice of many public domain Unix tools, and for this reason alone
+concerns me.
+
+This was also discussed by David Fiander in a previous post:
+
+&gt;Unfortunately, neither option addresses the practical concern
+&gt;that the server has to have some way of determining
+&gt;&lt;strong&gt;when&lt;/&gt; a URL contains a version. I mean, the path
+&gt;
+&gt;        http://host/foo/1.5/bar.html 
+&gt;
+&gt;could easily reference a page discussing the history of the "bar"
+&gt;facility in Lisp 1.5.
+
+3) It is impossible for a HTTP user-agent, or for a human being, to
+determine whether a directory named "1.5" is an actual physical directory,
+or a version number, without querying the HTTP server.  It is extremely
+useful for a user to know just by looking at a URL whether a resource is a
+particular version.  Allowing arbitrary opaque identifiers (one area on
+which we do have consensus) for version names makes matters even more
+confusing: in &lt; http://foo.bar.com/src/alpha/foo.c.html &gt; is "alpha" a
+version name for the "alpha" release of the code, or is it the name of the
+directory containing code for the DEC Alpha?
+
+4) The main benefit of placing version identifiers into the name space,
+"surfing" into the past via relative URLs, does not work.  One scenario
+outlines this:
+
+ http://foo.bar.com/1.5/A.html   (where 1.5 is the version id) contains a
+relative URL of GIF "../background.gif."  In this case, version 1.5 of
+background.gif would also be retrieved.  However, experience to date with
+versioning systems shows that all objects are not versioned at the same
+rate.  Thus it is much more likely that version "1.1" (or some other
+arbitrary version of the GIF) is what really needed to be retrieved.  OK,
+so the relative URL could be changed to "../../1.1/background.gif", but
+then what has been gained over  http://foo.bar.com/1.1/background.gif? 
+
+- Jim Whitehead &lt; ejw@ics.uci.edu &gt;
+ 
+
+  
+     Next message:   Larry Masinter: "Re: Re2: what's doable in Web version control" 
+    Previous message:   Fabio Vitali: "Re: Version identifier in URL" 
+
+    Next in thread:   Larry Masinter: "Re: Name space munging ... blech!" 
+    Maybe reply:   Larry Masinter: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe reply:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe reply:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+  </body> 

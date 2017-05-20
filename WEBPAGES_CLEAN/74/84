@@ -1,0 +1,63 @@
+ 11.9 OEUnaryPredicate<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.8.1 Specializations 
+ Up:   11. OESystem Templates 
+ Next:   11.10 OEFactory 
+   
+
+
+  
+11.9 OEUnaryPredicate 
+ 
+
+ 
+    
+template&lt;class Arg&gt;
+class OEUnaryPredicate : public OEUnaryFunction&lt;Arg,bool&gt;
+
+virtual bool operator()(const Arg&amp;) const = 0
+virtual OEUnaryFunction&lt;Arg,Result&gt; *CreateCopy() = 0
+    
+This abstract base-class defines predicates in OEChem.  Predicates are a
+special class of functors which, by convention, has several restriction.  These
+restrictions make predicates predictable and reliable.  To the degree possible,
+these restrictions are enforced by the api.  CreateCopy is a virtual
+constructor which allows copying of concrete derived objects using a reference
+to this base class.
+
+  
+By definition, a predicates is a functor which always return a boolean.  By
+convention, the operator() of a predicate does not modify the object it takes
+as an argument and itself is not modified by the evaluation.  These conventions
+guarentee that the result of a series of predicate evaluations will not be
+order dependent.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.8.1 Specializations 
+ Up:   11. OESystem Templates 
+ Next:   11.10 OEFactory 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

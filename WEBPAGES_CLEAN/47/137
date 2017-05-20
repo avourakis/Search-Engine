@@ -1,0 +1,160 @@
+ Ipe tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Differences  
+ 
+
+ 
+
+This shows you the differences between two versions of the page.
+ 
+
+ 
+       
+     wiki:ipe_tutorial [Wed Oct 23 21:26:13 2013]   jenny       
+     
+     wiki:ipe_tutorial [Mon Mar  2 22:02:49 2015]  (current)  will       
+       Line 1: 
+ Line 1:       ====== Ipe tutorial ======     ====== Ipe tutorial ======    -                        This is more of a random list of how-to topics than a tutorial.     This is more of a random list of how-to topics than a tutorial.    Line 6: 
+ Line 5:       ===== Stylesheets =====     ===== Stylesheets =====                -  Stylesheets are text files that can be included  in </strong>an Ipe document to  customize or </strong>add  functionality not available directly through Ipe</strong>. Stylesheets work a bit like preambles in LaTeX. Multiple stylesheets can be used in one Ipe document . They </strong>can be  used to customize </strong>a document or  define general-purpose objects </strong>to  be reused over multiple </strong>documents.   +  Stylesheets are text files that can be included  to customize various formatting aspects of </strong>an Ipe document . For example, you can use it </strong>to  define more colors, </strong>add  transparency levels, or create gradients</strong>. Stylesheets work a bit like preambles in LaTeX. Multiple stylesheets can be used in one Ipe document , and a single stylesheet </strong>can be  reused over multiple documents. </strong>       +    </strong>       +   By default, Ipe uses </strong>a  basic style sheet ''basic.isy''. To use your own stylesheet, you can either have Ipe automatically load it for every </strong>document , </strong>or  you add it manually for each document. You would want </strong>to  use the former option for things that are useful across </strong>documents , like color definition and transparency levels, and the latter option for things specific to the document, like backgrounds and location of the title text</strong>.                -  The workflow of using  stylesheets</strong>:  +  The workflow of using  a stylesheet specific to a document</strong>:                     - Create or open a stylesheet in a text editor. Here is a barebones example: &lt;file xml my-stylesheet.isy&gt;       - Create or open a stylesheet in a text editor. Here is a barebones example: &lt;file xml my-stylesheet.isy&gt;    Line 16: 
+ Line 17:         - Edit it. Some examples of things to add can be found in this tutorial.       - Edit it. Some examples of things to add can be found in this tutorial.         - Save it.       - Save it.    -    - Include it in the Ipe document: in Ipe, go to  **</strong>Edit &gt; Style sheets &gt; Add **</strong>.   +    - Include it in the Ipe document: in Ipe, go to  ''</strong>Edit &gt; Style sheets &gt; Add ''</strong>.     -    - Update it: in Ipe, click  **</strong>Edit &gt; Update style sheets **</strong>. This must be done  everytime </strong>an included stylesheet is modified.  +    - Update it: in Ipe, click  ''</strong>Edit &gt; Update style sheets ''</strong>. This must be done  every time </strong>an included stylesheet is modified.                -  ==== =LaTeX packages=</strong>====  +  ====  Color-blind colors </strong>====                -   To include a LaTeX package in Ipe, go to **Edit </strong>&gt;  Document Properties </strong>&gt;  Latex preamble** and add the LaTeX command ''\usepackage{my-package}''</strong>.   +   &lt;code xml good_colors.isy</strong>&gt;  </strong>    -     +   &lt;?xml version="1.0"?</strong>&gt;  </strong>    -   Alternatively, add the following in a stylesheet:</strong>   +   &lt;!DOCTYPE ipestyle SYSTEM "ipe</strong>. dtd"&gt;</strong>     -     +   &lt;ipestyle name="good colors"&gt;</strong>     -  &lt; code xml</strong>&gt;   +   &lt;color name="good blue" value="0 0.506 0.804"/&gt;</strong>     -  &lt; preamble</strong>&gt;   +   &lt;color name="good red" value="0.737 0.118 0.278"/&gt;</strong>     -   \usepackage{my-package}</strong>   +  &lt; color name="good yellow" value="0.996 0.761 0"/</strong>&gt;     -  &lt;/ preamble</strong>&gt;  +  &lt; color name="good green" value="0 0.573 0.275"/</strong>&gt;        +   &lt;color name="good pink" value="0.8 0.2 0.8"/&gt;</strong>        +  &lt;/ ipestyle</strong>&gt;       &lt;/code&gt;     &lt;/code&gt;                -   You can also put whatever LaTeX commands usually go in the preamble of a LaTeX document in the ''&lt;preamble&gt;'' tags, such as ''\input{}'', ''\newcommand{}'', etc. </strong>  +  ==== Transparency ====    -    </strong>  +      -    </strong>  +      -   =</strong>====Transparency =</strong>====  +                     &lt;code xml transparency.isy&gt;     &lt;code xml transparency.isy&gt;       &lt;ipestyle name="transparency"&gt;     &lt;ipestyle name="transparency"&gt;    -  &lt;opacity name="75%" value="0.75"/&gt;       -  &lt;opacity name="50%" value="0.5"/&gt;       -  &lt;opacity name="25%" value="0.25"/&gt;          &lt;opacity name="10%" value="0.1"/&gt;     &lt;opacity name="10%" value="0.1"/&gt;       &lt;opacity name="20%" value="0.2"/&gt;     &lt;opacity name="20%" value="0.2"/&gt;       &lt;opacity name="30%" value="0.3"/&gt;     &lt;opacity name="30%" value="0.3"/&gt;       +  &lt;opacity name="50%" value="0.5"/&gt;       &lt;opacity name="40%" value="0.4"/&gt;     &lt;opacity name="40%" value="0.4"/&gt;       &lt;opacity name="60%" value="0.6"/&gt;     &lt;opacity name="60%" value="0.6"/&gt;    Line 52: 
+ Line 50:       &lt;/code&gt;     &lt;/code&gt;                -   =</strong>====Gradient =</strong>====  +   Warning: the transparency feature may not be supported by all PDF viewers. (Skim should support it, but not Adobe Acrobat, although this may have changed.) </strong>       +    </strong>       +  ==== Gradient ====       Here is an example code snippet to include in your stylesheet:     Here is an example code snippet to include in your stylesheet:                Line 68: 
+ Line 68:       Once the stylesheet uploaded, the gradient option should show up in the context menu of objects that can have a gradient fill.     Once the stylesheet uploaded, the gradient option should show up in the context menu of objects that can have a gradient fill.                -  =====Ipe presentation background =</strong>====  +  = ==== Presentations ===== </strong>       +    </strong>       +  ==== Ipe presentation background ====                   To use an Ipe drawing as a background:     To use an Ipe drawing as a background:    Line 83: 
+ Line 85:       To turn off the background on a specific page, add a layer called **BACKGROUND**. Setting that layer to visible/invisible seems to have no effect.     To turn off the background on a specific page, add a layer called **BACKGROUND**. Setting that layer to visible/invisible seems to have no effect.                -   =</strong>====Ipe presentation title==== =</strong>  +  ==== Ipe presentation title ====  </strong>       Add something like this to your stylesheet.     Add something like this to your stylesheet.                Line 92: 
+ Line 95:       &lt;titlestyle pos="25 554" size="titlesize" color="titlecolor" halign="left" valign="baseline" /&gt;     &lt;titlestyle pos="25 554" size="titlesize" color="titlecolor" halign="left" valign="baseline" /&gt;       &lt;/code&gt;     &lt;/code&gt;       +         The ''textsize'' allows you to specify the LaTeX code for the font you want to use. The ''textstretch'' specifies how much to magnify the LaTex generated text, which is useful to enlargen text in a presentation. The ''titlestyle'' is where you specify the appearance and position of your title text.     The ''textsize'' allows you to specify the LaTeX code for the font you want to use. The ''textstretch'' specifies how much to magnify the LaTex generated text, which is useful to enlargen text in a presentation. The ''titlestyle'' is where you specify the appearance and position of your title text.                   The ''textsize'' and ''textstretch'' can be used alone to define a text style (size and shape). They simply have to have the same ''name'' attribute. This is a little hacky because this was only meant to define a text size and not text style.     The ''textsize'' and ''textstretch'' can be used alone to define a text style (size and shape). They simply have to have the same ''name'' attribute. This is a little hacky because this was only meant to define a text size and not text style.                -   **Warning**: never put quote characters (") in the title of a slide or Ipe will die. FIXME (Joe please explain how you fixed this problem!)</strong>  +   ===== pdftoipe Bug =====</strong>                -  =====  CGAL </strong>ipelets =====   +   When using pdftoipe, the generated .ipe file is missing an opening page tag.  To fix the output add "&lt;page&gt;" on the line after "&lt;/ipestyle&gt;". </strong>    -  This is assuming that  ipe </strong>is already installed and runs successfully.  +    </strong>       +  =====  LaTeX packages ===== </strong>       +    </strong>       +   == Option 1: using the GUI == </strong>       +    </strong>       +   **Edit &gt; Document Properties &gt; Latex preamble** and add the LaTeX command ''\usepackage{my-package}''. </strong>       +    </strong>       +   == Option 2: using a stylesheet == </strong>       +    </strong>       +    </strong>       +   Add the following in a stylesheet: </strong>       +    </strong>       +   &lt;code xml&gt; </strong>       +   &lt;preamble&gt; </strong>       +   \usepackage{my-package} </strong>       +   &lt;/preamble&gt; </strong>       +   &lt;/code&gt; </strong>       +    </strong>       +   You can also put whatever LaTeX commands usually go in the preamble of a LaTeX document in the ''&lt;preamble&gt;'' tags, such as ''\input{}'', ''\newcommand{}'', etc. </strong>       +    </strong>       +    </strong>       +   ===== Advanced topics ===== </strong>       +    </strong>       +   There are three main categories of file for Ipe:  </strong>       +    </strong>       +     * Ipe document (.ipe, .pdf, .ps, etc.) </strong>       +     * Style sheets (.isy) </strong>       +     * Ipelets (.lua) </strong>       +    </strong>       +   ==== Ipe Document ==== </strong>       +    </strong>       +   Ipe can save and open documents in a variety of formats, including xml, pdf, and postscript. See the [[http://ipe7.sourceforge.net/manual/manual_41.html|Ipe Manual]] for more details. </strong>       +    </strong>       +   You can use ''ipetoipe'' to convert between these different formats. Sometimes, this might be necessary to fix problems with the program: </strong>       +    </strong>       +   === Quote character (") in a layer name === </strong>       +    </strong>       +   Never put quote characters (") in the name of a layer. Ipe will crash when you try to open such a document. </strong>       +    </strong>       +   == How to fix it: == </strong>       +    </strong>       +   Internally, Ipe saves files as xml. Even if you save it as a pdf, Ipe will embed the xml inside the pdf. Ipe must be able to parse this xml in order to properly load a file. However, if you put (") characters in places that get written as metadata, Ipe will not be able to parse the xml. You will get poorly formatted xml that looks like this: </strong>       +    </strong>       +   &lt;code&gt; </strong>       +   &lt;page title="&amp;apos;this&amp;quot; is fixed for titles"&gt; </strong>       +   &lt;layer name="don't_do_"this""/&gt; </strong>       +   &lt;view layers="don't_do_"this"" active="don't_do_"this""/&gt; </strong>       +   &lt;text layer="don't_do_"this"" transformations="translations" pos="128 704" stroke="black" type="label" width="36.862" height="6.128" depth="0" valign="baseline"&gt;test text&lt;/text&gt; </strong>       +   &lt;/page&gt; </strong>       +   &lt;/code&gt; </strong>       +   When you try and open this file, you will get an error like this: </strong>       +    </strong>       +       Document '/home/jsimons/Desktop/bad_ipe.ipe' could not be opened </strong>       +       Parsing error at position 6051 </strong>       +    </strong>       +   Ipe is helpfully trying to tell you which character the xml parser failed on. To fix it, you have to manually edit the xml. If you saved as .ipe, then just open up the file in your favorite text editor and remove the extra quotes from the xml. If you saved it as a pdf, you first have to extract the xml from the pdf (since in the pdf it's saved as a byte stream, you can't see the plain text). One easy way to do this is to run </strong>       +   &lt;code&gt;ipetoipe -xml input.pdf output.ipe&lt;/code&gt; </strong>       +    </strong>       +    </strong>       +   ==== Ipelets ==== </strong>       +    </strong>       +   You can expand the existing functionality of Ipe by using Ipelets, which are [[http://www.lua.org/|Lua]] scripts that Ipe runs on-the-fly. The installed Ipelets can be accessed and used under the "Ipelets" menu item. </strong>       +    </strong>       +   Each Ipelet consists of a single Lua source file with other support files. To install an Ipelet, simply save the files in your Ipelets directory. You can run ''ipe -show-configuration'' to find out where that directory is (typically, this is ''~/.ipe/</strong>ipelets ''). </strong>       +    </strong>       +   The bottom of the [[http://sourceforge.net/p/ipe7/wiki/Home/|Ipe Wiki]] has a good list of Ipelets. They include things like automatic page numbering, background boxes for text, and graph drawing tools (where edges will follow when vertices are dragged). </strong>       +    </strong>       +  = === CGAL Ipelets </strong>====        +  This is assuming that  Ipe </strong>is already installed and runs successfully.                   On debian:     On debian:    Line 117: 
+ Line 189:             * $ cmake .           * $ cmake .         5. Compile the demo(s).        5. Compile the demo(s).     -    To make just the  ipelets</strong>, go to the ready-to-compile subdirectory (yes, it's another nested level, demo/demo/), and make.   +    To make just the  Ipelets</strong>, go to the ready-to-compile subdirectory (yes, it's another nested level, demo/demo/), and make.     -    It will take a few minutes to compile all the  ipelets</strong>  +    It will take a few minutes to compile all the  Ipelets</strong>             * $ cd ~/CGAL/demo/demo/CGAL_ipelets/           * $ cd ~/CGAL/demo/demo/CGAL_ipelets/             * $ make           * $ make    -    6. Copy the compiled output '*.so' files and the '*.lua' into the  ipelet </strong>directory.    +    6. Copy the compiled output '*.so' files and the '*.lua' into the  Ipelet </strong>directory.      -       On the default 7.1.3  ipe </strong>installation, the command is:  +       On the default 7.1.3  Ipe </strong>installation, the command is:             * $ sudo find . -name '*.so' -exec cp '{}' /usr/local/lib/ipe/7.1.3/ipelets/ \;           * $ sudo find . -name '*.so' -exec cp '{}' /usr/local/lib/ipe/7.1.3/ipelets/ \;             * $ sudo find ~/CGAL/demo/CGAL_ipelets/lua/ -name '*.lua' -exec cp '{}' /usr/local/lib/ipe/7.1.3/ipelets/ \;           * $ sudo find ~/CGAL/demo/CGAL_ipelets/lua/ -name '*.lua' -exec cp '{}' /usr/local/lib/ipe/7.1.3/ipelets/ \;                -     </strong>   +   ==== Customizations ==== </strong>    -     </strong>   +    </strong>    -  ==== = Posters </strong>=====  +   You can use Ipelets to customize the behavior of Ipe. </strong>       +   http://ipe7.sourceforge.net/manual/manual_40.html </strong>       +    </strong>       +   The customization script is written as an Ipelet. The easiest way to do the customization is to copy ''prefs.lua'', ''shortcuts.lua'', and ''mouse.lua'' in the Ipe lua directory to your Ipelets directory and modify them to your liking. (Use ''-show-configuration'' to see where these directories are.) </strong>       +    </strong>       +   The ''mouse.lua'' is also good for discovering all the useful mouse shortcuts in Ipe. </strong>       +    </strong>       +          +          +  ====  Setting default stylesheets </strong>====  </strong>       +    </strong>       +   Here's how we can add and change the default stylesheets loaded by Ipe. </strong>       +    </strong>       +     * Add the stylesheets you want into a styles directory. Typically this is ''~/.ipe/styles'' (you may need to create the directory yourself). </strong>       +     * In your customization Ipelet, add the names of all the stylesheets you want to load automatically: &lt;code&gt; </strong>       +   prefs.styles </strong>=  { "basic", "good_colors" } </strong>       +   &lt;/code&gt;</strong>                -  ===== Examples =====                      ===== External resources =====     ===== External resources =====         * [[http://ipe7.sourceforge.net/|Ipe website]]       * [[http://ipe7.sourceforge.net/|Ipe website]]    -    * [[http:// lamut</strong>. informatik.uni-wuerzburg.de</strong>/ mediawiki</strong>/ipe7/ index.php</strong>/ Main_Page</strong>|Ipe wiki]]  +    * [[http:// sourceforge</strong>. net</strong>/ p</strong>/ipe7/ wiki/Home</strong>/|Ipe wiki]]     
+   
+  
+
+  
+    
+     Trace: 
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/ipe_tutorial.1382563573.txt.gz · Last modified: Wed Oct 23 21:26:13 2013 by jenny  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

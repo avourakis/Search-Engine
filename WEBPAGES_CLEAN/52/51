@@ -1,0 +1,178 @@
+ 
+    data – Machine Learning and Bioinformatics Lab   
+
+
+    
+   
+		 Machine Learning and Bioinformatics Lab 		    		 
+             
+         
+			 
+				⚙
+			 
+			 
+           Show pagesource  Old revisions  Backlinks 			 
+         
+         
+         
+			⚒
+		 
+		  Recent changes  Sitemap  Login  
+         
+     
+    
+
+
+
+
+
+
+
+
+ 
+
+ 
+       
+
+
+
+
+
+ 
+
+    	
+
+
+    
+
+
+
+       
+     CBCL Lab @ UCI  
+      Publications  
+      Software  
+      Data  
+      People  
+      Teaching  
+      Contact  
+      Internal Projects  
+    
+
+    
+    
+    
+               
+          
+ 
+ Table of Contents 
+ 
+
+    DANN data   
+   tree-hmm sample .bam's from chr19   
+   LRH-1 ChIP-seq Data   
+   FXR ChIP-seq Data   
+   SREBP-2 ChIP-seq Data   
+   SREBP-1 ChIP-seq Data   
+  
+ 
+
+
+ DANN data 
+ 
+
+ 
+The raw data can be found here  http://krishna.gs.washington.edu/martin/download/cadd_training/ . The real SNV, insertion and deletion samples sum up to 16,627,775. We randomly sample equal number of simutation samples (SNV, insertion and deletion), combine with the real data, and get a dataset of 33,255,550 samples. 
+ 
+
+ 
+This dataset is transormed into svmlight format with script impute2svmlight.py, which is provided by Dr. Martin Kircher (the author of CADD paper), and the python package  svmlight-loader . We roughly partition the dataset into 80% for training, 10% for validation and 10% for testing. Their svmlight files are here: 
+ 
+
+ 
+
+ tree-hmm sample .bam's from chr19 
+ 
+
+ 
+tree-hmm sample data from the ENCODE human project  http://cbcl.ics.uci.edu/public_data/tree-hmm-sample-data 
+ 
+
+ 
+
+ LRH-1 ChIP-seq Data 
+ 
+
+ 
+Our ChIP-seq analysis of LRH-1 can be found at:  http://cbcl.ics.uci.edu/public_data/LRH-1 
+ 
+
+ 
+
+ FXR ChIP-seq Data 
+ 
+
+ 
+ http://cbcl.ics.uci.edu/public_data/FXR/ 
+ 
+
+ 
+
+ SREBP-2 ChIP-seq Data 
+ 
+
+ 
+ChipSeq was performed on SREBP-2 and peaks were called using  GLITR .  We also re-analyzed SREBP-1 using GLITR. Supplemental Tables, Figures, and datasets are available:  SREBP2 
+ 
+
+ 
+
+ SREBP-1 ChIP-seq Data 
+ 
+
+ 
+Included here is ChIP-Seq raw and processed data from:
+ 
+
+ 
+ Genome-wide analysis of SREBP-1 binding in mouse liver chromatin reveals a preference for promoter proximal binding to a new motif.  PNAS 2009 106:13765-13769; Young-Kyo Seo, Hansook Kim Chong, Aniello M. Infante, Seung-Soon Im, Xiaohui Xie, and Timothy F. Osborne
+ 
+    Raw sequence data (raw_data/*_sequence.txt) was processed using eland to create raw/*_eland_multi.txt 
+ 
+   ChipSeq-mini 2.0 (http://woldlab.caltech.edu/html/software, now part of the ERANGE package) was used to process the eland files and produce the processed/*.bed files. 
+ 
+   IgG files are for the control run, SREBP1 files are after fasting and refeeding. See paper for details. 
+ 
+      Processed Data  
+ 
+    Raw Data  
+ 
+  
+
+
+      
+      
+    
+
+
+     
+     
+       You are here:    start    data   
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+   
+</body> 

@@ -1,0 +1,246 @@
+ Hobbes Genome Sequence Mapping, UC Irvine<body> 
+  
+   
+   Hobbes   
+  Genome Sequence Mapping  
+  Information Systems Group       Institute for Genomics and Bioinformatics  
+  Bren School of ICS  UC Irvine  
+    
+ 
+  
+ 
+    About  
+  Downloads  
+  Quick Start  
+  Examples  
+  Manual  
+  People  
+  FAQ  
+  Contact  
+  
+
+
+  Manual   
+ 
+       
+	  Hobbes3 is a software package for efficiently mapping DNA
+	  snippets (reads) against a reference DNA sequence. It can
+	  map short and long reads, and supports Hamming distance
+	  (only substitutions) and edit distance
+	  (substitutions/insertions/deletions). Hobbes3 accepts both
+	  single-end and paired-end reads for alignment, and can run
+	  on multiple CPU cores using multithreading. It supports
+	  three input formats (Fastq, Fasta, and text files) and the
+       SAM output format . Ambiguous
+      bases such as the 'N' character are treated as mismatches.  
+      Manual page for the previous versions (Hobbes 1.x) is  here 
+  
+      
+ System Requirements 
+	 
+	   We developed and tested Hobbes3 under Ubuntu 14.04.2 LTS 64-bit. 
+	     GCC. Hobbes3 uses GCC builtin functions. We used GCC 4.8.2 
+	     CMake. Required for compiling Hobbes3 (sudo apt-get install cmake).
+
+	      The following libraries are required if you want to map compressed reads 
+            - libbz2 and libz (sudo apt-get install libbz2-dev libz-dev).
+            - boost-iostreams (sudo apt-get install libboost-iostreams-dev). 
+
+	   
+
+ Compiling Hobbes3 
+	 
+	   Download the Hobbes3 source from  here . 
+	     Extract the contents of the archive (tar -zxvf hobbes-3.0.tar.gz). 
+	     cd into the Hobbes3 source root directory (cd hobbes3.0). 
+		 Run either "build.sh nocompress" or "build.sh compress". 
+		   - build.sh nocompress: compressed reads are not supported. 
+		   - budil.sh compress: compressed reads are supported. 
+		     (the "compress" option requires libboost, libbz2, libz libraries).
+	     The Hobbes3 binaries are placed in the "build" directory. 
+	   
+       
+
+
+ Constructing a Hobbes3 Index 
+ Usage 
+ 
+./hobbes-index --sref &lt;input fasta file&gt; \
+               -i &lt;output index file&gt; -g &lt;gram length&gt; -p &lt;number of threads&gt;
+ 
+
+ Example 
+./hobbes-index --sref hg18.fa -i hg18.hix -g 11 -p 4
+
+ Options 
+	    --sref &lt;file&gt;  
+	     Reference sequence file to index in fasta format. 
+	      --dref &lt;dir&gt;  
+	     Uses all fasta files in given directory as reference sequence. File names become chromosome names. 
+	      -i &lt;file&gt;  
+	     Create Hobbes3 index into given file. 
+	      -g &lt;int&gt;  
+	     Use given gram length to build a Hobbes3 index. We recommend a gram length of 11. We support gram lengths up to 16, but the index size will increase dramatically after gram length 13. 
+	      -p &lt;int&gt;  
+	     Use given number of parallel pthreads to construct the index. 
+	      --noprogress  
+	     Disable progress indicator. 
+	     Mapping Reads with Hobbes3 
+ Single-End Reads 
+1) Hamming distance (substitutions only):
+ 
+./hobbes -q &lt;input fastq file&gt; --sref &lt;fasta reference file&gt;       \
+         -i &lt;hobbes index file&gt; -a --hamming -v &lt;hamming distance&gt; \
+         -n &lt;number of reads&gt; -p &lt;number of threads&gt;
+ 
+
+2) Edit distance (substitutions/insertions/deletions):
+ 
+./hobbes -q &lt;input fastq file&gt; --sref &lt;fasta reference file&gt;  \
+         -i &lt;hobbes index file&gt; -a --indel -v &lt;edit distance&gt; \
+         -n &lt;number of reads&gt; -p &lt;number of threads&gt;
+   
+
+Examples:
+ 
+ hobbes -q reads.fq --sref hg18.fa -i hg18.hix -a --hamming -v 2 -n 10000 -p 16   hobbes -q reads.fq --sref hg18.fa -i hg18.hix -a --indel   -v 2 -n 10000 -p 16    Paired-End Reads 
+1) Hamming distance (substitutions only):
+ 
+./hobbes --pe                                                               \
+         --seqfq1 &lt;first read fastq file&gt; --seqfq2 &lt;second read fastq file&gt; \
+         --min &lt;minimum insert size&gt; --max &lt;maximum insert size&gt;            \
+         --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt;               \
+         -a --hamming -v &lt;hamming distance&gt; -n &lt;number of reads&gt;            \
+         -p &lt;number of threads&gt;
+ 
+
+2) Edit distance (substitutions/insertions/deletions):
+ 
+./hobbes --pe                                                               \
+         --seqfq1 &lt;first read fastq file&gt; --seqfq2 &lt;second read fastq file&gt; \
+         --min &lt;minimum insert size&gt; --max &lt;maximum insert size&gt;            \
+         --sref &lt;fasta reference file&gt; -i &lt;hobbes index file&gt;               \
+         -a --indel -v &lt;hamming distance&gt; -n &lt;number of reads&gt;              \
+         -p &lt;number of threads&gt;
+ 
+
+Examples:
+ 
+./hobbes --pe --seqfq1 reads1.fq --seqfq2 reads1.fq  --min 50 --max 150 \
+         --sref hg18.fa -i hg18.hix -a --hamming -v 2 -n 10000 -p 16
+./hobbes --pe --seqfq1 reads1.fq --seqfq2 reads1.fq  --min 50 --max 150 \
+         --sref hg18.fa -i hg18.hix -a --indel   -v 2 -n 10000 -p 16
+ 
+
+ Read Input Options 		   
+	    -q &lt;file&gt;  
+	     Map single-end reads in given fastq file. 
+	      -r &lt;file&gt;  
+	     Map single-end reads in given line-by-line text file. 
+	      -f &lt;file&gt;  
+	     Map single-end reads in given fasta file. 
+	      -c &lt;string&gt;  
+	     Map given single-end read (only maps a single read). 
+	      --seqfq1 &lt;file&gt;  
+	     First fastq file for paired-end reads. Requires --pe. 
+	      --seqfq2 &lt;file&gt;  
+	     Second fastq file for paired-end reads. Requires --pe. 
+	      --gzip  
+	     Reads file is compressed with gzip. 
+	      --bzip2  
+	     Reads file is compressed with bzip2. 
+	     top 
+
+ Reference Sequence Options 
+	    --sref &lt;file&gt;  
+	     Reference sequence file in fasta format. 
+	      --dref &lt;dir&gt;  
+	     Uses all fasta files in given directory as reference sequence. File names become chromosome names. 
+	     top 
+
+ Index Options 
+	    -i &lt;file&gt;  
+	     Use given Hobbes3 index to perform mapping. 
+	     top 
+
+ Mapping Options 
+Hobbes3 can find all or at most  k  mappings per
+read. Note that the running time varies accordingly.
+If a read has exact mappings, Hobbes3 guarantees to find
+them. Otherwise, it finds mapping(s) within the specified distance.
+By default, Hobbes3 maps against the forward and reverse reference,
+(see --norc and --nofw).
+      -a  
+	     Find all mapping locations. 
+	      -m &lt;int&gt;  
+	     Find those reads such that the maximum number of distinct mapping locations is less than or equal to a given threshold (single-end mapping only). 
+	      -k &lt;int&gt;  
+	     Find upto 'k' mappings per read (single-end mapping only). 
+	      --hamming  
+	     Map reads using using Hamming distance. 
+	      --indel  
+	     Map reads using edit distance. Uses heuristics to speed up the search, and is not guaranteed to find the best possible mapping locations (but very often it does). 
+	      -v &lt;int&gt;  
+	     Distance threshold. Finds reads within given distance threshold (use --hamming for Hamming distance and --indel for edit distance). 
+	      --pe  
+	     Enable paired-end mapping mode. See --seqfq1 and --seqfq2. 
+	      --min &lt;int&gt;  
+	     Minimum insert size for paired-end mappings. 
+	      --min &lt;int&gt;  
+	     Maximum insert size for paired-end mappings. 
+	      -n &lt;int&gt;  
+	     Aligns given number of reads (first ones). By default, all the reads are aligned.  
+	      --norc  
+	     Maps against forward reference only. 
+	      --nofw  
+	     Maps against reverse reference only. 
+	     top 
+	
+ Output Options  
+Hobbes3 produces results in  the SAM output format  with CIGAR strings. 
+By default, mappings are printed to  stdout .
+      --sam-nohead  
+	     Suppresses the header lines (starting with '@'). 
+	      --sam-nosq  
+	     Suppresses the @SQ header lines. 
+	      --mapout &lt;file&gt;  
+	     Prints the mappings to a specified file.  
+	     top 
+            
+ Other options 
+         
+	    -p &lt;int&gt;  
+	     Runs given number of parallel pthreads to perform the mapping. 
+	      --noprogress  
+	     Disable progress indicator. 
+	      --version  
+	     Prints version information. 
+	      --help  
+	     Prints usage information.  
+	     top          
+
+      
+       
+       The SAM Output Format 
+       Hobbes3 produces results in the SAM format. It outputs one mapping per
+        line. A single read may appear at multiple lines, where the primary
+        mapping is placed first. Reads that are unmapped are not printed. Each
+        line has the following tab separated fields: 
+        
+
+        
+         Name of the read mapped.   SAM bitwise FLAG.   RNAME: Reference sequence name of the mapping.
+         If @SQ header lines are present, RNAME must be present in one of the SQ-SN tag.    POS: 1-based leftmost mapping POSition of the first matching base.
+         The first base in a reference sequence has coordinate 1.   MAPQ: Mapping Quality. A value 255 indicates that the mapping quality is not available.
+         Since we don't support this yet, it's set to 255.   CIGAR: CIGAR string.    RNEXT: Reference sequence name of the NEXT fragment in the template. Currently unavailable and hence set to`*'.   PNEXT: Position of the NEXT fragment in the template.
+         In single-end alignment, it's set to 0; in paired-end alignment, it's the positon of it's mate pair.   TLEN: Signed insert size, it is set as 0 for single-end reads or when the information is unavailable.   SEQ: Read sequence. If the current mapping is not a primary mapping, it is set to `*'.   QUAL: ASCII of base QUALity plus 33 (same as the quality string in the Sanger FASTQ format).
+         If either the input file is not in the FASTQ or the current mapping is not a primary mapping, it is set to `*'.   Optional fields: For descriptions of all possible optional fields, see  
+           the SAM format specification .
+         The fields relevant to Hobbes3 is,    NM:i:&lt;N&gt; - Mapped read has hamming/edit distance of &lt;N&gt;.     
+        
+         top      
+        
+ 
+      
+
+   � 2015 ISG | Website maintained by Jongik Kim | Created by  Yun Huang  | Original design   Andreas Viklund      Last Updated on Jul 13, 2015   </body> 

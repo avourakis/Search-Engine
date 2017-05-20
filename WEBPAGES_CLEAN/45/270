@@ -1,0 +1,1167 @@
+ Contents<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+   
+   
+   
+   Previous:   Front Matter 
+ Up:   OEChem - API Manual 
+ Next:   1. Introduction 
+   
+
+    
+Contents 
+ 
+
+
+     Front Matter 
+   1. Introduction 
+   2. C++ Compilers and Platforms 
+   2.1 Native Compilers 
+   2.2 GNU C/C++ Compilers 
+   2.3 Third Party Compilers 
+       1 OEChem Library 
+   3. OEChem Classes and Member Functions 
+   3.1 OEAtomBase 
+   3.1.1 GetAtomicNum 
+   3.1.2 GetAtoms 
+   3.1.3 GetBond 
+   3.1.4 GetBonds 
+   3.1.5 GetDegree 
+   3.1.6 GetExplicitDegree 
+   3.1.7 GetExplicitHCount 
+   3.1.8 GetExplicitValence 
+   3.1.9 GetFormalCharge 
+   3.1.10 GetHvyDegree 
+   3.1.11 GetHvyValence 
+   3.1.12 GetHyb 
+   3.1.13 GetIdx 
+   3.1.14 GetImplicitHCount 
+   3.1.15 GetIntType 
+   3.1.16 GetIsotope 
+   3.1.17 GetMapIdx 
+   3.1.18 GetName 
+   3.1.19 GetParent 
+   3.1.20 GetPartialCharge 
+   3.1.21 GetRadius 
+   3.1.22 GetRxnRole 
+   3.1.23 GetSymmetryClass 
+   3.1.24 GetTotalHCount 
+   3.1.25 GetType 
+   3.1.26 GetValence 
+   3.1.27 IsAromatic 
+   3.1.28 IsCarbon 
+   3.1.29 IsConnected 
+   3.1.30 IsHalogen 
+   3.1.31 IsHydrogen 
+   3.1.32 IsInRing 
+   3.1.33 IsMetal 
+   3.1.34 IsNitrogen 
+   3.1.35 IsOxygen 
+   3.1.36 IsPhosphorus 
+   3.1.37 IsPolar 
+   3.1.38 IsPolarHydrogen 
+   3.1.39 IsSulfur 
+   3.1.40 SetAromatic 
+   3.1.41 SetAtomicNum 
+   3.1.42 SetFormalCharge 
+   3.1.43 SetHyb 
+   3.1.44 SetImplicitHCount 
+   3.1.45 SetIntType 
+   3.1.46 SetInRing 
+   3.1.47 SetIsotope 
+   3.1.48 SetMapIdx 
+   3.1.49 SetName 
+   3.1.50 SetPartialCharge 
+   3.1.51 SetRadius 
+   3.1.52 SetRxnRole 
+   3.1.53 SetStereo 
+   3.1.54 SetSymmetryClass 
+   3.1.55 SetType 
+     3.2 OEBondBase 
+   3.2.1 GetBgn 
+   3.2.2 GetBgnIdx 
+   3.2.3 GetEnd 
+   3.2.4 GetEndIdx 
+   3.2.5 GetIdx 
+   3.2.6 GetIntType 
+   3.2.7 GetNbr 
+   3.2.8 GetOrder 
+   3.2.9 GetParent 
+   3.2.10 GetType 
+   3.2.11 IsAromatic 
+   3.2.12 IsInRing 
+   3.2.13 IsRotor 
+   3.2.14 SetAromatic 
+   3.2.15 SetBgn 
+   3.2.16 SetEnd 
+   3.2.17 SetIntType 
+   3.2.18 SetInRing 
+   3.2.19 SetOrder 
+   3.2.20 SetStereo 
+   3.2.21 SetType 
+   3.2.22 SwapEnds 
+     3.3 OECartesianToInternal 
+   3.3.1 reset 
+   3.3.2 update 
+     3.4 OECliqueSearch 
+   3.4.1 Constructors 
+   3.4.2 AddConstraint 
+   3.4.3 ClearConstraints 
+   3.4.4 GetMaxMatches 
+   3.4.5 GetMinAtoms 
+   3.4.6 GetPattern 
+   3.4.7 GetSaveRange 
+   3.4.8 Init 
+   3.4.9 Match 
+   3.4.10 SingleMatch 
+     3.5 OEConfBase 
+   3.6 OEConfBaseT 
+   3.6.1 coord_type 
+   3.6.2 Copy 
+   3.6.3 Constructors 
+   3.6.4 operator= 
+   3.6.5 AddAtom 
+   3.6.6 AddBond 
+   3.6.7 RemoveAtom 
+   3.6.8 RemoveBond 
+   3.6.9 MCMol 
+   3.6.10 Conformer Indices 
+   3.6.11 SetCoords 
+   3.6.12 GetCoords 
+   3.6.13 Deletion 
+   3.6.14 Torsions 
+   3.6.15 Transformations 
+   3.6.16 Title 
+   3.6.17 OEMolBase 
+   3.6.18 OEBase 
+     3.7 OEConfTest 
+   3.7.1 CompareMols 
+   3.7.2 CreateCopy 
+   3.7.3 OEDefaultConfTest 
+   3.7.4 OEIsomericConfTest 
+   3.7.5 OEAbsoluteConfTest 
+   3.7.6 OEAbsCanonicalConfTest 
+     3.8 OEEuler 
+   3.9 OEExprBase 
+   3.9.1 IsEquivalent 
+   3.9.2 CreateCopy 
+   3.9.3 GetType 
+     3.10 OEFuzzy 
+   3.10.1 Constructor 
+   3.10.2 operator bool 
+   3.10.3 operator ! 
+   3.10.4 operator &amp;&amp; 
+   3.10.5 operator 
+   3.10.6 operator == 
+   3.10.7 operator != 
+     3.11 OEInternalToCartesian 
+   3.11.1 reset 
+   3.11.2 update 
+     3.12 OELibaryGen 
+   3.12.1 Constructors 
+   3.12.2 AddStartingMaterial 
+   3.12.3 operator() 
+   3.12.4 operator bool 
+   3.12.5 ClearStartingMaterial 
+   3.12.6 GetExplicitHydrogens 
+   3.12.7 GetProducts 
+   3.12.8 GetReactants 
+   3.12.9 GetValenceCorrection 
+   3.12.10 Init 
+   3.12.11 NumReactants 
+   3.12.12 SetExplicitHydrogens 
+   3.12.13 SetStartingMaterial 
+   3.12.14 SetValenceCorrection 
+     3.13 OEMatch 
+   3.13.1 OEMatch Constructors 
+   3.13.2 operator = 
+   3.13.3 AddPair 
+   3.13.4 CreateCopy 
+   3.13.5 GetAtoms 
+   3.13.6 GetBonds 
+   3.13.7 GetPatternAtoms 
+   3.13.8 GetPatternBonds 
+   3.13.9 GetTargetAtoms 
+   3.13.10 GetTargetBonds 
+   3.13.11 NumAtoms 
+   3.13.12 NumBonds 
+     3.14 OEMatchBase 
+   3.14.1 CreateCopy 
+   3.14.2 GetAtoms 
+   3.14.3 GetBonds 
+   3.14.4 GetPatternAtoms 
+   3.14.5 GetPatternBonds 
+   3.14.6 GetTargetAtoms 
+   3.14.7 GetTargetBonds 
+   3.14.8 NumAtoms 
+   3.14.9 NumBonds 
+     3.15 OEMatchPair 
+   3.15.1 Constructors 
+   3.15.2 operator = 
+     3.16 OEMCMolBase 
+   3.17 OEMCMolBaseT 
+   3.17.1 ConfType 
+   3.17.2 Copy 
+   3.17.3 Constructors 
+   3.17.4 operator= 
+   3.17.5 Active Conformer 
+   3.17.6 GetMaxConfIdx 
+   3.17.7 NewConf 
+   3.17.8 NumConfs 
+   3.17.9 GetConf 
+   3.17.10 Delete Conformers 
+   3.17.11 SweepConfs 
+   3.17.12 OrderConfs 
+   3.17.13 GetConfs 
+   3.17.14 OEMolBase 
+   3.17.15 OEBase 
+     3.18 OEMCSFunc 
+   3.18.1 operator() 
+   3.18.2 CreateCopy 
+     3.19 OEMCSMaxAtoms 
+   3.20 OEMCSMaxBonds 
+   3.21 OEMCSMaxAtomsCompleteCycles 
+   3.21.1 Constructor 
+     3.22 OEMCSSearch 
+   3.22.1 Constructor 
+   3.22.2 operator= 
+   3.22.3 operator bool 
+   3.22.4 AddConstraint 
+   3.22.5 ClearConstraints 
+   3.22.6 GetMaxMatches 
+   3.22.7 GetMinAtoms 
+   3.22.8 GetPattern 
+   3.22.9 GetSaveRange 
+   3.22.10 Init 
+   3.22.11 Match 
+   3.22.12 SetMCSFunc 
+   3.22.13 SetMaxMatches 
+   3.22.14 SetMinAtoms 
+   3.22.15 SetSaveRange 
+   3.22.16 SingleMatch 
+     3.23 OEMol 
+   3.23.1 Constructors 
+   3.23.2 operator = 
+   3.23.3 operator bool 
+   3.23.4 ConfIdxArraySize 
+   3.23.5 DeleteConfs 
+   3.23.6 DeleteConf 
+   3.23.7 GetActive 
+   3.23.8 GetConf 
+   3.23.9 GetConfs 
+   3.23.10 IsDeleted 
+   3.23.11 NewConf 
+   3.23.12 NumConfs 
+   3.23.13 OrderConfs 
+   3.23.14 PopActive 
+   3.23.15 PushActive 
+   3.23.16 ResetConf 
+   3.23.17 SetActive 
+   3.23.18 SweepConfs 
+     3.24 OEMolBase 
+   3.24.1 operator = 
+   3.24.2 operator += 
+   3.24.3 operator bool 
+   3.24.4 Clear 
+   3.24.5 Compress 
+   3.24.6 DeleteAtom 
+   3.24.7 DeleteBond 
+   3.24.8 GetAtom 
+   3.24.9 GetAtoms 
+   3.24.10 GetBond 
+   3.24.11 GetBonds 
+   3.24.12 GetCoords 
+   3.24.13 GetDimension 
+   3.24.14 GetEnergy 
+   3.24.15 GetMaxAtomIdx 
+   3.24.16 GetMaxBondIdx 
+   3.24.17 GetTitle 
+   3.24.18 IsRxn 
+   3.24.19 NewAtom 
+   3.24.20 NewBond 
+   3.24.21 NumAtoms 
+   3.24.22 NumBonds 
+   3.24.23 OrderAtoms 
+   3.24.24 OrderBonds 
+   3.24.25 SetCoords 
+   3.24.26 SetDimension 
+   3.24.27 SetEnergy 
+   3.24.28 SetRxn 
+   3.24.29 SetTitle 
+   3.24.30 Sweep 
+   3.24.31 UnCompress 
+     3.25 oemolistream 
+   3.25.1 operator 
+   3.25.2 close 
+   3.25.3 GetFlavor 
+   3.25.4 GetFormat 
+   3.25.5 Getgz 
+   3.25.6 open 
+   3.25.7 SetConfTest 
+   3.25.8 SetFormat 
+   3.25.9 SetFlavor 
+     3.26 oemolostream 
+   3.26.1 operator 
+   3.26.2 close 
+   3.26.3 GetFormat 
+   3.26.4 open 
+   3.26.5 SetFormat 
+     3.27 OEQAtomBase 
+   3.27.1 GetQAtoms 
+   3.27.2 GetQBonds 
+     3.28 OEQBase 
+   3.28.1 SetExpr 
+   3.28.2 GetExpr 
+     3.29 OEQBondBase 
+   3.30 OEQMol 
+   3.30.1 Constructors 
+   3.30.2 operator += 
+   3.30.3 operator OEMolBase 
+   3.30.4 operator OEQMolBase 
+   3.30.5 SCMol 
+   3.30.6 QMol 
+     3.31 OEQMolBase 
+   3.31.1 operator= 
+   3.31.2 operator += 
+   3.31.3 BuildExpressions 
+   3.31.4 GetQAtoms 
+   3.31.5 GetQBonds 
+     3.32 OEQuaternion 
+   3.33 OERotMatrix 
+   3.34 OEResidue 
+   3.34.1 operator = 
+   3.34.2 operator bool 
+   3.34.3 GetAlternateLocation 
+   3.34.4 GetBFactor 
+   3.34.5 GetChainID 
+   3.34.6 GetFragmentNumber 
+   3.34.7 GetInsertCode 
+   3.34.8 GetModelNumber 
+   3.34.9 GetName 
+   3.34.10 GetOccupancy 
+   3.34.11 GetResidueNumber 
+   3.34.12 GetSecondaryStructure 
+   3.34.13 GetSerialNumber 
+   3.34.14 IsHetAtom 
+   3.34.15 SetAlternateLocation 
+   3.34.16 SetBFactor 
+   3.34.17 SetChainID 
+   3.34.18 SetFragmentNumber 
+   3.34.19 SetHetAtom 
+   3.34.20 SetInsertCode 
+   3.34.21 SetModelNumber 
+   3.34.22 SetName 
+   3.34.23 SetOccupancy 
+   3.34.24 SetResidueNumber 
+   3.34.25 SetSecondaryStructure 
+   3.34.26 SetSerialNumber 
+     3.35 OESubSearch 
+   3.35.1 Constructors 
+   3.35.2 operator = 
+   3.35.3 operator bool 
+   3.35.4 AddConstraint 
+   3.35.5 AtomMatch 
+   3.35.6 ClearConstraints 
+   3.35.7 GetMaxMatches 
+   3.35.8 GetPattern 
+   3.35.9 Init 
+   3.35.10 Match 
+   3.35.11 SingleMatch 
+   3.35.12 SetMaxMatches 
+     3.36 OETrans 
+   3.36.1 Construction and Initialization 
+   3.36.2 Adding Transformations 
+   3.36.3 OETransBase Access 
+   3.36.4 Transform 
+     3.37 OETransBase 
+   3.37.1 CreateCopy 
+   3.37.2 Transform 
+   3.37.3 Protected Transformations 
+     3.38 OETranslation 
+   3.39 OEUniMolecularRxn 
+   3.39.1 Constructors 
+   3.39.2 Init 
+   3.39.3 operator() 
+   3.39.4 operator bool 
+     3.40 OEVectorBindings 
+   3.40.1 Constructors 
+   3.40.2 operator= 
+   3.40.3 Add 
+   3.40.4 Get 
+       4. OEChem Functions 
+   4.1 OE3DToAtomStereo 
+   4.2 OE3DToBondStereo 
+   4.3 OE3DToInternalStereo 
+   4.4 OEAddExplicitHydrogens 
+   4.5 OEAddMols 
+   4.6 OEAssignAromaticFlags 
+   4.7 OEAssignFormalCharges 
+   4.8 OEAssignHybridization 
+   4.9 OEAssignImplicitHydrogens 
+   4.10 OEAssignMDLHydrogens 
+   4.11 OEAssignResidueNumbers 
+   4.12 OEAssignSerialNumbers 
+   4.13 OEAtomGetResidue 
+   4.14 OEAtomGetSmallestRingSize 
+   4.15 OEAtomIsInAromaticRingSize 
+   4.16 OEAtomIsInRingSize 
+   4.17 OEAtomSetResidue 
+   4.18 OEBondGetSmallestRingSize 
+   4.19 OEBondIsInAromaticRingSize 
+   4.20 OEBondIsInRingSize 
+   4.21 OECalcCartesianCoord 
+   4.22 OECalcInternalCoord 
+   4.23 OECalculateMolecularWeight 
+   4.24 OECanonicalOrderAtoms 
+   4.25 OECanonicalOrderBonds 
+   4.26 OEChemGetRelease 
+   4.27 OEChemGetVersion 
+   4.28 OECenter 
+   4.29 OEClearAromaticFlags 
+   4.30 OEClearPartialCharges 
+   4.31 OECreateAbsSmiString 
+   4.32 OECreateCanSmiString 
+   4.33 OECreateIsoSmiString 
+   4.34 OECreateSlnString 
+   4.35 OECreateSmiString 
+   4.36 OEDefaultImplicitHCount 
+   4.37 OEDefaultMDLHCount 
+   4.38 OEDeleteEverythingExceptTheFirstLargestComponent 
+   4.39 OEDetermineComponents 
+   4.40 OEDetermineConnectivity 
+   4.41 OEDetermineRingSystems 
+   4.42 OEEulerRotate 
+   4.43 OEExactGraphMatch 
+   4.44 OEExpandSuperAtoms 
+   4.45 OEFindRingAtomsAndBonds 
+   4.46 OEFormalPartialCharges 
+   4.47 OEGasteigerInitialCharges 
+   4.48 OEGasteigerPartialCharges 
+   4.49 OEGetAbsTorsion 
+   4.50 OEGetAngle 
+   4.51 OEGetAtomicNum 
+   4.52 OEGetAtomicSymbol 
+   4.53 OEGetAutomorphs 
+   4.54 OEGetAverageWeight 
+   4.55 OEGetBondiVdWRadius 
+   4.56 OEGetCovalentRadius 
+   4.57 OEGetDefaultMass 
+   4.58 OEGetDistance 
+   4.59 OEGetDistance2 
+   4.60 OEGetFileExtension 
+   4.61 OEGetFileType 
+   4.62 OEGetFormatString 
+   4.63 OEGetHybridization 
+   4.64 OEGetIsotopicWeight 
+   4.65 OEGetPackedCoords 
+   4.66 OEGetPaulingVdWRadius 
+   4.67 OEGetPDBAtomIndex 
+   4.68 OEGetPDBAtomName 
+   4.69 OEGetPathLength 
+   4.70 OEGetResidueIndex 
+   4.71 OEGetResidueName 
+   4.72 OEGetSmallestSubtree 
+   4.73 OEGetSubtree 
+   4.74 OEGetSubtree 
+   4.75 OEGetTorsion 
+   4.76 OEHasDoubleBond 
+   4.77 OEHasExplicitHydrogens 
+   4.78 OEHasImplicitHydrogens 
+   4.79 OEHasPartialCharges 
+   4.80 OEHasResidue 
+   4.81 OEHasResidues 
+   4.82 OEHasSingleBond 
+   4.83 OEHasTripleBond 
+   4.84 OEIsCommonIsotope 
+   4.85 OEIsReadable 
+   4.86 OEIsWriteable 
+   4.87 OEKekulize 
+   4.88 OEMacroModelAtomTypes 
+   4.89 OEMacroModelAtomTypeNames 
+   4.90 OEMacroModelTypeElement 
+   4.91 OEMacroModelTypeName 
+   4.92 OEMacroModelTypeNames 
+   4.93 OEMDLClearParity 
+   4.94 OEMDLCorrectBondStereo 
+   4.95 OEMDLHasIncorrectBondStereo 
+   4.96 OEMDLHasParity 
+   4.97 OEMDLPerceiveBondStereo 
+   4.98 OEMDLPerceiveParity 
+   4.99 OEMDLStereoFromBondStereo 
+   4.100 OEMDLStereoFromParity 
+   4.101 OEMolecularFormula 
+   4.102 OENetCharge 
+   4.103 OENewMCMolBase 
+   4.104 OENewMolBase 
+   4.105 OENewQMolBase 
+   4.106 OEParseSmarts 
+   4.107 OEParseSmiles 
+   4.108 OEParseSmirks 
+   4.109 OEPDBOrderAtoms 
+   4.110 OEPerceiveBondOrders 
+   4.111 OEPerceiveChiral 
+   4.112 OEPerceiveResidues 
+   4.113 OEPerceiveSymmetry 
+   4.114 OERandomizeTorsions 
+   4.115 OEReadCDXFile 
+   4.116 OEReadFASTAFile 
+   4.117 OEReadMacroModelFile 
+   4.118 OEReadMDLFile 
+   4.119 OEReadMol2File 
+   4.120 OEReadMolecule 
+   4.121 OEReadMOPACFile 
+   4.122 OEReadOldBinary 
+   4.123 OEReadPDBFile 
+   4.124 OEReadXYZFile 
+   4.125 OEResidueHydrogens 
+   4.126 OERMSD 
+   4.126.1 Array-Based OERMSD 
+   4.126.2 Full Molecule-Based OERMSD 
+   4.126.3 Partial Molecule-Based OERMSD 
+     4.127 OERotate 
+   4.128 OESameChain 
+   4.129 OESameResidue 
+   4.130 OEScrambleMolecule 
+   4.131 OESet3DHydrogenGeom 
+   4.132 OESetDimensionFromCoords 
+   4.133 OESetPackedCoords 
+   4.134 OESetTorsion 
+   4.135 OESmilesAtomCount 
+   4.136 OESubsetMol 
+   4.137 OESuppressHydrogens 
+   4.138 OETheFunctionFormerlyKnownAsStripSalts 
+   4.139 OETranslate 
+   4.140 OETriposAtomNames 
+   4.141 OETriposAtomType 
+   4.142 OETriposAtomTypes 
+   4.143 OETriposAtomTypeNames 
+   4.144 OETriposBondTypeNames 
+   4.145 OETriposTypeElement 
+   4.146 OETriposTypeIndex 
+   4.147 OETriposTypeName 
+   4.148 OETriposTypeNames 
+   4.149 OEWriteCDXFile 
+   4.150 OEWriteFASTAFile 
+   4.151 OEWriteMacroModelFile 
+   4.152 OEWriteMDLFile 
+   4.153 OEWriteMOPACInputFile 
+   4.154 OEWriteMol2File 
+   4.155 OEWritePDBFile 
+   4.156 OEWriteMolecule 
+   4.157 OEWriteXYZFile 
+     5. OEChem Functors 
+   5.1 OEHasIdx 
+   5.1.1 Constructor 
+   5.1.2 operator() 
+   5.1.3 Typedefs 
+     5.2 OEHasAtomName 
+   5.2.1 Constructor 
+   5.2.2 operator() 
+     5.3 OEHasChainID 
+   5.3.1 Constructor 
+   5.3.2 operator() 
+     5.4 OEHasResidueNumber 
+   5.4.1 Constructor 
+   5.4.2 operator() 
+     5.5 OEHasFragmentNumber 
+   5.5.1 Constructor 
+   5.5.2 operator() 
+     5.6 OEHasMapIdx 
+   5.6.1 Constructor 
+   5.6.2 operator() 
+     5.7 OEHasAtomicNum 
+   5.7.1 Constructor 
+   5.7.2 operator() 
+     5.8 OEIsRGroup 
+   5.8.1 Constructor 
+   5.8.2 operator() 
+     5.9 OENthAtom 
+   5.9.1 Constructor 
+   5.9.2 operator() 
+     5.10 OEMatchFunc 
+   5.10.1 Constructor 
+   5.10.2 operator() 
+   5.10.3 typedefs 
+     5.11 OEIsHydrogen 
+   5.11.1 Constructor 
+   5.11.2 operator() 
+     5.12 OEIsHeavy 
+   5.12.1 Constructor 
+   5.12.2 operator() 
+     5.13 OEIsPolar 
+   5.13.1 Constructor 
+   5.13.2 operator() 
+     5.14 OEIsPolarHydrogen 
+   5.14.1 Constructor 
+   5.14.2 operator() 
+     5.15 OEIsCarbon 
+   5.15.1 Constructor 
+   5.15.2 operator() 
+     5.16 OEIsCAlpha 
+   5.16.1 Constructor 
+   5.16.2 operator() 
+     5.17 OEIsNitrogen 
+   5.17.1 Constructor 
+   5.17.2 operator() 
+     5.18 OEIsOxygen 
+   5.18.1 Constructor 
+   5.18.2 operator() 
+     5.19 OEIsHalogen 
+   5.19.1 Constructor 
+   5.19.2 operator() 
+     5.20 OEIsSulfur 
+   5.20.1 Constructor 
+   5.20.2 operator() 
+     5.21 OEIsPhosphorus 
+   5.21.1 Constructor 
+   5.21.2 operator() 
+     5.22 OEIsAromaticAtom 
+   5.22.1 Constructor 
+   5.22.2 operator() 
+     5.23 OEAtomIsInRing 
+   5.23.1 Constructor 
+   5.23.2 operator() 
+     5.24 OEIsChiralAtom 
+   5.24.1 Constructor 
+   5.24.2 operator() 
+     5.25 OEHasAtomStereoSpecified 
+   5.25.1 Constructor 
+   5.25.2 operator() 
+     5.26 OEHasAlphaBetaUnsat 
+   5.26.1 Constructor 
+   5.26.2 operator() 
+     5.27 OEAtomIsInResidue 
+   5.27.1 Constructor 
+   5.27.2 operator() 
+     5.28 OEHasOrder 
+   5.28.1 Constructor 
+   5.28.2 operator() 
+     5.29 OEBondIsInRing 
+   5.29.1 Constructor 
+   5.29.2 operator() 
+     5.30 OEIsRotor 
+   5.30.1 Constructor 
+   5.30.2 operator() 
+     5.31 OEIsChiralBond 
+   5.31.1 Constructor 
+   5.31.2 operator() 
+     5.32 OEHasBondStereoSpecified 
+   5.32.1 Constructor 
+   5.32.2 operator() 
+     5.33 OEIsAromaticBond 
+   5.33.1 Constructor 
+   5.33.2 operator() 
+     5.34 OEGetNbrAtom 
+   5.34.1 Constructor 
+   5.34.2 operator() 
+     5.35 OEPartPred 
+   5.35.1 Constructor 
+   5.35.2 SelectPart 
+   5.35.3 operator() 
+     5.36 OEIsMember 
+   5.36.1 Constructors 
+   5.36.2 operator() 
+     5.37 OEIsMemberPtr 
+   5.37.1 Constructors 
+   5.37.2 operator() 
+   5.37.3 CreateCopy() 
+       6. OEChem Constants 
+   6.1 OEAroModel Constants 
+     7. OEChem Template Functions 
+   7.1 OECalcInertialTensor 
+   7.2 OESetCoordsToInertialFrame 
+     8. OEChem Namespaces 
+   8.1 OEAroType 
+   8.2 OECounts 
+   8.3 OEElemNo 
+   8.4 OEExprOpts 
+   8.4.1 Mass 
+   8.4.2 HCount 
+   8.4.3 ImplicitHCount 
+   8.4.4 FormalCharge 
+   8.4.5 StrictFormalCharge 
+   8.4.6 Degree 
+   8.4.7 ExplicitDegree 
+   8.4.8 Valence 
+   8.4.9 Hybridization 
+   8.4.10 AtomicNumber 
+   8.4.11 EqMetal 
+   8.4.12 EqHalogen 
+   8.4.13 EqON 
+   8.4.14 EqONS 
+   8.4.15 EqPS 
+   8.4.16 EqAromatic 
+   8.4.17 EqCHalogen 
+   8.4.18 EqCAliphaticONS 
+   8.4.19 EqCPSAcidRoot 
+   8.4.20 EqKetoneSulfoneRoot 
+   8.4.21 BondOrder 
+   8.4.22 EqSingleDouble 
+   8.4.23 EqDoubleTriple 
+   8.4.24 EqNotAromatic 
+   8.4.25 Aromaticity 
+   8.4.26 RingMember 
+   8.4.27 Chiral/Stereo 
+   8.4.28 IntType 
+   8.4.29 StringType 
+   8.4.30 DefaultAtoms 
+   8.4.31 DefaultBonds 
+   8.4.32 ExactAtoms 
+   8.4.33 ExactBonds 
+   8.4.34 AutomorphAtoms 
+   8.4.35 AutomorphBonds 
+     8.5 OEExprType 
+   8.6 OEFormat 
+   8.7 OEFuzzVal 
+   8.8 OEIFlavor 
+   8.8.1 OEIFlavor::Generic 
+   8.8.2 OEIFlavor::MMOD 
+   8.8.3 OEIFlavor::MOL2 
+   8.8.4 OEIFlavor::PDB 
+   8.8.5 OEIFlavor::SMI 
+   8.8.6 OEIFlavor::XYZ 
+     8.9 OEOFlavor 
+   8.9.1 OEOFlavor::CAN 
+   8.9.2 OEOFlavor::Generic 
+   8.9.3 OEOFlavor::ISM 
+   8.9.4 OEOFlavor::MDL 
+   8.9.5 OEOFlavor::MF 
+   8.9.6 OEOFlavor::MMOD 
+   8.9.7 OEOFlavor::MOL2 
+   8.9.8 OEOFlavor::MOL2H 
+   8.9.9 OEOFlavor::MOPAC 
+   8.9.10 OEOFlavor::PDB 
+   8.9.11 OEOFlavor::RDF 
+   8.9.12 OEOFlavor::SDF 
+   8.9.13 OEOFlavor::SMI 
+     8.10 OEHybridization 
+   8.11 OEHydrogenMode 
+   8.12 OEMCMolType 
+   8.13 OEMDLOFlag 
+   8.14 OEMModTypes 
+   8.15 OEMolBaseType 
+   8.16 OEMOPACOFlag 
+   8.17 OEPDBAtomName 
+   8.18 OEPDBIFlag 
+   8.19 OEPDBOFlag 
+   8.20 OEProperty 
+   8.21 OEQMolType 
+   8.22 OEResidueIndex 
+   8.23 OERxnRole 
+   8.24 OESmiFlag 
+   8.25 OETriposType 
+       2 OESystem Library 
+   9. OESystem Classes and Member Functions 
+   9.1 OEBase 
+   9.1.1 Constructors 
+   9.1.2 AddData 
+   9.1.3 Clear 
+   9.1.4 CreateCopy 
+   9.1.5 DeleteData 
+   9.1.6 GetBoolData 
+   9.1.7 GetData 
+   9.1.8 GetDataIter 
+   9.1.9 GetDataType 
+   9.1.10 GetDoubleData 
+   9.1.11 GetFloatData 
+   9.1.12 GetIntData 
+   9.1.13 GetStringData 
+   9.1.14 HasData 
+   9.1.15 IsDataType 
+   9.1.16 SetBoolData 
+   9.1.17 SetData 
+   9.1.18 SetDoubleData 
+   9.1.19 SetFloatData 
+   9.1.20 SetIntData 
+   9.1.21 SetStringData 
+     9.2 OEBaseData 
+   9.2.1 Constructor 
+   9.2.2 CreateCopy 
+   9.2.3 GetDataType 
+   9.2.4 GetSize 
+   9.2.5 GetTag 
+     9.3 OEBitVector 
+   9.3.1 Constructors 
+   9.3.2 ClearBits 
+   9.3.3 CountBits 
+   9.3.4 FirstBit 
+   9.3.5 FromHexString 
+   9.3.6 GetData 
+   9.3.7 GetSize 
+   9.3.8 IsBitOn 
+   9.3.9 IsEmpty 
+   9.3.10 LastBit 
+   9.3.11 NegateBits 
+   9.3.12 NextBit 
+   9.3.13 PrevBit 
+   9.3.14 SetBitOff 
+   9.3.15 SetBitOn 
+   9.3.16 SetSize 
+   9.3.17 ToggleBit 
+   9.3.18 ToHexString 
+     9.4 OEContainer 
+   9.4.1 Constructors 
+     9.5 OEDots 
+   9.5.1 Constructors 
+   9.5.2 GetCounts 
+   9.5.3 Total 
+   9.5.4 Update 
+     9.6 OEErrorHandler 
+   9.6.1 Error 
+   9.6.2 Fatal 
+   9.6.3 GetStrict 
+   9.6.4 Info 
+   9.6.5 SetOutputStream 
+   9.6.6 SetStrict 
+   9.6.7 Usage 
+   9.6.8 Warning 
+     9.7 OEErrorHandlerImplBase 
+   9.8 OEInterface 
+   9.8.1 Factory 
+   9.8.2 Has 
+   9.8.3 Get 
+   9.8.4 SetOrderPriority 
+   9.8.5 SetName 
+   9.8.6 SetInstance 
+   9.8.7 SetBrief 
+   9.8.8 AddDetail 
+   9.8.9 GetOrderPriority 
+   9.8.10 GetName 
+   9.8.11 GetInstance 
+   9.8.12 GetBrief 
+   9.8.13 GetDetail 
+   9.8.14 AddParameter 
+   9.8.15 DeleteParameter 
+   9.8.16 GetParameter 
+   9.8.17 GetParameters 
+   9.8.18 AddInterface 
+   9.8.19 DeleteInterface 
+   9.8.20 GetInterface 
+   9.8.21 GetInterfaces 
+   9.8.22 Parent 
+   9.8.23 Clear 
+   9.8.24 Constructor 
+   9.8.25 Destructor 
+   9.8.26 Copy Constructor 
+   9.8.27 Assignment operator 
+     9.9 OEParameter 
+   9.9.1 IsSet 
+   9.9.2 SetName 
+   9.9.3 SetInstance 
+   9.9.4 SetBrief 
+   9.9.5 SetStringValue 
+   9.9.6 SetStringDefault 
+   9.9.7 SetHasValue 
+   9.9.8 SetHasDefault 
+   9.9.9 SetRequired 
+   9.9.10 SetKeyless 
+   9.9.11 SetVisibility 
+   9.9.12 SetOrderPriority 
+   9.9.13 AddDetail 
+   9.9.14 AddAlias 
+   9.9.15 AddLegalValue 
+   9.9.16 AddIllegaValue 
+   9.9.17 AddLegalRange 
+   9.9.18 AddIllegalRange 
+   9.9.19 GetName 
+   9.9.20 GetInstance 
+   9.9.21 GetBrief 
+   9.9.22 GetStringValue 
+   9.9.23 GetStringDefault 
+   9.9.24 GetHasValue 
+   9.9.25 GetHasDefault 
+   9.9.26 GetRequired 
+   9.9.27 GetKeyless 
+   9.9.28 GetVisibility 
+   9.9.29 GetOrderPriority 
+   9.9.30 GetDetail 
+   9.9.31 GetAlaises 
+   9.9.32 GetLegalValues 
+   9.9.33 GetIllegalValues 
+   9.9.34 GetLegalRanges 
+   9.9.35 GetIllegalRanges 
+   9.9.36 Load 
+   9.9.37 LoadValue 
+   9.9.38 LoadDefault 
+   9.9.39 IsLegalString 
+   9.9.40 IsSetToString 
+   9.9.41 TypeParameterTypeID 
+   9.9.42 ClassID 
+   9.9.43 WriteValueAndDefaultBinary 
+   9.9.44 ReadValueAndDefaultBinary 
+   9.9.45 ValueAndDefaultBinarySize 
+   9.9.46 CreateCopy 
+   9.9.47 Destructor 
+     9.10 OERandom 
+   9.10.1 Constructor 
+   9.10.2 NextFloat 
+   9.10.3 Seed 
+   9.10.4 TimeSeed 
+     9.11 OEStopWatch 
+   9.11.1 Elapsed 
+   9.11.2 Lap 
+   9.11.3 Start 
+       10. OESystem Functions 
+   10.1 OEBitVectorAnd 
+   10.2 OEBitVectorEqual 
+   10.3 OEBitVectorNot 
+   10.4 OEBitVectorOr 
+   10.5 OEBitVectorSub 
+   10.6 OEBitVectorXor 
+   10.7 OEGetTag 
+   10.8 OEHasTag 
+   10.9 OENumberToString 
+   10.10 OEStringJoin 
+   10.11 OEStringLower 
+   10.12 OEStringMatch 
+   10.13 OEStringSimplifyWhiteSpace 
+   10.14 OEStringStripWhiteSpace 
+   10.15 OEStringTokenize 
+   10.16 OEStringTokenizeQuoted 
+   10.17 OEStringToNumber 
+   10.18 OEStringTranslate 
+   10.19 OEStringUpper 
+   10.20 OETanimoto 
+   10.21 StringTo 
+   10.22 ToString 
+   10.23 OEConfigure 
+   10.23.1 Parameter record format 
+   10.23.2 Category record format 
+     10.24 OECheckHelp 
+   10.25 OEParseCommandLine 
+   10.26 OEParseCommandLineLW 
+   10.27 OEWriteSettings 
+     11. OESystem Templates 
+   11.1 OEAnd 
+   11.1.1 Constructor 
+     11.2 OEGetDataType 
+   11.3 OEIter 
+   11.3.1 Constructors 
+   11.3.2 operator = 
+   11.3.3 operator == 
+   11.3.4 operator != 
+   11.3.5 operator bool 
+   11.3.6 operator 
+   11.3.7 operator * 
+   11.3.8 operator ++ 
+   11.3.9 operator - 
+   11.3.10 operator += 
+   11.3.11 operator -= 
+   11.3.12 Copy 
+   11.3.13 ToFirst 
+   11.3.14 ToLast 
+   11.3.15 Sort 
+     11.4 OEIterBase 
+   11.5 OENot 
+   11.5.1 Constructor 
+     11.6 OEOr 
+   11.6.1 Constructor 
+     11.7 OETypeId 
+   11.8 OEUnaryFunction 
+   11.8.1 Specializations 
+     11.9 OEUnaryPredicate 
+   11.10 OEFactory 
+   11.10.1 Register 
+   11.10.2 Construct 
+     11.11 OETypedParameter 
+   11.11.1 SetValue 
+   11.11.2 SetDefault 
+   11.11.3 GetValue 
+   11.11.4 GetDefault 
+   11.11.5 GetSetting 
+   11.11.6 TypedParameterTypedID 
+       12. OESystem Globals 
+   12.1 OEThrow 
+       3 OEMath Library 
+   13. OEMath Constants 
+   13.1 Deg2Rad 
+   13.2 Pi 
+   13.3 Pi2 
+   13.4 Rad2Deg 
+     14. OEMath Template Functions 
+   14.1 OEGeom2DAdd 
+   14.2 OEGeom2DAngle 
+   14.3 OEGeom2DCopy 
+   14.4 OEGeom2DDistance 
+   14.5 OEGeom2DDistance2 
+   14.6 OEGeom2DDotProd 
+   14.7 OEGeom2DMidpoint 
+   14.8 OEGeom2DNormalize 
+   14.9 OEGeom2DSubtract 
+   14.10 OEGeom2DScale 
+   14.11 OEGeom3DAbsTorsion 
+   14.12 OEGeom3DAdd 
+   14.13 OEGeom3DAngle 
+   14.14 OEGeom3DAngleCoord 
+   14.15 OEGeom3DCopy 
+   14.16 OEGeom3DCrossProd 
+   14.17 OEGeom3DDistance 
+   14.18 OEGeom3DDistance2 
+   14.19 OEGeom3DDotProd 
+   14.20 OEGeom3DEulerRotate 
+   14.21 OEGeom3DMidpoint 
+   14.22 OEGeom3DNormalize 
+   14.23 OEGeom3DRotate 
+   14.24 OEGeom3DRotVectorToTransform 
+   14.25 OEGeom3DSubtract 
+   14.26 OEGeom3DScale 
+   14.27 OEGeom3DTorsion 
+   14.28 OEGeom3DTranslate 
+   14.29 OEGeom3DVolume 
+   14.30 OEGeom3DPlanarCoord 
+   14.31 OEGeom3DTetraCoord 
+   14.32 OEGeom3DEulerToRotMatrix 
+   14.33 OEGeomQuaternionMultiply 
+   14.34 OEGeomNormalizeQuaternion 
+   14.35 OEGeomGetQuaternionConjugate 
+   14.36 OEGeom3DQuaternionToRotMatrix 
+   14.37 OEGeom3DMatrixMultiply 
+   14.38 OEGeom3DQuaternionRotate 
+   14.39 OEGeom3DUnitQuaternionRotate 
+       4 OEPlatform Library 
+   15. OEPlatform Classes and Member Functions 
+   15.1 OEDirectoryScan 
+   15.1.1 Constructors 
+   15.1.2 operator bool 
+   15.1.3 Close 
+   15.1.4 Next 
+     15.2 oeifstream 
+   15.2.1 Constructors 
+   15.2.2 fd 
+   15.2.3 openfd 
+     15.3 oeigzstream 
+   15.3.1 Constructors 
+     15.4 oeipstream 
+   15.4.1 Constructors 
+     15.5 oeisstream 
+   15.5.1 Constructors 
+   15.5.2 Operators 
+   15.5.3 clear 
+   15.5.4 getbuffer 
+   15.5.5 reset 
+   15.5.6 set 
+     15.6 oeistdstream 
+   15.6.1 Constructors 
+   15.6.2 clear 
+   15.6.3 set 
+   15.6.4 stream 
+     15.7 oeistream 
+   15.7.1 Constructors 
+   15.7.2 operator 
+   15.7.3 close 
+   15.7.4 get 
+   15.7.5 getbyte 
+   15.7.6 getline 
+   15.7.7 gettoken 
+   15.7.8 open 
+   15.7.9 peekbyte 
+   15.7.10 read 
+   15.7.11 skip 
+   15.7.12 skipbyte 
+   15.7.13 skipline 
+     15.8 oeiwrapperstream 
+   15.8.1 Constructors 
+   15.8.2 clear 
+   15.8.3 set 
+   15.8.4 stream 
+     15.9 OEMutex 
+   15.9.1 Acquire 
+   15.9.2 Release 
+     15.10 OETryMutex 
+   15.10.1 Acquire 
+   15.10.2 Release 
+   15.10.3 Try 
+     15.11 oeofstream 
+   15.11.1 Constructors 
+   15.11.2 append 
+   15.11.3 fd 
+   15.11.4 openfd 
+     15.12 oeogzstream 
+   15.12.1 Constructors 
+     15.13 oeopstream 
+   15.13.1 Constructors 
+     15.14 oeosstream 
+   15.14.1 Constructors 
+   15.14.2 Operators 
+   15.14.3 clear 
+   15.14.4 set 
+   15.14.5 str 
+     15.15 oeostdstream 
+   15.15.1 Constructors 
+   15.15.2 clear 
+   15.15.3 set 
+   15.15.4 stream 
+     15.16 oeostream 
+   15.16.1 Constructors 
+   15.16.2 operator 
+   15.16.3 close 
+   15.16.4 flush 
+   15.16.5 open 
+   15.16.6 putbyte 
+   15.16.7 write 
+     15.17 oeowrapperstream 
+   15.17.1 Constructors 
+   15.17.2 clear 
+   15.17.3 set 
+   15.17.4 stream 
+     15.18 oestream 
+   15.18.1 Constructors 
+   15.18.2 operator bool 
+   15.18.3 eof 
+   15.18.4 length 
+   15.18.5 rewind 
+   15.18.6 seek 
+   15.18.7 size 
+   15.18.8 tell 
+       16. OEPlatform Functions 
+   16.1 OECloseIStream 
+   16.2 OECloseOStream 
+   16.3 OECompressionAvailable 
+   16.4 OECompress 
+   16.5 OECreateDirectory 
+   16.6 oeendl 
+   16.7 oeends 
+   16.8 oeflush 
+   16.9 OEGetUserName 
+   16.10 OEOpenIStream 
+   16.11 OEOpenOStream 
+   16.12 OERegisterIStream 
+   16.13 OERegisterOStream 
+   16.14 OERenameFile 
+   16.15 OESleep 
+   16.16 OEUncompress 
+   16.17 OEUnlink 
+   16.18 OEUnlinkDirectory 
+   16.19 operator 
+     17. OEPlatform Globals 
+   17.1 oeerr 
+   17.2 oein 
+   17.3 oenul 
+   17.4 oeout 
+       About this document ... 
+   
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+   
+   
+   
+   Previous:   Front Matter 
+ Up:   OEChem - API Manual 
+ Next:   1. Introduction 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

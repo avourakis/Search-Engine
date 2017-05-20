@@ -1,0 +1,258 @@
+ A breath of fresh air @ the bren school of information and computer sciences<body>
+
+
+ 
+
+ 
+ 
+
+           
+
+           
+
+       
+
+
+
+
+
+
+
+
+
+     
+
+                
+              
+                
+                     ABOUT 
+
+                    
+                       About the School  
+                          Dean's Welcome  
+                          Facts and Figures  
+                          Donald Bren Hall  
+                          Visit the Bren School  
+                          Equity &amp; Diversity 
+                           Contact Us  
+                        
+                      
+                
+                 
+                
+                      DEPARTMENTS  
+                    
+
+                       Computer Science  
+                          Informatics  
+                          Statistics  
+                      
+                
+                 
+                
+                      RESEARCH  
+                
+                
+                       Research Areas  
+                          Research Centers  
+                          Research Highlights  
+                      
+                
+                
+                
+                 
+                
+                      EDUCATION  
+                    
+
+                       Graduate ▸  
+                        
+                               Prospective Students  
+                              How to Apply  
+                              Programs of Study  
+                              Academic Year Plan  
+                              Forms  
+                              Policies  
+                              Funding &amp; Housing  
+                              Computing Support  
+                              Campus Resources  
+                              Visit the Bren School  
+                              Graduate Student Handbook  
+                              Contact  
+                              
+                        
+                          Undergraduate ▸  
+                        
+                               Contact  
+                              Academic Advising  
+                              Academic Year Plan  
+                              Petitions  
+                              ICS Majors  
+                              ICS Minors  
+
+                              Policies: Academic Integrity  
+                              Policies: Academic Standing  
+                              Policies: Add, drop, &amp; change options  
+                              Policies: Coursework outside UCI  
+                              Policies: Grade policy  
+                              Policies: Laptop &amp; computer use  
+                              Policies: Withdrawal/Readmission  
+
+                                Graduation  
+                                ICS Student Life  
+                                Upcoming Events  
+                                Computing Support  
+                              
+
+                        
+                          Prospective Undergrad  
+
+
+                          Scholarships &amp; Fellowships  
+                        
+                                                    
+                      
+
+    
+                 
+                    
+                     PEOPLE                       
+                    
+                
+                       Faculty  
+                          Staff  
+                          Graduate Students  
+                          Alumni  
+                      
+                                
+                
+                  
+                
+                     NEWS &amp; EVENTS 
+                    
+                    
+                       Newsroom  
+                          Events  
+                          Press releases  
+                          Annual reports  
+                      
+
+                 
+                
+                     GET INVOLVED 
+                
+                
+                       Make a Gift  
+                              Leadership Council  
+                              Corporate Partners  
+                              Sponsor Projects  
+                              Product Development Competition  
+                              ZotLink Jobs &amp; Internships  
+                            
+                      
+
+
+                 
+                                 
+
+              
+
+
+
+
+
+
+
+
+
+
+    
+
+  Bren school home  &gt;  Community  &gt;  News  &gt;  Spotlights  
+
+
+     
+ A breath of fresh air 
+
+ 
+ 
+
+ 
+ When Tony Givargis and his team set out to build a better lung simulator, they discovered that software wasn’t enough. 
+
+
+
+ 
+   
+
+
+
+ 
+Much of computer science professor Tony Givargis’ work concerns what is known as “cyberphysical systems” – computer systems that interact with the physical world. “The simplest cyberphysical system we see everywhere is that thing,” Givargis says, pointing to the thermostat in his office. “The thermostat is a computer: It’s sensing the temperature in the room, and it’s commanding the vents, the heating, the cooling and so on.”
+ 
+ 
+In July 2010, Givargis and his research partners — including Frank Vahid, a professor at UC Riverside, and Bailey Miller, a UCR graduate student — began working on a project that involved a far more complicated cyberphysical system. Their mission, as they glibly described it in their presentation about the project: “Building Fake Body Parts.”
+ 
+ 
+CareFusion, a Yorba Linda-based medical devices manufacturer, asked Givargis and his team to come up with a new way to test respirators — the machines found in hospital ICUs that breathe for those who are unable to breathe on their own.
+ 
+ 
+“How do you test a device like that?” Givargis asks. “Well, of course, you can bring a person and say, ‘You sit down and stop breathing for a few minutes because we’re going to attach this thing to you and test it out,’ but that’s not going to work,” he says with a chuckle. It turns out that the FDA-approved method for testing high-tech respirators is a mechanical apparatus with a couple of balloons on it. 
+ 
+ 
+When Givargis first saw this thing, the contrast was startling. “You can see this electronic, sophisticated, state-of-the-art device, into which so much engineering effort has gone on one side of the table, and then you have this very basic machine — something that wouldn’t have looked strange 200 years ago. We said, we’ve got to be able to do better.”
+ 
+ 
+Conceptually, Givargis and his team found that simulating human breathing isn’t all that difficult. “It’s all mathematical,” he says. “It’s basically a large set of differential equations.”
+ 
+ 
+The problem was one of speed. “In order to emulate how a lung functions, you need to solve these equations at a very high rate — let’s say, 100 times a second, you need to solve 1,000 complicated math equations,” he says. “If you take math equations and write them in your favorite programming language, and then try to run it on a desktop computer, it works, and it computes the right result — it’s just hundreds of times slower than you’d need it to be for real-time interaction.”
+ 
+ 
+The simplest way to describe the difference between computer science and computer engineering is to break it down to software-vs.-hardware: Computer science involves the former, computer engineering the latter. To find the solution to the speed problem Givargis and his team discovered that they needed to do both.
+ 
+ 
+“Forget about code, forget about running it on a processor: Executing one instruction at a time is just too slow,” Givargis continues. “We needed massive parallelism, and a circuit is as parallel as you want to make it — it can have a million multipliers all doing multiplication simultaneously.”
+ 
+ 
+In essence, they wrote a program that could take these equations, and spit out a circuit on the other end. “And then that circuit we mapped onto an FPGA — a Field Programmable Gate Array circuit.” These reprogrammable chips turned out to be the answer.
+ 
+ 
+Givargis also notes that the device they created was itself a cyberphysical system. “We attached the pumps and such we need to get the pressure and air flow going, and then hooked that up to the ventilator and showed that the ventilator’s fooled: It thinks it’s attached to a real human being.” Their mockup could also do without the “physical” part of “cyberphysical”: “We could directly connect to their data bus, and bypass the sensing and actuation.
+ 
+ 
+By the time the project concluded in June 2013, the mockup worked beautifully — but it isn’t likely to replace the old balloon device anytime soon. That would have involved an arduous FDA approval process. “Being professors, we were kind of lucky in a sense that we didn’t have to do that,” Givargis says with a smile. “We were really interested in showing that it can be done. We had zero interest in going through all the red tape and bureaucracy it would take to get the digital mockup approved as a standard test.”
+ 
+ 
+For their part, CareFusion “appreciated having this other thing for internal use only, which allowed them to more efficiently get through the steps leading up to the approval process,” Givargis says. “I think we saved them time -- at least, we proved the concept that they can save a lot of time by using this internally as a design aid. And they’ve very happy about this.”
+
+
+ 
+  
+   — Story by Ted B. Kissell  
+   — Photo by Robert Farmer 
+
+
+ 
+ 
+ 
+  More community » 
+   Alumni  
+  Friends  
+  Parents  
+  Leadership Council  
+  News  
+  Give a gift  
+  
+   Quick Links   
+                            
+   
+  Copyright Inquiries  |
+    UCI Directory  |
+    Intranet  |
+   
+   
+ 
+   icswebmaster  
+ 
+</body> 

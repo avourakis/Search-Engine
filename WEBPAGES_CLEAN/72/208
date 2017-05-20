@@ -1,0 +1,90 @@
+ User manual for XLOGP v2.0<body>
+
+   
+
+   How to compile XLOGP?</strong>  
+
+      The XLOGP program is written in C++
+language and can run on UNIX / LINUX or DOS platform. 
+
+     To compile XLOGP, first you need to decrypt
+the file. You must do this in a UNIX / LINUX shell like this: 
+
+         
+     crypt  key &lt; xlogp.tar.Z.en &gt;
+xlogp.tar.Z  
+
+      Then,
+you need to uncompress the file:  
+
+         
+     uncompress  xlogp.tar.Z  
+
+      The third step is to
+unpack the file:  
+
+       
+       tar  xvf  xlogp.tar  
+
+      Now you will see that
+a directory named "  xlogp2.0  " has been created in your working
+directory. Under that directory, there are two subdirectories:
+"  xlogp  " and "  manual  ". The subdirectory "  xlogp  " contains
+the source codes of XLOGP v2.0 while the subdirectory "  manual  "
+contains this manual.   
+
+      Please go into the
+subdirectory "  xlogp  ". You will find the following files in that
+directory:   
+
+   Makefile
+                  
+        compiling script  
+      xlogp.c
+                   
+        source codes, in C++  
+      molecule.c        
+         source codes, in C++  
+      xlogp.h
+                   
+        source codes, in C++  
+      xlogp
+                     
+        executable code of XLOGP for SGI workstation  
+      xlogp.exe          
+        executable code of XLOGP for DOS   
+      cygwin1.dll        
+        DLL file necessary for running xlogp.exe  
+      melatonin.mol2     
+        an example compound, in Mol2 format  
+       To compile the source
+codes, please run the compiling script "Makefile" by:  
+
+     
+         make  
+
+      The
+"Makefile" script will compile the source codes
+automatically and finally generate an executable code named as
+"  xlogp  ". Please notice that the default C++
+compiler assigned in the "Makefile" script is SGI
+"CC" compiler. If you are using a different C++
+compiler on your computer, e.g. "g++", you should
+change the first line in the file "Makefile" as
+"CC = g++".   
+
+      If you do not have
+any C++ compiler installed on your computer, we have provided the
+executable code of XLOGP v2.0, "  xlogp  ",  in the same directory. It is
+compiled on a SGI O2/R10000 workstation running IRIX6.4. So, if
+you happen to use the same kind of computer, you have a good
+chance to run "  xlogp  " directly.  
+
+      We have also provided
+the executable code of XLOGP for Windows/DOS platform, "  xlogp.exe  ".
+Please always remember to keep the file "  cygwin1.dll  "
+together with it.  
+
+    [Content]       [Introduction]       [Download]    [Compiling]    [Usage]       [Trouble
+Shooting]   
+</body> 

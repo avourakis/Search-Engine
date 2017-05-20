@@ -1,0 +1,424 @@
+ #ifndef ARRAY_SET_HPP_
+#define ARRAY_SET_HPP_
+
+#include 
+#include 
+#include 
+#include 
+#include "ics_exceptions.hpp"
+
+
+namespace ics {
+
+
+template class ArraySet {
+  public:
+    //Destructor/Constructors
+    ~ArraySet();
+
+ 	  ArraySet          ();
+	  explicit ArraySet (int initial_length);
+	  ArraySet          (const ArraySet&amp; to_copy);
+	  explicit ArraySet (const std::initializer_list&amp; il);
+
+    //Iterable class must support "for-each" loop: .begin()/.end()/.size() and prefix ++ on returned result
+    template 
+    explicit ArraySet (const Iterable&amp; i);
+
+
+    //Queries
+    bool empty      () const;
+    int  size       () const;
+    bool contains   (const T&amp; element) const;
+    std::string str () const; //supplies useful debugging information; contrast to operator 
+    bool contains_all (const Iterable&amp; i) const;
+
+
+    //Commands
+    int  insert (const T&amp; element);
+    int  erase  (const T&amp; element);
+    void clear  ();
+
+    //Iterable class must support "for" loop: .begin()/.end() and prefix ++ on returned result
+
+    template 
+    int insert_all(const Iterable&amp; i);
+
+    template 
+    int erase_all(const Iterable&amp; i);
+
+    template
+    int retain_all(const Iterable&amp; i);
+
+
+    //Operators
+    ArraySet&amp; operator = (const ArraySet&amp; rhs);
+    bool operator == (const ArraySet&amp; rhs) const;
+    bool operator != (const ArraySet&amp; rhs) const;
+    bool operator &amp; rhs) const;
+    bool operator &amp; rhs) const;
+    bool operator &gt;= (const ArraySet&amp; rhs) const;
+    bool operator &gt;  (const ArraySet&amp; rhs) const;
+
+    template
+    friend std::ostream&amp; operator &amp; s);
+
+
+
+    class Iterator {
+      public:
+        //Private constructor called in begin/end, which are friends of ArraySet
+        ~Iterator();
+        T           erase();
+        std::string str  () const;
+        ArraySet::Iterator&amp; operator ++ ();
+        ArraySet::Iterator  operator ++ (int);
+        bool operator == (const ArraySet::Iterator&amp; rhs) const;
+        bool operator != (const ArraySet::Iterator&amp; rhs) const;
+        T&amp; operator *  () const;
+        T* operator -&gt; () const;
+        friend std::ostream&amp; operator ::Iterator&amp; i) {
+          outs ::begin () const;
+        friend Iterator ArraySet::end   () const;
+
+      private:
+        //If can_erase is false, current indexes the "next" value (must ++ to reach it)
+        int          current;
+        ArraySet* ref_set;
+        int          expected_mod_count;
+        bool         can_erase = true;
+
+        //Called in friends begin/end
+        Iterator(ArraySet* iterate_over, int initial);
+    };
+
+
+    Iterator begin () const;
+    Iterator end   () const;
+
+
+  private:
+    T*  set;           //Unordered contiguous array
+    int length    = 0; //Physical length of array: must be &gt;= .size()
+    int used      = 0; //Amount of array used: invariant: 0 
+ArraySet::~ArraySet() {
+  delete[] set;
+}
+
+
+template
+ArraySet::ArraySet() {
+  set = new T[length];
+}
+
+
+template
+ArraySet::ArraySet(int initial_length)
+: length(initial_length) {
+  if (length 
+ArraySet::ArraySet(const ArraySet&amp; to_copy)
+: length(to_copy.length), used(to_copy.used) {
+  set = new T[length];
+  for (int i=0; i
+ArraySet::ArraySet(const std::initializer_list&amp; il)
+: length(il.size()) {
+  set = new T[length];
+  for (const T&amp; s_elem : il)
+    insert(s_elem);
+}
+
+
+template
+template
+ArraySet::ArraySet(const Iterable&amp; i)
+: length(i.size()) {
+  set = new T[length];
+  for (const T&amp; v : i)
+    insert(v);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Queries
+
+template
+bool ArraySet::empty() const {
+  return used == 0;
+}
+
+
+template
+int ArraySet::size() const {
+  return used;
+}
+
+
+template
+bool ArraySet::contains (const T&amp; element) const {
+  for (int i=0; i
+std::string ArraySet::str() const {
+  std::ostringstream answer;
+  answer 
+template
+bool ArraySet::contains_all (const Iterable&amp; i) const {
+  for (const T&amp; v : i)
+    if (!contains(v))
+        return false;
+
+    return true;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Commands
+
+template
+int ArraySet::insert(const T&amp; element) {
+  for (int i=0; iensure_length(used+1);
+  set[used++] = element;
+  ++mod_count;
+  return 1;
+}
+
+
+template
+int ArraySet::erase(const T&amp; element) {
+  for (int i=0; i
+void ArraySet::clear() {
+  used = 0;
+  this-&gt;ensure_length_low(0);
+  ++mod_count;
+}
+
+
+template
+template
+int ArraySet::insert_all(const Iterable&amp; i) {
+  int count = 0;
+  for (const T&amp; v : i)
+     count += insert(v);
+
+  return count;
+}
+
+
+template
+template
+int ArraySet::erase_all(const Iterable&amp; i) {
+  int count = 0;
+  for (const T&amp; v : i)
+     count += erase(v);
+
+  return count;
+}
+
+
+template
+template
+int ArraySet::retain_all(const Iterable&amp; i) {
+  ArraySet s(i);
+  int count = 0;
+  for (int i=0; i
+ArraySet&amp; ArraySet::operator = (const ArraySet&amp; rhs) {
+  if (this == &amp;rhs)
+    return *this;
+
+  this-&gt;ensure_length(rhs.used);
+  used = rhs.used;
+  for (int i=0; i
+bool ArraySet::operator == (const ArraySet&amp; rhs) const {
+  if (this == &amp;rhs)
+    return true;
+
+  if (used != rhs.size())
+    return false;
+
+  for (int i=0; i
+bool ArraySet::operator != (const ArraySet&amp; rhs) const {
+  return !(*this == rhs);
+}
+
+
+template
+bool ArraySet::operator &amp; rhs) const {
+  if (this == &amp;rhs)
+    return true;
+
+  if (used &gt; rhs.size())
+    return false;
+
+  for (int i=0; i
+bool ArraySet::operator &amp; rhs) const {
+  if (this == &amp;rhs)
+    return false;
+
+  if (used &gt;= rhs.size())
+    return false;
+
+  for (int i=0; i
+bool ArraySet::operator &gt;= (const ArraySet&amp; rhs) const {
+  return rhs 
+bool ArraySet::operator &gt; (const ArraySet&amp; rhs) const {
+  return rhs 
+std::ostream&amp; operator &amp; s) {
+  outs 
+auto ArraySet::begin () const -&gt; ArraySet::Iterator {
+  return Iterator(const_cast*&gt;(this),0);
+}
+
+
+template
+auto ArraySet::end () const -&gt; ArraySet::Iterator {
+  return Iterator(const_cast*&gt;(this),used);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//Private helper methods
+
+template
+int ArraySet::erase_at(int i) {
+  set[i] = set[--used];
+  this-&gt;ensure_length_low(used);
+  ++mod_count;
+  return 1;
+}
+
+
+template
+void ArraySet::ensure_length(int new_length) {
+  if (length &gt;= new_length)
+    return;
+  T* old_set = set;
+  length = std::max(new_length,2*length);
+  set = new T[length];
+  for (int i=0; i
+void ArraySet::ensure_length_low(int new_length) {
+  if (length 
+ArraySet::Iterator::Iterator(ArraySet* iterate_over, int initial)
+: current(initial), ref_set(iterate_over), expected_mod_count(ref_set-&gt;mod_count) {
+}
+
+
+template
+ArraySet::Iterator::~Iterator() {}
+
+
+template
+T ArraySet::Iterator::erase() {
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::erase");
+  if (!can_erase)
+    throw CannotEraseError("ArraySet::Iterator::erase Iterator cursor already erased");
+  if (current = ref_set-&gt;used)
+    throw CannotEraseError("ArraySet::Iterator::erase Iterator cursor beyond data structure");
+
+  can_erase = false;
+  T to_return = ref_set-&gt;set[current];
+  ref_set-&gt;erase_at(current);
+  expected_mod_count = ref_set-&gt;mod_count;
+  return to_return;
+}
+
+
+template
+std::string ArraySet::Iterator::str() const {
+  std::ostringstream answer;
+  answer str() 
+auto ArraySet::Iterator::operator ++ () -&gt; ArraySet::Iterator&amp; {
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator ++");
+
+  if (current &gt;= ref_set-&gt;used)
+    return *this;
+
+  if (can_erase)
+    ++current;
+  else
+    can_erase = true;  //current already indexes "one beyond" erased value
+
+  return *this;
+}
+
+
+template
+auto ArraySet::Iterator::operator ++ (int) -&gt; ArraySet::Iterator {
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator ++(int)");
+
+  if (current &gt;= ref_set-&gt;used)
+    return *this;
+
+  Iterator to_return(*this);
+  if (can_erase)
+    ++current;
+  else
+    can_erase = true;  //current already indexes "one beyond" erased value
+
+  return to_return;
+}
+
+
+template
+bool ArraySet::Iterator::operator == (const ArraySet::Iterator&amp; rhs) const {
+  const Iterator* rhsASI = dynamic_cast(&amp;rhs);
+  if (rhsASI == 0)
+    throw IteratorTypeError("ArraySet::Iterator::operator ==");
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator ==");
+  if (ref_set != rhsASI-&gt;ref_set)
+    throw ComparingDifferentIteratorsError("ArraySet::Iterator::operator ==");
+
+  return current == rhsASI-&gt;current;
+}
+
+
+template
+bool ArraySet::Iterator::operator != (const ArraySet::Iterator&amp; rhs) const {
+  const Iterator* rhsASI = dynamic_cast(&amp;rhs);
+  if (rhsASI == 0)
+    throw IteratorTypeError("ArraySet::Iterator::operator !=");
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator !=");
+  if (ref_set != rhsASI-&gt;ref_set)
+    throw ComparingDifferentIteratorsError("ArraySet::Iterator::operator !=");
+
+  return current != rhsASI-&gt;current;
+}
+
+
+template
+T&amp; ArraySet::Iterator::operator *() const {
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator *");
+  if (!can_erase || current = ref_set-&gt;used) {
+    std::ostringstream where;
+    where size();
+    throw IteratorPositionIllegal("ArraySet::Iterator::operator * Iterator illegal: "+where.str());
+  }
+
+  return ref_set-&gt;set[current];
+}
+
+
+template
+T* ArraySet::Iterator::operator -&gt;() const {
+  if (expected_mod_count != ref_set-&gt;mod_count)
+    throw ConcurrentModificationError("ArraySet::Iterator::operator -&gt;");
+  if (!can_erase || current = ref_set-&gt;used) {
+    std::ostringstream where;
+    where size();
+    throw IteratorPositionIllegal("ArraySet::Iterator::operator -&gt; Iterator illegal: "+where.str());
+  }
+
+  return &amp;ref_set-&gt;set[current];
+}
+
+
+}
+
+#endif /* ARRAY_SET_HPP_ */
+ 

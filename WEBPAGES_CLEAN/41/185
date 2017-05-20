@@ -1,0 +1,153 @@
+ SSH tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Differences  
+ 
+
+ 
+
+This shows you the differences between two versions of the page.
+ 
+
+ 
+       
+     wiki:ssh_tutorial [Wed Feb 27 04:55:04 2013]   michael       
+     
+     wiki:ssh_tutorial [Sat Sep 13 01:16:07 2014]  (current)  michael   PC edit      
+       Line 1: 
+ Line 1:       ====== SSH tutorial ======     ====== SSH tutorial ======                -  ===== Generating a key =====   +  ===== Generating a key  on a *NIX </strong>=====     -   FIXME</strong>  +    </strong>       +   These instructions apply to OS X and Linux. </strong>       +    </strong>       +   &lt;code bash&gt; </strong>       +   ssh-keygen -t dsa -C "user@school.edu" </strong>       +   &lt;/code&gt; </strong>       +    </strong>       +   &lt;code -&gt; </strong>       +   Generating public/private dsa key pair. </strong>       +   Enter file in which to save the key (/home/user/.ssh/id_dsa): </strong>       +   Enter passphrase (empty for no passphrase):  </strong>       +   Enter same passphrase again:  </strong>       +   Your identification has been saved in /home/user/.ssh/id_dsa. </strong>       +   Your public key has been saved in /home/user/.ssh/id_dsa.pub. </strong>       +   The key fingerprint is: </strong>       +   70:85:4f:e5:91:b8:ab:a4:95:ce:fb:df:11:75:df:de user@school.edu </strong>       +   The key's randomart image is: </strong>       +   +--[ DSA 1024]----+ </strong>       +   |         ..oo.   | </strong>       +   |        ..o...   | </strong>       +   |      . .o ..   o| </strong>       +   |       o  o    .+| </strong>       +   |        S. .  . o| </strong>       +   |        + .    o.| </strong>       +   |       * .    . E| </strong>       +   |      . +    . . | </strong>       +   |        .o... .  | </strong>       +   +-----------------+ </strong>       +   &lt;/code&gt; </strong>       +    </strong>       +   ===== Generating a key on Windows ===== </strong>       +    </strong>       +   Use the utility called Putty Key Generator. </strong>       +    </strong>       +   Generate &gt; save private key. </strong>       +    </strong>       +   To share the public key: </strong>       +     - copy the text in the text box into a clipboard </strong>       +     - paste the text from the clipboard into a text file and save that file </strong>       +     - share the saved file </strong>       +    </strong>       +   Remarks: </strong>       +     * For those using SourceTree as a Git client, Putty Key Generator is included under Tools. </strong>       +     * Do not use Putty Key Generator's save public key feature, that won't work.</strong>                   ===== The config file =====     ===== The config file =====    -   FIXME</strong>  +    </strong>       +   &lt;code - config&gt; </strong>       +   Host redwood </strong>       +       HostName redwood.ics.uci.edu </strong>       +       User git </strong>       +       IdentityFile ~/.ssh/school_rsa   # Only need if you have multiple keys </strong>       +   &lt;/code&gt; </strong>       +    </strong>       +   &lt;code - config&gt; </strong>       +   Host family-guy </strong>       +       HostName family-guy.ics.uci.edu </strong>       +       User &lt;user&gt; </strong>       +       IdentityFile ~/.ssh/school_rsa   # Only need if you have multiple keys </strong>       +   &lt;/code&gt;</strong>                   ===== Other resources =====     ===== Other resources =====       FIXME     FIXME                 
+   
+  
+
+  
+    
+     Trace: 
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/ssh_tutorial.1361940904.txt.gz · Last modified: Wed Feb 27 04:55:04 2013 by michael  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

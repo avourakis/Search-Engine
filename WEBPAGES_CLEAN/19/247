@@ -1,0 +1,37 @@
+ 1. In class we described van Emde Boas trees with a simplifying assumption that each item has a different key from each other item. But what if this assumption is not true? Describe how to modify the data structure to handle the case that more than one item may have the same priority. Your solution should have the same asymptotic running time per operation as the van Emde Boas tree as described in class.
+
+(Possible solutions include storing linked lists of items with the same priority, or using a separate data structure to map priorities to the set of items having those priorities. You may assume that hash tables can solve the dictionary problem in constant time per operation. You should describe how your modifications affect the operation of the three basic priority queue operations: insert, delete, and find-min).
+
+SOLUTION: Make the value associated with a key in the van emde Boas tree be a collection of all the different values that are really associated with that key. To do an insertion, search the tree to find whether the inserted key is already there, and if so add it to the collection; otherwise start a new collection. To do a deletion, remove it from the collection and if that causes the collection to become empty then do the deletion in the van emde Boas tree directly. You will need either to know when you do a deletion which insertion it corresponds to (in which case you can remember the position in the collection, e.g. as a node in a linked list, allowing you to go directly to that position when it comes time to delete it) or the value being deleted (in which case you can maintain the collection of values as another hash table).
+
+
+2. Slot-size bound for hash chaining (Cormen, Leiserson, Rivest, and Stein,
+Introduction to Algorithms, Problem 11-2, page 250):
+
+Suppose we have a hash table with n slots, with collisions resolved by
+chaining -- that is, each slot stores a linked list of the (key,value) pairs that the hash function maps to that slot. Suppose also that n keys are inserted into the table. (That is, the fill ratio is 1). Each key is equally likely to be hashed to each slot, independently of the other keys. Let M be the maximum number of keys in any slot after all the keys have been inserted. Your mission is to prove an O(log n / log log n) upper bound on E[M], the expected value of M.
+
+(a) Argue that the probability Q_k that exactly k keys hash to a
+particular slot is given by
+    Q_k = (1/n)^k (1 - 1/n)^(n-k) (n choose k)
+(The last term is the binomial coefficient that counts the number of
+distinct k-tuples that can be formed by n items; it equals n!/k!(n-k)!.)
+
+SOLUTION: There are (n choose k) sets of k keys that could map to that slot, each of them has probability (1/n) of actually being mapped to that slot, and each of the remaining keys has probability (1 - 1/n) of being mapped elsewhere. So for some particular set S of k keys, there is probability (1/n)^k (1 - 1/n)^(n-k) that the set of keys mapped to that slot is exactly S. Different choices of S give us disjoint events (it's not possible for two different sets of k keys to both be the exact set of keys mapped to a given slot) so we can add these probabilities over all possible choices of S, giving us the stated bound.
+
+
+(b) Let P_k be the probability that M = k; that is, the probability that
+the slot containing the most keys contains k keys. Show that P_k = 1, (1 + x/y)^(1/y)  1 such that Q_k0 = k0.
+
+SOLUTION: We can rewrite our inequality from (c) as ln Q_k = 2 ln ln ln n, and this will simplify to -c/2 ln n. Letting c = 6 gives ln Q_k0  c log n / log log n] +
+		(c log n / log log n) Pr[ M = c log n / log log n} i Pr[M=i])
+        [splitting the sum into two separate ranges]
+ = c log n / log log n} n Pr[M=i])
+        [replacing i by its maximum value within each range]
+ =  (c log n / log log n) (sum_{i = c log n / log log n} Pr[M=i])
+        [bringing terms that don't depend on i out of the sums]
+ = c log n / log log n} Pr[M=i])
+        [the first sum of probabilities is at most one]
+ = c log n / log log n} 1/n^3)
+        [replace probabilities in second sum using part (d)]
+  t]  

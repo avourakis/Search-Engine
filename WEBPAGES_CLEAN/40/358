@@ -1,0 +1,501 @@
+ Git tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+ 
+ This is an old revision of the document!</strong>
+ 
+  
+ Table of Contents 
+ 
+
+     Setting up git   
+     Mandatory setup    
+    Ignoring files    
+  
+    Git workflow   
+     Simple workflow    
+    Add-commit workflow    
+    Fetch-merge workflow    
+    Merge conflicts    
+  
+    I've made a huge mistake...    
+    Best practices   
+     Tagging versions    
+  
+    Tips &amp; tricks   
+     What repositories do I have access to?    
+    Pretty colors    
+    Aliases    
+    A better log    
+    Word level diffs    
+  
+    Other resources      
+ 
+
+
+
+
+  Git tutorial  
+ 
+
+ 
+On this page you will information on we have been using  git  to manage our papers.
+ 
+
+ 
+
+  Setting up git  
+ 
+
+ 
+
+  Mandatory setup  
+ 
+
+ 
+At the very least you will need to tell git who you are. The following two commands will set your name and email address. This information will show up in the commit log.
+
+ 
+ git config  --global  user.name  "Your Name" 
+git config  --global  user.email  "your_email@whatever.edu"  
+
+ 
+
+If you have  Gravatar  account, the associated image will appear in many git  GUI  programs.
+ 
+
+ 
+
+  Ignoring files  
+ 
+
+ 
+Some files you never want in your repository. For us this mostly consists of LaTeX auxiliary files and operating system trash. You can activate a global ignore file with the command
+
+ 
+ git config  --global  core.excludesfile  "~/.gitignore_global"  
+
+ 
+
+If you are using  OS  X, then you may have a global ignore file that looks like
+
+ 
+   .gitignore_global  
+  
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+ 
+   
+
+And, if you are using Windows, then you may have a global ignore file that looks like
+
+ 
+   .gitignore_global  
+  
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ 
+   
+
+The problem with using global ignore file is that it requires all of your coauthors to have setup a global ignore file. If they have not you will still end up with crud in your repository. For this reason a better solution is a per repository ignore file. If you add file with name  .gitignore  to the top level of your repository, then all files matching the patterns in this file will be ignored. A good general purpose ignore file for LaTeX documents is
+
+ 
+   .gitignore  
+  
+paper.pdf
+
+##### LaTeX Files #####
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.nav
+*.nlo
+*.out
+*.pdfsync
+*.ps
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.maf
+*.mtc
+*.mtc0
+
+##### OS X Files #####
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+##### Windows Files #####
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ 
+   
+
+The top line of this file should be changed to match the output of pdflatex.
+ 
+
+ 
+
+  Git workflow  
+ 
+
+ 
+
+  Simple workflow  
+ 
+
+ 
+The first step is to clone the repository you will be working in. To clone a repository with the name  repo-name  use the following command:
+
+ 
+ git clone git @ redwood.ics.uci.edu:repo-name 
+
+ 
+Before a file can be tracked by the version control it will need to be added to the repository. To add the file  foo.bar  to the repository use the following command:
+
+ 
+ git add foo.bar 
+
+ 
+When you have edited files to the point where you are ready to “check in” your changes, you can use can use the following command to commit all changes.
+
+ 
+ git commit  -a  
+
+ 
+In git commits are only to your local repository. To share your local commits with your coauthors you use the push command.
+
+ 
+ git push 
+
+ 
+On the first push to an empty repository you will get the error:
+
+ 
+ 
+No refs in common and none specified; doing nothing.
+Perhaps you should specify a branch such as 'master'.
+fatal: The remote end hung up unexpectedly
+error: failed to push some refs to '&lt;repo name&gt;'
+ 
+
+ 
+
+For the first push you will need to specify the full branch name with the command:
+
+ 
+ git push origin master 
+
+ 
+
+This only needs to be done once per repository.
+ 
+
+ 
+To receive the commits of your coauthors you use the pull command.
+
+ 
+ git pull 
+
+ 
+
+Make sure you have committed all local changes before pulling.
+ 
+
+ 
+
+  Add-commit workflow  
+ 
+
+ 
+  
+
+ 
+
+  Fetch-merge workflow  
+ 
+
+ 
+  
+
+ 
+
+  Merge conflicts  
+ 
+
+ 
+  
+
+ 
+
+  I've made a huge mistake...  
+ 
+
+ 
+  
+
+ 
+
+  Best practices  
+ 
+
+ 
+
+  Tagging versions  
+ 
+
+ 
+It is generally a good idea to tag milestones in your project. For a paper an obvious milestone is submission to a conference. For a paper being submitted to WADS 2013 we would tag the submitted version with the following command.
+
+ 
+ git tag WADS2013-submission 
+
+ 
+
+For an arXiv upload we would use
+
+ 
+ git tag arxiv-1308.5741v1 
+
+ 
+
+including both the arxiv identifier for the paper and the arxiv version of the upload.
+To push this tag so that your coauthors have access to it you use the command:
+
+ 
+ git push  --tags  
+
+ 
+
+When you notice that there was an error in your submission and you need to resubmit, you can move the tag. To do this you need to force the tag to move with  -f  flag.
+
+ 
+ git tag WADS2013-submission  -f  
+
+ 
+
+  Tips &amp; tricks  
+ 
+
+ 
+
+  What repositories do I have access to?  
+ 
+
+ 
+To find out which papers you have access to on our version control server you can use the following command.
+
+ 
+  ssh   -T  git @ redwood.ics.uci.edu 
+
+ 
+
+  Pretty colors  
+ 
+
+ 
+  
+
+ 
+
+  Aliases  
+ 
+
+ 
+  
+
+ 
+
+  A better log  
+ 
+
+ 
+  
+
+ 
+
+  Word level diffs  
+ 
+
+ 
+  
+
+ 
+
+  Other resources  
+ 
+     Git Immersion : A general git tutorial. 
+ 
+    Pro Git : An online book on git. 
+ 
+    Ry's Git Tutorial : Another good online tutorial. 
+ 
+    Git - SVN Crash Course : Compares git with subversion 
+ 
+    Collaborating with LaTeX and git : Blog post. 
+ 
+    git + LaTeX workflow : A stackoverflow post. 
+ 
+  
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    Git tutorial  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/git_tutorial.1409263076.txt.gz · Last modified: Thu Aug 28 21:57:56 2014 by david  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

@@ -1,0 +1,86 @@
+ """
+Module with prompting functions
+Use as 
+  import prompt
+  ... prompt.for_int(...)
+"""
+
+
+from goody import leading
+
+def for_value(prompt_text, convert=(lambda x : x), is_legal=(lambda x : True), default=None, error_message='reenter'):
+    """
+    Prompt for value using the specified prompt_text (with default in brackets
+      appended if it is non-None) followed by ': '; convert the entered value
+      (or use the default if the user just presses enter), ensure is_legal
+      returns True when called on it, and return that value.
+    Display error_messages for all possible failures
+    See the comments in the code for more details
+    See the calls to for_value below, for examples of how it is called.
+    """
+    while True:
+        try:
+            #display answer (and default, if supplied) and ': '; read str that is user's answer
+            response = input(prompt_text + ('['+str(default)+']' if default != None else '') + ': ')
+
+            #if there is no answer, and no default, print error message and reprompt
+            #kludge: so the user cannot enter an empty string unless the empty string is a default!
+            if len(response) == 0 and default == None: 
+                print(leading(prompt_text,extra=2)+'Must enter a value: there is no default')
+                continue
+            
+            #set answer to either be the default (if there is no answer) or convert the user's answer
+            #see except clause, in case conversion fails: e.g., int('abc') throws an exception
+            answer = default if len(response) == 0 and default != None else convert(response) 
+            
+            #if the answer (default or user's) is legal, return it, other print the error message
+            if is_legal(answer):
+                return answer
+            else:
+                print(leading(prompt_text,extra=2)+'Entry Error:',"'"+str(answer)+"'; ",error_message)
+        #if conversion raises an exception, print an error message and reprompt
+        except Exception as x:
+            print(leading(prompt_text,extra=2)+'Exception:',x)
+            print(leading(prompt_text,extra=2)+'Possible error: cannot convert str \'',response,'\' to specified type of value',sep='')
+
+
+def for_int(prompt_text, default=None, is_legal=(lambda x : True), error_message='not a legal value'):
+    """
+    Prompt for an int; use the specified prompt_text (with default in brackets
+      appended if it is non-None) followed by ': '; verify that the entered value
+      (using default if the user just presses enter) is an int and is_legal
+      returns True when called on it (and if not display the error_message)
+    See the call to for_value below, and the documentation and code for for_value above.
+    """
+    lead = leading(prompt_text,extra=2)
+    return for_value(prompt_text, int, (lambda x: type(x) is int and is_legal(x)), default, error_message+':\n'+lead+'Please enter a legal value')
+ 
+    
+def for_float(prompt_text, default=None, is_legal=(lambda x : True), error_message='not a legal value'):
+    """
+    Prompt for a float; use the specified prompt_text (with default in brackets
+      appended if it is non-None) followed by ': '; verify that the entered value
+      (using default if the user just presses enter) is a float and is_legal
+      returns True when called on it (and if not display the error_message)
+    See the call to for_value below, and the documentation and code for for_value above.
+    """
+    lead = leading(prompt_text,extra=2)
+    return for_value(prompt_text, float, (lambda x: type(x) is float and is_legal(x)), default, error_message+':\n'+lead+'Please enter a legal value')
+
+    
+def for_num(prompt_text, default=None, is_legal=(lambda x : True), error_message='not a legal value'):
+    """
+    Prompt for an int or float; use the specified prompt_text (with default in brackets
+      appended if it is non-None) followed by ': '; verify that the entered value
+      (using default if the user just presses enter) is an int or float and is_legal
+      returns True when called on it (and if not display the error_message)
+    See the call to for_value below, and the documentation and code for for_value above.
+    """
+    lead = leading(prompt_text,extra=2)
+    return for_value(prompt_text, eval, (lambda x: (type(x) is int or type(x) is float) and is_legal(x)), default, error_message+':\n'+lead+'Please enter a legal number')
+
+    
+def for_int_between(prompt_text, low, high, default=None, error_message=''):
+    lead = leading(prompt_text,extra=2)
+    return for_value(prompt_text+'('+str(low)+'..'+str(high)+')',
+                    int, (lambda x: type(x) is int and low 

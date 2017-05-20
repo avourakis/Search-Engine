@@ -1,0 +1,78 @@
+ Untitled Document 
+		 
+			   Machine Learning  Spring  2010   
+			     Classnotes       (updated 5/13/10)   
+		 
+		 
+			    Q&amp;A Blog on Machine Learning     (updated 5/11/10)   
+		 
+		 
+			   CompSci: 273A 
+						Instructor: Max Welling  
+			  Office hours: Fridays 1-2pm     
+			  
+					   
+			  Prerequisites  
+			  ICS 270A Intro AI, or with consent of instructor.  
+			  
+					   
+			  Goals:  
+			  The goal of this class is to familiarize you with various stat-of-the-art machine learning techniques for classification, regression,  clustering  and dimensionality reduction. Besides this, an important aspect this class is to provide a modern statistical view of machine learning.   
+			    Grading &amp; Homwork:</strong>  
+			  The course will primarily be lecture-based.  
+					Every week there will be homework mostly consisting of a coding assignement. Coding will be done in MATLAB. Finishing all your homework assignments is required for passing this class. If you do not hand in your HW before the weekly deadline, you will acculumate penalty points (or viewed more positively, if you hand in your HW in time every week you will accumulate bonus points). I may ask students to demo their implementation of the HW assignment in class.  
+						There will be short quizzes every week, starting in week 2, but no midterms or final. Quizzes will be multiple choice, and you will need to buy   Green scantron test forms   in the UCI bookstore (both variety of green form will work).    There will also be a project, starting right from day 1. Details are given below. You may work in group's of up to 5 students but every member must do their own coding work. Each group will also be required to do a presentation and write a report (as a group). It is important that the various contributions of the groupmembers will be made transparent.  
+						Your final grade will be determined as a combination of Homework (about 20%), Project (about 40%) and Quizz exams (about 40%).  
+			    Projects :</strong> 
+			 There will be 3 predefined projects: 
+			 1. Parameter estimation of (possibly stochastic) nonlinear dynamical systems. We will work with a well defined set of ODE's which model the development of cell lineages from stem cells to terminal cells. The model can be found in the following  paper . As an objectiver we will measure the deviation of the various cell populations as a function of time from some ideal curves. We may also specify upper and lower margins of deviations that are still considered acceptable. The difficulty in learning these models is the highly nonlinear dynamics which makes it hard to compute the gradient of the objective function w/r/t/ the parameters of the model. One way to approach the problem is to first learn a mapping C(A) with C a cost function and "A" the parameter setting. Note that we can easily request samples to learn this function because we can easily forward simulate the ODEs for any set of A and then compute a cost C(X) as a function of the resulting populations X. Therefore, each simulation generates a datapoint and we have control over what datapoints to request. Clearly, we want to optimize this process and ask for the most informative data-points. This is called "active learning". Using these data-points you will learn the mapping C(A). You can use a neural network or a Gaussian process or whatever else you like (GPs are nice because they provide you with the uncertainty in your estimates of your mapping which can be used to optimize for the most informative simulation to run). Given an estimate of the mapping C(A), you can find the best, i.e. lowest cost, parameter setting that will produce simulations that match the constraints most closely. The learning process will have to trade-off exploration of new parts of parameter space to improve the mapping with exploitation of the current mapping to find the best possible simulations. If successful this project could lead to a publication. because it is on the cutting edge of research and highly interesting to biologists. 
+			 2. The second project will also concern a relastic problem in biology. It has to do with proving that two classes of cells can be distinguished from the image data alone.. 
+					website for downloading data:  http://cinquin.org.uk/static/datasets4welling/  .  
+				There are two germlines, 44_unstraightened and 61_rb, each with four corresponding .mat files, which are as follows: 
+				DAPI.mat - The original image of the germline 
+				fullSeg.mat - The segmented image of the germline 
+				coordinates.mat - The [y,x,z] coordinates of each of the n cells in the germline. A 3xn matrix. 
+				individual_DAPI_segmentations.mat - Each of the segmented cells. A 61x61x61xn matrix, where each cell is included in a 61^3 cube. The segmented part of the original image is overlaid on a black background. 
+				If you want to join this team please contact Kevin Heins: &lt;kaheins@gmail.com&gt;  
+			 3.  The  following data  will be used for all our Homework assignments. It consists of a about 70 features (columns) and 50,000 data-cases. You should ignore the first 4 columns as they do not represent features (attributes, inputs, covariates) and the last column is the label (response variable) that you need to predict. The typical performance on this data is between [0.77-0.8] Area Under The ROC Curve.  The task is to improve performance on this dataset to be significantly better than 80% ROC on Xross validation. Any strong improvements will make the company who provided this data very happy.  
+			 4.  This will change shortly:  
+				Predicting stock prices.   Old Data   (no longer of any use)  
+			  New Data  Your task is to build a model that will predict the highest and lowest price for  stock "a" over the next 5 mins. Note that there are 7 time series in total but you are only asked to predict series "a". The other series are correlated with "a" so you can use them to make predictions. Each time series is aligned and has a number of attributes: opening and closing  prices at 1 minute intervals, highest and lowest price in each interval, number of trades and total trading volume. Given all information up till time "t", you are asked to predict the highest and lowest price for stock "a" over the next 5 minutes (5 time points). This means that you can compute your regression label (response variable Y) as MAX[X(t+1),X(t+2),X(t+3),X(t+4),X(t+5)]  where X is the attribute "highest price" in your data.  Similarly for the MIN. Given your predictions the company involved will execute some trading strategy on data that you haven't seen and report how much money you would have made. More about this trading strategy and how you may be able to test your own programme later. For now you can start on making predictions on the training data. 
+			 We will compute your Sharpe Ratio. This measures risk corrected access return relative to a simple buy and hold strategy. The best algorithm with significant positive Sharpe ratio wins an iPad. The company who is providing this price will have access to your report and will test your code. Here is an interesting  paper  on how to use boosting for stockmarket prediction. 
+			 5. You may also define your own project, but it will have to be approved by me first. You may even work on problems dirtectly related to your research, however you have to make very clear what you did for this class and there obviosuly needs to be a strong connections with machine learning. 
+			  
+					   
+			   Slides:   Week 1: Introduction, kNN, Logistic Regression, Overfitting, Xvalidation [ ppt ] [ pdf ] 
+							Week 2: Decision Trees, Random Forests, Bagging, Boosting [ ppt ] [ pdf ]   Week 3: Neural Networks [ ppt ] [ pdf ] 
+							Week 4: Convex Optimization (see appendix A of the classnotes), SVMs [ ppt ] [ pdf ] (chapter 8 of classnotes)         Week 5:     Unsupervised Learning: k-means clustering &amp; PCA [ ppt ] [ pdf ]     Week 6: PCA &amp; Kernel PCA (classnotes) [ matlab demo ],    Week 7:      Receiver Operating Characteristic (ROC) [ ppt ] [ pdf ]     ,   Kernel Fisher Linear Discriminant Analysis (classnotes)     Week 8: Spectral &amp; Kernel Clustering (classnotes).     Week 9: Comparing Classfiers [ ppt ] [ pdf ] , Kernel Canoncial Correlation Analysis (classnotes)        Week 10:           
+			    Data Sets and Online Resources:    
+			  Homework Dataset   
+			              
+			 There are about 70 features (columns) and 50,000 data-cases (rows). You should ignore the first 4 columns as they do not represent features (attributes, inputs, covariates) and the last column is the label (response variable) that you need to predict. The typical performance on this data is between [0.77-0.8] Area Under The ROC Curve. 
+			    Homework :  (always due the next Tuesday at 12pm)    
+			    Week 1: Homework 1 [ doc ] [ pdf ] (updated Th. April 1),       Week 2: Homework 2 [ doc ] [ pdf ]         Week 3: Homework 3 [ doc ] [ pdf ]       Week 4: Homework 4 [ doc ] [ pdf ]     Week 5: Homework 5 [ doc ] [ pdf ] (updated Th. Apr. 29)             Week 6: Homework 6 [ doc ] [ pdf ]                Week 7: Homework 7 [ doc ] [ pdf ] (updated Th. May 13)               Week 8: Homework 8 [ doc ] [ pdf ]                Week 9: Homework 9 [ doc ] [ pdf ]     Week 10:                   
+			  
+					   
+			  Syllabus:  (incomplete)   
+			   1   :     introduction: overview, examples, goals, algorithm evaluation, statistics, kNN, logistic regression.   
+			   2   :     classification I: decision trees, random forests, bagging, boosting.   
+			   3   :   clustering &amp; dimensionality reduction:  k-means, expectation-maximization, PCA.    
+			    4   :  neural networks:  perceptron , multi-layer networks, back-propagation.   
+			   5:      classification II: kernel methods &amp; support vector machines.   
+			  
+					   
+			  Textbook  
+			  I am writing my own text which will be posted here and on the top of this webpage. Note that I will continuously update it during the course and feedback is appreciated.  
+			   
+						The textbook that will be used for this course is:  
+			  1. C. Bishop: Pattern Recognition and Machine Learning  
+			   
+						Optional side readings are:  
+			  2. D. MacKay: Information Theory, Inference and Learning Algorithms 
+						3. R.O.  Duda , P.E. Hart, D. Stork: Pattern Classification 
+						4. C.M. Bishop: Neural Networks for Pattern Recognition 
+						5. T.  Hastie , R.  Tibshirani , J.H, Friedman: The Elements of Statistical Learning 
+						6. B.D. Ripley: Pattern Recognition and Neural Networks 
+						7. T. Mitchell: Machine Learning.  (http://www.cs.cmu.edu/~tom/mlbook.html)    
+		 
+	</body> 

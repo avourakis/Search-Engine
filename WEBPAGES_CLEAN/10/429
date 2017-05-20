@@ -1,0 +1,52 @@
+ 15.18.6 seek<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.18.5 rewind 
+ Up:   15.18 oestream 
+ Next:   15.18.7 size 
+   
+
+
+  
+15.18.6 seek 
+ 
+   
+bool seek(oefpos_t pos)
+bool seek(oeoff_t offset, seek_dir dir)
+    
+Sets the current position of the data pointer. This is accomplished by
+specifying the desired position or by specifying an offset distance and a
+directionality from the current position. Directionality is specified using
+the following enumeration:
+
+  
+    
+enum seek_dir { beg = 0, cur = 1, end = 2 };
+    
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.18.5 rewind 
+ Up:   15.18 oestream 
+ Next:   15.18.7 size 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

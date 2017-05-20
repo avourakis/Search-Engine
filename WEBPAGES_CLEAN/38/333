@@ -1,0 +1,104 @@
+ 4.155 OEWritePDBFile<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.154 OEWriteMol2File 
+ Up:   4. OEChem Functions 
+ Next:   4.156 OEWriteMolecule 
+   
+
+
+  
+4.155 OEWritePDBFile 
+ 
+
+ 
+    
+void OEWritePDBFile(oemolostream &amp;ofs, OEMolBase &amp;mol,
+                    unsigned int flavor = OEPDBOFlag::DEFAULT)
+    
+Write the molecule as a Brookhaven PDB format file to the output stream
+ofs.  A number of different PDB format variants are supported by use of
+the bits in the ``flavor'' parameter.
+
+  
+The  OEPDBOFlag::BONDS  flag is used to control whether the OEChem
+PDB file writer includes CONECT records to describe the connectivity of
+the molecule.  If this flag is given without  OEPDBOFlag::ORDERS 
+all bonds are written as ``single'' bonds.   OEPDBOFlag::BONDS  is
+off by default.
+
+  
+The  OEPDBOFlag::ORDERS  flag is used to control whether the PDB file
+writer should use repeated CONECT records to represent multiple bond
+orders ( i.e.  double and triple bonds).  If this flag is given without
+ OEPDBOFlag::BONDS  only double and triple bonds are written to the
+file.   OEPDBOFlag::ORDERS  is off by default.
+
+  
+The  OEPDBOFlag::BOTH  flag is used to control whether CONECT records
+are written bi-directionally.  Conventionally, PDB files list connect records
+both from source atom to destination atom, and again from destination to
+source.  This duplication doubles the number/size of CONECT records with
+redundant information, as most readers (if they honor CONECT records at
+all) can work with uni-directional CONECT records.  By default, OEChem's
+PDB writer only output uni-directional CONECT records where the source
+atom's serial number is always less than the destination atom's.  The
+ OEPDBOFlag::BOTH  can be used to request full bi-directional PDB files.
+
+  
+The  OEPDBOFlag::CHARGE  flag can be used to instruct the OEChem PDB
+file writer to take the value for the PDB file's B-factor field from the
+atom's partial charge property.  A number of applications, including
+Delphi, (ab)use the PDB file format specification to store atomic
+partial charges in the b-factor field rather instead of crystallographically
+determined anisotropic temperature factors.   OEPDBOFlag::CHARGE  is
+off by default.
+
+  
+The  OEPDBOFlag::RADIUS  flag can be used to instruct the OEChem PDB
+file writer to take the value for the PDB file's occupancy field from the
+atom's radius property.  A number of applications, including Delphi,
+(ab)use the PDB file format specification to store radii in the occupancy
+field rather instead of crystallographically determined anisotropic
+occupancies.   OEPDBOFlag::RADIUS  is off by default.
+
+  
+The  OEPDBOFlag::DELPHI  flag is just the combination of the
+ OEPDBOFlag::CHARGE  and  OEPDBOFlag::RADIUS  flags.
+
+  
+The  OEPDBOFlag::TER  flag can be used to instruct the OEChem PDB file
+writer to terminate each connection table with a TER record rather than
+an END record.  Some dubious molecular graphics software, such as Grasp,
+requires that multiple compounds be separated by the chain/fragment
+separator TER, rather than the molecule separator END.
+ OEPDBOFlag::TER  is off by default.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.154 OEWriteMol2File 
+ Up:   4. OEChem Functions 
+ Next:   4.156 OEWriteMolecule 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

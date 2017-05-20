@@ -1,0 +1,59 @@
+ 4.126.1 Array-Based OERMSD<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.126 OERMSD 
+ Up:   4.126 OERMSD 
+ Next:   4.126.2 Full Molecule-Based OERMSD 
+   
+
+
+  
+4.126.1 Array-Based OERMSD 
+ 
+
+ 
+    
+double OERMSD(const float *ref, const float *fit, unsigned int size,
+              bool overlay = false, double *rot = 0, double *trans = 0)
+double OERMSD(const double *ref, const double *fit, unsigned int size,
+              bool overlay = false, double *rot = 0, double *trans = 0)
+    
+Returns the root mean squared deviation between two sets of Cartesian
+coordinates.  The two arrays passed in as ref and fit should be of length
+size*3, and should contain the Cartesian coordinates of the two objects
+being assesed.  The boolean flag overlay indicates whether the RMSD of the
+two arrays in their current position is desired (false), or whether the
+lowest possible RMSD for the two arrays should be returned (true).  If an
+overlay calculation is carried out, the functions can report the rotation
+and translation required to give this minimum RMSD.  An array of length nine
+should be passed to the rot argument and an array of length three should be
+passed as the trans argument.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.126 OERMSD 
+ Up:   4.126 OERMSD 
+ Next:   4.126.2 Full Molecule-Based OERMSD 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

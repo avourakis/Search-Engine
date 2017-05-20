@@ -1,0 +1,57 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Seiwald Q &amp; A -- "GET for EDIT" cookies<body> Re: Seiwald Q &amp; A -- "GET for EDIT" cookies 
+ David G. Durand  (  dgd@cs.bu.edu  )  Tue, 3 Sep 1996 11:42:45 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Larry Masinter: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+    
+Larry Masinter &lt; masinter@parc.xerox.com &gt; wrote:
+&gt;You know, it might very well be that the right conception of both
+&gt;distributed authoring and versioning should be to make them work
+&gt;independent of network protocol, by exchange of appropriate
+&gt;_messages_. That is, rather than a "CHECKOUT" method, just use "POST"
+&gt;with an appropriate "CHECKOUT" method. Rather than returning the data
+&gt;as HTML and trying to embed the versioning information inside it,
+&gt;return the data in a container (multpart/related comes to mind) that
+&gt;has both the versioning information and also the related data.
+&gt;
+&gt;I especially like the idea of a "checkin" data object that could work
+&gt;with a MAILTO URL as well as an HTTP one.
+&gt;
+&gt;Larry
+
+   I don't have a problem with this, except that we have HTTP PUT, and the
+versioning stuff must work with it (to my mind, PUT is un-useful without
+versioning, but that is (perhaps) only my problem). If we move all the
+versioning stuff into a special content-type that must be processed,
+versioning updates will be implemented differently from non-versioning
+updates. This will reduce the ability of versioning to work with legacy
+authoring environments, and _require_ special work for versioning to be
+supported at all.
+
+   I think this violates some of the requirements, unless we remove PUT,
+define POST as "form-only" and make all updates use a content-type (w/
+simple options that allow versioning).
+
+   I liked the multipart/HTTP you suggested for transactions, but that's a
+CM and not a versioning issue. I think that we agree that CM support will
+not work well will legacy software, except insofar as we can support the
+update of single resources.
+
+  -- David
+
+--------------------------------------------+--------------------------
+David Durand                   dgd@cs.bu.edu  | david@dynamicDiagrams.com
+Boston University Computer Science          | Dynamic Diagrams
+ http://www.cs.bu.edu/students/grads/dgd/     | http://dynamicDiagrams.com/
+ 
+
+  
+     Next message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Larry Masinter: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+
+
+  </body> 

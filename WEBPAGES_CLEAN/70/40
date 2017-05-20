@@ -1,0 +1,94 @@
+ Tetrahedra Classified by Bad Angles<body>
+
+ 
+   
+ 
+  
+Tetrahedra Classified by Bad Angles
+ 
+
+Simplices are the higher dimensional generalizations of triangles and
+tetrahedra.  We are interested in measuring the suitability of a given
+simplex for use in an unstructured finite element mesh.
+
+ 
+Each  k -dimensional face
+in a  d -simplex (e.g. vertex or edge in a tetrahedron)
+defines an angle, and 
+all angles that involve the entire simplex are so defined. 
+To measure an angle, we place
+a small sphere around the  k -face and determine
+what fraction of the sphere lies interior to the simplex.
+The sphere is ( d - k -1)-dimensional and lies in a 
+( d - k )-dimensional subspace perpendicular to the
+ k -face; its center is
+the projection of the face onto the subspace. 
+If  k  =  d  - 2, we call the angle a dihedral angle
+and we can write its measure in degrees in the usual way.
+If  k  = 0, the angle is called a solid angle.
+
+  
+We can now define a family of problems:  for each  k , we can
+demand either no small angles, that is, all angles must be bounded
+away from zero, or no large angles---all angles must
+be bounded away from flat (half the sphere).
+This family forms two sequences of difficulty.
+No small angle at a 0-face (no small solid
+angle) implies no small angle at a 1-face, which
+implies no small angle at a 2-face, and so forth up to
+no small angle at a ( d -2)-face. 
+No-large-angle problems reverse the order:
+no large dihedral implies no large angle at a ( d -3)-face,
+which implies no large angle at a ( d -4)-face, and so forth down
+to no large solid angle.
+There are two bridges between the sequences.
+No small solid angle implies no large dihedral, and hence
+good angles of all types.
+In the opposite direction,
+a large solid angle implies a small dihedral, and hence
+bad angles of all types.
+
+  
+A ( j , k )-bad-angle simplex,
+0 j, k  d-1,
+allows small angles at faces of dimension up to  j -1
+and large angles at faces of dimension down to  k .
+The case  j  = 0 allows no small angles, and hence no
+bad angles at all, so  k  is irrelevant.
+On the other extreme,  k  = 0 allows a large solid angle and
+renders  j  irrelevant.
+Except for these extreme cases all other combinations
+of  j  and  k  are possible, so there are
+2 + ( d  - 1) 2 
+different types of simplices.
+
+  
+    
+ 
+The figure above illustrates this classification
+for the case  d  = 3.
+The ideal "round" tetrahedra have neither small nor large angles.
+A "needle" allows small solid angles, but not small or large dihedrals.
+A "wedge" allows small but not large dihedrals.
+A "spindle" allows large but not small dihedrals, and
+small but not large solid angles.
+A "sliver" allows large and small dihedrals, and small but not large
+solid angles.
+And a "cap" allows bad angles of all types including large solid angles.
+
+  
+[From " Dihedral Bounds for
+Mesh Generation in High Dimensions ".
+For related work see Baker's
+" Element Quality in Tetrahedral Meshes ".]
+  
+
+   
+From the  Geometry Junkyard ,
+computational
+and recreational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Last update: . 
+ </body> 

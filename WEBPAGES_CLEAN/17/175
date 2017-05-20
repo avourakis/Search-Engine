@@ -1,0 +1,267 @@
+  User-Interface <body>
+  User Interface  
+  Goals: Problems  
+     Display information: textually and graphically
+     Get information: usually text, sometimes numerics.
+     Respond to events
+      Solutions  
+     Component are standard displayable units (user-interface
+elments), e.g  menus, buttons, labels, lists, textFields, etc
+        Containers allows us to compose components. They include
+      Panels,  Windows, Diaglog, Frame, etc.
+         LayoutManagers are  interfaces that provide
+   reasonable ways to size and position objects  within a container.
+   We can turn this off if we want to work hard.
+        Graphics provide a way to control individual
+  pixels and colors, giving  complete control over the image.
+        Registering and implementing Listeners provide a means to attach
+      particular actions  to selected/choosen events.
+      
+                                   / -&gt; Button
+                                  /
+              Object --&gt; Component  --&gt;  List
+                                   \ 
+                                    \ --&gt; Textfield
+                                     \
+                                      \ --&gt; Choice ....
+
+ 
+
+  Important Methods in Object and Component:  
+    paint:   redraws the visual  object
+       setBounds(x,y,w,d):  sets location to x,y and size to w,d   
+       setSize(w,d):   ...
+       getSize():   returns Dimension  (two-tuple with fields width and height)
+       setEnabled(Boolean b):   sets control to active or inactive, ie
+    whether it responds to events(?).
+       getBackground():   returns  a Color 
+       setBackground(Color c):   ...
+       setVisible(Boolean b):    whether you can see control.
+       isEnable():   returns boolean. Whether control is selectable
+  by user. 
+       isVisible():   returns boolean 
+       getLocation():  returns a Dimension
+       setLocation(x,y):   ..
+       getComponent():   Gives reference to event source.
+      repaint():   schedules painting.
+       requestFocus():   Asks system of give  Focus to control (?).
+       setFont(Font f):    Sets font to f, which include size, font,
+and style.
+      Components or Visual Controls   
+
+ These descriptions are deliberately not complete, however they
+provide the flavor of these controls. The capabilities of these
+objects will probably change. Use a web-browser to get the latest
+Java.api details.
+
+     Button
+         Purpose: get simple selection from from user, i.e. button chosen.
+          Constructors:    = new Button() or new Button(String)
+          Method: addActionListener(ActionListener actlist)
+          Note; actlist must implement actionPerformed (i.e. implements
+             ActionListener)
+            Label
+          Purpose: display unchangeable text on screen
+            Constructors: new Label() or new Label(String,alignment) where
+     alignment is LEFT, CENTER or RIGHT.
+            Labels have a size and text can be aligned within it, e.g. via
+        method setAlignment(Label.LEFT).
+            As a component it fires (responds to) component, mouse,
+           and mouse-motion events.
+            Radio button
+           Purpose: allows multiple  choices
+             label with on/off button
+             appearance may change with different browsers.
+             Can be initialized 
+             Ex. TBD
+             Method: TBD
+              Checkbox
+          Purpose: get multiple choices from users
+              independent clickable labelled box
+              Constructors: Checkbox(String), Checkbox(String,boolean) 
+              methods: getState, getLabel, addItemListener
+              listener must implement itemStateChanged(ItemEvent)
+            CheckboxGroup
+           Purpose: to allow only one choice from a set of choices.
+              Requires that CheckboxGroup be constructed with added parameter
+              Example
+    
+         CheckboxGroup cbg = new CheckboxGroup();
+         Checkbox happy = new Checkbox("happy",t,cbg);
+         Checkbox sad   = new Checkbox("sad",f,cbg);
+    
+               Choice
+         Purpose: display and get as many selections as needed, e.g.
+  the number of choices is larger than will fit on screen. 
+           Constructor: Choice()
+           Methods: add(String item), remove(item), insert(item, position),
+       removeall.
+           Generates events for selection and deselection
+           TextComponent 
+         Purpose: displaying and capturing text
+           Children: TextField and TextArea
+     note: text can be parsed into numerics with a little work.
+           String getText()
+           setText(String)
+           boolean isEditable()
+           setEditable() : determines if user can write in area
+           void addTextListener(TextListener)
+           TextField
+       Constructors: TextField(), TextField(String), TextField(int columns),...
+         inherits from TextComponent
+         Single line area for text io.
+        TextField tf = TextField("Hi there");
+        TextField tf = TextField(10); 
+       size of display, more can be in it  but you won't see it.
+        TextField tf = TextField();
+        setEchoChar(char) : for passwords and the like
+         Method: addActionListener(ActionListener) 
+          TextArea
+        Constructor: TextArea(), TextArea(rows,columns), ...
+          inherits from TextComponent
+          Multi-line area for text io.
+          Methods: addActionListener
+          Canvas
+        Purpose: making drawings or images. Complete control
+          Constructor: Canvas()
+          Typically you inherit your own Canvas class from Canvas
+      and override the paint() method.
+          Methods: addActionListener
+          Panel
+        Purpose: organize a group of related grahical objects.
+         Constructors: Panel(), Panel(LayoutManager)
+         Containers have the method add(Component)
+         default layout manager: FlowLayout, which displays objects
+         left to right as they fit.
+         Like a canvas, you can draw directly on it.
+           ScrollBar
+        Purpose: to get or display  values and to scroll
+          Constructor:  ScrollBar(), ScrollBar(orientation),...
+          can be horizontal or vertical
+          ranges and increments can be set
+          usually part of a panel or another component
+          method addAdjustmentListener
+          Scrollpane
+          Purpose: create vertical, horizontal or both scrollable viewarea
+            Constructor: ScrollPane(), ScrollPane(scrollbarDisplayPolicy)
+            allows only 1 component to be displayed at a time.
+            takes over most old uses of ScrollBar (a better ScrollBar)
+            new to JDK1.1
+            List
+        Purpose: get selections from users
+          Constructors: List(), List(rows), List(rows, mode)
+          scrollable list of text entries
+          constructor: List(int,boolean) where int is number of
+     items displayed and boolean controls whether multiple selections allowed.
+          Some methods: add and delete items, select and deselect,
+            allow/disallow multiple selections 
+          Menu
+         Purpose: allow nested selections
+           Constructors: Menu(), Menu(title), Menu(title, boolean tearoff)
+           Contains menus or menuitems.
+           Tedious to code
+           Methods: add, insert, remove etc.
+            Menubar
+          Purpose: holds pop-up menus.
+           Constructor: MenuBar() 
+           horizontal display of selectable menus.
+           Methods: add, insert, remove, etc
+            MenuItem
+           Purpose: Permits selections
+               Constructors: MenuItem(), MenuItem(String),...
+             DialogBox
+          Purpose: Get user response.
+            Modal dialogboxes require that user respond
+             Modeless dialogboxes can be ignored.
+            
+
+
+
+There currently are about a dozen graphic widgets,  each with as many
+as 70 methods and sometimes lots of constants. Do not try to learn
+them, but instead understand their general structure and how to use
+them. Moreover this number keeps changing. And you can create
+your own user-interface elements with them.
+Typically one builds the type of display
+desired by combining inheritance and composition.
+ 
+ Warning : The list of methods and graphical objects is not complete.
+
+
+   Graphics Methods, in java.awt.Graphics  
+ All of this methods apply to a graphics object, e.g. to
+ write "don't press" to the screen you would use:
+   
+        Graphics g = getGraphics();
+        g.drawString("don't press",100,200);
+    
+     drawString(String s, int x, int y)
+      drawLine(int x1, int y1, int x2, int y2)
+      drawPolygon(int[] xPoints, int[] yPoints, int nPoints)
+      nPoints is the number of points
+      drawPolygon(Polygon p)
+       To creat a Polygon: Polygon p = new Polygon();
+       To add a point to it: p.addPoint(x,y);
+      drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
+     startAngle is measured from the horizontal, counterclockwise
+     arcAngle is measured relative to  the start angle
+      drawRect(int x, int y, int width, int height) 
+      etc: ovals, 3d rectangles, rounded rectangles, filled shapes, ...
+      images also, but we will not cover these.
+    Layout Managers  
+
+  Layout managers can be nested. They permit reasonable 
+ways to organize the graphical layout.  You can define
+your own Layout Manager.
+     setLayout(null);
+           turns off any default layout manager
+             requires that you place each object on display via
+   explicit locations
+             not fun and usually avoided.
+            FlowLayout()
+           Often the default, e.g. default for Panels.
+            established via: setLayout(new FlowLayout());
+           Like wrap-around text layout. 
+             Components are placed left to right as they fit.
+             Note: resizing window will change appearance.
+             BorderLayout()
+           Divides component into 5 areas: North, South, East, West
+                and Center.
+               E.G. to a button to cmp  to the East:
+          cmp.add(new Button("Hi"),"East");
+              Often a useful way to layout a window or a subcomponent
+          of a window, especially when combined with panels.
+             Components take as much room as available.
+             not all pieces need be specified.
+         GridLayout(int row, int col)
+           Divides component into "row" rows and "col" columns.
+               add(component) goes into the next available (row,col).
+               to skip an entry do add(new Label("")), i.e. add an empty
+        label.
+             CardLayout(int hgap, int vgap)
+            This displays one component at a time.
+              This layout manager requires a parent container.
+              individual items are display one at a time.
+              You can move thru item in natural ways, ie.
+         next, previous, first, last.
+             Example
+            
+                Button next = new Button("Next");
+                next.addActionListener(this);
+                ... more buttons
+                Panel movement = New Panel();
+                movement.add(next);
+                ... more additions of buttons
+                Panel display = New Panel();
+                display.setLayout(new CardLayout());
+                display.add(component1);
+                ... 
+          public void actionPerformed(ActionEvent ae)
+        {
+          if (ae.getSource() = next) display.next()
+        }
+               
+              GridBagLayout
+            Permits great control over display
+              Complex. Read about it.
+             </body> 

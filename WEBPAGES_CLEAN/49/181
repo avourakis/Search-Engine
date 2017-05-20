@@ -1,0 +1,143 @@
+ CS 154 Lab 3: Register File 
+
+ 
+
+ 
+
+   
+    Lab3    
+    Register File (RF)    
+     Due dates: see Labs table     
+             
+       
+   The objective of this lab assignment is to design and implement a
+  register file using D flip-flops.  
+       
+   The MIPS register file implements 32 registers, each of which is 32 bits
+  wide. Register number 0 is a zero register; its content is always 0 and
+  cannot be changed. Registers 1 through 31  store  any
+  value assigned to them.  
+       
+   There are  data ,  address  and  control  ports to the register file. There should be 3 data ports:
+  2 for reading and 1 for writing. During each clock cycle, values from 2 registers
+  can be read through the 2 read ports (   d_out_1   
+  and    d_out_2   ) and 1 can be
+  written through the write port (    d_in    ).
+  All 3 data ports are 32-bit wide. 
+       
+   The address ports are    rd_addr_1 ,
+   rd_addr_2    and     wr_addr    . RF addresses are 5bits. 
+       
+   A     wr_en    
+  control signal is used to write the value on port   d_in   to a register addressed by
+    wr_addr  .
+  The register file also needs a clock signal (port     clk    ). Write operations are
+  synchronized with this clock.  
+               
+               
+      Specification             
+   Draw a block diagram of the register file described above. To make
+  things easier, draw a register file with    only 8
+  registers   . You can show the middle four registers with �...�
+  and show only register 0, 1, 2 ... and 7. 
+       
+    You may use the following building
+  blocks in your block diagram: a  32 bit  register
+  (with a write enable), a 32 bit MUX, and 3-8 decoder.     
+         
+   Use the write enable signal to control the input to a register, either a
+  new value or an old value. Label each input of a MUX with a control input
+  value that selects the input. 
+       
+   Pay attention to the wiring. Label the wires with proper signal names
+  and mark the width. 
+             
+             
+     Design      
+    Your task is to
+  design a register file module with 32 registers.  You will use an
+  array of  std_logic_vector  to implement the register
+  file. 
+   The  template VHDL files  have been provided to
+  you. The interface (that is, ports) is already defined. You need to add code
+  for functionality in both files to make them work. Do not make any changes to
+  the interface. 
+   Since we are using an array to implement the register file, the decoder
+  and the mux component is implemented automatically by the array reference.
+  The implementation should be very straight-forward. Please refer to Prof.  Veidenbaum's  slides ( Slide
+  #5  and  #6 
+  of  Lecture 5 ).
+  Our register file should be something like: 
+    
+                 
+                   RegFile :  array  (0 to
+  31)  of  std_logic_ vector    ( 31  downto  0); 
+    
+  The declaration in the slides has many named subtypes and constants. Some of
+  them are useful, and it will be a good idea to keep the declarations in a
+  separate  package 
+  for future labs. 
+       
+   Index to array elements should be of type "INTEGER". To
+  convert a signal of type STD_LOGIC_VECTOR to integer, you should use the VHDL
+  function " TO_INTEGER ". It is
+  declared in " IEEE.NUMERIC_STD "
+  package. The argument of this function should be either STD_LOGIC_UNSIGNED or
+  STD_LOGIC_SIGNED. So you need to first cast the STD_LOGIC_VECTOR to STD_LOGIC_UNSIGNED,
+  then pass it to TO_INTEGER. For example, to use  wr_addr 
+  as array index, you should use:  
+       
+     RegFile    (
+  TO   _INTEGER( UNSIGNED( wr_addr ) ) ) ; 
+       
+   You should use a process to implement the writing operation. Think about
+  which signals should be in the sensitivity list. Pay special attention
+  to R0. When  wr_addr  = "00000", an update
+  should not happen. 
+       
+       
+     Verification    - Due with
+  the design.  
+   In your test bench, you need to test your register file module for: 
+    Addressing :  
+   You must make sure that you are reading from / writing to the specific
+  register you want. All addresses and data ports need to be tested. This has
+  to be done first, because the following tests will test each register and to
+  do that you must make sure you are able to access each register.  
+  You should write unique values to different registers, and read from them and
+  see if what you read is what you have written. 
+   Content:  
+   You must make sure that each register holds what was actually written.
+  No "stuck at" errors exist. Each bit in each register must be
+  tested.  
+  You should write "000...0" and "111...1" to each register
+  and read from them and see if what you read is what you have written. 
+       
+   All input signals in test bench should be 1 clock long and go high a
+  short time after a rising clock edge. Use the assert statement and expected
+  values to detect errors. 
+       
+    
+     
+     What
+  you should produce in this lab:        
+         
+    Please submit for your specification     
+     A block diagram of the register
+       file you designed that has 8 registers.    
+          
+     Please submit for your design
+  and verification:       
+     Your VHDL design.     
+     Your VHDL test-bench.     
+     Screen shots of addressing and
+       content tests.     
+      
+   
+    
+
+       
+
+ 
+
+</body> 

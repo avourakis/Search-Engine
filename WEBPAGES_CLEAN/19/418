@@ -1,0 +1,411 @@
+ Egyptian Fractions<body>
+
+ Egyptian Fractions 
+
+  Nowadays, we usually write non-integer numbers either as
+fractions (2/7) or decimals (0.285714). The floating point
+representation used in computers is another representation very
+similar to decimals. But the ancient Egyptians (as far as we can
+tell from the documents now surviving) used a number system based
+on  unit fractions : fractions with one in the numerator. This
+idea let them represent numbers like 1/7 easily enough; other
+numbers such as 2/7 were represented as sums of unit fractions
+(e.g. 2/7 = 1/4 +1/28). Further, the same fraction
+could not be used twice (so 2/7 = 1/7 + 1/7 is
+not allowed). We call a formula representing a sum of distinct unit
+fractions an  Egyptian fraction . 
+
+ This notation is cumbersome and difficult to compute with, so
+the Egyptian scribes made large tables so they could look up the
+answers to arithmetic problems. However there is also some
+interesting mathematics associated with the problem of  
+converting  modern fraction notation into the Egyptian form. A
+number of famous mathematicians have looked at this problem, and
+invented different ways of doing this conversion process. Each of
+these methods has advantages and disadvantages in terms of the
+complexity of the Egyptian fraction representations it produces and
+in terms of the amount of time the conversion process takes. There
+are still some unsolved problems about whether some of these
+processes finish, or whether they get into an infinite loop. 
+
+ To investigate some of these questions, I wrote a  
+Mathematica  notebook, now called "Algorithms for Egyptian
+Fractions", which as the title implies implements on the computer
+some of these computation methods. A version of this notebook was
+published as "Ten Algorithms for Egyptian Fractions" in  
+Mathematica in Education and Research , vol. 4, no. 2, 1995, pp.
+5-15, available online through
+ MathSource . 
+
+ Since then I have made several changes including improvements to
+the binary remainder method and two new sections on reverse greedy
+methods and brute force searches. I am making this updated version
+available here. 
+
+ Algorithms for Egyptian fractions: 
+
+   Algorithms for Egyptian fractions  in
+HTML format,  publication
+information , and  Mathematica source code . 
+
+  Python-based command-line tool for generating
+Egyptian fractions . 
+
+  Mathematica package ,  also available
+through MathSource , as is
+ a different Egyptian fraction package . 
+
+  C++ source code  to brute force search for
+representations with few terms and  C source code  to find certain solutions to
+4/n = 1/x + 1/y + 1/z 
+  Transcriptions of network conversations: 
+
+   My blog entries on Egyptian fractions . 
+
+  Polygons
+with angles of different k-gons .
+Leroy Quet poses a geometric tiling question related to Egyptian fraction
+decompositions of 1 and 1/2. 
+
+  Egyptian
+topology on Q .
+Michael Barr defines a topological space in which a sequence of rationals
+converges only if its terms have bounded length Egyptian fraction
+expansions, and asks how this differs from the usual Euclidean topology. 
+
+  Sums of unit fractions .
+Michael Barr asks for a proof that there can be no constant bound on the
+number of terms needed for Egyptian fraction representations. 
+
+  1/x
++ 1/y + 1/z = 1/n .
+Tim Brooks asks for the solution maximizing z. 
+
+  Perfect numbers and Carmichael numbers .
+Bill Daly shows how to use Egyptian fraction representations of integers
+to generate counterexamples for primality-testing algorithms. 
+
+  Math
+forum archive  of sci.math messages under the subject of Egyptian fractions. 
+
+  Why use Egyptian fractions?  Darrah
+Chavey gives some explanations for the Egyptians' use of this
+seemingly bizarre notation. 
+
+  Donald T. Davis hypothesizes that
+perfect numbers were first studied for their uses in simplifying
+Egyptian fraction manipulation . 
+
+  Dave Ketcheson asks how to represent the
+number one as an Egyptian fraction with odd denominators . 
+
+  Quentin Grady uses Egyptian fractions to
+make up electrical engineering problems . 
+
+  Stan Wagon discovers that odd greedy
+performs very poorly on 3/179 , throwing into question a
+heuristic analysis from my paper. 3/2879 and 5/5809 are even
+worse. 
+
+  Stefan Bartels looks for the maximum
+denominator  among all  k -term representations for a given
+number (or equivalently the closest ( k -1)-term
+underrepresentation), which is often found by the greedy algorithm,
+and investigates work on the subject by Curtiss and others. 
+
+  Kevin Brown looks for the minimum
+denominator  among all  k -term representations for a given
+number. In particular for  k  = 12 he finds the representation 
+
+ 
+    
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+   1 =  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+  +  
+ 
+  
+    
+ 6 
+  
+ 7 
+  
+ 8 
+  
+ 9 
+  
+ 10 
+  
+ 14 
+  
+ 15 
+  
+ 18 
+  
+ 20 
+  
+ 24 
+  
+ 28 
+  
+ 30 
+   
+ 
+
+  Bill Taylor asks about a conjecture
+that for any denominator, all sufficiently large numerators can be
+expressed as a sum or difference of at most three unit
+fractions . 
+
+  Fibonacci
+Algorithm and Egyptian Fractions . Liz asks Dr. Math how to find
+numbers for which the greedy algorithm produces long expansions. 
+  Other sites of interest: 
+
+   Wikipedia:
+Egyptian fractions  and  related articles . 
+
+  The
+Universe of Discourse: Egyptian Fractions .
+Mark Dominus explains why the 2/n table in the Rhind Papyrus is
+sufficient for calculation of any more general Egyptian fraction. 
+
+  Math
+Games: Egyptian Fractions .  Ed Pegg describes the Rhind Papyrus and
+the 4/n problem, including a pretty density plot of the number of terms
+required in the shortest egyptian fraction representation of rationals
+with small numerators and denominators. 
+
+  Approximating
+1 from below by  n  Egyptian fractions.
+A short proof that the greedy algorithm finds the largest  n -term
+Egyptian fraction less than one.  
+
+  Izzycat
+investigates odd Egyptian fraction representations of unity .
+See also  more
+wrong turns 
+and  this paper by P. Shiu . 
+
+  Web
+Mathematica applet  for the greedy Egyptian fraction algorithm. 
+
+  This
+week's finds in Egyptian fractions , John Baez. 
+
+  Madison
+Capps' science fair project . 
+
+  Binary
+Egyptian Fractions  and  other Egyptian fraction papers
+by Ernie Croot . 
+
+  Egyptian Fractions  page by Ron Knott. 
+
+  Lecture
+notes  from a section on Egyptian fractions in a history of math course
+by Carl Eberhart, U. Kentucky, including a Maple implementation of the
+greedy algorithm. 
+
+  Best of Mathnerds:
+the magnificent seven  asks for seven-term Egyptian fraction decompositions of 1, and describes a method for finding decompositions of any fraction
+using a method based on Farey sequences
+(essentially equivalent to
+ the continued fraction method ). 
+
+  The 1998 British Informatics Olympiad 
+used a sample programming question on Egyptian fractions, with
+sample solutions including
+a  Java applet for calculating 4-term representations 
+of a value m/n by choosing a value d (sequentially testing d=1, d=2, d=3
+etc), finding the divisors of nd (using a simple brute force loop rather
+than any kind of factorization technique),
+and looping through all permutations of the divisors testing
+which ones have a prefix that sums to md (rather than using any kind of
+dynamic program). 
+
+  The Distribution of Prime Primitive Roots and Dense Egyptian
+Fractions , dissertation by Greg Martin. 
+
+  Jim Loy's
+Egyptian fraction page . 
+
+  
+Julian Steprans uses Egyptian fractions for a homework
+assignment . 
+
+  The Erdos-Strauss
+conjecture . Allan Swett confirms that 4/n=1/x+1/y+1/z is
+solvable for n up to 10 12 . 
+
+  Kris'
+Egyptian fraction applet . Seems to be using binary remainders? 
+
+  A loving look at the unitary partition problem .
+Which numbers can be partitioned into distinct positive integers, the
+reciprocals of which add to one? 
+
+  An odd
+Egyptian puzzle  with  many solutions .
+Stan Wagon's problem of the week #848, on odd representations of
+3/179. 
+
+ K. S. Brown's extensive work on Egyptian fractions includes
+pages speculating on
+ how the Egyptians
+did it  as well as several on more number-theoretic concerns:
+these pages on  unit fractions and
+Fibonacci ,  the two Ohm
+problem ,  
+counting unit fraction partitions of unity ,  minimizing
+denominators in unit fraction expansions ,
+ minimizing the
+max denominator in a t-term expansion of 1 ,
+ odd greedy
+stubbornness ,
+ irrationality of
+quadratic sums , and
+ wagon
+trains and sticky wickets 
+ 
+
+ The  CECM Inverse
+Symbolic Calculator  also mentions including Egyptian fraction
+routines. 
+
+ Milo Gardner has done extensive research on the  historical
+methods used by the Egyptians to construct their tables of
+fractions. . 
+
+  Terrance
+Nevin  uses greedy Egyptian fraction methods as a basis for
+investigating the dimensions of the Egyptian pyramids. 
+ 
+
+  The
+Magma symbolic algebra system  uses  the
+splitting method  for Egyptian fractions as an example of its sequence
+manipulation features. 
+
+  
+Is there a harmonic integer?  Stan Wagon asks if any integer  
+k  has an Egyptian fraction representation 
+
+ 
+    
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+  
+ 1 
+    k   =   
+ 
+  
+   +   
+ 
+  
+   +   
+ 
+  
+   +   
+ 
+  
+ 
+  +  ···  +   
+ 
+  
+    
+ 2 
+  
+ 3 
+  
+ 4 
+  
+ 5 
+  
+  n  
+   
+
+ (Hint: consider the largest power of two less than or equal to
+ n .) 
+ 
+
+  Unit
+Fractions  from Eric Weisstein's treasure trove of
+Mathematics. 
+
+  
+Undergraduate projects . This list of possible projects includes
+a very brief mention of Egyptian fractions. 
+
+  
+Problem: sum of unit fractions . Which numbers  
+n /( n +1) have a two-term Egyptian fraction
+representation? Problem from a U. Georgia summer course in
+mathematical problem solving. 
+
+  Good
+Math, Bad Math: Egyptian Fractions . 
+    Number-theoretic hacks ,  David Eppstein ,  Dept. Inf. &amp;
+Comp. Sci. ,  UC Irvine . 
+
+  Last update: 
+  
+</body> 

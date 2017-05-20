@@ -1,0 +1,121 @@
+ VHDL Reference Guide - Next Statements<body>  This is Google's cache of  http://www.vdlande.com/VHDL/nexts.html . It is a snapshot of the page as it appeared on Sep 16, 2009 14:35:25 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Next Statement  
+        Sequential Statement 
+ ---- used in ----&gt; 
+ Loop For Loop While Loop 
+            Syntax        
+  
+
+ 
+     next;
+  
+    
+  
+
+ 
+     next loop_label;
+  
+    
+  
+
+ 
+     next loop_label when condition;
+  
+    
+  
+
+
+
+ 
+See LRM section 8.9
+
+         Rules and Examples        
+  
+
+ 
+    The  next statement is used to prematurely terminate the
+current iteration of a  while, for  or infinite  loop :
+ for I in 0 to 7 loop
+  if SKIP = '1' then
+    next;
+  else
+    N_BUS &lt;= TABLE(I);
+    wait for 5 ns;
+  end if;
+end loop;
+  
+    
+  
+
+ 
+    The next statement may test a boolean condition directly, using the
+ when  keyword:
+ process (A)
+begin
+   Z &lt;= "0000";
+   for I in 0 to 3 loop 
+      next when A /= I;
+      Z(I) &lt;= '1';
+   end loop; 
+end process;
+  
+    
+  
+
+ 
+    For a next statement within a set of nested loops, the optional loop
+label may be used to indicate which level of loop is to be iterated. The
+default (no label) is the innermost loop. If an outer loop is specified,
+loops inside are effectively exited:
+ READ_BUS: process
+begin
+  RESETLOOP: loop
+    VALID_CHECK: while 
+      (CPU_DATA_VALID /= '1') loop
+        wait until rising_edge(CLK)
+                   or RESET = '1';
+        next RESETLOOP when RESET='1';
+    end loop VALID_CHECK;
+    CPU_DATA_READ &lt;= '1';
+    wait until rising_edge(CLK);
+    LOCAL_BUFFER &lt;= DATA_BUS;
+    wait until rising_edge(CLK);
+    CPU_DATA_READ &lt;= '0';
+  end loop RESETLOOP;
+end process READ_BUS;
+  
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+The next statement is supported by some logic synthesis tools, with
+certain restrictions.
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, the  next  statement may have an optional label:  
+labelL  next  loop_label;
+
+
+  
+
+  
+   
+   
+   
+ 
+
+  </body> 

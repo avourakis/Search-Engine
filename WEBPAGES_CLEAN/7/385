@@ -1,0 +1,323 @@
+ //  
+// $Id: NFAMatch.cpp 1106 2007-04-16 23:20:29Z chenli $
+//
+// NFAMatch.cpp: implementation of the NFAMatch class.
+//
+//  Copyright (C) 2004 - 2007 by The Regents of the University of
+//  California
+//
+// Redistribution of this file is permitted under the terms of the GNU
+// Public License (GPL).
+//
+// Date: October, 2004
+//
+// Author: 
+//          Liang Jin (liangj@ics.uci.edu)
+//
+
+#include "stdafx.h"
+#include "NFAMatch.h"
+#include 
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+NFAMatch::~NFAMatch()
+{
+	//for(int i=0; iautomaton = automaton;
+}
+    
+
+
+// return the edit distance between the RE and the string
+int NFAMatch::match(string str){
+	int score = 0;
+    buildGraph(str);
+    score = dynamicProg(str);
+    //printMatr(str);
+    return score;
+}
+
+bool NFAMatch::match(string str, int delta)
+{
+	bool score;
+    buildGraph(str);
+    score = dynamicProg(str, delta);
+    //printMatr(str);
+    return score;
+}
+
+void NFAMatch::buildGraph(string str){
+	//graph = new NFA*[str.length()+1];
+    automaton-&gt;prepareForGraph();
+    //for(int i=0; iclone();
+    //}
+	this-&gt;size = str.length() + 1;
+
+    //labelStepOne(str);
+    //labelStepTwo(str);
+    //labelStepThree(str);
+    return ;
+}
+
+// if i=[1, M] and either s=0 or Y(s)!=epsilon
+// There is a deletion edge (i-1, s) -&gt; (i, s)
+// with label [ai, epsilon]
+void NFAMatch::labelStepOne(string str){
+	NFANode* node;
+    char labels[2];
+    for(int i=1; inodeNum();s++){
+			node = automaton-&gt;getNode(s);
+            if(node-&gt;initState == true || node-&gt;name != EPSILON){
+				NFATransition* edge = new NFATransition(getNode(i,s), getNode(i-1, s));
+
+                // [ai, epsilon]
+                labels[0] = str.at(i-1);
+                labels[1] = EPSILON;
+                edge-&gt;setLabels(labels);
+
+                getNode(i-1, s)-&gt;downBranches.push_back(edge);
+                getNode(i,s)-&gt;upBranches.push_back(edge);
+            }
+        }
+    }
+}
+
+// if i=[0,M] and t-&gt;s = E
+// then there is an insertion edge (i,t)-&gt;(i,s)
+// with label [epsilon, Y(s)]
+void NFAMatch::labelStepTwo(string str){
+	NFANode *t, *s;
+    NFATransition* edge;
+    char labels[2];
+    for(int i=0; inodeNum();nodeIndex++){
+			t = getNode(i, nodeIndex);
+			for(int edgeNum=0; edgeNumbranches.size(); edgeNum++){
+				edge = (NFATransition*)t-&gt;branches[edgeNum];
+                s = edge-&gt;outNode;
+                labels[0] = EPSILON;
+                labels[1] = s-&gt;name;
+                edge-&gt;setLabels(labels);
+            }
+        }
+    }
+}
+
+// if i=[1,M], t-&gt;s = E, and Y(s)!=epsilon,
+// then there is a substitution edge (i-1,t)-&gt;(i,s)
+// with label [ai, Y(s)]
+void NFAMatch::labelStepThree(string str){
+	NFANode *t, *s;
+    NFATransition *edge, *newEdge;
+    int tIndex, sIndex;
+    char labels[2];
+    for(int i=1; inodeNum(); tIndex++){
+			t = automaton-&gt;getNode(tIndex);
+            for(int edgeNum=0; edgeNumbranches.size(); edgeNum++){
+				edge = (NFATransition*)t-&gt;branches[edgeNum];
+                s = edge-&gt;outNode;
+                if (s-&gt;name != EPSILON){
+					sIndex = s-&gt;nodeNumber;
+                    newEdge = new NFATransition(getNode(i,sIndex), getNode(i-1, tIndex));
+                    labels[0] = str.at(i-1);
+                    labels[1] = s-&gt;name;
+                    newEdge-&gt;setLabels(labels);
+                    getNode(i-1, tIndex)-&gt;downBranches.push_back(newEdge);
+                    getNode(i,sIndex)-&gt;upBranches.push_back(newEdge);
+                }
+            }
+        }
+	}
+}
+
+
+int NFAMatch::dynamicProg(string str){
+	int M=str.length();
+    int N=automaton-&gt;nodeNum();
+	int i;
+
+	C = new int*[M+1];
+
+	for(i = 0; i upBranches[0])-&gt;labels);
+    }
+
+    for(i=1; ibackBranches);
+        for(sIndex=1; sIndex backBranches);
+            if(node-&gt;name != EPSILON){
+
+				int  max1 = max(sIndex-1, node-&gt;upBranches);
+                int  max2 = C[sIndex-1][i] + scoreLabel(str.at(sIndex-1), EPSILON);
+                C[sIndex][i] = maxOfThree(C[sIndex][i], max1, max2);
+            }
+        }       
+	}
+
+	int result = C[M][N-1];
+
+	for(i = 0; i nodeNum();
+	int i, j;
+
+    C = new int*[M+1];
+
+	for(i = 0; i  currentMax)
+			currentMax = C[sIndex][0];
+    }
+
+	if(abs(currentMax) &gt; delta)
+	{
+		for(i = 0; i getNode(i));
+
+			if(C[0][i] &gt; currentMax)
+				currentMax = C[0][i];
+
+			for(sIndex=1; sIndex getNode(i);
+				C[sIndex][i] = InsertionMax(sIndex, node);//insertion
+				if(node-&gt;name != EPSILON){
+
+					int  max1 = SubstitutionMax(sIndex, node, str);//substitution
+
+					int  max2 = C[sIndex-1][i] + scoreLabel(str.at(sIndex-1), EPSILON);//deletion
+					C[sIndex][i] = maxOfThree(C[sIndex][i], max1, max2);
+				}
+
+				if(C[sIndex][i] &gt; currentMax)
+					currentMax = C[sIndex][i];
+			}
+
+			if(automaton-&gt;getNode(i)-&gt;finalState == true)
+				if(abs(C[M][i]) getNode(i)-&gt;level == automaton-&gt;getNode(i-1)-&gt;level);
+
+		if(abs(currentMax) &gt; delta)
+		{
+			for(j = 0; j = delta) 
+		return true;
+	else
+		return false;    */
+	return false;
+}
+
+
+
+NFANode* NFAMatch::getNode(int i, int s){
+	//return graph[i]-&gt;getNode(s);
+	return automaton-&gt;getNode(s);
+}
+
+void NFAMatch::printGraph(int i){
+    //graph[i]-&gt;printMe();
+}
+
+void NFAMatch::resetC(int M, int N, int num){
+    for(int i=0; i edgeArr){
+    NFATransition* edge;
+    int tIndex;
+    int max = MINIMUM;
+    for(int edgeNum=0; edgeNumfromNode-&gt;nodeNumber;
+        //  only consider edge in topological order
+        //  since we set all unexamed node score to be MINIMUM
+        //  then it is of no problem
+        if(true){
+			if(C[i][tIndex] + scoreLabel(edge-&gt;labels) &gt; max){
+				max = C[i][tIndex] + scoreLabel(edge-&gt;labels);
+            }
+        }
+    }
+    return max;
+}
+
+int NFAMatch::InsertionMax(int i, NFANode* node)
+{
+	NFATransition* edge;
+	int tIndex;
+	int max = MINIMUM;
+
+	char labels[2];
+	labels[0] = EPSILON;
+	labels[1] = node-&gt;name;
+
+	for(int edgeNum = 0; edgeNum backBranches.size(); edgeNum++)
+	{
+		edge = (NFATransition*)node-&gt;backBranches[edgeNum];
+		tIndex = edge-&gt;fromNode-&gt;nodeNumber;
+
+		if(C[i][tIndex] + scoreLabel(labels) &gt; max)
+		{
+			max = C[i][tIndex] + scoreLabel(labels);
+		}
+	}
+	return max;
+}
+
+int NFAMatch::SubstitutionMax(int i, NFANode* node, string str)
+{
+	NFATransition* edge;
+	int tIndex;
+	int max = MINIMUM;
+
+	char labels[2];
+	labels[0] = str.at(i-1);
+	labels[1] = node-&gt;name;
+
+	for(int edgeNum = 0; edgeNum backBranches.size(); edgeNum++)
+	{
+		edge = (NFATransition*)node-&gt;backBranches[edgeNum];
+		tIndex = edge-&gt;fromNode-&gt;nodeNumber;
+
+		if(C[i - 1][tIndex] + scoreLabel(labels) &gt; max)
+		{
+			max = C[i - 1][tIndex] + scoreLabel(labels);
+		}
+	}
+	return max;
+}
+
+//  this is a user-speficed scoring function for the label
+//  [epsilon, a] insertion  -------       -1
+//  [a, epsilon] deletion   -------       -1
+//  [a, b]       substitution -----       -1
+//  [a, a]  [epsilon, epsilon] ----       0
+int NFAMatch::scoreLabel(char labels[]){
+    if(labels[0] == labels[1]){
+		return 0;
+    }
+    else{
+		return -1;
+    }
+}
+
+
+int NFAMatch::scoreLabel(char label0, char label1){
+    if(label0 == label1){
+		return 0;
+    }
+    else{
+		return -1;
+    }
+}
+
+
+int NFAMatch::maxOfThree(int num1, int num2, int num3){
+    if(num1&gt;=num2){
+		if(num1&gt;=num3){
+			return num1;
+        }
+		else {
+			return num3;
+		}
+    }
+    else{
+		if(num2&gt;=num3){
+			return num2;
+        }
+        else{
+			return num3;
+        }
+    }
+}
+
+
+void NFAMatch::printMatr(string str){
+    int M=str.length();
+    int N=automaton-&gt;nodeNum();
+	for(int i=0; i 

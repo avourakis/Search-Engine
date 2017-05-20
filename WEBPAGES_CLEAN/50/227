@@ -1,0 +1,385 @@
+ Matrix Algebra<body>
+   3. Matrix Algebra   
+   Due: Nov 13, 2013   
+  3.1
+Introduction  
+     The purpose of this lab is to make
+you feel comfortable using MATLAB to perform various operations with
+matrices.  In some sense, matrices are a bit like real numbers:
+they can be added, subtracted, and multiplied (provided they have
+appropriate dimensions).  Certain square matrices can also be
+inverted.  However, with these similarities also come some
+striking differences.  For example, when multiplying matrices, it
+is not true in general that  AB  =  BA , and  A  2 
+may equal  0  even for nonzero  A . 
+Keep these things in mind as you are working through this lab; it will
+help build up your intuition about matrices. 
+     Matrix algebra is not just some
+crazy theoretical nonsense that people made up when they got bored with
+real numbers.  You will see how we can apply these ideas to a
+concrete real world problem.  Hopefully, you will enjoy seeing
+matrices being applied to everyday life. 
+    3.2
+Addition and Multiplication  
+     You have already seen that we can add two
+matrices of the same dimensions by adding their corresponding
+entries.  The operator MATLAB uses to add matrices is simply '+',
+as the next example shows: 
+   Example 3.1     
+     Let us first enter some matrices into MATLAB: 
+  &gt;&gt;  A = [1, 2, 3, 4; 5, 6, 7, 8]  
+  &gt;&gt;  B = [8, 7, 6, 5; 4, 3, 2, 1]   
+ We can add them by typing 
+  &gt;&gt;  A+B   
+  ans =  
+9   9   9   9 
+9   9   9   9  
+     As you know, matrix addition is
+defined componentwise, but matrix multiplication
+is defined in a way that may seem strange at first glance. 
+However, this way of defining matrix multiplication turns out to work
+to our advantage in the future.  You may have seen some of the
+motivation for this definition in lecture.  To recap, recall that
+if we have a matrix
+ A  of dimension  k x l  and a matrix  B  of dimension
+ l x m , we can multiply them to obtain a  k x m  matrix  AB . 
+Note that in order to be able to multiply two matrices, the number of
+columns of the first one must be the same as the number of rows of the
+second one.  For your convenience here is the definition: 
+  ( AB )  ij   
+=  ∑     
+  A   in   B     nj     
+ Here ( AB )  ij   represents the  ij  th 
+entry of the matrix
+ AB  and   n  runs from 1 to  l 
+in the summation.  
+   Example 3.2   
+       Enter the following matrices
+into MATLAB: 
+  &gt;&gt;  A = [1, 1; 1, 0]  
+  &gt;&gt;  B = [0, 1; 1, 1]    
+ Now multiply them, simply by typing 
+  &gt;&gt;  A*B  
+ 
+  ans =  
+1   2 
+0   1  
+ What happens if we multiply  B  by  A ? 
+  &gt;&gt;  B*A   
+  ans =  
+1   0 
+2   1  
+ When you multiply two matrices  A  and  B ,
+it is often not true that  AB  =  BA ! 
+  
+       Exercise
+3.1    Can you think of any 2x2 matrices  D  for
+which  CD   =   DC  for all 2x2 matrices  C ? 
+Give 2 different examples of such matrices  D .  
+            We can do other things with matrices
+as well. Among things to try are:        &gt;&gt;  A-B  
+       
+       
+       (Subtracts two matrices.) 
+       
+        &gt;&gt;  2*A   
+       
+       (Multiplies matrix  A  by a scalar  2 .) 
+        &gt;&gt;  A^3   
+       
+       (Raises the matrix  A  to the third power,
+i.e., multiplies  A  by itself three times.) 
+        &gt;&gt;  A.*B   
+       
+       (Multiplies the corresponding entries of the
+matrices together. We will not be using this command, but it is nice to
+know.) 
+        &gt;&gt;  rref(A)   
+       (Gives the reduced row echelon form of  A .)
+       
+        &gt;&gt;  A'   
+       (Gives the transpose of  A , sometimes
+written as  A  T ) 
+        where  A  and
+ B  are the same matrices defined in the above example. 
+  
+        Exercise
+3.2   
+         (a)   
+Enter the following matrices into MATLAB
+         
+       and compute the following expression: 
+        C   =  (2 A  2  B 
++ 3 A  T ) 2  
+       
+         (b)   
+Compute  C x   and include all your input and output into
+your final write up. 
+           3.3
+Application: Incidence Matrices  
+     Consider the following problem: suppose we have
+six cities with airports, say San Diego, San Francisco, Chicago, New
+York, Moscow, and Tokyo.  We are interested in counting the number
+of ways we can travel from one city to another with at most  n 
+stopovers.  Suppose for example that there are direct flights from 
+ San Diego to San Francisco 
+San Francisco to any of the remaining five cities 
+Chicago to San Francisco, New York, and Moscow 
+New York to San Diego, San Francisco, Chicago, and Moscow 
+Moscow to Chicago, New York, and Tokyo 
+Tokyo to San Francisco, New York, and Moscow  
+ and we want to count the number of ways we can get from San Diego to
+Moscow with at most 3 stopovers.  For example, the trip San Diego
+- San Francisco - Tokyo - New York - Moscow is a trip with 3
+stopovers.  (We are stopping over in San Francisco, Tokyo, and New
+York).  Let us get a taste for this problem in the next exercise. 
+      Exercise 3.3    List
+all possible ways to get from San Diego to Moscow with exactly 3
+stopovers. 
+            At first glance this problem has little to do
+with matrices and linear algebra, but it turns out that there is a very
+easy and elegant way of solving problems of this type using something
+called  incidence matrices . 
+     The first step is to number our cities in the
+order they are listed: San Diego will be 1, San Francisco 2, and so
+on.  Then, let us set up our incidence matrix  A    by
+the following rule: if we can get from the  i  th  city
+to the  j  th  city, then the entry  A   ij  
+of the matrix will be set to 1.  Otherwise we set that entry to
+0.  By convention we will set all of the diagonal entries,  A   i    i  
+to 0, because you cannot take a flight from a city to itself. 
+Thus we obtain the following matrix    A    for our
+situation: 
+ 
+  
+ We can now find a useful interpretation for the entries of the
+matrix  A  2 . Take, for example: 
+ ( A  2 ) 36  =  A  31  A  16 
++  A  32  A  26  +  A  33  A  36 
++  A  34  A  46  +  A  35  A  56 
++  A  36  A  66  
+ Note that any of the terms  A  3 k   A   k 6  
+=  1 if and only if both  A  3 k   and  A   k 6 
+equal 1; that is, if and only if we can fly from Chicago to the  k  th 
+city and from the  k  th  city to Tokyo.  Thus ( A  2 ) 36  
+   gives us the number of ways of flying from Chicago to Tokyo
+with exactly one stopover.  Similarly one can show that the number
+of ways of flying from city  i  to city  j  with  exactly 
+ n  stopovers is just ( A   n+1  )  ij  . 
+      Exercise 3.4   
+         (a)    Go
+ahead and enter the above incidence matrix into MATLAB by typing in the
+following command:   &gt;&gt;  A = [0, 1, 0, 0, 0, 0;     1, 0, 1, 1, 1, 1; 
+0, 1, 0, 1, 1, 0; 
+1, 1, 1, 0, 1, 0; 
+0, 0, 1, 1, 0, 1; 
+0, 1, 0, 1, 1, 0]    
+       Now state the number of ways to get from San Diego to Moscow
+with exactly 3 stopovers.  Simply type in: 
+        &gt;&gt;  A^4   
+       and read off the entry in the first row and fifth
+column.  Does your answer agree with your explicit count in
+exercise 3.3?  If not, find the missing trips.  Include your
+input and output in the final Word document. 
+       
+         (b)    Find
+the number of ways to get from San Francisco to Chicago with  
+at most  4 stopovers.  (Note, this is  not  the same as
+finding the number of ways with  exactly  4 stopovers!)    Include
+all of your commands and output in your final write up. 
+          Remark 3.1    As you have
+probably realized, the method discussed above counts silly trips such
+as San Francisco  →  New York  →  San Francisco  
+→  New York as a trip with 2 stopovers, so, user beware! 
+    3.4 Matrix Inversion  
+     A concept of fundamental importance is that of
+the inverse of a matrix.  Recall that we define the inverse of an  n
+x n  matrix  A  to be a matrix  B  such that  AB 
+=  BA  =  I , where  I  is the  n x n  identity
+matrix.  Such a matrix  B  is denoted by  A  -1 . 
+Note that it follows from the definition that  B  is also
+an   n x n  matrix.   
+ As we know, every nonzero real number  x  has an inverse,
+namely  1/x .  However, this need not be the case with
+non-zero matrices, which may be invertible (sometimes called  
+non-singular ) or non-invertible ( singular ). MATLAB has a
+special command,   inv  , that finds
+the inverse of a matrix, if one exists. 
+     If you want to find an inverse of a square matrix
+M, simply type 
+  &gt;&gt;  inv(M)   
+     (Of course, if you enter this right now you'll
+probably get an error. We haven't defined a matrix M.) 
+      Exercise 3.5   
+         (a)    Try
+using the   inv   command to find
+the inverse of the matrix 
+            
+       Notice the strange output.  Include your command and the
+output in the final write up. 
+       
+         (b)    Now
+enter the following matrix  A  into MATLAB.
+        &gt;&gt;  A = [4, 9; 5, 11]   
+       Let us find its inverse: 
+         &gt;&gt;  B = inv(A)   
+       and check that it satisfies the definition. Enter the
+following commands. 
+        &gt;&gt;  A*B   
+        &gt;&gt;  B*A   
+       Include your commands and the output they produced in the
+final write up. 
+       (MATLAB may give you entries such as -0.000 as the result of
+multiplying the matrices above.  Don't pay too much attention to
+that.  -0.000 is still 0 for all practical purposes.) 
+       
+         (c)   
+Enter the following column vector into MATLAB:
+        &gt;&gt;  x = [5;10]   
+       Now multiply  A  by   x   by entering the
+following command: 
+        &gt;&gt;  y = A*x   
+       As usual, include your input and output in the final write up. 
+       
+         (d)    Now
+without entering anything into MATLAB  (no cheating!) , what do
+you think will be the result of B*y?  Explain your answer. 
+         (e)   
+Check your answer to the above question, by entering the appropriate
+commands into MATLAB.  Include the input and output in your Word
+document. 
+         
+ 3.5 Application: Matrices and Presidential Elections  
+ 
+     Certainly, the title of this section
+sounds a bit strange.  What do matrices and presidents have in
+common?  We'll begin an application here involving the use of
+matrices to study long term election results. We have not developed all
+of the math we'll need to finish the example, however, so we'll
+actually finish this example in the next MATLAB assignment. 
+     Let us consider a math model which is used
+in many subjects involving dynamics by illustrating it in a simple
+"sociological" situation.  
+In California when you register to vote you declare a party
+affiliation.
+Suppose we have four political parties: Democrats, Republicans,
+Independents, and Libertarians, and we get the (publically available)
+data telling us
+what percentage of voters in each party switch to a different party
+every 4
+years.  So we may be told something like this... "81% of Democrats
+remain Democrats, 9% convert to Republicans, 6% switch to Independents
+and 4% become Libertarians."  Suppose we have this sort of
+information for each party, and we organize it into a matrix, which we
+shall call  P , as follows: 
+      
+       Democrats 
+       Republicans 
+       Independents 
+       Libertarians 
+       Democrats 
+       0.81 
+       0.08 
+       0.16 
+       0.10 
+       Republicans 
+       0.09 
+       0.84 
+       0.05 
+       0.08 
+       Independent 
+       0.06 
+       0.04 
+       0.74 
+       0.04 
+       Libertarians 
+       0.04 
+       0.04 
+       0.05 
+       0.78 
+          
+ (For example, the 0.05 in the second row and third
+column indicates that every four years, 5% of those calling themselves
+Independent will switch to the Republican party.)  Note that we
+are assuming that these percentages do not change from one election to
+the next.  This is not a very realistic assumption, but it will do
+for our simple model. 
+     The question of course is to try to
+determine the outcome of all future elections, and if possible, the
+composition of the electorate in the long term.  Let  D  0 ,
+ R  0 ,
+ I  0  and  L  0  denote the current
+percentage of Democrats, Republicans, Independents and
+Libertarians.  In four years these numbers will change according
+to the matrix above, as follows: 
+  D  1  = 0.81 D  0  + 0.08 R  0 
++ 0.16 I  0  + 0.10 L  0   R  1  = 0.09 D  0  + 0.84 R  0 
++ 0.05 I  0  + 0.08 L  0   I  1  =
+0.06 D  0  + 0.04 R  0  + 0.74 I  0 
++ 0.04 L  0   L  1  =
+0.04 D  0  + 0.04 R  0  + 0.05 I  0 
++ 0.78 L  0   
+ Let   x  n   be the vector ( D    n   ,
+ R    n   ,
+ I    n   ,
+ L    n   ) T .
+It
+represents the percentage of representatives of each party after  n 
+presidential elections
+and we shall call it the party distribution.  From the calculation
+above we see that  
+  
+  x   1    =  P   x    0  
+  
+  x   2    =  P  2   x   0 
+and in general   x   n    =  P   n  x   0   
+ Assuming everyone voted along party lines, from the
+presidential election of 2004 we know that  
+  x   0   is roughly (48.56, 51.01, 0.0013,
+0.0030) T  
+         
+       Exercise 3.6    
+         (a)   Enter
+the matrix  P  and the vector     x   0  
+into MATLAB. To avoid mistakes, just copy and paste this:
+        &gt;&gt;  P = [0.8100 0.0800 0.1600
+0.1000; 
+0.0900 0.8400 0.0500 0.0800; 
+0.0600 0.0400 0.7400 0.0400; 
+0.0400 0.0400 0.0500 0.7800]   
+        &gt;&gt;  x0 = [48.56; 51.01;
+0.0013; 0.0030]   
+       What will the party distribution vector be
+3, 7, and 10 presidential elections
+from now? 
+       
+         (b)   
+What will be the results 30, 60, 100 elections from now?
+   
+How much different is x  30   from
+x  60   from
+x  100  ?  
+Summarize simply what is happening with x  k  
+as k gets big.  
+             From the previous exercise you probably observed
+that the results seem to stabilize the further into the future we
+go.  We lack the mathematics to describe what is really going on
+here just yet, so make sure to save a copy of your results from this
+exercise. We'll revisit and finish the election application in the next
+lab. 
+
+     3.6
+Conclusion  
+     Hopefully you have gained some more intuition
+about matrices from this lab.  You have seen that we can perform
+similar operations on them, as we can on real numbers, but at the same
+time, their behavior can be very different from that of real
+numbers.  We would also like to think that you have enjoyed seeing
+some applications of such basic things as multiplication and inversion
+of matrices, to an interesting real world problem.  The many uses
+of
+linear algebra in the real world are still to be investigated further
+in future labs and the appendices. 
+   Acknowledgement: This lab was developed by faculty and graduate students at UCSD.
+( http://www.math.ucsd.edu/~math20f/Fall/MatlabIndex.html ).  
+ </body> 

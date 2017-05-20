@@ -1,0 +1,269 @@
+ David Eppstein - Publications<body>
+ David Eppstein - Publications 
+  
+  
+Generating multiple near-optimal solutions
+ 
+See also my
+ 
+bibliography of algorithms for  k  shortest paths , which
+also includes related work on other " k th best
+solution" problems, especially the  k  smallest spanning trees.
+Victor Jiménez and Andrés Marzal maintain a web page on
+ algorithms for k shortest paths .
+ 
+    Finding the  k  smallest spanning trees . 
+D. Eppstein.  2nd Scand. Worksh. Algorithm Theory,  Bergen, Norway, 1990. 
+Springer,  Lecture Notes in Comp. Sci.  447, 1990, pp. 38–47.   BIT  32: 237–248, 1992 
+(special issue for 2nd Scand. Worksh. Algorithm Theory).
+ 
+By removing edges not involved in some solution,
+and contracting edges involved in all solutions,
+we reduce the problem to one in a graph with O( k )
+edges and vertices.  This simplification step
+transforms any time bound involving  m  or  n 
+to one involving min( m,   k ) or min( n,   k )
+respectively.  This paper also introduces the geometric
+version of the  k  smallest spanning trees problem
+(the graph version was long known) which it solves using
+order ( k +1) Voronoi diagrams.
+  ( BibTeX  --
+ Citations  --
+ ACM DL (SWAT)  --
+ ACM DL (BIT) )
+  
+    Iterated nearest neighbors and finding minimal polytopes . 
+D. Eppstein and 
+ J. Erickson . 
+Tech. Rep. 92-71, ICS, UCI, 1992.  
+ 4th ACM-SIAM Symp. Discrete Algorithms,  Austin, 1993, pp. 64–73 .   Disc. Comp. Geom.  11: 321–350, 1994 .
+ 
+Showed that for various optimization criteria, the
+optimal polygon containing  k  of  n 
+points must be near one of the points, hence one can transform
+time bounds involving several factors of  n 
+to bounds linear in  n  but polynomial in  k. 
+Used as a subroutine are data structures for finding several
+ nearest neighbors  in rectilinear metric spaces, and
+algorithms for finding the
+ deepest point in an arrangement  of cubes or
+spheres.
+  ( BibTeX  --
+ Citations  --
+ Jeff's pub list entry  --
+ CiteSeer )
+  
+    Tree-weighted neighbors and geometric  k  smallest spanning trees . 
+D. Eppstein.  Tech. Rep. 92-77 , ICS, UCI, 1992.  Int. J. Comp. Geom. &amp; Appl.  4: 229–238, 1994.
+ 
+" Finding the  k  smallest spanning trees "
+used higher order Voronoi diagrams to reduce the geometric
+  k  smallest 
+ spanning tree  problem to the graph problem.
+Here I instead use nearest neighbors for a modified
+distance function where the bottleneck shortest path length
+is subtracted from the true distance between points.
+The result improves the planar time bounds and extends
+more easily to higher dimensions.
+  ( BibTeX  --
+ CiteSeer )
+
+  
+    Ten algorithms for Egyptian fractions . 
+D. Eppstein.  Mathematica in Education and Research  4 (2): 5–15, 1995.
+ 
+Number theory.
+I survey and implement in  Mathematica  several methods
+for representing rational numbers as sums of distinct unit fractions.
+One of the methods involves searching for paths in a certain graph
+using a   k  shortest paths  heuristic.
+  ( BibTeX  --
+ Citations  --
+ Also available
+in HTML and Mathematica notebook formats )
+  
+    Sparsification--A technique for speeding up dynamic graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and A. Nissenzweig.  33rd IEEE Symp. Foundations of Comp. Sci.,  Pittsburgh, 1992, pp. 60–69. 
+Tech. Rep. RC 19272 (83907), IBM, 1993. 
+Tech. Rep. CS96-11, Univ. Ca' Foscari di Venezia, Oct. 1996.   J. ACM  44 (5): 669–696, 1997 .
+ 
+Uses a divide and conquer on the edge set of a graph, together with the
+idea of replacing subgraphs by sparser certificates, to make various
+dynamic algorithms as fast on dense graphs as they are on sparse graphs.
+Applications include random generation of spanning trees
+as well as finding the  k 
+ minimum weight spanning trees 
+for a given parameter  k. 
+  ( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography  --
+ ACM DL )
+  
+    Improved sparsification . 
+D. Eppstein,
+ Z. Galil , and 
+ 
+G.F. Italiano .  Tech. Rep. 93-20 , ICS, UCI, 1993.
+ 
+Saves a log factor over dynamic graph algorithms in
+" Sparsification "
+and their applications, by dividing vertices instead of edges.
+Merged into the journal version of "Sparsification".
+  ( BibTeX  --
+ Citations  --
+ CiteSeer )
+  
+    Separator based sparsification for dynamic planar graph algorithms . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and T. Spencer.   25th ACM Symp. Theory of Computing,  San Diego, 1993, pp. 208–217. 
+ 
+Replaces portions of a hierarchical separator decomposition with smaller
+certificates to achieve fast update times for various dynamic planar graph problems.  Applications include finding the  k 
+ best spanning trees  of a planar graph.
+  
+( BibTeX  --
+ Citations  --
+ MIT hypertext bibliography )
+  
+    Separator based sparsification I:
+planarity testing and minimum spanning trees . 
+D. Eppstein,
+ Z. Galil , 
+ 
+G.F. Italiano , and T. Spencer.  
+ J. Comp. Sys. Sci.  52: 3–27, 1996
+(special issue for 25th STOC) .
+ 
+First half of journal version of
+ Separator based sparsification for dynamic planar graph algorithms .
+  
+( Citations  --
+ ACM DL )
+  
+    Algorithms for proximity problems in higher dimensions .  
+M. T. Dickerson  and D. Eppstein.  
+ Comp. Geom. Theory &amp; Applications  5: 277–291, 1996 .
+ 
+Combines a method from
+" Provably good mesh generation " for
+finding sparse high-dimensional Delaunay triangulations,
+a method of Dickerson, Drysdale, and Sack
+[" Simple
+algorithms for enumerating interpoint distances ", IJCGA 1992]
+for using Delaunay
+triangulations to search for nearest neighbors,
+and a method of Frederickson for speeding up tree-based searches.
+The results are fast algorithms for several proximity problems
+such as finding the  k  nearest neighbors to each point
+in a given point set.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ CiteSeer  --
+ ACM DL )
+  
+    Finding the  k  shortest paths . 
+D. Eppstein.  35th IEEE Symp. Foundations of Comp. Sci.,  Santa Fe, 1994, pp. 154–165.  Tech. Rep. 94-26 , ICS, UCI, 1994.  
+ SIAM J. Computing  28 (2): 652–673, 1998 .
+ 
+This paper presents an algorithm that finds multiple short paths connecting
+two terminals in a graph
+(allowing repeated vertices and edges in the paths)
+in constant time per path after a preprocessing stage
+dominated by a single-source shortest path computation.
+The paths it finds are the  k  shortest in the graph, where  k  is a
+parameter given as input to the algorithm.
+  
+The  k  shortest paths problem has many important applications for finding
+alternative solutions to geographic path planning problems, network
+routing, hypothesis generation in computational linguistics, and
+sequence alignment and metabolic pathway finding in
+bioinformatics. Although there have been many papers on the
+ k  shortest paths problem before and after this one, it has become
+frequently cited in those application areas.
+Additionally, it marks a boundary in the theoretical study of the problem:
+prior theoretical work largely concerned how quickly the problem could
+be solved, a line of research that was closed off by the optimal time
+bounds of this paper. Subsequent work has focused instead
+on devising efficient algorithms for more complex alternative
+formulations of the problem that avoid the repeated
+vertices and other shortcomings of the alternative paths produced by
+this formulation.
+  ( BibTeX  --
+ Full paper  --
+ Citations  --
+ Graehl implementation  --
+ Jiménez-Marzal implementations  --
+ Shibuya implementation  --
+ Martins implementation  --
+ Cliff OpenStreetMap demo  --
+CiteSeer:
+ TR '94 ,
+ SJC '98  --
+ ACM DL )
+  
+    Representing all minimum spanning trees with applications to
+counting and generation . 
+D. Eppstein.  Tech. Rep. 95-50 , ICS, UCI, 1995.
+ 
+Shows how to find for any edge weighted graph G an equivalent
+graph EG such that the  minimum spanning trees 
+of G correspond one-for-one with the spanning trees of EG.
+The equivalent graph can be
+constructed in time O(m+n log n) given a single minimum spanning tree of
+G.  As a consequence one can find fast algorithms for counting, listing,
+and randomly generating MSTs.
+Also discusses similar
+equivalent graph constructions for
+ shortest paths , minimum cost flows,
+and  bipartite matching .
+  ( BibTeX  --
+ Citations )
+  
+    Finding common ancestors and disjoint paths in DAGs . 
+D. Eppstein.  Tech. Rep. 95-52 , ICS, UCI, 1995.
+ 
+This paper describes algorithms for finding pairs of vertex-disjoint
+paths in a DAG, either connecting two given nodes to a common
+ancestor, or connecting two given pairs of terminals.
+The main results were merged into the journal version of
+" Finding the  k  shortest paths ".
+  ( BibTeX )
+  
+    All maximal independent sets and dynamic dominance for sparse
+graphs.  
+D. Eppstein.  arXiv:cs.DS/0407036 .  16th ACM-SIAM Symp. Discrete Algorithms, 
+Vancouver, 2005, pp. 451–459.   ACM Trans. Algorithms  5(4):A38, 2009 .
+ 
+We show how to apply reverse search to list all maximal independent sets
+in bounded-degree graphs in constant time per set, in graphs from minor
+closed families in linear time per set, and in sparse graphs
+in subquadratic time per set.  The latter two results rely on new
+data structures for maintaining a dynamic vertex set in a graph
+and quickly testing whether the set dominates all other vertices.
+  
+( SODA05 talk slides  --
+ BibTeX )
+  
+     k -best enumeration . 
+D. Eppstein.   Encyclopedia of Algorithms   (Ming-Yang Kao, ed.), Springer, added 2014.  arXiv:1412.5075 .   Bull. EATCS  115, 2015 .
+ 
+A brief survey of algorithms for finding the  k  shortest paths and
+related  k -best enumeration problems. The arXiv/EATCS version is
+significantly longer and with more references than the Springer version.
+  
+     
+ Publications  --
+ David Eppstein  --
+ Theory Group  --
+ Inf. &amp; Comp. Sci.  --
+ UC Irvine 
+  
+ Semi-automatically  filtered 
+from a common source file. 
+ </body> 

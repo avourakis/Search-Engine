@@ -1,0 +1,164 @@
+  Make: a Unix programming aid
+<body>
+
+  Make:  a Unix programming aid  
+
+You should do separate compilation on files,
+compiling code files (files ending with  .c )
+into object files (ending with  .o ), and then
+creating a final executable version from these. 
+This saves much CPU
+time since you only really need to recompile the files you have edited
+since the last compile. 
+It also saves you precious hacking time since
+you don't have to sit there waiting for your entire program to recompile
+every time you make a few small corrections. 
+The Unix command  make  executes compiliation of large programs
+according to a set of rules you give it.
+ 
+The method (not the best -- just a general, simple way which handles
+most cases reasonably well):
+  
+Your program for a given lab should be in a single directory. 
+Within the directory you should have
+all of your code files ( .c ),
+usually one include file ( .h ),
+and a file called  Makefile  or  makefile . 
+Later you will also have some object files ( .o ),
+a single executable file, and perhaps some program input and output
+files for testing purposes.
+  
+The code files contain all executable code and data declarations. 
+An easy rule is to put each function in a file by itself,
+with the name of the file corresponding to the name of the function
+contained therein. 
+There is nothing wrong with putting several (small) related functions
+in each file as long as you can easily remember where you put them.
+  
+The  .h  file contains the compiler directives to insert all
+system include files,
+like  &lt;stdio.h&gt;  and  &lt;math.h&gt; ,
+and all data type and macro definitions. 
+This file should  not 
+contain anything that creates a variable, allocates space, or generates
+executable code. 
+It  should  contain all compiler directives which
+define data structures, macros, etc. 
+This file should be included at the head of all  .c  files. 
+Thus all code files will have exactly the same knowledge about
+the environment in which they coexist.
+  
+The last file,  Makefile , tells the system how all of your files
+are inter-related, and how to combine them into a program. 
+ Makefile  consists of a list of files which need to be generated
+in the process of creating an executable program. 
+This list will include the  .o  files and the final executable
+file. 
+For each file, there is a list of files that the file depends on,
+and a list of commands (usually just one  gcc  command) that will
+generate the file. 
+The syntax is:  on a given line you have the name of the file,
+a colon, and a list of the files that it depends on,
+separated by spaces. 
+On the next line, the first character  must  be a tab
+(not eight spaces -- a  real  tab character).
+Following the tab is a command that should result in the creation
+of the desired file. 
+Blank lines between entries are allowed. 
+The following is an example  Makefile :
+  
+  
+#----------- example of a makefile ----------
+
+CC=gcc
+
+mysort: main.o timer.o insert.o quick.o merge.o heap.o
+        $(CC) -o mysort main.o timer.o insert.o quick.o merge.o heap.o -lm
+
+main.o: main.c my_includes.h
+        $(CC) -c main.c
+
+insert.o: insert.c my_includes.h
+        $(CC) -c insert.c
+
+quick.o: quick.c my_includes.h
+        $(CC) -c quick.c
+
+merge.o: merge.c my_includes.h
+        $(CC) -c merge.c
+
+heap.o: heap.c my_includes.h
+        $(CC) -c heap.c
+
+#----------- end of example makefile --------
+ 
+ 
+Notice that all files depend on a simple tree structure of
+prerequisites. 
+The Unix command  make  will read  Makefile  and
+examine the timestamps on the files involved. 
+It will then invoke only
+the commands necessary to update branches of the tree that have been
+modified since the last compile.
+  
+Also notice that  all  object files rely on the include file. 
+If you change a definition in the include file, you may redefine a data
+structure or macro whose definition is known to all of the code files,
+so they generally must all be recompiled. 
+But even though the include
+file is listed as a prerequisite, it is not listed on the compile
+command line since it is read in when the  #include  directive is
+encountered on the first line of the  .c  file. 
+You should not need to
+change the basic definitions in the  .h  file very often, since
+you should not start coding until you have figured out what
+global data structure definitions and other declarations you will need.
+  
+Note that include files that are located in the system include directory
+are surrounded by angles (as in  &lt;stdio.h&gt; ) while include
+files that are located in directories relative to the current
+directory are surrounded by double quotes
+(as in  "my_includes.h" ).
+  
+It has been observed that g++ will produce better diagnostics
+than gcc if there are errors in your programs. 
+Other than that, if you write your
+programs in standard ANSI C as described in Kernighan,
+there should be no difference.
+  
+Here is another example makefile:
+  
+  
+# This sets a make variable OBJ to the list of all the files I want to
+# compile together.  Make is smart enough to know that each file that
+# ends in .o comes from a file that ends in .c.
+OBJ = sorts.o insertion.o quick.o heap.o merge.o
+
+# This tells make to use the g++ compiler instead of the default (cc)
+# when it is implicitly producing .o files from .c files.
+CC = g++
+
+# This tells make what flags to use when compiling C programs.  The flag
+# -Wall tells g++ to print all warning messages.  The flag -g tells
+# g++ to generate the extra information required by a symbolic debugger
+# such as gdb.
+CFLAGS = -Wall -g 
+
+# This tells make that the main program it is to build
+# is "sorts" and that sorts depends on the files listed in the make variable
+# OBJ.  It also gives a command on the second line to compiler the
+# final executable file "sorts".  Note that the second line begins
+# with a TAB.  Make is very fussy that command lines begin with TABs.
+sorts : $(OBJ)
+	g++ $(CFLAGS) -o sorts $(OBJ) /home/dan/165/timer.o
+ 
+ 
+
+   
+ 
+Dan Hirschberg    
+Computer Science Department 
+University of California, Irvine, CA 92697-3435  
+ dan (at) ics.uci.edu  
+Last modified: Apr 6, 1999
+</body> 

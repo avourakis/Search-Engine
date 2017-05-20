@@ -1,0 +1,140 @@
+ Program 6<body>
+
+ 
+ Program 6 
+ Writing Classes with Arrays and Interfaces 
+ 
+  Introduction to Computer Science I
+ 
+ICS-21  
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+  This programming assignment is designed to ensure that you know how to write
+    more complicated classes: both classes that use arrays to store large
+    quantities of data and classes that employ interfaces to specify general
+    things to do with the values stored in the array in the class.
+  Primarily, you will be writing methods that manipulate values stored in an
+    array of  Object ; the class will declare instance variables to store
+     an array
+    (which is not required to be filled) and keep track of the number of
+    values that it stores.
+  Of course, you will continue gaining experience with the standard control
+    structures in Java (blocks, ifs, loops/breaks) as well as the more basic
+    Java features (declarations and expression statements using arithmetic,
+    state-change, relational and logical operators).
+   
+  You will write just one class in this assignment.
+  I will provide a driver program that you will use to test this class.
+  As always, you can check the behavior of your programs against mine by
+    downloading, unzipping, and then running the file
+      Program #6 Executables ,
+    to help you understand the specification of the problem and observe the
+    programmer/user interaction that you are to implement.
+  Use the  toString  option liberally, to examine the contents of the
+    array storing the information.
+    
+  See  Program #1  for details on how
+    to run these executables on both PCs and in Eclipse (PCs and Macs).
+  Remember, you can run these programs, but not examine their source (Java)
+    code.
+    
+  To start working on this assignment, download
+     Program #6 Project Folder 
+    which contains a template for the class that you should write for this
+    assignment, some other completely written classes, and the driver program
+    that you should use to test these classes.
+  When you finish, submit the  Sequence.java  file.
+    
+  Note that the methods/classes in  Sequence  are all written or stubbed;
+    so the driver program compiles but fails to work correctly until you write
+    the required code.
+    
+   Only one programmer of the pair should dropoff the program.
+     It doesn't matter which of the pair submits.
+     Of course, the program should contain both student names (in the
+        comment: the same one you cut, pasted, ane filled in at the top of
+        each program in  Program #1 ). 
+  
+    
+       Sequence Collection Class  
+ 
+  You are to read and write the unwritten methods in the  Sequence 
+    collection class.
+  A sequence is just collection of values  whose order is important ;
+    programmers
+    using this class can insert, put, and remove values in specified indexes
+    in the sequence (as well as empty all the values out of a sequence or
+    reverse the order of its values).
+  They can also examine the values stored at and indexes, find the index
+    storing a value, and get other useful information (e.g., the size of the
+    sequence).
+  Finally, by using classes implementing the  Decision  interface, we can
+    count how many values in the collection return  true  according to
+    some  Decision  object's  isOK  method, or construct a new
+    sequence containing only those values that return  true  according to
+    some  Decision  object's  isOK  method (called  filtering ).
+   
+  The constructors for  Sequence  are written; the  toString  and
+     toStringAllIndex  methods are also written: the former includes only
+    those indexes thought to be  0  to  used; and the
+     doubleLength  method is written as well.
+  First examine the two instance variables declared for this class (for
+    storing an array of values and keeping track of the number of values
+    stored in the array).
+  Second, observe and understand how the constructor and written methods
+    examine/update values in these variables.
+    
+  The class uses an  Object  array to store all the values in a sequence.
+  These arrays double their lengths when necessary (to accomodate inserting
+    more values into the sequence when the array is full), and thus are often
+    not filled.
+  Pay close attention to the difference between the  size  of a collection
+    and the  length  of the array storing the collection.
+  The  size  of the collection is the actual number of values stored in
+    the collection (e.g., the number of indexes "used" to store values in the
+    array); the  length  of an array is the physical size of the array,
+    e.g., its capacity to store values.
+  An object of the  Sequence  class stores both an  Object[]  and an
+     int  storing the number of  used  values in the array.
+  As a data invariant, all array indexes from  0  to  used-1  store
+    values in the sequence; all array values from  used  to
+     length-1  in the array should store  null .
+  When adding or removing values from the array, remember to retain this
+    data invariable and update the  sequence  array and  used 
+    instance variable when necessary.
+    
+  The methods you must write are the accesors  get ,  getSize ,
+     isEmpty ,  findIndex ,  countTrue , and  filterTrue ;
+    and also the mutators  makeEmpty ,  putAt ,  insert ,
+     insertAt ,  removeAt ,  remove , and  reverse .
+  The details of each of these methods is specified inside the
+     Sequence.java  file; read them carefully.
+  Each method is written in stubbed form (with a correct header but
+    a generic body).
+  If a method must check its parameters and throw an exception, execute
+    this code as early as possible in the method (and supply a helful message
+    in the exception: see my messages by testing my executable).
+  The driver allows you to test each method individually, and also includes
+    and automatic testing feature.
+    
+  I suggest writing the  insert  method first (it is similar to push in
+    stack and enqueue in queues) and testing it by calling  toString  and
+     toStringAllIndex .
+  Then try writing and testing each of the "simple" accessors (all except
+     countTrue  and  filterTrue , although you might find writing
+    these methods simple as well).
+  Try writing and testing each mutator in the order listed above.
+  You can write  remove  by a simple combination of calling the
+      findIndex  and  removeAt  method.
+  If you haven't already written  countTrue  and  filterTrue ,
+    write these methods.
+  Finally, you can use the driver to perform an autotest on all these methods.
+  
+   </body> 

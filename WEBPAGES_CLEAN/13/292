@@ -1,0 +1,31 @@
+ """GraphDegeneracy.py
+
+Compute the degeneracy of graphs, and degeneracy orderings of graphs.
+
+D. Eppstein, July 2016.
+"""
+
+import unittest
+from Graphs import isUndirected
+from BucketQueue import BucketQueue
+
+def degeneracySequence(G):
+    """Generate pairs (vertex,number of later neighbors) in degeneracy order."""
+    if not isUndirected(G):
+        raise TypeError("Graph must be undirected")
+    Q = BucketQueue()
+    for v in G:
+        Q[v] = len(G[v])    # prioritize vertices by degree
+    for v,d in Q.items():
+        yield v,d           # output vertices in priority order
+        for w in G[v]:
+            if w in Q:
+                Q[w] -= 1   # one fewer remaining neighbor
+
+def degeneracy(G):
+    """Calculate the degeneracy of a given graph"""
+    return max(d for v,d in degeneracySequence(G))
+
+def degeneracyOrientation(G):
+    """Directed version of G with  level:                   # new depth record?
+            if k == None or level  

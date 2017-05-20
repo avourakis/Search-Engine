@@ -1,0 +1,96 @@
+ 22.5 Call-Backs<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.4 OEUnaryPredicate 
+ Up:   22. Predicate Functors 
+ Next:   22.6 Predefined OEChem Functors 
+   
+
+
+  
+22.5 Call-Backs 
+ 
+
+ 
+Simply stated, predicate functors (boolean functors) are functions which
+return "true" or "false".  In OEChem, these functors are often passed into
+another function.  The functors are then called from inside the second
+function.  This is the concept of a "call-back" because the second function
+provides the argument and "call's back" to the functor which was passed
+into the function.
+
+  
+    #include "oechem.h"
+#include "oesystem.h"
+
+#include &lt;iostream&gt;
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+unsigned int Count(const OEUnaryPredicate&lt;OEAtomBase&gt; &amp;fcn,
+                   const OEMolBase &amp;mol)
+{
+  unsigned int count = 0;
+  OEIter&lt;OEAtomBase&gt; atom;
+  for(atom = mol.GetAtoms();atom;++atom)
+    if(fcn(*atom))
+      ++count;
+
+  return count;
+}
+
+int main()
+{
+  OEGraphMol mol;
+  OEParseSmiles(mol, "c1c(O)c(O)c(Cl)cc1CCCBr");
+
+  cerr &lt;&lt; "Number of Oxygens = " &lt;&lt; Count(OEIsOxygen(),mol) &lt;&lt; endl;
+
+  cerr &lt;&lt; "Number of Carbons = " &lt;&lt; Count(OEHasAtomicNum(6),mol) &lt;&lt; endl;
+
+  cerr &lt;&lt; "Number of Halides = " &lt;&lt; Count(OEIsHalide(),mol) &lt;&lt; endl;
+
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+In the example above, the function  Count  loops over the atom and
+performs a call-back to the predicate functor  fcn  for each atom.  If
+the predicate returns true, a counter is incremented.  The main loop passes
+three of OEChem's predefined atom predicates to the  Count  function,
+allowing the same function to calculate the number atoms in the molecule
+which satisfy the functor passed to it.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.4 OEUnaryPredicate 
+ Up:   22. Predicate Functors 
+ Next:   22.6 Predefined OEChem Functors 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

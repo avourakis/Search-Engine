@@ -1,0 +1,661 @@
+ Expressions<body>
+
+ 
+ Expressions 
+ 
+  ICS-31: Introduction to Programming
+ 
+ 
+  
+
+
+        The Structure and Evaluation of Expressions  
+ 
+   In this section we begin our examination of how to build simple and
+     complicated expressions from literals, names, operators, functions, and
+     methods.
+   The EBNF rules specifying the structure of expressions are overly 
+     complicated, so instead we will just describe their syntax in English
+     (one of the few times we shall do so).
+   Here are the three structural rules for expressions; each rule concerns
+     the syntax of legal expressions.
+     S1 : A literal is a legal expression
+       S2 : A (variable) name is a legal expression; its type.
+       S3 : An operator (or function or method) whose operands (each of
+          which must be a legal expression) is a legal expression.
+    
+  We will be interested in computing the type of the object resulting from an
+   expression, which we can determine if we know the types of its literals,
+   (variable) names and the prototpyes/annotations of its operators, functions,
+   and methods.
+   
+  For each syntax rule there is a companion semantic rule for  evaluating 
+    expressions.
+  In some sense, each expression is a question, "What is the value of ..."
+    which Python answers by evaluating the expression.
+      E1 : A literal evaluates to itself (a trivial but noteworthy
+          rule, for the sake of completeness).
+       E2 : A name evaluates to the current object it is bound to
+          (refers to it).
+       E3 : An operator (or function or method)
+      Evaluates each of its operands or arguments (which are themselves
+              legal expressions).
+          Performs any implicit conversions
+            (e.g., promoting  int  to  float  or  bool  to
+             int  for arithmetic on mixed types
+          Applies the operator to its operands (or calls the function or
+              method on its arguments) to to compute its result, which is based
+              on the semantics of that operator, function, or method.
+                
+  Here, as above,  E1  and  E2  are simple rules; all the power is
+    in rule  E3 .
+   
+  For example, assume that we assign  x = 3  in a script and then
+    want to determine whether the expression  3*x+1  is a legal expression
+   (and what its resulting type and value is).
+  Here is a proof in English that this expression is legal and has the value
+     10 .
+     We can prove that  3  is a legal expression (by  S1 );
+          its value is  3  (by  E1 ) whose type is  int .
+      We can prove that  x  is a legal expression (by  S2 );
+          its value is  3  (by  E2 ) whose type is  int .
+      We can prove that  3*x  is a legal expression (by  S3 :
+          we just proved both  3  and  x  are legal
+          expressions of type  int , and one of the prototypes of
+           *  is  (int,int) -&gt; int ); its result value is  9 
+          (by  E3  and applying the semantics of the multiply operator)
+          whose type if  int .
+      We can prove that  1  is a legal expression (by  S1 ); its
+           value is  1  (by  E1 ) whose type is  int .
+      Finally, we can prove that  3*x+1  is a legal expression
+         (by  S3 : we just proved both  3*x  and
+           1  are legal expressions of type  int , and one of the
+          prototypes of  +  is  + (int,int) -&gt; int ); its result
+          value is  10  (by  E3  again, and applying the semantics
+          of the add operator) whose type if  int .
+    
+  In fact, these three rules allow us to identify the structure of -and
+    evaluate- arbitrarily complicated expressions built from literals,
+    (variable) names, operators, functions, and methods.
+ 
+           Oval Diagrams  
+ 
+  To illustate that we understand how Python structures and evaluates our
+    expressions (and more importantly, to give us a tool to analyze and debug
+    incorrectly written expressions), we will study how to illustrate an
+    expression as an  Oval  diagram.
+  As we write expressions with many operators, functions, and methods mixing
+    many types, this tool will become more and more important.
+   
+  To create an oval diagram, first circle (or draw an oval around) every 
+    literal and (variable) name in the expression.
+  These expressions are like atoms in chemistry: they contain no smaller
+    constituents.
+  Next, label their values on the bottoms and the types on these values on the
+    top.
+  Then, draw an oval around each operator and its operands (or each function or
+    method and its arguments); label the bottom with the result value (using
+    the semantics of the operator, function, or method) and the top with its
+    type.
+    
+  The outermost oval is labelled by the value and type of the result of the
+    entire expression.
+  Here is an example of an oval diagram for the previously discussed expression:  3*x+1  with  x  bound to  3 .
+  
+   
+  
+           Operator Precedence and Associativity  
+ 
+  Examine the oval diagram below.
+  It has exactly the same tokens as the oval diagram above, but the ovals are
+     a bit different.
+  They both seem to "follow all the rules" for forming/evaluating expressions,
+    but the ovals are in different positions, and they ultimately produce
+    different values as a result.
+  The questions are: which oval diagram is correct (which is the way Python
+     analyzes and evaluates expressions) and what extra rules do we need to
+     know about to  construct correct oval diagrams?
+     
+  
+        &amp;nbsp  
+ 
+  The answers have to do with the concepts of "operator precedence" and
+   "operator associativity": which operators take precedence over other
+    operators (which operators are circled/evaluated first) in an expression.
+  During this discussin we will learn that we can also use parentheses to
+    override the standard operator precedence/associativity when we need to.
+  Here is an operator precedence/association table that includes all the
+    operators in Python -some we know, others will be covered later- in
+    highest to lowest precedence.
+ 
+       Operator  Name  Associativity 
+         () [] {}    Grouping or tuple, list, set/dictionary   
+     x.attr, x(...), x[...]    Attribute, call, index/slice   
+     x**y    Power (exponentiation)  Right 
+     -x +x ~x    Positive, negative, bit-wise not   
+     * % / //    Multiply/repetition, remainder/formatting, divide, floor divide  Left 
+     + -    Add/catenation, subtract/set-difference  Left 
+     x&lt;&lt;y x&gt;&gt;y    &gt;&gt;Shift x left/right by y bits   
+     &amp;    Bitwise AND/set-intersection   
+     ^    Bitwise NOT/set-symmetric-difference(XOR)   
+     |    Bitwise OR/set-union   
+      &gt;= == != is, is not, in, not in    Comparison object identity, membership  Chained   
+     not    Logical negation   
+     and    Logical and (short-circuit)   
+     or    Logical not (short-circuit)   
+     x if b else y    Conditional expression   
+     lambda a : e    Un-named(anonymous) function generation   
+     yield    Generator function send protocol   
+  
+      
+  The rules for using these tables on expressions are
+     O1: When an expression contains two consecutive operators, neither
+            appearing in parentheses, Python applies the higher precedence
+            operator first.
+      O2: When an expression contains two consecutive operators, neither
+            appearing in parentheses, and both have the same precedence,
+            Python applies left associative operators left to right; it
+            applies right associative operators right to left; it applies
+            chained operators as one group.
+      O3: Python always evaluates expressions in parentheses before it uses
+            them as operands/arguments in other expressions (so we can use
+            parentheses to override precedence, forcing the operators inside the
+            parentheses to be evaluated before the operators outside the
+            parentheses).
+    
+  Thus, in the expression  3*x+1  we start by circling all literals and
+    (variable) names.
+  Then we see two consecutive operators with no parentheses: the  * 
+    operator has a higher precedence than the  +  operator, so it and its
+    operands are circled first.
+  Then the  +  operator and its operands are circled, completing the
+    oval diagram. 
+  Remember, higher precendence operaters are evaluated earlier, lower
+    precedence operators are evaluated later.
+   
+  In the expression below  3*(x+1)  the subexpression  x+1  appears
+    in parentheses.
+  Again, we start by circling all literals and (variable) names.
+  Then we see two consecutive operators, but this time the second one is in
+    parentheses.
+  By rule O3, we must handle all the operators inside the parentheses first
+    (circling the  +  operator first) and then circling the  * 
+    operator last, after its operand has been circled.
+  This complete this oval diagram.
+    
+      
+ In fact, the parentheses themselves are suggestive of two sides of an 
+   oval; you can always draw ovals around parenthesized expressions: they
+   can be used to represent the result computed by the last operator inside
+   the parentheses.
+  
+           Examples  
+ 
+  Note that in the expression  A &amp;nbsp / &amp;nbsp B*C  it looks like
+     A  is being divided by the product  B*C , but both operators
+    have the same precedence, and are left associative, and all the redundant
+    white space is meaningless once we have tokenized the expression (which is
+    exactly what Python does first).
+  So, this expression is equivalent to  A/B*C)  (with the extra spaces
+    removed) which is equivalent to  (A/B)*C  (because these operators are
+    left associative) and not  A/(B*C) .
+  If a formula has the product of  B  and  C  in the denominator,
+    then according to the rules of operator precedence and associativity, we
+    must use parentheses in the denominator to instruct Python to compute the
+    denominator first.
+  Some students, in an attempt to avoid parentheses, write this expression as
+     A/B/C , which has the same value, but I think that this form is
+    uglier and harder to understand than just putting in the parentheses.
+   
+  Next, let's examine how to write an oval diagram for a more complicated
+    expression, which computes the volume of a sphere of radius  r .
+      4/3*pi*r**3  
+  Assume that we bind  r = 2  and  pi = 3.1416  (which simplifies
+    the math).
+  Notice how implicit coversion and operator prototypes ultimately compute a
+     float  result from this mixture of  int  and  float  values
+  (detailed below the oval diagram).
+ 
+     
+
+      &amp;nbsp  
+ 
+Note that there is one  /  operator, two  *  operators, and one
+   **  operator.
+Because of the operator precedence and associativity rules, we do not need
+  to use any parentheses to write this expression correctly.
+These rules ensure (a) division occurs before the multiplication following it
+  (these equal precedence operators are left associative) and (b) exponentiation
+  occurs before the multiplication preceding it (exponentiation has higher
+  precedence).
+ 
+Also note that when two  int  values are divided the result is a
+   float  (according to the prototype  / (int,int) -&gt; float )
+  and in  r**3  the  3  is implicitly converted/promoted from an
+   int  to a  float  (as required, to match the prototype
+    ** (float,float) -&gt; float ).
+We could have explictly written this subexpression as  r**3.  which would
+  have required no conversion/promotion because  3.  is a  float 
+  literal.
+  
+Next, let's examine the combination of relational, logical and arithmetic
+  operators (and note how multiple adjacent relational operators use chained
+    associatitivity).
+This expression, resulting in the  bool  value  False  computes
+  whether  x  is between  1  and  10  inclusive and  x 
+  is strictly greater than twice  y .
+  
+     
+
+
+
+
+      &amp;nbsp  
+ 
+Note that all the relational operators (here  &lt;=  &amp;lt ) have
+  a higher precedence than the logical operators (here  and )
+That makes sense because relational operators produce  bool  results and
+  logical operators use  bool  values as their operands; so the relational
+  operators should have higher precedence.
+Arithmetic operators even higher precedence.
+ 
+Also note that because the two  &lt;=  operators are adjacent, and
+  relational operators use chained associativity, we draw one large oval around
+  this sequence/chain of operators and their operands.
+So,  0 &lt;= x &lt;= 10  computes whether both  0  is less than or
+  equal to  x  and  x  is less than or equal to  10 .
+We could write this subexpression as the equivalent
+   0 &lt;= x  and x &lt;= 10 .
+We prefer the former way, using chained relational operators, because it is
+  shorter and just as meaningful.
+  
+Here is one more expression to analyze: it actually is quite interesting in
+  what it does and how it does it.
+  
+     
+
+
+
+
+      &amp;nbsp  
+ 
+Note that twice the expression computes a  bool  values and multiplies it
+   times an  int  value.
+To match the prototype ( * (int,int) -&gt; int ) of the  *  operator,
+  Python implicity converts/promotes each  bool  to an  int  according
+  to the rule:  False  promotes to  0  and  True  promotes to
+    1 .
+ 
+Try evaluating this expression with  x = 3  and  y = 5 ; the result
+  is again  3 , but now the left product is  3  and the right product
+  is  0 .
+Choose different values to bind to  x  and  y  and evaluate this
+  expression: you will find that it always is the smaller of these values; this
+  expression computes the minimum of  x  and  y .
+Here is a quick justification.
+The two boolean subexpressions are  x and  x&gt;y ; these are
+  opposite tests: when one is  True  the other is  False .
+So one side of the sum will always be zero; the other side will be  x 
+  or  y ; it will be  x  if  x evalutes to  True ;
+  it will be  y  when  x&gt;y  evalutes to  True .
+So, it will be  x  when  x  is the smaller number and it will be
+   y  when  y  is the smaller number.
+    
+Finally, we could have made the conversion explicit by instead writing this
+  expression as  int(xy)*y .
+Because implicit conversion from  bool  to  int  is not familiar to
+  most people, the explicit conversion version is probably better.
+Of course, if we ever must analyze and expression to understand it better,
+  these oval diagrams are exactly what you should use.
+  
+As another example, what would the previous expression mean in Python if 
+   y  were bound to a  float  value instead?
+Here is an example.
+Notice implicit conversions from both  bool  to  float  and from
+   int  to  float .
+The result is a  float .
+Suprisingly, even if we had written  x = 5.  and  y = 3  the result
+ would have been  3.  (not  3 ) because of the conversions.
+  
+Finally, let's look at an example that involves a method call instead of a
+  function call; this example is also interesting because it use the string
+  ( str ) type, including string semantics for the  +  and  * 
+  operators.
+The following expression computes an all upper-case letter version of  s 
+  and concatenates it with the  !  character repeated 3 times.
+The result is the  str   FIRE!!! 
+  
+     
+
+
+
+
+      &amp;nbsp  
+ 
+Notice how the method call  upper  appears, and note that the  * 
+  operator still has precedence over  +  whether we are using numeric or
+  string operands.
+ 
+           Expression Pragmatics  
+ 
+  Write expressions correctly (for computers) and clearly (for people,
+    including yourself).
+  Use suggestive spacing, redundant parentheses, or both to clarify (for the
+    person) the meanings of complicated expressions.
+    Suggestive Spacing: use extra whitespace around lower-precedence
+          operators to suggest that they are evaluated later.
+        Recall that whitespace doesn't change the meaning of a program (all the
+          tokens remain the same), but this spacing makes it easier for
+          people to "see" operator precedence.
+      Redundant Parentheses: use unneeded parentheses (they do not override
+          the precedence of any operators) around higher-precedence operators
+          to reinforce that they are evaluated earlier.
+     
+       Expression  Suggestive Spacing  Redundant () 
+         .5*a*t**2+v*t+d   
+       .5*a * t**2  +  v*t  +  d   
+       .5*a*(t**2)+(v*t)+d   
+      
+  Also, use literals of the correct type to avoid implicit conversion (which
+    often leads to harder-to-understand expression).
+  If you want to indicate conversion, use explict conversion functions to make
+    it explicit: doing so doesn't change how Python evaluates the expression
+    (implicit/explicit conversion both do the same thing) but for anyone
+    reading the code (including you), the expression will be easier to
+    understand.
+  We can check the expressions we write by analyzing them with oval diagrams,
+    and evaluating them for a few different values to ensure that they compute
+    the correct answers.
+    
+  Don't convert literals; when I see students write  float(5)  it pains me
+    greatly: write just  5.  instead.
+             Synthesis:Formulas -&gt; Expressions  
+ 
+Now let's look at the problem of translating mathematical formulas (often
+  written in a 2-dimensional notation) into  equivlalent Python expressions
+  (written in a 1-dimensional notation).
+The key to such a process will be to find the operator that will be applied
+  last (after its operands/subexpressions are computed); then to write the
+  operator and placeholders for its operands, and apply this process
+  recursively to synthesize its subexpressions.
+Let's apply this process to to translating the following formula into a Python
+  expression: it computes one root of a quadratic equation.
+                __________
+             / 2
+    -b  +  \/ b  - 4ac
+
+  ---------------------------
+               2a  
+
+So, for the root of the quadratic equation, the division between the numerator
+and the denominator is applied last, so we would start with
+
+    numerator/denominator  
+
+The denominator is just  2a , so we rewrite the formula as follows,
+  putting the denominator in paretheses to avoid the common operator
+  precedence mistake.
+ 
+    numerator/(2*a)  
+
+Now, the last operator applied in the  numerator  is the  + .
+So we rewrite the formula as follows, putting the  numerator  in
+  parentheses to force the  +  to be applied before the  / .
+We use     (left + right) / (2*a)  
+because	    left + right / (2*a)   would compute incorrectly: it
+  would apply the  +  after division.
+ 
+The  left  is just  -b , so we rewrite the formula as follows.
+We don't need to put -b in parentheses, because the negative operator (-)
+  has a precedence higher than  +  so it will be applied earlier.
+We now have     (-b + right) / (2*a)  
+
+The  right  requires using the  sqrt  function (assume
+   from math import sqrt ), so we rewrite the formula as follows
+    (-b + sqrt(body)) / (2*a)  
+Inside the  body  the last operator applied is  - .
+So we rerwite the formula as follows.
+    (-b + sqrt(left - right)) / (2*a)  
+
+The left formula is just  b**2 , so we rewrite the formula as follows.
+We don't need to put  b**2  in parentheses, because the  **  operator
+  has a higher precedence than  -  so it will be applied earlier.
+    (-b + sqrt(b**2 - right)) / (2*a)  
+
+The  right  formula performs two multiplications.
+Since adjacent multiplications are done left to right, the left operand is
+ 4a  and the right is  c , so we can rewrite the formula as follows.
+We don't need to put  left*c  in parentheses, because the * operator has
+  a higher precedence than the  -  operator.
+    (-b + sqrt(b**2 - left*c)) / (2*a)  
+
+Finally, we can rewite left as just  4*a  and we are done converting the
+mathematical formula into an Python expression.
+    (-b + sqrt(b**2 - 4*a*c)) / (2*a)  
+
+Try to use an oval diagram to analyze this expression to see if we converted
+  it correctly.
+  
+We can carefully apply this method to convert any mathematical formula into a
+  Python expression, no matter how complicated it is, but we must also remember
+  rules of operator precedence and associativity.
+             Simple Functions  
+ 
+
+Although this is getting a bit ahead of ourselves, we know enough now to
+  define simple functions, using the  return  keyword.
+Here is a definition of the  quadratic  function, which combines a
+  function header (which we know about from reading/calling functions) with
+  and expression (which we know about from this chapter) just the keyword
+   return , which we will discuss exactly when we discuss functions in
+  detail: for now, it just tells the function what value to return as a result.
+    def quadratic(a,b,c,x):
+      return a*x**2 + b*x + c  
+With this knowledge you can abstract any compuatation that is an expression into
+  a function you can define.
+You can put such a definition in a script (for use once, in the current
+  computation) or in a library module, so you can import the function and use
+  it in any script.
+This is just the tip of the iceberg about functions, we we will study in more
+  detail after we discuss the control structures that often inside them.
+            Final Topics  
+ 
+
+We briefly touch on two topics here that we will learn much more about later
+  (some in ICS-33).
+First Python translate all the operators into calls on special methods defined
+  in the classes that specify their left operand.
+So, for example, in the  int  class there is a special method call
+   __add__  that is called whenever an  int  object is the left
+  operand of a  +  operator; this method determines the type of the
+   right  operand to determine how to perform the addition: it produces
+  an  int  result if the right operand is an  int , but produces a
+   float  result if the right operand is a  float .
+When we learn how to define our own classes, we can write methods like
+   __add__  that the  +  operator will call.
+ 
+There is a special function named  eval  that is defined in the
+   builtins  module (whose names are automatically imported into every
+  module).
+It has a single  str  argument and returns some object: the result of
+  treating that argument as if Python were to evaluate it as an expression.
+Its prototype is  eval(str) -&gt; object .
+For example, if we had a script
+    a = 1
+  b = 2
+  print (eval('a+b'))  
+Python would print  3 .
+Big deal, we could have written  print(a+b)  inside the script.
+But now let us look at another script.
+    a = 1
+  b = 2
+print (eval(prompt.for_string('Enter expression using a and b'))))  
+Now, the user is prompted and could enter any string, say  a+3*b  and
+  Python would  eval  that string and print the answer  7 .
+So, in the middle of running a script, Python can ask the user for some
+  information (here an expression) and determine its value in the context of
+  where the "code" was entered.
+That is different than Python knowing what should be in the script before it
+  starts running.
+This is a powerful feature that we will use when we need the power.
+What do you think we happen if we entered  a+c ?
+
+Note that  eval("3")  is the  int  object with the value
+     3  (just as  int("3")  would be;
+   eval("True")  is the  bool  object with the value
+      true ;
+   eval("'abc'")  is the  str  object with the value
+      'abc' ;
+   eval('v')  is whatever object the name  v  is bound to
+     (which might raise and exception if  v  is not a defined name:
+      NameError: name 'v' is not defined .
+             Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a CA, a Tutor,
+    or any other student.
+     What are the results of each of the the following operators?
+          7/10   7./10   7/10.   7./10.
+    7/10   57/10   157/10   2157/10
+    7//10  57//10  157//10  2157/10
+    7%10   57%10   157%10   2157%10  
+     
+
+       
+       Analyze each of the following expressions, assuming
+         a = 1  and  b=2  and write an
+          oval diagram for each.
+            (a+b)/2       a+b/2
+      100*a//b      100*(a//b)      a//b*100  
+     
+
+       Evaluate the expression  (a+b - abs(a-b))//2  when
+           a = 3  and  b = 5 
+             a = 5  and  b = 3 .
+          
+        Try a few other example values for  a  and  b .
+        Describe in general terms what this expression evaluates to.
+     
+        
+       Suppose that we define  attendance = 3000  and
+           capacity=10000  the number of fans attending an event at a
+          stadium and the maximum number of fans possible at that
+          stadium respectively.
+        Which of the following expressions evaluates to 30, the percentage of
+          fans in the stadium?
+        What do the "incorrect" expressions evaluate to?
+                  attendance//capacity
+        100*attendance//capacity
+        100*(attendance//capacity)
+        attendance//capacity*100          
+
+       Assume that we define  year  to be some  int  value.
+         Write an expression whose result is  True  whenever  year 
+           stores a leap year and  false  otherwise.
+         We define a leap year as any year that is a perfect multiple of of
+            4 , but not if it is a perfect multiple of  100 
+           (unless it is also a perfect multiple of  400 ).
+         Note that one number is a perfect multiple of another if the
+           remainder after division equals zero.
+      
+
+        Assume that we define  x ,  y , and  z  to refer to
+            int  values.
+         Write an expression that computes whether...
+           ... x  is odd
+              ... x  is a multiple of 20 (e.g., 20, 40, 60, ...)
+           
+         Assume that zero is a positive number.
+         Write an expression that computes whether...
+           ... x  and  y  are both positive
+              ... x  and  y  have the same sign
+            (both are positive or both are negative)
+              ... x  and  y  have different signs
+            (one is positive and one is negative)
+           
+         Write an expression that computes whether...
+           ...all three names ( x ,  y , and  z ) are bound
+                to equal values
+              ...all three names ( x ,  y , and  z ) are bound
+                to different values (none the same)
+              ...two variables store the same value, but the third one is
+                different
+            
+
+        Assume that we specify two points in space by definint the x and y
+           coordinate of each using
+            x1 ,  y1 ,  x2 , and  y2  all which are
+            float .
+         Write an expression that computes...
+           ...the distance between these points
+              ...the slope of the line from the first point to the second
+              ...whether both points lie on the same line from the origin
+              ...whether the first point is above the second
+              ...what quadrant the first point lies in (1st, 2nd, 3rd, or 4th)
+              ...whether the two points lie in the same quadrant
+            
+
+        Assume that we specify a circle with the definitions
+            centerX ,  centerY , and  radius 
+           and a point by the defintions  x  , y  all which are
+            float .
+         Write an expression that computes whether or not the point lies inside
+            the circle (include points on the boundary).
+      
+
+        Assume that specify an interval by a pair of  int  values (the
+           ones at the beginning and end of the interval:  5  and  8 
+           would specify the interval containing the numbers  5 ,
+            6 ,  7 , and  8  inclusive.
+         We declare  b1 ,  e1 ,  b2 , adn  e2  to
+           represent the beginning and end of two intervals (all  int ),
+           and  x  so represent some  int  value.
+         Note that we will guarantee that the intervals are "well formed":
+            b1  and   b2 .
+           Write an expression that computes the number of values in an 
+                  interval beginning with  b1  and ending with  e1 .
+              Write an expression that computes whether...
+                 ... x  is inside the first interval
+                   ... x  is not inside the first interval
+                   ... x  is inside the first interval but not the second
+                   ... x  is inside either the first or second interval (or both)
+                   ... x  is inside either the first or second interval (but not both)
+                   Write an expression that computes whether...
+                 ...the first interval is the same as the second
+                   ...the first interval ends before the second one begins
+                   ...the first interval ends on the same value as the second one begins
+                   ...the first interval is inside the second one
+                   ...the first interval and the second interval overlap (at least one common value)
+                   ...the first interval and the second interval do not overlap (no common values)
+                   
+         Draw pictures to help you visualize the relationships; choose your relational and logical
+           operators carefully, and try a few examples to convince yourself that your expressions are
+           correct.
+         For example, the following picture shows the first interval inside the second.     
+
+        Assume that we define  x ,  y , and  z  to refer to
+            int  values.
+         Write an expression that computes the minimum of these three values.
+         You may use the  min  function; its prototype is
+            min(int,int) -&gt; int  and it computes/returns the minimum of its
+           arguments.
+      
+
+        Assume that we defined
+          low ,  high ,and  x  to be  int  and that we
+         guarantee that  low .
+         Write an expression whose result is  low  if  x  is smaller
+          than  low ,   high  if  x  is greater than
+           high , and  x  if it is between these values.
+          You may use the  min  and the  max  functions (see the
+          problem above).
+       
+
+
+     
+
+   </body> 

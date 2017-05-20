@@ -1,0 +1,57 @@
+ SEAL - Titanium<body>
+ 
+    
+
+
+ Titanium: Efficient Analysis of Evolving Alloy Specifications 
+
+ 
+The Alloy specification language, and the corresponding Alloy Analyzer, have received much attention in the last two decades with applications in many areas of software engineering. Increasingly, formal analyses enabled by Alloy are desired for use in an on-line mode, where the specifications are automatically kept in sync with the running, possibly changing, software system. However, given Alloy Analyzer's reliance on computationally expensive SAT solvers, an important challenge is the time it takes for such analyses to execute at runtime. The fact that in an on-line mode, the analyses are often repeated on slightly revised versions of a given specification, presents us with an opportunity to tackle this challenge.
+
+  Titanium is an extension of Alloy for formal analysis of evolving specifications. By leveraging the results from previous analyses, Titanium narrows the state space of the revised specification, thereby greatly reducing the required computational effort.    
+ 
+
+ Approach Overview 
+ 
+    The following diagram shows a simplified, schematic view of the Titanium approach, where the dimensions represent relational variables—in this case three hypothetical relational variables R1, R2, and R3—dots, model instances, and the two lines, the upper and lower bounds that scope the state space in the analysis of original specification.    
+ 
+
+   
+The Titanium's efficiency gain is due to a new method of determining the analysis bounds. When the satisfying model instances are found, we are able to tighten the bounds without losing any of the satisfying instances. Based on this observation, when a specification changes, Titanium is able to set tighter bounds for the parts that remain unaffected. Dashed lines, in the diagram, represent bounds adjusted by Titanium  for the shared relational variables in the revised specification. Of course, changed relations and those newly added would maintain the user-defined bounds for the analysis.
+
+  Titanium first analyzes the structure of a revised specification, and identifies a set of candidate relational variables that are shared with the originating specification. It then uses the instances produced for the original specification to calculate tighter bounds for shared relational variables in the revised specification. By tightening the bounds, Titanium reduces the search space, enabling the SAT solver to find the model instances at a fraction of time needed for the original bounds.
+
+  The paper presents a formal description of the approach, including its semantic basis in terms of models specified in relational logic, and demonstrates how it can be realized atop an existing relational logic model finder, without compromising soundness and completeness.    
+ 
+
+ Tool 
+
+ 
+Titanium tool is publicly  available .
+
+  To execute,  type java –Xmx8096m –jar Titanium.jar Titanium
+ –f –originfile &lt;?&gt; Original Alloy Specification
+ –u –updatedfile &lt;?&gt; Updated Alloy Specification
+ [ –o –output &lt;?&gt; Output file
+ –s –symmetry &lt;?&gt; A symmetry–breaking predicate size parameter ]
+ For example, java –Xmx8096m –jar Titanium.jar Titanium –f "model.als" –u "updated.als" –o "output.txt"
+
+  Experimental results can be downloaded from  here .
+ 
+
+ Publications 
+
+More details about Titanium can be found in our publication:
+
+   Titanium: Efficient Analysis of Evolving Alloy Specifications   
+    Hamid Bagheri and Sam Malek  24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering (FSE 2016), Seattle, WA, November 2016. (27% acceptance rate) 
+     [ PDF ]
+      
+    
+               
+ 
+ 
+               
+ 
+ 
+</body> 

@@ -1,0 +1,298 @@
+   
+  Class System.TMWSpecification
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class System.TMWSpecification
+ 
+ 
+ java.lang.Object 
+   |
+   +----System.TMWSpecification
+ 
+    public class  TMWSpecification 
+    extends  Object 
+   
+Performs manipulations of Teamware objects at the Specification level.
+Specifications are Categories with certain fields filled in with
+default data. Specifications inherit their behaviors from the parent
+Category and specify the data for the Instances.
+    See Also: 
+        TMWFoundation ,  TMWTypes ,  TMWCategory ,  TMWInstance ,  TMWValue 
+     
+ 
+    
+      ClassSpecification  
+     
+        Families  
+     
+        Multi  
+     
+        Shared  
+     
+        Single  
+     
+   
+    
+      TMWSpecification  ()
+     
+   
+    
+      AddElement  (Integer, String, String)
+     Add an element to a multiple element field.
+        CreateSpecification  (String, Integer)
+     Create a new activity specification based on a category.
+        CreateSpecification  (String, Vector)
+     Create a new activity specification based on a category.
+        DeleteSpec  (Integer)
+     Delete the Specification.
+        GetFieldList  (Integer, String)
+     Get the list of all fields in the specification in the given family.
+        GetMultiFieldValues  (Integer, String)
+     Get the list of element values from a multi-field.
+        GetSharedFieldValue  (Integer, String)
+     Get a single value that is shared across all Specifications based
+on the same Category.
+        GetSpecDescription  (Integer)
+     Get the description of the Specification.
+        GetSpecId  (String, String)
+     Get the object id of the activity spec.
+        GetSpecList  (String)
+     Get the list of activity specifications based on the search criteria
+string, usually a list of substrings separated by '&amp;'.
+        GetSpecName  (Integer)
+     Get the name of the Specification.
+        RemoveElement  (Integer, String, String)
+     
+
+        SetMultiFieldElements  (Integer, String, Vector)
+     Set a multiple element field to a list of variables.
+        SetSharedFieldValue  (Integer, String, String)
+     Set a single value that is shared across all Specifications based
+on the same Category.
+        SetSpecDescription  (Integer, String)
+     Set the description of a Specification.
+        SetSpecName  (Integer, String)
+     Set the Specification name.
+    
+ 
+    
+   
+ Shared 
+ 
+  public static  String  Shared
+ 
+   
+ Single 
+ 
+  public static  String  Single
+ 
+   
+ Multi 
+ 
+  public static  String  Multi
+ 
+   
+ Families 
+ 
+  public static  String  Families
+ 
+   
+ ClassSpecification 
+ 
+  public final static  String  ClassSpecification
+ 
+  
+ 
+    
+  
+   
+ TMWSpecification 
+ 
+  public TMWSpecification()
+ 
+  
+ 
+    
+   
+  CreateSpecification  
+ 
+  public static  Integer  CreateSpecification( String  Name,
+                                             Integer  BasedOn)
+ 
+   Create a new activity specification based on a category.
+      Parameters: 
+       Name - is the name of the specification to create.
+      BasedOn - is the Category id that specifies the object behaviors.
+         Returns: 
+       s the object id of the new Specification.
+         
+  CreateSpecification  
+ 
+  public static  Integer  CreateSpecification( String  Name,
+                                             Vector  BasedOn)
+ 
+   Create a new activity specification based on a category.  Multiple
+inheritance currently isn't enforced, so the Specification is just
+created using the first Category in the list, but calls to other
+behaviors of other Categories are still allowed.
+      Parameters: 
+       Name - is the name of the specification to create.
+      BasedOn - is the list of Category ids that specifies 
+the object behaviors.
+         Returns: 
+       s the object id of the new Specification.
+         
+  GetSpecList  
+ 
+  public static  Vector  GetSpecList( String  SearchCriteria)
+ 
+   Get the list of activity specifications based on the search criteria
+string, usually a list of substrings separated by '&amp;'.
+      Parameters: 
+       SearchCriteria - a list of substrings separated by '&amp;'.
+        Returns: 
+       s the list of activity spec names.
+         
+  GetSpecId  
+ 
+  public static  Integer  GetSpecId( String  Name,
+                                   String  SpecType)
+ 
+   Get the object id of the activity spec.
+      Parameters: 
+       Name - is the name of the Sepcification.
+      SpecType - is the base Category of the Specification.
+         Returns: 
+       s the object id of the Specification.
+         
+  GetSpecName  
+ 
+  public static  String  GetSpecName( Integer  SpecId)
+ 
+   Get the name of the Specification.
+      Parameters: 
+       SpecId - is the id of the Specification.
+        Returns: 
+       s the name of the Specification.
+         
+  GetSpecDescription  
+ 
+  public static  String  GetSpecDescription( Integer  SpecId)
+ 
+   Get the description of the Specification.
+      Parameters: 
+       SpecId - is the id of the Specification.
+        Returns: 
+       s the textual description of the Specification.
+         
+  SetSpecName  
+ 
+  public static void SetSpecName( Integer  SpecId,
+                                  String  Name)
+ 
+   Set the Specification name.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      Name - is the name to set the Specification to.
+          
+  SetSpecDescription  
+ 
+  public static void SetSpecDescription( Integer  SpecId,
+                                         String  Description)
+ 
+   Set the description of a Specification.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      Description - is the description of the Specification.
+          
+  DeleteSpec  
+ 
+  public static void DeleteSpec( Integer  SpecId)
+ 
+   Delete the Specification.
+      Parameters: 
+       SpecId - is the id of the Specification.
+         
+  GetFieldList  
+ 
+  public static  Vector  GetFieldList( Integer  SpecId,
+                                     String  Family)
+ 
+   Get the list of all fields in the specification in the given family.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      Family - is the name of the family of fields to retrieve.
+         Returns: 
+       s a list of all fields within a given family.
+         
+  GetSharedFieldValue  
+ 
+  public static  String  GetSharedFieldValue( Integer  SpecId,
+                                            String  FieldName)
+ 
+   Get a single value that is shared across all Specifications based
+on the same Category.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      FieldName - is the shared field value to retrieve.
+          
+  SetSharedFieldValue  
+ 
+  public static void SetSharedFieldValue( Integer  SpecId,
+                                          String  FieldName,
+                                          String  FieldValue)
+ 
+   Set a single value that is shared across all Specifications based
+on the same Category.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      FieldName - is the name of the field to update.
+      FieldValue - is the value to assign to the field.
+           
+  GetMultiFieldValues  
+ 
+  public static  Vector  GetMultiFieldValues( Integer  SpecId,
+                                            String  FieldName)
+ 
+   Get the list of element values from a multi-field.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      FieldName - is the name of the multiple value field.
+         Returns: 
+       s a list of multi-field element values.
+         
+  SetMultiFieldElements  
+ 
+  public static void SetMultiFieldElements( Integer  SpecId,
+                                            String  FieldName,
+                                            Vector  Elements)
+ 
+   Set a multiple element field to a list of variables.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      FieldName - is the name of the multiple element field to set.
+      Elements - are the values to set the field to.
+           
+  AddElement  
+ 
+  public static void AddElement( Integer  SpecId,
+                                 String  FieldName,
+                                 String  Element)
+ 
+   Add an element to a multiple element field.
+      Parameters: 
+       SpecId - is the id of the Specification.
+      FieldName - is the name of the field to add the value to.
+      Element - is the element to add to the multiple element field.
+           
+  RemoveElement  
+ 
+  public static void RemoveElement( Integer  SpecId,
+                                    String  FieldName,
+                                    String  Element)
+ 
+    
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

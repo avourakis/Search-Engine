@@ -1,0 +1,53 @@
+ CS 261, Spring 2013, Homework 3 Solutions
+
+
+1. Suppose you have two Bloom filters FA and FB (each having the same
+number of cells and the same hash functions) representing the two sets A
+and B. Let FC = FA &amp; FB be the Bloom filter formed by computing the
+bitwise Boolean and of FA and FB.
+
+(a) FC may not always be the same as the Bloom filter that would be
+constructed by adding the elements of the set (A intersect B) one at a
+time. Explain why not.
+
+    Because an element of A \ B (the elements that belong to A but not
+    B) and another element of B \ A may both map to the same cell of the
+    Bloom filter; if they do, that cell will belong to FC even if it is
+    not covered by any element of the set intersection. For instance, if
+    A and B are the single-element sets {a} and {b}, and some cells are
+    covered by both a and b, then those cells will be nonzero in FC even
+    though the correct Bloom filter for (A intersect B) has all cells
+    zero.
+
+(b) Does FC correctly represent the set (A intersect B), in the sense
+that it gives a positive answer for membership queries of all elements
+in this set? Explain why or why not.
+
+    Yes. Every element in (A intersect B) will have all its cells nonzero
+    in both FA and FB, so they will all be nonzero in FC.
+
+
+2. Suppose that we want to store a set S of n = 20 elements, drawn from
+a universe of U = 10000 possible keys, in a Bloom filter of exactly N =
+100 cells, and that we care only about the accuracy of the Bloom filter
+and not its speed. For this problem size, what is the best choice of the
+number of cells per key (the parameter k in the lecture)? (I.e., what
+value of k gives the smallest possible probability that a key not in S
+is a false positive?) What is the probability of a false positive for
+this choice of k?
+
+   I think the easiest way to solve this problem is computationally.
+   The probability that a cell is missed is (1-1/100)^{20k},
+   so the probability that it is hit is (1 - (1-1/100)^{20k}) and
+   the probability of a false positive is (1 - (1-1/100)^{20k})^k.
+   The Python expression
+   
+   min(((1-(1-1./100)**(20*k))**k,k) for k in range(1,30))
+
+   gives the answer (0.09286327705662296, 3): that is, setting k=3 gives
+   false positive probability approximately 0.0929. (k=4 is worse, but
+   only slightly worse: its false positive probability is approximately
+   0.0932.)
+
+   For values of k greater than or equal to 30, the probability that
+   there exists a missed cell is at most 100 (1-1/100)^{20k}  

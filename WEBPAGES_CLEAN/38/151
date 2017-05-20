@@ -1,0 +1,949 @@
+ Abstract Classes<body>
+
+ 
+ Abstract Classes 
+ 
+  Introduction to Computer Science I-III 
+ICS-21/-22/-23  
+ 
+  
+
+
+
+
+        Introduction  
+ 
+  In this lecture we will continue our discussion of inheritance features by 
+    examing  abstract  classes.
+  Once again, in many ways abstract classes are a simple concept (involving
+    only one new keyword that can be used in two places) that has deep
+    ramifications when designing complex class hierarchies.
+  We will discuss this Java language feature in the context of the
+     
+      Positional Shape Inheritance Demo , which you should
+      download, run, and examine.
+  In this lecture we will compare abstract classes to interfaces (which seem
+    closely related: for example we can extend interfaces via inheritance too)
+    and see multiple ways to accomplish approximate the same result -and 
+    compare them.
+  Finally, we will examine some general principles for designing classes in
+    inheritance hierarchies..
+ 
+           Defining Abstract Methods and Classes  
+ 
+  Sometimes a class should define a method that logically belongs in the class,
+    but that class cannot specify how to implement the method.
+  For example, the  Shape  class is used as a superclass for 2-dimensional
+    shapes (like circles, rectangles, etc).
+  Logically, every shape should have a  getArea  method, because every
+    shape has an area.
+  But, every shape would compute its area using a different formula, and there
+    is no way to specify one  getArea  method in the  Shape  class
+    that is correct for all its possible subclasses.
+   
+  In an application, we might want to declare a  Shape  array, fill it
+    with references to objects constructed from actual shapes (subclasses of
+     Shape ), and then ask each shape to return its area.
+  We would like Java to call the correct  getShape  method for each object
+    to compute the result correctly; again, this illustrate how Java implements
+    polymorphism to solve such a problem.
+    
+  We accomplish this in Java by defining the  getArea  method in the
+     Shape  class, but by specfying the  abstract  keyword in its 
+    list of access modifiers (as a syntax constraint this keyword can be used
+    when defining only classes and methods) and then specifying no
+    implementation (no method body, just like in an interface).
+  We would specify it in the  Shape  class as follows
+       public abstract double getArea();  
+  By defining this method, we are telling the Java  compiler that it should
+    allows us to call the  getArea  method using any variable declared
+    with the type  Shape , or declared with any class that is a subclass
+    of  Shape  (where the definition of  getArea  will really
+    appear).
+  For example, we can define the  toString  method in the  Shape 
+    class as
+
+      public String toString( )
+  {return "Shape[id="+id+",area="+getArea()+"]";}  
+
+  This method calls  getArea  and returns (as a  String ) the area of
+    the shape.
+  Our first big rule about using  abstract  concerns where abstract
+    methods can be called.
+    Any method in a class can be declared  abstract .
+        Such a method has no body ( {...}  is replaced by just  ; ,
+          as in interfaces) and can be called in other methods defined in that
+          class, or be called in methods defined in any of its subclasses, or
+          be called using any variables whose type is this class or any of its
+          subclasses.  
+     
+  Our second big rule about using  abstract  concerns the relationship
+    between abstract method and the classes in which the are defined.
+     
+      If a class defines any abstract methods (or, as we will see, inherits
+        any abstract methods and doesn't override them), that class must be
+        defined using the  abstract  keyword in its access modifiers.
+    
+  If this second rule is violated, the Java compiler will detect and report an
+    error, so if we forget to make a class abstract, Java will just remind us
+    with no harm caused..
+   
+  In fact, we will define the  Shape  class (using an  id  instance
+    variable and constructor) throughout the examples in this lecture as
+       public abstract class Shape {
+
+    public Shape (String id)
+    {this.id = id;}
+
+    //This abstract method must be defined in a concrete subclass.
+    //Note that it is called in this class in the toString method.
+    public abstract double getArea();
+
+    public String getId()
+    {return id;}
+    
+    public String toString( )
+    {return "Shape[id="+id+",area="+getArea()+"]";}
+
+    private String id;
+  }  
+  Generally, abstract classes can specify all the standard class components:
+    constructors, methods, and instance variables.
+  Again, a class must be defined with the keyword  abstract  (as is the
+    case above) if any of its methods is defined with the keyword
+     abstract  (as is the case above).
+  Note that we can call the  abstract  method in other methods defined in
+    the class, even if its body isn't defined yet.
+   
+  Again, logically this method belongs in the class, even if it cannot
+    be written there (because  Shape  is too high in the hierarchy).
+  
+           Using Abstract Classes (as Superclasses)  
+ 
+  Now, it should be  obvious that it would make no sense to write
+      Shape s = new Shape("s1");
+  System.out.println(s);  
+  because although we are allowed to call the  getArea  method (Java
+    knows the prototype of this method), its implementation
+    HAS NOT BEEN SPECIFIED.
+  Java would have no idea what code to execute to compute  getArea 
+    inside  toString .
+   
+  But the problem is not in the method call, it is in the construction.
+  This issue brings us to our third big rule about using  abstract  for
+    classes, concerning the restriction on calling constructors ONLY IN
+    SUBCLASSES.
+     
+    If a class is defined with the keyword  abstract , we may call its
+      constructor only via  super  in a class that extends it, not
+      via the  new  operator.
+    That is, we cannot explicitly construct an object using an  abstract 
+      class, but we can use it to help construct an object from a subclass.
+    
+  Thus the Java compiler would detect and report an error in the statement
+     Shape s = new Shape("s1");  and never even get to compiling the
+    call to the  getArea  method.
+   
+  If we cannot construct an object with an abstract class, what can we do with
+    one?
+  We can definine a subclass that extends it.
+  If the subclass overrides every abstract method that it inherits, then that
+    subclass is not abstract.
+  But, if it inherits any abstract methods and doesn't override them, then the 
+    subclass also has abstract methods and must itself also be defined
+    abstract.
+  We call a "non-abstract" class concrete, although there is no keyword with
+    this name.
+    
+  For example, we can define a concrete  Circle  subclass by extending
+     Shape  as follows
+       public class Circle extends Shape {
+
+    public Circle (String name, double r)
+    { 
+      super(name);
+      radius = r;
+    }
+    
+    //Overide the abstract method declared in shape
+    public double getArea()
+    {return Math.PI * radius * radius;}
+    
+    public double getRadius()
+    {return radius;}
+    
+    public void setRadius(double newRadius)
+    {radius = newRadius;}
+    
+    public String toString( )
+    {return "Circle["radius="+radius+","+super.toString()+"];}
+
+    private double radius;
+  }  
+  Here the  Circle  subclass does override the one abstract method
+    that it inherits from  Shape ; it defines a few new methods, but none
+    of them is abstract; so, it is a concrete class -and therefore not defined
+    with the  abstract  keyword.
+  Also notice that its constructor must be supplied a radius that is stored in
+     an instance variable in this class, and is used to compute the area.
+  As we described above, although we cannot constuct a new object from the
+    class  Shape , we can call the constructor for this class
+     inside  the constructor for a subclass (as the  Circle  class
+    does with its call of  super(name);  in its constructor).
+   
+  Because the  Circle  class is concrete, we can construct new objects
+    from this class.
+  So, we can write
+
+       Circle c = new Circle("c1",1.0);
+  System.out.println(c.toString());  //or just ...(c);  
+
+  Which will print
+     Circle[radius=1.0,Shape[id=c1,,area=3.141592653589793]] 
+   
+  In fact, we can even write
+       Shape s = new Circle("c1",1.0);    //Note the type
+  System.out.println(s.toString());  //or just ...(s);  
+   
+  which prints exactly the same thing!
+  Here is the reasoning.
+  Both  Shape  and  Circle  define  toString  methods, Java
+    allows us to call  toString  on such variables.
+  In both cases the object to which  c / s  refer is constructed
+    from the  Circle  class, so it is the method DEFINED IN THIS CLASS
+    that is called.
+    
+  Stop and think hard!
+  Many students reason that since  s  is DEFINED to be of type
+     Shape  then calling  s.toString  calls the  toString 
+    method defined in the  Shape  class.
+  THIS IS INCORRECT THINKING!
+  Recall that Java's rule say that the TYPE determines WHAT methods can be
+    called, but the CLASS OF THE OBJECT determines WHICH method is called!
+  This is polymorphism in action.
+    
+  Of course, if we wrote  Shape s = new Circle("c1",1.0);  then we
+    COULD NOT call  s.setRadius(2.0);  because the type  Shape 
+    defines no  setRadius  method.
+  But if we wrote  Circle c = new Circle("c1",1.0);  then we
+    COULD call  c.setRadius(2.0);  because the type  Circle 
+    does define this method.
+    
+  Finally we learn our fourth, and last, big rule about using  abstract .
+     
+     We can treat an abstract class as a superclass and extend it; its
+       subclasses can override some or all of its inherited abstract methods.
+     If through this overriding a subclass contains no more abstract methods,
+       that class is concrete (and we can construct objects directly from it).
+     If it still abstract, it too can be used as a superclass ... (until
+       eventually a subclass of a subclass ... is concrete).
+     
+  We can also easily define a simlar subclass for rectangles.
+       public class Rectangle extends Shape {
+    public Rectangle (String name, double w, double h)
+    { 
+      super(name);
+      width  = w;
+      height = h;
+    }
+    
+    //Overide the abstract method declared in Shape
+    public double getArea()
+    {return width*height;}
+    
+    public double getWidth()
+    {return width;}
+    
+    public double getHeight()
+    {return height;}
+    
+    public void setWidthHeight(double newWidth, double newHeight)
+    {
+      width  = newWidth;
+      height = newHeight;
+    }
+    
+    public String toString( )
+    {return "Rectangle["width="+width+",height="+height+",+super.toString()+"];}
+
+    private double width, height;
+  }  
+  Because the  Rectangle  class is also concrete, we can construct new
+    objects from this class too.
+  We can write, for example
+      Shape s = new Rectangle("r1",2.0,3.0); //Note the type
+  System.out.println(s);  
+  Which will print
+     Rectangle[width=2.0,height=3.0,Shape[id=r1,area=6.0]] 
+   
+  We can picture such an object using our standard notation.
+          &amp;nbsp 
+ 
+   
+  Of course, it is very simple to add more shapes (square, triangle, etc.)
+    to this hierarchy by extending the  Shape  class.
+  Neither the  Shape  class, nor  Circle  and  Rectangle 
+    need to know any information about such newly added shapes.
+    
+  Now, lets look at a more complicated example: writing parts of a model
+    class that uses arrays, abstract classes interfaces.
+  Suppose that we wanted to store an array of ten object that were each
+    constructed from subclasses of  Shape .
+  We could declare  Shape[] allShapes = new Shape[10];  and then
+    initialize this array.
+  Some member migh index circles and some rectangles.
+    
+  Now assume that we want to find the two shapes that have the most similar
+    area.
+  We can do this by first sorting the shapes in this array by their areas
+    (smallest to biggest).
+  We can call  Arrays.sort  using the  allShapes  array and the
+     following anonymous class (that implements the correct  Comparator ).
+    Arrays.sort(allShapes,
+    new Comparator () {
+      public int compare(Object o1, Object o2)
+      {
+        double areaDiff = ((Shape)o1).getArea() - ((Shape)o2).getArea();
+        if (areaDiff  0)
+          return +1;
+        else return 0;
+      }
+    });  
+  Now we can scan the array to find the adjacent shapes that have the most
+    similar areas.     int bestIndex  = -1;
+  double minDist = Double.MAX_VALUE;
+  for (int i=0; i&lt;allShapes.length-1; i++) {
+    double newDist = allShapes[i+1].getArea()-allShapes[i].getArea();
+    if (newDist   
+  Now, the minimum distance is between  bestIndex  and  bestIndex +1.
+  
+           Doing Without Abstract Methods/Classes  
+ 
+  We can get close to the effect of declaring  abstract  methods and
+    classes by doing the following.
+    Remove the word  abstract  from each method and class.
+      Implement each formerly  abstract  method by a stub.
+            If the method
+          is  void  its body should be just  {} ; if its method
+          returns some primitive value, return  0 , or  0.0 , or
+           '?' , or  false ; and if its method returns some
+          reference to an object, return  null .
+              Or, just have each method throw
+           UnsupportedOperationException ; in either case the method
+            does nothing useful.
+             Leave unchanged any methods in a subclass that overrides a formerly
+           abstract  method.
+    
+  Any compiling/working classes will still compile/work after these changes.
+  They will execute identically.
+  But other -not so good- things can also happen.
+    We can construct objects from the formerly  abstract  class; when
+          calling their stub methods, bad results are returned.
+      We can extend the formerly  abstract  class, and forget to
+          override its stub methods; when calling these methods, the usefuless
+          results are also returned.
+    
+  In the latter case, which is an easy mistake of omission (or even one of
+    misspelling), if we used  abstract  methods the Java compiler would
+    detect and inform us that the subclass must be defined to be abstract
+    because an abstract method was not overridden: typically this message
+    doesn't really what it says; normally we fix the problem not by defining
+    the class to be  abstract  but by adding/fixing the appropriate
+    method(s).
+   
+  The designers of Java felt that the possiblity of "messing up" in this way
+    was too big, and introduced the keyword  abstract  into the language
+    for the purposes explained above.
+  Its purpose is much like  final  for variables: we can provide the
+    compiler with extra information about our intent; if we do something
+    inconsistant with this intent, we receive an error message from the Java
+    compiler.
+  
+           The Positional Shape Hierarchy  
+ 
+  Let's now deal with a more complicated example of a positional shape
+    inheritance hierarchy.
+  It is illustrated below graphically; the superscript  A  is used to
+    denote classes that are abstract.
+   
+      
+  Here the root of the inheritance hierarchy is shown as the concrete
+     Object  class.
+  The  Shape  subclass, defined exactly as shown above, extends this
+    concrete superclass and introduces an abstract method ( getArea ),
+    so it becomes abstract.
+  The  PositionalShape  subclass, extends the abstract  Shape 
+    superclass.
+    
+  It defines a constructor that initializes one new instance variable, a
+     Point  (read its Javadoc in the standard Java library) that
+    specifies the position of the center of the shape (an x,y coordinate)
+    on a 2-dimensional plane.
+  This class adds a few new methods that manipulate the position, and adds one
+    additional abstract method that returns the  bounding box  of the
+     shape
+    (the smallest  Rectangle  in which the shape can be enclosed; 
+    note, this class has the full name  java.awt.Rectange  and IS NOT
+    the  Rectangle  class that we will define; read its Javadoc in the
+    standard Java library).
+  Finally, it adds one additional method that detects whether two shapes
+    "may overlap" by checking for intersection in their bounding boxes: if
+    the bounding boxes don't intersect, there is no possibility of an overlap.
+    
+  So, this class must be abstract because it contains two abstract methods:
+    it specifies  getBoundingBox  and also inherits (and doesn't override)
+     getArea .
+  Here is a complete the class.
+    public abstract class PositionalShape extends Shape {
+
+    public PositionalShape (String id, int centerX, int centerY)
+    { 
+      super(id);
+      center = new Point(centerX,centerY);
+    }
+    
+    //These abstract methods must be defined in a concrete subclass.
+    public abstract Rectangle getBoundingBox();
+
+    public Point getCenter ()
+    {return center;}
+
+    public double distanceTo (PositionalShape other)
+    {return center.distance(other.center);}
+
+    public void moveCenterTo (Point newCenter)
+    {
+      center.x = newCenter.x;
+      center.y = newCenter.y;
+    }
+
+    public void moveCenterBy (int dx, int dy)
+    {
+      center.x += dx;
+      center.y += dy;
+    }
+
+    public boolean mayOverlap (PositionalShape other)
+    {return getBoundingBox().intersects(other.getBoundingBox());}
+    
+    public String toString ()
+    {return "PositionalShape[center="+center+","+super.toString()+"]";}
+
+    //Fields
+    private Point center;
+  }  
+  
+Notice that although this class does not know how bounding boxes are
+  constructed from  PositionalShape   objects (that method is abstract),
+  it defines a concrete  mayOverlap  method because it knows that the
+   getBoundingBox  method in any concrete subclass of
+   PositionalShape  is defined concretely.
+Thus, just as the concrete  toString  method in the  Shape  class
+  called the abstract method  getArea , the concrete  mayOverlap 
+  method in the  PositionalShape  class calls the abstract method
+   getBoundingBox .
+  
+Finally, we can define the  Circle  subclass as follows.
+Note that it is concrete: it extends the abstract  PositionalShape 
+  class, and overrides both the  getArea  and  getBoundingBox 
+  methods.
+    public class Circle extends PositionalShape {
+
+    public Circle (String name, int centerX, int centerY, double r)
+    { 
+      super(name,centerX,centerY);
+      radius = r;
+    }
+    
+    //Overide the abstract method declared in Shape
+    public double getArea()
+    {return Math.PI * radius * radius;}
+
+    //Overide the abstract method declared in PositionalShapee
+    public Rectangle getBoundingBox()
+    {
+      return new Rectangle( (int)(getCenter().x-radius),
+                            (int)(getCenter().y-radius),
+                            (int)(2*radius),
+                            (int)(2*radius) );
+    }
+    
+    public double getRadius()
+    {return radius;}
+  
+    public void setRadius(double newRadius)
+    {radius = newRadius;}
+
+    public String toString( )
+    {return "Circle[radius="+radius+","+super.toString()+"]";}
+
+    //Fields
+    private double radius;
+  }  
+  The bounding boxes are specified by the coordinate of the shapes upper-left
+   corner and its width and height.
+  For a circel, here is a picture of its bounding box.
+    
+          &amp;nbsp 
+ 
+ 
+  Again, bounding boxes can detect whether two shapes "may overlap" by
+    checking for an intersection: if the bounding boxes don't intersect,
+    there is no possibility of an overlap; if they do intersect, the shapes
+    must be examined more closely.
+  This property is illustrated below.
+  
+          &amp;nbsp 
+ 
+ 
+Given all this intheritance, we can picture the result of calling
+   new Circle("c1", 100, 150, 1.0); 
+  by the following picture.
+  
+          &amp;nbsp 
+ 
+ 
+If you have not already done so, download
+   
+  Positional Shape Inheritance Demonstration  and run this driver
+  program.
+It contains all the code above, as well as the defintion of the
+   Rectangle  class.
+Notice in the  Rectangle  class how we differentiate between the
+   Rectangle  class we are defining and the  java.awt.Rectangle 
+  class that we are using to help define it: no import, full class name
+  (prefixed by its package name).
+  
+Finally, notice that the  Shape  class defines a concrete
+   PromptForInformation  method, which is overridden (and called via
+   super ) in the  PositionalShape  class, which is again overridden
+  (and called via  super ) in the  Circle  and  Rectangle 
+  class (a lot like how  toString  is overridden/called in these same
+  classes).
+The result is that there is no checking  instanceof  or casting in the
+  application.
+This absence is always desired.
+It ensures that if we add other subclasses of  PositionalShape  they
+  will all work with this application; we must change only  get  in
+  the application to allow it to return other subclasses.
+  
+If you are writing  instanceof , you are probably not defining your
+  classes correctly, making appropriate use of polymorphism.
+For example, if you need to know whether a an object is drawn with only
+  straight lines (a square, rectangle, polygon; not a circle or elipse),
+  don't use  instanceof  to pick out the right classes.
+Instead define  public abstract boolean drawnWithLines()  inside the
+   Shape  class and then override this method in each subclass.
+  
+  
+           Inheritance and Interfaces  
+ 
+There is another interesting way to design the  Circle  and
+   Rectangle  classes through the use of inheritance of interfaces,
+  combined with inheritance of classes/abstract classes.
+To do so, we must first learn that we can use the keyword  extends  to
+  specify that one interface extends another.
+In fact, UNLIKE CLASSES, an interface can extend multiple interfaces
+  (much like the way that a class can implement multiple interfaces; recall
+  that a class can extend only one other class).
+The use of subinterfaces and superinterfaces will appear immediately below,
+  including the specification of a subinterface that extend multiple
+  superinterfaces.
+ 
+We will start by specifying two interfaces separately,  Shape  and
+   Position , and then one interface that has the properties of
+  both:  PositionShape .
+Notice that these interfaces include all the abstract and concrete
+  methods defined in the  Shape  and  PositionalShape  CLASSES
+  above (except  toString , which is not needed, because every
+  class -whether or not it implements these interfaces- inherits a
+   toString  method that it can override).
+       public interface Shape {
+    public double getArea();
+    public String getId();
+  }
+
+  public interface Position {
+    public Point     getCenter    ();
+    public double    distanceTo   (Position other);
+    public void      moveCenterTo (Point newCenter);
+    public void      moveCenterBy (int dx, int dy);
+  }
+
+  public interface PositionalShape extends Position,Shape {
+    public Rectangle getBoundingBox();
+    public boolean   mayOverlap    (PositionalShape other);
+  }  
+Here, the  PositionalShape  (sub)interface inherits all the methods
+  specified in the  Position  and  Shape  (super)interfaces,
+  and specifies two new methods.
+Why are these methods new here and not inherited from other interfaces?
+It WOULD NOT make sense to specify  getBoundingBox  or  mayOverlap 
+  in either individual interface, because the concepts of bounding boxes
+  and overlaping shapes don't make sense when applied to just shapes without
+  positions or just positions without shapes.
+It makes sense to specify these methods only within interfaces combining
+   both shape and position properities.
+ 
+If we declare a variable using the  PositionalShape  interface,
+  Java allows us to use such a variable to call methods from the  Shape ,
+   Position  and  PositionalShape  interfaces.
+I guess that we could also call this interfaces  ShapelyPosition ,
+  and this begins to get at the point.
+There is no obvious reason to have  Shape  as the superclass and then
+  extend it to  PositionalShape ; we could have  Position  as the
+  superclass and then extend it to  ShapelyPositional .
+In the original design we needed to make an arbitrary choice: which is the
+  subclass and which is the superclass; in this design we avoid making such
+  a choice, developing each part on its own can combining them on equal terms.
+  
+Once we define these interfaces, we can define three "simple" classes
+  that implement them; the last of these classes it implemented using the
+  first two, and will be extended when defining the  Circle  and
+   Rectangle  classes.
+First we define a class that implements the basic part of the
+    Shape  interface (all but the abstract method).
+It cannot say that it  implements Shape  because it defines no
+   getArea  method.
+     public class ShapeBasics {
+
+    public ShapeBasics (String id)
+    {this.id = id;}
+
+    public String getId()
+    {return id;}
+  
+    public String toString( )
+    {return "ShapeBasics[id="+id+"]";}
+
+    private String id;
+  }  
+Next we similarly define the  PositionBasics  class.
+It CAN say that it  implements Position  because it defines all
+  the specified methods (the formerly abstract  getBoundingBox  method
+  is not specified in the  Position  interface, but in
+   PositionalShape ).
+Because we can, we do specify  implements Position .
+      public class PositionBasics implements Position {
+
+    public PositionBasics (int centerX, int centerY)
+    {center = new Point(centerX,centerY);}
+    
+    public Point getCenter ()
+    {return center;}
+
+    public double distanceTo (Position other)
+    {return center.distance(other.getCenter());}
+
+    public void moveCenterTo (Point newCenter)
+    {
+      center.x = newCenter.x;
+      center.y = newCenter.y;
+    }
+
+    public void moveCenterBy (int dx, int dy)
+    {
+      center.x += dx;
+      center.y += dy;
+    }
+
+    public String toString ()
+    {return "PositionBasic[center="+center+"]";}
+
+    //Fields
+    private Point center;
+  }  
+Note one small change in the  distanceTo  method.
+It now is implemented via
+   {return center.distance(other.getCenter());}  instead of
+   {return center.distance(other.center);}  because the  Position 
+  parameter is an interface, and stores no instance variables for this method
+  to access.
+ 
+Finally, we define an abstract class that implements the basic part of the
+    PositionalShape  interface.
+It is this abstract class that our concrete  Circle  and Rectangle
+  classes will extend.
+The  PositionShapeBasics  class constructs objects from the
+   ShapeBasics  and  PositionBasics  classes, and uses these
+  objects whenever one of their methods is needed.
+This is called  delegation : one object uses another to implement a
+  method.
+  
+Thus, this class defines many methods (all those in the  Shape ,
+   Position , and  PositionalShape  interfaces), with most being
+  concrete.
+It also has the the same two (from the first design) abstract methods:
+   getArea  and  getBoundingBox .
+All the concrete methods are implemented by delegation, with one-line bodies
+ that delegate the call to the right object.
+Note that  mayOverap  can be defined concretely here, knowing that
+  the  getBoundingBox  method will eventually be defined in a concrete
+  subclass.
+    public abstract class PositionalShapeBasics implements PositionalShape {
+
+    public PositionalShapeBasics (String name, int centerX, int centerY)
+    { 
+      s  = new ShapeBasics(name);
+      p  = new PositionBasics(centerX,centerY);
+    }
+  
+    //These abstracts method must be defined in a concrete subclass.
+    public abstract double    getArea();
+    public abstract Rectangle getBoundingBox();
+    
+    public String getId()
+    {return s.getId();}
+    
+    public double distanceTo(Position other)
+    {return p.distanceTo(other);}
+    
+    public Point getCenter()
+    {return p.getCenter();}
+    
+    public void moveCenterTo(Point newCenter)
+    {p.moveCenterTo(newCenter);}
+    
+    public void moveCenterBy(int dx, int dy)
+    {p.moveCenterBy(dx,dy);}
+    
+    public boolean mayOverlap(PositionalShape other)
+    {return getBoundingBox().intersects(other.getBoundingBox());}
+    
+    public String toString( )
+    {return "PositionalShapeBasics[s="+s+",p="+p+"]";}
+
+    //Fields
+    private ShapeBasics    s;
+    private PositionBasics p;
+  }  
+Any class extending the  PositionalShapeBasics  class in this design
+  can do all the jobs of a class subclassing the  PositionalShape  class
+  in the previous design.
+A class like  Circle  is defined almostly identically: the only 
+  difference is on the name of the class it extends (and my comments in
+  the class).
+Recall that by knowing  Circle extends PositionalShapeBasics  and
+   PositionalShapeBasics implements PositionalShape  Java deduces
+  (and we don't have to write) that  Circle implements PositionalShape .
+    public class Circle extends PositionalShapeBasics {
+
+    public Circle (String name, int centerX, int centerY, double r)
+    { 
+      super(name,centerX,centerY);
+      radius = r;
+    }
+    
+    //Implement the getArea method,
+    //  specified in the Shape interface
+    public double getArea()
+    {return Math.PI * radius * radius;}
+
+    //Implement the getBoundingBox method,
+    //  specified inthe PositionalShape interface
+    public Rectangle getBoundingBox()
+    {
+      return new Rectangle( (int)(getCenter().x-radius),
+                            (int)(getCenter().y-radius),
+                            (int)(2*radius),
+                            (int)(2*radius) );
+    }
+    
+    public double getRadius()
+    {return radius;}
+    
+    public void setRadius(double newRadius)
+    {radius = newRadius;}
+
+    public String toString( )
+    {return "Circle[radius="+radius+","+super.toString()+"]";}
+
+    //Fields
+    private double radius;
+  }  
+With this hierarchy, we would picture a  Circle  object as follows.
+Recall that the  PositionalShapeBasics  abstract class delegates
+  all its methods to the objects referred to by either of its its instance
+  variables.
+  
+          &amp;nbsp 
+ 
+ 
+So, what are the advantage to each design, given that by the time we
+  construct  Circle  and  Rectangle  subclasses (and other similar
+  ones) we do so identically.
+As stated above, the second design is a bit more symmetrical.
+But the first design is certainly easier to understand (2 abstract classes,
+  2 concrete ones; vs. 3 interfaces, 4 concrete classes, and 1 abstract one).
+There is a general design rule that says to prefer delegation to inheritance,
+  because you can delegate using many classes but directly inherit from only
+  one.
+Other interfaces/classes can more easily be constructed to use properties
+  of these interfaces/classes, and others like them.
+In fact, the pattern used in the second solution, although more complicated,
+  can be used more often to solve other similar (and not so similar) problems.
+  
+I think the bottom line is: GOOD DESIGN IS A HARD.
+I DO NOT have a goal for this class that you can design elegant
+  inheritance hierarchies.
+I DO have a goal that given an inheritance hierarchy, you can quickly read,
+  understand, and use it (extend classes it contains).
+  
+You can download this alternative code in
+   
+  Positional Shape Inheritance Demonstration #2  and run its driver,
+  which is identical to the first one.
+It contains all the code above, as well as the  Rectangle  class.
+  
+           General Comments on Inheritance  
+ 
+In the next lecture we will apply inheritance to acheive a more perfect
+  understanding of exceptions.
+It will introduce no new material.
+ 
+In this section I'd like to make just a few observations about classes.
+   GOOD DESIGN IS A HARD.
+Reread the last part of the previous section.
+Don't try to fix a poor design by hacking it implementation; fix the design.
+ 
+   There are two important relationships between classes: we must be
+  be able to recognize and understand (and differentiate) them.
+The  extends  mechanism is also know as the IS-A mechanism.
+It is appropriate to use when the subclass IS-A slightly different (extended)
+  class than its superclass.
+The delegation mechanism is known as the HAS-A mechanism.
+It is appropriate to use when an object from one class HAS-A object from 
+  another class to help it do its work (remember state; implement behavior);
+  this second object is stored as an instance variable in the first.
+ 
+   The Liskov subsitution rule:
+  
+If for each object o1 of type S there is an object o2 of type T such that for
+   all programs P defined in terms of T, the behavior of P is unchanged when
+   o1 is substituted for o2 then S is a subtype of T.
+  
+Paraphrased: If S it is a subclass of T, then everything you can do to an
+  object from class T should also make sense (and have the same effect)
+  for an object from class S.
+ 
+An example that is often dragged out is circles and elipses.
+Mathematicians want to say a circle is just a special kind of elipse,
+  but the  setAxes(double x, double y)  method on elipses makes no
+  sense to apply to a circle (since it has one radius, not a major/minor
+  axis).
+Likewise an elipse is not just a special kind of circle: the relationship
+  between the radius of a circle and its area makes no sense when speaking
+  about an elipses.
+This, at a fundamental level, as appealing as it may be, a circle and an
+  elipses are not IS-A related.
+  
+One could, for example, define the  Circle  and  Elipses  classes
+  separately, and then implement the  Circle  class by delegating its
+  behavior to an  Elipse  stored as an instance variable, ensuring that
+  the major and minor axes are always the same.
+This implementation technique, delegation, is common.
+  
+It has been asserted that most inheritance problems boil down to a
+  variant of the circle/elipses scenario, if you are smart enough to
+  spot it.
+If you truly understand this reasoning, you will be able to apply it
+  everywhere.
+For example, should  SortedList  extend  List : no, because
+  we can perform many operations on a  List  that make no sense
+  for a  SortedList : we can call  insertFront  and  insertRear 
+  on a  List  and the inserted value becomes the first/last value
+  respectively in the  List ;  but, in a  SortedList , we cannot put
+  values in these places (when can put values in, but they move to their
+  "naturally sorted" place).
+But one could, for example, specify the  List  and  SortedList  class
+  separately, and then implement the  SortedList  by delegating its
+  behavior to a  List 
+So again, we see delegation (HAS-A relationships) are more common than
+  inheritance (IS-A relationships) between classes.
+  
+   Generally, "Classes should be closed for modification but open for
+      extension."
+This means that once the specification and implementation of a class
+  stabilizes, we should never change it; instead we can extend it with
+  subclasses that behave similarly but not identically, if we need different
+  state and behavior.
+  
+Again, relationships among classes in a large system is a quite advanced
+  topic.
+We need lots of experience reading classes -noticing their designs and
+  learning how to use them effectively- before we can start creating
+  complicated designs.
+ 
+Finally,  final  as an access modifier for class and methods in classes.
+If a method in a class is prefaced by the  final  access modifier, it
+   means that it cannot be overridden.
+Likewise, if a class is prefaced by the the  final  access modifier, it
+  means that it cannot be extended (thus, none of its methods can be
+  overridden).
+The  String  class is defined to be  final .
+
+  
+           Abstract Rules Review  
+ 
+  To review, here are the four rules for using the  abstract  keyword,
+    collected in one place.
+    Any method in a class can be declared  abstract .
+        Such a method has no body ( {...}  is replaced by just  ; ,
+          as in interfaces) and can be called in other methods defined in that
+          class, or be called in methods defined in any of its subclasses, or
+          be called using any variables whose type is this class or any of its
+          subclasses.  
+       
+ 
+       
+      If a class defines any abstract methods (or, as we will see, inherits
+        any abstract methods and doesn't override them), that class must be
+        defined using the  abstract  keyword in its access modifiers.
+       
+ 
+       
+    If a class is defined with the keyword  abstract , we may call its
+      constructor only via  super  in a class that extends it, not
+      via the  new  operator.
+    That is, we cannot explicitly construct an object using an  abstract 
+      class, but we can use it to help construct an object from a subclass.
+      
+
+       
+     We can treat an abstract class as a superclass and extend it; its
+       subclasses can override some or all of its inherited abstract methods.
+     If through this overriding a subclass contains no more abstract methods,
+       that class is concrete (and we can construct objects directly from it).
+     If it still abstract, it too can be used as a superclass ... (until
+       eventually a subclass of a subclass ... is concrete).
+      
+           Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a TA,
+    or any other student.
+
+   Does Java allow us to declare a class  abstract  even if it define and
+      inherits no  abstract  methods?
+    If so, what do you expect the properties of the class to be?
+ 
+   Does it make sense to define a  final abstract  method (use these
+      two access modifiers together)?
+ 
+   Write the  ModularCounter  class from the previous lecture to
+      implement  Counter  but not by subclassing  IntCounter ;
+      instead, store an  IntCounter  and delegate all the methods to 
+      operate on it.
+ 
+   Explain how a subclass can overload an inherited method (not override it).
+ 
+   Do you think that an abstract class can say that it implements an
+      interface, even if one of the methods in the interface is declared to
+      be abstract in the class?
+    Explain why your answer is reasonable.
+   
+   </body> 

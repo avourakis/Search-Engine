@@ -1,0 +1,528 @@
+ 
+JFMLocalFilesystem
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.localFileSystem 
+ 
+Class JFMLocalFilesystem 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.localFileSystem.JFMFileSystem 
+        org.itr_rescue.dataGuard.localFileSystem.JFMLocalFilesystem 
+ 
+    public class  JFMLocalFilesystem   extends  JFMFileSystem     
+TODO change me!!!
+  
+
+  
+    Author:  
+   sergiu 
+   
+
+
+
+  
+     
+ Constructor Summary   
+      JFMLocalFilesystem  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  boolean   
+    canRead  ( JFMFile  file) 
+
+ 
+          Tests whether the application can read the file denoted by the
+ abstract pathname. 
+    
+  boolean   
+    canWrite  ( JFMFile  file) 
+
+ 
+          Tests whether the application can modify to the file denoted by the
+ abstract pathname. 
+    
+  boolean   
+    createNewFile  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+    createNewFile  ( JFMFile  parent,
+              java.lang.String name) 
+
+ 
+          Atomically creates a new, empty file named by the abstract pathname if
+ and only if a file with that name does not yet exist. 
+    
+  boolean   
+    delete  ( JFMFile  file) 
+
+ 
+          Deletes the file or directory denoted by the abstract pathname. 
+    
+  boolean   
+    exists  ( JFMFile  file) 
+
+ 
+          Tests whether the file or directory denoted by the abstract pathname
+ exists. 
+    
+   JFMFile    
+    getDefaultRootDirectory  () 
+
+ 
+          The default root directory in the case of filesystems with more than one root directories (like windows) 
+    
+   JFMFile    
+    getFile  (java.lang.String pathName) 
+
+ 
+          This method returns an JFMFile object based on the pathname provided 
+    
+  char   
+    getPathSeparator  () 
+
+ 
+          The system-dependent path-separator character. 
+    
+  char   
+    getSeparator  () 
+
+ 
+          The system-dependent default name-separator character. 
+    
+   JFMFile    
+    getStartDirectory  () 
+
+ 
+          This method returns the start directory for this filesystem 
+    
+  boolean   
+    isLocal  () 
+
+ 
+          Tells us if the filesystem is local. 
+    
+   JFMFile []   
+    listFiles  ( JFMFile  root) 
+
+ 
+          Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname. 
+    
+   JFMFile []   
+    listFiles  ( JFMFile  rootFile,
+          java.io.FilenameFilter filter) 
+
+ 
+          Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter. 
+    
+   JFMFile []   
+    listRoots  () 
+
+ 
+          List the available filesystem roots. 
+    
+  boolean   
+    mkdir  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+    mkdir  ( JFMFile  parent,
+      java.lang.String name) 
+
+ 
+          Creates the directory named by the abstract pathname denoted by the parameter. 
+    
+  boolean   
+    mkdirs  ( JFMFile  file) 
+
+ 
+            
+    
+  boolean   
+    setLastModified  ( JFMFile  file,
+                long time) 
+
+ 
+          Sets the last-modified time of the file or directory named by the
+ abstract pathname. 
+    
+  boolean   
+    setReadOnly  ( JFMFile  file) 
+
+ 
+          Marks the file or directory named by the abstract pathname so that
+ only read operations are allowed. 
+  
+   
+    Methods inherited from class org.itr_rescue.dataGuard.localFileSystem. JFMFileSystem   
+     createFileSystem ,  getPathSeparatorString ,  getRegisteredFilesystems ,  getRootDriveFile ,  getSeparatorString ,  registerFilesystems   
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+JFMLocalFilesystem 
+ 
+public  JFMLocalFilesystem () 
+    
+    
+ Method Detail   
+     
+getPathSeparator 
+ 
+public char  getPathSeparator () 
+   Description copied from class:   JFMFileSystem    
+ The system-dependent path-separator character.  This field is
+ initialized to contain the first character of the value of the system
+ property  path.separator .  This character is used to
+ separate filenames in a sequence of files given as a  path list .
+ On UNIX systems, this character is  ':' ; on Microsoft Windows systems it
+ is  ';' .
+ 
+     Specified by:     getPathSeparator   in class   JFMFileSystem     
+    See Also:    org.jfm.md.filesystems.JFMFileSystem#getPathSeparator()    
+      
+getSeparator 
+ 
+public char  getSeparator () 
+   Description copied from class:   JFMFileSystem    
+ The system-dependent default name-separator character.  This field is
+ initialized to contain the first character of the value of the system
+ property  file.separator .  On UNIX systems the value of this
+ field is  '/' ; on Microsoft Windows systems it is  '\' .
+ 
+     Specified by:     getSeparator   in class   JFMFileSystem     
+    See Also:    org.jfm.md.filesystems.JFMFileSystem#getSeparator()    
+      
+getDefaultRootDirectory 
+ 
+public  JFMFile   getDefaultRootDirectory () 
+   Description copied from class:   JFMFileSystem    
+ The default root directory in the case of filesystems with more than one root directories (like windows)
+ 
+     Specified by:     getDefaultRootDirectory   in class   JFMFileSystem     
+    Returns:   The default root directory   See Also:    org.jfm.md.filesystems.JFMFileSystem#getDefaultRootDirectory()    
+      
+listRoots 
+ 
+public  JFMFile []  listRoots () 
+   Description copied from class:   JFMFileSystem    
+ List the available filesystem roots.
+ 
+     Specified by:     listRoots   in class   JFMFileSystem     
+    See Also:    org.jfm.md.filesystems.JFMFileSystem#listRoots()    
+      
+listFiles 
+ 
+public  JFMFile []  listFiles ( JFMFile  root) 
+   Description copied from class:   JFMFileSystem    
+ Returns an array of abstract pathnames denoting the files in the
+ directory denoted by the abstract pathname.
+
+   If this abstract pathname does not denote a directory, then this
+ method returns  null .  Otherwise an array of
+  File  objects is returned, one for each file or directory in
+ the directory.  Pathnames denoting the directory itself and the
+ directory's parent directory are not included in the result.
+
+    There is no guarantee that the name strings in the resulting array
+ will appear in any specific order; they are not, in particular,
+ guaranteed to appear in alphabetical order.
+  
+     Specified by:     listFiles   in class   JFMFileSystem     
+    Returns:   An array of abstract pathnames denoting the files and
+          directories in the directory denoted by this abstract
+          pathname.  The array will be empty if the directory is
+          empty.  Returns  null  if this abstract pathname
+          does not denote a directory, or if an I/O error occurs.   See Also:    org.jfm.md.filesystems.JFMFileSystem#listFiles()    
+      
+listFiles 
+ 
+public  JFMFile []  listFiles ( JFMFile  rootFile,
+                           java.io.FilenameFilter filter) 
+   Description copied from class:   JFMFileSystem    
+ Returns an array of abstract pathnames denoting the files and
+ directories in the directory denoted by this abstract pathname that
+ satisfy the specified filter.  The behavior of this method is the
+ same as that of the   #listFiles()   method, except
+ that the pathnames in the returned array must satisfy the filter.
+ If the given  filter  is  null  then all
+ pathnames are accepted.  Otherwise, a pathname satisfies the filter
+ if and only if the value  true  results when the
+   FilenameFilter.accept(java.io.File, java.lang.String)   method of the filter is
+ invoked on this abstract pathname and the name of a file or
+ directory in the directory that it denotes.
+ 
+     Specified by:     listFiles   in class   JFMFileSystem     
+    filter  - A filename filter
+   Returns:   An array of abstract pathnames denoting the files and
+          directories in the directory denoted by this abstract
+          pathname.  The array will be empty if the directory is
+          empty.  Returns  null  if this abstract pathname
+          does not denote a directory, or if an I/O error occurs.   See Also:    org.jfm.md.filesystems.JFMFileSystem#listFiles(java.io.FilenameFilter)    
+      
+mkdir 
+ 
+public boolean  mkdir ( JFMFile  file) 
+     See Also:    org.jfm.md.filesystems.JFMFileSystem#mkdir(org.jfm.md.filesystems.JFMFile)    
+     
+mkdirs 
+ 
+public boolean  mkdirs ( JFMFile  file) 
+     See Also:    org.jfm.md.filesystems.JFMFileSystem#mkdirs(org.jfm.md.filesystems.JFMFile)    
+     
+delete 
+ 
+public boolean  delete ( JFMFile  file) 
+   Description copied from class:   JFMFileSystem    
+ Deletes the file or directory denoted by the abstract pathname.  If
+ this pathname denotes a directory, then the directory must be empty in
+ order to be deleted.
+ 
+     Overrides:     delete   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file or directory is
+          successfully deleted;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFileSystem#delete(org.jfm.md.filesystems.JFMFile)    
+      
+createNewFile 
+ 
+public boolean  createNewFile ( JFMFile  file)
+                      throws  FSException  
+     Throws: 
+    FSException     See Also:    org.jfm.md.filesystems.JFMFileSystem#createNewFile(org.jfm.md.filesystems.JFMFile)    
+     
+setLastModified 
+ 
+public boolean  setLastModified ( JFMFile  file,
+                               long time) 
+   Description copied from class:   JFMFileSystem    
+ Sets the last-modified time of the file or directory named by the
+ abstract pathname.
+
+   All platforms support file-modification times to the nearest second,
+ but some provide more precision.  The argument will be truncated to fit
+ the supported precision.  If the operation succeeds and no intervening
+ operations on the file take place, then the next invocation of the
+   org.jfm.md.filesystems.JFMFile#lastModified   method will return the (possibly
+ truncated)  time  argument that was passed to this method.
+  
+     Specified by:     setLastModified   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname  time  - The new last-modified time, measured in milliseconds since
+               the epoch (00:00:00 GMT, January 1, 1970)
+    Returns:    true  if and only if the operation succeeded;
+           false  otherwise   See Also:    org.jfm.md.filesystems.JFMFileSystem#setLastModified(org.jfm.md.filesystems.JFMFile, long)    
+      
+setReadOnly 
+ 
+public boolean  setReadOnly ( JFMFile  file) 
+   Description copied from class:   JFMFileSystem    
+ Marks the file or directory named by the abstract pathname so that
+ only read operations are allowed.  After invoking this method the file
+ or directory is guaranteed not to change until it is either deleted or
+ marked to allow write access.  Whether or not a read-only file or
+ directory may be deleted depends upon the underlying system.
+ 
+     Specified by:     setReadOnly   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the operation succeeded;
+           false  otherwise   See Also:    org.jfm.md.filesystems.JFMFileSystem#setReadOnly(org.jfm.md.filesystems.JFMFile)    
+      
+canRead 
+ 
+public boolean  canRead ( JFMFile  file) 
+   Description copied from class:   JFMFileSystem    
+ Tests whether the application can read the file denoted by the
+ abstract pathname.
+ 
+     Overrides:     canRead   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file specified by this
+          abstract pathname exists  and  can be read by the
+          application;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFileSystem#canRead(org.jfm.md.filesystems.JFMFile)    
+      
+canWrite 
+ 
+public boolean  canWrite ( JFMFile  file) 
+   Description copied from class:   JFMFileSystem    
+ Tests whether the application can modify to the file denoted by the
+ abstract pathname.
+ 
+     Overrides:     canWrite   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file system actually
+          contains a file denoted by this abstract pathname  and 
+          the application is allowed to write to the file;
+           false  otherwise.   See Also:    org.jfm.md.filesystems.JFMFileSystem#canWrite(org.jfm.md.filesystems.JFMFile)    
+      
+exists 
+ 
+public boolean  exists ( JFMFile  file) 
+   Description copied from class:   JFMFileSystem    
+ Tests whether the file or directory denoted by the abstract pathname
+ exists.
+ 
+     Overrides:     exists   in class   JFMFileSystem     
+    Parameters:    file  - The file that denotes the abstract pathname
+   Returns:    true  if and only if the file or directory denoted
+          by this abstract pathname exists;  false  otherwise   See Also:    org.jfm.md.filesystems.JFMFileSystem#exists(org.jfm.md.filesystems.JFMFile)    
+      
+getStartDirectory 
+ 
+public  JFMFile   getStartDirectory () 
+   Description copied from class:   JFMFileSystem    
+ This method returns the start directory for this filesystem
+ 
+     Specified by:     getStartDirectory   in class   JFMFileSystem     
+    Returns:   JFMFile the start directory (for example, on the local filesystem it will be the user directory)   See Also:    org.jfm.md.filesystems.JFMFileSystem#getStartDirectory()    
+      
+getFile 
+ 
+public  JFMFile   getFile (java.lang.String pathName) 
+   Description copied from class:   JFMFileSystem    
+ This method returns an JFMFile object based on the pathname provided
+ 
+     Specified by:     getFile   in class   JFMFileSystem     
+    Parameters:    pathName  - String
+   Returns:   JFMFile   See Also:    org.jfm.md.filesystems.JFMFileSystem#getFile(java.lang.String)    
+      
+mkdir 
+ 
+public boolean  mkdir ( JFMFile  parent,
+                     java.lang.String name) 
+   Description copied from class:   JFMFileSystem    
+ Creates the directory named by the abstract pathname denoted by the parameter.
+ 
+     Specified by:     mkdir   in class   JFMFileSystem     
+    Parameters:    parent  - The parent file that denotes the abstract pathname  name  - The name of the new dir
+    Returns:    true  if and only if the directory was
+          created;  false  otherwise   
+      
+createNewFile 
+ 
+public boolean  createNewFile ( JFMFile  parent,
+                             java.lang.String name)
+                      throws  FSException  
+   Description copied from class:   JFMFileSystem    
+ Atomically creates a new, empty file named by the abstract pathname if
+ and only if a file with that name does not yet exist.  The check for the
+ existence of the file and the creation of the file if it does not exist
+ are a single operation that is atomic with respect to all other
+ filesystem activities that might affect the file.
+ 
+     Specified by:     createNewFile   in class   JFMFileSystem     
+    Returns:    true  if the named file does not exist and was
+          successfully created;  false  if the named file
+          already exists
+   Throws: 
+    FSException   - If an filesystem error occurred   
+      
+isLocal 
+ 
+public boolean  isLocal () 
+   Description copied from class:   JFMFileSystem    
+ Tells us if the filesystem is local. This information may be used for some optimizations in some cases
+ 
+     Overrides:     isLocal   in class   JFMFileSystem     
+    Returns:   true is the filesystem is a local filesystem (hard-disk) false otherwise (a network one)   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

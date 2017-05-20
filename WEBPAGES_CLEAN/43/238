@@ -1,0 +1,82 @@
+ COSMOS Summer 2006, Lab Exercise 4: Assembling Larger Programs and Connecting Them to the Outside World<body>
+
+ 
+
+ 
+COSMOS Summer 2006 |
+ Index  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ COSMOS Summer 2006 
+   Lab Exercise #4: Assembling Larger Programs and Connecting Them to the Outside World 
+
+ 
+
+  
+
+ Today's exercise 
+
+ In previous lab exercises, we've written programs that perform a variety of tasks on DNA sequences: counting various kinds of nucleotides, finding the presence of gaps, determining the presence or absence of start codons, and, ultimately, finding candidate genes, which is one of our main goals for the first two weeks of the course.  As we talked about in lecture yesterday, however, our programs have been limited in their usefulness by the fact that the program's input had to appear in the program. 
+
+ A better program is one that can interact with the world outside of itself.  At minimum, we'd like our programs to be able to take their input from external sources — a human user typing the input into the program, files containing the input, or even directly from the Internet — so that they're not limited to processing input stored in the program.  This ability makes the programs much easier to use, which also makes them much easier to test, since you can repeatedly give them different input and see whether your program behaves as it should. 
+
+ Today's task is to assemble some of the pieces that we've built throughout the course into more "complete" programs that are able to get their input from the outside world — human users and files. 
+
+ 
+
+ 
+
+  Pair up!  (Optional) 
+
+ As always, you're welcome and encouraged to pair up, though it is optional, so if you prefer to work alone, you can.  If you pair up, work in the same way you have previously: one computer shared between the two of you, one person "driving," the other watching, and the keyboard changing hands at least once every fifteen minutes. 
+
+ 
+
+ 
+
+  Today's problems 
+
+ Today's problems focus on taking existing programs that we've built previously and connecting them to input sources.  For today, we'll concentrate on two input formats: 
+
+  DNA sequences typed by a human user, as we did in lecture yesterday using raw_input. 
+   DNA sequences read from a text file.  Once you introduce the use of files into a program, it becomes necessary to define the  file format , which is the set of rules that the data inside the file must follow.  Today, we'll use a simple file format that I'll call  AlexDNA format :
+      AlexDNA format is a text file format.  It consists of a sequence of lines, with each line being one of the following:
+          A blank line.  Blank lines should be ignored by your program, but will help to break a large input file into pieces. 
+           A comment.  Comments are lines that begin with a '#' character.  Comments should also be ignored by your program. 
+           A DNA sequence, entered as a sequence of 'A,' 'C,' 'T,' or 'G' characters on one line.
+       
+       An example of an AlexDNA file is  here .  In IDLE, create a new window as though you were going to write a Python program; copy and paste the contents of the AlexDNA file into that window, then save it with the name "alexdna.txt". 
+      
+    Write two versions of each of the following programs, each of which is based on one or more programs we wrote previously. 
+
+  Write a version of each program that repeatedly asks the user (using raw_input) to type a DNA sequence, then processes it.  The program should continue processing DNA sequences until the user enters an empty one. 
+   Write a version of each program that reads its input from an AlexDNA file instead.  Use raw_input to ask the user what the name of the input file is, then open and read the contents of that file, processing each of the DNA sequences stored within it. 
+  Today's programs are: 
+
+  Write a program that finds candidate genes on the primary strand of each DNA sequence in its input.  (Candidate genes are defined as they were in the previous lab assignment.)  For each candidate gene found, report the starting nucleotide position and the length of the candidate gene in codons, as in the previous lab assignment.  Also, report which DNA sequence contained the candidate gene; one way to report this is to think of the first sequence as being sequence number 1, the second as sequence number 2, and so on, then to say something like "Candidate gene found on the reverse strand of sequence number 2." 
+  
+   Write a program that finds candidate genes on both the primary and reverse strands of each DNA sequence in its input.  You can use our previous programs that find candidate genes and reverse complements.  Report the candidate genes in the same way as in the previous program, except that you should be sure to note whether each was found on the given or reverse strands. 
+   Write a program that finds candidate genes on both the primary and reverse strands of each DNA sequence in its input, but rather than reporting the length of the strand in codons, translate the candidate gene to an amino acid sequence and show the complete amino acid sequence for it instead.  (You can use the program from the previous lab assignment to perform this translation.) 
+  
+
+ 
+
+  Finished early?  (Sorry, no games or videos today) 
+
+ If you're done with the assignment, I'd prefer that you spend the remaining time on productive tasks.  Your projects are looming large now, as there's much work to be done on them between now and the end of the COSMOS cluster.  Spend your remaining time working on your projects, building new Python programs, or helping other people on their programs (with an emphasis on being sure that they understand why their programs work).  With so much to do, games and videos are not permitted today. 
+
+ If you're looking for an interesting program to work on, come talk to me; I'll think of something for you to work on. 
+
+ 
+
+ 
+
+   Originally written by Alex Thornton, Summer 2006. 
+  
+
+</body> 

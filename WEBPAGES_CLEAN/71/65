@@ -1,0 +1,56 @@
+ 3.31.4 GetQAtoms<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.31.3 BuildExpressions 
+ Up:   3.31 OEQMolBase 
+ Next:   3.31.5 GetQBonds 
+   
+
+
+  
+3.31.4 GetQAtoms 
+ 
+   
+virtual OESystem::OEIterBase&lt;OEQAtomBase&gt; *GetQAtoms()
+    
+Return an iterator over all the query atoms of a molecule.  By default, this
+returns all the atoms of the molecule in the order they were created.
+The ordering of the atoms returned by GetAtoms may be modified by
+OEMolBase::OrderAtoms.
+
+  
+    
+virtual OESystem::OEIterBase&lt;OEQAtomBase&gt; *GetQAtoms(
+    const OESystem::OEUnaryPredicate&lt;OEChem::OEAtomBase&gt; &amp;predicate)
+    
+Return an iterator over all of the query atoms of a molecule that
+match the specified atom predicate.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.31.3 BuildExpressions 
+ Up:   3.31 OEQMolBase 
+ Next:   3.31.5 GetQBonds 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,541 @@
+ I Want My FTP: Bits on Demand<body>
+
+  [Note to Joan: I updated the caption on Table 1. Nothing else was changed on the tables. 
+ New text-length target: tables subtract 2/3 + 1/2 + 1/4 + 1/4 (headline) out of 3 pages = 4/3 * 750 = 1,000. 
+ I have it down to 1,500. Good luck; call 626 806 7574 anytime for cutting advice.] 
+  I Want My FTP: Bits on Demand 
+  Protocol implementors have suffered from the erroneous opinion that implementing FTP ought to be a small and trivial task.  This is wrong, because FTP has a user interface, because it has to deal (correctly) with the whole variety of communication and operating system errors that may occur, and because it has to handle the great diversity of real file systems in the world. 
+ -- RFC 1123,  Requirements for Internet Hosts -- Application and Support  
+ Last issue, I closed with innuendo that FTP, though equally mature as Telnet, was not as evolvable. Indeed, it seems like a "small and trivial task": FTP clients authenticate themselves, navigate to a path in the hierarchy, and open data connections to slurp down files in 7-bit ASCII or 8-bit binary. Far from it: nearly thirty years of protocol designs complicate that story in pursuit of the triple goals of interactivity, robustness, and flexibility. 
+
+ Modern FTP evolved from an era of radically diverse systems. There are historic reasons it accumulated a welter of commands, transfer modes, and data representations. Consider text alone in the early �70s: DEC TOPS-20 crammed five 7-bit ASCII characters into a 36-bit word; Multics used four nine-bit bytes; IBM mainframes mapped into its own 8-bit EBCDIC (after all, ASCII was an emerging standard itself, only ratified in 1968). The Internet Standard edition published in October 1985 by editors Jon Postel and Joyce Reynolds in October 1985 (RFC959) commendably documents its own heritage, justifying features which seem quaint in today's homogenized Internet (see Table 1). 
+     What: The Network Virtual Filesystem 
+     "And when it came time to develop a File Transfer Protocol, the same [Common Intermediate Representation] trick was clearly just as useful as for a terminal oriented protocol..." 
+ -- RFC 871,  The ARPANET Reference Model  
+ A file, singular, is merely a pile of bits, perhaps tagged with a name. File transfer, then, is a correspondingly simple task: send a request header to read or write the file with some name, then stream the data across. That�s the Trivial File Transfer Protocol, TFTP, Standard 33 (RFC 1350), a mere 11 pages long. 
+
+ File systems  are where the trouble begins. Now, there�s metadata about organization, access control, and data representation. Names become pathnames, with all their attendant directory operations; transactions must be authenticated; and files reveal internal structure and formatting.  
+
+ Just as Telnet faced down the challenge of connecting N terminal types with a single Network Virtual Terminal, FTP introduced an NVFS to bridge differing filing hierarchies, data types, file structures, and transfer modes.  
+
+ Though directory operations actually emerged fairly late in FTP's evolution (RFC 775), its three rules illustrate best how to manipulate a foreign filesystem without prior knowledge. First, pathnames are presumed relative by default, disambiguating requests. Second, replies can encode the current path in  machine-readable form, so clients just store an opaque string. Third, there's a command to move back "up" to the parent directory without knowing the local separator. Thus, NVFS avoided the rathole of  "Uniform Pathnames and the ARPANET virtual filesystem" (from a workshop agenda in RFC 309) -- leaving it to the URL working group twenty-five years later to mandate the '/'.  
+
+ File representation was the knottier part of NVFS and took years to sort out into two axes. First, the data TYPE could be text (with a choice of end-of-line and printer control codes) or binary (with a choice of logical byte sizes). Second, it could be STRUctured as a sequence of bytes, records, or pages (random-access, or "holey" files).  
+
+ Finally, file transmission bridges several on-the-wire representations of that data. Stream MODE is the simplest: one file per data connection using an escape byte (all-ones) to flag record boundaries. Block mode divides the transfer into chunks and allows insertion of restart markers, using yet different flags (including a new one for "suspect data", for corrupted magnetic tape segments).  Compressed mode offers run-length-encoding using a different escape byte (all-zeros), a blank or null filler byte depending on the TYPE, and reuses Block flags. 
+
+ Not surprisingly, all of these features are implemented somewhere on the wild reaches of the Net. Most tools, though, only support two permutations: ASCII without printing codes, or 8-bit bytes, as a continuous file, delivered in a simple stream. The failure of NVFS to adapt to a diversity of file types cannot be pinned on "Toy systems... too simple for many Real file systems" (RFC 944), but on network effects. When one permutation is universally available, every new host on the Internet gains the most utility from reinforcing that one, and layering its own idiosyncratic needs above it. In this case, the evolution of new data types,  compression modes, and bundled file structures occurred as new formats. FTP didn't learn about audio bitstreams, adaptive compression, or Macintosh resource- and data-forks; users learned about MIME types, gzip, and binhex.  
+     How: FTP Implementation 
+     Protocols, like children, should be seen and not heard. Their commands and codes are for automata alone, hidden behind the curtain of user interfaces. FTP, however, emerged from a hacker-run environment and user-oriented prototypes. It is a pioneering example of what became IETF canon: simultaneously human- and machine-readable. This duality justifies the separation of FTP into control and data channels and its reply code structure. 
+
+ As early as RFC 163, it was clear "This information could be supplied either embedded in the file transmission data stream, or supplied over a separate control connection." Furthermore, to allow humans to drive the protocol interpreter RFC 871 noted, "we needed an agreed-upon representation of the commands--not only spelling the names, but also defining the character set, indicating the ends of lines, and so on. In less time than it takes to write about, we realized we already had... Telnet." 
+
+ The commands in Table 2 are presented in the typical order of use. FTP sessions are stateful, modifying a single context for current authenticated user, pathname, and transfer parameters. Furthermore, particular command sequences have intermediate states requiring completion of the group: PASS may follow USER; RNTO must follow RNFR. Authentication, in particular, was generalized to multiple rounds of challenges and responses by RFC 2228. Command semantics can also vary by context; STAT varies when sent during a transfer and if it has an argument.  
+
+ Choreographing this ballet are the reply codes. RFC 141 already proposed "Upon abnormal termination... an identifying code to facilitate precise error recognition." Soon, there was a convention that even or odd major digits indicated success or failure (RFC 607). FTP automata, though, still had to deal with contradictory codes until "A Theory of Error Codes" was codified in RFC 640, leading to Tables 3 and 4. 
+
+ Duality reveals itself again in replies. Code numbers are for machines; the text is for humans. Some text is also machine-readable, like restart markers or pathnames; some replies can extend to multiple lines of human explanation. 
+
+ The actual transfers in turn migrated to data connections formatted for automata alone. Stream mode, in particular, requires a new connection for each file (TCP requires a few minutes before reopening the same port). The server can select a new PORT, or the client can select one with PASV. The latter has two uses: originally, it allowed a single FTP client to control two servers and directly transfer files between them; later it eased firewall implementations where all connections must be initiated from within. 
+     Why: FTP as a Transfer Protocol 
+     When FTP first emerged, it was  the  transfer protocol, the hammer used to deliver printer spool files, email messages, and public documents. Even though individual FTP sessions are one-to-one and synchronous, developers built systems on top of it which had the net effect of many-to-many asynchronous push delivery (email) and one-to-many asynchronous pull delivery (anonymous FTP archives). As we�ll see in the next installment of  Seventh Heaven , the interactive MAIL and batch-file MLFL commands to deliver to "mailbox files" (RFCs 385, 751) as well as extensions to mail to groups of recipients (RFC 743) and logged-in terminal users (RFC 737) spun off as Simple Mail Transfer Protocol (SMTP). 
+
+ Today, FTP is used primarily for maintaining archives of public files, and losing ground to HTTP even there (due, in part, to Web browsers that download FTP resources but refuse to upload!). FTP simply doesn�t maintain as much metadata: not creation date, not original location, not application data type. Its addressing structure is an opaque pathname at a host; at least URLs have internal path structure. Consider that in the context of mirroring or relocating information: FTP mirrors are an ad-hoc, user-driven abstraction; HTTP can send automatable redirection messages. Per-site metadata is also provided manually as    00index   files (a convention of the Archie indexing service), compared to automatable Web spiders.
+     Lessons FTP Teaches 
+     I posit the reason FTP has faded as glue-of-choice for distributed information systems is precisely the interactive session architecture which commended it in the early days. True, there has been a dramatic homogenization of what "file" means, obviating the need for much of FTP�s special modes; but I suspect it�s that programmers are more comfortable with the stateless request-response paradigm of email and the web than with the state machine in FTP. Statefulness means there can only be one transaction at a time; that each action takes on the "current" parameters set by earlier commands. That requires applications to carefully synchronize access to the transfer channel � more care than queuing request and reply messages that package together the complete context of each transaction. In Irvine�s WebSoft research group, we�d call that "representational state transfer," an architectural style inspiring our work on HTTP and the Distributed Authoring and Versioning extensions � a simpler, more evolvable framework for loosely-coupled systems. 
+
+    
+   
+    
+   RFC   
+ 
+   Date    
+ 
+   Title &amp; Comments    
+   
+  163   
+ 
+  19 May 1971   
+ 
+   Data Transfer Protocols    
+Report from the first public presentation of ARPANET 
+   
+  172   
+ 
+  23 Jun 1971   
+ 
+   A File Transfer Protocol     Derived from MIT's internal protocol in RFC 114 
+   
+  265   
+ 
+  17 Nov 1971   
+ 
+   The File Transfer Protocol    
+Control and data channels still fused together. Introduced Create cmd. 
+   
+  385   
+ 
+  18 Aug 1972   
+ 
+   Comments on the File Transfer Protocol    
+Introduced MAIL and MLFL commands, X prefix for extensions 
+   
+  542   
+ 
+  12 July 1973   
+ 
+   File Transfer Protocol    
+Separate control and data connections. A/k/a "new FTP" 
+   
+  640   
+ 
+  5 Jun 1974   
+ 
+   Revised FTP Reply Codes    
+Rationalized 354 and 454's ("FTP-1") and 542's. Also used in SMTP. 
+   
+  683   
+ 
+  3 Apr 1975   
+ 
+   FTPSRV - TENEX FTP Extensions For Paged Files    
+Proposed page structure as well as block &amp; compressed mode. 
+   
+  691   
+ 
+  28 May 1975   
+ 
+   One More Try on the FTP    or  Leaving Well Enough Alone  (686) 
+Argued against 9yz experimental codes and overspecific 'y' categories 
+   
+  776   
+ 
+  Dec 1980   
+ 
+   Directory-Oriented FTP Commands 
+   Folded into 959 as official (not X-) commands; later required by 1123  
+   
+  949   
+ 
+  Jul 1985   
+ 
+   FTP Unique-named Store Command     
+Folded into 959 as proposed; later required by 1123 
+   
+  959   
+ 
+  Oct 1985   
+ 
+   File Transfer Protocol (FTP)    
+Eventually approved as Internet Standard 9 
+   
+  1123   
+ 
+  Oct 1989   
+ 
+   Host Requirements -- Applications and Services    
+Expanded the minimal FTP requirements; 1127 raised future work 
+   
+  1415   
+ 
+  Jan 1993   
+ 
+   FTP-FTAM Gateway Specifications 
+   Proposed Standard for ISO File Transfer, Access, and Manipulation  
+   
+  1579   
+ 
+  Feb 1994   
+ 
+   Firewall-Friendly FTP    
+Relying on passive mode behind firewalls eases packet filtering 
+   
+  1635   
+ 
+  May 1994   
+ 
+   How to Use Anonymous FTP    Current practices to find, compress, bundle, and encode files 
+   
+  2228   
+ 
+  Oct 1997   
+ 
+   FTP Security Extensions    
+Hooks for authentication challenges, integrity checks, confidentiality 
+    Table 1. Milestones in the fossil record of FTP. Many of the early RFCs -- nearly half of the 44 RFCs on record -- are not online (all of these are, though). 
+   
+
+    
+      
+ 
+   959    
+ 
+   1123    
+ 
+   CMND    
+ 
+   Name    
+ 
+   Comment    
+   
+  Access Control   
+ 
+  *   
+ 
+  *   
+ 
+  USER   
+ 
+  User Name   
+ 
+  Security hole: 530 vs 332 reply code reveals whether user exists   
+     
+ 
+  *   
+ 
+  PASS   
+ 
+  Password   
+ 
+  Client responsible for masking typeout; sent in the clear   
+     
+ 
+  *   
+ 
+  ACCT   
+ 
+  Account   
+ 
+  Certain OSes have additional access specifiers    
+     
+   
+ 
+  REIN   
+ 
+  Reinitialize   
+ 
+  Reset all authentication and parameters; pending xfers complete   
+   
+  Session   
+   
+   
+ 
+  REST   
+ 
+  Restart   
+ 
+  Can send a marker before any Block or Compressed data xfer   
+     
+ 
+  *   
+ 
+  ABOR   
+ 
+  Abort   
+ 
+  Delivered with Telnet IP / TCP Urgent flag.    
+     
+   
+ 
+  SITE   
+ 
+  Site Parameters   
+ 
+  Hook for any private parameters on the session. Used in FTAM.   
+     
+ 
+  *   
+ 
+  SYST   
+ 
+  System   
+ 
+  Return the server's system type (from an IANA list)   
+     
+ 
+  *   
+ 
+  STAT   
+ 
+  Status   
+ 
+  Variably returns progress, file listing (on control), or server status   
+   
+  *   
+ 
+  *   
+ 
+  QUIT   
+ 
+  Quit   
+ 
+  RFC 1123 also added a server-side timeout (at least 5 minutes)   
+   
+  Transfer Parameters   
+ 
+  *   
+ 
+  *   
+ 
+  PORT   
+ 
+  Data Port   
+ 
+  h1,h2,h3,h4,p1,p2 :  four IP host octets, two TCP port octets   
+     
+ 
+  *   
+ 
+  PASV   
+ 
+  Passive   
+ 
+  Server listens on port in reply; client initiates active open instead   
+   
+  *   
+ 
+  *   
+ 
+  TYPE   
+ 
+  Data Type   
+ 
+  {  A  SCII,  E BCDIC}  ´ 
+ {  N  on-print,  T elnet,  C arriage Control},  I mage,  L ocal [ #bits/logical byte]   
+   
+  *   
+ 
+  *   
+ 
+  STRU   
+ 
+  File Structure   
+ 
+    F    ile,  R ecord, or  P age (deprecated) 
+   
+  *   
+ 
+  *   
+ 
+  MODE   
+ 
+  Transfer Mode   
+ 
+    S    tream,  B lock, or  C ompressed 
+   
+  Directory Navigation   
+ 
+      
+ 
+  *   
+ 
+  CWD   
+ 
+  Change Dir   
+ 
+  Takes absolute or relative path. Does not return current pathname   
+     
+ 
+  *   
+ 
+  CDUP   
+ 
+  Change to Parent    
+ 
+  On any hierarchical system, moves up (hides variance in separator)   
+     
+ 
+  *   
+ 
+  PWD   
+ 
+  Print Working    
+ 
+  Returns current pathname, quote-escaped   
+     
+ 
+  *   
+ 
+  MKD   
+ 
+  Make Dir   
+ 
+  Presumed-relative argument. New path quote-escaped in reply   
+     
+ 
+  *   
+ 
+  RMD   
+ 
+  Remove Dir   
+ 
+  Presumed-relative argument. No path info in reply   
+     
+   
+ 
+  SMNT   
+ 
+  Structure Mount   
+ 
+  Not recommended today; was for tapes &amp;c   
+   
+  FTP Service   
+ 
+  *   
+ 
+  *    
+ 
+  RETR   
+ 
+  Retrieve   
+ 
+  Takes a pathname argument, relative or absolute   
+   
+  *    
+ 
+  *   
+ 
+  STOR   
+ 
+  Store   
+ 
+  Create file, or replace contents if path exists   
+     
+   
+ 
+  STOU   
+ 
+  Store Unique   
+ 
+  Server creates unique file name in the current directory   
+     
+ 
+  *   
+ 
+  APPE   
+ 
+  Append   
+ 
+  Create file, or append contents if path exists   
+     
+ 
+  *   
+ 
+  DELE   
+ 
+  Delete   
+ 
+  Confirmation, if any, should be at the client-side   
+     
+   
+ 
+  ALLO   
+ 
+  Allocate   
+ 
+  &lt;max_total&gt; [ " R " &lt;max_block&gt;] in decimal bytes (historic)   
+     
+ 
+  *   
+ 
+  LIST   
+ 
+  List Files   
+ 
+  Human-readable listing provided on data connection   
+     
+ 
+  *   
+ 
+  NLST   
+ 
+  Name List   
+ 
+  Machine-readable list on data conn; just files; for mget   
+     
+ 
+  *   
+ 
+  RNFR   
+ 
+  Rename   
+ 
+  350 reply should be followed by RNTO; bad servers may require it   
+    Table 2. A summary of the commands in the FTP standard. RFC 959 originally required a minimal set; 1123 expanded the basic set (which also includes HELP and NOOP). 
+
+   
+    
+   
+   Digit    
+ 
+   FTP Reply Type    
+ 
+   HTTP Reply Type    
+   
+  1yz   
+ 
+  Positive Preliminary   
+ 
+  Informational   
+   
+  2yz   
+ 
+  Positive Completion   
+ 
+  Successful   
+   
+  3yz   
+ 
+  Positive Intermediate   
+ 
+  Redirection   
+   
+  4yz   
+ 
+  Transient Negative   
+ 
+  Client Error   
+   
+  5yz   
+ 
+  Permanent Negative   
+ 
+  Server Error   
+   
+  6yz   
+ 
+  Secured Reply   
+   
+     Table 3. compares the definition of error categories in their earliest and more modern incarnations. The 6yz class was defined recently in the FTP Security Extensions.  
+  
+   
+   Digit    
+ 
+   Reply Subtype    
+   
+  x0z   
+ 
+  Syntax   
+   
+  x1z   
+ 
+  Informational   
+   
+  x2z   
+ 
+  Connection   
+   
+  x3z   
+ 
+  Authentication/Accounting   
+   
+  x4z   
+ 
+  Unallocated   
+   
+  x5z   
+ 
+  Filesystem   
+     Table 4. The second digit categorizes an FTP reply code; HTTP does not assign any meanings. 
+  
+   </body> 

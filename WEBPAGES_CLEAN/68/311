@@ -1,0 +1,54 @@
+ <body>
+ Proof that level 9 is unreachable 
+Assign to a peg on lattice point ( x,y ) the value
+ V ( x,y ) = θ min{ y,c -| x |} ,
+ 
+where θ is the positive root of θ 2 =θ+1
+(≈ 1.618) and  c  is a positive integer. 
+ 
+Initially, the sum  S ( c ) of the value of all pegs is the
+sum of  V ( x,y ) over the lower half plane,
+ which is
+(1+2 c )θ/(θ-1) + 4θ/(θ-1) 2 . 
+This is shown as follows.
+ 
+   
+ S  = ∑  y ≤0  ∑  x   V ( x,y )
+        = ∑  y ≤0  [   V (0, y ) + 2 ∑  x ≥1  V ( x,y )  ]      
+        = ∑  y ≤0  [  θ  y   + 2 ∑ 1≤ x ≤ c - y   θ  y   + 2 ∑  x ≥ c - y +1  θ  c - x   ]      
+        = ∑  y ≤0  θ  y   [ 1 + 2( c - y ) ]  + 2 ∑  y ≤0  θ  y  /(θ-1)     
+        =  [ 1 + 2 c  + 2/(θ-1) ] ∑  y ≤0  θ  y   - 2 ∑  y ≤0  y θ  y       
+Note that ∑  y ≤0 [- y θ  y  ] = ∑  i ≥0  i θ - i   =  ∑ 0≤ j≤i   θ - i   = ∑  j ≥0  ∑  i≥j   θ - i   = ∑  j ≥0  θ - j   θ/(θ-1)     
+So,  S  =  [ 1 + 2 c  + 2/(θ-1) ]  θ/(θ-1) + 2 θ/(θ-1) 2      
+        = (1 + 2 c )θ/(θ-1) + 4 θ/(θ-1) 2   
+ 
+The net gain to  S  when jumping with a peg of value  v  is, at most,
+ v θ 2  -  v θ -  v  = 0. 
+ 
+Therefore, the total value of all pegs cannot exceed its initial value.
+  
+Consider  c  = 9.    S (9)=66.687+. 
+Since the value of a peg at (0,9) is θ 9  &gt; 76,
+ 
+it follows that we cannot get a peg to the point (0,9). 
+ 
+If we could get a peg to any point on or above the line
+ y  = 9
+ 
+then we could get one to (0,9) by stopping when
+some peg reaches a point ( x ,9),
+ 
+and then retracing all the jumps performed shifted left by  x ,
+or shifted right by - x  when  x  is negative.
+  
+Note that the same argument can be used to show that Conway's problem,
+in which diagonal jumps are not permitted cannot admit a finite sequence
+of moves leading to a peg at level 5, by using the potential function
+ V ( x,y ) = θ  y -| x | . 
+In this case, the sum of  V ( x,y ) over the lower half plane
+is  S  = (θ 2 +θ)/(θ-1) 2 ,
+and the value of a single peg at (0,5) is θ 5  which
+equals  S . 
+This allows for no other pegs to co-exist, an impossibility to achieve
+within a finite number of steps.
+ </body> 

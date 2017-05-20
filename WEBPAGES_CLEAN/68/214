@@ -1,0 +1,67 @@
+ 22.4 OEUnaryPredicate<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.3 Functors have State 
+ Up:   22. Predicate Functors 
+ Next:   22.5 Call-Backs 
+   
+
+
+  
+22.4 OEUnaryPredicate 
+ 
+
+ 
+In OEChem, we define a very limited set of functors called the
+ OEUnaryPredicate  and  OEBinaryPredicate .  These two classes
+are abstract base classes which define interfaces with the following
+restrictions.  First, they only return boolean.  Second, they must define
+an  operator()  which is a const function ( i.e.  - doesn't change
+the state of the predicate).  Third, the unary predicate is a template of 1
+argument ArgType whose  operator()  must take a single argument of
+type const &amp; to ArgType.  Similarly, the binary predicate is a template of
+2 arguments (ArgType1, ArgType2) whose  operator()  must take two
+arguments, one of const &amp; to ArgType1 and another of const &amp; to ArgType2.
+Fourth, these predicates must define a virtual constructor function
+( CreateCopy ) which returns a pointer to a copy of the predicate.
+This is useful for generating copies of a functor which has been passed
+into a function as a reference to the  OEUnaryPredicate  base class.
+Fifth, these predicates define  Eval  functions which are wrappers
+around  operator()  and effectively make  operator()  a virtual
+function.
+
+  
+While these restrictions may seem limiting at first glance, they actually
+produce a set of reliable behaviors which are quite useful.  Unary
+predicates are used throughout OEChem as filters on the atoms, bonds,
+conformers, and molecules a programmer is interested in examining via
+iterator interfaces.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   22.3 Functors have State 
+ Up:   22. Predicate Functors 
+ Next:   22.5 Call-Backs 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

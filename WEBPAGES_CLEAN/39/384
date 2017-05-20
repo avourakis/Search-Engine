@@ -1,0 +1,39 @@
+ Description of JTsampleGrid<body>
+  
+  Home  &gt;   MRFLearning  &gt; JTsampleGrid.m 
+
+
+
+ JTsampleGrid
+ 
+
+   PURPOSE     
+  Exact sampling for rectangular grid boltzmann m/c's using junction tree.</strong> 
+
+   SYNOPSIS     
+  function samples = JTsampleGrid(model,numSamples,rep01,varargin) </strong> 
+
+   DESCRIPTION     
+   Exact sampling for rectangular grid boltzmann m/c's using junction tree.
+ INPUTS: 
+           model     :  struct array with fields
+                       numRows: # rows in the grid
+                       numcols: # columns in the grid
+                       wHor   : (numRows X numCols-1) matrix of horizontal edge weights
+                       wVer   : (numRows-1 X numCols) matrix of vertical edge weigths
+                       alpha  : (numRows X numCols ) matrix of node biases
+          numSamples : # samples to generate
+          rep01      : 1 if nodes take values from {0,1} and
+                       0 if nodes take values from {-1,+1}
+          &lt;sNodes&gt;   : optional argument if you already have the output from the junction
+                       tree for this model - the sNode struct (see runJTgrid.m)
+ RETURNS:
+          samples    : (numSamples X (numRows*numCols)) matrix of data samples  
+
+
+   CROSS-REFERENCE INFORMATION     
+This function calls:
+   getNeighbors 	Get neighbors of each node in an (R X C) grid   runJTgrid 	Junction Tree Inference for a rectangular grid Boltzmann m/c  
+This function is called by:
+    Generated on Wed 28-Sep-2005 04:10:02 by   m2html </strong> © 2003 
+</body> 

@@ -1,0 +1,503 @@
+   
+  Interface Foundation.Objv.ObjectClass
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Interface Foundation.Objv.ObjectClass
+ 
+   public interface  ObjectClass 
+    extends  Object 
+    extends  Runnable 
+       
+ 
+    
+      None  
+     
+        One  
+     
+        StaticFalse  
+     
+   
+    
+      AddInheritanceMessage  (TMWMessage)
+     
+        AddInheritanceVariable  (TMWStateVariable)
+     
+        AddInternalHandler  (TMWMessageHandler)
+     
+        AddInternalMessage  (TMWMessage)
+     
+        AddInternalVariable  (TMWStateVariable)
+     
+        AddOperationalMessage  (TMWMessage)
+     
+        Assign  (String, String)
+     
+        Assign  (String, Vector)
+     
+        DeleteInstance  ()
+     
+        FTFull  ()
+     
+        FTFull  (boolean)
+     
+        FTFullAdd  (String)
+     
+        FTFullAddList  (Vector)
+     
+        FTFullRemove  (String)
+     
+        FTFullRemoveList  (Vector)
+     
+        FTOff  ()
+     
+        FTOn  ()
+     
+        FTSolo  ()
+     
+        FTSoloAdd  (String)
+     
+        FTSoloAddList  (Vector)
+     
+        FTSoloRemove  (String)
+     
+        FTSoloRemoveList  (Vector)
+     
+        GetChildren  ()
+     
+        GetClassName  ()
+     
+        GetId  ()
+     
+        GetInheritanceMessages  ()
+     
+        GetInheritanceVariables  ()
+     
+        GetInstances  ()
+     
+        GetInternalHandlers  ()
+     
+        GetInternalMessages  ()
+     
+        GetInternalVariables  ()
+     
+        GetName  ()
+     
+        GetOperationalMessages  ()
+     
+        GetParent  ()
+     
+        GetState  (String)
+     
+        GetStateVector  (String)
+     
+        InClass  (String)
+     
+        InheritedSend  (String, Vector)
+     
+        InitName  (String)
+     
+        InitializedInstance  (Vector, Vector)
+     
+        IsInstance  ()
+     
+        IsParent  (Integer)
+     
+        Load  (String, Integer)
+     
+        Lock  ()
+     
+        Lock  (String)
+     
+        NewInstance  (Vector, Vector)
+     
+        NewObject  ()
+     
+        NewObject  (Vector)
+     
+        NewObject  (Vector, Vector)
+     
+        RemoveInheritanceMessage  (String)
+     
+        RemoveInheritanceVariable  (String)
+     
+        RemoveInternalHandler  (String)
+     
+        RemoveInternalMessage  (String)
+     
+        RemoveInternalVariable  (String)
+     
+        RemoveOperationalMessage  (String)
+     
+        Retrieve  (String)
+     
+        Retrieve  (String, boolean)
+     
+        Send  (String, Vector)
+     
+        SetClassName  (String)
+     
+        SetName  (String)
+     
+        Store  ()
+     
+        Unlock  ()
+     
+        Unlock  (String)
+     
+        run  ()
+     
+    
+ 
+    
+   
+ None 
+ 
+  public final static  Integer  None
+ 
+   
+ One 
+ 
+  public final static  Integer  One
+ 
+   
+ StaticFalse 
+ 
+  public final static  Integer  StaticFalse
+ 
+  
+ 
+    
+   
+  GetId  
+ 
+  public abstract  Integer  GetId()
+ 
+   
+  GetClassName  
+ 
+  public abstract  String  GetClassName()
+ 
+   
+  GetParent  
+ 
+  public abstract  ObjectClass  GetParent()
+ 
+   
+  IsParent  
+ 
+  public abstract boolean IsParent( Integer  Obj)
+ 
+   
+  IsInstance  
+ 
+  public abstract boolean IsInstance()
+ 
+   
+  InClass  
+ 
+  public abstract boolean InClass( String  ClassName)
+ 
+   
+  SetName  
+ 
+  public abstract void SetName( String  ObjectName)
+ 
+   
+  GetName  
+ 
+  public abstract  String  GetName()
+ 
+   
+  GetState  
+ 
+  public abstract  String  GetState( String  VarName)
+ 
+   
+  GetStateVector  
+ 
+  public abstract  Vector  GetStateVector( String  VarName)
+ 
+   
+  GetOperationalMessages  
+ 
+  public abstract  Hashtable  GetOperationalMessages()
+ 
+   
+  GetInheritanceMessages  
+ 
+  public abstract  Hashtable  GetInheritanceMessages()
+ 
+   
+  GetInheritanceVariables  
+ 
+  public abstract  Hashtable  GetInheritanceVariables()
+ 
+   
+  GetInternalMessages  
+ 
+  public abstract  Hashtable  GetInternalMessages()
+ 
+   
+  GetInternalVariables  
+ 
+  public abstract  Hashtable  GetInternalVariables()
+ 
+   
+  GetInternalHandlers  
+ 
+  public abstract  Hashtable  GetInternalHandlers()
+ 
+   
+  run  
+ 
+  public abstract void run()
+ 
+   
+  Lock  
+ 
+  public abstract void Lock()
+ 
+   
+  Unlock  
+ 
+  public abstract void Unlock()
+ 
+   
+  Lock  
+ 
+  public abstract void Lock( String  VarName)
+ 
+   
+  Unlock  
+ 
+  public abstract void Unlock( String  VarName)
+ 
+   
+  FTSolo  
+ 
+  public abstract boolean FTSolo()
+ 
+   
+  FTFull  
+ 
+  public abstract boolean FTFull()
+ 
+   
+  FTOn  
+ 
+  public abstract void FTOn()
+ 
+   
+  FTOff  
+ 
+  public abstract void FTOff()
+ 
+   
+  FTSoloAdd  
+ 
+  public abstract void FTSoloAdd( String  Symbol)
+ 
+   
+  FTSoloRemove  
+ 
+  public abstract void FTSoloRemove( String  Symbol)
+ 
+   
+  FTSoloAddList  
+ 
+  public abstract void FTSoloAddList( Vector  Symbols)
+ 
+   
+  FTSoloRemoveList  
+ 
+  public abstract void FTSoloRemoveList( Vector  Symbols)
+ 
+   
+  FTFull  
+ 
+  public abstract void FTFull(boolean TraceAll)
+ 
+   
+  FTFullAdd  
+ 
+  public abstract void FTFullAdd( String  Symbol)
+ 
+   
+  FTFullRemove  
+ 
+  public abstract void FTFullRemove( String  Symbol)
+ 
+   
+  FTFullAddList  
+ 
+  public abstract void FTFullAddList( Vector  Symbols)
+ 
+   
+  FTFullRemoveList  
+ 
+  public abstract void FTFullRemoveList( Vector  Symbols)
+ 
+   
+  Retrieve  
+ 
+  public abstract  String  Retrieve( String  VarName)
+ 
+   
+  Retrieve  
+ 
+  public abstract  Vector  Retrieve( String  VarName,
+                                  boolean IsList)
+ 
+   
+  Assign  
+ 
+  public abstract void Assign( String  VarName,
+                               String  Val)
+ 
+   
+  Assign  
+ 
+  public abstract void Assign( String  VarName,
+                               Vector  Vals)
+ 
+   
+  InitName  
+ 
+  public abstract void InitName( String  Name)
+ 
+   
+  SetClassName  
+ 
+  public abstract void SetClassName( String  Name)
+ 
+   
+  Send  
+ 
+  public abstract  Vector  Send( String  Mesg,
+                               Vector  Arguments)
+ 
+   
+  InheritedSend  
+ 
+  public abstract  Vector  InheritedSend( String  Mesg,
+                                        Vector  Arguments)
+ 
+   
+  AddOperationalMessage  
+ 
+  public abstract void AddOperationalMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveOperationalMessage  
+ 
+  public abstract void RemoveOperationalMessage( String  MesgName)
+ 
+   
+  AddInheritanceMessage  
+ 
+  public abstract void AddInheritanceMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveInheritanceMessage  
+ 
+  public abstract void RemoveInheritanceMessage( String  MesgName)
+ 
+   
+  AddInheritanceVariable  
+ 
+  public abstract void AddInheritanceVariable( TMWStateVariable  Var)
+ 
+   
+  RemoveInheritanceVariable  
+ 
+  public abstract void RemoveInheritanceVariable( String  VarName)
+ 
+   
+  AddInternalMessage  
+ 
+  public abstract void AddInternalMessage( TMWMessage  Mesg)
+ 
+   
+  RemoveInternalMessage  
+ 
+  public abstract void RemoveInternalMessage( String  MesgName)
+ 
+   
+  AddInternalVariable  
+ 
+  public abstract void AddInternalVariable( TMWStateVariable  Var)
+ 
+   
+  RemoveInternalVariable  
+ 
+  public abstract void RemoveInternalVariable( String  VarName)
+ 
+   
+  AddInternalHandler  
+ 
+  public abstract void AddInternalHandler( TMWMessageHandler  Handler)
+ 
+   
+  RemoveInternalHandler  
+ 
+  public abstract void RemoveInternalHandler( String  HandlerName)
+ 
+   
+  NewInstance  
+ 
+  public abstract  ObjectClass  NewInstance( Vector  Paramters,
+                                           Vector  Values)
+ 
+   
+  InitializedInstance  
+ 
+  public abstract  ObjectClass  InitializedInstance( Vector  Parameters,
+                                                   Vector  Values)
+ 
+   
+  GetChildren  
+ 
+  public abstract  Hashtable  GetChildren()
+ 
+   
+  GetInstances  
+ 
+  public abstract  Hashtable  GetInstances()
+ 
+   
+  DeleteInstance  
+ 
+  public abstract void DeleteInstance()
+ 
+   
+  NewObject  
+ 
+  public abstract  ObjectClass  NewObject()
+ 
+   
+  NewObject  
+ 
+  public abstract  ObjectClass  NewObject( Vector  Vars)
+ 
+   
+  NewObject  
+ 
+  public abstract  ObjectClass  NewObject( Vector  Vars,
+                                         Vector  Vals)
+ 
+   
+  Store  
+ 
+  public abstract boolean Store()
+ 
+   
+  Load  
+ 
+  public abstract boolean Load( String  Name,
+                                Integer  Id)
+ 
+  
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

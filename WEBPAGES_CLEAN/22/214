@@ -1,0 +1,221 @@
+ Informatics 102 Spring 2012, Assignment #1: Aspect-Oriented Programming Using AspectJ<body>
+
+ 
+
+ 
+Informatics 102 Spring 2012 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Lab Manual  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ Informatics 102 Spring 2012 
+   Assignment #1:  Aspect-Oriented Programming Using AspectJ  
+   
+ 
+
+ 
+
+  Due date and time:   Tuesday, April 17, 11:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ As object-oriented programming (OOP) has become a predominant approach used in the design and implementation of software systems, and as software developers have become increasingly adept at using it to keep their designs simpler and more flexible, the weaknesses of OOP have become ever clearer.  While OOP provides mechanisms like classes, inheritance, and polymorphism to help us follow the principle of  separation of concerns , not all concerns can be separated using these language features.  In particular, some concerns are what we call  crosscutting concerns , in that they tend to affect many parts of a class or program, requiring code to be added to all affected areas, quite often duplicated verbatim.  One of the central tenets of good software engineering is  not  duplicating code, yet code duplication often arises as the only possible solution in OOP when we have concerns that crosscut our designs. 
+
+ Aspect-oriented programming (AOP) arose as a solution to the problem of separating crosscutting concerns, allowing programmers to encapsulate crosscutting concerns into constructs called  aspects .  An aspect contains three things: (1) a specification of what parts of a program are to be affected by the aspect, (2) a specification of what changes should be introduced to those parts of the program, and (3) additional code that supports the feature, including changes to the static structure of existing classes (e.g., introducing new methods, fields, or inheritance relationships) as well as methods and fields within the aspect itself. 
+
+ There is a wide variety of AOP languages and tools available, which have gradually made their way out of research and into professional and open-source software development projects.  One of those languages is AspectJ, which is a natural choice for us, given that it is based on Java.  AspectJ is an aspect-oriented programming language that extends Java by adding aspects to it.  This assignment will provide you with experience in defining your own aspects and applying them in AspectJ programs.  It will also demonstrate how the Eclipse IDE can be used for languages other than Java. 
+
+ 
+
+ 
+
+  Getting started 
+
+ Downloading and installing Eclipse and the AspectJ Development Tools (AJDT) plug-in 
+
+ Before proceeding with this assignment, be sure that you've completed  Assignment #0 , which led you through the steps of downloading and installing necessary software on your machine.  Note that Steps 3 and 4 of  Assignment #0  are applicable even if you're working on the machines in the ICS labs — this is especially true for Step 4, the downloading of the AspectJ Development Tools (AJDT) plug-in, which you may have to execute each time you sit at a new machine in the labs (if no one has executed the instructions on the machine previously). 
+
+ Creating AspectJ projects in Eclipse 
+
+ When beginning a new Eclipse project in which you plan to use AspectJ, it's important that you create an  AspectJ Project  rather than a  Java Project .  This will enable the compiler to compile aspects as well as classes, and also will link your project to the necessary run-time support libraries that are required by AspectJ. 
+
+ Creating an AspectJ project is much like creating a Java project.  In the  Package Explorer , right-click in an empty area and select  New  (or, alternatively, from the  File  menu, select  New ) and then select  AspectJ Project  from the ensuing menu.  If  AspectJ Project  does not appear on the menu, select  Other , which will bring up a dialog titled  New ; you'll find  AspectJ Project  in the list in a folder called  AspectJ . 
+
+ You'll now see a dialog box that's much like the one you see when you create a new Java project. 
+
+   
+
+ Fill in the project name, then specify the other settings as you see in the screenshot above (which should be the defaults, if you use the provided Informatics 102 Eclipse workspace), then click  Finish .  You'll now see your new project appear in the  Package Explorer  in the Eclipse window. 
+
+ The first time you create an AspectJ project, you may be asked if you want to turn on something called the  JDT Weaving Service  within Eclipse.  (Recent versions of the AJDT plug-in should do this by default, but you may still be asked.)  This service is optional — it can improve the experience of things like searching through your code base in the presence of aspects, at the cost of some performance when Eclipse runs.  It's up to you whether you want to run the service or not; it will not dramatically affect your work on this assignment. 
+
+ Creating new classes and aspects in AspectJ projects 
+
+ AspectJ projects in Eclipse behave just like their Java counterparts in most ways.  The primary difference is that they support two things: (1) the creation and manipulation of aspects, and (2) some user interface tools, such as the Cross References tab, that help visualize the effect of various aspects on your program. 
+
+ As you begin your work, one thing you'll need to be able to do is create new aspects.  To create an aspect, right-click on your project in  Package Explorer , select  New , and then select  Aspect  from the ensuing menu.  If  Aspect  does not appear on the menu, select  Other  instead; you'll find  Aspect  in the list in a folder called  AspectJ . 
+
+ You'll now see a dialog box that's much like the one you see when you create a new class in a Java project. 
+
+   
+
+ If you do not opt to use packages, you can fill in the  Name  field and leave the others as-is.  If you're using packages, you'll also want to fill in the  Package  field. 
+
+ Creating, compiling, and running a project 
+
+ Create a new AspectJ project and import all of the files from the Tracing  code example  that we did in lecture.  (You can import files into an AspectJ project the same way you import them into a Java project.) 
+
+ Eclipse will compile your project every time you save any of its files, as it does for Java projects.  Running your program requires right-clicking on the file containing your  main( )  method, selecting  Run As , and then selecting  AspectJ/Java Application .  (Do not select  Java Application  as you would for a Java program.) 
+
+ In the current version of Eclipse, there appears to be a bug that causes the Java bytecode verifier to fail in some cases when using AspectJ.  You may see an error message like this one: 
+
+ 
+Exception in thread "main" java.lang.VerifyError: Expecting a stackmap frame at branch target 24 in method Main.()V at offset 4
+	at java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.lang.Class.privateGetDeclaredMethods(Unknown Source)
+	at java.lang.Class.getMethod0(Unknown Source)
+	at java.lang.Class.getMethod(Unknown Source)
+	at sun.launcher.LauncherHelper.getMainMethod(Unknown Source)
+	at sun.launcher.LauncherHelper.checkAndLoadMain(Unknown Source)
+ 
+
+ If you do, there is a workaround for the problem.  Apply Solution 2 from  this article  (i.e., change the "Default VM Arguments" for your Java Runtime Environment to include  -XX:-UseSplitVerifier ). 
+
+ Experimenting with the Tracing aspect 
+
+ First, understand that this program can run either with or without the Tracing aspect in place.  It either performs tracing of method calls (when the Tracing aspect is included) or not (when it's not).  Including or excluding an aspect is as simple as this in Eclipse: 
+
+  Right-click the Tracing.aj file in Package Explorer. 
+   Select  Build Path  on the popup menu, then either select  Exclude  to exclude the aspect from your program or  Include  to include it.  In this way, you can toggle individual aspects. 
+  Try excluding and including the Tracing aspect; run the program both ways and see how the output differs. 
+
+ Next, spend a few minutes making some modifications to the Tracing aspect to help you become more comfortable with AspectJ.  For example: 
+
+  See what happens when you remove  !within(Tracing)  from the  allMethodBodies( )  pointcut, then recompile and run the program. 
+   Rewrite the pointcut so that it will not trace any methods in the Y class, but will continue to trace the others. 
+   Rewrite the pointcut so that it also will not trace any method in any class if the method's name begins with the word  get , but will continue to trace the others. 
+  Once you have successfully made a few modifications to the Tracing aspect, you'll be ready to proceed with the next part of the assignment. 
+
+ 
+
+ 
+
+  Part 1 (30 points) 
+
+ For this part of the assignment, I'd like you to write an aspect that counts a few different kinds of method calls in a Java program.  Your aspect should meet the following requirements: 
+
+  The aspect should maintain the following counts:
+      calls to public methods 
+       calls to private methods 
+       calls to protected methods 
+       calls to package-private methods (i.e., those that are not public, private, or protected) 
+       calls to static methods 
+       calls to non-static methods 
+       calls to all methods 
+     
+    (Note that these sets of methods are not mutually exclusive; a method can, for example, be public and non-static.) 
+   Count every method call, excluding the main( ) method that began the program.  Be sure to count method calls made within the executions of other methods.  (So, if we call a public method x( ) that calls a public method y( ) that calls a public method z( ), that should add 3 to the count of calls to public methods and 3 to the count of calls to all methods.) 
+   Do not include constructors in the counts. 
+   Include calls to methods in the Java library, but don't include the method calls that the library methods make to other library methods.  (This is good news; it means that I'm not asking you to try to weave advice into existing Java library code.) 
+   If the advice in your aspect calls any methods, do not include these method calls in the count. 
+   As the program is ending, print a message to System.out that indicates the value of each of your counts, in a simple tabular form.  The message should appear after any other output generated by the program. 
+  Your aspect should not be specific to a particular program; it should be possible to weave it into any existing Java program.  You may not assume that the program will have only one "main" method (i.e., only one method with the signature  public static void main(String[] args) ), nor that "main" methods will not call each other, but the output showing the method calls counts should only appear when the last "main" method is returning. 
+
+ You may assume that the aspect will be compiled together with all of the source code of the program it modifies.  However, the other parts of the program must not be dependent upon the contents of the aspect.  It should be possible to compile a program with or without the aspect; other than the method counting feature, the program's behavior should not change as a result of include the aspect or leaving it out. 
+
+ 
+
+ 
+
+  Part 2 (40 points) 
+
+ The problem 
+
+ Suppose that you're leading a very large open source project, consisting of many interrelated programs and tools.  Though you don't intend for your group to charge money for the software, you hope that a business can eventually be built around consulting and support services.  (There are now a number of successful business like this.)  With an eye toward a commercially-friendly future, it becomes important for your software to be professionally acceptable.  But with a large number of developers and thousands of lines of new and modified code streaming into the project on a weekly basis, it's difficult for any single person to keep careful track of all of it. 
+
+ At present, all of your projects send logging output to the console (System.out); the output can then be redirected at the operating system level to files or other destinations.  As a first step toward ensuring that the professionalism of your software can be counted on now and in the future, you decide to mandate that any output sent to the console by any of your projects is inoffensive to your potential customers; any offensive words should be eliminated or, at least, replaced.  (You won't build a list of offensive words yourself, since it's difficult for one person to imagine what might be considered offensive; instead, you'll poll your contributors, customers, and lawyers to get an idea of what words should be avoided.) 
+
+ After considering the options, you decide that you should write an aspect to implement this new functionality, which will allow you to easily weave it into all of your projects automatically, and also to opt to leave it out if you so choose. 
+
+ Your aspect should meet the following requirements: 
+
+  Every time a String or an Object is printed to  System.out  using either  System.out.print ,  System.out.println , or  System.out.format , the output should be checked to see if any "offensive" words have been included in it.  Any offensive words should be replaced by a sequence of  #  characters equal to the length of the offensive word.  The new text, with any occurrences of offensive words replaced by  #  characters, should then be printed to the console.  Make sure that the format of the output (spacing, newlines, etc.) otherwise will not change. 
+   We have provided a skeletal list of "offensive" words in a class called  OffensiveWords .  It consists of one static method called  getOffensiveWords( ) , which returns a list of the offensive words.  Your aspect must use this class to figure out what words are offensive, so that we can easily plug in our own set of offensive words to use in testing your aspect. 
+   Offensive words are case-insensitive, meaning that if "alex" is included in the list of offensive words, all of these words (and many other variations that I didn't list) are considered offensive:  alex ,  Alex ,  ALEX ,  aLeX . 
+   If the output contains an offensive word within a longer word, the offensive portion of the word should be filtered.  For example, if "base" is in the offensive words list,  Baseball  should appear on the output as  ####ball ,  database  should appear as  data#### , and  databases  should appear as  data####s . 
+   In this version, output sent to other output devices, including files, network connections, and even PrintStreams other than System.out should not be filtered in this way.  Furthermore, output sent to System.out by other means than  System.out.print ,  System..out.println , or  System.out.format  need not be filtered. 
+   Filtering offensive words built out of more than one call to  System.out.print ,  System.out.println , or  System.out.format  is not required, but you can do it if you'd like an additional challenge.  For example, if "alex" is in the offensive word list, it's your choice whether you filter it out:
+ 
+    System.out.print("al");
+    System.out.println("ex");
+ 
+   
+  As in Part 1, your aspect should not be specific to a particular program.  It should be possible to weave it into any existing Java program without the program being otherwise dependent upon it. 
+
+ 
+
+ 
+
+  Part 3 (30 points) 
+
+ Background 
+
+ Aspects aren't used only for concerns that crosscut entire programs.  They also allow you to separate behaviors from a single class.  We saw more than one  code example  in lecture where we did this (e.g., the Lineup example), where we injected specific behavior into just one class, rather than general behavior into many.  This technique may seem unimportant on its face, but it does have at least a couple of benefits: (1) simplifying a class by pulling complex features into an aspect, and (2) allowing features to be included or left out, by including or leaving the aspect out when compiling the program. 
+
+ Suppose you've written a program that manages information about the payroll for small businesses.  In your program, there is a class called Person.  Additionally, there are different kinds of people in your system (e.g., employees, managers, contractors, etc.), but their details aren't important in this example.  Since your payroll program is intended to manage only small numbers of people, it stores a collection of Person objects in an ArrayList&lt;Person&gt;, with lookups done using linear searches based on first and/or last names. 
+
+ Like any good entrepreneur, you've realized that if you could rewrite portions of your software, you might be able to open up new markets for it, such as large companies or governments.  However, you'd still like to sell the limited version of the program cheaply to small businesses, while selling a beefier, more expensive version to larger organizations.  It will be much easier to maintain multiple versions of the software if you don't end up duplicating code; it will ideally be one code base, with multiple configurations used to compile it.  This is a nice argument in favor of using aspects to solve problems that crosscut classes in the system; they can be either included or left out, depending on whether the feature is to be included. 
+
+ In the full version of the product, you'll be dealing with information about much larger numbers of people, so you've decided that you should use a more suitable data structure.  Having been well-versed in data structures and algorithms, you've chosen a TreeMap (which is a balanced binary search tree implementation of a map).  Of course, to store objects in a TreeMap, you have to decide on a key for each object; these keys need to have at least the following three properties: 
+
+   Uniqueness .  Each key must uniquely identify an object in the map. 
+    Comparability.   It needs to be possible to compare pairs of keys to determine which is smaller. 
+    Stability.   An object must always be identified by the same key, even if many other properties of the object change over time.  If changing some property of the object can cause its key to change, the TreeMap will suddenly be out of order when you change that property (or you'll need to introduce some convoluted mechanism to restructure the TreeMap whenever such changes are made). 
+  We have to choose a key carefully so that it has all three of these properties.  Names have the comparability property (since they could be compared alphabetically) but are not necessarily unique (since two or more people may have the same name) or stable (since a person's name may change).  Many other properties of a person (height, weight, salary, job description) have similar problems.  So you decide to introduce the notion of a  personID  into the full version of your program, so that each person will be uniquely identified by a numeric ID.  Furthermore, you want the Person class to implement the Comparable interface.  But you only want these changes to be made in the full version of your program; the limited version should be unchanged. 
+
+ The problem 
+
+ In this part of the assignment, I'd like you to write an aspect that makes the necessary modifications to an existing Person class.  You may not modify the Person class in any way; the aspect needs to introduce all of the changes, so that it can be compiled either with or without the aspect. 
+
+ First of all, here is a link to the code for the Person class: 
+
+   Person.java  
+  Your aspect should introduce the following changes to the Person class: 
+
+  Add an integer field to the Person class in which each person's ID will be stored. 
+   Add code to the Person constructor to initialize the field containing the person's ID.  Assign person ID's consecutively, so that the first person constructed will be given the ID 1, the second will be given ID 2, and so on. 
+   Make the Person class implement the Comparable&lt;Person&gt; interface.  Two Persons will be compared based only on their IDs so that, if they are sorted, they will be sorted in ascending order of their IDs. 
+   Update the existing  equals  method in the Person class to include the person ID in the comparison, while preserving the remaining functionality as-is. 
+  Remember, you're not allowed to change the Person class directly.  All of the necessary changes must be introduced by your aspect. 
+
+ 
+
+ 
+
+  Deliverables 
+
+ For each part, submit your aspects, in files named with an .aj extension, and any Java code that they require, if any, to Checkmate.  You do not need to submit any Java programs that you used to test your aspects.  Do not submit any of the .class files or files generated by your development environment. 
+
+ Follow  this link  for a discussion of how to submit your assignment via Checkmate.  Be aware that I'll be holding you to all of the rules specified in that document, including the one that says that you're responsible for submitting the version of the assignment that you want graded.  We won't regrade an assignment simply because you submitted the wrong version by accident. 
+
+ 
+
+ 
+
+   Updated to reflect new versions of Eclipse and the AJDT plug-in, including a new bug in Eclipse that affects our work, by Alex Thornton, Spring 2012. 
+   Originally written (with portions adapted from an assignment from ICS 141 Fall 2005) by Alex Thornton, Winter 2009. 
+  
+
+</body> 

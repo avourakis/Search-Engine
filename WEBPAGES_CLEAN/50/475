@@ -1,0 +1,368 @@
+ Sphere_d&lt;Kernel&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Sphere_d&lt;Kernel&gt;  
+ 
+
+  Definition 
+ 
+
+An instance  S  of the data type   Sphere_d   is an oriented sphere
+in some  d -dimensional space. A sphere is defined by  d+1  points
+(class   Point_d &lt; Kernel &gt; ). We use  A  to denote the array of the
+defining points.  A set  A  of defining points is  legal  if
+either the points are affinely independent or if the points are all
+equal. Only a legal set of points defines a sphere in the geometric
+sense and hence many operations on spheres require the set of defining
+points to be legal.  The  orientation  of  S  is equal to the
+ orientation  of the defining points, i.e.,   orientation (A) .
+  
+
+  Types 
+ 
+
+    
+          Sphere_d &lt; Kernel &gt;::R
+         
+              
+    the representation type.
+ 
+
+          
+          Sphere_d &lt; Kernel &gt;::RT
+         
+              
+    the ring type.
+ 
+
+          
+          Sphere_d &lt; Kernel &gt;::FT
+         
+              
+    the field type.
+ 
+
+          
+          Sphere_d &lt; Kernel &gt;::LA
+         
+              
+    the linear algebra layer.
+ 
+
+          
+          Sphere_d &lt; Kernel &gt;::point_iterator
+         
+              
+    a read-only iterator for points defining
+the sphere.
+ 
+
+     
+
+  Creation 
+ 
+
+    
+          Sphere_d &lt; Kernel &gt; S;
+         
+              
+    introduces a variable  S 
+of type   Sphere_d &lt; Kernel &gt; .
+ 
+
+          
+         
+    template &lt;class ForwardIterator&gt;
+         
+            
+          Sphere_d &lt; Kernel &gt; S ( int d,  ForwardIterator first,  ForwardIterator last);
+         
+              
+    introduces a variable
+ S  of type   Sphere_d &lt; Kernel &gt; .  S  is initialized to the
+sphere through the points in  A = tuple [first,last) .  Precondition:   A  consists of  d+1  d -dimensional points.  Requirement:  The value type of ForwardIterator is   Point_d &lt; Kernel &gt; .
+ 
+
+     
+
+  Operations 
+ 
+
+    
+           
+int
+         
+          
+         
+    S.dimension ()
+         
+          
+    returns the dimension of the ambient space.
+                 
+           
+ Point_d &lt; Kernel &gt;
+         
+          
+         
+    S.point ( int i)
+         
+          
+    returns the  i th defining
+point.  Precondition:   0    i    dim  .
+                 
+           
+point_iterator
+         
+          
+         
+    S.points_begin ()
+         
+          
+    returns an iterator
+  pointing to the first defining point.
+                 
+           
+point_iterator
+         
+          
+         
+    S.points_end ()
+         
+          
+    returns an iterator pointing
+  beyond the last defining point.
+                 
+           
+bool
+         
+          
+         
+    S.is_degenerate ()
+         
+          
+    returns true iff the defining points
+  are not full dimensional.
+                 
+           
+bool
+         
+          
+         
+    S.is_legal ()
+         
+          
+    returns true iff the set of defining
+  points is legal.  A set of defining points is legal iff their
+   orientation  is non-zero or if they are all equal.
+                 
+           
+ Point_d &lt; Kernel &gt;
+         
+          
+         
+    S.center ()
+         
+          
+    returns the center of  S .  Precondition:   S  is legal.
+                 
+           
+FT
+         
+          
+         
+    S. squared_radius  ()
+         
+                
+    returns the squared radius of the
+  sphere.  Precondition:   S  is legal.
+                 
+           
+ Orientation 
+         
+          
+         
+    S. orientation  ()
+         
+          
+    returns the  orientation  of
+   S .
+                 
+           
+ Oriented_side 
+         
+          
+         
+    S.oriented_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+  either the constant   ON_ORIENTED_BOUNDARY  ,
+    ON_POSITIVE_SIDE  , or   ON_NEGATIVE_SIDE  , iff p lies on the
+  boundary, properly on the positive side, or properly on the negative
+  side of sphere, resp.  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+ Bounded_side 
+         
+          
+         
+    S.bounded_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+    ON_BOUNDED_SIDE  ,   ON_BOUNDARY  , or   ON_UNBOUNDED_SIDE  
+  iff p lies properly inside, on the boundary, or properly outside of
+  sphere, resp.  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+bool
+         
+          
+         
+    S.has_on_positive_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+   S.oriented_side(p)== ON_POSITIVE_SIDE  .  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+bool
+         
+          
+         
+    S.has_on_negative_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+   S.oriented_side(p)== ON_NEGATIVE_SIDE  .  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+bool
+         
+          
+         
+    S.has_on_boundary (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+   S.oriented_side(p)== ON_ORIENTED_BOUNDARY  , which is the same as
+   S.bounded_side(p)== ON_BOUNDARY  .  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+bool
+         
+          
+         
+    S.has_on_bounded_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+   S.bounded_side(p)== ON_BOUNDED_SIDE  .  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+bool
+         
+          
+         
+    S.has_on_unbounded_side (   Point_d &lt; Kernel &gt; p)
+         
+                
+    returns
+   S.bounded_side(p)== ON_UNBOUNDED_SIDE  .  Precondition:   S.dimension()==p.dimension() .
+                 
+           
+ Sphere_d &lt; Kernel &gt;
+         
+          
+         
+    S. opposite  ()
+         
+          
+    returns the sphere with the same
+  center and squared radius as  S  but with  opposite   orientation .
+                 
+          Sphere_d &lt; Kernel &gt;
+         
+          
+         
+     S +   Vector_d &lt; Kernel &gt; v  
+
+         
+                
+    returns the
+  sphere translated by  v .  Precondition:   S.dimension()==v.dimension() .
+            
+
+  Non-Member Functions 
+ 
+
+    
+           
+bool
+         
+          
+         
+    weak_equality (  S1,  S2)
+         
+                
+    Test for equality as unoriented spheres.  Precondition:   S1.dimension()==S2.dimension() .
+            
+
+  Implementation 
+ 
+
+Spheres are implemented by a vector of points as a handle type.  All
+operations like creation, initialization, tests, input and output of a
+sphere  s  take time  O( s.dimension() ) .  dimension() ,
+point access take constant time.  The  center() -operation takes
+time  O(d 3 )  on its first call and constant time thereafter. The
+sideness and  orientation  tests take time  O(d 3 ) .  The space
+requirement for spheres is  O( s.dimension() )  neglecting the
+storage room of the points.
+  
+
+    Next:    Iso_box_d&lt;Kernel&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

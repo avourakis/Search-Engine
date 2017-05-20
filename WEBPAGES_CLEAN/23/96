@@ -1,0 +1,238 @@
+ ChemicalSearch: Help Notes<body>
+
+     ChemicalSearch: Help Notes 
+           
+            Text Search
+              Search Field 
+               Search Text 
+               Fuzzy Match 
+          
+           
+            Structure Search
+              SMILES 
+               Tversky Parameters 
+               Strict Substructure 
+               Similarity Threshold 
+          
+           
+            Basic Filters
+              SMILES / CDB Chemical ID 
+               Molecular Descriptors 
+               Sources / Vendors 
+          
+           
+              Include Source External IDs 
+          
+       
+              Results Limit 
+          
+            Text Search 
+             Search Field 
+          Top  
+       
+              Select which source / vendor annotation field to perform a text search on.
+                    Options include:
+                  Chemical name:  Any field representing the name of the chemical,
+                    systematic or common. For example, find "tylenol" or "acetaminophen,"
+                    or "serine" or "2-amino-3-hydroxy-propanoic acid"
+                  External ID: The ID number / string that the source refers to the
+                    chemical as.  For example, you could input a CAS registry number
+                    or PubChem Substance ID here, and most likely the respective
+                    chemical will be found.
+                  All annotations:  Searches through all of the annotations values,
+                    including names, IDs and any other descriptors the sources provide
+                    about their chemicals.
+               
+             Search Text 
+          Top  
+       
+              Full-text search of source / vendor annotations, such as chemical names
+                    (systematic and common)
+                  Powered by the  Lucene 
+                    simple search module, allowing for respective special command characters.
+                  The search is case-insensitive and should automatically separate
+                    out word components by spaces and punctuation marks.
+               
+             Fuzzy Match 
+          Top  
+       
+              If you are unsure of the spelling for a chemical name,
+                    enter your best guess and select the "fuzzy" style search option.
+                  This will not only find chemicals with exactly matching
+                    name components, but those which are "similar" to the search name.
+               
+            Structure Search 
+             SMILES 
+          Top  
+       
+              Search for chemicals in the ChemDB with similar structure to a query structure
+                    by entering a SMILES string representing the query structure here.
+                  Enter multiple SMILES strings (one per line) to perform a profile-based
+                    concensus search which searches for items similar to every structure listed.
+                    Especially useful when combined with the  sub-structure search option 
+                    to search for chemicals containing several desired functional groups.
+                  To sketch a structure instead of specifying a SMILES string,
+                    click on the sketch icon.    To convert various molecular file formats into SMILES, try the online
+                     Babel  tool.
+                  For more information on the de facto standard SMILES string representation,
+                    spend a few minutes with the
+                     Daylight SMILES Tutorial 
+               
+             Tversky Parameters 
+          Top  
+       
+              When performing a similarity search, additional parameters besides the
+                    query structure(s) may be specified to fine-tune the query.  In particular,
+                    the α and β parameters of the Tversky similarity measure
+                    may be used to fine-tune the search towards a "super-structure" or "sub-structure" search.
+                  For most basic needs, just use the drop-list to select either a Similar or
+                    Sub-structure style search which will set reasonable default values for the
+                    α and β parameters.
+                  The sub-structure search option is especially useful for finding chemicals
+                    which possess the query structure as a sub-structure / functional group.
+                  For more detailed information on how to use the α and β parameters,
+                    refer to the  Daylight Tversky Index Description .
+               
+             Strict Substructure 
+          Top  
+       
+              While the similarity α and β parameters can be used to bias towards
+                    a sub-structure search, they may still yield some "false positives."  That is,
+                    structures which have something very similar to the search structures as
+                    sub-structures, but not exactly.
+                  In combination with substructure biasing α and β parameters, select
+                    this option to enforce "strict" substructure searching.  Any results returned must
+                    have the exact search structures as substructures, not just something "similar."
+           
+             Similarity Threshold 
+          Top  
+       
+              Minimum similarity score that any search results must satisfy for similarity searches.
+                  Value should be between 0.0 and 1.0
+                  This value is necessary to enable fast similarity searches.
+                    A "full" search used to be supported which would not use such a threshold,
+                    scanning the entire database for similar molecules.  This allowed for the
+                    calculation of additional statistics such as a z-score for each result
+                    and a similarity distribution histogram and .
+                    However, this method would take
+                    ~30 seconds per search and has thus since been disabled.
+           
+            Basic Filters 
+             SMILES / CDB Chemical ID 
+          Top  
+       
+              Search for chemicals having a specific SMILES string or CDB Chemical IDs
+                    by selecting one of these from the drop-list.
+                  CDB Chemical ID is the numerical identifier used in the ChemDB system
+                    to specify every unique chemical.
+                  Enter one or more SMILES strings or CDB Chemical IDs (but not both)
+                    into the text box, one item per line.  Only chemicals which
+                     exactly  match one of these values will appear in the results.
+                  To sketch a chemical structure instead of specifying a SMILES string,
+                    click on the sketch icon.    To convert various molecular file formats into SMILES, try the online
+                     Babel  tool.
+                  For more information on the de facto standard SMILES string representation,
+                    spend 15 minutes with the  Daylight SMILES Tutorial 
+                  When searching for chemicals by exact SMILES, as opposed to the similarity search,
+                    the match must be exact with what is stored in the database.
+                  The database only stores the canonical SMILES
+                    ( OEChem  implementation)
+                    for each chemical, thus, arbitrarily constructed SMILES entered into the search field
+                    are unlikely to match any canonical SMILES, however...
+                  The system will automatically convert your entered SMILES into
+                    canonical SMILES representations before searching for exact matches in the database.
+               
+             Molecular Descriptors 
+          Top  
+       
+              To search for chemicals by molecular descriptors, select the descriptors from the drop-lists.
+                  Enter a lower-limit (inclusive) and upper-limit (exclusive) for the descriptor.
+                  Note that multiple descriptor drop-lists and limit fields are provided to
+                    allow for the specification of multiple filters simultaneously ("and" logic).
+                  If no limit values are specified, all possible values will be accepted.
+                  The chemical search results will include the values for all descriptors selected
+                    (whether or not limit values are actually provided).
+                  Current descriptors include
+                       Descriptor 
+                             Description 
+                             Source 
+                           Molecular Weight 
+                             Sum of average atomic weights. 
+                              OEChem  
+                           Heavy Atoms 
+                             Number of non-hydrogen atoms. 
+                              OEChem  
+                           Carbons, Nitrogens, Oxygens 
+                             Number of respective atoms. 
+                              OEChem  
+                           XLogP 
+                             Predicted octanol-water partition coefficient, used to infer permeability through biological membranes. 
+                              XLogP  
+                           LogP (Chemaxon) 
+                             Another predicted log P value. 
+                              ChemAxon Calculator Plugin  
+                           Rotatable Bonds 
+                             Number of "single, non-ring bond[s] between two non-terminal, non-triple-bonded atoms."  Reflects molecular "flexibility." 
+                              OEChem  
+                           H-Bond Donors 
+                             Number of Lipinski H-bond donors, simply defined as any hydrogens attached to a nitrogen or oxygen. 
+                              OEChem  
+                           H-Bond Acceptors 
+                             Number of Lipinski H-bond acceptor, simply defined as any nitrogens or oxygens. 
+                              OEChem  
+                           Chiral Atoms 
+                             Number of chiral atoms / stereocenters.  That is, an atom with ≥ 4 distinct neighbors such that different connection arrangements cannot be achieved by simply rotating about the atom. 
+                              OEChem  
+                           Chiral Bonds 
+                             Number of chiral bonds.  In particular, double bonds with distint constituent pairs at both ends such that rotating about the bond would yield a different configuration. 
+                              OEChem  
+                           Rigid Segments 
+                             Number of rigid segments.  That is, segments containing no rotatable bonds or segments delimited by rotatable bonds. 
+                              OEChem  
+                           Solvation Energy 
+                              
+                              ZAP  
+                           Solvation Area 
+                              
+                              ZAP  
+                           Solvation Total 
+                              
+                              ZAP  
+                           Solvation Coulombic 
+                              
+                              ZAP  
+                           3D Coordinates 
+                             Predicted 3D atom coordinate geometry including isomer enumeration.
+                                Not a searchable descriptor, but available for download and usage from
+                                chemical isomer downloads.
+                             
+                              Corina  
+                             
+             Sources / Vendors 
+          Top  
+       
+              Restrict search results to only include chemicals provided by the selected sources / vendors.
+                  Select and deselect multiple sources by performing "Ctrl+Click."
+                  Refer to the  source / vendor information table 
+                    to translate source abbreviations into their full names, including company websites
+                    where available.
+               
+            Include Source External IDs 
+          Top  
+       
+              Select this option if you want the results to include for each chemical
+                    a list of all sources that have it and the external ID number that
+                    they refer to it as.
+                  In some cases, leaving this option off can significantly improve
+                    search times.
+                  These and more details for any individual chemical can always be
+                    accessed by clicking on the respective chemical link in the results.
+               
+         Results Limit 
+          Top  
+       
+              Set this value to determine the maximum number of results to show per page.
+                  Subsequent records can be retrieved using the "Next Page" button in the results section.
+                  To protect system performance, this number may not be set to a value &gt; 100.
+               
+      </body> 

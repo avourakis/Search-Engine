@@ -1,0 +1,162 @@
+ 12.7 Smallest Set of Smallest Rings (SSSR) considered Harmful<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.6 Identifying Ring Systems 
+ Up:   12. Ring Processing 
+ Next:   13. Aromaticity Processing 
+   
+
+
+  
+12.7 Smallest Set of Smallest Rings (SSSR) considered Harmful 
+ 
+
+ 
+In 1968, Edsger Dijkstra, one of the great pioneers of computer
+science, wrote a classic paper, ``Go To Statement Considered Harmful'',
+Communications of the ACM, Vol. 11, No. 3, pp. 147-148, March 1968.
+The first sentence of that paper contains ``the observation that the
+quality of a programmer is a decreasing function of the density of
+GOTO statements in the programs they produce''.  This paper had such
+dramatic impact that 35 years later most programmers know they should
+avoid using ``GOTO'', but would have difficulty explaining why.
+
+  
+Dijkstra's argument was not that GOTO was evil  per se , but that it
+showed that the programmer probably had given the problem enough
+thought to discover a cleaner, more elegant solution without its use.
+This argument is equally valid for the ``Smallest Set of Smallest
+Rings'' in chemical information processing.  The use of SSSR probably
+shouldn't be forbidden, but it is almost always used in algorithms for
+which it is inappropriate.  Both the relatively high computational
+cost,    , and the non-deterministic ambiguity in choosing SSSR
+membership lead to real bugs in almost all chemoinformatics uses.
+Indeed, the OEChem library itself demonstrates that its possible to
+develop state-of-the-art algorithms for cycle perception, aromaticity
+perception, symmetry perception and 2D depiction, without once using
+SSSR.  Indeed many of the technical advantages of OEChem over its
+rivals, stem from the fact that it doesn't use SSSR and its
+competition do.
+
+  
+The fundamental problem is that Plotkin's original definition of
+Smallest Set of Smallest Rings is not unique.  For example, the
+molecule cubane, has five rings in its SSSR, as determined by the
+Frérejacque number (no. of rings = no. of bonds - no. of atoms + 1).
+This means that although all eight atoms are symmetric, four will be
+members of three SSSR rings and four will be members of two SSSR
+rings.  Obviously SSSR membership can not be used as a graph theoretical
+invariant in symmetry perception.  Indeed the choice of which rings
+are part of the SSSR and which are not is arbitrary, and often
+dependent upon the input order of the molecule.  For example, in
+aromaticity the non-determinism of ring membership can result in the same
+atom being aromatic in one input ordering and aliphatic in another.
+Because of this many alternative definitions to SSSR have been
+proposed over the years, including Extended SSSR, the set of
+``synthetically important'' rings, K-rings, etc...
+
+  
+We believe that it is a great service to our customers that we do not
+include any SSSR functionality in OEChem.  This is a conscious (and consensus)
+decision.  The forerunners of OEChem, babel and OELib, both contained
+efficient algorithms for determining SSSR, and these remain freely
+available on the Internet today.  Furthermore, many useful ring
+perception routines are available in OEChem including; the ability to
+detect whether an atom or bond is acyclic or part of a ring, the smallest
+ring size that an atom or bond are in, the size of the smallest
+aromatic ring an atom or bond are in, and whether an atom or bond are
+in a ring of a particular size.
+
+  
+
+   Renzo Balducci and Robert S. Pearlman, ``Efficient Exact Solution of
+the Ring Perception Problem'', Journal of Chemical Information and
+Computer Science (JCICS), Vol. 34, No. 4, pp. 822-831, 1994.
+
+ 
+  
+ L. Baumer, G. Sala and G. Sello, ``Ring Perception in Organic
+Structures: A New Algorithm for Finding SSSR'', Computational
+Chemistry, Vol. 15, p. 293-299, 1991.
+
+ 
+  
+ Franziska Berger, Christoph Flamm, Petra M. Gleiss, Josef Leydold
+and Peter F. Stadler, ``Counterexamples in Chemical Ring Perception'',
+Journal of Chemical Information and Computer Science (JCICS), Vol. 44,
+pp. 323-331, 2004.
+
+ 
+  
+ Geoffrey M. Downs, Valerie J. Gillet, John D. Holliday and Michael
+F. Lynch, ``Review of Ring Perception Algorithms for Chemical Graphs'',
+Journal of Chemical Information and Computer Science (JCICS), Vol. 29,
+No. 3, pp. 172-187, 1989.
+
+ 
+  
+ John Figueras, ``Ring Perception Using Breadth-First Search'', Journal
+of Chemical Information and Computer Science (JCICS), Vol. 36, No. 5,
+pp. 986-991, 1996.
+
+ 
+  
+ Johann Gasteiger and Clemens Jochum, ``An Algorithm for the Perception
+of Synthetically Important Rings'', Journal of Chemical Information and
+Computer Science (JCICS), Vol. 29, No. 1, pp. 43-48, 1979.
+
+ 
+  
+ M. J. Plotkin, Journal of Chemical Documentation, Vol. 11, pp. 60-63,
+1971.
+
+ 
+  
+ C. Qian, W. Fisanick D. E. Hartzler and S. W. Chapman, ``Enhanced
+Algorithm for Finding Smallest Set of Smallest Rings'', Journal of
+Chemical Information and Computer Science (JCICS), Vol. 30, pp.
+105-110, 1990.
+
+ 
+  
+ Barbara L. Roos-Kozel and William L. Jorgensen, ``Computer-Aided
+Mechanistic Evaluation of Organic Reactions. 2. Perception of Rings,
+Aromaticity and Tautomers'', Journal of Chemical Information and
+Computer Science (JCICS), Vol. 21, pp. 101-111, 1981.
+
+ 
+  
+ A. Zamora, ``An Algorithm for Finding the Smallest Set of Smallest
+Rings'', Journal of Chemical Information and Computer Science (JCICS),
+Vol. 16, p. 43-48, 1979.
+
+ 
+  
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.6 Identifying Ring Systems 
+ Up:   12. Ring Processing 
+ Next:   13. Aromaticity Processing 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

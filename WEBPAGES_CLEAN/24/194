@@ -1,0 +1,20 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Generate n vectors in R^d, with varying distances
+
+#include "Vector.h"
+#include "Random.h"
+#include "Error.h"
+
+static inline double DoubleAbs(double a)
+{
+	if (a  maxdif) maxdif = dif;
+	}
+	return maxdif;
+}
+
+double VectorDot::VecDistance(double * u, double * v)
+{
+	double total = 0;
+	for (int i = 0; i  

@@ -1,0 +1,52 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Seiwald Q &amp; A -- "GET for EDIT" cookies<body> Re: Seiwald Q &amp; A -- "GET for EDIT" cookies 
+ Roy T. Fielding  (  fielding@liege.ICS.UCI.EDU  )  Tue, 03 Sep 1996 15:24:04 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Dave Long: "Re: An attempt at taxonomy" 
+
+
+    
+&gt; 1. What about Content-Version and Derived-From? (Dan Connolly)  
+&gt; 
+&gt; 	If I read the spec right, Content-Version reflects the contents
+&gt; 	of the document.  That is, if the same document is dished up
+&gt; 	twice it is supposed to have the same Content-Version value.
+
+It reflects the contents of the Entity, which includes both the body
+document and the entity-header fields (metainformation about the document).
+If the server is providing different information per checkout, then it
+is in fact changing the entity.
+
+&gt; 	As I argued before (and will continue arguing until I wear people
+&gt; 	down :-) the identity of the source is not sufficient information
+&gt; 	for a "checkin", because the VC system underneath the version-aware
+&gt; 	web server may wish to find any context associated with a prior
+&gt; 	"checkout".  
+&gt; 
+&gt; 	Now Roy Fielding says that Content-Version is opaque and could
+&gt; 	be used exactly for this purpose, 'cause no one would be the wiser
+&gt; 	if the Content-Version were different for each checkout of the
+&gt; 	same document.  This is true, but now the names of these fields
+&gt; 	are losing their meaning, no?  If it's checkout context, call it
+&gt; 	"Checkout-Context" (or "Checkout-Cookie").
+
+Checkout does not have meaning on all systems, whereas version has a generic
+meaning (at times, too generic). It is intended to be as flexible as possible.
+The "Content-" prefix is a requirement of MIME for what HTTP calls
+entity-header field names.
+
+.....Roy
+
+BTW, I can set the  www-vers-wg@ics.uci.edu  list Reply-To at any time --
+the reason it is not on by default is that many people find it annoying,
+particularly when you have cross-list discussions (like this one).
+ 
+
+  
+     Next message:   Christopher Seiwald: "Re: Seiwald Q &amp; A -- "GET for EDIT" cookies" 
+    Previous message:   Dave Long: "Re: An attempt at taxonomy" 
+
+
+  </body> 

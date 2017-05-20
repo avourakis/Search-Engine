@@ -1,0 +1,56 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Versioning Thoughts (in HTML)<body> Re: Versioning Thoughts (in HTML) 
+ Christopher Seiwald  (  seiwald@p3.com  )  Thu, 6 Jun 1996 00:07:50 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   David J. Fiander: "Re: More versioning thoughts." 
+    Previous message:   Andre van der Hoek: "More versioning thoughts." 
+    Maybe in reply to:   David G. Durand: "Versioning Thoughts (in HTML)" 
+
+    Next in thread:   David J. Fiander: "Re: Versioning Thoughts (in HTML)" 
+
+    
+| From: "David G. Durand" &lt; dgd@cs.bu.edu &gt;
+| Subject: Versioning Thoughts (in HTML)
+|
+| ...
+|
+| best done by tracking user operations, (typically editing operations) and
+| constructing versions as sets of non-interfering edits. This makes merging
+| and distribution easy, at the expense of making the notion of version
+| trees only one of a variety of styles.
+|
+| ...
+|
+| &lt;p&gt;The semantics should not assume that there is a single predecessor
+| version, or that if there are multiple predecessors, one of them is the
+| "main" one.  The semantics should not assume that every derived version
+| even has a meaningful predecessor version.  In my model, a user might want
+| to designate a new "top-level version" for the result of a complicated
+| merge involving many manual decisions about which changes to keep and how
+| conflicts are to be resolved.
+
+Sorry for the long excerpt:  I believe what you are describing is what
+in SCM circles is called "change sets."  That's the approach to version
+management where a configuration object is stored as a collection of
+deltas and the contents of a "version" is the result of combining any
+arbitrary subset of those deltas.  This is in contrast to more traditional
+SCM where a configuration object is a tree of versions, and deltas lead
+from one version to the next.
+
+This model is embodied in the commercial SCM system Aide-de-Camp.
+
+Christopher
+----
+Christopher Seiwald     P3 Software              http://www.p3.com 
+ seiwald@p3.com           f-f-f-fast SCM          1-510-865-8720
+ 
+
+  
+     Next message:   David J. Fiander: "Re: More versioning thoughts." 
+    Previous message:   Andre van der Hoek: "More versioning thoughts." 
+    Maybe in reply to:   David G. Durand: "Versioning Thoughts (in HTML)" 
+
+    Next in thread:   David J. Fiander: "Re: Versioning Thoughts (in HTML)" 
+
+  </body> 

@@ -1,0 +1,56 @@
+ Dr. Rina Dechter @ UCI<body>
+ 
+ 
+     R198  
+|     
+        
+Extending the Reach of AND/OR Search for Optimization over Graphical Models
+        
+       
+      Lars Otten
+           
+              Abstract   
+This thesis presents substantial enhancements to the state of the art in combinatorial optimization over graphical models. Our contributions are relevant in the context of both exact
+and approximate reasoning over Bayesian and Markov networks, weighted constraint satisfaction problems, and other related queries. While the focus of this work is on probabilistic
+and constraint inference, we also draw from the areas of distributed computing and statistical learning. Relevant practical applications we consider include genetic linkage analysis,
+protein side-chain prediction, medical diagnosis, resource scheduling, and signal processing.
+
+ We extend AND/OR Branch-and-Bound (AOBB), a leading algorithm for optimization
+queries over graphical models. AOBB applies the principle of depth-first branch-and-bound
+to AND/OR search spaces, which exploit conditional independencies via problem decomposition and merge unifiable subproblems through caching of partial solutions. This thesis
+presents fundamental extensions to AOBB in three regards.
+
+  First, we significantly improve the applicability of AOBB as an approximation scheme. We
+analyze and demonstrate the inherent conflict between problem decomposition (through
+AND/OR search spaces) and the anytime behavior of AOBB and depth-first search in
+general. We introduce a new algorithm, Breadth-Rotating AND/OR Branch-and-Bound
+(BRAOBB), which drastically improves upon AOBB with respect to its anytime performance while maintaining desirable depth-first complexity guarantees. Comprehensive analysis and experimental evaluation demonstrate the scheme’s effectiveness. Furthermore, our
+entry based on BRAOBB placed first in all three optimization tracks of the PASCAL 2012
+Probabilistic Inference Challenge.
+
+  Second, we investigate the instance-based run-time complexity of AOBB. The asymptotic
+worst-case bounds are both time and space exponential in the problem’s induced width, but
+often prove to be very loose due to the algorithm’s powerful pruning, as we show empirically.
+We identify a range of (sub)problem features and develop learning schemes to estimate runtime complexity based on statistical regression analysis. We conduct extensive experimental
+evaluation within and across various problem classes and demonstrate convincing predictive
+performance.
+
+  Third, we describe a parallel AND/OR Branch-and-Bound scheme that pushes the boundaries of feasibility for exact reasoning by orders of magnitude. We adapt the paradigm of
+parallel tree search to AND/OR search spaces; our implementation distributes conditioned
+subproblems on a grid of independent computers. In this context, we show how the pruning
+power of AOBB can cause large variance in subproblem complexity, which makes load balancing extremely elusive and impairs parallel performance. We thus propose load balancing
+based on the run-time estimation scheme presented earlier in the thesis, learning a complexity model offline from previously solved subproblems. Through experimental results using
+hundreds of computers on problem instances from a variety of classes we show convincing
+parallel performance with several orders of magnitude speedup over sequential AOBB, but
+we also highlight and analyze some inherent limitations.
+
+  Our implementations of AOBB, BRAOBB and parallel AOBB are available online under an
+open-source license.
+
+  
+       
+        
+       [pdf]  
+       
+        
+ </body> 

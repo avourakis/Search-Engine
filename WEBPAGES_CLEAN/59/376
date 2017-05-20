@@ -1,0 +1,117 @@
+ 
+  Interface SchedulerInterface
+<body>
+  
+ 
+  Interface SchedulerInterface
+ 
+   public interface interface  SchedulerInterface 
+  
+Interface that the scheduler must implement in
+ order to receive information from the simulator.
+ 
+    
+ 
+    
+      EndOfTimeSlice  (float, int)
+      Invoked when a timeslice has expired on a PE.
+        GlobalClock  (float)
+     
+ Invoked when a global clock is trasmited to all processors
+
+ 
+        JobArrival  (float, int)
+     
+ Invoked when a new job arrives
+
+ 
+        PeIdle  (float, int, int)
+      Invoked when a PE has become idle for some reason
+
+ 
+        TaskArrival  (float, long)
+     
+ Invoked when a new task arrives, only if the network is asynchronous
+
+ 
+        TaskStateChange  (float, long)
+     
+ Invoked when a task has changed state
+
+ 
+    
+ 
+    
+   
+  PeIdle  
+ 
+ public abstract void PeIdle(float time,
+                             int PeId,
+                             int reason)
+ 
+   Invoked when a PE has become idle for some reason
+ 
+        Parameters: 
+       time - Time when the PE became idle
+      PeId - The id of the PE that became idle
+      reason - Why the PE became idle. Not implemented.
+       
+     
+  EndOfTimeSlice  
+ 
+ public abstract void EndOfTimeSlice(float time,
+                                     int PeId)
+ 
+   Invoked when a timeslice has expired on a PE.
+ 
+        Parameters: 
+       time - Time when the timeslice expired
+      PeId - The id of the PE at which the timeslice has expired
+      
+     
+  TaskArrival  
+ 
+ public abstract void TaskArrival(float time,
+                                  long taskID)
+ 
+   Invoked when a new task arrives, only if the network is asynchronous
+ 
+        Parameters: 
+       time - Time when the task arrived
+      task - ID of the task that arrived
+      
+     
+  GlobalClock  
+ 
+ public abstract void GlobalClock(float time)
+ 
+   Invoked when a global clock is trasmited to all processors
+ 
+        Parameters: 
+       time - Time of the global clock
+     
+     
+  JobArrival  
+ 
+ public abstract void JobArrival(float time,
+                                 int jobID)
+ 
+   Invoked when a new job arrives
+ 
+        Parameters: 
+       time - Time when the job arrived
+      jobID - ID of the job that arrived
+      
+     
+  TaskStateChange  
+ 
+ public abstract void TaskStateChange(float time,
+                                      long taskID)
+ 
+   Invoked when a task has changed state
+ 
+        Parameters: 
+       time - Time when the change of state occured
+      task - ID of the task that changed state
+      
+  </body> 

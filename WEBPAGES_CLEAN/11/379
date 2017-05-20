@@ -1,0 +1,249 @@
+ 
+      Dr. Rina Dechter @ UCI
+    <body>
+
+[an error occurred while processing this directive]
+
+   
+     
+   ICS-175A, Bayesian and Constraint Networks, Fall 2001 
+     
+   
+   announcements  | 
+   home work  | 
+   lecture notes  | 
+   projects  
+   
+
+    
+ 
+   Grades   
+   
+   
+  Classroom: CS 180   Days: Tuesday &amp; Thursday
+    Time: 12:30 - 1:50pm
+    Instructor: Rina Dechter -  dechter@ics.uci.edu 
+    TA: Dasha Chudova -  dchudova@amorgos.ics.uci.edu 
+    Office Hours:  Th 10-11 
+    
+
+  Course Goals 
+
+ Requirements: 
+ 
+Students are required to do a project in Artificial Intelligence. Weekly progress reports will be graded. 
+ 
+Final project: submit a report + code + demo. 
+  
+Students will be required to work independently and be expected to acquire all the knowledge necessary for the project. They will have to fill-up the necessary gaps in their background. TA and instructor will help with an introductory overview and refer the students to the appropriate literature. In particular, basic knowledge in Bayesain networks will be necessary.
+  
+We will have a class meeting each week on Tuesday. we will have individual/group meetings and TA meetings each Thursday. 
+  
+  
+
+    Grading: 
+ 
+ Final grade:  Weekly project reports, 20%.  Demo-presentation:  30%  Final report:  50%.  
+
+    Projects Ideas: 
+ 
+There will be two types of projects. Project of building an AI system that provide advise in some area. We will use graphical model frameworks and focus primarily on Bayesian Networks (BN). Students can choose projects from other areas in AI, such as search and constraint satisfaction, and planning. The second type is "Research projects". Students will delve into a research question with a graduate student and will conduct empirical investigation pursuing the question at stake.
+ 
+Students can select a proposed prject or may also come up with a proposal of their own which is relevant to an AI class.
+  
+
+    System Building Projects: 
+   Primary focus of the lab:    
+  The project is to build a Bayesian network that models a domain and makes some inferences. Available tools such as Hugin and JavaBayes can be used. The system can be built using knowledge acquisition from expert in the domain or by learning from data or both. Following is a suggested domain.
+   
+   
+   Domain 1: Admission to a Phd program.    
+  The system should "replace" or advise faculty that are engaged in admitting students to our i
+Phd program. Each year, ICS receives hundreads of applications from candidate students both US and foreign that wish to be admitted to our Phd program. The staff (Kris Bolcer) prepare some relevant summaries of student�s profiles (Grades: GPA,GRE, records of education, universities, letters of references, countries of origin, student�s statement of interest, etc). Each faculty sort through these summaries searching for students that may be suitable for their research programs. Faculty/Staff also need to decide for students who are admitted, what kinds of packages to offer. Some are admitted with full fellowships, some with RAships and others get TAships. Most are accompanied with tuition/fees waivers. Some students have feelowships from their countries and can be admitted with no support. The system can be compared with some alternatives: simple Bayesian network: Naive Bayes, or decision trees.
+   
+   
+    Information gathering. 
+    
+  Students will be able to acquire information by talking with Staff and some faculty in ICS. Also data may be available from past years to assist in learning/calibrating the system.
+   
+   
+    More domains for Bayesian networks can be suggested by students.  
+    
+      Systems based on constraint networks 
+   
+   TA assignments:  Given class schedules for quarter, the number of TA needed for each class, TA�s preferences and qualification, and instructors� choice of preferred TA, schedule the TA�s in a way that maximize some measure of staisfaction. (Real data may be available)
+   
+   
+   Class scheduling: 
+    The problem is to find a schedule for classes, classrooms, and teachers for a teaching seting (e.g., a high school, a computer science department). Measure of satisfaction can be to minimize the number of weighted constraints violated. Some algorithms written by graduate students may be available. Students can try to adapt those to the problem or code the algorithms from scratch.
+   
+
+      Research with a graduate student: 
+   Triangulation algorithms. 
+   
+  Many algorithms applied to graphical models (Bayesian networks and constraint-networks) 
+have complexity related to a graph parameter known as induced-width. The task will be to implement a variety of approximation methods (greedy methods, local search methods) for induced-width and compare on real benchmarks and randomly generated networks.
+ 
+  The problem of findinging minimum induced-width is related to
+  graphs' preprocessing for triangulation. The problem is to find atriangulation of a graph such that the maximum size of its cliques is minimal. In a recent paper several rules are used to preprocess the initial graph in orderto reduce it to a smaller graph before triangulating it. The triangulationof the original graph can then be obtained by reversing the reductionsteps.
+  
+Another graph related investigations are to find a cycle-sutest of a graph.
+    
+ 
+ References 
+   Hans L. Bodlaender et al., "Pre-processing for Triangulation of Probabilistic Networks", Proceedings of UAI, 2001
+	
+	  Judea Pearl. "Probabilistic Reasoning in Intelligent Systems". Morgan Kaufman, ch. 3.2.4 (graph triangulation algorithm)
+	
+	  A. Becker, R. Bar-Yehuda, D. Geiger, "Random Algorithms for the Loop Cutset Problem", UAI, 1999
+
+      A. Becker, D. Geiger, "Approximation Algorithms for the Loop Cutset Problem", UAI 1994
+   
+Most of these papers can be retrieved from  http://citeseer.nj.nec.com .
+
+
+      Extending Java Bayes. 
+   
+  JavaBayes is a software, written in Java 1.2, that provides graphical user interface for defining Bayesian networks and implements Bucket Elimination algorithm for computing a belief for each variable. JavaBayes can open and save Bayesian networks in several file formats. The core of this project is to extend the functionality of JavaBayes. JavaBayes is a research software; however, it is mature and free of bugs.Currently, JavaBayes implements only one inference algorithm and does not measure many other parameters of the network. The project includes implementing one or several (depending on the degree of difficulty and number of participants) of the following features: 1) compute induced tree width 2) compute cycle cutset 3) implement Iterative Belief Propagation algorithm IBP(n) 4) implement Loop Cutset Conditioning algorithm 5) convert directed Bayesian network into undirected Markov network and display in separate window. Participants in this project will be provided with all necessary assistanceto understand and implement any new algorithms. If necessary, we can also reach the original author of the software by email.Another note - this work will not be lost in vein. Many people use JavaBayes and will continue to use it with new features added beyond this project's time frame. To make yourself familiar with JavaBayes and download latest version of software and the source code,  click here. 
+   
+        Resources on the Internet 
+
+   Books 
+     Artificial Intelligence: A Modern Approach , by Stuart Russell and Peter Norvig. 
+	Chapter  14 ,  15a ,  15b 
+	  Probabilistic Reasoning in Intelligent Systems, by Judea Pearl, Morgan Kaufmann, 1990.
+	   Koller Handouts 
+	
+     Survey Papers 
+       A Brief Introduction to Graphical Models and Bayesian Networks  by  Kevin Murphy   Postscript  and  PDF 
+  
+     Bayesian Networks Without Tears , by  Eugene Charniak ,   AI Magazine  , vol. 12, 1991. 
+  Direct link to the paper in 
+  PDF  format is available.
+  
+     Bayesian Networks , by  Judea Pearl  and  Stuart Russel . In PDF format.
+
+     Generalizing Variable Elimination in Bayesian Networks , by  Fabio Cozman . 
+  From  JavaBayes  web site.
+     Tutorials 
+      AAAI-98 Tutorial: Learning Bayesian Networks From Data 
+
+	   Bayesian Networks and Decision-Theoretic Reasoning for Artificial Intelligence 
+        Tools 
+    GeNIe/SMILE from the University of UPitt:
+  http://www2.sis.pitt.edu/~genie/ 
+  Hugin lite from Hugin:
+  http://www.hugin.com 
+  MSBN from Microsoft Research:  http://www.research.microsoft.com/dtas/msbn/ 
+  BNT:  http://www.cs.berkeley.edu/~murphyk/Bayes/bnt.html 
+  JAVABayes from CMU:  http://www.cs.cmu.edu/~javabayes/Home/ 
+  Netica from Norsys:  http://www.norsys.com 
+       More Links 
+     Bayesian Networks in Java 
+     LADS: Bayesian Nets 
+     ICS-275B Fall 2000 WebPage 
+       
+
+     Schedule: 
+ 
+  
+    Week  
+
+
+  Topic  
+
+
+  Date    
+        Week 1 
+
+
+ 
+     Overview of necessary background in Bayes networks. 
+Start forming groups for projects. 
+     
+
+ 09-25 
+        Week 2 
+
+ 
+      Presentation of specific projects. Each group provides a proposal for two possible projects it considers. 
+     
+
+ 10-02 
+        Week 3 
+
+ 
+     Progress report. 
+     
+
+ 10-09 
+        Week 4 
+
+ 
+     Progress report. 
+     
+ 10-16 
+        Week 5 
+
+ 
+     Progress report. 
+     
+
+ 10-23 
+        Week 6  
+
+ 
+     Mid-quarter progress report and presentation. 
+     
+
+ 10-30 
+        Week 7 
+
+ 
+     Progress report. 
+     
+
+ 11-06 
+        Week 8 
+
+ 
+     End of eight week draft of final report. 
+     
+
+ 11-13 
+        Week 9 
+
+ 
+     Demo-presentations. 
+     
+
+ 11-20 
+        Week 10 
+
+ 
+     Demo-presentations. 
+     
+
+ 11-27 
+        Week 11 
+
+ 
+     (Finals): final report + code + demo-presentation. 
+     
+
+ 12-04 
+   
+
+      
+   
+
+  
+ School of Information and Computer Science 
+ University of California, Irvine, CA 92697-3435 
+ Dr. Rina Dechter 
+
+ dechter at ics.uci.edu 
+
+  
+
+</body> 

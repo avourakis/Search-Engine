@@ -1,0 +1,61 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Conga line closest pair algorithm
+
+#include "MultiConga.h"
+#include "Error.h"
+
+// add an edge to the graph
+inline void MultiConga::AddEdge(point in, point out, double d)
+{
+	if (how_many_edges == 2*max_points)
+		error("CongaLine: too many edges");
+	edges[how_many_edges].in = in;
+	edges[how_many_edges].out = out;
+	edges[how_many_edges].d = d;
+	how_many_edges++;
+}
+
+// remove an edge from the graph
+inline void MultiConga::RemoveEdge(unsigned long e)
+{
+	if (e &gt;= how_many_edges) error("CongaLine: removing the same edge twice");
+	edges[e] = edges[--how_many_edges];	// copy struct
+}
+
+// move a point to a new subset, leaving all edges in place
+// caller is responsible for calling subset_sizes.Update(p)
+inline void MultiConga::MoveToSubset(point p, unsigned long &amp; subset_size)
+{
+	if (where_are_the_points[p]  2*max_points) {
+		CleanAllGraphs();					// run out of room, rebuild
+		return;
+	}
+	
+	// now do Conga line
+	point current = points[0];
+	int was_in_subset = 1;
+	unsigned long i;
+	point * p = points+1;
+	ns--; tp--;			// account for removal of first element
+	for (;;) {
+		double d;	// find nbr s.t. either current or nbr is in s
+		if (was_in_subset) {			// current is in s
+			if (tp p might have become longer than x-&gt;something else)
+void MultiConga::UpdatePoint(point p)
+{
+	(*this) -= p;
+	(*this) += p;
+	gInsertions--;
+	gDeletions--;
+}
+
+// Distance has changed. Move both points to new subset, get rid of old pq edges.
+// Unlike UpdatePoint this is reasonably fast.
+// Note that it's safe to remove all edges p-&gt;x and q-&gt;x, not just p-&gt;q and q-&gt;p
+void MultiConga::UpdateDistance(point p, point q)
+{
+	// flush any existing edges involving this pair of points
+	unsigned long i = 0;
+	while (i  

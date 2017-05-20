@@ -1,0 +1,93 @@
+ //NAME: Danish Khan
+//STUDENT ID: 47324012
+//NAME: Adam Su
+//STUDENT ID: 23628358
+
+// Payroll.java
+//
+// ICS H22 Winter 2006
+// Lab 3: The Price You Pay
+//
+// This class should contain the majority of the code for your user interface.
+// To help you get started, I've included a little bit of code:
+//
+//   * In the constructor, I've created three objects that you'll need in
+//     various places: a Scanner to read input, a PayrollMenu (see
+//     PayrollMenu.java for more information about that), and an
+//     ArrayList that you should use to store all of the employees.
+//
+// You should start by adding code to the go() method that displays the menu,
+// asks the user for the next command, and processes that command.  (Be aware
+// that the PayrollMenu object can do some of this work for you.  See the
+// PayrollMenu.java file for more information before you proceed.)
+
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
+
+
+//This is the class that is where the majority of the coding happens. 
+//This class implements and runs everything for all three types of employees and then
+//outputs their pay check and all the other tasks that are requried by this program
+public class Payroll
+{
+	private Scanner scanner;
+	private PayrollMenu menu;
+	private ArrayList employees;
+
+	
+public Payroll(String input)
+	{
+		//catch the exceptions
+		try
+		{
+			scanner = new Scanner(new FileReader(input)); //scanner reads from input file
+		}
+		catch(FileNotFoundException e)
+		{
+			System.out.println("Input file not found!");
+			System.exit(1);
+		}
+		
+		menu = new PayrollMenu(scanner); //creates a new menu object while passing in scanner to get commands
+		employees = new ArrayList();//creates employees array list
+	}
+		
+
+	public Payroll()
+	{
+		scanner = new Scanner(System.in);
+		menu = new PayrollMenu(scanner);
+		employees = new ArrayList();
+	}
+
+
+	public void go()
+	{
+		//welcome();
+		menu = new PayrollMenu(scanner);
+		PayrollCommand command = menu.getNextCommand();
+
+		if (command == PayrollCommand.ADD_EMPLOYEE)
+			addEmployee();
+		else if (command == PayrollCommand.REMOVE_EMPLOYEE)
+			removeEmployee();
+		else if (command == PayrollCommand.SHOW_EMPLOYEES)
+			showEmployees();
+		else if (command == PayrollCommand.DO_WEEKLY_PAYROLL)
+			doWeeklyPayroll();
+		else if (command == PayrollCommand.QUIT)
+			quit();
+
+	}
+	
+	public boolean isThere(String name) //for loop statement for addemployee
+	{
+		boolean present = false; //by default, employee not found
+		
+		for (int index = 0; index  payroll = new ArrayList();
+		int d = 0;
+		int e = 0;
+		int hoursWorked;
+		for (d = 0; d  

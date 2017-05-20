@@ -1,0 +1,145 @@
+ 
+  Class UniformDistribution
+<body>
+  
+ 
+  Class UniformDistribution
+ 
+ 
+java.lang.Object
+   |
+   +---- ProbabilityDistribution 
+           |
+           +----UniformDistribution
+ 
+    public final class  UniformDistribution 
+    extends  ProbabilityDistribution 
+      
+ 
+    
+      rd  
+     
+   
+    
+      UniformDistribution  (float)
+      Constructs a uniform probability distribution that generates values
+ within the interval  [0, high]  with uniform probability.
+        UniformDistribution  (float, float)
+      Constructs a uniform probability distribution that generates values
+ within the interval  [low, high]  with uniform probability.
+   
+    
+      floatSample  ()
+      Returns a float sample from this probability distribution.
+        floatSample  (float, float)
+      Returns a float sample from this probability distribution.
+        intSample  ()
+      Returns an integer sample from this probability distribution.
+        intSample  (float, float)
+      Returns an integer sample from this probability distribution.
+        newInstance  (double[])
+      Creates a new instance of this probability distribution.
+    
+ 
+    
+   
+ rd 
+ 
+ protected static Random rd
+ 
+  
+ 
+    
+  
+   
+ UniformDistribution 
+ 
+ public UniformDistribution(float low,
+                            float high)
+ 
+   Constructs a uniform probability distribution that generates values
+ within the interval  [low, high]  with uniform probability.
+ 
+        Parameters: 
+       low - lower bound of distribution interval.
+      high - upper bound of distribution interval.
+      
+     
+ UniformDistribution 
+ 
+ public UniformDistribution(float high)
+ 
+   Constructs a uniform probability distribution that generates values
+ within the interval  [0, high]  with uniform probability.
+ 
+        Parameters: 
+       high - upper bound of distribution interval.
+     
+    
+ 
+    
+   
+  newInstance  
+ 
+ public static  ProbabilityDistribution  newInstance(double params[])
+ 
+   Creates a new instance of this probability distribution.
+ 
+        Parameters: 
+       params - array of parameters.
+        Returns: 
+       a new instance of this probability distribution.
+     
+     
+  intSample  
+ 
+ public static int intSample(float low,
+                             float high)
+ 
+   Returns an integer sample from this probability distribution.
+ 
+        Parameters: 
+       low - lower bound of distribution interval (inclusive).
+      high - upper bound of distribution interval (inclusive).
+         Returns: 
+       an integer sample from this probability distribution.
+     
+     
+  floatSample  
+ 
+ public static float floatSample(float low,
+                                 float high)
+ 
+   Returns a float sample from this probability distribution.
+ 
+        Parameters: 
+       low - lower bound of distribution interval (inclusive).
+      high - upper bound of distribution interval (exclusive).
+         Returns: 
+       a float sample from this probability distribution.
+     
+     
+  intSample  
+ 
+ public int intSample()
+ 
+   Returns an integer sample from this probability distribution.
+ 
+        Returns: 
+       an integer sample from this probability distribution.
+        Overrides: 
+        intSample  in class  ProbabilityDistribution 
+     
+     
+  floatSample  
+ 
+ public float floatSample()
+ 
+   Returns a float sample from this probability distribution.
+ 
+        Returns: 
+       a float sample from this probability distribution.
+        Overrides: 
+        floatSample  in class  ProbabilityDistribution 
+     
+  </body> 

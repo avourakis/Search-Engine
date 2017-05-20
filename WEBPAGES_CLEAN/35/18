@@ -1,0 +1,705 @@
+ 
+  Class JobManager
+<body>
+  
+ 
+  Class JobManager
+ 
+ 
+java.lang.Object
+   |
+   +----JobManager
+ 
+    public class  JobManager 
+    extends Object
+    implements EventDestination
+    
+Implements a job manager. All interaction with jobs and tasks
+ should go through an instance of this class.
+ 
+     See Also: 
+        Job ,  Task 
+     
+ 
+    
+      JobManager  (TheSimulator)
+      Constructs a job manager.
+   
+    
+      endedJobs  ()
+      Returns an array with global job identifier for ended jobs,
+ managed by this object.
+        generateJob  (int, float, int, int, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, ProbabilityDistribution, float, float, String)
+      Generates a job and adds it to this object.
+        getJob  (int)
+      Returns the sought job.
+        getJobExecutionTime  (int)
+      Returns the execution time for the given job.
+        getPEId  (long)
+      Returns the identifier for the processing element which the
+ given task is located on.
+        getSimulator  ()
+      Returns the simulator.
+        getTask  (long)
+      Returns the sought task.
+        getTaskStatistics  (int)
+      Returns statistics for the given task.
+        getThroughput  (int, int)
+      Returns the throughput.
+        handleEvent  (SimEvent)
+      Handles incoming events.
+        jobClass  (int)
+      Returns the job class defined by the user.
+        jobEnded  (int)
+      Called by an ended job.
+        jobs  ()
+      Returns an array with global job identifiers for all jobs
+ managed by this object.
+        jobsWithLeastTasks  ()
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks.
+        jobsWithLeastTasks  (int)
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks in the given state.
+        jobsWithMostTasks  ()
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks.
+        jobsWithMostTasks  (int)
+      Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks in the given state.
+        numberOfJobs  ()
+      Returns the number of jobs managed by this object.
+        numberOfLivingTasks  ()
+      Returns the total number of living tasks, contained by jobs
+ managed by this object.
+        numberOfTasks  ()
+      Returns the total number of tasks, contained by jobs managed
+ by this object.
+        numberOfTasks  (int)
+      Returns the number of tasks in the given state, contained by
+ jobs managed by this object.
+        numberOfTasksInJob  (int)
+      Returns the number of tasks contained by the given job.
+        numberOfTasksInJob  (int, int)
+      Returns the number of tasks in the given state, contained by
+ the given job.
+        numberOfTasksInJobOnPE  (int, int)
+      Returns the number of tasks on the given processing element,
+ contained by the given job.
+        numberOfTasksInJobOnPE  (int, int, int)
+      Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+        numberOfTasksOnPE  (int)
+      Returns the number of task on the given processing element.
+        numberOfTasksOnPE  (int, int)
+      Returns the number of task on the given processing element
+ in the given state.
+        tasks  ()
+      Returns an array with global task identifiers for tasks,
+ contained by jobs managed by this object.
+        tasks  (int)
+      Returns an array with global task identifiers for tasks
+ in the given state, contained by jobs managed by this object.
+        tasksInJob  (int)
+      Returns an array with global task identifiers for tasks
+ contained by the given job.
+        tasksInJob  (int, int)
+      Returns an array with global task identifiers for tasks in
+ the given state, contained by the given job.
+        tasksInJobOnPE  (int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+        tasksInJobOnPE  (int, int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+        tasksOnPE  (int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by jobs managed
+ by this object.
+        tasksOnPE  (int, int)
+      Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by jobs managed by this object.
+    
+ 
+    
+  
+   
+ JobManager 
+ 
+ public JobManager( TheSimulator  simulator)
+ 
+   Constructs a job manager.
+ 
+        Parameters: 
+       simulator - a simulator.
+     
+    
+ 
+    
+   
+  getSimulator  
+ 
+ public  TheSimulator  getSimulator()
+ 
+   Returns the simulator.
+ 
+        Returns: 
+       the simulator.
+     
+     
+  generateJob  
+ 
+ public void generateJob(int numberOfTasks,
+                         float startTime,
+                         int peId,
+                         int jobTypeId,
+                          ProbabilityDistribution  endDist,
+                          ProbabilityDistribution  spawnDist,
+                          ProbabilityDistribution  spawnSizeDist,
+                          ProbabilityDistribution  ioDist,
+                          ProbabilityDistribution  ioDurationDist,
+                          ProbabilityDistribution  commDist,
+                          ProbabilityDistribution  laxityDist,
+                         float syncProb,
+                         float globalSyncProb,
+                         String jClass)
+ 
+   Generates a job and adds it to this object.
+ 
+        Parameters: 
+       numberOfTasks - initial number of tasks.
+      startTime - start time of job.
+      peId - processing element identifier.
+      endDist - end task distribution.
+      spawnDist - task spawning distribution.
+      spawnSizeDist - task spawning size distribution.
+      ioDist - task I/O distribution.
+      ioDurationDist - task I/O duration distribution.
+      commDist - task communication distribution.
+      laxityDist - tasx laxity distribution
+      syncProb - probability for communication being
+ synchronization.
+      globalSyncProb - probability for synchronization being
+ global.
+                   See Also: 
+        Job 
+     
+     
+  numberOfJobs  
+ 
+ public int numberOfJobs()
+ 
+   Returns the number of jobs managed by this object.
+ 
+        Returns: 
+       the number of jobs managed by this object.
+     
+     
+  jobs  
+ 
+ public int[] jobs()
+ 
+   Returns an array with global job identifiers for all jobs
+ managed by this object.
+ 
+        Returns: 
+       an array with global job identifiers for all jobs
+ managed by this object.
+        See Also: 
+        Job 
+     
+     
+  endedJobs  
+ 
+ public int[] endedJobs()
+ 
+   Returns an array with global job identifier for ended jobs,
+ managed by this object.
+ 
+        Returns: 
+       an array with global job identifier for ended jobs,
+ managed by this object.
+     
+     
+  jobsWithLeastTasks  
+ 
+ public int[] jobsWithLeastTasks()
+ 
+   Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks.
+ 
+        Returns: 
+       an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks.
+        See Also: 
+        Job ,  Task 
+     
+     
+  jobsWithMostTasks  
+ 
+ public int[] jobsWithMostTasks()
+ 
+   Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks.
+ 
+        Returns: 
+       an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks.
+        See Also: 
+        Job ,  Task 
+     
+     
+  jobsWithLeastTasks  
+ 
+ public int[] jobsWithLeastTasks(int taskState)
+ 
+   Returns an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks in the given state.
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       an array with global job identifiers for jobs, managed
+ by this object, with least number of tasks in the given state.
+        See Also: 
+        Job ,  Task 
+     
+     
+  jobsWithMostTasks  
+ 
+ public int[] jobsWithMostTasks(int taskState)
+ 
+   Returns an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks in the given state.
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       an array with global job identifiers for jobs, managed
+ by this object, with most number of tasks in the given state.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks()
+ 
+   Returns the total number of tasks, contained by jobs managed
+ by this object.
+ 
+        Returns: 
+       the total number of tasks, contained by jobs managed
+ by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfLivingTasks  
+ 
+ public int numberOfLivingTasks()
+ 
+   Returns the total number of living tasks, contained by jobs
+ managed by this object.
+ 
+        Returns: 
+       the total number of living tasks, contained by jobs
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasks  
+ 
+ public int numberOfTasks(int taskState)
+ 
+   Returns the number of tasks in the given state, contained by
+ jobs managed by this object.
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       the number of tasks in the given state, contained by
+ jobs managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasksOnPE  
+ 
+ public int numberOfTasksOnPE(int peId)
+ 
+   Returns the number of task on the given processing element.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+        Returns: 
+       the number of task on the given processing element.
+     
+     
+  numberOfTasksOnPE  
+ 
+ public int numberOfTasksOnPE(int peId,
+                              int taskState)
+ 
+   Returns the number of task on the given processing element
+ in the given state.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+      taskState - a task state.
+         Returns: 
+       the number of task on the given processing element.
+     
+     
+  numberOfTasksInJob  
+ 
+ public int numberOfTasksInJob(int jobId)
+ 
+   Returns the number of tasks contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+        Returns: 
+       the number of tasks contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  jobClass  
+ 
+ public String jobClass(int jobId)
+ 
+   Returns the job class defined by the user.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+        Returns: 
+       a string provided by the user describing the job classification.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasksInJob  
+ 
+ public int numberOfTasksInJob(int jobId,
+                               int taskState)
+ 
+   Returns the number of tasks in the given state, contained by
+ the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      taskState - a task state.
+         Returns: 
+       the number of tasks in the given state, contained by
+ the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasksInJobOnPE  
+ 
+ public int numberOfTasksInJobOnPE(int jobId,
+                                   int peId)
+ 
+   Returns the number of tasks on the given processing element,
+ contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+         Returns: 
+       the number of tasks on the given processing element,
+ contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  numberOfTasksInJobOnPE  
+ 
+ public int numberOfTasksInJobOnPE(int jobId,
+                                   int peId,
+                                   int taskState)
+ 
+   Returns the number of tasks on the given processing element
+ in the given state, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+      taskState - a task state.
+          Returns: 
+       the number of tasks on the given processing element
+ in the given state, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasks  
+ 
+ public long[] tasks()
+ 
+   Returns an array with global task identifiers for tasks,
+ contained by jobs managed by this object.
+ 
+        Returns: 
+       an array with global task identifiers for tasks,
+ contained by jobs managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasks  
+ 
+ public long[] tasks(int state)
+ 
+   Returns an array with global task identifiers for tasks
+ in the given state, contained by jobs managed by this object.
+ 
+        Parameters: 
+       taskState - a task state.
+        Returns: 
+       an array with global task identifiers for tasks
+ in the given state, contained by jobs managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasksOnPE  
+ 
+ public long[] tasksOnPE(int peId)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by jobs managed
+ by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+        Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element, contained by jobs managed
+ by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksOnPE  
+ 
+ public long[] tasksOnPE(int peId,
+                         int taskState)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by jobs managed by this object.
+ 
+        Parameters: 
+       peId - a processing element identifier.
+      taskState - a task state.
+         Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by jobs managed by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksInJob  
+ 
+ public long[] tasksInJob(int jobId)
+ 
+   Returns an array with global task identifiers for tasks
+ contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+        Returns: 
+       an array with global task identifiers for tasks
+ contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasksInJob  
+ 
+ public long[] tasksInJob(int jobId,
+                          int taskState)
+ 
+   Returns an array with global task identifiers for tasks in
+ the given state, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      taskState - a task state.
+         Returns: 
+       an array with global task identifiers for tasks in
+ the given state, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Job ,  Task 
+     
+     
+  tasksInJobOnPE  
+ 
+ public long[] tasksInJobOnPE(int jobId,
+                              int peId)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+         Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element, contained by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Task 
+     
+     
+  tasksInJobOnPE  
+ 
+ public long[] tasksInJobOnPE(int jobId,
+                              int peId,
+                              int taskState)
+ 
+   Returns an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+ 
+        Parameters: 
+       jobId - a global job identifier.
+      peId - a processing element identifier.
+      taskState - a task state.
+          Returns: 
+       an array with global task identifiers for all tasks
+ on the given processing element in the given state, contained
+ by the given job.
+        Throws:  IllegalArgumentException
+       if the given job is not
+ managed by this object.
+        See Also: 
+        Task 
+     
+     
+  getPEId  
+ 
+ public int getPEId(long taskId)
+ 
+   Returns the identifier for the processing element which the
+ given task is located on.
+ 
+        Parameters: 
+       taskId - global task identifier.
+        Returns: 
+       the identifier for the processing element which the
+ given task is located on.
+     
+     
+  getJobExecutionTime  
+ 
+ public float getJobExecutionTime(int jobId)
+ 
+   Returns the execution time for the given job.
+ 
+        Parameters: 
+       jobId - global job identifier.
+        Returns: 
+       the execution time for the given job.
+     
+     
+  getThroughput  
+ 
+ public int getThroughput(int start,
+                          int end)
+ 
+   Returns the throughput.
+ 
+        Parameters: 
+       start - start of time interval.
+      end - end of time interval.
+         Returns: 
+       the throughput.
+     
+     
+  getTaskStatistics  
+ 
+ public  TaskStatistics  getTaskStatistics(int taskId)
+ 
+   Returns statistics for the given task.
+ 
+        Parameters: 
+       taskId - global task identifier.
+        Returns: 
+       statistics for the given task.
+     
+     
+  handleEvent  
+ 
+ public void handleEvent( SimEvent  event)
+ 
+   Handles incoming events.
+ 
+        Parameters: 
+       event - incoming event.
+     
+     
+  jobEnded  
+ 
+ protected void jobEnded(int jobId)
+ 
+   Called by an ended job.
+ 
+        Parameters: 
+       jobId - global job indetifier of ended job.
+     
+     
+  getJob  
+ 
+ protected  Job  getJob(int jobId)
+ 
+   Returns the sought job.
+ 
+        Parameters: 
+       jobId - global job identifier for sought job.
+        Returns: 
+       the sought job.
+     
+     
+  getTask  
+ 
+ public  Task  getTask(long taskId)
+ 
+   Returns the sought task.
+ 
+        Parameters: 
+       taskId - global task identifier for sought task.
+        Returns: 
+       the sought task.
+     
+  </body> 

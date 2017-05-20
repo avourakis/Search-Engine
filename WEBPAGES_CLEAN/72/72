@@ -1,0 +1,525 @@
+ Goals<body>
+
+ 
+
+ 
+Goals
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+ 
+   
+    
+    Fig. #.  The relationships among goals and other requirements entities
+   
+ 
+
+ 
+A  goal  is the result toward which effort is directed,
+an objective that should be achieved. 
+A goal expresses what is desired,
+and in addition usually conveys why it is desired
+and the larger context in which the motivations and rationales behind it
+can be understood. 
+ 
+
+ 
+Here are some examples of goals: 
+ 
+   " Ensure  that only the account owner
+    can access the account." 
+   
+    " Prevent  the thrust reversers
+    from operating during flight." 
+   
+    " Achieve  an "A" in this course." 
+   
+    "Be familiar with the issues, areas, and techniques
+    of requirements engineering." 
+   
+  
+Goals are most commonly expressed as imperative sentences
+beginning with a verb (as in the examples above). 
+ 
+
+
+ Kinds of goals 
+
+ 
+Goals can be classified in several ways. 
+ 
+
+ Functional / non-functional, behavioral / developmental-quality 
+
+  
+     Functional  goals express services that a system is to deliver. 
+   
+   
+    All other goals are  non-functional . 
+    These include goals related to the "-ilities"
+    (suitability, reliability, usability, interoperability, verifiability, ...). 
+   
+     Examples
+       
+       "Provide safe, reliable, and quick transportation around campus" 
+       
+       (functional)
+       
+     "Print a receipt for every transaction" 
+       
+       (functional)
+       
+     "Be self-explanatory and easy to use". 
+       
+       (non-functional)
+       
+      
+A slightly different classification is also made for them. 
+ behavioral  goals or  developmental quality  goals
+(or goals that are neither): 
+ 
+
+  
+     Behavioral  goals characterize what a system's behavior is to be. 
+    These goals are satisfied (or not) by what the system does when it runs. 
+   
+   
+     Developmental quality  goals characterize the process by which
+    a system is produced and evolved. 
+    These goals are satisfied (or not) by the actions of
+    the people responsible for producing a system.
+   
+     Examples
+       
+       "Turn out the lights when the room is unoccupied" 
+       
+       (behavioral)
+       
+     "Be thoroughly testable so that customers will have a high level of confidence". 
+       
+       (developmental quality)
+       
+      
+Functional/non-functional and behavioral/developmental-quality
+don't quite divide goals the same way. 
+Most notably,
+there are nonfunctional goals (such as, perhaps, "Cost less than  per copy")
+that are arguably neither
+behavioral goals (because they don't address the system's behavior)
+nor developmental quality goals
+(because they don't characterize the development process). 
+There are arguably behavioral goals (such as, perhaps,
+"Secretly provide access to internal program state
+needed to make testing more effective")
+that are more closely related to a nonfunctional goal
+such as testability
+than to any ordinary functional goal. 
+It seems that
+every developmental-quality goal would also be a non-functional goal,
+and any functional goal would also be a behavioral goal
+(I have not come up with counterexamples, in any case). 
+ 
+
+
+ Hard / soft 
+
+ 
+Some goals are either satisfied or not satisfied — there is no in-between. 
+ 
+
+ 
+Other goals (probably the vast majority)
+cannot be completely satisfied, but only satisfied to a degree;
+these are called  soft goals . 
+ 
+
+ 
+Soft goals can be said to be  satisficed  (rhymes with "iced")
+rather than satisfied
+(a word due to Herb Simon in 1956). 
+A soft goal is satisficed if it is achieved to a degree that is acceptable,
+with the understanding that this may cover a wide range of relative achievement,
+and that complete achievement is not possible. 
+If a soft goal is not satisficed,
+then it is  denied . 
+ 
+
+
+ Achieve / maintain / optimize 
+
+ 
+Another way of classifying goals
+relates to their temporal characteristics. 
+ 
+
+  
+    An  Achieve  goal refers to a property that is
+    not initially true, but that becomes true. 
+   
+   
+    A  Maintain  goal refers to a property that
+    starts out true and stays that way. 
+   
+   
+    A  Stop  goal refer to a property that is
+    not initially false, but that becomes false. 
+   
+   
+    A  Prevent  goal refers to a property that s
+    starts out false and stays that way. 
+   
+   
+    An  Optimize  goal refers to a soft property
+    that is to be satisficed. 
+   
+  
+In terms of temporal logic,
+an  Achieve  goal is of the form "eventually P",
+while
+a  Maintain  goal is of the form "always P". 
+ 
+
+ 
+Some authors capitalize the verb of such goals,
+as I have done in some examples above. 
+ 
+
+
+ Identifying goals and obstacles to them 
+
+ 
+Talk to stakeholders and read documents, and ask "why" questions. 
+Look for motivations and rationales
+(rationale = a reasoned exposition of principles,
+an explanation or statement of reasons [OED]). 
+Ask what could prevent a goal from being satisfied;
+those things are  obstacles . 
+ 
+
+ 
+Once you have some goals, it is often possible to derive additional goals from them. 
+ 
+
+   Ask "why" about the goal (you may get a higher-level goal). 
+   
+    Ask how the goal is to be achieved (you may get its subgoals). 
+   
+    Abstract and generalize from the goal (you may get a larger goal). 
+   
+  
+   
+    
+    Fig. 1.  A goal structure for part of the London Ambulance System
+   
+ 
+
+ Goal structures 
+
+ 
+Goals can be related to each other by  contribution ,
+either partial or complete. 
+The satisfaction of one goal may contribute to another's satisfaction. 
+If the contributing goal is simpler or of smaller scope
+than the goal it contributes to,
+the contributing goal is called a  subgoal  of the other. 
+ 
+
+ 
+The contribution of a subgoal may be  positive ,
+or it may be negative
+(in which case we can equivalently say the goals  conflict ). 
+In the case of a conflict (i.e. negative contribution),
+satisfaction of the subgoal
+interferes with satisfaction of its supergoal. 
+ 
+
+ 
+An obstacle only contributes negatively, by definition. 
+An obstacle differs from a negatively-contributing subgoal
+in that achievement of an obstacle is not desired,
+whereas achievement of a goal is. 
+ 
+
+ 
+Two special cases of contribution are particularly useful. 
+In the first case, a group of subgoals is said to be an
+ AND-refinement  of their supergoal if
+the satisfaction of all of the AND subgoals
+is sufficient to ensure satisfaction of their supergoal. 
+In the second case, a group of subgoals is said to be an
+ OR-refinement  of their supergoal if
+satisfaction of any one of the OR subgoals
+is sufficient to ensure satisfaction of their supergoal. 
+ 
+
+ 
+These relationships can be drawn in a diagram like Fig. 1. 
+In this diagram of some goals for the London Ambulance System,
+complete contribution is shown by solid arrows. 
+The arrows for the contributions of AND-subgoals
+are grouped by a circle;
+the arrows for contributions of OR-subgoals
+go all the way to their supergoal. 
+See the four subgoals of "Allocated Ambulance Mobilized"
+at the bottom of the figure: 
+it has two OR-ed contributions, one the AND of the two subgoals on the left,
+and the other the AND of the two subgoals on the right. 
+ 
+
+ 
+The figure also shows a goal whose partial contribution
+is indicated by a dotted line,
+and whose mitigation of an obstacle is shown
+by an arrow to the obstacle. 
+The obstacle's negative contribution to the goal it obstructs
+is indicated by an arrow with a bar across it
+(that arrow is red for emphasis). 
+ 
+
+ 
+These goals could be either hard or soft goals. 
+In the case of a soft subgoal,
+satisficing of the subgoal contributes to its supergoal;
+in the case of a soft supergoal,
+its subgoal contributes to the satisficing of the supergoal. 
+ 
+
+
+ 
+    Fig. 2.  Key for Figs. 3-5
+   
+ 
+
+ Example analysis of goal relationships 
+
+ 
+It is possible to draw arrows among all goals that contribute to each other,
+and end up with a diagram that looks like a tangle
+and that is so complex it is not helpful. 
+The way to combat this
+is to refine each goal into its AND and OR subgoals,
+put each larger goal above its smaller subgoals,
+and then eliminate all the arrows
+that are implied by inheritance. 
+When you have two goals that are related,
+but not in a way that you can express easily,
+the best approach is usually to refine each of them into subgoals,
+and try to find a common subgoal
+(if the original goals contributed partially to each other)
+or two subgoals that are in conflict
+(if the original goals conflicted partially with each other). 
+ 
+
+ 
+    Fig. 3.  Goal analysis (first step)
+   
+ 
+
+ Example goal analysis — Step 1 
+
+ 
+In the first step,
+six goals for an elevator were produced. 
+Some of the goals partially contribute to others, and
+one goal partially conflicts with another;
+the diagram indicates the partial contributions with dashed lines and arrows,
+and conflicts with slashes across the lines and arrows. 
+The goals are:
+ 
+
+  Comfortable Transport 
+   
+    Move passengers in such a way that they are not made uncomfortable by the process.
+   
+   Fairness of Service 
+   
+    Be fair to all passengers.
+   
+   Minimize Waiting 
+   
+    Minimize the time passengers spend waiting for the elevator.
+   
+   Safe Entry and Exit 
+   
+    Leave the doors open long enough that all passengers can
+    enter and exit the elevator safely.
+   
+   Speedy Transport 
+   
+    Move passengers quickly to their destinations.
+   
+   Transport Passengers 
+   
+    Move passengers from floor to floor.
+   
+  
+    Fig. 4.  Goal analysis (second step)
+   
+ 
+
+ Example goal analysis — Step 2 
+
+ 
+In the second step,
+several changes have been made. 
+The first change is that the goals have been re-expressed more exactly,
+and some new goals and  obstacles  have been added. 
+A number of partial contributions have been added, to the goal structure,
+indicating that we know the goals they connect are related
+but aren't sure how yet. 
+ 
+
+   Acceleration Limit  
+   
+    There is a limit to how rapidly a passenger can be
+    accelerated in an elevator
+    without feeling uncomfortable or worse.
+   
+   Comfortable Transport 
+   
+    Move passengers in such a way that they are not made uncomfortable by
+    any part of the process.
+   
+   Doors Open Long Enough 
+   
+    Leave the elevator doors open long enough
+    when passengers are entering and exiting
+    so that no passenger must move uncomfortably quickly.
+   
+   Fairness of Service 
+   
+    Minimize the amount of variation in the time it takes
+    for passengers to make analogous trips.
+   
+   Minimize Transport Time 
+   
+    Minimize the time between when a passenger presses a call button
+    and when the passenger exits at his/her destination floor.
+   
+   Minimize All Waiting 
+   
+    Minimize the average time all passengers spend waiting for an elevator.
+   
+   Minimize Waiting 
+   
+    Minimize the time passengers spend waiting for an elevator.
+   
+   Safe Transport 
+   
+    Transport each passenger without injury.
+   
+   Safe Entry and Exit 
+   
+    Leave the doors open long enough that all passengers can
+    enter and exit the elevator safely.
+   
+   Slow Enough Acceleration 
+   
+    Reduce the maximum acceleration of the elevator
+    enough that no passenger is made uncomfortable.
+   
+   Speedy Transport 
+   
+    Minimize the time between when a passenger enters the elevator
+    and when the passenger exits at his/her destination floor.
+   
+   Transport Passengers 
+   
+    Move passengers from floor to floor in a satisfactory manner.
+   
+    Walking Limit  
+   
+    Passengers, especially disabled or elderly passengers,
+    can only walk so fast.
+   
+  
+    Fig. 5.  Goal analysis (third step)
+   
+ 
+
+ Example goal analysis — Step 3 
+
+ 
+In the third and final step for this example,
+two more subgoals have been added
+that specify how  Minimize Waiting  and  Speedy Transport 
+can be achieved. 
+These subgoals are in conflict with the existing goals
+ Slow Enough Acceleration  and  Minimize Doors Open ,
+and make the two obstacles in the preceding step unnecessary. 
+An additional subgoal  Optimal Routing  has been added for
+ Minimize All Waiting ,
+so that the partial contribution from  Minimize Waiting 
+can become complete contribution as an AND-subgoal. 
+All the goals added in the previous step
+have been integrated into the goal structure
+so that each is an AND or singleton subgoal of another goal. 
+Each of the partial contributions in step 2
+has been expressed by the sharing of a specific subgoal,
+or by subgoals that conflict. 
+ 
+
+  Fast Acceleration 
+   
+    Accelerate the elevator as fast as possible between floors.
+   
+   Minimize Doors Open 
+   
+    Minimize the time the doors are open.
+   
+   Optimal Routing 
+   
+    Route the elevator among the floors in a way
+    that minimizes a summing function of all wait times.
+   
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Sep23We10:12 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

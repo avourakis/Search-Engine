@@ -1,0 +1,168 @@
+ Asst. 2 * Functional Programming<body>
+  
+ 
+   This assignment is due on Monday, January
+31; deposit your assignment in the locking drop box in room CS 189.  Try
+to finish the assignment by Friday morning so you can ask questions about
+it in discussion.  
+ 
+  Summary:   In the last lab, you became
+comfortable (or at least conversant) with the Scheme interpreter, with Scheme
+syntax, and with the recursive style of list processing.  In this assignment
+you will work with list structures and explore some programming techniques
+using higher-order functions.  
+ 
+  (a)   Draw box-and-pointer diagrams
+(as shown on page 579 of Sebesta) for the following expressions.  For the
+empty list, use an empty cell (rather than a cell pointing to the symbol
+  NIL  ,
+as Sebesta does).  
+ 
+    *    (Franz
+() Klefstad)  
+ 
+    *    ((Pratt
+Mehrotra Baldi))  
+ 
+    *    ((Pratt
+Gennari) (Venkatasubramanian Mehrotra) (Mark Kobsa))  
+ 
+    *    (Ackerman
+(King (Grudin (Kling))))  
+ 
+    *    (define
+fact (lambda (x) (if (&lt;= 0 x) 1 (* x (fact (- x 1))))))  
+ 
+  (b)   Write the Scheme expression that
+corresponds to each of the two box-and-pointer diagrams below.   
+ 
+  
+   
+  
+ 
+  (c)   Sebesta defines the function   mapcar  ,
+more commonly called   map  :  
+ 
+    *   (map  
+    action         list    )  ,
+which returns a list, each of whose elements is the result of applying   action  
+(a function) to the corresponding element of   list  .  
+ 
+ Another function that takes another function
+as an argument is   filter  :  
+ 
+    *   (filter
+    test?         list    )  ,
+which returns a list of those elements in   list   that satisfy
+  test?   (which is a predicate--a function that returns true
+or false, given an element of  list. )  
+ 
+ Write a definition of   filter  .
+ Check the Notes on Scheme handout, which contains a function that does
+the same task.  
+ 
+ Now look at this third function:  
+ 
+    *    (accumulate
+    action         initial-value    
+    list    )  ,
+which is defined as follows:  
+       
+ 
+(define accumulate
+ 
+   (lambda (action initial-value list)
+ 
+      (cond
+ 
+         ((null? list) initial-value)
+ 
+         (else (action (first list) 
+ 
+                       (accumulate action
+initial-value (rest list)))))))   
+ 
+  (c.1)   What is the result of evaluating
+each of these expressions?  Try them by hand before typing them in to check
+your answer; you won't have a Scheme interpreter on the exams.  
+ 
+    *   (accumulate
++ 0 '(1 2 3 4 5))  
+ 
+    *   (accumulate
+(lambda (a b) (+ b (if (even? a) a 0))) 0 '(1 2 3 4 5))  
+ 
+    *   (accumulate
+cons '() '(Huey Dewey Louie))  
+ 
+    *   (accumulate
+max -1 '(1953 1956 1949 1991 1964))  
+ 
+  (c.2)   Assume you have a function   (interval
+a b)   that returns a list of all the
+integers between   a  
+and   b  ,
+inclusive (so that   (interval 5 10)  
+would return   (5 6 7 8 9 10)  ).
+ (Re-)write the function   factorial  
+using   accumulate  
+(and   interval  ),
+without any explicit recursion.  
+ 
+  (c.3)   Now, think back to the restaurant
+database and assume we have a standard Lisp list (called   RL  )
+of the restaurant objects as we described.  For each of the following expressions,
+describe in one English sentence what value it returns.  Don't just
+say, "It does an accumulate of plus and zero to a map of ... ;"
+give a description of what the expression  means,  something you could
+put in a software catalog so that a prospective buyer could find what he
+or she wanted.  
+ 
+    *   (accumulate
++ 0 (map (lambda (R) 1) RL))  
+ 
+    *   (filter
+(lambda (R)(equal? 'Ethiopian (rest-cuisine R))) RL)  
+ 
+    *   (/
+(accumulate + 0 (map (lambda (R) (rest-price R)) RL))
+ 
+        (accumulate + 0 (map (lambda (R) 1) RL)))  
+ 
+    *   (let
+((PRL (filter (lambda (R) (equal? 'pizza (rest-dish R))) RL)))
+ 
+       (/ (accumulate + 0
+ 
+            (map (lambda (R) (rest-price R)) PRL))
+ 
+         (accumulate + 0 (map (lambda (R) 1) PRL))))  
+ 
+  (c.4)   Using   map  ,
+  filter  ,
+and   accumulate  ,
+write an expression to return each of the following values without using
+explicit recursion:  
+ 
+    * a list of all the French and
+Italian restaurants in RL  
+ 
+    * a list of all the  names 
+of the French and Italian restaurants in RL  
+ 
+    * a list of all the restaurants
+in RL whose best dish costs between $10.00 and $20.00 (inclusive).  
+ 
+    * the name of the lowest-priced
+French restaurant in RL  
+ 
+    * (extra credit) a list of all
+the restaurants in RL, where every French restaurant whose best dish's
+price is less than the average (price of best dishes at French restaurants)
+has its price changed to that average price.  
+ 
+ You aren't required to code up and run
+the solutions to this problem; you can do them with pencil and paper.  However,
+coding them up is good practice, it can help you verify that your solutions
+are right, and it might earn you a bit of extra credit.  
+ </body> 

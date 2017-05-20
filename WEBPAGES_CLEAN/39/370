@@ -1,0 +1,2217 @@
+ XML Schemas<body>
+
+ 
+
+ 
+XML Schemas
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Table of contents 
+
+ 
+    Introduction and context  
+    Basics  
+    An element  
+    Schema  
+    Referencing a schema in an XML file  
+    Elements and types in a schema  
+    Simple and complex types  
+    Empty, simple, complex, and mixed content  
+    Character data  
+    Attribute types  
+    Element  
+    Simple type  
+    Restriction (of a simple type)  
+    List  
+    Union  
+    Predefined types  
+    Complex type  
+    Simple content  
+    Complex content  
+    Extension  
+    Restriction (of a complex type)  
+    Compositors  all ,  choice , and  sequence   
+    Particles  any  and  group   
+    Attribute for a complex type  
+    Attribute group  
+    Any attribute allowed  
+    Attributes common to several schema elements  
+    More on  element   
+    More on  schema   
+    Comments  
+    Uniqueness constraints  
+    Advanced  
+    The distinction between lexical and value spaces  
+  
+
+
+ Introduction and context 
+
+ 
+This is a partial description of the XML Schema language. 
+It is provided because the W3C specification and published descriptions
+of the language
+are difficult to follow, especially for a novice. 
+For a variety of reasons,
+the XML Schema language is complex, apparently arbitrary,
+and difficult to explain or understand in its entirety. 
+This description does not give every feature of XML Schema
+nor every way of doing things,
+but rather a (relatively) straightforward approach
+for defining most XML languages. 
+ 
+
+ 
+The W3C documents current at this writing
+are available online: 
+the  XML Schema home page 
+and the XML Schema specification,
+consisting of
+ XML Schema Part 0: Primer ,
+ XML Schema Part 1: Structures , and
+ XML Schema Part 2: Datatypes . 
+ 
+
+ 
+A useful Java package is
+Apache  XMLBeans ,
+which provides methods to marshal and unmarshal XML to/from Java objects
+and also a most useful verification tool ( validate )
+for schemas and for XML files intended to match a particular schema. 
+All examples in this page were checked using  validate . 
+ 
+
+
+ Basics 
+
+ An element 
+
+ 
+An  element  consists of
+a start tag and end tag and everything in between,
+or an empty-element tag. 
+A pair of start and end tags have the same name. 
+A  start tag  consists of an initial &lt;, the name,
+possibly some attributes, and a terminal &gt;. 
+An  end tag  has no attributes,
+and consists only of an initial &lt;/,
+the tag name, and a terminal &gt;. 
+The material between an element's start tag and end tag
+are its  contents . 
+The contents may contain elements, and if so they must be
+either empty-element tags
+or paren-nested start and end tags. 
+An  empty-element tag  starts with &lt; and its name,
+may have attributes following its name,
+and ends with /&gt;. 
+ 
+
+ 
+A tag's name may be
+ 
+
+  
+    a  localname  such as  item 
+    with no namespace prefix,
+    corresponding to the
+      xs:NCName   predefined type; 
+    or
+   
+   
+    a  qualified name  or  qname   such as  xs:QName 
+    with a namespace prefix,
+    corresponding to the
+      xs:QName   predefined type. 
+    The prefix must have been defined in an
+      xmlns:*   attribute
+    such as  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+    of the current element or a parent element. 
+   
+  
+Examples: 
+ 
+
+   An empty-element tag:   &lt;name attr='value'/&gt; 
+   
+    Matched start and end tags: 
+
+ 
+&lt;name attr='value'&gt;
+   ...  character data  or other elements can appear here ... 
+&lt;/name&gt;
+ 
+   
+  Schema 
+
+ 
+A  schema  is a file defining a grammatical form for XML files. 
+The schema itself is in XML of a particular grammatical form described here. 
+The schema file defines a single   schema   element,
+and looks something like this:
+ 
+
+ 
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    elementFormDefault='qualified'
+    attributeFormDefault='unqualified'
+    xml:lang='en'&gt;
+    ...
+&lt;/xs:schema&gt;
+ 
+
+ 
+with the  ...  representing the schema. 
+ 
+
+ 
+The line
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+is the  XML declaration . 
+ 
+
+ 
+In this schema,
+the attribute  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+of the  schema  element
+makes  xs  represent the namespace of the XMLSchema definition,
+so that a prefix of  xs:  identifies the schema elements
+(such as  xs: simpleType  ); 
+We will use  xs:  throughout this document. 
+Any prefix can be used ( xsd:  is also common)
+as long as it is defined in the  schema  element. 
+ 
+
+ 
+An element is at the  top level 
+if it is a child element of the schema element
+(rather than a child of a child, or a child of a child of a child, etc). 
+ 
+
+ 
+ More on the schema element ... 
+ 
+
+
+ Referencing a schema in an XML file 
+
+ 
+An XML element can identify its schema(s)
+in the  xsi: schemaLocation   and
+ xsi: noNamespaceSchemaLocation  
+attributes. 
+These two attributes are in the
+ http://www.w3.org/2001/XMLSchema-instance  namespace. 
+ 
+
+ 
+The  xsi: schemaLocation   attribute's
+value is a list of whitespace-separated
+namespaces and URIs for corresponding schemas. 
+ 
+
+ 
+  &lt;anElement xmlns='http://www.w3.org/1999/XSL/Transform'
+             xmlns:html='http://www.w3.org/1999/xhtml'
+             xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+             xsi:schemaLocation='http://www.w3.org/1999/XSL/Transform
+                                 http://www.w3.org/1999/XSL/Transform.xsd
+                                 http://www.w3.org/1999/xhtml
+                                 http://www.w3.org/1999/xhtml.xsd'&gt;
+   ...
+  &lt;/anElement&gt;
+ 
+
+ 
+(example adapted  from the W3C XML Schema Structures document) 
+ 
+
+ 
+The
+ xsi: noNamespaceSchemaLocation  
+attribute's
+value is a single URI for the schema for elements and attributes
+with no namespace. 
+ 
+
+
+ Elements and types in a schema 
+
+ 
+Each XML element defined in a schema has a  type . 
+The type is defined either
+as part of the element definition,
+or elsewhere as a named type
+(with the   name   attribute)
+and referred to by that name in the element definition
+(with the   type   attribute). 
+Each type definition consists of a
+  simpleType   or a
+  complexType   element. 
+Each attribute of an element has a type as well; 
+attribute types are restricted to be
+  simpleType  s. 
+ 
+
+ 
+The element definition itself is made using an
+ element  element
+(which is confusing to say, but natural to do). 
+ 
+
+ 
+Examples: 
+ 
+
+   An element containing a string; 
+    its type is the basic XML type   string  
+    and is referred to in the element definition. 
+ 
+  &lt;xs:element name='stringElement' type='xs:string'/&gt;
+ 
+   
+
+    An element containing a string; 
+    this example's type is defined as part of the element definition. 
+    (In practice, one would simply define the element
+    as in the preceding example.) 
+ 
+  &lt;xs:element name='stringElementSimpleType'&gt;
+    &lt;xs:simpleType&gt;
+      &lt;xs:restriction base='xs:string'/&gt;
+    &lt;/xs:simpleType&gt;
+  &lt;/xs:element&gt;
+ 
+   
+
+    An element containing a string and with an attribute. 
+    The element type is defined as part of the element definition. 
+ 
+  &lt;xs:element name='stringLangElementComplexType'&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:simpleContent&gt;
+        &lt;xs:extension base='xs:string'&gt;
+          &lt;xs:attribute name='language' type='xs:string'/&gt;
+        &lt;/xs:extension&gt;
+      &lt;/xs:simpleContent&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+ 
+   
+
+    An element containing a string and with an attribute. 
+    The element type is defined separately as  stringLangType 
+    and referred to in the element definition. 
+ 
+  &lt;xs:element name='stringLangElement' type='stringLangType'/&gt;
+  
+  &lt;xs:complexType name='stringLangType'&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base='xs:string'&gt;
+        &lt;xs:attribute name='language' type='xs:language'/&gt;
+      &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+ 
+   
+
+  
+Although the same XML Schema constructs
+are used to define element and attribute types,
+those types are interpreted in different ways. 
+An attribute type is simply
+a definition of the set of values that attribute can be given. 
+An element type, on the other hand,
+gives the values that the element can contain
+(and possibly the names and types of the element's attributes). 
+In example (a) above,
+ xs: string  
+is the type of the contents of the element,
+while in example (c)
+the same type  xs: string  
+is the type of the values of
+the attribute  language . 
+ 
+
+ 
+Rather than separating the definitions of
+element and attribute types,
+XML Schema divides types into
+  simpleTypes   and
+  complexTypes  . 
+Attribute types are restricted to be
+  simpleTypes  ,
+while element types can be either
+  simpleTypes  
+(interpreted as element contents) or
+  complexTypes  . 
+ 
+
+
+ Simple and complex types 
+
+ 
+A  simple type  may contain only
+ character data ,
+and may not have attributes. 
+All other types are  complex . 
+A simple type is defined using a
+  simpleType   element,
+and
+a complex type is defined using a
+  complexType   element. 
+ 
+
+    Type 
+     Element may contain 
+     Element may have attributes 
+     simple 
+      Character data  only 
+     No 
+     complex 
+      Character data , other elements, or both 
+     Yes 
+      Empty, simple, complex, and mixed content 
+
+ 
+Element content may be  empty, simple, complex,  or  mixed . 
+ 
+
+    Content 
+     Element may contain 
+     Indicated by 
+     empty 
+     Nothing 
+       simpleType  
+          containing no  character data 
+          ( example )
+          or   complexType  
+          containing no  character data  and no elements
+          (easier  example ) 
+     simple 
+      Character data  only 
+       simpleType   or   complexType  
+          containing   simpleContent   
+     complex\n 
+     Other elements 
+       complexContent  
+        declaring those subelements 
+     mixed 
+      Character data  and other elements 
+       complexContent  
+        declaring those subelements,
+        with attribute  mixed='true'  
+      
+Simple types must have simple or empty content; 
+complex types may have any kind of content, . 
+ 
+
+
+ Character data 
+
+ 
+Character data may consist of
+any characters except &lt; or literal &amp;. 
+A &lt; may be represented as  &amp;lt; ,
+and an &amp; as  &amp;amp; . 
+ 
+
+ 
+Within an attribute value,
+character data may not contain the quote characters bracketing it. 
+A ' may be represented as  &amp;apos; ,
+and a " as  &amp;quot; . 
+ 
+
+
+ Attribute types 
+
+ 
+Attribute types must be defined separately from the element that uses them,
+and they must be simple types containing simple content. 
+ 
+
+
+ Element 
+
+ 
+An   element   element
+defines an element that may appear in an XML file. 
+If the   element   is defined at the top level,
+then the XML file may contain an instance of the element
+as its sole contents; 
+otherwise, the XML file may contain an instance of the element
+as part of another element. 
+ 
+
+ 
+Every   element   must have a name,
+specified by its   name   attribute. 
+ 
+
+ 
+An   element   element may specify its type in one of these ways:
+ 
+
+   by naming the type in its  type  attribute,
+   
+    by containing a   simpleType   element, or
+   
+    by containing a   complexType  
+      element. 
+   
+  
+An element with  simple content 
+may have either (but not both) of these attribute:
+ 
+
+     default  
+    giving the value that is assumed if the element is empty, or
+   
+      fixed  
+    giving the only value the element is allowed to have. 
+   
+  
+An element may also have its contents restricted using either of these elements:
+ 
+
+     key  
+   
+      keyref  
+   
+      unique  
+   
+  Simple type 
+
+ 
+A   simpleType   element must contain
+an element of one of these kinds: 
+ 
+
+     restriction  ,
+   
+      list  , or
+   
+      union  . 
+   
+  Restriction (of a simple type) 
+
+ 
+A   restriction   element
+defines a new type by restricting an already-existing type
+to produce a smaller set of values. 
+The already-existing type is named in the
+  restriction   element's
+  base   attribute. 
+There are many ways of restricting a type,
+some of which are listed below. 
+ 
+
+ 
+(Note that a complex type can also be defined by
+  restriction  ,
+using the same tag but with additional possibilities.) 
+ 
+
+
+ By a regular expression 
+
+ 
+Perl notation is used for the regular expression. 
+The set of values are all those that completely match the pattern. 
+ 
+
+ 
+  &lt;xs:simpleType name='vowelString'&gt;
+    &lt;xs:restriction base='xs:string'&gt;
+      &lt;xs:pattern value='[aeiou]+'/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+ 
+
+ By enumeration of the restricted set of values 
+
+ 
+The values are given in the  value  attribute of
+  enumeration   elements. 
+ 
+
+ 
+  &lt;xs:simpleType name='emptySimpleType'&gt;
+    &lt;xs:restriction base='xs:string'&gt;
+      &lt;xs:enumeration value=''/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+
+  &lt;xs:simpleType name='subtractiveColors'&gt;
+    &lt;xs:restriction base='xs:string'&gt;
+      &lt;xs:enumeration value='blue'/&gt;
+      &lt;xs:enumeration value='brown'/&gt;
+      &lt;xs:enumeration value='green'/&gt;
+      &lt;xs:enumeration value='orange'/&gt;
+      &lt;xs:enumeration value='purple'/&gt;
+      &lt;xs:enumeration value='red'/&gt;
+      &lt;xs:enumeration value='yellow'/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+
+  &lt;xs:simpleType name='smallSquares'&gt;
+    &lt;xs:restriction base='xs:integer'&gt;
+      &lt;xs:enumeration value='0'/&gt;
+      &lt;xs:enumeration value='1'/&gt;
+      &lt;xs:enumeration value='4'/&gt;
+      &lt;xs:enumeration value='9'/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+ 
+
+ By length 
+
+   The length may be limited by a minimum;
+   
+    or by a maximum;
+   
+   or to a single value. 
+   
+  
+  &lt;xs:simpleType name='threeChars'&gt;
+    &lt;xs:restriction base='xs:string'&gt;
+      &lt;xs:length value='3'/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+
+  &lt;xs:simpleType name='threeToFiveChars'&gt;
+    &lt;xs:restriction base='xs:string'&gt;
+      &lt;xs:minLength value='3'/&gt;
+      &lt;xs:maxLength value='5'/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+ 
+
+
+ List 
+
+ 
+List types describe lists of elements of simple type; 
+the lists are represented with whitespace between the elements. 
+Definition of list types is not discussed here. 
+ 
+
+
+ Union 
+
+ A   union   element defines a new simple type
+that is the union of two or more other simple types. 
+The new type consists of everything that the component types comprise. 
+The types may be listed by name in the  memberTypes  attribute,
+or defined in the contents of the
+  union   element,
+or both. 
+ 
+
+ 
+  &lt;xs:simpleType name='vowelsOrColors'&gt;
+    &lt;xs:union memberTypes='vowelString subtractiveColors'/&gt;
+  &lt;/xs:simpleType&gt;
+ 
+
+ 
+  &lt;xs:simpleType name='vowelsOrColors2'&gt;
+    &lt;xs:union memberTypes='subtractiveColors'&gt;
+     &lt;xs:simpleType&gt;
+        &lt;xs:restriction base='xs:string'&gt;
+          &lt;xs:pattern value='[aeiou]+'/&gt;
+        &lt;/xs:restriction&gt;
+      &lt;/xs:simpleType&gt;
+    &lt;/xs:union&gt;
+  &lt;/xs:simpleType&gt;
+ 
+
+
+
+ Predefined types 
+
+ 
+All predefined types are simple content
+except for  anyType , the supertype of all types. 
+ 
+
+   xs: anySimpleType   
+     The supertype of all simple types,
+      provided for use when deriving a type
+      if no other supertype will do. 
+     
+    xs: string   
+     Strings of printable  character data . 
+         xs: normalizedString   
+           Like  xs: string  , but
+            the only whitespace characters are spaces
+            (on input, other whitespace is replaced by spaces).
+               xs: token   
+                 Like  xs: normalizedString  ,
+                  but
+                  leading spaces,
+                  sequences of two or more spaces,
+                  and trailing spaces
+                  are not allowed
+                  (on input, sequences are collapsed to single spaces
+                  and leading and trailing space is removed),
+                 
+              
+          xs: NMTOKEN   
+           Like  xs: string  
+            but restricted to name characters
+             [-_:.A-Za-z0-9]* .
+               xs: Name   
+                 Like  xs: NMTOKEN  
+                  but restricted to begin with a letter, colon, or underscore
+                   [_:A-Za-z][-_:.A-Za-z0-9]* . 
+                   (If you want a name in the usual sense,
+                  you probably want an
+                   xs: NCName  .) 
+                     xs: QName   
+                       A qualified name. 
+                        Like  xs: Name   but
+                        can't start with a colon,
+                        and at most one colon is allowed. 
+                        For example, the string
+                        ' xs: QName  '
+                        is an  xs: QName  . 
+                       
+                      xs: NCName   
+                       Like  xs: Name   but
+                        no colons allowed
+                         [_A-Za-z][-_.A-Za-z0-9]* . 
+                         (This datatype is closest to
+                        what one ordinarily thinks of as a name.) 
+                           xs: ID   
+                             Like  xs: NCName  
+                              but programs processing an XML file must check that
+                              each attribute value and simple type element value
+                              of this type
+                              is unique within the document containing them. 
+                             
+                            xs: IDREF   
+                             Like  xs: NCName  
+                              but programs processing an XML file must check that
+                              each attribute value and simple type element value
+                              of this type
+                              is also an attribute or simple type element value
+                              of type  xs: ID  
+                              in the same file. 
+                             
+                          
+                    
+              
+          xs: language   
+           Like  xs: string  
+            but restricted to be language codes
+            (such as  en ,  fr , etc.).
+           
+          xs: anyURI   
+           Like  xs: string  
+            but restricted to be URIs; 
+            for example ' http://www.w3.org/2001/XMLSchema '. 
+           
+        
+    xs: boolean   
+     A boolean value. 
+      'true', 'false', '1', or '0'. 
+     
+
+    xs: decimal   
+     A decimal number. 
+      Like  xs: string  
+      but restricted to be
+       [-+]?[0-9]+(.[0-9]+)  or
+       [-+]?[0-9]*.[0-9]+ . 
+         xs: integer   
+           A decimal number with no fractional digits. 
+            Like  xs: decimal  
+            but restricted to be
+             [-+]?[0-9]+ . 
+            Has these self-explanatory subtypes: 
+             xs: byte  ,
+             xs: int  ,
+             xs: long  ,
+             xs: negativeInteger  ,
+             xs: nonNegativeInteger  ,
+             xs: nonPositiveInteger  ,
+             xs: positiveInteger  ,
+             xs: short  ,
+             xs: unsignedByte  ,
+             xs: unsignedInt  ,
+             xs: unsignedLong  ,
+             xs: unsignedShort  . 
+           
+          xs: float   
+           Like  xs: decimal  
+            but with an optional  E[-+]?[0-9]+  on the end,
+            plus also the speciol values
+             INF ,
+             -INF , and
+             NaN . 
+            There is also  xs: double  ,
+            just like  xs: float   but can be twice as long, 
+           
+          xs: binary   
+           Values are  true ,  false ,
+             1 , and  0 . 
+           
+        
+
+    xs: dateTime   
+     A date and time of the form
+       CCYY - MM - DD T hh : mm : ss . 
+      The hyphens, T, and colons are required. 
+      Fractional seconds and a time zone
+      (Z or a time offset such as +05:00) are allowed. 
+         xs: date   
+           Like  xs: dateTime  
+            but without hours, minutes, or seconds
+            (time zone is still allowed). 
+           
+          xs: gDay   
+           Like  xs: dateTime  
+            but without century, year, month,
+            hour, minute, or second
+            (time zone is still allowed). 
+           
+          xs: gMonth   
+           Like  xs: dateTime  
+            but without century, year, day,
+            hour, minute, or second
+            (time zone is still allowed). 
+           
+          xs: gMonthDay   
+           Like  xs: dateTime  
+            but without century, year,
+            hour, minute, or second
+            (time zone is still allowed). 
+           
+          xs: gYear   
+           Like  xs: gYearMonth  
+            but without the month
+            (time zone is still allowed). 
+           
+          xs: gYearMonth   
+           A Gregorian year and month (thus the 'g'). 
+            Like  xs: date   but without the day
+            (time zone is still allowed). 
+           
+          xs: time   
+           Like  xs: dateTime  
+            but without century, year, month, or day
+            (time zone is still allowed). 
+           
+        
+
+    xs: duration   
+     A duration of the form
+       xs: P nYnMnD T nHnMnS . 
+      The P is required, and the T is required
+      if any of the later elements are present. 
+      Each nX substring represents a number and a unit
+      (years, months, days, etc.); 
+      the number of seconds can be  xs: decimal  ,
+      the number of any other unit must be
+       xs: integer  . 
+     
+  
+Not discussed here: 
+base64Binary, ENTITY, ENTITIES, hexBinary, IDREFS, NMTOKENS, NOTATION. 
+ 
+
+
+ Complex type 
+
+ 
+A   complexType   element must contain
+an element of one of these kinds: 
+ 
+
+     simpleContent  ,
+   
+      complexContent  ,
+   
+    any  compositor 
+      (  all  ,
+          choice  , or
+          sequence  ), or
+   
+    a   group  . 
+   
+  
+In addition,
+a   complexType   element may contain
+elements of these kinds: 
+ 
+
+     attribute   (any number of these),
+   
+      attributeGroup  
+      (any number of these), and/or
+   
+      anyAttribute  .
+   
+     A   complexType  
+        may  be defined to have: 
+     by giving it: 
+      empty content  
+     an empty
+          complexContent   element
+        with no  mixed='true'  attribute
+        ( example ) 
+      simple content  
+     a   simpleContent   element 
+      complex content  
+     a non-empty
+          complexContent   element,
+        or a  compositor 
+        or  particle  
+      mixed content  
+      complex content  and
+        the  mixed='true'  attribute.  
+      
+For simplicity,
+we will say a complex type is
+ 
+
+    complex-simple 
+      if it has empty or simple content,
+      and
+   
+     complex-complex 
+      if it has complex or mixed content. 
+   
+  Simple content 
+
+ 
+A
+  simpleContent  
+element of a
+  complexType   element must contain
+an element of either of these kinds: 
+  
+
+   an   extension  
+      of a  simple type 
+      (without adding child elements), or
+   
+    a   restriction  
+      of a  simple type . 
+   
+  Complex content 
+
+ 
+A
+  complexContent  
+element of a
+  complexType   element must contain
+an element of either of these kinds: 
+ 
+
+   an   extension  
+      of a  simple 
+      or  complex type , or
+   
+    a   restriction  
+      of a  simple 
+      or  complex type . 
+   
+  
+If the  mixed='true'  attribute is given,
+the contents may include  character data 
+as well as child elements; 
+otherwise,
+it may only include child elements. 
+ 
+
+
+ Extension 
+
+ 
+An   extension   element
+creates a new type by adding elements and/or attributes to
+a  simple  or  complex type . 
+ 
+
+   The type to extend must be defined at the  top level 
+      and have a   name  . 
+   
+    The type to extend is identified using the
+        extension   element's
+        base   attribute. 
+   
+    Elements are added using a
+        group  ,
+        all  ,
+        choice  , or
+        sequence   element
+      in the contents of the   extension  . 
+   
+    Attributes are added using
+        attribute   and/or
+        attributeGroup   elements or an
+        anyAttribute   element
+      in the contents of the   extension  . 
+   
+  
+Example: 
+ 
+
+ 
+  &lt;xs:complexType name='emptyComplexType'/&gt;
+
+  &lt;xs:complexType name='vowelStringInLanguage'&gt;
+    &lt;xs:complexContent&gt;
+      &lt;xs:extension base='emptyComplexType'&gt;
+        &lt;xs:attribute name='vowels' type='vowelString'&lt;/a&gt;/&gt;
+        &lt;xs:attribute name='language' type='xs:language'/&gt;
+      &lt;/xs:extension&gt;
+    &lt;/xs:complexContent&gt;
+  &lt;/xs:complexType&gt;
+ 
+
+
+ Restriction (of a complex type) 
+
+ 
+A new complex type may be derived by from an existing
+ complex-simple type  by
+ restriction ,
+in all the ways that
+a simple type can be derived from an existing simple type
+(see   restriction   for simple types). 
+ 
+
+ 
+In addition,
+a new complex type may be derived by from an existing
+ complex-complex type  by
+a  restriction 
+that reduces the child elements allowed
+or the type of a child element. 
+ 
+
+ 
+In either case,
+the restriction of a complex type
+can reduce the scope of one or more attributes of the type. 
+ 
+
+
+ Restriction (of a complex-simple type) 
+
+ 
+The  character data 
+allowed for a complex type with simple content
+may be restricted in all the ways that a simple type can
+(see   restriction   of simple types). 
+In addition,
+the types of attributes for the complex type
+may be restricted. 
+ 
+
+   The   restriction  
+    may contain
+      attribute   elements (any number of these),
+      attributeGroup   elements (any number of these),
+    and/or an
+      anyAttribute   element. 
+   
+    The attributes named in these elements
+    must be attributes of the base type being restricted. 
+   
+    The type assigned to an attribute by these elements
+    must be the same or a restriction
+    of the type assigned to that attribute by the base type. 
+   
+    Any attribute of the base type
+    that is not named in the
+      restriction  
+    is assumed to have the same type as it did in the base type. 
+   
+    To exclude a base type attribute,
+    give it the   use=prohibited  
+    attribute in the restricted type. 
+   
+  
+Examples:   (under construction) 
+ 
+
+
+ Restriction (of a complex-complex type) 
+
+ 
+The  character data 
+and attributes allowed for a complex type with complex content
+may be restricted in all the ways that a simple type
+or complex type with simple content can
+(see
+  restriction   of simple types and
+  restriction  
+of simple content). 
+In addition,
+the child elements of the type may be restricted. 
+ 
+
+   The   restriction  
+    may contain
+      group  ,
+      all  ,
+      choice  , or
+      sequence   elements. 
+   
+    These elements must be the same or a subset
+    of the ones appearing in the base type. 
+   
+    The type assigned to each element must be the same
+    or a restriction of the type assigned to that element in the base type. 
+   
+    An element of the base type
+    may be excluded from the restricted type (unlike attributes). 
+    If an element is not listed in the restriction,
+    that element may not appear in instances of the new type. 
+   
+  
+Examples:   (under construction) 
+ 
+
+ Compositors  all ,  choice , and  sequence  
+
+ 
+  all  ,
+  choice  , and
+  sequence  
+are the XML Schema  compositors ,
+useful in that they allow a composition of more than one
+ particle 
+where a single  particle  could otherwise appear. 
+ 
+
+
+  all  
+
+ 
+  all   is not discussed here; 
+it does not appear useful in ordinary situations. 
+ 
+
+
+  choice  
+
+ 
+A   choice   compositor
+lists mutually exclusive child elements
+that may appear where the compositor does. 
+ 
+
+   A    choice   may contain
+      element  ,
+      any  ,
+      group  ,
+      choice  , and/or
+      sequence   elements. 
+   
+    These sub-elements may be given
+      minOccurs   and/or
+      maxOccurs   attributes
+    to indicate how many instances of them
+    must appear if that sub-element is chosen. 
+   
+    If the   choice   is not
+    an element of a   group  ,
+    it may itself be given   minOccurs  
+    and   maxOccurs  
+    attributes, so that it can represent
+    a range of numbers of choices from the sub-elements
+    rather than a single choice. 
+   
+  
+Examples:   (under construction) 
+ 
+
+
+  sequence  
+
+ 
+A   sequence   compositor
+lists child elements
+that must appear where the compositor does
+in the sequence in which they are listed. 
+ 
+
+   A    sequence   may contain
+      element  ,
+      any  ,
+      group  ,
+      choice  , and/or
+      sequence   elements. 
+   
+    These sub-elements may be given
+      minOccurs   and/or
+      maxOccurs   attributes
+    to indicate how many instances of them
+    must appear there in the sequence. 
+   
+    If the   sequence   is not
+    an element of a   group  ,
+    it may itself be given   minOccurs  
+    and   maxOccurs  
+    attributes, so that it can represent
+    a range of numbers of sequences of the elements
+    rather than a single sequence. 
+   
+  
+Examples:   (under construction) 
+ 
+
+
+ Particles  any  and  group  
+
+ 
+  element  ,
+  any  ,
+  group  ,
+and the  compositors 
+  choice   and
+  sequence  
+are the XML Schema  particles . 
+A particle is used in a  compositor 
+to define a part of a  complexType . 
+ 
+
+ 
+Any particle can have a
+  minOccurs=   and/or
+  maxOccurs=   attribute,
+as long as it is not appearing in a   group  . 
+ 
+
+
+  any  
+
+ 
+The   any   element
+represents any element in a specified namespace. 
+ 
+
+ 
+Its  namespace  attribute
+has several possible values:
+ 
+
+   A whitespace-separated list of one or more URIs,
+      possibly including the special values
+       ##targetNamespace  for the
+       target namespace  specified in
+      the schema element, and/or
+       ##local  for elements defined in the schema
+      but not appearing with a namespace prefix. 
+   
+     ##any , which causes the
+        any   element to represent
+      elements from any namespace
+      (this is the default). 
+   
+     ##other , which causes the
+        any   element to represent
+      elements from namespaces other than the
+       target namespace ,
+      or from any namespace if the schema specifies no target namespace. 
+   
+  
+An   any   element
+must be empty. 
+ 
+
+ 
+There is also   anyAttribute  
+for attributes. 
+ 
+
+ 
+Examples:   (under construction) 
+ 
+
+
+  group  
+
+ 
+A   group   is a named set of
+  elements  . 
+A named   group   must be defined
+at the  top level  (contained only by the
+  schema   element)
+and given a name using its   name   attribute,
+as in this examples:
+ 
+
+ 
+  &lt;xs:group name='groupSubtractiveColorsWithLanguage'&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name='subtractiveColor' type='subtractiveColors'/&gt;
+      &lt;xs:element name='language' type='xs:language'/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:group&gt;
+ 
+
+ 
+The named   group  
+can then be referenced by an  empty-element 
+  group   tag
+using its   ref   attribute,
+and the effect is as if
+the contents of the group appeared at that point. 
+ 
+
+ 
+This example defines two equivalent complex types,
+the first using a group and the second directly:
+ 
+
+ 
+  &lt;xs:complexType name='SubtractiveColorsWithLanguage'&gt;
+    &lt;xs:group ref='groupSubtractiveColorsWithLanguage'/&gt;
+  &lt;/xs:complexType&gt;
+
+  &lt;xs:complexType name='subtractiveColorAndLanguage'&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name='subtractiveColor' type='subtractiveColors'/&gt;
+      &lt;xs:element name='language' type='xs:language'/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+ 
+
+   A   group   may contain
+      element  ,
+      group  ,
+      all  ,
+      choice  , and
+      sequence   elements. 
+   
+    The child elements of a   group  
+    may not have either
+    the   minOccurs   or
+    the   maxOccurs   attributes. 
+   
+    A   group   definition
+    may not have either
+    the   minOccurs   or
+    the   maxOccurs   attributes,
+    but an empty-element   group  
+    referring to a named group may have them
+    (unless it appears within a   group   itself). 
+   
+  
+There are also
+ attributeGroup s. 
+ 
+
+
+ Attribute for a complex type 
+
+ 
+A   complexType   is given an
+attribute by giving it an   attribute   child element. 
+ 
+
+ 
+Attributes may be
+ defined globally ,
+ referenced , or
+ defined locally . 
+ 
+
+
+ Global definition of an attribute 
+
+ 
+Attributes may be named and defined at the  top level ,
+and then referenced by name elsewhere. 
+Such definitions may contain these attributes: 
+ 
+
+     default   giving the default value
+      (an  xs: string  )
+      of the attribute
+      that is used for any element in which the attribute can appear
+      but does not. 
+   
+      fixed   giving a single value
+      (an  xs: string  )
+      that is the only value the attribute may be given; 
+      the attribute then must either appear with that value,
+      or not appear. 
+       fixed  and  default 
+      are mutually exclusive. 
+   
+      name  ,
+      the name of the defined attribute in any element it is part of,
+      and also the name by which this definition is referenced. 
+   
+      type  ,
+      the type of the defined attribute's value. 
+      This attribute can't appear if a type is given in the body of the
+        attribute   element. 
+   
+  
+The type of the attribute's value
+is given either
+by a   type   attribute of the definition
+or by a   simpleType   child element
+of the definition. 
+ 
+
+
+ Reference to a global definition of an attribute 
+
+ 
+A defined attribute may be given to an element or element type
+by a child empty-element   attribute  . 
+The empty-element   attribute  
+may have these attributes:
+ 
+
+     ref  
+    specifying the attribute definition;  required. 
+   
+     use , which may have one of these values: 
+        use=prohibited ,
+        meaning the attribute may not appear
+        (useful in
+          restrictions  ). 
+       
+         use=optional :  this is the default. 
+       
+         use=required . 
+       
+      
+     form=qualified  (if the attribute name
+    must be qualified with the namespace when appearing in
+    the element or type) or
+     form=unqualified  if not. 
+    The default is set by the   schema  
+    element's
+      attributeFormDefault  
+    attribute. 
+   
+  Local definition of an attribute 
+
+ 
+An attribute may be given to an element or element type
+by an   attribute   element
+that gives the name and type of the attribute directly. 
+The local definition can have these attributes: 
+ 
+
+     default  
+   
+      fixed  
+   
+      form  
+   
+      name   giving the name of the attribute; 
+    a local definition can't be referenced elsewhere by its name. 
+   
+      type  
+   
+      use  
+   
+  
+It may not have a   ref   attribute. 
+ 
+
+ 
+The type of the attribute's value
+is given either
+by a   type   attribute of the definition
+or by a   simpleType   child element
+of the definition. 
+ 
+
+ 
+Examples:   (under construction) 
+ 
+
+
+ Attribute group 
+
+ 
+An  attribute group  is a named set of
+  attributes  . 
+Like a   group  ,
+it must be defined at the  top level 
+and can be referenced elsewhere. 
+An   attributeGroup  
+may contain
+  attribute   and/or
+  attributeGroup  
+elements. 
+An   attributeGroup  
+definition must have a   name   attribute,
+and a   attributeGroup  
+reference must be empty
+and have a   ref   attribute. 
+ 
+
+ 
+Examples:   (under construction) 
+ 
+
+ 
+See   group  . 
+ 
+
+
+ Any attribute allowed 
+
+ 
+The   anyAttribute   element
+represents any attribute in a specified namespace. 
+An   anyAttribute   element
+may have a   namespace   attribute,
+and must be empty. 
+It is analogous to   any  
+for elements. 
+ 
+
+ 
+Examples:   (under construction) 
+ 
+
+
+ Attributes common to several schema elements 
+
+ 
+Many of the XML Schema elements
+share the same attributes. 
+Some of those are described here. 
+ 
+
+
+  base  
+
+ 
+  base   is used to refer to
+a simpleType or complexType
+that is being extended or restricted. 
+It is similar to   ref  
+and   type  
+but is only used to reference base types. 
+ 
+
+ 
+The type of a   base   value
+is  xs: NCName  . 
+ 
+
+
+  default  
+
+   default   indicates the default value
+of an attribute or element; 
+the default value is assumed
+for an attribute that does not appear,
+or for an element with  empty content . 
+The only elements for which it is allowed
+are those with  simple content ,
+as values of  complex content  cannot be given
+in an attribute value. 
+ 
+
+ 
+  default   and
+  fixed   may not appear together. 
+ 
+
+
+  fixed  
+
+   fixed   indicates an attribute or element
+that can only have one value; 
+that value is given by the value of the
+  fixed   attribute. 
+The only elements for which it is allowed
+are those with  simple content ,
+as values of  complex content  cannot be given
+in an attribute value. 
+ 
+
+ 
+  default   and
+  fixed   may not appear together. 
+ 
+
+
+  maxOccurs  
+
+   maxOccurs   indicates the maximum number of times
+an instance represented by the element may appear. 
+If the   maxOccurs   attribute is not given,
+1 is assumed. 
+  maxOccurs   may be given
+any non-negative integer value,
+and also the special value  unbounded . 
+ 
+
+ 
+The value of   minOccurs  
+(assumed or explicit)
+must not be greater than
+the value of   maxOccurs  
+(assumed or explicit). 
+ 
+
+ 
+Examples:
+ 
+
+ 
+  &lt;xs:group name='OccursExample'&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name='Default'/&gt;
+      &lt;xs:element name='SameAsDefault'  minOccurs='1' maxOccurs='1'/&gt;
+      &lt;xs:element name='ZeroOrOneTimes' minOccurs='0'/&gt;
+      &lt;xs:element name='OnceOrTwice'                  maxOccurs='2'/&gt;
+      &lt;xs:element name='AtLeastOnce'                  maxOccurs='unbounded'/&gt;
+      &lt;xs:element name='AnyNumber'      minOccurs='0' maxOccurs='unbounded'/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:group&gt;
+ 
+
+
+  minOccurs  
+
+   minOccurs   indicates the minimum number of times
+an instance represented by the element may appear. 
+If the   minOccurs   attribute is not given,
+1 is assumed. 
+  minOccurs   may be given
+any non-negative integer value. 
+ 
+
+ 
+The value of   minOccurs  
+(assumed or explicit)
+must not be greater than
+the value of   maxOccurs  
+(assumed or explicit). 
+ 
+
+
+  name  
+
+ 
+  name   is used to give a name to a definition
+that can then be referenced elsewhere using a
+  base  ,
+  ref  ,
+  type  ,
+or other attribute. 
+ 
+
+ 
+It is also used to specify the names of elements and attributes
+that can appear in an XML file matching the schema. 
+ 
+
+ 
+The type of a   name   value
+is  xs: NCName  . 
+ 
+
+
+  ref  
+
+   ref   is used to reference
+a named definition (see   name  ). 
+ 
+
+ 
+The type of a   ref   value
+is  xs: NCName  . 
+ 
+
+  type  
+
+   type   is used to reference
+a named type (see   name  ). 
+It is similar to   ref  
+but is only used to reference types. 
+ 
+
+ 
+The type of a   type   value
+is  xs: NCName  . 
+ 
+
+
+ More on  element  
+
+ 
+Attributes: 
+ 
+
+     default  
+    specifies a value that is assumed as
+    the intended contents of an empty instance
+    of this element. 
+    The value must be of   simpleContent  
+    because it is given in an attribute value. 
+      default   and
+      fixed   cannot both appear. 
+   
+      fixed  
+    specifies a value that all instances of the element must have,
+    and that is used as the default value of empty instances of this element. 
+      default   and
+      fixed   cannot both appear. 
+   
+      form  
+    specifies, for a local element definition only,
+    whether the element name belongs to
+    the target namespace ( form=qualified )
+    or to no namespace ( form=unqualified ). 
+    The default is set by the   schema  
+    attribute     . 
+    Compare   attribute  's
+      form   element,
+    whose meaning is different although its syntax is identical. 
+   
+  More on  schema  
+
+ 
+Attributes: 
+ 
+
+     attributeFormDefault  
+    specifies whether it is the default that
+    attributes in XML files matching the schema
+    must have a namespace prefix ( attributeFormDefault=qualified )
+    or need not ( attributeFormDefault=unqualified , the default). 
+    See the   attribute   attribute
+      form  . 
+   
+  
+      elementFormDefault  
+    specifies whether it is the default that
+    elements in XML files matching the schema
+    must have a namespace prefix ( elementFormDefault=qualified )
+    or need not ( elementFormDefault=unqualified , the default). 
+    See the   element   attribute
+      form  . 
+   
+  
+      lang  
+    gives the language in which the schema's text is written; 
+    its value is of type  xs: language  . 
+    This attribute is defined as part of XML
+    and can be given for any XML element
+    (often appearing as  xml:lang ). 
+   
+      targetNamespace  
+    specifies the namespace (if any) whose names
+    the   schema   defines. 
+      
+        The attribute value must be a  URI 
+        that is the value of one of the   schema  's
+          xmlns   attributes. 
+       
+       
+        All qualified attributes and elements defined in the schema
+        must be qualified with the prefix
+        given to this namespace in that
+          xmlns   attribute. 
+       
+       
+        If no  targetNamespace 
+        attribute is given,
+        the elements and attributes are not defined in a namespace. 
+       
+      
+      xmlns  
+    gives the default namespace,
+    the namespace for unqualified elements
+    (those whose names have no prefix). 
+    Its value is a  URI . 
+    Example: 
+        xmlns='http://www.w3.org/2001/XMLSchema' 
+        makes the XMLSchema namespace the default
+        for unqualified element names
+        (but not unqualified attribute names —
+        those are assumed to be in the same namespace
+        as the element containing them). 
+       
+      
+      xmlns:*  
+    defines a prefix that refers to a specific namespace. 
+    The prefix is the  xs:NCName 
+    that appears instead of the  *  in the
+     xmlns:*  attribute. 
+    The attribute's value is a  URI 
+    that gives the namespace for the prefix. 
+    Example: 
+        xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+        makes the  xs  prefix
+        refer to the XMLSchema namespace. 
+        Any name preceded by  xs:  will be considered
+        as a name in that namespace. 
+       
+      
+  Comments 
+
+ 
+Ordinary XML comments may be used in XML schemas. 
+These comments may appear anywhere an element may. 
+ 
+
+ 
+Example: 
+ 
+ 
+  
+ 
+
+ 
+The   annotation   element
+is provided specifically for commenting schemas. 
+An   annotation  
+may appear as the first element of almost any XML Schema element,
+and may appear anywhere at the  top level 
+in a   schema   element. 
+(An   annotation  
+cannot appear within another   annotation  
+or its children.) 
+ 
+
+ 
+An   annotation  
+may contain a   documentation   element
+containing a human-readable comment,
+and/or an   appinfo   element
+containing program-readable text. 
+ 
+
+ 
+Example: 
+ 
+
+ 
+  &lt;xs:element name='annotatedElement'&gt;
+    &lt;xs:annotation&gt;
+      &lt;xs:documentation&gt;
+        Here is a comment for this schema element.
+      &lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/xs:element&gt;
+ 
+
+
+ Uniqueness constraints 
+
+ 
+XML Schema provides several ways of ensuring unique values
+for attributes or elements
+and using those values in references. 
+Of course,
+it is always possible to
+exercise discipline and ensure that certain values in an XML file are unique,
+or to write a program to check the constraints you need. 
+Using the features described here
+forces XML validators to check the uniqueness constraints
+whenever an XML instance of your schema is read by a validator. 
+ 
+
+ 
+One way is through the predefined types
+  ID   and
+  IDREF  . 
+Schema processors are expected to check
+that values of type   ID   in an XML file are unique,
+and
+that values of type   IDREF  
+are also values of type   ID   in the same file. 
+ 
+
+ 
+A second way is to use
+  unique  ,
+  key  ,
+and/or
+  keyref  . 
+ 
+
+ 
+A   unique   element
+identifies elements
+with unique field or element values. 
+These values are constrained to be unique within
+each instance of   unique  's
+parent   element  
+(  unique   can only occur as
+a child of an   element  ). 
+This parent   element  
+defines the scope of the constraint,
+and is here termed the  scope node . 
+ 
+
+ 
+The   unique   element must contain
+two subelements:
+ 
+
+     selector  ,
+    whose  xpath  attribute identifies
+    the   scope node  's descendant elements
+    that are uniquely distinguished
+    (here termed the   selected elements  ), and
+   
+      field  ,
+    whose  xpath  attribute identifies
+    the element or field
+    (here termed the   distinguishing node  )
+    whose value is unique
+    for each of the   selected elements  . 
+   
+  
+The values are constrained to be unique among the
+selected descendants of the   scope node  
+(contrast   ID  s, which
+are unique within the entire file). 
+The distinguishing field or element may be an optional one,
+in which case only descendants that possess it
+are constrained. 
+ 
+
+ 
+Each   unique   element is required
+to have a   name   field,
+and the name values must be unique among
+all   unique   and
+  key   elements in the schema. 
+ 
+
+ 
+A   selector   element
+identifies a set of  selected elements . 
+Its  xpath  attribute
+gives the  pattern 
+that selects those elements,
+using the   scope node  
+(the   selector   element's
+  element   grandparent)
+as the context node. 
+In the most common case,
+the pattern simply names the element type. 
+However, any pattern that selects a child of the
+  scope node   is allowed. 
+ 
+
+ 
+A   field   element
+identifies a  distinguishing node ,
+an element or field of the
+  selected elements  . 
+Its  xpath  attribute
+gives the  pattern 
+that selects the element or field,
+using each element selected by
+the   selector   element
+as the context node. 
+In the most common case,
+the pattern simply names the field
+(preceded by  @  to show it is a field). 
+However, any pattern that selects a child of the selected elements
+or a field of a child is allowed. 
+It is possible to select several children as a composite field,
+but that is not discussed further here. 
+ 
+
+ 
+A   key   element
+is like a   unique   element,
+except that its   field   child element
+may only select a
+  distinguishing node   that is required,
+whereas for   unique  
+the   distinguishing node   may be
+an element for which
+  minOccurs =0 
+or a field for which  use=optional . 
+ 
+
+ 
+A   keyref   element
+defines a reference to a
+  selected element   of
+a   key  
+or   unique   element. 
+The   keyref   should be a sibling of the
+  key   or
+  unique   element
+(this is not required, but produces results that are more predictable). 
+ 
+
+ 
+The   keyref   element must contain
+two subelements: 
+ 
+
+     selector  ,
+    whose  xpath  attribute identifies
+    the   scope node  's descendant elements
+    that contain the key references, and
+   
+      field  ,
+    whose  xpath  attribute identifies
+    the element or field whose value is the key reference. 
+   
+  
+Each   keyref   element is required to have
+two attributes: 
+ 
+
+     name  , and
+   
+     refer , whose value is
+    the   name   of the
+      key   or
+      unique   element
+    whose unique value is referenced by
+    this   keyref  's
+     selected elements' 
+      distinguishing nodes  . 
+   
+  
+Example: 
+ 
+
+ 
+  &lt;xs:element name='world'&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name='state' maxOccurs='unbounded'&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:choice maxOccurs='unbounded'&gt;
+              &lt;xs:element name='car'&gt;
+                &lt;xs:complexType&gt;
+                  &lt;!-- empty content --&gt;
+                  &lt;xs:attribute name='licenseNumber'  type='xs:string'/&gt;
+                  &lt;xs:attribute name='carPhoneNumber' type='xs:string' use='optional'/&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+              &lt;xs:element name='carOwner'&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:sequence&gt;
+                    &lt;xs:element name='carLicense' type='xs:string' maxOccurs='unbounded'/&gt;
+                  &lt;/xs:sequence&gt;
+                  &lt;xs:attribute name='owner'  type='xs:string'/&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+            &lt;/xs:choice&gt;
+          &lt;/xs:complexType&gt;
+          &lt;xs:key name='car-licenseNumber-state'&gt;  &lt;!-- key --&gt;
+            &lt;xs:annotation&gt;
+              &lt;xs:documentation&gt;
+                No two cars in the same state can have the same licenseNumber.
+              &lt;/xs:documentation&gt;
+            &lt;/xs:annotation&gt;
+            &lt;xs:selector xpath='car'/&gt;
+            &lt;xs:field xpath='@licenseNumber'/&gt;
+          &lt;/xs:key&gt;
+          &lt;xs:keyref name='owner-state' refer='car-licenseNumber-state'&gt;  &lt;!-- keyref --&gt;
+            &lt;xs:selector xpath='carOwner'/&gt;
+            &lt;xs:field xpath='carLicense'/&gt;
+          &lt;/xs:keyref&gt;
+        &lt;/xs:element&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+    &lt;xs:unique name='car-carPhoneNumber-world'&gt;  &lt;!-- unique --&gt;
+      &lt;xs:annotation&gt;
+        &lt;xs:documentation&gt;
+          No two cars in the world can have the same carPhoneNumber.
+        &lt;/xs:documentation&gt;
+      &lt;/xs:annotation&gt;
+      &lt;xs:selector xpath='car'/&gt;
+      &lt;xs:field xpath='@carPhoneNumber'/&gt;
+    &lt;/xs:unique&gt;
+  &lt;/xs:element&gt;
+ 
+
+
+ Advanced 
+
+ 
+Following are descriptions of XML Schema features
+that are more advanced,
+and best avoided until needed. 
+ 
+
+
+ Inclusion of other schemas 
+
+ 
+There are several ways one schema can incorporate
+types, elements, attributes, and groups defined in another schema
+(besides simply copying the text, which always works). 
+ 
+
+ 
+  include  
+has the effect of including all  top-level  definitions of
+another schema. 
+The other schema is named in the  schemaLocation 
+attribute. 
+Its namespace (if any) must match the namespace
+of the including schema (if any). 
+  include   may only appear
+at the  top level . 
+ 
+
+ 
+  import  
+tells a program processing a schema
+where to find definitions in another namespace
+that are used in the schema. 
+The location of the definitions is given in the  schemaLocation 
+attribute; 
+only definitions at the  top level  can be imported. 
+The namespace of those definitions is given in the  namespace 
+attribute. 
+(Compare   schema  's
+  xmlns   attribute.) 
+ 
+
+
+ Substitution groups 
+
+ 
+Substitution groups provide a way to 'type' elements
+and allow them to appear interchangeably,
+without creating a type. 
+They do something of the same thing that types and
+  choice   do,
+but can be extended elsewhere,
+for example when a schema is  included . 
+ 
+
+ 
+We will not describe substitution groups here in any more detail,
+as in most cases the same function can be provided more straightforwardly
+by types and compositors,
+and their description complicates the descriptions of other elements
+by requiring details that are not otherwise needed. 
+ 
+
+
+ The distinction between lexical and value spaces 
+
+ 
+Each type in XML Schema
+can be considered as
+a possibly infinite set of values of that type (the type's value space). 
+Each type can also be considered as
+a possibly infinite set of strings representing the values of the type
+(the type's lexical space). 
+Ordinarily there is no need to keep this distinction in mind. 
+But for many types,
+a single value can be represented by more than one string; 
+for example,
+a single  xs: integer   is
+represented by
+' 1 ', ' +1 ', and ' 01 ',
+and a single  xs: normalizedString  
+is represented by
+' normalized string ' and
+' normalized  string '. 
+ 
+
+ 
+  Restriction by a regular expression  
+acts on the lexical space, not the value space. 
+It is best to avoid deriving types by regular expression
+for which the two spaces are not one-to-one,
+as it makes confusion likely. 
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010May16Su21:42 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

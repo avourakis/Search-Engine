@@ -1,0 +1,39 @@
+ Theory Seminar, June 8, 2007<body>
+   
+
+ CompSci 269S, Spring 2007: Theory Seminar 
+
+ June 8, 2007, in Bren Hall 1423 
+
+ Optimal-time Dynamic Mesh Refinement 
+
+ Benoit Hudson 
+
+ Abstract: 
+
+ In February, Gary Miller presented our results on static mesh
+refinement: the problem was to, given an input geometry, produce an
+output tetrahedral mesh where every tetrahedron has good aspect ratio.
+This requires adding some additional points to the input; he showed how
+to minimize (to within a constant factor) the number of points in the
+output, and how to run in optimal sequential time. 
+
+ When the mesh domain changes after the first timestep, we now need to
+solve the dynamic mesh refinement problem: how to maintain a small but
+good quality mesh as we change the input.  I will show that after
+addding or removing points from the input, the mesh refinement algorithm
+of Bern, Eppstein, and Gilbert can recompute the output quality mesh in
+O(log  L / s ) time.  This uses the automatic
+dynamization techniques of Acar, which ensures that the dynamic
+algorithm is no harder to implement than the static algorithm. 
+
+ In two dimensions, we can extend this to do even better: by
+dynamizing a post-processing algorithm of Har-Peled and Ungor, we can
+maintain a mesh as small as is known how to produce in practice, at no
+additional asymptotic cost. 
+
+ I expect this joint work with Umut Acar (TTI-C) to be of particular
+interest to geometers, dynamic algorithmaticians, and scientific
+computers. 
+
+</body> 

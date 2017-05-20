@@ -1,0 +1,302 @@
+ Nef_polyhedron_3&lt;Traits&gt;::SHalfedge<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Nef_polyhedron_3&lt;Traits&gt;::SHalfedge  
+ 
+
+  Definition 
+ 
+
+A shalfedge is a great arc on a sphere map. 
+Figure 
+     
+
+depicts the relationship between a shalfedge and its incident
+shalfedges, svertices, and sfaces on a sphere map.  A shalfedge is 
+an oriented sedge between two svertices. It is always paired with a 
+shalfedge pointing in
+the  opposite  direction. The  twin()  member function returns
+this shalfedge of  opposite   orientation .
+  
+
+  
+     
+      
+            Figure: 
+     
+ 
+
+The  snext()  member function points 
+to the  successor  shalfedge around this sface while the  sprev()  member 
+function points to the preceding shalfedge.  An
+successive assignments of the form  se = se-&gt;snext()  cycles
+counterclockwise around the sface (or hole).
+  
+
+Similarly, the successive
+assignments of the form  se = se-&gt;snext()-&gt;twin()  cycle
+clockwise around the svertex and traverse all halfedges incident to
+this svertex. The assignment  se = se-&gt;cyclic_adj_succ()  can be 
+used as a shortcut.
+  
+
+The role of shalfedges in a facet is illustrated in 
+Figure 
+     
+. The  facet()  member function returns the facet 
+in which
+the shalfedge is part of one of the facet cycles. The successive assignment of 
+the form  se = se-&gt;next()  cycles counterclockwise around the facet (or a
+hole of the facet).
+  
+
+A const circulators is provided for each of the three circular orders.
+The circulators are bidirectional and assignable to  SHalfedge_const_handle .
+  
+
+ #include &lt; CGAL/Nef_polyhedron_3.h &gt; 
+  
+
+  Types 
+ 
+
+The following types are the same as in   Nef_polyhedron_3 &lt;Traits&gt; .
+  
+
+    
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::Mark
+         
+              
+    type of mark.
+ 
+
+          
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::Sphere_circle
+         
+              
+    sphere circle type stored in SHalfedge.
+ 
+
+          
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::Halffacet_const_handle
+         
+              
+    const handle to Halffacet.
+ 
+
+     
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::SVertex_const_handle
+         
+              
+    const handle to SVertex.
+ 
+
+     
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::SHalfedge_const_handle
+         
+              
+    const handle to SHalfedge.
+ 
+
+     
+          Nef_polyhedron_3&lt;Traits&gt;::SHalfedge ::SFace_const_handle
+         
+              
+    const handle to SFace.
+ 
+
+     
+
+  Creation 
+ 
+
+There is no need for a user to create a  SHalfedge  explicitly. The
+class   Nef_polyhedron_3 &lt;Traits&gt;  manages the needed shalfedges internally.
+  
+
+  Operations 
+ 
+
+    
+           
+ Mark
+         
+          
+         
+    se.mark ()
+         
+          
+    the mark of  se  .
+                 
+           
+ Sphere_circle
+         
+          
+         
+    se.circle ()
+         
+          
+    the sphere circle of  se  .
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.twin ()
+         
+          
+    the twin of  se  .
+                 
+           
+SVertex_const_handle
+         
+              
+         
+    se.source ()
+         
+          
+    the source svertex of  se  .
+                 
+           
+SVertex_const_handle
+         
+              
+         
+    se.target ()
+         
+          
+    equals  twin()-&gt;source() .
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.prev ()
+         
+          
+    the SHalfedge previous to  se  in a facet cycle.
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.next ()
+         
+          
+    the next SHalfedge of  se  in a facet cycle.
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.sprev ()
+         
+          
+    the SHalfedge previous to  se  in a sface cycle.
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.snext ()
+         
+          
+    the next SHalfedge of  se  in a sface cycle.
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.cyclic_adj_pred ()
+         
+                
+    the edge before  se  in the cyclic ordered adjacency list of source().
+                 
+           
+SHalfedge_const_handle
+         
+              
+         
+    se.cyclic_adj_succ ()
+         
+                
+    the edge after  se  in the cyclic ordered adjacency list of source().
+                 
+           
+Halffacet_const_handle
+         
+              
+         
+    se.facet ()
+         
+          
+    the facet that corresponds to  se  in the 3D incidence structure.
+                 
+           
+SFace_const_handle
+         
+          
+         
+    se.incident_sface ()
+         
+                
+    the incident sface of  se  .
+            
+
+  See Also 
+ 
+
+  CGAL::Nef_polyhedron_3&lt;Traits&gt;::Halfedge     CGAL::Nef_polyhedron_3&lt;Traits&gt;::Halffacet     CGAL::Nef_polyhedron_3&lt;Traits&gt;::SFace     CGAL::Nef_polyhedron_S2&lt;Traits&gt;::Sphere_circle  
+  
+
+    Next:    Nef_polyhedron_3&lt;Traits&gt;::SHalfloop   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

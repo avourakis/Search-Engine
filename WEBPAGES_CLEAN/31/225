@@ -1,0 +1,58 @@
+ Description of CD_RBM<body>
+  
+  Home  &gt;   MRFLearning  &gt; CD_RBM.m 
+
+
+
+ CD_RBM
+ 
+
+   PURPOSE     
+  CD Learning for partially observed RBMs</strong> 
+
+   SYNOPSIS     
+  function model = CD_RBM(data,A,Vind,K,varargin) </strong> 
+
+   DESCRIPTION     
+   CD Learning for partially observed RBMs
+
+ Estimate the parameters for a restricted boltzmann m/c using
+ K-step Contrastive Divergence (CD) Learning
+ INPUTS: 
+        data        : (N X V) matrix where N = # data points and V = # visible nodes
+                        Each variable can take values from {+1,-1} or {0,1}                
+        A           : Adjacency matrix defining the graph structure for the model to learn 
+        Vind        : (V X 1) visible node numbers
+        K           : #steps of Markov chain
+        &lt;varargin&gt;  : optional inital model values (in data representation)
+ RETURNS:
+          model: (1X1) struct array with fields
+                   N: the number of nodes
+                   A: adjacency matrix                 
+                   b: the biases  ( CD estimates )
+                   w: the edge weights ( CD estimates )
+                Vind: visible node indices
+                Hind: hidden node indices
+           Optionally saves a file "paramVec.mat" showing the sequence of updates to the parameters  
+
+ The node value representation ( +1/-1 or 0/1) intended by the user is guessed from the training samples.       
+ If using 0/1, the data is first mapped to +1/-1 and the model params are learned. 
+ These learned params are then mapped back to the 0/1 case.
+
+ If the variable MONITOR is set to 1 on line &lt;&gt;, a file "paramVec.mat" is generated that saves the parameter
+ updates. One can plot these values to see if the gradient learning
+ parmeters are reasonable. If not they can be changed on lines &lt;&gt;. The gloabl learning rate rho can be 
+ adapted in a pre-defined manner by using ADAPT_PTS and RHO_CHANGE or automatically by
+ setting LOCAL_ADAPT to 1. In this case, the smooothed estimates
+ of parameter changes are found at regular intervals and the local rates rho_b and rho_w are changed 
+ accordingly. Uses learning by mini batches, momentum and runs till MAX_ITERATIONS is reached.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+
+   CROSS-REFERENCE INFORMATION     
+This function calls:
+  
+This function is called by:
+    Generated on Wed 28-Sep-2005 04:10:02 by   m2html </strong> © 2003 
+</body> 

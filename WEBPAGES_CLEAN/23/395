@@ -1,0 +1,70 @@
+ HelpOnInstalling/WebLogic - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   HelpOnInstalling    WebLogic  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    HelpOnInstalling/WebLogic  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+                   
+  Set up MoinMoin on Weblogic 
+   Although this setup is tested and verified on Weblogic server 8.1 on Windows, it should be easily duplicated for other Weblogic versions on other platforms such as Unix. You will do the following to enable  MoinMoin  on Weblogic server:        Download and install win32con module if you don't have that yet      Follow the steps outlined in  HelpOnInstalling/BasicInstallation       Enable CGI servlet in Weblogic     Add wiki webapp for shared wiki resources     Add mywiki webapp     Fix application context issue        
+  config.xml for step 4 and step 5 
+                               &lt;Application Deployed="true" Name="wiki"
+          Path="d:\Python23\share\moin" StagedTargets="YourServer" TwoPhase="false"&gt;
+          &lt;WebAppComponent Name="wiki" Targets="YourServer" URI="htdocs"/&gt;
+      &lt;/Application&gt;
+      &lt;Application Deployed="true" Name="mywiki" Path=".\applications"
+          StagingMode="nostage" TwoPhase="true"&gt;
+          &lt;WebAppComponent Name="mywiki" Targets="YourServer" URI="mywiki"/&gt;
+      &lt;/Application&gt;         
+  web.xml for step 5 
+                                           &lt;servlet&gt; 
+   &lt;servlet-name&gt;CGIServlet&lt;/servlet-name&gt; 
+   &lt;servlet-class&gt;weblogic.servlet.CGIServlet&lt;/servlet-class&gt; 
+   &lt;init-param&gt;  
+    &lt;param-name&gt;cgiDir&lt;/param-name&gt;  
+    &lt;param-value&gt;d:\moin\mywiki&lt;/param-value&gt; 
+   &lt;/init-param&gt;
+   &lt;init-param&gt;   
+    &lt;param-name&gt;*.cgi&lt;/param-name&gt;   
+    &lt;param-value&gt;d:\Python23\python.exe&lt;/param-value&gt;  
+   &lt;/init-param&gt;
+  &lt;/servlet&gt;
+  
+  &lt;servlet-mapping&gt;   
+   &lt;servlet-name&gt;CGIServlet&lt;/servlet-name&gt;   
+   &lt;url-pattern&gt;cgi/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;         
+  fix for application context issue 
+   In the file  moin.cgi  there is a line reading  request = RequestCGI() . You have to add  properties = {'script_name': "/mywiki" + os.environ['SCRIPT_NAME']}   in the parenthesis. This will let  MoinMoin  generate correct URLs.       You shall be able to access your  MoinMoin  front page at  http://localhost/mywiki/cgi/moin.cgi  after you have completed the setup steps above       
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

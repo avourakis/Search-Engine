@@ -1,0 +1,57 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ Kenji Takahashi  (  kt@nttlabs.com  )  Tue, 28 May 1996 19:31:45 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Previous message:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Christopher Seiwald: "Re: Version identifier in URL" 
+
+    
+&gt;From these examples, you can see that there is a basic similarity to all
+&gt;approaches.
+
+Actually we do not use the similar approach.  We use "Content-version" field
+in HTTP header to specify a version of an entity.  Our server and client
+use a GET method that includes the "Content-version" header.  I believe that
+the earlier version of the HTTP draft intend to handle versions in this way and
+our approach is generally consistent with current "Content-negotiation"
+approach...
+
+The nameing scheme, "entity+;something", seems to be difficult to handle
+within file system.  For example, consider a file named "xxx;yyy" in Unix
+file system...
+
+This is somehow specific to our implementation, but our naming scheme
+is as follows.  We use directory name as a "representative" URL of an
+entity.  Under the directory, versioned entities exist.  For example,
+" http://host/proj/file.html  " is a representative URL,
+        " http://host/proj/file.html/1 " for the version 1
+        " http://host/proj/file.html/2 " for the version 2
+        " http://host/proj/file.html/2 " for the version 3
+        and so on.
+
+The client get the specific version with GET representative URL + content
+version header field, or GET "representative URL"/n.  The latest version
+can be gotten and PUT with the representative URL.
+
+Best regards,
+
+Kenji
+--
+Kenji Takahashi                   | e-mail:  kt@nttlabs.com 
+NTT Software Laboratories         |  http://www.nttlabs.com/people/kt/ 
+250 Cambridge Avenue, Suite 205   | Phone : 415-833-3604
+Palo Alto, CA 94306               | Fax   : 415-326-1878
+ 
+
+  
+     Next message:   Christopher Seiwald: "Re: Version identifier in URL" 
+    Previous message:   Daniel W. Connolly: "Re: Version identifier in URL" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Christopher Seiwald: "Re: Version identifier in URL" 
+
+  </body> 

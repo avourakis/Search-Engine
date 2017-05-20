@@ -1,0 +1,41 @@
+ Chimera 2.0 Tutorial: Setting JSDK 1.0.1 in CLASSPATH on Solaris<body>
+ 
+
+ Setting JSDK 1.0.1 in the CLASSPATH on Solaris 
+
+  
+This section provides an example of how to set up your downloaded JSDK 1.0.1
+to be included it in the CLASSPATH environment variable.  CLASSPATH is the
+environment used by the Java interpretor (JVM) to look for Java byte-code.
+ 
+
+  Note: the tcsh shell was used for this example. 
+
+  Appending the CLASSPATH to include the JSDK byte-code files 
+
+  After you have uncompressed and un-tared the downloaded JSDK, you
+will need to include the classes.zip file (located under the lib directory)
+of the JSDK in your CLASSPATH environment variable.  
+ 
+
+  You may use any technique you like to set the CLASSPATH.  In this 
+example, we are using the setenv command to append the CLASSPATH.
+The command will look like this:
+  setenv CLASSPATH $CLASSPATH': path_to_JSDK_classes ' 
+ 
+Note: The ' quotes the string :path_to_JSDK_classes so that tcsh won't
+interpret the colon symbol :.
+ 
+
+   
+
+
+  Note: the file classes.zip contains the Java byte-code for the JSDK.
+The CLASSPATH should be set to that file. 
+ 
+
+  You now have JSDK installed so that your Java interpretor can 
+use it to run Chimera 2.0.
+ 
+
+</body> 

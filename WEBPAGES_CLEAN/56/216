@@ -1,0 +1,72 @@
+ 30. Reactions<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   29.1.3 Logical Operators 
+ Up:   OEChem - C++ Theory 
+ Next:   30.1 Normalization Reactions 
+   
+
+
+  
+30. Reactions 
+ 
+
+ 
+Reaction processing in OEChem is divided into two categories:
+unimolecular reactions and library generation.  Unimolecular reactions
+are useful for (although not limited to) normalization reactions. The
+ OEUniMolecularRxn  class in OEChem applies chemical
+transformations to individual molecules.  Reactions can also be used
+to generate combinatorial libraries using OEChem.  Both 'clipping' and
+reaction based enumeration can be achieved using the
+ OELibraryGen  class.
+
+  
+Reactions are represented in OEChem as query molecules
+( OEQMolBase ).  Sets of chemical transform operations are
+derived from reaction molecules by differences between the reactant
+and product patterns and in the reaction molecule.  For example, atoms
+and bonds that appear in the reactant pattern, but are absent the in
+the product pattern are 'destroyed'.  Atoms and bonds that appear in
+the product pattern but not in the reactant pattern are 'created'.
+Atoms are tracked between reactants and products by means atom maps.
+Atom maps are stored and retrieved using the
+ OEAtomBase::SetMapIdx  and  OEAtomBase::GetMapIdx  methods.
+Product atoms that have the same map index as reactant atoms originate
+from their reactant counterpart.  Reactions are completely defined by
+a fields in a query molecule.  Reaction molecules can be created from
+virtually any reaction file format (SMIRKS, MDL RXN, etc.), and can
+even be constructed programmatically.
+
+  
+
+      Subsections</strong> 
+
+   30.1 Normalization Reactions 
+   30.2 Library Generation 
+   
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   29.1.3 Logical Operators 
+ Up:   OEChem - C++ Theory 
+ Next:   30.1 Normalization Reactions 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

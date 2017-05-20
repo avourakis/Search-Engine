@@ -1,0 +1,48 @@
+ further improvement: "fractional cascading"
+
+example problem: four-sided range counting (points in rectangle)
+    static (no changes to data set allowed)
+
+    outer data structure: binary search tree on x-coordinates
+	search finds O(log n) subtrees and O(log n) indiv points in x-range
+
+    inner data structure: for each subtree of outer structure,
+	store sorted list of points by y-coordinate
+	search finds positions of start and end of y-range
+	subtract positions =&gt; count points
+
+    so total query time: O(log^2 n), total space: O(n log n)
+    can we do better?
+
+simplified view of problem:
+	given sequence of O(log n) sorted lists
+		with total length = O(n)
+	set up a data structure
+	so we can find the predecessor of a query value q in each list
+
+    (the sequence = the subtrees found in the outer structure,
+	actually different outer searches will give us different
+	sequences, will deal with that complication later)
+
+	solution 1 (slow):
+		binary search in each list, time O(log^2 n)
+
+	solution 2 (spacy):
+		merge the lists; for each item in the merged list
+		store an array of O(log n) search results, one per input list
+		query: single binary search, O(log n)
+		space: O(n) items, O(log n) space each =&gt; O(n log n)
+
+	solution 3 (frac.casc):
+		use spacy solution in pairs,
+			where pair i combines
+				i'th input list
+				every other pt in spacy solution for pair i+1
+		pair 0 gives result[0], off-by-one in pair 1
+		pair 1 gives result[1], off-by-one in pair 2
+		...
+
+	time per query: O(log n) for pair 0, O(1) for each other =&gt; O(log n)
+	space: by induction at most 2n
+		if k items in last list
+		2(n-k/2) + k  

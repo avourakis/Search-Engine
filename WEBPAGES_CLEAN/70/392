@@ -1,0 +1,485 @@
+ Sorting<body>
+ ICS 161: Design and Analysis of Algorithms 
+Lecture notes for January 16, 1996 
+
+
+   
+
+ Sorting 
+
+How to alphabetize a list of words? Sort a list of numbers? Some
+other information? We saw last time one reason for doing this (so
+we can apply binary search) and the same problem comes up over and
+over again in programming. 
+
+ Comparison sorting 
+
+This is a very abstract model of sorting. We assume we are given a
+list of objects to sort, and that there is some particular order in
+which they should be sorted. What is the minimum amount of
+information we can get away with and still be able to sort them? 
+
+ As a particular case of the sorting problem, we should be able
+to sort lists of two objects. But this is the same as comparing any
+two objects, to determine which comes first in the sorted order.
+(For now, we assume no two objects are equal, so one should always
+go before the other; most sorting algorithms can also handle
+objects that are "the same" but it complicates the problem.) 
+
+ Algorithms that sort a list based only on comparisons of pairs
+(and not using other information about what is being sorted, for
+instance arithmetic on numbers) are called  comparison sorting
+algorithms  
+
+ Why do we care about this abstract and restrictive model of
+sorting? 
+
+  We only have to write one routine to do sorting, that can be
+used over and over again without having to rewrite it and re-debug
+it for each new sorting problem you need to solve. 
+
+ In fact we don't even have to write that one routine, it is
+provided in the  qsort()  routine in the Unix library. 
+
+ For some problems, it is not obvious how to do anything other
+than comparisons. (I gave an example from my own research, on a
+geometric problem of  quadtree
+construction , which involved comparing points (represented as
+pairs of coordinates) by computing bitwise exclusive ors of the
+coordinates, comparing those numbers, and using the result to
+determine which coordinates to compare). 
+
+ It's easier to design and analyze algorithms without having to
+think about unnecessary problem-specific details 
+
+ Some comparison sorting algorithms work quite well, so there is
+not so much need to do something else. 
+  Sorting algorithms 
+
+There are dozens of sorting algorithms. Baase covers around seven.
+We'll probably have time only for four: heapsort, merge sort,
+quicksort, and bucket sort. Each of these is useful as an
+algorithm, but also helps introduce some new ideas: 
+
+  Heapsort shows how one can start with a slow algorithm
+(selection sort) and by adding some simple data structures
+transform it into a much better one. 
+
+ Merge sort and quick sort are different examples of divide and
+conquer, a very general algorithm design technique in which one
+partitions an input into parts, solves the parts recursively, then
+recombines the subproblem solutions into one overall solution. The
+two differ in how they do the partition and recombination; merge
+sort allows any partition, but the result of the recursive solution
+to the parts is two interleaved sorted lists, which we must combine
+into one in a somewhat complicated way. Quick sort instead does a
+more complicated partition so that one subproblem contains all
+objects less than some value, and the other contains all objects
+greater than that value, but then the recombination stage is
+trivial (just concatenate). 
+
+ Quick sort is an example of randomization and average case
+analysis. 
+
+ Bucket sort shows how abstraction is not always a good idea --
+we can derive improved sorting algorithms for both numbers and
+alphabetical words by looking more carefully at the details of the
+objects being sorted. 
+  Sorting time bounds 
+
+What sort of time bounds should we expect? First, how should we
+measure time? If we have a comparison sorting algorithm, we can't
+really say how many machine instructions it will take, because it
+will vary depending on how complicated the comparisons are. Since
+the comparisons usually end up dominating the overall time bound,
+we'll measure time in terms of the number of comparisons made. 
+
+ Sorting algorithms have a range of time bounds, but for some
+reason there are two typical time bounds for comparison sorting:
+mergesort, heapsort, and (the average case of) quicksort all take
+O(n log n), while insertion sort, selection sort, and the worst
+case of quicksort all take O(n^2). As we'll see, O(n log n) is the
+best you could hope to achieve, while O(n^2) is the worst -- it
+describes the amount of time taken by an algorithm that performs
+every possible comparison it could. 
+
+ O(n log n) is significantly faster than O(n^2): 
+
+ 
+    n       n log n         n^2
+    --      -------         ---
+    10      33              100
+    100     665             10K
+    1000    10^4            10^6
+    10^6    2 10^7          10^12
+    10^9    3 10^10         10^18
+ 
+
+So even if you're sorting small lists it pays to use a good
+algorithm such as quicksort instead of a poor one like bubblesort.
+You don't even have the excuse that bubblesort is easier, since to
+get a decent sorting algorithm in a program you merely have to call
+ qsort . 
+
+ Lower bounds 
+
+A lower bound is a mathematical argument saying you can't hope to
+go faster than a certain amount. More precisely, every algorithm
+within a certain model of computation has a running time at least
+that amount. (This is usually proved for worst case running times
+but you could also do the same sort of thing for average case or
+best case if you want to.) This doesn't necessarily mean faster
+algorithms are completely impossible, but only that if you want to
+go faster, you can't stick with the abstract model, you have to
+look more carefully at the problem. So the linear time bound we'll
+see later for bucketsort won't contradict the n log n lower bounds
+we'll prove now. 
+
+ Lower bounds are useful for two reasons: First, they give you
+some idea of how good an algorithm you could expect to find (so you
+know if there is room for further optimization). Second, if your
+lower bound is slower than the amount of time you want to actually
+spend solving a problem, the lower bound tells you that you'll have
+to break the assumptions of the model of computation somehow. 
+
+ We'll prove lower bounds for sorting in terms of the number of
+comparisons. Suppose you have a sorting algorithm that only
+examines the data by making comparisons between pairs of objects
+(and doesn't use any random numbers; the model we describe can be
+extended to deal with randomized algorithms but it gets more
+complicated). We assume that we have some particular comparison
+sorting algorithm A, but that we don't know anything more about how
+it runs. Using that assumption, we'll prove that the worst case
+time for A has to be at least a certain amount, but since the only
+assumption we make on A is that it's a comparison sorting
+algorithm, this fact will be true for all such algorithms. 
+
+ Decision trees 
+
+Given a comparison sorting algorithm A, and some particular number
+n, we draw a tree corresponding to the different sequences of
+comparisons A might make on an input of length n. 
+
+ If the first comparison the algorithm makes is between the
+objects at positions a and b, then it will make the same comparison
+no matter what other list of the same length is input, because in
+the comparison model we do not have any other information than n so
+far on which to make a decision. 
+
+ Then, for all lists in which a&lt;b, the second comparison will
+always be the same, but the algorithm might do something different
+if the result of the first comparison is that a&gt;b. 
+
+ So we can draw a tree, in which each node represents the
+positions involved at some comparison, and each path in the tree
+describes the sequence of comparisons and their results from a
+particular run of the algorithm. Each node will have two children,
+representing the possible behaviors of the program depending on the
+result of the comparison at that node. Here is an example for
+n=3. 
+
+ 
+                  1:2
+                /     \
+             &lt; /     &gt; \
+              /         \
+           2:3           1:3
+           / \           / \
+        &lt; / &gt; \       &lt; / &gt; \
+         /     \       /     \
+      1,2,3    1:3  2,1,3    2:3
+               / \           / \
+            &lt; / &gt; \       &lt; / &gt; \
+             /     \       /     \
+          1,3,2   3,1,2 2,3,1   3,2,1
+ 
+
+This tree describes an algorithm in which the first comparison is
+always between the first and second positions in the list (this
+information is denoted by the "1:2" at the root of the tree). If
+the object in position one is less than the object in position two,
+the next comparison will always be between the second and third
+positions in the list (the "2:3" at the root of the left subtree).
+If the second is less than the third, we can deduce that the input
+is already sorted, and we write "1,2,3" to denote the permutation
+of the input that causes it to be sorted. But if the second is
+greater than the third, there still remain two possible
+permutations to be distinguished between, so we make a third
+comparison "1:3", and so on. 
+
+ Any comparison sorting algorithm can always be put in this form,
+since the comparison it chooses to make at any point in time can
+only depend on the answers to previously asked comparisons. And
+conversely, a tree like this can be used as a sorting algorithm:
+for any given list, follow a path in the tree to determine which
+comparisons to be made and which permutation of the input gives a
+sorted order. This is a reasonable way to represent algorithms for
+sorting very small lists (such as the case n=3 above) but for
+larger values of n it works better to use pseudo-code. However this
+tree is also useful for discovering various properties of our
+original algorithm A. 
+
+  The worst case number of comparisons made by algorithm A is
+just the longest path in the tree. 
+
+ One can also determine the average case number of comparisons
+made, but this is more complicated. 
+
+ At each leaf in the tree, no more comparisons to be made --
+therefore we know what the sorted order is. Each possible sorted
+order corresponds to a permutation, so there are at least n!
+leaves. (There might be more if for instance we have a stupid
+algorithm that tests whether a&lt;c even after it has already
+discovered that a&lt;b and b&lt;c). 
+  The sorting lower bound 
+
+What is longest path in binary tree with k leaves? At least log k.
+(Proof: one of the two subtrees has at least half the leaves so
+LP(k) &gt;= 1 + LP(k/2); the result follows by induction.) 
+
+  So the number of comparisons to sort is at least
+log n!. This turns out to be roughly n log n; to distinguish lower
+bounds from upper bounds we write them a little differently, with a
+big Omega rather than a big O, so we write this lower bound as
+Omega(n log n).  More precisely, 
+
+ 
+    log n! = n log n - O(n).
+ 
+
+A reasonably simple proof follows: 
+
+ 
+        n
+    n! = product i
+       i=1
+ 
+
+so 
+
+ 
+          n
+    log n! = sum log i
+         i=1
+
+          n
+       = sum log (n i/n)
+         i=1
+
+          n
+       = sum (log n - log n/i)
+         i=1
+
+            n
+       = n log n - sum log n/i .
+               i=1
+ 
+
+Let f(n) be the last term above, sum log(n/i); then we can write
+down a recurrence bounding f(n): 
+
+ 
+        n
+    f(n) = sum log n/i
+       i=1
+
+       n/2             n
+    f(n) = sum log n/i +  sum  log n/i
+       i=1          i=n/2+1
+ 
+
+All of the terms in the first sum are equal to log 2((n/2)/i) = 1 +
+log((n/2)/i), and all of the terms in the second sum are logs of
+numbers between 1 and 2, and so are themselves numbers between 0
+and 1. So we can simplify this equation to 
+
+ 
+        n/2
+    f(n) &lt;= n + sum log (n/2)/i
+        i=1
+
+     = n + f(n/2)
+ 
+
+which solves to 2n and completes the proof that log n! &gt;= n log
+n - 2n. 
+
+ (Note: in class I got this argument slightly wrong and lost a
+factor of two in the recurrence for f(n).) We can get a slightly
+more accurate formula from Sterling's formula (which I won't
+prove): 
+
+ 
+    n! ~ sqrt(pi/n) (n/e)^n
+ 
+
+so 
+
+ 
+    log n! ~ n log n - 1.4427 n - 1/2 log n + .826
+ 
+
+Let's compute a couple examples to see how accurate this is: 
+
+ 
+        log n!          formula gives
+    n=10    21.8            33.22 - 14.43 ~ 18.8
+    n=100   524.8           664.4 - 144.3 ~ 520.1
+ 
+
+Enough math, let's do some actual algorithms. 
+
+ Selection sort 
+
+To understand heap sort, let's start with selection sort. An
+experiment: I write a list of numbers, once I'm done you tell me
+sorted order. 
+
+ 
+    5,2,100,19,22,7
+ 
+
+How did you go about finding them? You probably looked through the
+list for the first number, then looked through it again for the
+next one, etc. One way of formalizing this process is called  
+selection sort : 
+
+ 
+    selection sort(list L)
+    {
+    list X = empty
+    while L nonempty
+    {
+        remove smallest element of L
+        and add it to X
+    }
+    }
+ 
+
+Time analysis: there is one loop, executed n times. But the total
+time is not O(n). Remember we are counting comparisons. "Remove the
+smallest element of L" could take many comparisons. We need to look
+more carefully at this part of the loop. (The other part, adding an
+element to X, also depends on how we store X, but can be done in
+constant time for most reasonable implementations and in any case
+doesn't require any comparisons, which is what we're counting.) 
+
+ The obvious method of finding (and removing) the smallest
+element: scan L and keep track of the smallest object. So this
+produces a nested inner loop, time = O(length of L) so total time =
+O(sum i) = O(n^2). This is one of the slow algorithms. In fact it
+is as slow as possible: it always makes every possible comparison.
+Why am I describing it when there are so many better
+algorithms? 
+
+ Heap sort 
+
+Heap sort (invented by  J.R.J. Williams )
+looks exactly like the pseudo-code above for selection sort, and
+simply uses some data structures to perform the main step of
+selection sort more quickly. 
+
+ The operations we need to perform are 
+
+  Starting with a list L and turning it into a copy of whatever
+data structure we're using, 
+
+ Finding the smallest object in the data structure, and 
+
+ Removing the smallest element 
+ 
+
+There are many suitable data structures, for instance the AVL trees
+studied in ICS 23. We'll describe here a structure called a  
+binary heap . A heap also supports other possible operations,
+such as adding objects to the list; that's not useful in this
+algorithm but maybe later. (We will see heaps again when we talk
+about minimum spanning trees and shortest paths.) 
+
+ Simple analysis of heap sort: if we can build a data structure
+from our list in time X and finding and removing the smallest
+object takes time Y then the total time will be O(X + nY). In our
+case X will be O(n) and Y will be O(log n) so total time will be
+O(n + n log n) = O(n log n) 
+
+ Heap data structure 
+
+We form a binary tree with certain properties: 
+
+  The elements of L are placed on the nodes of the tree; each
+node holds one element and each element is placed on one node. 
+
+ The tree is  balanced  which as far as I'm concerned means
+that all paths have length O(log n); Baase uses a stronger property
+in which no two paths to a leaf differ in length by more than one.
+   
+
+ (The  heap property ): If one node is a parent of another,
+the value at the parent is always smaller than the value at the
+child. 
+ 
+
+You can think of the heap property as being similar to a property
+of family trees -- a parent's birthday is always earlier than his
+or her childrens' birthdays. As another example, in a corporate
+hierarchy, the salary of a boss is (almost) always bigger than that
+of his or her underlings. 
+
+ You can find the smallest heap element by looking at root of the
+tree (e.g. the boss of whole company has the biggest salary); this
+is easy to see, since any node in a tree has a smaller value than
+all its descendants (by transitivity). 
+
+ How to remove it? Say the company boss quits. How do we fill his
+place? We have promote somebody. To satisfy the heap property, that
+will have to be the person with the biggest salary, but that must
+be one of his two direct underlings (the one of the two with the
+bigger salary). Promoting this person then leaves a vacancy lower
+down that we can fill the same sort of way, and so on. In
+pseudo-code: 
+
+ 
+    remove_node(node x):
+    {
+    if (x is a leaf) delete it
+    else if (no right child or left &lt; right)
+    {
+        move value at left child to x
+        remove_node(left child)
+    }
+    else if (no left child or right &lt; left)
+    {
+        move value at right child to x
+        remove_node(right child)
+    }
+    }
+ 
+
+(Baase has a more complicated procedure since she wants to maintain
+a stronger balanced tree property. Essentially the idea is to pick
+someone at the bottom of the tree to be the new root, notice that
+that violates the heap property, and trade that value with its best
+child until it no longer causes a violation. This results in twice
+as many comparisons but has some technical advantages in terms of
+being able to store the heap in the same space as the sorted list
+you're constructing.) 
+
+ The number of comparison steps in this operation is then just
+the length of the longest path in the tree, O(log n). 
+
+ This fits into the comparison sorting framework because the only
+information we use to determine who should be promoted is to
+compare pairs of objects.. 
+
+ The total number of comparisons in heapsort is then O(n log n) +
+how much time it takes to set up the heap. 
+
+ How to build heap? 
+
+I ran out of time, we'll have to see this  
+next time . 
+
+   ICS 161  --  Dept.
+Information &amp; Computer Science  --  UC Irvine   Last update: 
+  
+</body> 

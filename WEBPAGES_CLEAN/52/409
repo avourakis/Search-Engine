@@ -1,0 +1,56 @@
+ wsearch - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   wsearch  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    wsearch  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+  W-SEARCH 
+    W-SEARCH implements several AND/OR search algorithms that use weighted heuristics to produce a w-optimal approximate solution to a most probable explanation problem in Bayesian or Markov networks in an anytime manner.      
+  Author 
+    Radu_Marinescu  and  Natalia Flerova  (using the heuristic by  Alex Ihler  and algorithm BRAOBB by  Lars Otten ).       
+  Description 
+     The following weighted heuristic algorithms are implemented: w-AOBF (in parameters choose aow), wR-AOBF (araobf), wAOBB (waobb) and wBRAOBB (wbraobb). Also the usual AOBF, AOBB and BRAOBB schemes are available. These are anytime algorithms that output a sequence of solutions, each of which is guaranteed to be w-optimal, namely to be within a factor of weight from the optimal (on logarithmic scale). When the weight becomes equal 1 the solution if optimal.         The following weight policies are implemented, where k and d are integer input parameters, Wj is the weight at iteration j and W(j-1) is the weight at the previous iteration. The starting weight W0 is defined as an input parameters.      substract(K): Wj = W(j−1) − K     divide(K): Wj = W(j−1)/K     inverse: Wj = W1/j     piecewise(K, D): if Wj ≥ D then Wj = W0 /j, else Wj = W(j−1)/K     sqrt(K): Wj =sqrt(W(j−1)/K)        
+  Input format 
+     The graphical model instance has to be specified in the  UAI file format .       
+  Output 
+     The output of the algorithm is the sequence of approximate solutions to the MPE problem on log scale (-log10(UB)) and corresponding weights, reported in anytime manner.        
+  Parameters 
+      -- algorithm</strong> ALG      ALG can take values of aobf, aobb, braobb, aow, araobf, waobb, wbraobb         --ibound</strong> I      I is an integer number controlling the strength of heuristics          --seed</strong> S      S is any large integer to be used as a seed for random generator         --weight</strong> W      W is the integer starting weight         --weight-denom</strong> K      D is the first integer parameter of the weight policy         --weight-delta</strong> D      K is the second integer parameter of the weight policy         --weight-sched</strong> SCH      SCH is the weight policy, can take values subtract, divide, sqrt, revsqrt, piecewise, over         --ordering-file</strong> F1      F1 is the ordering file          --input-file</strong> F2      F2 is the problem file in the UAI format         --heuristic</strong> H      H takes values mbe and mbe-mplp          --match</strong>      flag for using max-marginal matching          --mplp</strong> M1      M1 is an integer that specifies the maximum number of iterations to run MPLP preprocessing         --mplps</strong> M2      M2 is a double that specifies the maximum time (in seconds) to run MPLP preprocessing         --jglp</strong> J1      J1 is an integer that specifies the maximum number of iterations to run JGLP preprocessing.         --jglps</strong> J2      J2 is a double that specifies the maximum time (in seconds) to run JGLP preprocessing.         Note that JGLP is always run with an i-bound equal to half of the i-bound used for mini-bucket.          
+  Download 
+   A 64-bit Linux binary is available  here .       If you are interested in obtaining the source code, please contact the program author.       
+  References 
+     [1] Natalia Flerova, Radu Marinescu and Rina Dechter, "Weighted Best First Search for MAP" in the   proceedings of the International Symposium on Artificial Intelligence and Mathematics (ISAIM), 2014.       [2] Natalia Flerova, Radu Marinescu and Rina Dechter. "Anytime AND/OR Best-First Search for   Optimization in Graphical Models." i n ICML workshop on Interaction between inference and learning, 2013.       [3] Natalia Flerova, Radu Marinescu, and Rina Dechter. "Preliminary Empirical Evaluation of Anytime   Weighted AND/OR Best-First Search for MAP" in Proceedings of NIPS workshop on Discrete and   Combinatorial Problems in Machine Learning, 2012.        wsearch  (last edited 2015-08-29 03:53:02 by   NatashaFlerova  ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

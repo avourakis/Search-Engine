@@ -1,0 +1,74 @@
+ Euler's Formula<body>
+     
+  Euler's Formula,
+Proof 12: Shelling
+ 
+
+ Ziegler 
+interprets a polyhedron or polytope as a complex of polyhedral
+faces of varying dimensions.  He lets  f i   denote the number
+of faces of dimension i, so  f  0 =V,
+ f  1 =E, and  f  2 =F,
+but he also adds faces of dimension  d  (the whole polytope)
+and -1 (the empty face);  f  -1 = f d  =1.
+
+Ziegler
+defines a  shelling  of a complex of polyhedral faces
+to be a linear ordering on the maximal-dimension faces ( facets )
+such that, if the facets are of dimension at least one,
+the ordering satisfies the following properties:
+  The boundary of the first facet F 0  has a shelling.
+  The intersection of each facet F  j   ( j  &gt; 0) with the
+union of previous
+facets is nonempty and forms the prefix of a shelling of F  j  .
+  
+
+Every convex polytope has a shelling found by traveling in a straight line
+from some point near one face of the polyhedron, and ordering the faces
+by the sequence of points at which the line crosses the plane of a face
+and the face becomes visible.  (The line must be imagined to pass
+"to infinity and beyond" through to the other side of the polyhedron.)
+The intersection of a facet F  j   with previous facets
+can be found
+geometrically as the portion of the boundary of the facet
+visible from the intersection point of the viewing line with the plane
+of the facet; this shows that the lower-dimensional shelling required by
+property 2 is of the same geometric type.
+
+Ziegler then proves that any polytope
+has Euler characteristic
+X(P)=Sum(-1  i   f i  )=0,
+by an induction on dimension and shelling length:
+ 
+The base case, in which f -1 =f 0 =1, is clear.
+Now if P is a  d -polytope with shelling order
+F 1 ,F 2 ,... then we have
+more precisely that
+X(F 1  u F 2  u ... u F  j  )
+is 0 for  j  &lt;  f   d -1 
+and 1 for  j  =  f   d -1 
+which follows by induction on  j , 
+since the facets we add in are ( d -1)-polytopes, the Euler
+characteristic is additive, and the intersection of F  j   with
+previous facets is a shellable part of, but (for  j  &lt;
+ f   d -1 )
+not the whole boundary of
+F  j   (Ziegler shows that this last observation is true
+in general, but it is evident geometrically for the
+shelling defined above).
+ 
+Removing the two "extra" faces  f  -1  and
+ f  3  from this sum
+gives us the usual Euler formula.
+    
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

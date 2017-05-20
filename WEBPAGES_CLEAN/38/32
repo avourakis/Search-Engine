@@ -1,0 +1,58 @@
+ 4.103 OENewMCMolBase<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.102 OENetCharge 
+ Up:   4. OEChem Functions 
+ Next:   4.104 OENewMolBase 
+   
+
+
+    
+ 
+4.103 OENewMCMolBase
+ 
+   
+OEMCMolBase *OENewMCMolBase(unsigned int type=OEMCMolType::OEDefault)
+OEMCMolBase *OENewMCMolBase(const OEMolBase &amp;mol,
+                            unsigned int type=OEMCMolType::OEDefault)
+OEMCMolBase *OENewMCMolBase(const OEMCMolBase &amp;mol,
+                            unsigned int type=OEMCMolType::OEDefault)
+    
+The  OENewMCMolBase  factory methods allocate an implementation
+of an  OEMCMolBase  based on the integer 'type' argument.  The
+'type' argument specifies the implementation type to be allocated, and
+should be one of the values listed in  namespace OEMCMolType .  An
+ OEMolBase  or  OEMCMolBase  may be passed in order to copy
+construct the  OEMCMolBase  instance.  The pointer to the
+ OEMCMolBase  memory returned by the function is allocated
+dynamically.  The  OEMCMolBase::delete  operator must be called
+for all returned instances to prevent memory leaks.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.102 OENetCharge 
+ Up:   4. OEChem Functions 
+ Next:   4.104 OENewMolBase 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,163 @@
+ 
+LogicalVariable (formula package)
+<body> 
+ 
+
+
+
+
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+formulaVisited 
+ 
+Class LogicalVariable 
+ 
+java.lang.Object
+    formulaVisited.Named 
+        formulaVisited.LogicalVariable 
+ 
+   All Implemented Interfaces:     Formula , java.lang.Comparable 
+     public class  LogicalVariable   extends  Named  implements  Formula      
+A logical variable, representing true or false
+  (but we may not know which).
+  
+
+  
+   
+
+
+
+  
+     
+ Constructor Summary   
+      LogicalVariable  (java.lang.String _name) 
+
+ 
+          Constructs a logical variable. 
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  java.lang.Object   
+    accept  ( Visitor  _v) 
+
+ 
+          Accepts a visitor. 
+  
+   
+    Methods inherited from class formulaVisited. Named   
+     compareTo ,  equals   
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Constructor Detail   
+     
+LogicalVariable 
+ 
+public  LogicalVariable (java.lang.String _name) 
+  Constructs a logical variable.
+ 
+    Parameters:    _name  - The variables's name.      
+    
+ Method Detail   
+     
+accept 
+ 
+public java.lang.Object  accept ( Visitor  _v) 
+   Description copied from interface:   Formula    
+ Accepts a visitor.
+    Each subclass implements this method as 
+     {  return _v.visit(this);  } ,
+    and the compiler identifies the right   Visitor   method
+    based on the subclass (which is the type of  this ).
+ 
+     Specified by:     accept   in interface   Formula     
+    Parameters:    _v  - The visitor.
+   Returns:   The result _v calculates for this formula.   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED | FIELD |  CONSTR  |  METHOD   
+  
+DETAIL: FIELD |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

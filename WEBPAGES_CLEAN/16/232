@@ -1,0 +1,41 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Seiwald Q &amp; A -- "GET for EDIT" cookies<body> Re: Seiwald Q &amp; A -- "GET for EDIT" cookies 
+ Dave Long  (  dave@sb.aol.com  )  Tue, 03 Sep 1996 12:17:22 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Bruce Brown: "Re: lock/checkout/reserve/edit" 
+    Previous message:   Jim Whitehead: "Agenda for Technical Working Mtg." 
+
+
+    
+&gt;1. What about Content-Version and Derived-From? (Dan Connolly)  
+&gt;
+&gt;	Now Roy Fielding says that Content-Version is opaque and could
+&gt;	be used exactly for this purpose, 'cause no one would be the wiser
+&gt;	if the Content-Version were different for each checkout of the
+&gt;	same document.  This is true, but now the names of these fields
+&gt;	are losing their meaning, no?  If it's checkout context, call it
+&gt;	"Checkout-Context" (or "Checkout-Cookie").
+
+I think the reason that neither Content-Version/Derived-From nor
+Cookie/Set-Cookie are the appropriate places for the checkout context
+is that checkout is a global state, based upon the user's identity.
+
+Carrying the checkout state in a browser cookie would mean that a
+checkout would be tied to my user agent instance, not my identity.
+(am I way off base here?  have I missed proposals to the W3C to
+pool cookies between user agents?)
+
+Don't get me wrong: Content-Version is still *very* useful -- it's
+like bus locking in a computer system: a low-level coherency check
+which simplifies life for the higher levels of the system.
+
+-Dave
+ 
+
+  
+     Next message:   Bruce Brown: "Re: lock/checkout/reserve/edit" 
+    Previous message:   Jim Whitehead: "Agenda for Technical Working Mtg." 
+
+
+  </body> 

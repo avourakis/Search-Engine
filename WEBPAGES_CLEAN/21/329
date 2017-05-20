@@ -1,0 +1,52 @@
+ 3.17.11 SweepConfs<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.17.10 Delete Conformers 
+ Up:   3.17 OEMCMolBaseT 
+ Next:   3.17.12 OrderConfs 
+   
+
+
+  
+3.17.11 SweepConfs 
+ 
+
+ 
+    
+virtual bool SweepConfs() = 0
+    
+Clean up unused memory and objects which may be associated with the
+conformers of the  OEMCMolBaseT .  Renumber the conformer indices
+sequentially.  This function invalidates the conformer indices of all
+conformers in a molecule.  Note that this function doesn't guarantee that
+all conformer indices are sequential upon completion (some molecule
+implementations may treat  OEMolBase::Sweep  as a no-op).
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.17.10 Delete Conformers 
+ Up:   3.17 OEMCMolBaseT 
+ Next:   3.17.12 OrderConfs 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

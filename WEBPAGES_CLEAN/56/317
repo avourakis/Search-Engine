@@ -1,0 +1,373 @@
+ CHEM.Common.ChemicalSearch.ChemicalSearch<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Common  ::
+         Module ChemicalSearch  ::
+        Class ChemicalSearch
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class ChemicalSearch    
+Given a SMILES string (and a limit on the results size), returns
+the most similar fingerprints known by the fingerprint server 
+(specified in the Env.py file) as well as a similarity score
+of each found fingerprint to the original search string.
+
+Additional methods include an option to actually retrieve the 
+database information for the chemicals with those fingerprints
+(while still keeping the similarity scores).
+
+Input: 
+- searchString:  
+    SMILES format of a molecule or component to search for similarity by.
+- maxResults:  
+    Maximum number of similar fingerprints to return
+- resultsStart:  
+    First result index to take out of the full possible results set
+
+Output:
+- resultsFile:
+    Output is the the fingerprint strings found to be most similar to the 
+    search criteria.  Alternatively, an option allows for the return of
+    the full-database information for the chemicals with those fingerprints.
+
+    Redirection to stdout possible by specifying the filename "-"
+
+     
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+             __init__ ( self )  
+      Constructor 
+           
+            
+            
+           
+           
+     
+         
+      
+           __similarMolSearchByQuery ( self ,
+         query ,
+         histogramOnly = False )  
+      Most of the similarity search work is done here, but separate it 
+      out, assuming the basic query string has already been 
+      constructed. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __similarMolQuery ( self ,
+         searchModel ,
+         histogramOnly = False )  
+      Build the fingerprint server query based on the list of 
+      similarMols in the search model. 
+           
+            
+            
+           
+           
+     
+         
+      
+           findChemicals ( self ,
+         searchModel )  
+      Given a ChemicalSearchModel, see if it has a 
+similarMols list of OEMolBase objects, then find all of the 
+chemical database records that match all of those critiera
+and return that data, including the supplementary search
+information like similarityScores. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __findChemicalsStrict ( self ,
+         searchModel )  
+      The main work of searching the database for chemical records, but 
+      only strict / standard DB criteria are considerd here. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __advancedCriteriaSearch ( self ,
+         searchModel ,
+         advancedResultsStart ,
+         advancedMaxResults )  
+      Find chemicals, but only using one of the advanced criteria, 
+      probably requiring a request to a separate specialized index 
+      server. 
+           
+            
+            
+           
+           
+     
+         
+      
+             __searchModelContainsAdvancedCriteria ( self ,
+         searchModel )  
+      Determines whether the searchModel includes advanced crtieria that
+      requires search requests to special index servers, beyond basic 
+      database filtering. 
+           
+            
+            
+           
+           
+     
+         
+      
+             __setupAdvancedSearch ( self ,
+         searchModel )  
+      Do any setup necessary to facilitate subsequent advanced criteria 
+      search runs 
+           
+            
+            
+           
+           
+     
+         
+      
+             __applyAdvancedCriteriaFilter ( self ,
+         searchModel ,
+         results )  
+      Filter by strict substructure when appropriate 
+           
+            
+            
+           
+           
+     
+         
+      
+             __strictSubstructureFilters ( self ,
+         substructureMols )  
+      Initializes and returns a list of OESubSearch objects to filter 
+      molecules based on the given substructureMols as substructures. 
+           
+            
+            
+           
+           
+     
+         
+      
+           fingerprintQuery ( self ,
+         query )  
+      Submit the query string to the fingerprint server. 
+           
+            
+            
+           
+           
+     
+         
+      
+             chemicalTextSearch ( self ,
+         searchModel ,
+         resultsStart ,
+         maxResults )  
+      Forward the chemical text search request on to the text search 
+      server. 
+           
+            
+            
+           
+           
+     
+         
+      
+             searchSources ( self )  
+      Return all information on all SOURCE table rows as 
+      RowItemModels. 
+           
+            
+            
+           
+           
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __similarMolSearchByQuery ( self ,
+         query ,
+         histogramOnly = False ) 
+   
+     
+     
+     Most of the similarity search work is done here, but separate it out, 
+  assuming the basic query string has already been constructed. 
+  If histogramOnly is True, assume the query is only to retrieve the 
+  score distribution histogram, not individual items.  In that case, return
+  it but also just save it to the class' public member variable for future 
+  access.
+        
+  
+ 
+   
+     
+     __similarMolQuery ( self ,
+         searchModel ,
+         histogramOnly = False ) 
+   
+     
+     
+     Build the fingerprint server query based on the list of similarMols in
+  the search model. Specifically don't use the resultsStart and resultsEnd 
+  parameters here, instead the string formatted query returned by this 
+  method will have two %d entries that should be replaced by the desired 
+  values like... 
+   query = self.__similarMolQuery(searchModel); query = query % 
+  (resultsStart,resultsStart+maxResults); 
+   If similarityThreshold is provided in the searchModel, can use fast 
+  search method to only check for targets that can have a similarity score 
+  greater than this threshold. 
+  If histogramOnly is True, will construct a query not to retrieve 
+  individual items, but just to retrieve the histogram of similarity score 
+  distributions.
+        
+  
+ 
+   
+     
+     findChemicals ( self ,
+         searchModel ) 
+   
+     
+     
+     
+Given a ChemicalSearchModel, see if it has a 
+similarMols list of OEMolBase objects, then find all of the 
+chemical database records that match all of those critiera
+and return that data, including the supplementary search
+information like similarityScores.
+
+If not, just look for other search criteria in the model and find chemicals
+by those criteria and return the same data (minus the similarityScore, etc.).
+
+Example Usage:
+
+from CHEM.Common.ChemicalSearch import ChemicalSearch;
+from CHEM.Common.Model import ChemicalSearchModel;
+from CHEM.Common.Util import molBySmiles;
+
+mol = molBySmiles("c1ccccc1N=C=O");
+chemicalSearch = ChemicalSearch()
+
+chemicalQuery = ChemicalSearchModel();
+chemicalQuery.maxResults = 10;
+chemicalQuery.similarityThreshold = 0.5;
+chemicalQuery.addSimilarMol(mol);
+
+resultChemicalModels = chemicalSearch.findChemicals(chemicalQuery);
+
+for chemical in resultChemicalModels:
+    print chemical["can_smiles"];
+
+ 
+        
+  
+ 
+   
+     
+     __findChemicalsStrict ( self ,
+         searchModel ) 
+   
+     
+     
+    
+  
+  The main work of searching the database for chemical records, but only
+  strict / standard DB criteria are considerd here. No funny similarity 
+  searches, etc.
+        
+  
+ 
+   
+     
+     __advancedCriteriaSearch ( self ,
+         searchModel ,
+         advancedResultsStart ,
+         advancedMaxResults ) 
+   
+     
+     
+    
+  
+  Find chemicals, but only using one of the advanced criteria, probably 
+  requiring a request to a separate specialized index server.  Figure out 
+  which is the proper one to call based on the searchModel contents and 
+  defer accordingly.
+        
+  
+ 
+   
+     
+     fingerprintQuery ( self ,
+         query ) 
+   
+     
+     
+    
+  
+  Submit the query string to the fingerprint server. Depending on 
+  environment settings and what's available, this may occur via a direct 
+  telnet connection or indirectly via a web service call to the cdb web 
+  server.
+        
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:28 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

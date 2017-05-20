@@ -1,0 +1,54 @@
+ DAOOPT-UAI12 - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   DAOOPT-UAI12  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    DAOOPT-UAI12  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+  DAOOPT-UAI12 
+   An exact AOBB solver for Most Probable Explanation/MAP in Bayesian/Markov networks. This is a version of the solver with all the features used in the  PASCAL2 Probabilistic Inference Challenge  in 2012.       
+  Author 
+    Lars_Otten  and  Alex_Ihler        
+  Description 
+   This is a version of the  DAOOPT  solver using MBE code by Alex Ihler. In addition to the features of the DAOOPT, it includes cost-shifting schemes to tighten the problem formulation (MPLP/JGLP) and the bounds produced by MBE algorithm (MBE with moment-matching). See [1] for details on these methods.       
+  Input format 
+   The graphical model instance has to be specified in the  UAI file format .       
+  Parameters 
+   See  DAOOPT  for parameters, or run the exectuable with  --help</strong>.   The following additional parameters are also available in this version.          --match</strong>: Apply moment-matching between mini-buckets        --mplp</strong>: (integer) specifies the maximum number of iterations to run MPLP preprocessing.        --mplps</strong>: (double) specifies the maximum time (in seconds) to run MPLP preprocessing.        --jglp</strong>: (integer) specifies the maximum number of iterations to run JGLP preprocessing.        --jglps</strong>: (double) specifies the maximum time (in seconds) to run JGLP preprocessing.         Note that JGLP is always run with an i-bound equal to half of the i-bound used for mini-bucket.   
+  Download 
+   A 64-bit Linux binary is available  here .       If you are interested in obtaining the source code, please contact the program author.       
+  References 
+   [1] Join-graph based cost-shifting schemes. Alexander T. Ihler, Natalia Flerova, Rina Dechter, Lars Otten. In  Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence (UAI2012) , Catalina Island, CA, USA, 2012.       [2] Winning the PASCAL 2011 MAP Challenge with Enhanced AND/OR Branch-and-Bound, Lars Otten, Alexander Ihler, Kalev Kask, and Rina Dechter. In  DISCML'12 Workshop , at NIPS'12, Lake Tahoe, NV, USA, December 2012.        DAOOPT-UAI12  (last edited 2013-10-31 21:58:50 by   WilliamLam  ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

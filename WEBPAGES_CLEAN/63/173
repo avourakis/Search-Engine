@@ -1,0 +1,71 @@
+ 24.5 oegzstream<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.4 oefstream 
+ Up:   24. I/O Utilities 
+ Next:   24.6 oesstream 
+   
+
+
+  
+24.5 oegzstream 
+ 
+
+ 
+These classes,  oeigzstream  and  oeogzstream , are wrapper classes
+for other  oestream  classes. These classes provide dynamic compression
+and decompression of data using  zlib .
+
+  
+    oeifstream ifs;
+oeofstream ofs;
+
+ifs.open("input.txt.gz");
+ofs.open("output.txt.gz");
+
+if (ifs &amp;&amp; ofs)
+{
+    oeigzstream igzs(&amp;ifs, false);
+    oeogzstream ogzs(&amp;ofs, false);
+
+    std::string buffer;
+    while (igzs &amp;&amp; ogzs)
+    {
+        if (igzs.getline(buffer))
+            ogzs &lt;&lt; buffer;
+    }
+
+    igzs.close();
+    ogzs.close();
+}
+
+ifs.close();
+ofs.close();
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   24.4 oefstream 
+ Up:   24. I/O Utilities 
+ Next:   24.6 oesstream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

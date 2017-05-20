@@ -1,0 +1,303 @@
+ 
+SplashWindow
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY:  NESTED  |  FIELD  | CONSTR |  METHOD   
+  
+DETAIL:  FIELD  | CONSTR |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.ui 
+ 
+Class SplashWindow 
+ 
+java.lang.Object
+   java.awt.Component
+       java.awt.Container
+           java.awt.Window
+                org.itr_rescue.dataGuard.ui.SplashWindow 
+ 
+   All Implemented Interfaces:    java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable, javax.accessibility.Accessible 
+     public class  SplashWindow   extends java.awt.Window    
+A Splash window.
+    
+ Usage: MyApplication is your application class. Create a Splasher class which
+ opens the splash window, invokes the main method of your Application class,
+ and disposes the splash window afterwards.
+ Please note that we want to keep the Splasher class and the SplashWindow class
+ as small as possible. The less code and the less classes must be loaded into
+ the JVM to open the splash screen, the faster it will appear.
+   
+ class Splasher {
+    public static void main(String[] args) {
+         SplashWindow.splash(Startup.class.getResource("splash.gif"));
+         MyApplication.main(args);
+         SplashWindow.disposeSplash();
+    }
+ }
+  
+ 
+
+  
+    Version:  
+   2.2.1 2006-05-27 Abort when splash image can not be loaded. 
+  Author:  
+   Werner Randelshofer 
+  See Also:    Serialized Form     
+
+
+  
+     
+ Nested Class Summary   
+  
+   
+    Nested classes/interfaces inherited from class java.awt.Window  
+    java.awt.Window.AccessibleAWTWindow  
+  
+ 
+  
+    Nested classes/interfaces inherited from class java.awt.Container  
+    java.awt.Container.AccessibleAWTContainer  
+  
+ 
+  
+    Nested classes/interfaces inherited from class java.awt.Component  
+    java.awt.Component.AccessibleAWTComponent, java.awt.Component.BaselineResizeBehavior, java.awt.Component.BltBufferStrategy, java.awt.Component.FlipBufferStrategy  
+  
+ 
+
+
+  
+    
+ Field Summary   
+    
+ static java.lang.String   
+    SPLASH_IMAGE_PATH   
+
+ 
+            
+  
+   
+    Fields inherited from class java.awt.Component  
+    BOTTOM_ALIGNMENT, CENTER_ALIGNMENT, LEFT_ALIGNMENT, RIGHT_ALIGNMENT, TOP_ALIGNMENT  
+  
+   
+    Fields inherited from interface java.awt.image.ImageObserver  
+    ABORT, ALLBITS, ERROR, FRAMEBITS, HEIGHT, PROPERTIES, SOMEBITS, WIDTH  
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+ static void   
+    disposeSplash  () 
+
+ 
+          Closes the splash window. 
+    
+ static void   
+    invokeMain  (java.lang.String className,
+           java.lang.String[] args) 
+
+ 
+          Invokes the main method of the provided class name. 
+    
+ static void   
+    invokeMethod  (java.lang.String className) 
+
+ 
+            
+    
+ static java.lang.Object   
+    invokeMethod  (java.lang.String className,
+             java.lang.String methodName) 
+
+ 
+            
+    
+  void   
+    paint  (java.awt.Graphics g) 
+
+ 
+          Paints the image on the window. 
+    
+ static void   
+    splash  () 
+
+ 
+          Open's a splash window using the specified image. 
+    
+ static void   
+    splash  (java.awt.Image image) 
+
+ 
+          Open's a splash window using the specified image. 
+    
+  void   
+    update  (java.awt.Graphics g) 
+
+ 
+          Updates the display area of the window. 
+  
+   
+    Methods inherited from class java.awt.Window  
+    addNotify, addPropertyChangeListener, addPropertyChangeListener, addWindowFocusListener, addWindowListener, addWindowStateListener, applyResourceBundle, applyResourceBundle, createBufferStrategy, createBufferStrategy, dispose, getAccessibleContext, getBufferStrategy, getFocusableWindowState, getFocusCycleRootAncestor, getFocusOwner, getFocusTraversalKeys, getGraphicsConfiguration, getIconImages, getInputContext, getListeners, getLocale, getModalExclusionType, getMostRecentFocusOwner, getOwnedWindows, getOwner, getOwnerlessWindows, getToolkit, getWarningString, getWindowFocusListeners, getWindowListeners, getWindows, getWindowStateListeners, hide, isActive, isAlwaysOnTop, isAlwaysOnTopSupported, isFocusableWindow, isFocusCycleRoot, isFocused, isLocationByPlatform, isShowing, pack, postEvent, processEvent, processWindowEvent, processWindowFocusEvent, processWindowStateEvent, removeNotify, removeWindowFocusListener, removeWindowListener, removeWindowStateListener, reshape, setAlwaysOnTop, setBounds, setBounds, setCursor, setFocusableWindowState, setFocusCycleRoot, setIconImage, setIconImages, setLocationByPlatform, setLocationRelativeTo, setMinimumSize, setModalExclusionType, setSize, setSize, setVisible, show, toBack, toFront  
+  
+   
+    Methods inherited from class java.awt.Container  
+    add, add, add, add, add, addContainerListener, addImpl, applyComponentOrientation, areFocusTraversalKeysSet, countComponents, deliverEvent, doLayout, findComponentAt, findComponentAt, getAlignmentX, getAlignmentY, getComponent, getComponentAt, getComponentAt, getComponentCount, getComponents, getComponentZOrder, getContainerListeners, getFocusTraversalPolicy, getInsets, getLayout, getMaximumSize, getMinimumSize, getMousePosition, getPreferredSize, insets, invalidate, isAncestorOf, isFocusCycleRoot, isFocusTraversalPolicyProvider, isFocusTraversalPolicySet, layout, list, list, locate, minimumSize, paintComponents, paramString, preferredSize, print, printComponents, processContainerEvent, remove, remove, removeAll, removeContainerListener, setComponentZOrder, setFocusTraversalKeys, setFocusTraversalPolicy, setFocusTraversalPolicyProvider, setFont, setLayout, transferFocusBackward, transferFocusDownCycle, validate, validateTree  
+  
+   
+    Methods inherited from class java.awt.Component  
+    action, add, addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener, addInputMethodListener, addKeyListener, addMouseListener, addMouseMotionListener, addMouseWheelListener, bounds, checkImage, checkImage, coalesceEvents, contains, contains, createImage, createImage, createVolatileImage, createVolatileImage, disable, disableEvents, dispatchEvent, enable, enable, enableEvents, enableInputMethods, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, firePropertyChange, getBackground, getBaseline, getBaselineResizeBehavior, getBounds, getBounds, getColorModel, getComponentListeners, getComponentOrientation, getCursor, getDropTarget, getFocusListeners, getFocusTraversalKeysEnabled, getFont, getFontMetrics, getForeground, getGraphics, getHeight, getHierarchyBoundsListeners, getHierarchyListeners, getIgnoreRepaint, getInputMethodListeners, getInputMethodRequests, getKeyListeners, getLocation, getLocation, getLocationOnScreen, getMouseListeners, getMouseMotionListeners, getMousePosition, getMouseWheelListeners, getName, getParent, getPeer, getPropertyChangeListeners, getPropertyChangeListeners, getSize, getSize, getTreeLock, getWidth, getX, getY, gotFocus, handleEvent, hasFocus, imageUpdate, inside, isBackgroundSet, isCursorSet, isDisplayable, isDoubleBuffered, isEnabled, isFocusable, isFocusOwner, isFocusTraversable, isFontSet, isForegroundSet, isLightweight, isMaximumSizeSet, isMinimumSizeSet, isOpaque, isPreferredSizeSet, isValid, isVisible, keyDown, keyUp, list, list, list, location, lostFocus, mouseDown, mouseDrag, mouseEnter, mouseExit, mouseMove, mouseUp, move, nextFocus, paintAll, prepareImage, prepareImage, printAll, processComponentEvent, processFocusEvent, processHierarchyBoundsEvent, processHierarchyEvent, processInputMethodEvent, processKeyEvent, processMouseEvent, processMouseMotionEvent, processMouseWheelEvent, remove, removeComponentListener, removeFocusListener, removeHierarchyBoundsListener, removeHierarchyListener, removeInputMethodListener, removeKeyListener, removeMouseListener, removeMouseMotionListener, removeMouseWheelListener, removePropertyChangeListener, removePropertyChangeListener, repaint, repaint, repaint, repaint, requestFocus, requestFocus, requestFocusInWindow, requestFocusInWindow, resize, resize, setBackground, setComponentOrientation, setDropTarget, setEnabled, setFocusable, setFocusTraversalKeysEnabled, setForeground, setIgnoreRepaint, setLocale, setLocation, setLocation, setMaximumSize, setName, setPreferredSize, show, size, toString, transferFocus, transferFocusUpCycle  
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+SPLASH_IMAGE_PATH 
+ 
+public static final java.lang.String  SPLASH_IMAGE_PATH  
+    See Also:    Constant Field Values      
+    
+ Method Detail   
+     
+update 
+ 
+public void  update (java.awt.Graphics g) 
+  Updates the display area of the window.
+ 
+     Overrides:    update  in class  java.awt.Container    
+    
+      
+paint 
+ 
+public void  paint (java.awt.Graphics g) 
+  Paints the image on the window.
+ 
+     Overrides:    paint  in class  java.awt.Container    
+    
+      
+splash 
+ 
+public static void  splash (java.awt.Image image) 
+  Open's a splash window using the specified image.
+ 
+     Parameters:    image  - The splash image.   
+      
+splash 
+ 
+public static void  splash () 
+  Open's a splash window using the specified image.
+ 
+     Parameters:    imageURL  - The url of the splash image.   
+      
+disposeSplash 
+ 
+public static void  disposeSplash () 
+  Closes the splash window.
+ 
+     
+      
+invokeMain 
+ 
+public static void  invokeMain (java.lang.String className,
+                              java.lang.String[] args) 
+  Invokes the main method of the provided class name.
+ 
+     Parameters:    args  - the command line arguments   
+      
+invokeMethod 
+ 
+public static void  invokeMethod (java.lang.String className) 
+     
+     
+invokeMethod 
+ 
+public static java.lang.Object  invokeMethod (java.lang.String className,
+                                            java.lang.String methodName) 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY:  NESTED  |  FIELD  | CONSTR |  METHOD   
+  
+DETAIL:  FIELD  | CONSTR |  METHOD   
+    
+
+
+ </body> 

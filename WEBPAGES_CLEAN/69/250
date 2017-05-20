@@ -1,0 +1,54 @@
+ #iris data are in the R package. The data are stored in two formats: 2D matrix or 3D array
+
+#"iris" is a data matrix with 150 rows and five columns
+attributes(iris)
+
+#"iris3" is 3D array
+attributes(iris3)
+
+
+############# slide 8: print the data
+#show the data matrix for each type
+iris[1:50,1:4] #setosa
+iris[51:100,1:4] #versicolor
+iris[101:150,1:4] #virginica
+
+#alternativelly, you can use iris3
+iris3[,,1]
+iris3[,,2]
+iris3[,,3]
+
+############## slide 9: visualize the iris data
+#plot the data matrix into an image using the "image" function
+image(t(iris[,4:1]),col=rainbow(12))
+#the "image" function draws a data matrix from bottom to up
+
+
+############## slides 18
+#### cluster analysis using the R function "kmeans"
+obj=kmeans(data.frame(iris[,-5]),centers=3)
+kmeans(data.frame(iris[,-5]),centers=3, trace=T)
+
+
+#slide 19
+#draw the scatter plot for the first 9 iterations
+distxy=function(x,y) { return(sum( (x-y)^2)) }
+mydata=iris[,-5]
+#mydata=scale(mydata)
+n=dim(mydata)[1]
+K=3
+distance=matrix(0, n, K)
+#initialize
+set.seed(1)
+cluster01=rmultinom(n, size=1, prob=c(0.3,0.3,0.4) )
+cluster01.new=rmultinom(n, size=1, prob=c(0.3,0.3,0.4) )
+cluster123=apply(cluster01.new, 2, which.max)
+
+par(mfrow=c(3,3))
+i=0
+
+### check whethere there are changes on cluster assignments
+while( sum(cluster01!=cluster01.new) )
+{
+ i=i+1
+ if(i 

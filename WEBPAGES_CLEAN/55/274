@@ -1,0 +1,79 @@
+   
+  Class User.ArtistManager
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class User.ArtistManager
+ 
+ 
+ java.lang.Object 
+   |
+   +----User.ArtistManager
+ 
+    public class  ArtistManager 
+    extends  Object 
+   
+Manages the dynamic invocation and disposal of Teamware Artists.
+An artist is a user interface component that is task specific
+and implements the dialog between the graphical UI and the Teamware
+System and Foundation interaces.
+    See Also: 
+        TMWFoundation ,  TMWCategory ,  TMWSpecification ,  TMWInstance ,  TMWNetwork 
+     
+ 
+    
+      ArtistManager  ()
+     ArtistManager creation is static as there should be one shared set of
+artist services.
+   
+    
+      InvokeArtist  (String, String[])
+     Invokes an artist of a certain type.
+        ShutdownAllArtists  ()
+     Shutdown all artists (most likely to quit system).
+        ShutdownArtist  (Integer)
+     Shutdown a given artist.
+    
+ 
+    
+  
+   
+ ArtistManager 
+ 
+  public ArtistManager()
+ 
+   ArtistManager creation is static as there should be one shared set of
+artist services.
+    
+ 
+    
+   
+  InvokeArtist  
+ 
+  public static  Integer  InvokeArtist( String  ArtistName,
+                                      String  args[])
+ 
+   Invokes an artist of a certain type.
+      Parameters: 
+       ArtistName - is the name of the artist to start.
+      args - are the initial values needed to set the artist state.
+         Returns: 
+       s the internal artist id.
+         
+  ShutdownArtist  
+ 
+  public static void ShutdownArtist( Integer  ArtistId)
+ 
+   Shutdown a given artist.
+      Parameters: 
+       ArtistId - is the internal id of the artist.
+         
+  ShutdownAllArtists  
+ 
+  public static void ShutdownAllArtists()
+ 
+   Shutdown all artists (most likely to quit system).
+    
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

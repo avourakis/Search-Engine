@@ -1,0 +1,481 @@
+ CompSci 141 / CSE 141 / Informatics 101 Spring 2013, Project #3<body>
+
+ 
+
+ 
+CompSci 141 / CSE 141 / Informatics 101 Spring 2013 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Code Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ CompSci 141 / CSE 141 / Informatics 101 Spring 2013 
+   Project #3 
+
+ 
+
+ 
+
+  Due date and time:   Monday, May 13, 11:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ As we discussed in lecture, functional languages such as Haskell provide some substantial advantages over their imperative-style counterparts: programs are simple, clear, and concise, with the more tedious and error-prone details of things like memory management handled automatically, and concurrency and distribution across multiple machines being simpler (and, in some cases, automatable).  These advantages are enabled by a simpler programming model, in which programs have no "global state" (i.e., no variables or assignment statements), expressions but no statements, and  higher-order functions  — functions that take other functions as parameters or build and return functions as their results.  Given the same set of parameters, a function will always return the same result, which makes understanding a program easier, since there are none of the unforeseen interactions between subprograms that are so difficult to avoid in imperative-style programming (such as Java) where there is global, mutable state. 
+
+ There are, of course, disadvantages to functional programming, as well; it pays, ultimately, to know when functional programming might be (or might not be) an appropriate approach.  Even if you're programming in, say, an object-oriented language, you'd be surprised how many ways functional programming techniques will help you to better understand and design software.  For example, a number of the methods and functions in the standard libraries of both Java and C++ are built around ideas from functional programming, with  function objects  (objects that often carry no state and support only one method) passed as parameters instead of functions.  The syntax is, in some ways, different — since an object has to be created and, possibly, destroyed — and the semantics are more heavyweight — since the object's class may have to inherit from some class or implement some interface — but the idea is precisely the idea from functional programming of passing a function as a parameter to another function.  Functional programming presents an easier venue for learning this technique, because it's stripped to its essence, without all of the scaffolding required in an object-oriented language to accomplish the same goal. 
+
+ Functional programming requires a somewhat different mindset than the imperative style of programming that you're likely more accustomed to.  The emphasis is on writing small, generic, reusable building blocks that can be combined in a wide variety of ways.  For those of you whose primary experience has been in languages like Java, C++, C#, or Visual Basic, you may find some of the "limitations" of functional programming difficult to overcome at first.  Where you would declare variables or create objects in an imperative-style language, then write loops to manipulate them, a functional approach would use recursion instead, with parameters and results carrying the information that you might prefer to store in variables.  Where you would pass an object that configures the behavior of some method in an object-oriented language, a functional approach would require that a function be passed instead.  Where you would write a loop that walks down a linked list and performs some operation on each element, a functional approach would use a higher-level abstraction, such as "mapping," with a function passed to indicate what operation should be performed on the elements. 
+
+ This project gives you an opportunity to explore some of the core language features of Haskell, which is (for our purposes in this assignment) a purely functional language.  In particular, we're going to concentrate our attention on some of the features that make Haskell different from what you've seen before; later this quarter, we'll talk about how some of these differences aren't as stark as they may seem, as ideas that show up in Haskell also show up — albeit with different syntax — in languages that you may be more familiar with. 
+
+ Of course, learning something new is always difficult, especially when you're forbidden from doing the things that you feel comfortable with.  With time, though, you may come to find that many of the seeming limitations of Haskell — e.g., no variables, no classes or objects — actually free you more than they limit you.  As you get started, remember to maintain an open mind.  Syntax and unfamiliar error messages will be frustrating at first, as it is any time you learn a new language, but this frustration fades quickly as you gain experience.  The semantic hurdles are somewhat more difficult to clear, but worthwhile, because they will pay off regardless of whether you ever write another line of Haskell code, as many of these concepts are universal.  Be sure to get your questions answered along the way; we know that working in a new language is difficult and we'll be happy to help. 
+
+ Enjoy! 
+
+ 
+
+ 
+
+  Getting started 
+
+ Like many other programming languages, there are multiple dialects of Haskell, so we'll need to pick one of them; we'll use the most recent "standard" version of Haskell, which is called Haskell 2010, though we'll be dealing exclusively with features that have been a part of Haskell for many years. 
+
+ There are also multiple implementations of Haskell.  For our work this quarter, we'll use the Haskell Platform, which is available for Windows, Mac OS X, and Linux. 
+
+ Using WinGHCi in the ICS labs 
+
+ The Windows workstations in the ICS labs provide the Haskell interpreter for your use.  Find WinGHCi, a GUI-based Windows Haskell interpreter, from the "Start" menu and execute it. 
+
+ Downloading the Haskell Platform for home use 
+
+ The Haskell Platform is available for a variety of platforms.  You can download it from  haskell.org . 
+
+ Installation instructions differ from one platform to another, though I've only used the Windows version, which offers a typical, no-frills Windows-based installer.  One side note: I noticed that the Windows installer can hang for quite a while just before it completes successfully, so you may need to be patient.  (It wasn't clear what the problem was and I haven't researched it, so there may be a workaround, but installation is a one-time problem, so it didn't seem worth worrying about.) 
+
+ Using the Haskell Platform 
+
+ The Haskell Platform provides an interactive, interpreted Haskell environment called  GHCi  (and, on Windows, is called  WinGHCi ), which offers what is sometimes called a  read-evaluate-print loop , in which you are repeatedly asked to type an expression, the expression is evaluated, and the result is printed.  This is a somewhat different environment than the one you might be accustomed to, as it does not require compilation and separate program execution; instead, you load a script into the interpreter, after which you can call the functions by typing expressions at the interpreter's prompt.  For the kind of work we'll be doing, there will be no notion of a "main" function; we'll be writing either individual functions or functions that work in tandem with one another to produce a result, but not complete programs.  (That's not to say that you can't write complete Haskell programs and compile them, but this is beyond the scope of our work.) 
+
+ I have provided an  example Haskell script  with a couple of simple Haskell functions in it.  Here is an example of using the interpreter to load the script and execute its functions, assuming that the script has been saved into the folder  C:\haskell\examples .  You would type the text shown in boldface, with the interpreter printing all of the other text shown. 
+
+ 
+    Prelude&gt;  :cd C:\haskell\examples 
+    Prelude&gt;  :load Examples 
+    *Examples&gt;  factorial 5 
+    120
+    *Examples&gt;  listLength [1,2,3,4] 
+    4
+    *Examples&gt;  factorial (listLength [1,2,3,4]) 
+    24
+    *Examples&gt;  :type factorial 
+    factorial :: Integer -&gt; Integer
+ 
+
+ 
+
+ 
+
+  Part 1: Simple functions and primitive recursion 
+
+ Create a new Haskell script called  Part1.hs , beginning with the following line: 
+
+ 
+    module Part1 where
+ 
+
+ In this script, write the following functions.  For this part of the project, I'm requiring you to stick to writing simple functions, using primitive recursion (if necessary).  Do not use higher-order functions, and do not use higher-level list functions such as  map ,  filter , and  foldr  that we discussed in lecture.  In subsequent parts of the assignment, we'll explore how higher-order functions can dramatically simplify your Haskell functions. 
+
+   inc , which takes one Integer parameter and returns the value of that Integer after 1 has been added to it.  Examples:
+ 
+    Part1&gt;  inc 3 
+    4
+    Part1&gt;  inc (inc 0) 
+    2
+ 
+   
+
+    larger , which takes two Integer parameters and returns the larger of the two.  Examples:
+ 
+    Part1&gt;  larger 3 4 
+    4
+    Part1&gt;  larger 8 5 
+    8
+    Part1&gt;  larger 3 3 
+    3
+ 
+   
+  
+    sumOfFirstN , which takes an Integer parameter  n  and returns the sum of the integers from 1 through  n , inclusive.  This function should have no result if  n  is zero or negative.  (The error message in the example below is roughly equivalent to the default, which is fine; you need not construct your own error message.)  Examples:
+ 
+    Part1&gt;  sumOfFirstN 5 
+    15
+    Part1&gt;  sumOfFirstN (-1) 
+    Error: pattern match failure
+ 
+   
+  
+    largest , which takes a list of Integers as a parameter and returns the largest integer in the list.  This function has no result if the given list is empty.  Examples:
+ 
+    Part1&gt;  largest [1,2,3,4] 
+    4
+    Part1&gt;  largest [3,1,5,4] 
+    5
+    Part1&gt;  largest [] 
+    Error: pattern match failure
+ 
+   
+
+    addOneToAll , which takes a list of Integers as a parameter and returns a list in which 1 has been added to each of the original elements.  Examples:
+ 
+    Part1&gt;  addOneToAll [1,2,3] 
+    [2,3,4]
+    Part1&gt;  addOneToAll [] 
+    []
+ 
+   
+
+    removeAlexes , which takes a list of Strings as a parameter and returns a list in which any occurrence of the String "alex" has been removed.  This function is case-sensitive, and removes only the Strings whose value is exactly "alex".  Examples:
+ 
+    Part1&gt;  removeAlexes ["a", "alex", "Alex", "ALEX", "alex"] 
+    ["a", "Alex", "ALEX"]
+ 
+
+     deepSum , which takes a list of lists of Integers and returns the sum of all of the integers in all of the lists.  The sum of any empty list is considered to be 0.  Examples:
+ 
+    Part1&gt;  deepSum [[1,2],[2,3],[3,4]] 
+    15
+    Part1&gt;  deepSum [[],[1],[]] 
+    1
+    Part1&gt;  deepSum [] 
+    0
+   
+   
+
+  You might find it useful to use some of these functions as "helpers" in your solutions to others, and you might also find it necessary to write separate helper functions that were not officially assigned. 
+
+ Be sure to include a type declaration on each function.  For example, for the following function that calculates the factorial of some integer, it would be important to include the first line, which explicitly declares the function's type, in addition to the equations that define the function. 
+
+ 
+    factorial :: Integer -&gt; Integer
+    factorial 0      = 1
+    factorial n
+        | n &gt; 0      = n * factorial (n - 1)
+ 
+
+ Haskell interpreters (and compilers) actually support a feature called  type inference , meaning that they can deduce the types of a function's parameters and result based on the way they are used within the function.  However, specifying the type of a function is a worthwhile form of documentation, and is required for all of the functions in this assignment. 
+
+ 
+
+ 
+
+  Part 2: Higher-order functions, partial function application, and operator sections 
+
+ Background 
+
+ Thanks to higher-level abstraction mechanisms provided by Haskell and its standard prelude, such as higher-order functions, partial function application, and operator sections, the kind of primitive recursion that you used for several of the functions in Part 1 is often unnecessary.  This part of the project will allow to rewrite a few of the functions from Part 1, as well as a few new ones, with most of the hard work being done by one or more of the pre-existing Haskell constructs or functions. 
+
+ The task 
+
+ Create a new Haskell script called  Part2.hs , beginning with the following lines: 
+
+ 
+    module Part2 where
+    import Part1
+ 
+
+ The  import  directive makes all of the functions in your Part1 module available to your Part2 module; loading Part2 into the interpreter will also, then, load Part1 automatically. 
+
+ In your Part2.hs script, write the following functions, this time making use of various higher-level features that you avoided in Part 1.  If you're so inclined, try to challenge yourself to use partial function application whenever you can.  For example, consider a function that squares all of the elements in a list of integers, assuming the presence of a function  square  that squares an integer.  There are (at least) two ways to write such a function in Haskell: 
+
+ 
+    squareAll :: [Integer] -&gt; [Integer]
+    squareAll xs = map square xs
+    
+    squareAll :: [Integer] -&gt; [Integer]
+    squareAll = map square
+ 
+
+ The two approaches are equivalent, with the latter arguably being clearer when read in English: "To  squareAll  is to map square across a list." 
+
+ The functions you'll need to write for Part 2 are: 
+
+   addOneToAll2 , which behaves equivalently to the  addOneToAll  function from Part 1, but is implemented using higher-order list functions (e.g. map, filter, foldr, zipWith) instead of primitive recursion.  Examples:
+ 
+    Part2&gt;  addOneToAll2 [1,2,3] 
+    [2,3,4]
+    Part2&gt;  addOneToAll2 [] 
+    []
+ 
+   
+
+    addOneToAllRemovingNegatives , which takes a list of Integers as a parameter, adding one to all of the elements that are non-negative, and removing all of the elements that are negative.  Use higher-order functions and/or operator sections in your solution as appropriate.  Examples:
+ 
+    Part2&gt;  addOneToAllRemovingNegatives [1,2,3] 
+    [2,3,4]
+    Part2&gt;  addOneToAllRemovingNegatives [1,-1,2,-2,3,-3,4] 
+    [2,3,4,5]
+ 
+   
+
+    sumOfFirstN2 , which behaves equivalently to  sumOfFirstN  from Part 1, but is implemented using higher-order functions.  Examples:
+ 
+    Part2&gt;  sumOfFirstN2 5 
+    15
+    Part2&gt;  sumOfFirstN2 (-1) 
+    Error: pattern match failure
+ 
+   
+
+    concatenate , which takes a list of Strings and flattens it into one long String.  (Remember that Strings are really lists of Chars.)  Use higher-order functions and/or operator sections in your solution as appropriate, but do not use the pre-existing  concat  function.  Examples:
+ 
+    Part2&gt;  concatenate ["Alex","is","happy"] 
+    "Alexishappy"
+    Part2&gt;  concatenate ["Hello",""," ","World!"] 
+    "Hello World!"
+ 
+   
+
+    largest2 , which behaves equivalently to the  largest  function from Part 1, but is implemented using higher-order functions and/or operator sections as appropriate.  Examples:
+ 
+    Part2&gt;  largest2 [1,2,3,4] 
+    4
+    Part2&gt;  largest2 [3,1,5,4] 
+    5
+    Part2&gt;  largest2 [] 
+    Error: pattern match failure
+ 
+   
+
+    calculateNetIncomes , which takes two lists of Floats.  The first list is the gross incomes of a set of people; the second list is the taxes paid by that same set of people.  The list items in each list correspond to each other, such that the first element of the first list is the gross income for the first person, and the first element of the second list is the taxes paid by the first person.  The function calculates the net income for each of the people, where net income is defined as the gross income minus the taxes paid.  Examples:
+ 
+    Part2&gt;  calculateNetIncomes [35123.75,21011.88,105143.13] [8127.19,7003.55,37881.47] 
+    [26996.56,14008.33,67261.66]
+    Part2&gt;  calculateNetIncomes [] [] 
+    []
+ 
+   
+
+  
+
+ 
+
+  Part 3: Polymorphically typed functions 
+
+ Background 
+
+ In the first two parts of this project, you wrote functions that were limited to dealing with one set of parameter types and returned only one kind of result.  For example,  largest2  took a list of Integers as a parameter and returned the largest Integer in the list.  However, there's no reason why  largest2  would necessarily have to be limited only to Integers; the same algorithm could be used to find the largest Float in a list of Floats, the "largest" String (lexicographically) in a list of Strings, and so on.  The only difference is how the individual elements are compared.  (Note that we would say the same thing about a similar Java method; in Java, we could solve the problem using generics.) 
+
+ As we discussed in lecture, polymorphically typed functions present a solution to this problem, allowing you to define one function that can operate on a variety of types, in a way very similar to Java's generics.  In this part of the assignment, you'll write a few functions that are polymorphically typed.  In each case, part of the challenge is to specify the most general type for the function.  You can use the  :type  command in GHCi — which uses type inferencing to determine the most general type for some function, if it doesn't already have a type declaration — to get help, though it's best to spend some time thinking about these before you resort to using the  :type  command. 
+
+ The task 
+
+ Create a script called  Part3.hs , beginning with the following lines: 
+
+ 
+    module Part3 where
+    import Part1
+    import Part2
+ 
+
+ Notice that it is necessary to import both the Part1 and Part2 modules, if you want all of the definitions in both modules to be available in Part3; module import is not recursive. 
+
+ In your Part3.hs script, write the following functions, making each as generally-typed as you can. 
+
+   concatenate3 , which behaves equivalently to the  concatenate  function from Part 2, but is polymorphic, in that it can flatten any kind of list of lists, rather than just a list of lists of Chars.  Examples:
+ 
+    Part3&gt;  concatenate3 ["Alex","is","happy"] 
+    "Alexishappy"
+    Part3&gt;  concatenate3 ["Hello",""," ","World!"] 
+    "Hello World!"
+    Part3&gt;  concatenate3 [[1,2],[3,4],[5,6]] 
+    [1,2,3,4,5,6]
+    Part3&gt;  concatenate3 [[[1],[2]],[[3],[4]]] 
+    [[1],[2],[3],[4]]
+ 
+   
+
+    removeAllOccurrences , which takes an element of some type and a list of the same type as parameters, removing all occurrences of the given element from the given list.  The function should be polymorphic, in that it takes lists and elements of any type, so long as that type supports comparison for equality (i.e., Eq).
+ 
+    Part3&gt;  removeAllOccurrences 3 [1,2,3,4,5,4,3,2,1] 
+    [1,2,4,5,4,2,1]
+    Part3&gt;  removeAllOccurrences "alex" ["alex","is","happy","today","because","alex","is","done"] 
+    ["is","happy","today","because","is","done"]
+ 
+   
+
+    larger3 , which behaves equivalently to the  larger  function from Part 1, except that it is polymorphic, meaning that it will return the larger of two arguments regardless of their type, so long as the type supports comparison on the basis of ordering (i.e., Ord).
+ 
+    Part3&gt;  larger3 3 4 
+    4
+    Part3&gt;  larger3 8 5 
+    8
+    Part3&gt;  larger3 "alex" "thornton" 
+    "thornton"
+ 
+   
+
+    largest3 , which behaves equivalently to the  largest2  function from Part 2, except that it is polymorphic, meaning that it will return the largest element in a list, regardless of the list's type, so long as the type supports comparison on the basis of ordering (i.e., Ord).
+ 
+    Part3&gt;  largest3 [1,2,3,4] 
+    4
+    Part3&gt;  largest3 [3,1,5,4] 
+    5
+    Part3&gt;  largest3 ["alex","is","happy"] 
+    "is"
+    Part3&gt;  largest3 [4.5,3.7,2.3] 
+    4.5
+ 
+   
+
+  
+
+ 
+
+  Part 4: Lazy evaluation, infinite recursion, and infinite lists 
+
+ Background 
+
+ Haskell's mechanism for evaluating expressions is very different than what you have experienced in other programming languages.  Java, C++, and Scheme, for example, all evaluate expressions in roughly the same way; for example, the arguments to a function are completely evaluated before the function is called.  Consider the following two Java methods: 
+
+ 
+    public ArrayList getListOfIntegers(int n)
+    {
+        ArrayList a = new ArrayList();
+        for (int i = 0; i  a)
+    {
+        return a.get(0);
+    }
+ 
+
+ Now suppose you executed this statement: 
+
+ 
+    System.out.println(returnFirstElement(getListOfIntegers(10000000)));
+ 
+
+ Even though only the first element of the ArrayList is actually used, Java will execute getListOfIntegers( ) to completion — building an ArrayList of 10,000,000 integers — before calling returnFirstElement( ).  (Java is designed this way at least partly because of side effects and "global state"; since getListOfIntegers( ) could potentially have a long-lasting effect, beyond just computing and returning a result, the only way you could ever hope to understand a Java program is if methods were executed to completion each time they were called.)  It's important to know this about Java, since you might otherwise find yourself foolishly walking into such a performance trap. 
+
+ Haskell's approach is fundamentally different from that of most other programming languages.  Haskell uses  lazy evaluation  to evaluate all expressions, meaning that no result is ever calculated before it is needed; in fact,  no part  of a result is ever calculated before it is needed.  This leads to some startling design choices, such as functions that are infinitely recursive or that take or build infinitely-long lists (or at least substantially longer lists than might be needed).  If used judiciously, this doesn't cause a performance problem in Haskell, in terms of time or space, since a function will only proceed as far as needed, and a list will only be evaluated as far as needed. 
+
+ The advantage is that you can often write functions without considering boundary conditions, input lengths, or other minutiae that you might have to think about in most other programming languages.  As an example, imagine you had a list of Strings representing the names of all of the students in a course, and you wanted to assign each one a unique ID.  Haskell's solution to this problem is remarkably simple and clear: 
+
+ 
+    assignIDs :: [String] -&gt; [(Integer, String)]
+    assignIDs names = zip [1 ..] names
+ 
+
+ where [1 ..] is an infinite list [1,2,3,...].  The  zip  function is a standard Haskell function that takes two lists and "zips" them together, creating a pair out of the corresponding elements in each list (the first elements of each list are paired, the second elements of each list are paired, and so on).  The "zipping" stops when one of the two lists runs out of elements.  For example, we might see the following behavior if we called this function from the Haskell interpreter: 
+
+ 
+    IdModule&gt;  assignIDs ["Norm", "Rich", "Alex"] 
+    [(1, "Norm"), (2, "Rich"), (3, "Alex")]
+ 
+
+ With this approach, we're able to give each student a unique ID, without using a counter variable (as we might in Java), without writing a recursive function (though, in fairness, I should point out that  zip  is recursive), and without worrying about how many elements there are in the list of names.  The code is not simpler than the Java equivalent only because the syntax is more terse; it's simpler because you have to rely on fewer details in order to accomplish your goal. 
+
+ The task 
+
+ Create a script called  Part4.hs , beginning with the following lines: 
+
+ 
+    module Part4 where
+    import Part1
+    import Part2
+    import Part3
+ 
+
+ In your script, write the following functions. 
+
+   wholeNumbers , which takes no parameters and returns an infinite list of whole numbers, i.e. [0, 1, 2, ...].  Use primitive, infinite recursion to generate your list.
+ 
+    Part4&gt;  take 5 wholeNumbers 
+    [0,1,2,3,4]
+    Part4&gt;  addOneToAll2 (take 5 wholeNumbers) 
+    [1,2,3,4,5]
+ 
+   
+
+    fibonacciNumbers , which takes no parameters and returns an infinite list that consists of the sequence of Fibonacci numbers.  (The  i   th   number of the Fibonacci sequence is the sum of the ( i  - 1)  th   and ( i  - 2)  th   number, with the first two numbers in the sequence being 0 and 1.)  Again, use primitive, infinite recursion to generate your list.  You may find a helper function useful.
+ 
+    Part4&gt;  take 10 fibonacciNumbers 
+    [0,1,1,2,3,5,8,13,21,34]
+ 
+   
+
+    infiniteMerge , which takes two lists of Integers that are assumed to be infinite and sorted in ascending order, and merges them together into one infinite list that is sorted in ascending order.  Once again, use primitive, infinite recursion to generate your list.
+ 
+    Part4&gt;  take 20 (infiniteMerge wholeNumbers fibonacciNumbers) 
+    [0,0,1,1,1,2,2,3,3,4,5,5,6,7,8,8,9,10,11,12]
+ 
+
+   Helpful hints for dealing with infinite lists 
+
+ Once you begin to delve into infinite lists or functions that recurse infinitely, testing becomes an issue to be approached somewhat more carefully.  As an example, your  wholeNumbers  function returns an infinite list of integers; if you simply call the function from the interpreter's prompt, you'll get an infinite stream of output, until you cancel the evaluation of the function (by pressing Ctrl+C in the interpreter, or pressing the "Pause" button in WinGHCi).  Use pre-existing functions such as  take  to limit the output to a manageable amount. 
+
+ 
+
+ 
+
+  Part 5: Using lazy evaluation to implement a simpler iterator 
+
+ Background 
+
+ In the previous project, you were asked to implement a binary search tree class in Java, including an iterator.  An iterator is a way to abstract the notion of iterating through the elements of a collection, so that it's possible to iterate over the elements without having to know the details of how the collection is implemented. 
+
+ Unfortunately, the Java implementation of the iterator was quite painful to write, because Java lacks the capability to "pause" a method in mid-stream and start it up again later from where it left off.  That meant that you couldn't just write a simple recursive tree traversal, but instead had to simulate one using a stack and your own pushes and pops, so that you could have the iterator remember the current position in the traversal between calls to next( ). 
+
+ Haskell's lazy evaluation mechanism blurs the distinction between traversals and iterators.  Whereas, in Java, you'd need to implement traversals and iterators separately, Haskell allows you to implement only a traversal; since the traversal will be evaluated lazily, Haskell will only ever traverse as far as you ask it to, and will be able to continue from where it left off whenever it needs to traverse farther. 
+
+ The task 
+
+ I've provided a script called  BST.hs , which contains a Haskell implementation of a binary search tree consisting of three functions: bstAdd, bstLookup, and bstRemove. 
+
+   BST.hs  
+  Add the following two functions to the bottom of this script,  without  introducing modifications to the provided portion. 
+
+   bstToList , which takes a BST as a parameter and returns a list of tuples, each of which contains a key and a value.  The list should contain the key/value pairs in ascending order of the keys.
+     
+    BST&gt;  bstToList (bstAdd 10 "Alex" (bstAdd 5 "Joe" EmptyBST)) 
+    [(5, "Joe"), (10, "Alex")]
+    BST&gt;  head (bstToList (bstAdd 10 "Alex" (bstAdd 5 "Joe" EmptyBST))) 
+    (5, "Joe")
+     
+This function can serve not only as a way to convert a binary search tree to a list, but also as a traversal mechanism,  and  as an iterator.  This sounds crazy, but it's important to remember the effect of lazy evaluation.  In the second example, where we ask for the head of the resulting list, Haskell will only build the first element of the list, meaning that the traversal done by bstToList will only go as far as the minimum key in the tree, then stop.
+   
+    bstCount , which takes a BST and returns the number of key/value pairs stored in it.  Implement this function using  bstToList , rather than counting the nodes directly.
+     
+    BST&gt;  bstCount (bstAdd 10 "Alex" (bstAdd 5 "Joe" EmptyBST)) 
+    2
+     
+   
+  
+
+ 
+
+  Deliverables 
+
+ You must submit all of your Haskell scripts (Part1.hs, Part2.hs, Part3.hs, Part4.hs, and BST.hs), and nothing else. 
+
+ Follow  this link  for a discussion of how to submit your project.  Remember that we do not accept paper submissions of your projects, nor do we accept them via email  under any circumstances . 
+
+ 
+
+ 
+
+   Updated to reflect a new Haskell implementation (the Haskell Platform) by Alex Thornton, Spring 2013. 
+   Writing cleaned up and a new section added by Alex Thornton, Fall 2007. 
+   Originally written by Alex Thornton, Fall 2005. 
+  
+
+</body> 

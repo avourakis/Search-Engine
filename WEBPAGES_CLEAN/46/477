@@ -1,0 +1,73 @@
+ class Modular:
+    """
+    Models a modular number (value and modulus)
+    Standard arithmetic operators are overloaded: + - * /
+    """
+    def __init__(self, value, modulus):
+        """
+        Instantiate like Modular(3,4)
+        """
+        assert type(modulus) is int and type(value) is int, \
+          'Modular.__init__: Modular('+str(value)+','+str(modulus)+') must both be ints'
+        assert modulus &gt;= 1, 'Modular.__init__: modulus('+str(modulus)+') 
+        """
+        assert type(other) is not Modular or self._modulus == other._modulus, 'Modular.__gt__: Incompatible modulii'
+        if type(other) is Modular:
+            return self._value &gt; other._value
+        else:
+            return self._value &gt; other
+
+
+    def __le__(self,other):
+        """
+        Overload less than or equal to operator: 
+        """
+        assert type(other) is not Modular or self._modulus == other._modulus, 'Modular.__ge__: Incompatible modulii'
+        if type(other) is Modular:
+            return self._value &gt;= other._value
+        else:
+            return self._value &gt;= other
+
+
+    def __str__(self):
+        """
+        Return a string representation for a Modular, such that
+        m2 = eval(str(m1)) copies the state of m1 at the time of the call
+        """
+        return 'Modular('+str(self._value)+','+str(self._modulus)+')'
+
+    
+
+
+
+if __name__ == '__main__': 
+    import prompt
+    print('Begin testing Modular') 
+    command_prompt = \
+"""\nTesting Modular:
+Commands     Queries          Other
+  i - inc      v - value        . - exec(...)
+  d - dec      m - modulus      q - quit
+  c - clear    _  - __str__
+  
+Command"""                            
+    m = Modular(prompt.for_int('Enter value'),prompt.for_int('Enter modulus'))
+    while True:
+        action = prompt.for_char(command_prompt, legal='idc_.q')
+        try:
+            if   action == 'i': m.inc()
+            elif action == 'd': m.dec()
+            elif action == 'c': m.clear()
+            elif action == 'v': print('  value =', m.value())
+            elif action == 'm': print('  modulus =', m.modulus())
+            elif action == 'c': m.clear()
+            elif action == '_': print('  str =',m)
+            elif action == '.': exec(prompt.for_string('  Enter command to exec (instance=m)'))
+            elif action == 'q': break
+            else: print('  Unknown command')
+        except AssertionError as report:
+            print('  AssertionError exception caught:', report)
+        except Exception as report:
+            import traceback
+            traceback.print_exc()
+    print('\nFinished testing Modular') 

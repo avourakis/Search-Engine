@@ -1,0 +1,65 @@
+ aomdd - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   aomdd  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    aomdd  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+     
+  aomdd 
+   Compiles AND/OR Multi-Valued Decision Diagrams (AOMDDs) for Weighted CSPs and Bayesian networks.       
+  Author 
+    Radu_Marinescu        
+  Description 
+   The library contains the implementations of the depth AND/OR search based compiler for AND/OR Multi-Valued Decision Diagrams (AOMDDs) for Weighted CSPs and Bayesian Networks       
+  Input format 
+   The weighted CSP instance has to be specified in the  WCSP_file_format .   The Bayesian network instance has to be specified in the  Ergo_file_format .       For some example problems please see our  Repository .       
+  Usage 
+   The algorithm is invoked with the following command line arguments:                             aomdd -f &lt;input file&gt;
+           -o &lt;task&gt;
+           -h &lt;pseudo tree&gt;
+           -a &lt;algorithm&gt;
+           -l &lt;time limit&gt;
+           -cb &lt;cache bound&gt;
+           -cp &lt;constraint propagation&gt;
+           -v &lt;verbosity&gt;      
+  Parameters 
+   Parameters for the algorithm are:          f</strong>: (string) specifies the input file name        o</strong>: (string) specifies the type of network to compile        compile_wcsp : specifies that the network is a weighted CSP        compile_bn : specifies that the network is a Bayesian network          h</strong>: (string) the heuristic to use for finding an variable elimination order by which to construct the And/Or search space:        hypergraph : i.e., hypergraph partitioning heuristic        minfill : i.e., min-fill elimination heuristic          a</strong>: (integer) specifies which algorithm to run. The following values can be used:      3: AND/OR Branch-and-Bound with static mini-bucket heuristics     4: AND/OR Branch-and-Bound with dynamic mini-bucket heuristics     91: Depth-first AND/OR search with adaptive context based caching         l</strong> (integer) specifies the time limit in seconds. Default value is -1, which indicates no time limit        ib </strong> (integer) specifies for i-bound (for mini-bucket heuristics)        cb </strong>(integer) specifies the cache bound (not settable AND/OR Branch-and-Bound)        cp</strong> (string): specifies the constraint propagation method. The following values can be used:        none : no constraint propagation is performed        bcp : constraint propagation via unit resolution over the CNF encoding of the zero probability CPT entries        sat : constraint propagation via full satisfiability over the CNF encoding of the zero probability CPT entries          v</strong> (string): verbosity. The following values can be used:        yes : enabled        no : disabled.           
+  Examples 
+           aomdd -f test.wcsp -o compile_wcsp -h minfill -a 3 -l 100 -ib 10     aomdd</strong> will compile the weighted CSP specified in "test.wcsp" file by an AND/OR Branch-and-Bound search with static mini-bucket heuristics using an i-bound of 10 guided by a minfill based pseudo tree. The time limit is set to 100 seconds. (Note that this compiles the AOMDD for optimization, so the resulting AOMDD does not necessarily contain all of the solutions.)                 aomdd -f test.erg -o compile_bn -h minfill -a 91 -l 100 -cb 10 -cp bcp -v yes     aomdd</strong> will compile the Bayesian network specified in "test.erg" file by a depth-first AND/OR search with adaptive context-based caching guided by a minfill based pseudo tree. The time limit is set to 100 seconds, verbosity is enabled, the cache bound is set to 10, and will perform constraint propagation via unit resolution.         
+  Download 
+   A 32-bit Linux binary is available  here .         A 32-bit Windows binary is available  here .         If you are interested in obtaining the source code, please contact the program author.       
+  References 
+   [1] Robert Mateescu and Rina Dechter.   Compiling Constraint Networks into AND/OR Multi-Valued Decision Diagrams (AOMDDs)</strong>.  In Proceedings of the International Conference on Principles and Practice of Constraint Programming, 2006.  Link        [2] Robert Mateescu, Radu Marinescu and Rina Dechter.   AND/OR Multi-Valued Decision Diagrams (AOMDDs) for Constraint Optimization</strong>.  In Proceedings of the International Conference on Principles and Practice of Constraint Programming (CP), 2007.  Link        [3] Robert Mateescu and Rina Dechter.   AND/OR Multi-Valued Decision Diagrams (AOMDDs) for Weighted Graphical Models</strong>.  In Proceedings of the International Conference on Uncertainty in Artificial Intelligence (UAI), 2007.  Link         aomdd  (last edited 2011-01-18 08:25:19 by   WilliamLam  ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

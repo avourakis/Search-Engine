@@ -1,0 +1,871 @@
+ /*
+** gfind 4.9 -- search for gliders in semitotalistic cellular automata
+** David Eppstein, UC Irvine, 7 Mar 1998
+**
+** This program performs very fast searches for low-period gliders. For example,
+** in Conway's Life, it can find a 10x12 c/3 spaceship instantaneously: try
+**     gfind b3/s23/o3v/l36
+** (This set of arguments means rule B3/S23 (Life); c/3 orthogonal,
+** even bilateral symmetry, level of difficulty = 36. Run gfind without
+** arguments and type return to the prompt for a full list of options.)
+**
+** The technique is to build a "de Bruijn graph" in which a vertex represents
+** the states that a whole row of cells might sequence through in some
+** (2*period)-generation time interval.  If two vertices share (2*period-1)
+** row states in common, and they overlap to form a (2*period+1)-generation
+** interval, then the first, middle, and last generations of the interval
+** form a contiguous block of three rows in the same phase. Applying the CA
+** rule to this block shows what the middle of the three rows would look like
+** in the next generation.  We connect the two vertices by an edge if the
+** CA rule result matches the state of this middle row in the two vertices.
+** A glider corresponds to a path in this graph starting and ending at the
+** constant-0 vertex.  The level of difficulty (L parameter) is the log(base 2)
+** of the number of vertices in the de Bruijn graph; that is, L=2*width*period.
+** However in most cases many fewer than 2^L vertices are actually searched.
+**
+** To reduce the size of the de Bruijn graph, we restrict our attention to
+** "extensible" states, i.e. those which in which we will be able to find an
+** outgoing edge for each future generation within two periods of the pattern.
+** The search for extensible neighbors of a given vertex is performed by
+** representing these neighbors as paths in a small auxiliary de Bruijn graph,
+** in which vertices represent pairs of cells in two new rows and edges
+** represent triples for which the CA rule produces the correct result.
+** Reachability in this auxiliary graph is determined by a fast algorithm
+** that uses table lookups to achieve 16-way bit-parallelism.
+**
+** The program uses two big data structures. The first keeps track of the graph
+** visited so far: each vertex is represented by a pointer to its predecessor,
+** and by the cells of the single row not shared with that predecessor.
+** The predecessor pointers are kept in a compressed form in which blocks of
+** vertices share a common base pointer, to which small offsets are added.
+** Second, to avoid repeatedly visiting the same vertices, we use a hash table.
+**
+** Version history:
+** 1.0, March 1998:
+**     Creation.
+**     Proliferation of symmetry modes.
+**     Garbage collection of BFS Q.
+** 2.0, March 1999:
+**     Replace backtracking search for successors of partial pattern
+**     with graph path enumeration, including one period of lookahead.
+**     Temporarily disable c/1 search and skew gutter mode.
+**     Automatically reduce search width when BFS tree becomes too full.
+** 3.0, May 1999:
+**     Add mode for searching from rear of ship forwards instead of vice versa.
+**     Partial two-period lookahead in all forward searches with period &gt;= 2,
+**     and infinite lookahead (via rear-first search for width-5 pattern
+**     w/don't-care boundary conditions) for c/2 orthogonal searches.
+**     Re-enable search for photons (always uses rear-first ordering).
+**     Disable broken 2c/n orthogonal glide-reflect modes.
+**     Re-code and re-enable orthogonal skew gutter mode.
+**     Allow specification of unusable rule bits, so we can find patterns
+**     that work in many rules simultaneously.
+**     Output whole pattern, not just asym half of it, even when width &gt;= 16.
+**     Fix various memory stomping bugs on Q overflow and in success.
+**     Start tracking of versions, add version history, redo top comment.
+**     Behave nicely under MacOS non-preemptive multitasking.
+**     Display banner and cmd-line args at startup.
+** 3.1, July 1999:
+**     Diagonal gutter mode.  Reduce length of log lines.
+**     Adjust the width reported in the log for diagonal skew gutter mode.
+**     Include badRuleBits in tests for whether to try speed or mode with given rule.
+** 3.2, September 1999:
+**     Only do o2 and d3 searches if rule includes one of B2/S1234
+**     Allow speeds up to c/19 ("1" followed by digit means teen period)
+**     Update default basebits to match my more usual extreme-settings usage
+**     Add param 'T' to taper width up gradually rather than sudden start
+**     Add '*' depth-first-search variant (still need to add hybrid dfs-bfs combo)
+** 4.0, November 1999:
+**     In place of separate BFS and DFS (with garbage collection in BFS when
+**     queue becomes full) make a combined hybrid BFS / depth first iterated
+**     deepening search.  Main search is BFS, but with a limited-depth
+**     depth-first search to eliminate most of the BFS queue prior to each garbage
+**     collection round.  The DFS is much faster because of the depth limit
+**     and because it terminates early when a path is found exceeding this limit.
+**     The iterated deepening part happens by, whenever we do a depth-first round,
+**     making the total depth (current level + number of levels of DFS) be one
+**     period more than the previous search.  As an example of the improvement due
+**     to this change, we can now do the (unsuccessful) B3/S23/O6/L100 in a day
+**     (on a 333MHz iMac) while previously the BFS ran out of memory and the DFS
+**     ran for a month without completing.  Get rid of taper parameter from 3.2.
+**     Apply width reduction based on deepening amount rather than size of queue
+**     and change command-line character for reduction limit from percent to minus.
+** 4.1, January 2000:
+**     Slightly strengthen c/2 double lookahead.  Simplify deepening amount logic.
+**     Disable hashing while deepening.  Turn WIDE on by default.
+** 4.2, February 2000:
+**     Slight cleanup to c/2 lookahead setup. Avoid c/2 setup when too fast for rule.
+**     Make deepening compaction handle completely empty queue better.
+**     Implement search for glide-reflect orthogonal patterns w/even offset
+**     (nice test case: b36s12/n2o5g/l80). Implement forward search for photons.
+**     Implement skew gutter mode for HighLife and other rules with B36 (and w/o B4).
+**     Jam successor graph construction and reachability; allow early loop termination.
+**     Avoid output while deepening if we want to find multiple patterns (/fNN option).
+** 4.3, April 2000:
+**     Keep track of phase so we can allow gcd(offset,period) &gt; 1.
+**     Avoid generating children in last level of deepening recursion.
+** 4.4, September 2000:
+**     Test period/gcd against input flags rather than true period
+**     Fix bug setting nRowsInState when mode==diagMirror
+** 4.5, February 2001:
+**     Puffer output mode
+** 4.6, July 2002:
+**     Fix bugs with free() of non-malloced pointer (srows).
+** 4.7, August 2002:
+**     Implement searches for B0 patterns.
+** 4.8, September 2002:
+**     Implement trace mode (t parameter).  Disable broken B0 lookahead.
+** 4.9, August 2011:
+**     Misc fixes from AKT. Also make this work when compiled in 64-bit mode.
+*/
+
+#include 
+#include 
+#include 
+#include 
+
+// AKT: on Mac OS 10.6 or later compile for 32-bit ints:
+// cc -o gfind -m32 gfind.c
+
+#define BANNER "gfind 4.9, D. Eppstein, 20 August 2011"
+#define WIDE
+
+/* Default values for the most important parameters controlling our search:
+   logs (base 2) of how many nodes we can actually visit,
+   how many nodes we can store in the hash table
+   and how big a graph we will attempt to search */
+
+#ifdef WIDE
+#define QBITS 22
+#else
+#define QBITS 23
+#endif
+
+#define HASHBITS 21
+#define DEFAULT_DEPTHLIMIT (qBits-3)
+#define SEARCHLIMIT 50
+
+/* command-line parameters */
+#define P_BIRTHS 0
+#define P_SURVIVES 1
+#define P_NUMERATORS 2
+#define P_ORTHOG 3
+#define P_DIAG 4
+#define P_MODES 5
+#define P_NOBIRTHS 6
+#define P_NODEATHS 7
+#define PARAM_IS_BITMASK(p) (p &gt; width) - 1)
+
+#define ROW(i) (rows[i] &amp; ROWBITS)
+#define OFFSET(i) (rows[i] &gt;&gt; width)
+#define EMPTY(i) (rows[i] == (row)-1)
+#define MAKEEMPTY(i) rows[i] = (row)-1
+#define PARENT(i) (base[(i)&gt;&gt;BASEBITS]+OFFSET(i))
+#define FIRSTBASE(i) (((i) &amp; ((1&gt;16)*269;
+	h += (h&gt;&gt;8)*269;
+	return h &amp; HASHMASK;
+}
+
+/* test if q+r is same as p */
+inline int same(node p, node q, row r) {
+	int i;
+	for (i = 0; i = QSIZE || q &gt;= QSIZE || EMPTY(p) || EMPTY(q)) return 0;	/* sanity check */
+		if (ROW(p) != r) return 0;
+		p = PARENT(p);
+		r = ROW(q);
+		q = PARENT(q);
+	}
+	return 1;
+}
+
+/* test if weve seen this child before */
+void success(node);
+inline int isVisited(node b, row r) {
+	if (same(0,b,r)) {
+		if (b != 0 &amp;&amp; period == 1) success(b); /* photon never gets to usual terminal call */
+		return 1;
+	}
+	if (hash != 0) {
+		int hashVal = hashFunction(b,r);
+		node hashNode = hash[hashVal];
+		if (hashNode == 0) return 0;
+		if (same(hashNode,b,r)) return 1;
+	}
+	return 0;
+}
+
+/* set node (NOT child) to be visited */
+inline void setVisited(node b) {
+	if (hash != 0) hash[ hashFunction(PARENT(b),ROW(b)) ] = b;
+}
+
+/* ============================================================== */
+/*  Behave nicely under non-preemptive multitasking (i.e. MacOS)  */
+/* ============================================================== */
+
+#ifdef __MWERKS__
+
+#include 
+#include 
+
+long niceTimer = 0;
+#define NICE(niceness) if ((niceTimer -= niceness) = qTail || !EMPTY(x) &amp;&amp; PARENT(x) &gt;= y) y = x;
+	}
+	nextRephase = y;
+}
+
+/* phase of an item on the queue */
+int peekPhase(node i) {
+	return (i = QSIZE) qFull();
+	else if (FIRSTBASE(i)) {
+		base[i&gt;&gt;BASEBITS] = b;
+		rows[i] = r;
+	} else {
+		long o = b - base[i&gt;&gt;BASEBITS];
+		if (o  MAXOFFSET) {	/* offset out of range */
+			while (!FIRSTBASE(i)) {
+				rows[i] = -1;
+				i = qTail++;
+				if (i &gt;= QSIZE) qFull();
+			}
+			base[i&gt;&gt;BASEBITS] = b;
+			rows[i] = r;
+		} else rows[i] = (o = nextRephase) {
+		queuePhase = (queuePhase+1)%period;
+		if (params[P_TRACING]) fprintf(stderr, "Phase %d\n", queuePhase);
+		nextRephase = qTail;
+	}
+	phase = queuePhase;
+	if (params[P_TRACING])
+	    fprintf(stderr, "Processing node %ld: %lo\n", qHead,
+	        (long unsigned int) (ROW(qHead)));
+	return qHead++;
+}
+
+inline void pop() {
+	qTail--;
+	while (qTail &gt; qHead &amp;&amp; EMPTY(qTail-1)) qTail--;
+}
+
+void resetQ() { qHead = qTail = 0; }
+
+inline int qTop() { return qTail - 1; }
+
+
+/* ================================= */
+/*  Compaction of nearly full queue  */
+/* ================================= */
+
+void putnum(long n) {
+	char suffix;
+	if (n &gt;= 1000000) {
+		n /= 100000;
+		suffix = 'M';
+	} else if (n &gt;= 1000) {
+		n /= 100;
+		suffix = 'k';
+	} else {
+		printf("%ld", n);
+		return;
+	}
+	
+	if (n &gt;= 100) printf("%ld", n/10);
+	else printf("%ld.%ld", n/10, n%10);
+	putchar(suffix);
+}
+
+long currentDepth() {
+	long i;
+	node x;
+	x = qTail - 1;
+	i = 1;
+	while (x != 0) {
+		x = PARENT(x);
+		i++;
+	}
+	return i;
+}
+
+void doCompact()
+{
+	node x,y;
+	node oldTail = qTail;
+	
+	/* make sure we still have something left in the queue */
+	if (qIsEmpty()) {
+		qTail = qHead = 0;	/* nothing left, make an extremely compact queue */
+		return;
+	}
+
+	/* make a pass backwards from the end finding unused nodes at or before qHead */
+	x = qTail - 1;
+	y = qHead - 1;
+	while (y &gt; 0) {
+		/* invariants: everything after y is still active.
+		   			   everything after x points to something after y.
+		   			   x is nonempty and points to y or something before y.
+		   			   so, if x doesnt point to y, y must be unused and can be removed. */
+		NICE(GCNICENESS);
+		if (!EMPTY(y)) {
+			if (y &gt; PARENT(x)) rows[y] = -1;
+			else while (EMPTY(x) || PARENT(x) == y) x--;
+		}
+		y--;
+	}
+	
+	/* make a pass forwards converting parent pointers to offset from prev parent ptr.
+	   note that after unused nodes are eliminated, all these offsets are zero or one. */
+	y = 0;
+	for (x = 0; x = 0) because x is unsigned */
+	}
+
+	/*
+	   Make a pass forwards converting parent bits back to parent pointers.
+	   
+	   For this phase, x points to the current item to be repacked, and y points
+	   to the parent of the previously repacked item.
+	   After the previous pass, x is initialized to first nonempty item,
+	   and all items after x are nonempty. 
+	 */
+	qTail = 0; y = 0;
+	resetHash();
+	for (x++; x &gt;1)
+#define MAXMAXWIDTH HALFWIDTH
+#define HALFMASK ((1L&gt;HALFWIDTH])&gt;&gt;(2*HALFWIDTH-width))
+
+#else
+#define MAXMAXWIDTH MAXWIDTH
+#define REVERSE(r) (reversals[r]&gt;&gt;(MAXMAXWIDTH-width))
+#endif
+
+row reversals[1 0 &amp;&amp; c != RLEchar) {
+  	 if (RLElineWidth++ &gt;= MAXRLELINEWIDTH) {
+  	 	if (RLEchar != '\n') putchar('\n');
+  	 	RLElineWidth = 0;
+  	 }
+    if (RLEcount == 1) putchar(RLEchar);
+    else {
+    	printf("%d%c", RLEcount, RLEchar);
+    	RLElineWidth ++;
+    	if (RLEcount &gt; 9) RLElineWidth++;
+    }
+    RLEcount = 0;
+    if (RLEchar == '\n') RLElineWidth = 0;
+  }
+  if (c != '\0') {
+    RLEcount++;
+    RLEchar = c;
+  } else RLElineWidth = 0;
+}
+
+int outputParity = 0;
+
+void putRow(row rr, row r, int shift) {
+	while (r | rr) {
+		if (shift == 0) sendRLE(r &amp; 01? 'o' : 'b');
+		else shift--;
+		r &gt;&gt;= 1;
+		if (rr &amp; 1) r |= (1&gt;= 1;
+	}
+	sendRLE('$');
+}
+
+void printRule() {
+  int i;
+  printf("B");
+  for (i = 0; i = 0; i--) {
+		row r = ROW(b);
+		row rx;
+		for (p = 0; p &gt; (32 - (MAXWIDTH - 1));
+				for (j = 1; j &gt; (32 - MAXWIDTH);
+				for (j = 0; j &gt; (32 - (MAXWIDTH + 1));
+				for (j = 0; j &gt; (32 - (MAXWIDTH - 1));
+				for (j = 1; j &gt; (32 - (MAXWIDTH + 1));
+				for (j = 0; j &gt; (32 - (MAXWIDTH + 2));
+				for (j = 0; j &gt; (32 - MAXWIDTH);
+				for (j = 0; j 0) nrows--;
+	while (srows[0] == 0 &amp;&amp; ssrows[0] == 0 &amp;&amp; nrows&gt;0) {
+		srows++;
+		ssrows++;
+		nrows--;
+	}
+	
+	/* make at least one row have nonzero first bit */
+	i = 0;
+	while ((srows[i] &amp; 1) == 0) {
+		for (i = 0; (srows[i] &amp; 1) == 0 &amp;&amp; i &gt;= 1;
+				if (ssrows[i] &amp; 1) srows[i] |= (1&gt;= 1;
+			}
+			i = 0;
+		}
+	}
+	
+	/* compute width */
+	/* note for diag, even if ssrows!=0, max may occur in srows! so always do both loops */
+	swidth = 0;
+	for (i = 0; i &gt; (swidth - diagonal*i))
+			swidth++;
+	if (swidth) swidth += 32;
+	for (i = 0; i &gt; (swidth - diagonal*i))
+			swidth++;
+
+	/* compute margin on other side of width */
+	if (diagonal) {
+		margin = 2*MAXWIDTH;
+		if (margin &gt;= 32) margin = 31;
+		for (i = 0; i  i &amp;&amp; (srows[i] &amp; ((1  0) {
+		if (diagonal) {
+			int i;
+			for (i = 0; i  nrows) putRow(ssrows[nrows], srows[nrows], margin - nrows);
+		else putRow(ssrows[nrows], srows[nrows], 0);
+	}
+	RLEchar = '!';
+	sendRLE('\0');
+	printf("\n\n");
+	fflush(stdout);
+	if (++nFound &gt;= findLimit) aborting = 1;
+}
+
+/* Is this a node at which we can stop? */
+
+int oddMirrorUnterm[1&gt;1)))) oddMirrorUnterm[i] = 1;
+		else if (rule &amp; (1 &gt;1) + ((i&amp;4)&gt;&gt;2) + ((i&amp;010)&gt;&gt;3))))
+			oddMirrorUnterm[i] = 1;
+		else oddMirrorUnterm[i] = 0;
+	}
+}
+
+int terminal(node n)
+{
+	int p;
+	int extra = (sdrawkcab? offset : 0);	/* addl rows need to be zero in reverse search */
+
+	if (params[P_BIRTHS] &amp; 1) {	/* B0 rules require special terminal test */
+		row blank1 = 0;
+		row blank2 = (1&gt;1) &amp; (ROW(n)&gt;&gt;2)) != 0) nonempty = 1;
+		}
+		if (!nonempty || ROW(n) != 0) return 0;
+		for (p = 0; p &gt;1) &amp;&amp; r != 0) return 0;
+		else if (mode == diagGutter &amp;&amp; (rule &amp; 020000) != 0 &amp;&amp; (r &amp; 3) == 3) return 0;
+		else if (diagonal == 0 &amp;&amp; (mode == odd || mode == even)) {
+			if ((rule &amp; (1 &gt;1) &amp; (r&gt;&gt;2);	/* rule w/b3 get tripled live cells */
+		else r &amp;= (r&gt;&gt;1) | (r&gt;&gt;2); /* w/b2 get paired cells (and some triples but thats ok */
+		if (r != 0) return 0;
+		n = PARENT(n);
+	}
+	return 1;
+}
+
+/* ========================================================== */
+/*  Preprocess tables needed for successor graph computation  */
+/* ========================================================== */
+   
+unsigned short edge00[MAXWIDTH], edge01[MAXWIDTH], edge10[MAXWIDTH], edge11[MAXWIDTH];
+
+/* main edge sets */
+#define ETABL ((1&gt;5) | (j&gt;j)&amp;7)&gt;j)&amp;7)&gt;j)&amp;7)] = 0) l2t[((g &amp; 076) &gt; 1));
+				NICE(L2NICENESS);
+			}
+
+	L2BIT(q) = -1;	/* except first one, which gets flag to mark stack bottom */
+	for (;;) {		/* while stack nonempty */
+		unsigned long sux;
+		i = q;		/* pop next node to be processed into i */
+		q = L2BIT(q);
+		if (i == -1) return;
+		sux = l2t[i &amp; 077777];
+		for (j = 0; j &gt;col)&amp;010421)*01111)&gt;&gt;9)&amp;0xf)*010421)
+*/
+
+#define TO4X(x,col) (((x) &amp; 010421 ? 1&gt;1) &amp; 1) + ((i&gt;&gt;2) &amp; 1) +
+				  ((i&gt;&gt;3) &amp; 1) + ((i&gt;&gt;5) &amp; 1) +
+				  ((i&gt;&gt;6) &amp; 1) + ((i&gt;&gt;7) &amp; 1) + ((i&gt;&gt;8) &amp; 1);
+		if (((i&gt;&gt;4)&amp;1) == 0) n += 9;	/* if (birth) use bit 9+nbrs instead of bit nbrs */
+		if (badRuleBits &amp; (1&gt;10) &amp; 1) &amp;&amp; ruleTab[i&gt;&gt;9] &gt;= 0) {
+			int idx = ETABXF((i&gt;&gt;6)&amp;7, (i&gt;&gt;3)&amp;7, (i&gt;&gt;15)&amp;7, (i&gt;&gt;12)&amp;7, ruleTab[i&gt;&gt;9]&gt;8) | (i&amp;4) | ((i&amp;02000)&gt;&gt;9) | ((i&amp;2)&gt;&gt;1);
+			bit = 1y, dyx-&gt;x */
+	for (i = 0; i &gt;3] == ((i&gt;&gt;4)&amp;1) &amp;&amp; ruleTab[i&amp;0777] == ((i&gt;&gt;1)&amp;1)) {
+			int idx = PHOTON + (i&gt;&gt;6);
+			int bit = ((i&amp;040)&gt;&gt;2) | (i&amp;4) | ((i&amp;020)&gt;&gt;3) | ((i&amp;2)&gt;&gt;1);
+			bit = 1a, dyx-&gt;b */
+	for (i = 0; i &gt;3];
+		int b = ruleTab[i &amp; 0777];
+		if (a &gt;= 0 &amp;&amp; b &gt;= 0) {
+			int idx = SDRAWKCAB + ((a&gt;6));
+			int bit = ((i&amp;040)&gt;&gt;2) | (i&amp;4) | ((i&amp;020)&gt;&gt;3) | ((i&amp;2)&gt;&gt;1);
+			bit = 1&gt;9, i&gt;&gt;12, i&gt;&gt;5, i);
+		r = (from4x[r] &amp; e00tab[idx]) | (from4x[r&gt;&gt;1] &amp; e01tab[idx]) |
+			(from4x[r&gt;&gt;2] &amp; e10tab[idx]) | (from4x[r&gt;&gt;3] &amp; e11tab[idx]);
+		idx = ETABXR(i&gt;&gt;10, i&gt;&gt;13, i&gt;&gt;6, i&gt;&gt;1);
+		r = (from4x[r] &amp; e00tab[idx]) | (from4x[r&gt;&gt;1] &amp; e01tab[idx]) |
+			(from4x[r&gt;&gt;2] &amp; e10tab[idx]) | (from4x[r&gt;&gt;3] &amp; e11tab[idx]);
+		idx = ETABXR(i&gt;&gt;11, i&gt;&gt;14, i&gt;&gt;7, i&gt;&gt;2);
+		r = (from4x[r] &amp; e00tab[idx]) | (from4x[r&gt;&gt;1] &amp; e01tab[idx]) |
+			(from4x[r&gt;&gt;2] &amp; e10tab[idx]) | (from4x[r&gt;&gt;3] &amp; e11tab[idx]);
+		if (r) { /* r is nonzero here iff u and v exist */
+			int bit = ((i &amp; 0100000)&gt;&gt;13) | ((i &amp; 040000) &gt;&gt; 14);
+			bit = (1&gt; 10;
+				int bit = ((i&amp;0400)&gt;&gt;5) | ((i&amp;010)&gt;&gt;1) | ((i&amp;0200)&gt;&gt;6) | (i&amp;4)&gt;&gt;2;
+				bit = 1= 0 &amp;&amp; j &gt; 2;
+				c |= rr[3*period] &amp; 1;
+				d |= (c &amp; 4) &gt;&gt; 2;
+				vertexSet = (d &amp; 4? 014: 3);
+			}
+			i = ETABX(a,b,c,d,e);
+			vertexSet =
+				(from4x[vertexSet] &amp; e00tab[i]) |
+				(from4x[vertexSet&gt;&gt;1] &amp; e01tab[i]) |
+				(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+				(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+			break;
+
+		case gutter:
+			vertexSet = 010421;	/* 010421=from4x[01] */
+			break;
+
+		case even:
+			vertexSet = 0102041; /* 0102041=vertices w/repeated bits */
+			a |= ((a&gt;&gt;1)&amp;2);				/* repeat bits on other rows too */
+			b |= ((b&gt;&gt;1)&amp;2);
+			c |= ((c&gt;&gt;1)&amp;2);
+			d |= ((d&gt;&gt;1)&amp;2);
+			e |= ((e&gt;&gt;1)&amp;2);
+			f |= (f&amp;2)&gt;&gt;1;
+			g |= (g&amp;2)&gt;&gt;1;
+			break;
+
+		case odd:
+			a |= ((a&gt;&gt;2)&amp;2);				/* repeat bits on other rows */
+			b |= ((b&gt;&gt;2)&amp;2);
+			c |= ((c&gt;&gt;2)&amp;2);
+			d |= ((d&gt;&gt;2)&amp;2);
+			e |= ((e&gt;&gt;2)&amp;2);
+			f |= (f&amp;4)&gt;&gt;2;
+			g |= (g&amp;4)&gt;&gt;2;
+			break;
+
+		case diagSkew:
+			vertexSet = 2;
+		case asymmetric:
+		case mirror:
+		case bigMirror:
+			i = ETABX(a,b,c,d,e);
+			vertexSet =
+				(from4x[vertexSet] &amp; e00tab[i]) |
+				(from4x[vertexSet&gt;&gt;1] &amp; e01tab[i]) |
+				(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+				(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+
+			if (diagonal) vertexSet &amp;= 07417;
+				/* force second bit of extension row to be zero */
+			break;
+
+		case diagMirror:
+			aa = rr[2*period + fwdOff[phase]];	/* need aa to be something consistent */
+			a |= (aa &amp; 2) &gt;&gt; 1;
+			b |= (aa &amp; 4) &gt;&gt; 2;
+			if (aa &amp; 010) vertexSet &gt; 1;
+			if (a &amp; 010) vertexSet &gt; 1;
+			if (c &amp; 4) vertexSet &gt;1;
+			i = ETABX(a,b,c,d,e);
+
+			vertexSet =
+				(from4x[vertexSet] &amp; e00tab[i]) |
+				(from4x[vertexSet&gt;&gt;1] &amp; e01tab[i]) |
+				(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+				(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+
+			/* force second bit of extension to match b */		
+			if (b &amp; 010) vertexSet &amp;= 0170360;	
+			else vertexSet &amp;= 07417;
+			break;
+
+		case diagGutter:
+			b |= (a &amp; 2) &gt;&gt; 1;
+			if (a &amp; 4) vertexSet &gt;1] &amp; e01tab[i]) |
+				(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+				(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+
+			vertexSet &amp;= 07417; /* force second bit of ext to zero */		
+			break;
+			
+		case diagGlide:
+			p2 = period&gt;&gt;1;
+			d |= rr[period+p2]&amp;1;
+			if (rr[period+p2]&amp;2) vertexSet &gt;1;
+			if (rr[period+p2+fwdOff[phase]]&amp;4) vertexSet &gt;1)]&amp;1;
+			i = ETABX(a,b,c,d,e);
+			vertexSet =
+				(from4x[vertexSet] &amp; e00tab[i]) |
+				(from4x[vertexSet&gt;&gt;1] &amp; e01tab[i]) |
+				(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+				(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+			break;
+
+		default:
+			printf("initSuccessorGraph: unimplemented mode\n");
+			return 0;
+	}
+
+
+	/* find start vertices for graph reachability, part 2:
+	   match evolution rule for outside row of pattern */ 
+
+	a &gt;&gt;= 1;
+	b &gt;&gt;= 1;
+	c &gt;&gt;= 1;
+	d &gt;&gt;= 1;
+	e &gt;&gt;= 1;
+	i = ETABX(a,b,c,d,e);
+	if (mode == odd)
+		vertexSet =
+			(017 &amp; e00tab[i]) |			/* match outgoing and incoming bits */
+			(0360 &amp; e01tab[i]) |
+			(07400 &amp; e10tab[i]) |
+			(0170000 &amp; e11tab[i]);
+	else
+		vertexSet =
+			(from4x[vertexSet] &amp; e00tab[i]) |
+			(from4x[vertexSet&gt;&gt;1] &amp; e01tab[i]) |
+			(from4x[vertexSet&gt;&gt;2] &amp; e10tab[i]) |
+			(from4x[vertexSet&gt;&gt;3] &amp; e11tab[i]);
+
+
+	/* main loop forward through columns of graph setting edges between each column */
+	for (ph = 0; ph &gt;= 1;
+		b &gt;&gt;= 1;
+		c &gt;&gt;= 1;
+		d &gt;&gt;= 1;
+		e &gt;&gt;= 1;
+		i = ETABX(a,b,c,d,e);
+
+		edge00[ph] = from4x[vertexSet] &amp; e00tab[i];
+		edge01[ph] = from4x[vertexSet &gt;&gt; 1] &amp; e01tab[i];
+		edge10[ph] = from4x[vertexSet &gt;&gt; 2] &amp; e10tab[i];
+		edge11[ph] = from4x[vertexSet &gt;&gt; 3] &amp; e11tab[i];
+		
+		/* filter edges according to double-period lookahead tables */
+		if (looking) {
+			if (look2) {
+				i = LTAB2X(f,g);
+				edge00[ph] &amp;= l00tab2[i];
+				edge01[ph] &amp;= l01tab2[i];
+				edge10[ph] &amp;= l10tab2[i];
+				edge11[ph] &amp;= l11tab2[i];
+			} else {
+				i = LTABX(b,f,g);
+				edge00[ph] &amp;= l00tab[i];
+				edge01[ph] &amp;= l01tab[i];
+				edge10[ph] &amp;= l10tab[i];
+				edge11[ph] &amp;= l11tab[i];
+			}
+			f &gt;&gt;= 1;
+			g &gt;&gt;= 1;
+		}
+		
+		/* use newly found edges to test which vertices in next col are reachable from start */
+		vertexSet = edge00[ph] | edge01[ph] | edge10[ph] | edge11[ph];
+			
+		/* apply width reduction */
+		if (widthReduction &amp;&amp; ph &gt;= width - widthReduction - 1) {
+			vertexSet &amp;= finalVertices;
+			finalVertices = 1;
+		}
+		
+		/* test for early termination */
+		if (vertexSet == 0) break;
+	}
+	
+	finalVertices &amp;= vertexSet;
+
+	return finalVertices;
+}
+
+void process(node theNode)
+{
+	int finalVertices = reachable(theNode);
+	if (finalVertices) findPaths(theNode,0,finalVertices,width);
+}
+
+/* ======================================================================= */
+/*  Depth first iterated deepening from active nodes in current BFS queue  */
+/* ======================================================================= */
+
+/* search given node to given test depth, return true if found any long lines */
+
+static int depthFirst(node theNode, long howDeep)
+{
+	long oldQ = qTail;
+	int oldPhase = phase;
+
+	if (howDeep  1) {				/* one would have been successful? */
+		perdidor = 1;
+		qTail = oldQ;
+		return 1;
+	}
+	phase++;
+	if (phase == period) phase = 0;
+	while (qTail &gt; oldQ) {			/* and process each one */
+		if (depthFirst(qTail - 1, howDeep)) {
+			qTail = oldQ;
+			phase = oldPhase;
+			return 1;
+		}
+		if (aborting) {
+			qTail = oldQ;
+			phase = oldPhase;
+			return 0;
+		}
+		pop();
+	}
+	phase = oldPhase;
+	return 0;
+}
+
+/* Here with too much stuff in the queue, run a pass of depth-first */
+static void deepen()
+{
+	node i;
+	node * savedHash = hash;
+
+	hash = 0;	/* disable hash while deepening */
+	if (findLimit &gt; 1) perdidor = 1;	/* also disable success if want mult pattern output */
+	
+	/* compute amount to deepen, apply reduction if too deep */
+	printf("Queue full");
+	i = currentDepth();
+	if (i &gt;= lastdeep) deepeningAmount = period;
+	else deepeningAmount = lastdeep + period - i;	/* go at least one period deeper */
+
+	if (params[P_REDLEVEL] &gt; 0 &amp;&amp; deepeningAmount &gt;= params[P_REDLEVEL]) {
+		printf(", shrinking");
+		widthReduction++;
+		deepeningAmount = period;
+	}
+	lastdeep = i + deepeningAmount;
+
+	/* start report of what's happening */
+	printf(", depth %ld, deepening %d, ", (long int) i, deepeningAmount);
+	putnum(qTail - qHead);
+	printf("/");
+	putnum(qTail);
+	fflush(stdout);
+	
+	/* go through queue, deepening each one */
+	for (i = qHead; i  period) deepeningAmount--; /* allow for gradual depth reduction */
+
+	/* before reporting new queue size, shrink tree back down */
+	printf(" -&gt; ");
+	fflush(stdout);
+	hash = savedHash;
+	perdidor = 0;
+	doCompact();
+	
+	/* now finish report */
+	putnum(qTail - qHead);
+	printf("/");
+	putnum(qTail);
+	printf("\n");
+	fflush(stdout);
+}
+
+/* ======================================================================= */
+/*  Main breadth first search through nodes representing partial patterns  */
+/* ======================================================================= */
+
+
+int gcd(int a, int b) {
+	if (a &gt; b) return gcd(b,a);
+	else if (a == 0) return b;
+	else return gcd(b-a,a);
+}
+
+int anythingSearched = 0;
+
+static void breadthfirst()
+{
+	while (!aborting &amp;&amp; !qIsEmpty()) {
+		if (qTail - qHead &gt;= (1= QSIZE - QSIZE/16 ||
+			 qTail &gt;= QSIZE - (deepeningAmount 1);
+
+	nRowsInState = period+period;	/* how many rows needed to compute successor graph? */
+	if (mode == skew || mode == diagMirror) { /* usually 2*period, but some modes need more */
+		nRowsInState += period;
+		if (rule &amp; 010000) nRowsInState += period;
+	}
+
+	resetQ();
+	resetHash();
+	if (period == 1 &amp;&amp; offset == 0) printf("Searching for still life");
+	else {
+		printf("Searching for speed ");
+		if (offset == 1) printf("c/%d", period);
+		else printf("%dc/%d", offset, period);
+	}
+	printf(", width %d", modeWidth());
+	if (diagonal) printf(", diagonal");
+	switch(mode) {
+		case asymmetric:
+			break;
+
+		case skew:
+		case diagSkew:
+			printf(", skew gutter");
+			break;
+
+		case odd: case even: case diagMirror:
+			printf(", bilateral symmetry");
+			break;
+
+		case gutter:
+		case diagGutter:
+			printf(", bilateral symmetry, gutter");
+			break;
+
+		case mirror: case bigMirror: case diagGlide:
+			printf(", glide-reflect symmetry");
+			break;
+
+		default:
+			printf(", unknown mode!");
+			break;
+	}
+	printf(".\n");
+	fflush(stdout);
+
+	enqueue(0,0);
+	rephase();
+	if (params[P_BIRTHS] &amp; 1) {
+		/* set alternating state for B0 rules */
+		int i;
+		for (i = 0; i  1 &amp;&amp; ((per|off)&amp;1) != 0) {
+			if (wid == MAXWIDTH) search(per,off,wid-1,0,mirror);
+			search(per,off,wid,0,mirror);
+			if (wid  MAXWIDTH) wid = MAXWIDTH;
+	searchWidth(per, off, wid, diag);
+}
+
+/* test if speed (i/per)*c is slow enough to be possible in given rules */
+int smallOffset(int per, int diag, int i) {
+	if ((rule &amp; 01000) != 0) {			    /* B0 rules: no limit */
+		return (i = '0' &amp;&amp; s[1] &gt;1) - ((x)&gt;&gt;2))
+
+/* main program */
+int main(int ac, char **av) {
+	int i;
+	
+	printf("%s\n", BANNER);
+
+	if (ac &gt;BASEBITS)*sizeof(node));
+	rows = malloc(QSIZE*sizeof(row));
+	if (base == 0 || rows == 0) {
+		printf("Unable to allocate BFS queue!\n");
+		exit(0);
+	}
+	
+	if (hashBits == 0) hash = 0;
+	else {
+		hash = malloc(HASHSIZE*sizeof(node));
+		if (hash == 0) printf("Unable to allocate hash table, duplicate elimination disabled\n");
+	}
+	if (findLimit  

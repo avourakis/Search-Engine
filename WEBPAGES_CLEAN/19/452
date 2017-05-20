@@ -1,0 +1,170 @@
+ Evaluation/Report/Benchmarks - UAI '08 Workshop: Probabilistic Reasoning Systems  
+     
+
+
+ 
+ Search: 
+ 
+
+   Login    
+
+
+   Evaluation    Report    Benchmarks  
+  
+
+
+   FrontPage    RecentChanges    FindPage    HelpContents    Benchmarks  
+    
+
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+    
+   
+   
+  Benchmark Descriptions 
+     The following sets of benchmarks were used in the evaluation:        Linkage1 / WCSP     bn2o     Diagnose     Grids     Linkage 2     Promedas     UAI06-MPE     UAI06-PE     Relational        In the following these sets are characterized in more detail.       
+  Linkage1 / WCSP 
+    Submitter: Thomas Schiex (INRA France)     Domain: Linkage and converted weighted CSPs     Type: Linkage is Bayes, others Markov, all for MPE     9   Linkage:                max. domain size 45     16 Radio Freq.:             max. domain size 44     16 Coloring:                max. domain size 5     18 Planning:                max. domain size 27,      20 Satellite:               max. domain size 4     18 Warehouse:               max. domain size 200       Between ~50-500 variables, Satellite and Warehouse up to 1100, Linkage up to 2200.     Treewidth: many have width ~30-60     weighted CSP networks also submitted as benchmarks for 3rd Max-CSP competition:       http://cpai.ucc.ie/           networks  and  list  of networks used         
+  bn2o 
+    Submitter: Jirka Vomlel and Petr Savicky (Academy of Sciences of the Czech Republic)‏     Domain: two-layer noisy-or Bayesian networks     Type: Bayes for MAR/PRE     18 instances     All variables binary     45, 50, or 55 variables       Treewidth: ~24-27     some exact PE solvers run out of memory (given 3GB)         networks  and  list  of networks used         
+  Diagnose 
+    Submitter: John M. Agosta (Intel Corp.)‏     Domain: diagnostic Bayesian networks, hand-built     Type: Bayes for MAR     2 Instances, each with 50 different sets of randomly generated evidence (leaf nodes only)‏     I 203 and 359 variables, respectively     Max. domain size 7 and 6, respectively     nodes assume causal independence (e.g., noisy-max)     relatively large for networks constructed by hand     ~200-300 nodes, ~300-600 edges         Treewidth ~11-18: still easy for exact solvers       networks  and  list  of networks used         
+  Grids 
+    Submitter: Tian Sang (University of Washington)‏     Domain: Grid networks, from 12x12 to 50x50 with varying level of determinism     Type: Bayes for PRE     roughly, 50%, 75%, or 90% of the parameters are 0/1     320 Instances     Between 144 and 2,500 binary variables       treewidth: ~12-50     Evidence by assigning value 1 to leaf node       networks ,  list  of networks used for exact PR/MAR, and a  subset  of networks used for the other tasks.            
+  Linkage 2 
+    Submitter: Dechter group (UC Irvine)‏     Domain: Genetic linkage     Type: Markov for MPE     22 instances     Max. domain size between 3 and 7       Treewidth: ~20-35       networks  and  list  of networks used           
+  Promedas 
+    Submitter: Vicenc Gomez (University Nijmegen)‏     Domain: Medical diagnosis, real-world cases, converted from noisy-or     Type: Markov for MAR/PRE     238 Instances     Binary variables       QMR-DT like networks; layered noisy-or model     Bayesian network model converted to Markov network after performing simplifications (pruning unobserved nodes, negative findings, compact representation of noisy-or, etc)       Treewidths range from 1 (tree) to ~60     most are too difficult for exact algorithms         networks  and  list  of networks used           
+  UAI06-MPE and UAI06-PE 
+    Submitter: Used in UAI'06 evaluation     Domain: Various     Type: Bayes for MPE and PRE, respectively     57 MPE instances      78 PRE instances&lt;/UL&gt;        For details, see last UAI evaluation:       http://ssli.ee.washington.edu/~bilmes/uai06InferenceEvaluation/          UAI06-MPE:  networks  and  list  of networks used       UAI06-PE:  networks  and  list  of networks used           
+  Relational 
+    Submitter: UCLA     Domain: Relational Bayesian networks constructed from the Primula tool     Type: Bayes for MAR/PRE     251 networks, with binary variables     150 Blockmap: 700 to 59,404 variables     80 Mastermind: 1,220 to 3,692 variables      11 Friends &amp; Smoker: 10 to 76,212 variables      10 Students: 376 variables       Large networks with large treewidths, but with high levels of determinism       networks ,  list  of networks used for exact PR/MAR, and a  subset  of networks used for the other tasks.                    
+  Benchmarks 
+     All benchmarks are available for download  here .  Lists of networks used, or subsets of networks used, are also given.  Note that each network was assigned (arbitrarily) an ID, for purposes of the evaluation.       Networks are specified in the evaluation  FileFormat , with accompanying evidence.                 
+  Summary tables 
+     These tables summarize the benchmark instances used with exact solvers for MAR and PE.        ('Bayes' and 'Markov' show whether the set contains Bayesian or Markov networks, 'Binary' whether the instances have binary variables only.)              Set    
+       
+     Bayes    
+     Markov    
+     Binary    
+      Weighted-CSP   
+    97   
+    x   
+    x   
+       
+      bn2o    
+     18   
+     x   
+       
+     x   
+      Diagnosis   
+     100   
+     x   
+       
+       
+      Grids   
+     320   
+     x   
+       
+     x   
+      Linkage 2   
+     22   
+       
+     x   
+       
+      Promedas   
+     238   
+       
+     x   
+     x   
+      UAI06-MPE   
+     57   
+     x   
+       
+       
+      UAI06-PE   
+     78   
+     x   
+       
+       
+      Relational   
+     251   
+     x   
+       
+     x   
+       TOTAL</strong>   
+      1181</strong>   
+      824</strong>   
+      357</strong>   
+      323</strong>   
+         Due to time constraints, MPE and all approximate solvers were run on a reduced set of instances, as shown in the following table:             Set    
+       
+     Bayes    
+     Markov    
+     Binary    
+      Weighted-CSP   
+    97   
+    x   
+    x   
+       
+      bn2o    
+     18   
+     x   
+       
+     x   
+      Diagnosis   
+      0/100    
+     x   
+       
+       
+      Grids   
+      32/320    
+     x   
+       
+     x   
+      Linkage 2   
+     22   
+       
+     x   
+       
+      Promedas   
+     238   
+       
+     x   
+     x   
+      UAI06-MPE   
+     57   
+     x   
+       
+       
+      UAI06-PE   
+     78   
+     x   
+       
+       
+      Relational   
+      35/251    
+     x   
+       
+     x   
+       TOTAL</strong>   
+      577</strong>   
+      220</strong>   
+      357</strong>   
+      323</strong>   
+          Evaluation/Report/Benchmarks  (last edited 2008-09-10 04:35:32 by   ArthurChoi  ) 
+
+  
+  
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+     MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

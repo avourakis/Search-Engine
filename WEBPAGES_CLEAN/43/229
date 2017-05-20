@@ -1,0 +1,90 @@
+ Kernel::ConstructBisector_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Kernel::ConstructBisector_2  
+
+
+A model for this must provide:
+ 
+
+    
+          Kernel::Line_2   
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Point_2  p,  Kernel::Point_2  q)     
+                
+    constructs the  bisector  of  p  and  q .
+The  bisector  is oriented in such a way that  p  lies on its
+positive side.  Precondition:   p  and  q  are not equal.
+                 
+          Kernel::Line_2   
+
+         
+          
+             
+    fo.operator() (     
+      Kernel::Line_2  l1,  Kernel::Line_2  l2)     
+                
+    constructs the  bisector  of the two lines  l1  and  l2 .
+In the general case, the  bisector  has the direction of the vector which
+is the sum of the normalized directions of the two lines, and which passes
+through the  intersection  of  l1  and  l2 .
+If  l1  and  l2  are  parallel , then the  bisector  is defined as the line
+which has the same direction as  l1 , and which is at the same distance
+from  l1  and  l2 .
+This function requires that   Kernel ::RT  supports the   sqrt () 
+operation.
+            
+
+  Refines  AdaptableFunctor  (with two arguments)
+ 
+
+  See Also   CGAL::bisector  
+ 
+
+    Next:    Kernel::ConstructBisector_3   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

@@ -1,0 +1,295 @@
+ Geometric Optimisation<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+  
+  
+ Chapter 52 Geometric Optimisation 
+
+ Bernd Gärtner, Thomas Herrmann, Michael Hoffmann, and Sven Schönherr   
+
+  Introduction 
+ 
+
+This chapter describes concepts, classes, and functions for solving
+geometric optimisation problems. They are divided into four categories.
+  
+
+ Bounding Areas and Volumes. 
+
+Smallest enclosing circle and ellipse (2D), smallest enclosing rectangle,
+parallelogram, and strip (2D), rectangular  p -center (2D), smallest
+enclosing sphere and annulus (dD).
+  
+
+ Inscribed Areas. 
+
+Maximum  area  and perimeter inscribed  k -gon (2D), extremal inscribed
+ k -gon (2D), largest empty isorectangle (2D).
+  
+
+ Optimal Distances. 
+
+All furthest neigbors (2D), width of point set (3D), polytope distance (dD).
+  
+
+ Advanced Techniques. 
+
+Monotone and sorted matrix search.
+  
+
+  Assertions 
+
+The optimisation code uses infix  OPTIMISATION  in the assertions,
+e.g. defining the compiler flag
+ CGAL_OPTIMISATION_NO_PRECONDITIONS  switches precondition
+checking off, cf. Section    .
+ 
+
+  Bounding Areas and Volumes 
+ 
+
+  CGAL::Min_circle_2 &lt;Traits&gt;    CGAL::Min_circle_2_traits_2 &lt;K&gt;    MinCircle2Traits  
+  
+
+   
+
+  CGAL::Min_ellipse_2 &lt;Traits&gt;    CGAL::Min_ellipse_2_traits_2 &lt;K&gt;    MinEllipse2Traits  
+  
+
+   
+
+  CGAL::min_rectangle_2     CGAL::min_parallelogram_2     CGAL::min_strip_2     CGAL::Min_quadrilateral_default_traits_2 &lt;R&gt;    MinQuadrilateralTraits_2  
+  
+
+   
+
+  CGAL::rectangular_p_center_2     CGAL::Rectangular_p_center_default_traits_2 &lt;R&gt;    RectangularPCenterTraits_2  
+  
+
+   
+
+  CGAL::Min_sphere_d &lt;Traits&gt;    CGAL::Min_annulus_d &lt;Traits&gt;    CGAL::Optimisation_d_traits_2 &lt;K,ET,NT&gt;    CGAL::Optimisation_d_traits_3 &lt;K,ET,NT&gt;    CGAL::Optimisation_d_traits_d &lt;K,ET,NT&gt;    OptimisationDTraits  
+  
+
+   
+
+  CGAL::Min_sphere_of_spheres_d &lt;Traits&gt;    MinSphereOfSpheresTraits  
+  
+
+  Inscribed Areas 
+ 
+
+  CGAL::maximum_area_inscribed_k_gon_2     CGAL::maximum_perimeter_inscribed_k_gon_2     CGAL::extremal_polygon_2     CGAL::Largest_empty_iso_rectangle_2 &lt;Traits&gt;    CGAL::Extremal_polygon_area_traits_2 &lt;K&gt;    CGAL::Extremal_polygon_perimeter_traits_2 &lt;K&gt;    ExtremalPolygonTraits_2     LargestEmptyIsoRectangleTraits_2  
+  
+
+  Optimal Distances 
+ 
+
+  CGAL::all_furthest_neighbors_2     AllFurthestNeighborsTraits_2  
+  
+
+   
+
+  CGAL::Width_3 &lt;Traits&gt;    CGAL::Width_default_traits_3 &lt;K&gt;    WidthTraits_3  
+  
+
+   
+
+  CGAL::Polytope_distance_d &lt;Traits&gt;    CGAL::Optimisation_d_traits_2 &lt;K,ET,NT&gt;    CGAL::Optimisation_d_traits_3 &lt;K,ET,NT&gt;    CGAL::Optimisation_d_traits_d &lt;K,ET,NT&gt;    OptimisationDTraits  
+  
+
+  Advanced Techniques 
+ 
+
+  CGAL::monotone_matrix_search     CGAL::Dynamic_matrix &lt;M&gt;    MonotoneMatrixSearchTraits     BasicMatrix  
+  
+
+   
+
+  CGAL::sorted_matrix_search     CGAL::Sorted_matrix_search_traits_adaptor &lt;F,M&gt;    SortedMatrixSearchTraits  
+  
+
+   
+
+   
+  Min_circle_2&lt;Traits&gt;     
+
+   
+  Min_circle_2_traits_2&lt;K&gt;     
+
+   
+  MinCircle2Traits     
+
+   
+ 
+   
+   
+  Circle     
+
+   
+  Min_ellipse_2&lt;Traits&gt;     
+
+   
+  Min_ellipse_2_traits_2&lt;K&gt;     
+
+   
+  MinEllipse2Traits     
+
+   
+ 
+   
+   
+  Ellipse     
+
+   
+  min_rectangle_2     
+
+   
+  min_parallelogram_2     
+
+   
+  min_strip_2     
+
+   
+  Min_quadrilateral_default_traits_2&lt;Kernel&gt;     
+
+   
+  MinQuadrilateralTraits_2     
+
+   
+  rectangular_p_center_2     
+
+   
+  Rectangular_p_center_default_traits_2&lt;R&gt;     
+
+   
+  RectangularPCenterTraits_2     
+
+   
+  Min_sphere_d&lt;Traits&gt;     
+
+   
+  Min_annulus_d&lt;Traits&gt;     
+
+   
+  Min_sphere_of_spheres_d&lt;Traits&gt;     
+
+   
+  MinSphereOfSpheresTraits     
+
+   
+  Min_sphere_of_spheres_d_traits_2&lt;K,FT,UseSqrt,Algorithm&gt;     
+
+   
+  Min_sphere_of_spheres_d_traits_3&lt;K,FT,UseSqrt,Algorithm&gt;     
+
+   
+  Min_sphere_of_spheres_d_traits_d&lt;K,FT,Dim,UseSqrt,Algorithm&gt;     
+
+   
+  Optimisation_d_traits_2&lt;K,ET,NT&gt;     
+
+   
+  Optimisation_d_traits_3&lt;K,ET,NT&gt;     
+
+   
+  Optimisation_d_traits_d&lt;K,ET,NT&gt;     
+
+   
+  OptimisationDTraits     
+
+   
+  maximum_area_inscribed_k_gon_2     
+
+   
+  maximum_perimeter_inscribed_k_gon_2     
+
+   
+  extremal_polygon_2     
+
+   
+  Extremal_polygon_area_traits_2&lt;K&gt;     
+
+   
+  Extremal_polygon_perimeter_traits_2&lt;K&gt;     
+
+   
+  ExtremalPolygonTraits_2     
+
+   
+  Largest_empty_iso_rectangle_2&lt;T&gt;     
+
+   
+  LargestEmptyIsoRectangleTraits_2     
+
+   
+  all_furthest_neighbors_2     
+
+   
+  AllFurthestNeighborsTraits_2     
+
+   
+  Width_3&lt;Traits&gt;     
+
+   
+  Width_default_traits_3&lt;K&gt;     
+
+   
+  WidthTraits_3     
+
+   
+  Polytope_distance_d&lt;Traits&gt;     
+
+   
+  monotone_matrix_search     
+
+   
+  Dynamic_matrix&lt;M&gt;     
+
+   
+  MonotoneMatrixSearchTraits     
+
+   
+  BasicMatrix     
+
+   
+  sorted_matrix_search     
+
+   
+  Sorted_matrix_search_traits_adaptor&lt;F,M&gt;     
+
+   
+  SortedMatrixSearchTraits     
+
+    Next chapter:  2D Search Structures  
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

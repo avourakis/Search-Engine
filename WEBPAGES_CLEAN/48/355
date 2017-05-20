@@ -1,0 +1,125 @@
+ Heaps for Priority Queues and O(N Log2 N) Sorting
+
+
+We will next study heaps (this lecture) and AVL trees (the next lecture). Both
+of these are special kinds of trees that have interesting order/structure
+properties that are different from binary search trees. They both use similar
+rules when adding/removing values from these trees, and then restoring their
+properties.
+
+Heaps (this term has another important use in Computer Science: memory used
+for allocating the storage for objects when the "new" operator is used) are
+almost the perfect data structure for storing priority queues. By using heaps
+we can add a value in O(Log2 N) and also remove the highest priority value in
+O(Log2 N). The reason for these complexity classes: heaps always stay perfectly
+balanced, unlike BSTs. In the discussion below I will characterize Min-Heaps
+and the algorithms that process them. We would use Max-Heaps, which are
+appropriate for storing priority queues: their operations follow almost
+identical/flipped rules.
+
+------------------------------------------------------------------------------
+
+Order and Structure Properties:
+
+Recall that BSTs had a special order property (FOR EVERY NODE, only smaller
+values are in its left subtree and only larger values are in its right subtree)
+and no structure property (trees can take on any shape, from well-balanced to
+pathologically unbalanced, depending on the order values are added to the BST).
+
+Min-Heaps have a special order and structure property:
+
+Order:     Every node must be less than or equal to all nodes in its left and
+           right subtrees. This is the same as saying something simpler: every
+           node must be less than or equal to its children (because each child
+           will in turn be then less that or equal to its two children, so each
+           node is less than or equal to its grandchildren, ...). We can also
+           say the same thing as "every node must be greater than or equal to
+           its parent."
+
+           Note: unlike BSTs, it is natural for heaps to store multiple copies
+           of a value. So that is why "equal" is allowed above.
+
+Structure: All depths must be filled, except possibly the deepest. If the
+           deepest is not filled, then all the nodes at that depth must appear
+           as far to the left as possible. This property ensures that every
+           heap with N values has the SAME STRUCTURE as every other heap with N
+           values: only the values inside the nodes are different. This is a
+           bit more like the structure of linked lists than BSTs: every N
+           element linked list has the same structure, only its values are
+           different.
+
+Note that there can be multiple legal heaps with the same values: they all have
+the same structure (by the structure property) but the values stored in the
+nodes might be different (except the minimum node must be at the root). For
+example, the following 3 trees all represent min-heaps with 4 different values.
+
+       1         1         1  
+      / \       / \       / \ 
+     2   3     3   2     2   4
+    /         /         /     
+   4         4         3      
+
+Which values are in which nodes will depend on the order in which the values
+are added to the heap, just as the structure property of a BST depends on the
+order in which values are added to the BST.
+
+The pictures accompany this lecture illustrate heaps, including how values are
+added and how the minimum value is removed. We will examine the algorithms to
+add values and remove-the-minimum value from a heap (and how to restore the
+heap properties for both). Then we will change our perspective and learn how to
+store heaps compactly in arrays. Finally we will learn an "offline" algorithm
+to build a heap with N values in O(N) time instead of O(N Log2 N) which is
+achieved by just adding N values, each taking at worst O(Log2 N) time.
+
+------------------------------------------------------------------------------
+
+Insertion into a Heap:
+
+To add a value into a min-heap, first we must place it in a new node in the tree
+according to the heap STRUCTURE property, so we put it directly to the right of
+the rightmost node at the deepest depth (or if that depth is filled, as the 
+leftmost child of the deepest leftmost node: at one greater depth). By adding
+this node in this way, we now have a tree (with one more node) that satisifes
+the heap STRUCTURE property, but not necessarily the ORDER property. 
+
+The added value may violate the order property: it may be smaller than its
+parent: in fact it may be very small, and belong near the top of the heap. To
+restore the order property, we compare that node's value with its parent's
+value: we stop if these values are in the correct order (for a min-heap, if the
+parent's value  child's value) we swap the values in these nodes; note that putting a smaller
+value in the parent will not affect the order property in the other subtree of
+the parent: the subtree values were all &gt;= the original parent, and the old
+parent's value has now been replaced with a yet smaller new value, so all the
+values in the other subtree are all still &gt;= than their parent's new value.
+Note that swapping does not affect the STRUCTURE of the heap, so the STRUCTURE
+property is still satisfied.
+
+Then we compare the parent (which now has a new value) with its parent according
+to the same rules and again swap if necessary. We continue comparing and
+swapping until (a) the value settles into its correct place: we find a parent's
+value  than either/both of its children, we swap its value with the value of its
+SMALLEST child. Again, if the left/right child is the smaller value, then as a
+parent it will still be inf, the
+number of comparisons for each percolation down would stay at 1,000,000.
+
+------------------------------------------------------------------------------
+
+Merging and Changing Priority:
+
+Finally, there is one operation common to priority queues that heaps do not
+do optimally: merging two priority queues into one. A simple way to do this
+for any heap implementation is just add every value from one heap to another:
+this would be an O(N Log2 N) operation (assuming each heap had N values). Of
+course O(N Log2 N) is good complexity class, but other more complicated
+priority queue data structures have a better complexity class for this
+operations.
+
+Another way to merge is to put both heaps into an array and then use the
+offline technique above to build a heap from their contents. This is an O(N)
+operations: putting the two heaps in an array big enough to hold both is O(N)
+and then doing the offline heap construction algorithm is also O(N), so the
+resulting complexity is O(N), an improvement over enqueuing all the values from
+one priority queue into the other, if the sizes are approximately the same.
+
+But (adding one more wrinkle) if the priority queues are vastly different
+sizes (say M  

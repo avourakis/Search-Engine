@@ -1,0 +1,291 @@
+ Tracing<body>
+
+ 
+
+ 
+Tracing
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+ What is traceability? 
+
+ 
+There seem to be a number of closely-related kinds of traceability
+and ways of defining it. 
+For the purposes of this class,
+ traceability  is relative to a written document or documents,
+and refers to the ability to determine what the consequences
+of each decision are, and where the consequences are located in the document;
+and what the reasons and rationales for each decision are,
+and where the reasons are located in the document. 
+We will often use traceability to refer to
+the  means  by which consequence and reasons are located. 
+Traceability of consequences is  forward traceability 
+and traceability of reasons in  backward traceability . 
+ 
+
+ 
+Forward and backward traceability correspond, in the simplest case,
+to forward and backward in time as well. 
+In a waterfall model,
+each choice is made before the choices that result from its consequences
+are made. 
+In practice,
+this usually doesn't happen
+because the decision process involves a lot of backtracking. 
+We don't see the full consequences of a decision
+until we've explored them and made some decisions based on them. 
+Often an earlier decision (in the traceability sense)
+is made on the basis of a later consequence —
+for example,
+we may change a system's goals
+when we discover that the code doesn't run fast enough. 
+ 
+
+ 
+I extend traceability to include  rejected alternatives ,
+and term this  sideways traceability . 
+While it is possible to make a statement that is simply
+the first one that occurred to you,
+such a one cannot be classed as a thoroughly considered and supported statement. 
+Every statement is (implicitly or explicitly)
+a choice from among two or more alternatives,
+the others of which were rejected for some reason or other. 
+The chosen statement is supported not only by
+the reasons and rationales behind it,
+but also by the thoroughness indicated by
+the range and breadth of rejected alternatives,
+and their rationales, which were deemed less convincing for specific causes. 
+ 
+
+
+ Why is traceability valuable and interesting? 
+
+ 
+One way of viewing traceability is to think of it as a goal
+using a metaphor of vision: 
+the goal of having reasons and rationales,
+considered but rejected alternatives,
+and consequences all visible
+from the point at which a decision is recorded. 
+The advantages of traceability are several, including: 
+ 
+
+  
+    The previous work of inference and reasoning
+    is not lost, but can be reviewed and reused. 
+   
+   
+    It is available when each decision
+    is reconsidered
+    (for example, as the system's conception evolves). 
+   
+   
+    It is available
+    when a neophyte is first learning about the system
+    and why it is the way that it is. 
+   
+   
+    If a previously rejected alternative
+    is elevated to primacy later,
+    at least some of its reasons, rationales, and consequences
+    are already present,
+    as are the reasons, rationales, and consequences
+    of the newly rejected choice. 
+   
+  
+How to achieve traceability? 
+In general,
+it has to be specifically supported. 
+Except for the very smallest requirements specifications,
+there is too much information
+for a person to have it all in their head. 
+Some way of finding it with assistance is needed. 
+ 
+
+
+ How is traceability supported? 
+
+ 
+The most straightforward way
+is to do it directly: 
+put as much of the traced-to information as possible
+right there with the statement,
+and put pointers to the rest. 
+This works best with rationales and rejected alternatives,
+because a set of rationales and rejected alternatives
+usually corresponds to a single statement
+and this correspondence doesn't change over time
+(although the chosen alternative may). 
+It is more problematic with the pointers,
+typically called  links  in this context. 
+These links ramify quickly,
+often change over time
+(because a change in a choice usually corresponds to
+a change in the reasons the choice is based on,
+and a change in the consequences of the choice),
+and have to be maintained both forward and backward. 
+In practice, the links frequently deteriorate in salience
+as the decisions evolve and the links are not evolved along with them. 
+ 
+
+ 
+Because updating the traceability links
+is time-consuming and tedious,
+and thus is error-prone and usually incomplete,
+it is tempting to think of other more flexible approaches. 
+Several commercial products support the construction and maintenance
+of traceability links. 
+One might imagine
+using a sophisticated search capability instead of maintained links,
+so that the connections could be easily
+rediscovered and regenerated only as needed,
+rather than updated whenever they change. 
+ 
+
+ 
+For the purposes of this course,
+we will use explicit links,
+not because they are necessarily the most effective approach,
+but because they are the most effective in
+showing your understanding. 
+ 
+
+
+ Traceability and consistency 
+
+ 
+Traceability is related to  consistency ,
+the problem of making a document
+not state contradictory things. 
+One way of supporting consistency
+is to divide the decisions so that they are orthogonal
+and do not interfere with each other,
+and then state each decision exactly once
+("a place for everything, and everything in its place"),
+and instead of repeating the statement,
+reference it instead. 
+Taken to the extreme,
+this approach ensures consistency
+because each thing is only said once,
+therefore there are no other statements of it
+that could be inconsistent. 
+In practice, partitioning the decisions so they are orthogonal
+is impractical. 
+However,
+it is still beneficial to state each decision only once
+and reference it instead of restating it. 
+ 
+
+
+ 
+    
+  Fig. 1.  Relations among kinds of information
+   
+ 
+
+
+ The relations among kinds of information 
+
+ 
+In general, there is a traceability progression
+from stakeholders through goals and requirements to scenarios: 
+ 
+
+  
+    each stakeholder has at least one goal
+    (forward)
+   
+   
+    each goal belongs to at least one stakeholder
+    (backward)
+   
+   
+    each goal is supported by other goals
+    or by one or more requirements
+    (forward)
+   
+   
+    each requirement supports at least one goal
+    (backward)
+   
+   
+    each requirement is operationalized by at least one scenario
+    (forward)
+   
+   
+    each scenario operationalizes at least one goal
+    (backward)
+   
+  
+And in general, all of the above have rationales and rejected alternatives,
+and everything is supported by the elicitation data: 
+ 
+
+  
+    stakeholders, goals, requirements, and scenarios\
+    each have a rationale (backward)
+    and one or more rejected alternatives
+    (sideways)
+   
+   
+    everything is directly or indirectly connected to
+    an elicitation datum that is its foundation
+    (backward)
+   
+   
+    each elicitation datum supports at least one thing
+    (forward)
+   
+  
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Nov04We09:53 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

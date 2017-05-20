@@ -1,0 +1,105 @@
+ 4.123 OEReadPDBFile<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.122 OEReadOldBinary 
+ Up:   4. OEChem Functions 
+ Next:   4.124 OEReadXYZFile 
+   
+
+
+  
+4.123 OEReadPDBFile 
+ 
+
+ 
+    
+bool OEReadPDBFile(oemolistream &amp;ifs, OEMolBase &amp;mol,
+                   unsigned int flavor = OEPDBIFlag::DEFAULT)
+    
+Read a molecule from the specified input stream, ifs, in Brookhaven
+PDB file format.  A number of different PDB format variants are
+supported by the use of the bits in the ``flavor'' parameter.  This
+function returns true if the operation was successful, and false if
+an end-of-file was encountered.
+
+  
+The  OEPDBIFlag::TER ,  OEPDBIFlag::END  and
+ OEPDBIFlag::ENDM  flags are used
+to inform the OEChem PDB file reader of the records used to separate
+consecutive molecules in a single PDB file.  The flags correspond to
+the PDB file format's TER, END and ENDMOD records respectively.  If all
+of these flags are turned off, all of the ATOM and HETATM records in a
+single PDB file will be read into a single OEMolBase.  By default, only
+ OEPDBIFlag::END  and  OEPDBIFlag::ENDM  are on (and
+ OEPDBIFlag::TER  is off),
+meaning that different chains are read into the a single molecule, but
+different NMR models and concatenated PDB files are treated as sequential
+molecules.
+
+  
+The  OEPDBIFlag::ALL  flag is used to indicate that all of the
+atom records in the input file should be read into the OEMolBase.  By
+default, the  OEReadPDBFile  function ignores/omits ATOM and HETATM
+records that represent pseudo or dummy atoms and/or alternate conformations.
+Without  OEPDBIFlag::ALL , the PDB file reader ignores all atoms whose
+alternate location indicator is other than  ' ' ,  A  or  1 ,
+all atoms with atom names begining  " Q" , all atoms with residue name
+ "DUM" , and all atoms with co-ordinates 9999.000, 9999.000, 9999.000
+(as used by XPLOR/CNS to represent dummy atoms).
+
+  
+The  OEPDBIFlag::DATA  flag is used to instruct the OEChem PDB file
+reader to preserve the PDB file's header data in the OEMolBase's generic
+data.  This option currently preserves AUTHOR, CAVEAT, COMPND, CRSYT1,
+EXPDTA, FORMUL, HEADER, HELIX, HET, HETNAM, HETSYM, JRNL, KEYWDS, MODRES,
+OBSLTE, ORIGX1, ORIGX2, ORIGX3, REMARK, REVDAT, SCALE1, SCALE2, SCALE3,
+SEQRES, SHEET, SITE, SOURCE, SPRSDE, SSBOND, TITLE and TURN records.
+Note that modifying or reordering the molecule may invalidate the atom
+serial numbers used in some of the PDB records.
+
+  
+The  OEPDBIFlag::CHARGE  flag is used to indicate that the contents
+of the b-factor column in the input PDB file contains a partial charge,
+and should be stored in the `partial charge' property of an atom, instead
+of the `b-factor' property.  This value can then be retrieved using the
+ OEAtomBase::GetPartialCharge  method.
+
+  
+The  OEPDBIFlag::RADIUS  flag is used to indicate the the contents
+of the occupancy column in the input PDB file contains a radius, and
+should be stored in the `radius' property of an atom instead of the
+`occupancy' property.  This value can then be retrieved using the
+ OEAtomBase::GetRadius  method.
+
+  
+The  OEPDBIFlag::DELPHI  flag is just the combination of the
+ OEPDBIFlag::CHARGE  and  OEPDBIFlag::RADIUS  flags above.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.122 OEReadOldBinary 
+ Up:   4. OEChem Functions 
+ Next:   4.124 OEReadXYZFile 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

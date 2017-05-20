@@ -1,0 +1,197 @@
+ 32.3.2 OEParseCommandLineLW<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.3.1 OEParseCommandLine 
+ Up:   32.3 Parsing the Command 
+ Next:   32.4 Command line help 
+   
+
+
+  
+32.3.2 OEParseCommandLineLW 
+ 
+
+ 
+OEParseCommandLineLW is designed for simple lightweight (hence LW) interfaces.
+The OEInterface object can only be configured with certain kinds of parameters
+when this function is used.  The rules are
+
+  
+
+   A boolean parameter with a default value of false and a name beginning
+with a dash followed by a single character.
+
+ 
+  
+ A key-less parameter ( i.e. , a parameter with a non-zero
+key-less value).
+
+ 
+  
+  
+The form of the command line is described in detail in the OEParseCommandLineLW
+API documentation.  For those who wish to discerned the form of the command
+line from and example here is one.
+
+  
+Given the following program
+
+  
+ Chapter 32 - Example 5 : cpp file 
+    #include "oeplatform.h"
+#include "oesystem.h"
+
+//Defines static const unsigned char* array InterfaceData
+#include "ch32-5.itf"
+
+using namespace OEPlatform;
+using namespace OESystem;
+
+int main(int argc, char** argv)
+{
+  OEInterface itf;
+  OEConfigure(itf,InterfaceData);
+  OEParseCommandLineLW(itf,argc,argv);
+  OEWriteSettings(itf,oeout,true);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+with this txt file
+
+  
+ Chapter 32 - Example 5 : txt configuration file 
+    !PARAMETER -a
+  !TYPE bool
+  !DEFAULT false
+!END
+
+!PARAMETER -b
+  !TYPE bool
+  !DEFAULT false
+!END
+
+!PARAMETER -c
+  !TYPE bool
+  !DEFAULT false
+!END
+
+!PARAMETER -in
+  !TYPE string
+  !KEYLESS 1
+!END
+
+!PARAMETER -out
+  !TYPE string
+  !KEYLESS 2
+!END
+ 
+ 
+ Download as text. 
+ 
+   
+here are some examples of valid command lines
+
+  
+    &gt; ch32-5 -a -b -c
+#Interface settings
+-a  true
+-b  true
+-c  true
+#-in (Not set, no default)
+#-out (Not set, no default)
+
+&gt; ch32-5 booga ooga
+#Interface settings
+-a  false
+-b  false
+-c  false
+-in booga
+-out ooga
+
+&gt; ch32-5 -a -b -c ooga booga
+#Interface settings
+-a  true
+-b  true
+-c  true
+-in  ooga
+-out  booga
+
+&gt; ch32-5 -ab -c ooga booga
+#Interface settings
+-a  true
+-b  true
+-c  true
+-in  ooga
+-out  booga
+
+&gt; ch32-5 -ab -c ooga
+#Interface settings
+-a  true
+-b  true
+-c  true
+-in  ooga
+#-out (Not set, no default)
+
+&gt; ch32-5 -abc ooga
+#Interface settings
+-a  true
+-b  true
+-c  true
+-in  ooga
+#-out (Not set, no default)
+
+&gt; ch32-5 -ca
+#Interface settings
+-a  true
+-b  false (default)
+-c  true
+#-in (Not set, no default)
+#-out (Not set, no default)
+    
+and invalid command lines
+
+  
+    &gt; ch32-5 -d
+Fatal: Unknow switch -d
+&gt; ch32-5 -abcd
+Fatal: Unknow switch -d (specified as part of group -abcd)
+&gt; ch32-5 -abc -d ooga booga
+Fatal: Unknow switch -d
+&gt; ch32-5 -abc ooga booga ack
+Fatal: Too many arguments on the command line
+&gt; ch32-5 ooga booga -a
+Fatal: Too many arguments on the command line
+&gt; ch32-5 -ab ooga booga -c
+Fatal: Too many arguments on the command line
+    
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   32.3.1 OEParseCommandLine 
+ Up:   32.3 Parsing the Command 
+ Next:   32.4 Command line help 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,58 @@
+ MatTreeDoc â€“ Group<body>  Back to Index    
+ AppString
+&gt; AppStringDoc 
+ MAT-Tree 
+ Overview 
+ MAT-tree: A tree-based structure for indexing string and numeric
+attributes. Using MAT-tree, we can perform range queries on both
+string and numeric attributes. [1] 
+ Usage 
+ The program can be compiled using Visual C or gnu C++. 
+ Compile the project in Visual C, and run accordingly. You can
+also write a makefile and compile it using a GNU C compiler. 
+ Interface 
+ Main files: 
+  RETree.cpp - includes main() and the MAT-tree functions 
+ index.h, index.cpp - defines data structures, such as Node,
+Record, Query, etc. 
+ node.cpp, Rect.cpp - defines basic functions for Node and
+Rect 
+ Trie.h, Trie.cpp - defines the Trie class and all Trie
+functions 
+ distance.h, distance.cpp - defines Distance1 class to calculate
+the edit distance between two strings 
+ NFA.h, NFA.cpp - defines the automaton class 
+ NFANode.h, NFANode.cpp - defines the Node of NFA 
+ NFATransition.h, NFATransition.cpp - defines the Edge of
+NFA 
+ NFAMatch.h, NFAMatch.cpp - Modifies Meyer's algorithm,
+calculates the edit distance between a string and an automaton 
+ data.zip - data (text file zipped) 
+ query.zip - queries (text file zipped) 
+  Useful parameters: 
+ 
+const int MAXLEN = 100; //maximum length of a string attribute
+const int PGSIZE = 256; //page size
+const int TRIELEN = 1000; //maximum size of a Trie (in string representation)
+const int K = 400;  //# of centers in MAT-tree
+const int STRDELTA = 3; //threshold for string attribute
+const int NUMDELTA = 4; //threshold for numeric attribute
+const int SIZES = 80000; //size of the dataset
+const int ALPH_SIZE = 29; //size of the alphabet
+#define DATAFILE "data.txt" //input file for dataset
+#define QUERYFILE "query.txt" //query file
+const int NUMQUERY = 10; //# of queries to run
+ 
+ Prepare DATAFILE and QUERYFILE. Each record is in one line, with
+a string followed by by aq numeric value. In the case there are
+white spaces in the string, you need to replace them with special
+characters first. 
+ Performance 
+ The performance results are available in [1]. 
+ Contributors 
+  Chen Li 
+ Liang Jin 
+   [1] Liang Jin, Nick Koudas, Chen Li, Anthony K. H. Tung:
+Indexing Mixed Types for Approximate Retrieval. VLDB 2005:
+793-804 
+     Back to Index   </body> 

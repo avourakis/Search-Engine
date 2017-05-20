@@ -1,0 +1,58 @@
+ <body>
+  Peg Game 
+
+  Rules 
+   the goal is to get a peg as high as possible
+  (it is possible to get as high as 8, but that is pretty hard)
+  a secondary goal is to minimize the number of moves to achieve
+     a certain level
+    initially all pegs are at level 0 or below
+    a peg can move only by jumping another peg either horizontally,
+      vertically, or diagonally
+    the peg that was jumped over is removed
+    Download executable 
+     PC Windows  operating system
+      Solaris  operating system
+     To play 
+   move the cursor to be on the peg that will make the next jump
+     by using the arrow keys for up, down, right, and left
+   make the peg jump by using the following control keys:
+     u = jump up
+      l = jump left
+      r = jump right
+      L = jump diagonally up-left
+      R = jump diagonally up-right
+      z = jump diagonally down-left
+      x = jump diagonally down-right
+     
+                L   u   R
+                  \ | /
+                l - + - r
+                  /   \
+                z       x
+ 
+   undo the last jump by pressing the $ key
+   record moves made so far by pressing the ! key
+    (this creates a trace file named "trace")
+   retrace moves made in an earlier game
+     by renaming the trace file "input" and pressing the ! key
+    Minimum number of moves to achieve a level 
+         
+    level  
+       1    2    3    4    5 
+       6    7    8    9 
+    number of moves  
+       1    2    4    7    12 
+       22   45   122    not possible  
+    References 
+This problem was posed by Peter Winkler of Bell Labs
+in his 2002 manuscript "Five Algorithmic Puzzles". 
+He explains that this is a variation of a problem described
+in  Winning Ways for your Mathematical Plays , Vol. 2,
+by Berlekamp, Conway and Guy (Academic Press, 1982).
+The original problem, credited by Winkler to Conway,
+did not permit diagonal jumps. 
+That problem has an upper bound of level 4 achievable in 19 moves.
+A  recent paper 
+proves the correctness of the numbers shown above.
+   </body> 

@@ -1,0 +1,77 @@
+ output <body>
+   Understanding the CloseUp output format  
+     
+  Output format options   
+   
+If you run CloseUp through the closeup.pl script, then you should have elected for plain text, or MySQL output format. The MySQL data will be in a file called filename.mysql (where 'filename' is your original output filename). The plain text parser creates two files: filename_detail.txt; and filename_overview.txt.
+  
+If for some reason you do not have these files, you can parse your output file again using closeup2mysql.pl or closeup2txt.pl
+ 
+   
+  MySQL tables   
+   
+
+The MySQL parser will create information for two tables. This can be sent into your MySQL database by entering
+
+ 
+mysql -p database 
+
+The tables have the following format:
+
+   Detailed results  lists every marker pair for every collinear run identified. The table has the format:
+    c1  reference chromosome
+   c2  compared chromosome
+   marker  marker name
+   c1_pos  position of the marker on c1
+   c2_pos  position of the marker on c2
+   block_id  id number for the collinear run (block)
+   id  unique id number for every pair listing
+     Results overview  lists summary information for each collinear run. There is only one line for each run.
+   c1  reference chromosome
+   c2  compared chromosome
+   len  number of pairs involved in the collinear run
+   sum_square  sum of square statistic used for significance calculations
+   c1_s  start position of the run on c1
+   c1_e  end position of the run on c1
+   c2_s  start position of the run on c2
+   c2_e  end position of the run on c2
+   sig  significance level of the collinear run
+   block_id  id number for the collinear run (block). This matches with the block_id in the Detailed Results table
+   id  another unique id number for every listing
+      
+  Plain text tables   
+   
+
+The plain text parser will create two tables in two files.
+
+
+The tables have the following format:
+
+   Detailed results  (filename_detail.txt) lists every marker pair for every collinear run identified. Different runs are separated by a line with several "=" signs, the block id number, and the chromosomes between which the collinear run was identified.
+ The following lines list the marker names involved in the run, and the position on each chromosome. For example
+
+  
+========== id: 65756 BETWEEN Chr 4 and Chr 2
+                    uaz42     52.5     21.0
+                    uaz43     52.5     21.0
+                    uaz45     52.5     21.0
+                    uaz46     52.5     21.0
+                    uaz48     52.5     21.0
+                    uaz69     52.5     24.7
+
+ 
+
+lists detailed information for run number 65756, which pairs a region on chromosome 4, with a region on chromosome 2. The six markers involved in the run are listed, with their position on chromosome 4, and 2 respectively (it will always be true that the positions are listed under the relevant chromosome name).
+
+   Results overview  (filename_overview.txt) lists summary information for each collinear run. There is only one line for each run.
+   c1  reference chromosome
+   c2  compared chromosome
+   # markers  number of pairs involved in the collinear run
+   ss  sum of square statistic used for significance calculations
+   c1s  start position of the run on c1
+   c1e  end position of the run on c1
+   c2s  start position of the run on c2
+   c2e  end position of the run on c2
+   sig  significance level of the collinear run
+   id  id number for the collinear run (block). This matches with the id in the Detailed Results table
+     </body> 

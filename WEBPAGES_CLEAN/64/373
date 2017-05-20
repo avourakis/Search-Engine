@@ -1,0 +1,66 @@
+ 3.31.3 BuildExpressions<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.31.2 operator += 
+ Up:   3.31 OEQMolBase 
+ Next:   3.31.4 GetQAtoms 
+   
+
+
+    
+ 
+3.31.3 BuildExpressions
+ 
+   
+virtual bool BuildExpressions(unsigned int atomopts, unsigned int bondopts)
+    
+This method builds query expressions for the atoms and bonds contained
+in a query molecule instance.  Any pre-existing query expressions are
+destroyed by this method.  The bits in the unsigned integers passed to
+the method define how query expressions will be built based on the
+attributes of each atom and bond instance.  The bitwise options are
+stored in the OEExprOpts namespace.  Please refer to
+(Section  8.4 ) for a complete explanation of the query
+options.  This method provides the ability to convert attributes of
+base atoms and bonds to query expressions that are consistent with the
+semantics desired for a graph match procedure.  Each requested
+expression is constructed, using data from the parent atom or bond if
+necessary.  During a graph match procedure, the resulting expression
+composition will be used to evaluate atom and bond graph component
+equivalences.
+
+  
+It is important to note that BuildExpressions uses the data present in
+a query molecule only when it is called.  Subsequent modifications to
+atom and bond data to not cause the expressions to be updated to
+reflect changes.  An additional call to BuildExpressions must be made
+to synchronize expressions with atom and bond data.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.31.2 operator += 
+ Up:   3.31 OEQMolBase 
+ Next:   3.31.4 GetQAtoms 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,141 @@
+ /*
+    $Id: gram.h 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 01/30/2007
+    Author: Rares Vernica 
+*/
+
+#ifndef _gram_h_
+#define _gram_h_
+
+#include  
+#include 
+#include 
+#include 
+
+#include 
+#include 
+
+using namespace std;
+using namespace tr1;
+
+// convert a string to a list of grams
+void str2grams(const string &amp;s, vector &amp;res,
+               const unsigned q = 3,
+               const unsigned char st = '#', unsigned char en = '$');
+
+void str2grams(const string &amp;s, set &amp;res, 
+               const unsigned q = 3);
+
+// convert a string to a list of hashed grams
+void str2gramsHash(const string &amp;s, vector &amp;res, 
+                    const unsigned q = 3,
+                    const unsigned char st = '#', const unsigned char en = '$'); 
+
+// convert a list of grams to the corresponding string
+void grams2str(const vector &amp;v, string &amp;s, const unsigned q = 3);
+
+unsigned gram2id(const string &amp;gram); // get ID from gram
+void id2gram(unsigned id, string &amp;res,
+             const unsigned q = 3); // get ID from unsigned
+
+extern hash hashString;
+
+class GramId                    // grams as IDs in a vector with all possible grams
+{
+public:
+  GramId(unsigned q = 3,
+         char st = '#',
+         char en = '$', 
+         const string &amp;charset = charsetEn,
+         bool withPerm = true);
+  GramId(const string &amp;filenamePreffix);
+
+  void saveData(const string &amp;filenamePreffix) const;
+
+  unsigned getQ() const { return q; }
+  unsigned getCharsetLen() const { return charsetLen; }
+  unsigned getN() const { return n; }
+
+  unsigned getId(const string &amp;gram) const; // get ID from gram
+  string getGram(unsigned id) const; // get gram from ID
+  void getIds(const string &amp;s, vector &amp;ids) const;
+                                // convert string to list of gram IDs
+  void getGrams(const vector &amp;ids, vector &amp;grams) const;
+                                // convert list of gram IDs to list of grams
+
+  bool consistData(const string &amp;filenamePrefix, const string &amp;filenameExt) const;
+
+  bool operator==(const GramId&amp; g) const;
+
+  static const string charsetEn; // English character
+
+private:
+  unsigned q;                   // length of grams
+  char st, en;                  // start and end char for grams (e.g., '#' and '$')
+  string charset;               // possible characters
+  unsigned charsetLen;
+  unsigned n;                   // length of vector with all possible grams
+  vector perm;        // permutation for gram IDs
+
+  static const unsigned charsetLenMax; // max length of the charset
+  static const string gramidSuffix;
+
+  void loadData(const string &amp;filenamePrefix);
+
+  unsigned invPerm(unsigned id) const;
+};
+
+// convert a string to a list of words
+void str2words(const string &amp;s, vector &amp;res, const string &amp;delims = " \t");
+
+// Word Index
+typedef set Ids;
+typedef pair  WordEntry;
+
+// version 1
+typedef unordered_map WordHash;
+
+// version 2
+typedef vector WordIds;
+typedef unordered_map WordKey;
+
+// version 3
+typedef vector WordKey3;
+typedef vector WordIds3;
+typedef unordered_map WordHash3;
+
+class WordIndex 
+{
+public:
+  static void build(const vector &amp;data, WordHash &amp;wordHash);
+  static void build(const string &amp;filenameDataset, WordHash &amp;wordHash);
+
+  static void build(const vector &amp;data,
+                    WordIds &amp;wordIds, WordKey &amp;wordKey);
+  static void build(const string &amp;filenameDataset,
+                    WordIds &amp;wordIds, WordKey &amp;wordKey);
+
+  static void save(const string &amp;filenameWords, 
+                   const string &amp;filenameIds,
+                   const WordHash &amp;wordHash);
+  static void load(const string &amp;filenameWords, 
+                   const string &amp;filenameIds, 
+                   WordHash &amp;wordHash);
+
+  static void save(const string &amp;filenameWids, 
+                   const string &amp;filenameWkey,
+                   const WordIds &amp;wordIds, const WordKey &amp;wordKey);
+  static void load(const string &amp;filenameWids, 
+                   const string &amp;filenameWkey, 
+                   WordIds &amp;wordIds, WordKey &amp;wordKey);
+  static bool exist(const string &amp;filename1, const string &amp;filename2);
+};
+
+#endif
+  

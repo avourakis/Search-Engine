@@ -1,0 +1,170 @@
+ 5.3 Dereferencing the Iterator<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5.2 Looping over the 
+ Up:   5. Traversing the Atoms, 
+ Next:   5.4 Looping over the 
+   
+
+
+  
+5.3 Dereferencing the Iterator 
+ 
+
+ 
+The example above shows how to use an OEChem iterator to loop over
+objects, but didn't actually use them.  OEChem iterators provide four
+operators to allow the user to access the object at the current
+iterator position. Implicit casting or the operator  -&gt;  can be used
+to get a pointer to the current object, and implicit casting or the
+operator  *  can be used to get a reference to a given object.
+I.e. if variable  iter  has type  OEIter&lt;T&gt;  then  (T*)iter  is a
+pointer to the current item, and  *iter  and  (T&amp;)iter  are of type
+ T&amp; .  These operators mean than in most cases an OEChem iterator
+ OEIter&lt;T&gt;  behaves identically to a  T* .
+
+  
+For example, to list the atomic numbers of atoms in a molecule:
+
+  
+    #include "oechem.h"
+#include &lt;iostream&gt;
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+void ListAtomicNumbers(OEMolBase &amp;mol)
+{
+  OEIter&lt;OEAtomBase&gt; atom;
+
+  for (atom=mol.GetAtoms(); atom; ++atom)
+    cout &lt;&lt; atom-&gt;GetAtomicNum() &lt;&lt; endl;
+}
+
+int main()
+{
+  OEMol mol;
+  OEParseSmiles(mol, "c1ccccc1");
+  ListAtomicNumbers(mol);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+This routine could also be written with an explicit assignment to an
+OEAtomBase*.
+
+  
+    #include "oechem.h"
+#include &lt;iostream&gt;
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+void ListAtomicNumbers(OEMolBase &amp;mol)
+{
+  OEIter&lt;OEAtomBase&gt; atom;
+  OEAtomBase *aptr;
+
+  for (atom=mol.GetAtoms(); atom; ++atom)
+  {
+    aptr = atom;
+    cout &lt;&lt; aptr-&gt;GetAtomicNum() &lt;&lt; endl;
+  }
+}
+
+int main()
+{
+  OEMol mol;
+  OEParseSmiles(mol, "c1ccccc1");
+  ListAtomicNumbers(mol);
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+Comparing these two examples shows how iterators and pointers behave
+similarly.  The OEAtomBase method, GetAtomicNum, that returns the
+atomic number of the given atom, will be described later.
+
+  
+The implicit casts of  OEIter&lt;T&gt;  to either a  T&amp;  or
+ T*  are most useful when passing the object to a function which
+takes T by reference or by pointer.
+
+  
+    #include "openeye.h"
+#include &lt;iostream&gt;
+#include "oeplatform.h"
+#include "oesystem.h"
+#include "oechem.h"
+
+using namespace OESystem;
+using namespace OEChem;
+using namespace std;
+
+void PrintAtomicNumber(const OEAtomBase *atom)
+{
+  cout &lt;&lt; atom-&gt;GetAtomicNum() &lt;&lt; endl;
+}
+
+void PrintAromatic(const OEAtomBase &amp;atom)
+{
+  if(atom.IsAromatic())
+    cout &lt;&lt; "Is Aromatic" &lt;&lt; endl;
+  else
+    cout &lt;&lt; "Isn't Aromatic" &lt;&lt; endl;
+}
+
+int main()
+{
+  OEMol mol;
+  OEParseSmiles(mol, "c1ccccc1");
+
+  OEIter&lt;OEAtomBase&gt; atom;
+  for(atom = mol.GetAtoms();atom;++atom)
+  {
+    PrintAtomicNumber(atom);
+    PrintAromatic(atom);
+  }
+
+  return 0;
+}
+ 
+ 
+ Download as text. 
+ 
+   
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   5.2 Looping over the 
+ Up:   5. Traversing the Atoms, 
+ Next:   5.4 Looping over the 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

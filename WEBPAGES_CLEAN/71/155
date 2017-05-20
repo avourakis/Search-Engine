@@ -1,0 +1,398 @@
+ 
+Raccoon
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon 
+ 
+Class Raccoon 
+ 
+java.lang.Object
+   java.lang.Thread
+        Raccoon.Raccoon 
+ 
+   All Implemented Interfaces:    java.lang.Runnable 
+    public class  Raccoon  extends java.lang.Thread    
+    Author:  
+   Qi Zhong 
+   
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+ static java.lang.String   
+    dbName   
+
+ 
+            
+    
+ static java.lang.String   
+    DEFAULT_INIT_FILE   
+
+ 
+            
+    
+ static int   
+    DUMMY_MODE   
+
+ 
+            
+    
+ static int   
+    GUI_MODE   
+
+ 
+            
+    
+ static java.lang.String   
+    host   
+
+ 
+            
+    
+ static  PVNode    
+    myNode   
+
+ 
+            
+    
+ static java.lang.String   
+    myNodeID   
+
+ 
+            
+    
+ static  NeighborList    
+    neighborList   
+
+ 
+            
+    
+ static  NetModuleImpl    
+    netModule   
+
+ 
+            
+    
+ static java.lang.String   
+    passwd   
+
+ 
+            
+    
+ static java.lang.String   
+    port   
+
+ 
+            
+    
+ static  PeerViewBrowser    
+    pvBrowser   
+
+ 
+            
+    
+ static  QueryEngine    
+    qe   
+
+ 
+            
+    
+ static  ResourceManager    
+    rm   
+
+ 
+            
+    
+ static  SearchEngine    
+    se   
+
+ 
+            
+    
+ static java.lang.String   
+    systemName   
+
+ 
+            
+    
+ static java.lang.String   
+    user   
+
+ 
+            
+  
+   
+    Fields inherited from class java.lang.Thread  
+    MAX_PRIORITY, MIN_PRIORITY, NORM_PRIORITY  
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      Raccoon  (javax.swing.JApplet app) 
+
+ 
+            
+      Raccoon  (java.lang.String fileName,
+        int mode) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+ static void   
+    init  (javax.swing.JApplet app) 
+
+ 
+          Initialize the value to myNode, myNodeID and neighborList
+ from applet app.getParameter(); 
+    
+ static void   
+    init  (java.lang.String fileName) 
+
+ 
+          Initialize the value to myNode, myNodeID and neighborList
+ from XML file 
+    
+  void   
+    initModules  () 
+
+ 
+          initialize all the modules 
+    
+ static void   
+    main  (java.lang.String[] args) 
+
+ 
+            
+    
+  void   
+    run  () 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Thread  
+    activeCount, checkAccess, countStackFrames, currentThread, destroy, dumpStack, enumerate, getContextClassLoader, getName, getPriority, getThreadGroup, holdsLock, interrupt, interrupted, isAlive, isDaemon, isInterrupted, join, join, join, resume, setContextClassLoader, setDaemon, setName, setPriority, sleep, sleep, start, stop, stop, suspend, toString, yield  
+  
+   
+    Methods inherited from class java.lang.Object  
+    equals, getClass, hashCode, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+GUI_MODE 
+ 
+public static final int  GUI_MODE  
+    See Also:    Constant Field Values        
+DUMMY_MODE 
+ 
+public static final int  DUMMY_MODE  
+    See Also:    Constant Field Values        
+DEFAULT_INIT_FILE 
+ 
+public static final java.lang.String  DEFAULT_INIT_FILE  
+    See Also:    Constant Field Values        
+neighborList 
+ 
+public static  NeighborList   neighborList  
+        
+myNodeID 
+ 
+public static java.lang.String  myNodeID  
+        
+myNode 
+ 
+public static  PVNode   myNode  
+        
+pvBrowser 
+ 
+public static  PeerViewBrowser   pvBrowser  
+        
+netModule 
+ 
+public static  NetModuleImpl   netModule  
+        
+rm 
+ 
+public static  ResourceManager   rm  
+        
+se 
+ 
+public static  SearchEngine   se  
+        
+qe 
+ 
+public static  QueryEngine   qe  
+        
+host 
+ 
+public static java.lang.String  host  
+        
+user 
+ 
+public static java.lang.String  user  
+        
+passwd 
+ 
+public static java.lang.String  passwd  
+        
+port 
+ 
+public static java.lang.String  port  
+        
+dbName 
+ 
+public static java.lang.String  dbName  
+        
+systemName 
+ 
+public static java.lang.String  systemName  
+      
+    
+ Constructor Detail   
+     
+Raccoon 
+ 
+public  Raccoon (java.lang.String fileName,
+               int mode)
+        throws java.lang.Exception 
+      
+Raccoon 
+ 
+public  Raccoon (javax.swing.JApplet app)
+        throws java.lang.Exception 
+    
+    
+ Method Detail   
+     
+initModules 
+ 
+public void  initModules () 
+  initialize all the modules
+ 
+     
+      
+init 
+ 
+public static void  init (java.lang.String fileName)
+                 throws java.lang.Exception 
+  Initialize the value to myNode, myNodeID and neighborList
+ from XML file
+ 
+     Throws: 
+   java.lang.Exception    
+      
+init 
+ 
+public static void  init (javax.swing.JApplet app)
+                 throws java.lang.Exception 
+  Initialize the value to myNode, myNodeID and neighborList
+ from applet app.getParameter();
+ 
+     Throws: 
+   java.lang.Exception    
+      
+main 
+ 
+public static void  main (java.lang.String[] args) 
+     
+     
+run 
+ 
+public void  run () 
+     
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+ PREV CLASS 
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

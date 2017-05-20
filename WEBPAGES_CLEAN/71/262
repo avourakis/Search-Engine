@@ -1,0 +1,43 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Draft functional requirements (strawman or woodman, you decide!)<body> Re: Draft functional requirements (strawman or woodman, you decide!) 
+ David G. Durand  (  dgd@cs.bu.edu  )  Thu, 18 Jul 1996 11:53:02 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Previous message:   David G. Durand: "Conversation-killer?" 
+    Maybe in reply to:   David Durand: "Draft functional requirements (strawman or woodman, you decide!)" 
+
+
+    
+At 12:55 PM 7/2/96, Larry Masinter wrote:
+&gt;Most of these are OK, but "Stableness of versions" is a repository
+&gt;requirement, not a protocol requirement. We might want to call out
+&gt;some protocol requirement where a client can DETERMINE whether the
+&gt;repository supports stable versions independent of other kinds of
+&gt;modifications.
+
+  It seems to me that the desire that a  versioned  URL be stable is
+inherent to the notion of versioning, and can be a protocol requirement
+(ie. assumption that users of the protocol are entitled to make). However,
+since URLs are not guaranteed to be stable, we still have a problem,
+because if the base URL is re-used, the versions should obviously not have
+to be persistent. Perhaps we can simply say "If the document addressed by a
+base URL (we don't have a proper name for this concept) remains the same,
+then the versions of that document will be stable.
+
+   I think this is important, as a stability guaranteee (even a weak one)
+allows versioning to be used to provide intelligent caching, distribution,
+and so on. And a server implementer is free to strengthen the guarantee if
+they want to, by  not  re-using base URLs.
+
+----------------------------------------------+----------------------------
+  David Durand                  dgd@cs.bu.edu   | david@dynamicDiagrams.com
+  Boston University Computer Science          | Dynamic Diagrams
+   http://cs-www.bu.edu:80/students/grads/dgd/  | http://dynamicDiagrams.com/
+ 
+
+  
+     Previous message:   David G. Durand: "Conversation-killer?" 
+    Maybe in reply to:   David Durand: "Draft functional requirements (strawman or woodman, you decide!)" 
+
+
+  </body> 

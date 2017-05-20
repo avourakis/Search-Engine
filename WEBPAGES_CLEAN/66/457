@@ -1,0 +1,1140 @@
+ Inheritance in Class Hierarchies<body>
+
+ 
+ Inheritance in Class Hierarchies 
+ 
+  Introduction to Computer Science I-III 
+ICS-21/-22/-23  
+ 
+  
+
+
+
+
+        Introduction  
+ 
+  In this lecture we will begin discussing direct relationships among classes
+    (including generalizing the relationship the  Object  class has to
+    all other classes).
+  We will discus subclasses (also known as extension classes), superclasses
+   (aka base classes),  and the concept of  inheritance among classes.
+  Pragmatically, we will focus on inheriting the state and methods defined in
+    classes, and overriding methods.
+   
+  A brief review.
+  Originally, we learned that every class was independent of every other class.
+  The type of a variable, and the reference to the object we stored in it,
+    were always the names of the same class
+   (e.g.,  Timer t = new Timer(); ). 
+    
+  Then we learned that the class  Object  acted as the type of a generic
+     class.
+  If a variable were declared to be of the type  Object , then we could
+    store into it a reference to an object constructed from any class (but
+    still not a primitive value; e.g., not  int , but we could wrap that
+    value in the  Integer  wrapper class).
+  Now, for the first time, the type of the left side of a declaration did not
+    have to be the same as the class constructed: we could write
+     Object x = new String("abc");  or  Object x = new Integer(123); 
+    or  Object x = new Timer(); . 
+  On that variable, we could call only those methods declared in the
+     Object  class.
+  If we wanted to call methods from the class of the object to which it really
+    refered, or store a reference to an  Object  into some other type
+    of variable, we needed to cast the reference (and/or check it with the
+     instanceof  operator):   ((Integer)s.pop()).intValue()  or
+     Integer i = (Integer)s.pop();  
+    
+  Recently we learned that sometimes classes were indirectly related: because
+    they implemented the same interface.
+  In these cases, if we used the interface name as a type for a variable, then
+    we could store into it a reference to an object constructed from any class
+    that implements that interface (e.g.,
+     DecisionInt inRange = new IsBetween(0,5); ); likewise, on that
+    variable, we could call only those methods declared in the interface,
+    which its class is guaranteed to specify..
+    
+  In this lecture we will learn about another, and more complicated and 
+    useful, way for classes to be related: via subclassing/extension (i.e.,
+    inheritance).
+  Again we will study a generalization about how the type of a variable
+    restricts what references to objects we can store in it and what methods we
+    can call on the variable; and how the class of the object it refers
+    to determines the actual behavior of these methods when they are called.
+    
+  The  Object  class, and all the properties that we know about it, is
+    just a special case of learning about subclassing/extension (inheritance).
+  The concepts of reference casting and the  instanceof  operator are
+    likewise rediscussed in the more general framework of class inheritance.
+  Although the programming implications of inheritance are many and varied, we
+    will focus on some of the technical details first.
+    
+  Whenever we discuss new facets of classes, we must discuss how they are
+    related to  constructors, fields, and methods.
+  Specifically, we will learn how to picture objects constructed from
+    subclasses, which extend the fields  provided by their superclasses;
+    we will learn some new constructor syntax for this purpose as well.
+  We will discuss how methods in a superclass are inherited and overridden in
+    subclasses, determining the behavior of any object constructed from the
+    subclass.
+    
+  To make this information concrete, we will use a few very simple classes
+    collected into a small hierarchy:  IntCounter ,  ModularCounter ,
+    and  BoundedCounter .
+  Each of these classes implements the  Counter  interface.
+  Both  ModularCounter  and  BoundedCounter  extend
+     IntCounter  by adding fields and inheriting, overriding, and
+    defining new methods.
+  We will close this lecture by discussing the  SkipCounter  class,
+    which acts as a decorator for the  Counter  interface and contrast
+    its use with making yet more subclasses.
+    
+  You can download the
+     
+    Counters via Inheritance Demonstration  application, whose code is
+    described in, and used to illustrate, all the material in this lecture.
+  
+           extends and Subclassing   
+ 
+  Often a new class is a slight variation (extension) of an old class; it adds
+    some state (fields) and adds/modifies some behavior (methods).
+  What makes a programming language object-oriented is that is provides a
+    mechansim to define a new class based on an old class, requiring us to
+    define just the new fields and changed/new methods.
+  In Java, we use the  extends  keyword to create a  subclass  based
+    on (extending) a  superclass .
+   
+  For example, the first line that defines the  ModularCounter  class is
+       public class ModularCounter extends IntCounter {
+  ...field(s), constructor(s) and method(s)
+  }  
+  In Java, and most OOP languages, we can define a class to extend just
+     one  other class.
+  Often we show this relationship as follows (always with the superclass on
+    top of the subclass)
+         &amp;nbsp 
+ 
+  We can build a complicated application program from a library of many
+    classes, some of which are  related by superclass-subclass relationships,
+    forming an inheritance hierarchy.
+  We draw such hierarchies as follows, with each subclass beneath its
+    superclass (with an arrow pointing to it).
+  While a superclass may have many direct subclasses, a subclass has exactly
+     one direct superclass.
+         &amp;nbsp 
+ 
+  So, in this example, the  ModularCounter  and  BoundedCounter 
+     classes extend the  IntCounter  class.
+  Each subclass is in some sense more powerful than the superclass that it
+    extends: it adds more fields and methods.
+  Unfortunately the terms  subclass  and  superclass  seem to have
+    exactly the opposite informal meanings.
+  The word  super  implies something more powerful, but in fact it is
+    the  subclass  that is more powerful.
+  We have to be careful how we use these terms.
+   
+  Many classes are declared without extending any other class.
+  By default, the absence of  extends  implies that these classes all
+    extend the class   Object .
+  This class is the most super of superclasses (it extends no other class).
+  It is at the root of the inheritance hierarchy that is created by all
+    inheritance relationships.
+  For example, the following inheritance hierarchy includes just a very few
+    of classes that we have discussed this quarter.
+          &amp;nbsp 
+ 
+  Most classes extend no other class, so by definition they are subclasses of
+    the  Object  class.
+  We will soon study how to read the Javadoc of classes in a hierarchy,
+    studying the fields and methods that they inherit.
+            The IntCounter Superclass  
+ 
+The  IntCounter  class appears below.
+It is a very simple class (compared to what we have been reading and writing),
+  but it has all the elements needed to discuss general inheritance in class
+  hierarchies.
+Certainly this class is more pedagogically useful than practical.
+    public class IntCounter {
+
+    public IntCounter ()
+    {}
+  
+    public IntCounter (int initialValue)
+    {value = initialValue;}
+  
+    public void reset ()
+    {value = 0;}
+
+    public void increment ()
+    {value++;}
+  
+    public int getValue()
+    {return value;}
+
+    public String toString()
+    {return ""+value;}
+
+    private int value = 0;
+}  
+The class declares the instance variable  value  and automatically
+  initializes it to  0 .
+One constructor allows us to keep this value; the other stores any initial
+   value into  value .
+Notice that if the first constructor were not written, Java WOULD NOT
+  supply it because there is another constructor; Java automatically
+  supplies a do-nothing constructor only if a class defines no other
+  constructors.
+The mutators/commands reset/increment the state stored in  value .
+The accessor/query  getValue  returns this value, and  toString 
+  returns this value as a  String , easily accomplished via catenation
+  to the empty string.
+ 
+We can use this class by itself. We can declare
+    IntCounter i = new IntCounter(); 
+  and then call  i.increment();  and then call
+   System.out.println("i = " + i);  (remember writing  i  here is
+  the same as writing  i.toString() ) which would print simply
+  as  i = 1 .
+             The ModularCounter Subclass  
+ 
+The  ModularCounter  class appears below.
+We will first explain Java's inheritance mechanism by using this class,
+  which extend (is a subclass of)  IntCounter .
+Briefly examine it now, but don't worry about details you don't yet
+  understand; we will discuss each of its components in the
+  next few sections.
+    public class ModularCounter extends IntCounter {
+    public ModularCounter (int modulus)
+    {this(0,modulus);}
+
+    public ModularCounter (int value, int modulus)
+      throws IllegalArgumentException
+    {
+      super(value);
+      if (modulus = modulus)
+        throw new IllegalArgumentException("ModularCounter: value bad");
+
+      this.modulus = modulus;
+    }
+
+    public int getModulus()
+    {return modulus;}
+
+    public void increment()
+    {
+      if (getValue() == modulus-1)
+        reset();
+      else
+        super.increment();
+    }
+
+    public String toString()
+    {return super.toString()+"("+modulus+")";}
+
+    private final int modulus;
+}  
+We explain the relationship bewteen  ModularCounter  and
+   IntCounter  by examining how inheritance affects the three components
+  of any class: fields, constructors, and methods.
+In the process, we will explain the uses of  super  that appear above.
+            Fields in Subclasses  
+ 
+  An object constructed from a subclass contains all the fields that the
+     subclass defines, and all the fields that are contained in its superclass
+    (and the superclass of the superclass, etc. all the way to the class
+     Object , at the root of the inheritance hierarchy).
+  The  Object  class defines no instance variables, so we will not
+    graphically represent it.
+  Note how the  public  and  private  access modifiers work with
+    subclassing: although a subclass may contain fields defined in its
+    superclass, if those fields are defined to be  private  in the
+    superclass, then the subclass cannot refer to them: if it wishes to
+    access or  change them, it must use the standard accessor and mutator
+    methods defined in the superclass.
+  All  public  fields -typically NONE of the instance variables- defined
+    in a superclass can be referred to directly in a subclass.
+   
+  When we draw an object constructed from a subclass, we will show it
+    containing all the fields of its superclass inside.
+  We will label the boundary of the superclass in which each instance
+    variable appears.
+  So, for example, the  IntCounter  class defines only a  value 
+    (of type  int ) instance variable; the  ModularCounter  class
+    that extends it defines a  modulus  (of type  int ) instance
+    variable.
+  Because  ModularCounter  extends  IntCounter  and inherits all its
+    fields, we will draw a  ModularCounter  object as follows.
+          &amp;nbsp 
+ 
+  Again, we choose NOT to represent the  Object  class in these pictures,
+    even though it is always the top class in an inheritance hierarchy,
+    because that class defines no state.
+  As we continue to study the mechanics of inheritance, pictures like this one
+    will make all the material easier to understand.
+  
+  Finally, we will now introduce another access modifier named
+    protected  (a keyword) that allows access at a level inbetween
+    public  and  private  (but different than package-friendly).
+  Any class member declared  protected  can be referred to by methods in
+    the class itself, can be referred to by methods in any subclass (or
+    subclass of a subclass, etc.), and can be referred to by any methods in a
+    class that is defined in the same package (like package-friendly).
+  This last rule for the  protected  access modifier is a bit strange,
+    and students are advised to not use  protected , but they should
+    know what it means if they run across code that uses it.
+  In summary access modifiers get more restrictive in the following sequence
+     public ,  protected , package-friendly, and  private .
+  We can say that  protected  members are package-friendly, plus being
+    able to be accessed in subclasses (whether or not they are in the same
+    package).
+             Constructors in Subclasses  
+ 
+  As we have seen, an object constructed from a subclass contains all the
+    fields present in its superclass as well.
+  So, when we diagram/construct an object from a subclass, we must first
+    diagram/construct its superclass fields, encapsulated inside an oval for
+    the superclass; then, we take all the new fields that the subclass defines
+    and place them outside the oval, and encapsulate all fields inside the
+    subclass oval.
+   
+  The first line of code in a subclass constructor must be a call to
+     super , a keyword which when it appears in a constructor means to
+    call the constructor of the superclass (whatever class this subclass
+    extends).
+  Most student would prefer to use the name of the superclass here, but this
+    is not the Java way.
+  The only exception is if the first line uses  this , in which case
+    it cannot have a call to  super .
+  Of course, the arguments to  super  must match the parameters of one of
+    the constructors of the superclass (which may be overloaded).
+  For example, there are two constructors defined for the superclass
+      ModularCounter ; they are
+       public ModularCounter (int modulus)
+  {this(0,modulus);}
+
+  public ModularCounter (int value, int modulus)
+    throws IllegalArgumentException
+  {
+    super(value);
+    if (modulus = modulus)
+      throw new IllegalArgumentException("ModularCounter: value bad");
+
+    this.modulus = modulus;
+  }  
+  As you can see the first constructor just refers to the second, more general
+    one using the  this  mechanism, which we have studied before.
+  The first line of code in the second constructor is, and must be, a
+    call to the constructor of its superclass (always denoted by the keyword
+     super ).
+  The purpose of calling  super  is to appropriately initialize
+     private  instance variables in the superclass.
+  In fact, if  super  is not explicitly called, it is implicitly called
+    as  super();  so if you leave out a call to  super  (accidentally
+    or on purpose) in your constructor, Java will still compile and run  your
+    code IF THE SUPERCLASS HAS A PARAMETERLESS CONSTRUCTOR.
+   
+  The second constructor for the  ModularCounter  class calls the
+    right  super  constructor: reinitializing  value  in
+     IntCounter  to the value of the parameter  value  in the
+     ModularCounter  constructor.
+  Notice that by the required placement of  super  -first in the method-
+    this must be done before the sanity check on  value  can 
+    be performed.
+    
+  Then, it will check these values: it seems odd to do this after calling
+     super , but this is the required order by Java.
+  Finally, assuming that the parameters are OK, it stores the second parameter
+    into the  modulus  instance variable defined in the
+     ModularCounter  subclass.
+  So writing  new ModularCounter(3)  or  new ModularCounter(0,3) 
+    leads to the construction of the object shown in the picture above.
+    
+  Here are the rules for construction summarized.
+     Allocate space for all the fields specified in the subclass and all its
+          superclasses, and initialize these fields according to their
+          declarations.
+      Call the superclass constructor, which reinitializes some of the fields
+          in the superclass; note that this supercalss constructor will
+          first call the constructor for its own superclass, unless it is the
+           Object  class, which has no superclass.
+      Execute the rest of the constructor code, which may reinitialize the
+          fields declared in this class.
+    
+  So, instance variables are declared/initialized/reinitialized from the
+    top of the hierarchy downwards.
+  Think of Java starting at the super-most class ( Object ), doing
+    initialization (and maybe reinitialization) downward to the subclass
+    actually being constructed.
+   
+  So, technically, each of the constructors for the classes that we have
+    written prior to this lecture (which extend only  Object ) should
+    start out with  super();  to construct the  Object  class
+    that they extend (recall that objects of the  Object  class store no
+    state so their constructor takes no parameters).
+  If we omit a call to  super  in the constructor of a class, java
+    automatically includes a call to  super();  for us, right at the top;
+    if the class we are writing extends a class that does not have a
+    parameterless constructor, the Java compiler will complain.
+    
+  The general parameterless constructor that Java writes for class
+       C   is thus
+    public class  C() 
+  {super();}  
+    
+  Finally, subclass constructors typically specify more parameters than their
+    superclass constructors, because the subclass constructor reinitialize 
+    instance variables in the superclass (via  super ) AS WELL AS all of
+    its own instance variables -the ones that it defines that the superclass
+    doesn't know about.
+             methods and Subclassing   
+ 
+  By far the most interesting, and most subtle, facet of subclasses is how
+    they can inherit and use methods from their superclasses.
+  Although we have seen that they also inherit fields, most access modifiers
+    for fields are  private , so the subclass cannot directly access the
+    fields defined in its superclass; it must use the accessors/mutators 
+    supplied by the supercalss  to examine/change these instance variables.
+  But, because most accessor modifiers for methods are  public , methods
+    inherited from the superclass can be referred to in the subclass.
+   
+  In this section we will discuss inherited methods, new methods, and finally
+    overridden methods (which are the most interesting and powerful).
+  First, a subclass  inherits  all methods that are available in its
+    superclass.
+  We can call such methods on any variable whose type is specified by the
+    subclass.
+  The  IntCounter  superclass declares the  reset ,  getValue ,
+    and  toString  methods.
+  The  ModularCounter  subclass inherits all these methods.
+  So, if we declare  ModularCounter mc = new ModularCounter(0,3);  
+    then we can call  mc.reset();  and  mc.getValue()  and
+     mc.toString()  - which, remember, is called implicitly in
+     System.out.println("mc = " + mc); 
+    
+  In all these cases Java executes the methods defined in  the
+     IntCounter  superclass.
+  Such a method, being in the superclass and not the subclass, can refer only
+    to instance variables declared in the  IntCounter  superclass; it is
+    not really aware that it is being called via a  ModularCounter 
+    object.
+    
+  Second, subclasses can also define new methods: ones that are not defined in
+    the superclass (either with a different name, OR WITH THE SAME NAME AND A
+    DIFFERENT SIGNATURE (parameter structure) - both such methods are
+    considered new methods).
+  The  ModularCounter  subclass defines the  public getModulus 
+    method simply as
+    public int getModulus()
+  {return modulus;}  
+  There is no method with this name defined in the  IntCounter 
+    superclass; it wouldn't make sense to define such a method there because
+     IntCounter s don't store a modulus value!
+  They represent only simpler objects.
+  So if we declare   ModularCounter mc = new ModularCounte(0,3);  then we
+    can call  mc.getModulus()  and Java executes the  getModulus 
+    method defined in the  ModularCounter  subclass.
+   
+  Finally, and most interestingly, a subclass can also  override  
+    a method (note the word is override NOT overwrite- the words are hard to
+    differentiate when you hear them).
+  In this case, the subclass defines its own method (with the same name and
+   signature as a  method that it inherits).
+  When we call that method (by its name, with the correct number/type of
+    arguments), Java executes the METHOD DEFINED IN THE SUBCLASS, not the one
+    it inherited from the superclass.
+  Thus, the subclass "particularizes" that method: it can access all the
+    instance variables declared in the subclass.
+  Because the  IntCounter  superclass declares a  public increment 
+    method (with no parameters), and because the  ModularCounter  class 
+    inherits and overrides this method by defining
+    public void increment()
+  {
+    if (getValue() == modulus-1)
+      reset();
+    else
+      super.increment();
+  }  
+  if we declare  ModularCounter mc = new ModularCounter(0,3);  
+    then we can call  mc.increment();  and Java executes the
+     increment  method defined in the  ModularCounter  subclass
+    (the one shown above), which overrides the method in the superclass.
+    
+  We will now examine HOW Java executes this method.
+  The  if  statement calls the inherited  getValue  method and
+    checks it for equality against one less than the  modulus  instance
+    variable (defined  private  inside the  ModularCounter  class,
+    and thus directly accessible in this method, which is also defined there).
+  If the test is  true , the inherited  reset  method is called; if
+     false , the inherited  increment  method is called.
+    
+  In the  else  part, if we wrote only the call  increment();  in
+    this method, Java would try to recursively call the same  increment 
+    method that it is executing: the one defined in the  ModularCounter 
+    subclass; but, instead we wrote  super.increment();  which tells Java
+    to call the overridden method that was inherited.
+    
+  Our model for objects -the one showing a superclass inside a subclass- can
+     help us to understand the process that Java uses to decide which method to
+     call.
+  Think of the following general process happening whenever a method is called
+    on an object that comes from a subclass.
+  Java starts at the outermost subclass.
+  If Java finds the method defined there (right name, right signature), it
+    calls the method defined in that subclass.
+  If Java cannot find the method, it goes inward, to its direct superclass,
+    and repeats this process.
+  So, whenever Java cannot find a method in a subclass, it moves inward to its
+    superclass repeating the process until it finds the right method to call.
+    
+  For new methods in the subclass, this is trivial, because such methods are
+    always found at the outer level.
+  Java finds the definitions of inherited methods when it moves inward, to the
+    superclass that first defines them.
+  For overridden methods, Java finds their definition in the (outer) subclass.
+  Although the actual process that Java uses to find a method is much more
+    efficient (a fast table lookup), this model is a good one to understand,
+    because it is simpler to explain and the result is the same.
+    
+  Finally, when a subclass method overrides a superclass method, and that
+    method name is called (it will be immediately found in the subclass), the
+    subclass method can call the superclass method that it overrode by
+    prefixing the method's name using the keyword  super .
+  Often the superclass method helps the subclass method get the job done:
+    the  increment  method in  ModularCounter  sometimes needs
+    just to increment the  private  instance variable  value  defined
+    in the  IntCounter  class, and the only way it can do so is by
+    calling the  increment  method defined in this superclass, hence the
+    call  super.increment(); 
+  Concretely, if we declare
+     ModularCounter mc = new ModularCounter(0,2);  in the first call to
+     mc.increment();  Java finds and executes  increment  in the
+    subclass, which explicitly executes the inherited method; in the second
+    call (with  value  now set to  1 ) Java finds and executes 
+     increment  in the subclass, which executes the inherited
+     reset  method
+    
+  Note that  IntCounter  class defined  toString , which the 
+     ModularCounter  class overrides by defnining
+       public String toString()
+  {return super.toString()+"("+modulus+")";}  
+  It works by first calling the  toString  method defined in the
+     IntCounter  class, getting a  String  representation of the
+     value  instance variable, and then catenating it with the
+     modulus  instance variable available in this subclass.
+   
+  Thus, just as we can use  this  as an explicit reference to the current
+    object, and we can use  super  as a reference to the current object
+    as well (but pretending that it is constructed from its superclass, when
+    accessing any member; forcing Java to find the method one level deeper in 
+    the object pictures).
+             The BoundedCounter Subclass  
+ 
+The  BoundedCounter  class appears below.
+It is another specialization of the  IntCounter  and quite similar
+  in form to  ModularCounter .
+But, it works by counting up to a certain bound and stopping there: further
+   increment operations have no effect.
+    public class BoundedCounter extends IntCounter {
+
+    public BoundedCounter (int bound)
+    {this(0,bound);}
+
+    public BoundedCounter (int value, int bound)
+      throws IllegalArgumentException
+    {
+      super(value);
+      if (bound  bound)
+        throw new IllegalArgumentException("ModularCounter: value bad");
+
+      this.bound = bound;
+    }
+
+    public int getBound()
+    {return bound;}
+
+    public void increment()
+    {
+      if (getValue()   
+So, we can extend  IntCounter  by specializing it to add more methods
+  and modifying the meanings of inherited methods (as well as adding the
+  appropriate constructors).
+Notice that each subclass has to define only the differences between it
+  and its superclass.
+Often the subclass will inherit very many methods from the superclass,
+  definining just a small amount of new state, a few new methods, and
+  overriding just a few inherited methods.
+Thus, it is economical to define such subclasses.
+            Javadoc and Inheritance Hierarchies  
+ 
+  Javadoc includes special features that help us understand how a class fits
+    in the inheritance hierarchy.
+  Below is the Javadoc for the  ModularCounter  class.
+  I have run Javadoc on exactly the code shown above, which constains
+    no special Javadoc comments, so we can concentrate on the structural
+    details of inheritance.
+         &amp;nbsp 
+ 
+  This tells us that the  ModularCounter  class is declared in the
+    edu.uci.ics.pattis.introlib  package.
+  It is a subclass whose direct superclass is  IntCounter  (also declared
+    in this same package); likewise, this class is a subclass whose direct
+    superclass is  Object  (declared in the  java.lang  package).
+  As we have seen  Object  has no direct superclass, because it is at the
+    very top of the Java class hierarchy.
+   
+  It shows the Constructor Summary next, which contains the two contructors
+    that we have studied.
+  The Method Summary shows all the other methods defined in this class:
+     getModulus  is a newly defined method;  increment  and
+     toString  override inherited methods.
+  Following the Method Summary, Javadoc shows the methods inherited in each of
+    the superclasses of  ModularCounter .
+  It shows  getValue  and  reset  from  IntCounter , and the
+    standard methods from  Object  that it inherits.
+  Notice that the  toString  method defined in the  Object  class
+    is not listed, because there is no way for a method in the the
+     ModularCounter  class to refer to this method:
+     super.toString()  refers to the  toString  method inheritred
+    from the  IntCounter  class, and we CANNOT WRITE anything like
+     super.super.toString() !
+    
+  As another example, we will soon study the details of the  JButton 
+    class, which allows us to place buttons in an application and take an
+    appropriate action when they are pressed (actually, as we will soon see,
+    there is much more to a  JButton  than this description implies).
+  If we examine the JavaDoc from Sun's API for this class, it starts with
+          &amp;nbsp 
+ 
+  This tells us that the  JButton  class is declared in the
+    javax.swing  package.
+  It is a subclass whose direct superclass is  AbstractButton 
+    (also declared in the  javax.swing  package); likewise, this class is
+    a subclass whose direct superclass is  JComponent  (also declared in
+    the  javax.swing  package); likewise, this class is a subclass whose
+    direct superclass is  Container  (declared in a different package,
+     java.awt ); likewise, this class is a subclass whose direct
+    superclass is  Component  (also declared in the  java.awt 
+    package); finally, this class is a subclass whose direct superclass is
+     Object  (declared in the  java.lang  package).
+  As we have seen  Object  has no direct superclass, because it is at the
+    very top of the Java class hierarchy.
+   
+  In addition, after displaying all the methods defined by this class,
+    Javadoc shows the methods inherited in each of the subclasses.
+  For  JButton  this appears as 
+            &amp;nbsp 
+ 
+So, it appears that objects in the  JButton  class have very many
+  methods that we can use to query and control them.
+At this point in our studies, I am not concerned with the functioning of
+   JButtons , but with the functioning of Javadoc when documenting
+  subclasses.
+ 
+Do Java programs know all these methods?
+Certainly the more you know the easier it is to program in Java.
+But the method usage probably follows some kind of  power law :
+  when plotting the frequency of use of each method, one finds that
+  a small number of methods are used a huge amount of time, and a
+  huge number of methods are rarely used at all.
+Tthe exact curve is a straight line when plotted on a log graph, with
+  the power being the slope: recall  log(a b )  equals
+   b log (a) .
+  
+Many applications can be written by calling just the  setText 
+  and  addActionListener  methods: specifying what the button's
+  label is and what to do when the button is pushed.
+Others also use  setIcon ,  getText ,  setEnabled .
+I have probably used another half-dozen methods in all the GUIs I've
+  written (admitedly, I'm not a professional programmer).
+             Polymorphism, Casting, instanceof   
+ 
+Recall that there are two critical rules to understand about Java method
+  calls.
+We restate them here, and illustrate how they are applied in the context of
+  inheritance hierarchies.
+These rules, and the type compatibility rules discussed below, are at the
+   core of Object-Oriented Programming.
+ 
+The first rule is applied at compile time, the second at runtime:
+  (1) what methods the Java compiler ALLOWS to be called on a variable and
+  (2) how Java determines WHICH METHOD (in the context of inheritance and
+      overriding) to call.
+   The type of a variable (when it is declared) determines what methods we
+        can call on it (regardless of what object it refers to).
+      When the compiler examines code with a method call, it checks only that
+        the  declared type of the variable supports the method call.
+   
+     The object that a variable refers to determines what method is actually
+        called (regardless of the type of a variable: of course, the type
+        must allow the call).
+      When the Java runtime systems calls a method, it follows the reference
+        from the variable to the object; it is the class of that object that
+        determine which method with that name to call.
+    
+So, if we declare  ModularCounter mc = ...;  then we can call any
+   methods on  mc  that are defined or inherited by the
+    ModularCounter  class.
+It is not affected by the actual class of the object that  mc 
+  refers to.
+This is just as at was with interfaces: if we declare a variable with the
+  name of an interface, we can use it to call only those methods defined
+  in the interface.
+ 
+As we shall soon see, we can declare
+   IntCounter ic = new ModularCounter(0,3); 
+  (storing into a superclass variable a reference to a subclass object).
+When we call the method  increment  (the  ModularCounter 
+  class overrides the  increment  method that it inherits from
+   IntCounter ), Java executes the method defined in the
+   ModularCounter  class.
+  
+Reread the previous paragraphs.
+Everything else that we discuss in terms of inheritance is built upon these
+  ideas (which we will continue to explore -and become better acquainted with-
+  throughout the rest of the quarter).
+  
+The ability of a variable to refer to objects constructed from different
+  classes (but compatible with the variable's type via interfaces and the
+  class hierarchy), and for the correct method to be determined at runtime 
+  is called  polymorphism , which means "many forms".
+  
+The rules of assignment, between a variable and a reference, become much more
+   interesting when classes are related by an inheritance hierarchy.
+We have already seen that we can assign a reference to an object to a variable
+  whose type is an interface, if the object's class implements the interface.
+The basic rules for inheritance are
+    Implicit Upcasting : We can assign a reference to a subclass object to a
+    variable whose type is a superclass, without any casting.
+    An example is  IntCounter c1 = new ModularCounter(0,3); 
+    In fact, it is correct but redundant to write
+       IntCounter c1 = (IntCounter)(new ModularCounter(0,3)); 
+    Of course, this is why we can write  Object o = new .... : EVERTHING
+      can be implicitly upcasted to the  Object  class.
+   
+      Explicit Downcasting : We can attempt to assign a reference to a
+       superclass object to a variable whose type is a subclass, but we must
+       use a cast to do so.
+     Whenever we downcast, Java BELIEVES AT COMPILE TIME that the downcast will
+        work, but Java CHECK AT RUNTIME that the cast works.
+     An example is  ModularCounter c2 = (ModularCounter)c1;  (which given
+       the declaration of  c1  will work at runtime).
+     WE COULD NOT WRITE  ModularCounter c2 = c1;  the Java COMPILER would
+       report an error: we need the explicit cast when going downwards.
+     This is why we almost always needed downcasting with the  pop  and
+        dequeue  methods: e.g.  Integer i = (Integer)q.dequeue(); 
+   
+     If the class of an object and the type of the variable are not related
+        by a subclass/superclass relationship, we cannot assign one to the
+        other.
+      WE COULD NOT WRITE  ModularCounter c3 = new Timer();  or
+       ModularCounter c3 = (ModularCounter)(new Timer());  
+      the Java COMPILER would dectect and report an error.
+  
+Why do these rules make sense?
+We know that an object constructed from a subclass (think
+   ModularCounter ) supports all the methods that Java allows to be called
+  on a superclass (think  IntCounter ) because the subclass inherits all
+  the methods in the superclass -of course, it may override some or add new
+  methods as well.
+Recall that it is legal to write  Object o = new ...  with any class
+   constructing the object stored in  o ; but recall too that Java allows
+   us to call only those methods on  o  that are defined in the
+    Object  class.
+So upcasting reduces the number of methods that can be called (from those in
+  the subclass to just those in the superclass).
+ 
+Downcasting increases the number of methods that can be called using a
+   variable (we can call all the methods in the subclass specified by the
+   cast), so Java requires us to use explicit casting, which is a signal to
+   us that Java will check something at runtime.
+The downcasting  ModularCounter mc = (ModularCounter)(new IntCounter(5)); 
+   is accepted by the Java compile, but it always fails at runtime because
+   the object created is not of the  ModularCounter  class.
+If we subsequently tried to call  mc.getModulus() , it wouldn't work
+  because an object constructed from the  IntCounter  class fails to
+  support that method.
+    
+So when does downcasting work?
+Suppose we use the  SimpleStack  class (the one with  Object 
+   parameters and return types) in the following way.
+     SimpleStack s = new SimpleStack();
+  s.push(new ModularCounter(0,3));
+  ModularCounter mc = (ModularCounter)s.pop();  
+Here the downcast works, because the  Object  returned by  pop 
+  really is a reference to an object constructed from the
+   ModularCounter  class.
+If we had written  s.push(new IntCounter(0));  then the previous code
+  would still compiler, but the cast after popping would throw the
+   ClassCastException .
+   
+Finally, we will learn better the semantics of  instanceof .
+Recall that we originally learned that the expression
+   x instanceof  TypeName   returns  true  when  x 
+  stored a non- null  reference and  x  refers to an object
+  constructed from class   TypeName  .
+Now we generalize this last part allowing  x  to refer to an object
+  that is allowed to be casted to class   TypeName   (which
+  can be the name of a class or interface).
+Thus, if we declare  ModularCounter mc = new ModularCounter(0,3); 
+  and asked  mc instanceof Counter  the result is  true  (if we
+  did what the next section shows: declare an interface named  Counter ,
+  and declared   ModularCounter  to implement  Counter ).
+If we asked  mc instanceof IntCounter  the result is  true  again,
+  not because  mc  refers to an object of the class  IntCounter ,
+  but because we could perform an upcast to this class.
+Of course, if we asked  mc instanceof ModularCounter  the result is
+   true .
+In upcasting,  instanceof  always returns  true  because
+    TypeName   is a superclass of the actual object that  x 
+  refers to; in downcasting it must truly check to see if the object is
+  constructed from the specified class.
+  
+ For completeness, if a reference variable stores  null  it can be casted
+   to any class (but don't try to call a method with the result, because it
+   refers to no object).
+             Counter Interface  
+ 
+In fact, all the counter classes implement a common interface.
+Let's see how this is done and why it is useful.
+The  Counter  interface is specified as
+    public interface Counter {
+    public void reset();
+    public void increment();
+    public int  getValue();
+  }  
+So, for some class to implement this  Counter  interface, it
+  needs to implement at least these three methods; in fact, all the
+  classes that we have seen implement these and more.
+So, when we declare the  IntCounter ,  ModularCounter , and
+   BoundedCounter  class, it is really done as follows:
+    public class IntCounter implements Counter {...
+  public class ModularCounter extends IntCounter implements Counter {...
+  public class BoundedCounter extends IntCounter implements Counter {...
+  
+In fact, Java allows us to leave off the last two  implements Counter 
+  because when we tell Java that  ModularCounter extend IntCounter ,
+  it combines this knowledge with its knowledge that
+   IntCounter implements Counter  to deduce that 
+   ModularCounter implements IntCounter  because even if
+   ModularCounter  did not define one method, it would inherit
+  all the methods from  IntCounter  and thus inherit all the methods
+  it needs to implement  Counter .
+ 
+So, let's look at the following three declarations, all of which are legal
+  because the types are compatible with the objects (via interface, or
+   upcasting, or just having the same type as the constucted object).
+    Counter        c1 = new ModularCounter(0,3);
+  IntCounter     c2 = new ModularCounter(0,3);
+  ModularCounter c3 = new ModularCounter(0,3);  
+We can call  reset ,  getValue , and  increment  on
+  all these variables.
+We can call  toString  as well, because any class will at least
+  inherit the  toString  method from the  Object  class.
+In addition, we can call  c3.getModulus() , but we CANNOT CALL
+   c1.getModulus()  and we CANNOT CALL  c2.getModulus()  because
+  the types of these variables do not specify this method.
+Remember, it is the type of the variable that determines what methods
+  can be called on it.
+  
+Likewise when we call  c1.increment()  or  c2.increment()  or
+   c3.increment()  Java executes the  increment  method defined
+  in the  ModularCounter  class -the right one for all the objects-
+  because the actual method called depends on the class of the object (not
+  the type of the variable)
+  
+Students have a devil of a time understanding the type/object distinction.
+They always seem to want it backwards: that the type of the variable determines
+   which method is called, and the class of the object a variable refers to
+   determines whether a method can be called.
+The right rules are not complicated, but takes a bit of getting used to.
+  
+So, which of the three declarations above would I put in a program?
+I like to use the most restrictive type possible.
+If all I care about a counter is calling its  reset ,  getValue ,
+  and  increment  methods, then I might as well declare it with
+  the type  Counter .
+Technically then, I don't care whether I'm using an  IntCounter ,
+   ModularCounter , or  BoundedCounter .
+In fact, I might change the code from one to the other; by declaring the
+  type generically, as  Counter , the rest of the code will guarantee
+  to compile, even when I change what constructed object I am using.
+  
+Of course, if I needed to call  getModulus , only the third declaration
+  works (because then I truly must have a  ModularCounter ).
+Let's explore the issue of types a bit further.
+Suppose I want to collect a bunch of counters in an array , and then
+  increment all of them.
+We don't know from which classes each counter is constructed; some
+  might be from one class and some from another.
+The simplest way to do this is by
+    Counter[] counters = new Counter[...];
+
+  //Code to store a new  IntCounter ,  ModularCounter ,
+  // or  BoundedCounter  into each member index in counters.
+
+  for (int i=0; i&lt;counters.length; i++) {
+    Counter c = counters[i];
+    c.increment();             //or just counters[i].increment();
+  }  
+By using the interface name  Counter  for the type of the array, we are
+  specifying that every array member refers to some object constructed from
+  a class implementing  Counter .
+It is the right generalization for all the objects that get stored in this
+  array.
+  
+The  for  loop generates each index in the array.
+We can write  Counter c = counters[i];  because  c , as well as any
+   member in the  counters  array, is of type  Counter .
+Then we call  increment  to change the state of the object.
+In fact, this can be accomplished more simply by writing just
+   counters[i].increment() 
+  
+What students invariable want to do is to store each class of counter in a
+  different array, and then write a loop that processes each.
+This takes lots of code.
+  
+I have also seen students use one array but write code like this.
+    for (int i=0; i&lt;counters.length; i++) {            //TERRIBLE
+    Counter c = counters[i];                         //TERRIBLE
+    if (c instanceof IntCounter)                     //TERRIBLE
+      ((IntCounter)counters[i]).increment();         //TERRIBLE
+    else if (c instanceof ModularCounter)            //TERRIBLE
+      ((ModularCounter)counters[i]).increment();     //TERRIBLE
+    else if (c instanceof BoundedCounter)            //TERRIBLE
+      ((BoundedCounter)counters[i]).increment();     //TERRIBLE
+  }  
+None of the uses of  instanceof  and/or casting is needed.
+  
+The original approach is much simpler (once you understand the concepts
+  involved -hang in there) and more elegant.
+It also is robust under changes.
+For example, if I define a new class that also implements  Counter , its
+  objects can also be put in the array and incremented with the exact code
+  shown above.
+In other approaches I'd have to declare a new array or add another
+   else if  in the code above.
+These kinds of changes cripple software maintenance.
+  
+As a final example, suppose that we have enqueued a bunch of
+  objects into a  SimpleQueue .
+We want to dequeue each object, and if it is a reference to a class that
+  implements  Counter , we want to add its current value into a sum.
+Here is the code for this
+    SimpleQueue q = new SimpleQueue();
+
+  //Code to store a new  IntCounter ,  ModularCounter ,
+  //  BoundedCounter  or any other reference into q.
+
+  int sum = 0;
+  for (;!q.isEmpty();) {
+    Object o = q.dequeue();
+    if (o instanceof Counter)
+      sum += ((Counter)o).getValue();
+  }  
+Note that if we were guaranteed that every reference in the queue was to
+  an object constructed from a class implementing  Counter , we could
+  write the loop more simply as
+    for (; !q.isEmpty(); )
+      sum += ((Counter)q.dequeue()).getValue();  
+Here we can directly cast the dequeued value.
+In the former code, all non- Counter  references are skipped; in this
+  code any non- Counter  reference causes a  ClassCastException  to
+  be thrown.
+             The SkipCounter Decorator  
+ 
+Recall the 
+   ReverseAComparator 
+  decorator.
+Its constructor took an object constructed from any class implementing
+  the  Comparator  interface.
+This class also implements  Comparator  by decorating the object it
+  is passed so that its  compare  method always returns the opposite
+  result.
+We will now look at another decorator, this time for  Counter .
+It is defined as
+    public class SkipCounter implements Counter  {
+ 
+    public SkipCounter (Counter toDecorate, int skip)
+      throws IllegaArgumentException
+    {
+      if (skip   
+Notice that the constructor takes as parameters a reference to an object
+  that is constructed from some class that implements  Counter  and
+  a positive  int .
+The reference is stored in the instance variable  baseCounter  and the
+   int  is stored in the instance variable  skip .
+Because this class implements  Counter  it must define the methods
+   reset ,  increment  and  getValue .
+The first and last are implemented by just applying the same-named method
+  to  baseCounter ; the middle is implemented by applying the same-named
+  method  skip  times to  baseCounter , incrementing the counter
+   skip  times.
+Finally, the  toString  method is overridden, to catenate the
+   toString  of the  baseCounter  along with how much it is
+  skipping).
+ 
+Thus, if we write
+   Counter c = new SkipCounter(new ModularCounter(0,3), 2);  and
+  then call  c.increment()  then  c.getValue()  returns  2 ,
+  incrementing  0  to  1  to  2 .
+If we call  c.increment()  again then  c.getValue()  returns
+   1 , incrementing  2  to  0  (remember its modulus is
+   3 ) to  1 .
+Likewise, calling  c.toString()  at this time returns the  String 
+   "1(mod 3)(skip 2)" .
+  
+Thus we can decorate any counter by making each call to  increment 
+   actually increment  skip  times.
+  
+An alternative approach would be to extend the class hierarchy as follows.
+          &amp;nbsp 
+ 
+But, with this approach, we need a different subclass for every class in the
+  hierarchy; and if we added more classes into it, we'd need to add more
+  skip subclasses for each.
+So, because of the nature of skipping, rather than have to write all these
+  classes we can write one decoarator class and apply it to any objects
+  constructed from any class in this hierarchy.
+            Problem Set  
+ 
+  To ensure that you understand all the material in this lecture, please solve
+    the the announced problems after you read the lecture.
+   
+  If you get stumped on any problem, go back and read the relevant part of the
+     lecture.
+  If you still have questions, please get help from the Instructor, a CA,
+    or any other student.
+
+   What would happen if we accidentally forgot to call  super  (commented
+      out) in the  the following constructor? Syntax error or runtime error?
+      Explain.
+    public ModularCounter (int value, int modulus)
+    throws IllegalArgumentException
+  {
+    //Accidentally leave out the call: super(value);
+    if (modulus = modulus)
+      throw new IllegalArgumentException("ModularCounter: value bad");
+
+    this.modulus = modulus;
+  }  
+
+ 
+   Explain why the following  increment  method (written in the
+     ModularCounter  class) is not as good as the original one shown
+    above?
+    public void increment()
+  {
+    super.increment();
+    if (getValue() == modulus)
+      reset();
+  }  
+ 
+   We saw that if we declare
+       ModularCounter x = new ModularCounter(0,3); 
+      and then ask  x instanceof IntCounter  it would return  true .
+    Write a more complicated expression that returns  true  if and only
+      if  x  really refers to an object constructed from the class
+       IntCounter , not any of its subclasses.
+    What problem arises in this code if we add more subclasses of
+       IntCounter ?
+    For the ambitious student: check out the  Object  class for an
+      alternative, fail-safe, way to write this code too.
+ 
+   Java will not let us rewrite the simpler constructor in
+   ModularCounter  as
+    public ModularCounter (int modulus)
+  {
+   super();
+   this(0,modulus);
+  }  
+What error does the compiler generate?
+What problem could be created if this body were allowed (see also the
+  body of the more complicated constructor that  this  refers to)?
+
+ 
+   Do you think we are allowed to call a new or inherited method in a
+      constructor?
+    For example, if we wanted each call to the constructor to print immediately
+    the object that it constructed, could we write any of the
+    following? For each that is legal, what would it print if we wrote
+     ...new ModularCounter(0,3); 
+    public ModularCounter (int value, int modulus)
+  {
+    System.out.println(this);
+    super(value);
+    this.modulus = modulus;
+  }
+
+  public ModularCounter (int value, int modulus)
+  {
+    super(value);
+    System.out.println(this);
+    this.modulus = modulus;
+  }
+
+  public ModularCounter (int value, int modulus)
+  {
+    super(value);
+    this.modulus = modulus;
+    System.out.println(this);
+  }  
+ 
+   Explain what the following method does (it is legal in Java).
+    public static Counter gimmeACounter()
+  {
+     if (Math.random()   
+Given this method, which of the following declarations is legal?
+    Counter        x = gimmeACounter();
+  IntCounter     x = gimmeACounter();
+  ModularCounter x = gimmeACounter();  
+If we added explict downcasting to the illegal declarations, would
+  they always, never, or sometimes cause a RUNTIME error?
+If we changed the return type of  gimmeACounter  to  IntCounter ,
+  would the method be legal in Java? Explain why and indicate which
+  declarations would still be legal (and how would explicit downcasting
+  work). Same questions if we changed the return type to  ModularCounter .
+ 
+   Answer each of the following related questions
+      Suppose that we wanted to write an  equals  method that tested
+      equality just by testing the value of each counter (a test not involving
+      its modulus or bound).
+    In what class(es) would we write this code (and what code goes there; if
+      more than one class needs to have new code, just write the code for
+      one of the classes)?
+      Suppose that we wanted to write an  equals  method that tested
+      true state equality: the objects compared must come from the same
+      class and their state must be identical
+    In what class(es) would we write this code (and what code goes there; if
+      more than one class needs to have new code, just write the code for
+      one of the classes)?
+      Suppose that we wanted to write a class implementing  Comparator ,
+      such that we could use it to sort objects from any class implementing
+       Counter  as well as object constructed from the  Integer 
+      wrapper class.
+    In what class(es) would we write this code (and what code goes there; if
+      more than one class needs to have new code, just write the code for
+      one of the classes)?
+       
+   What would Java do if the body of the  getModulus  method contained
+      a call to  super.getModulus() ?
+ 
+   Write a constructor for  SkipCounter  that has just one  int 
+       parameter,  skip .
+    It should create a  SkipCounter  object that automatically decorates
+    an  IntCounter .
+ 
+   Explain why it is not a good idea for  SkipCounter  to
+     extend IntCounter  or any other class besides  Object .
+ 
+   Write a  public static  method named  allOK  that takes two
+      parameters: a filled array of  DecisionInt  and an  int .
+    This method returns  true  if every object in the array, when its
+       isOK  method is called on the  int  parameter, returns
+       true ; otherwise it should return  false .
+ 
+   Carefully finish this sentence.
+    The first argument passed to the constructor of  SkipCounter 
+    must be ...
+    
+   
+   </body> 

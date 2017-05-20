@@ -1,0 +1,21 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 20 Apr 1997
+//
+// Multi-fragment TSP application
+
+#include "Algorithms.h"
+
+extern CPApplication MultiFragment;
+
+class MultiFragmentDistance : public PointSet {
+	PointSet &amp; base;
+	point * partners;
+	friend CPApplication MultiFragment;
+	
+ public:
+ 	MultiFragmentDistance(unsigned long npoints, PointSet &amp; b);
+ 	~MultiFragmentDistance() { delete &amp;base; delete partners; }
+ 	double operator() (point, point);	// compute dist modified by partners
+ 	void interact(point, point);		// merge two frags by repartnering
+};
+ 

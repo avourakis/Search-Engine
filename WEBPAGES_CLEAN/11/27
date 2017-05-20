@@ -1,0 +1,81 @@
+ Geometry in Action: Interpolation<body>
+
+ 
+ 
+  
+ 
+  
+  Interpolation and Extrapolation 
+
+In many areas ranging from  cartography  to  molecular imaging and modeling , one finds the need to
+fit a function or surface to a collection of scattered data points.
+Interpolation refers to finding values for points between the given
+points (i.e. inside their convex hull); if the function should extend
+over a wider region of the input domain the problem is instead referred
+to as extrapolation.  The method chosen should depend on the properties
+one desires the resulting surface to have; many interpolation methods
+are based on  Voronoi diagrams and Delaunay
+triangulations .  A piecewise constant approximation, used in
+rainfall estimation, can be found by simply choosing the function value
+in each Voronoi cell to be that of the cell's generating site.  This is
+a analog for continuous domains of the nearest neighbor rule from
+machine learning theory, which has been generalized e.g. to voting among
+three nearest neighbors; one could similarly define median-of-three
+interpolation schemes (still piecewise constant, but less susceptable to
+erroneous data), however I know of no application in which such schemes
+have been tried.  The Delaunay triangulation itself provides a piecewise
+linear continuous function, defined within the convex hull of the input,
+that minimizes a certain energy functional.  "Natural neighbor
+interpolation" is defined for each point x by adding x as a site to the
+Voronoi diagram of the original sites, and averaging the sites' values
+weighted by the fraction of the cell for x previously covered by each
+other cell.  This somewhat complicated procedure results in a continuous
+function smooth everywhere except at the original sites.
+At the 1995 ARO-MSI Worksh. on Comp. Geom.,
+ Ken
+Clarkson 
+described a similar technique that results in a function
+smooth everywhere.
+     Applications of computational geometry .
+John Hershberger describes some geometric problems arising in his work
+at Mentor graphics including interpolation of thermal data, minimum spanning trees, and breakout
+routing in PC board design.
+ 
+    Convex hulls and interpolation .  Ken Clarkson describes some implementation
+details of algorithms for convex hulls, alpha shapes, Voronoi diagrams,
+and natural
+neighbor interpolation.
+ 
+    Delaunay interpolation .
+Various people discuss the pros and cons of using Delaunay triangulation
+for data interpolatation.
+ 
+    The
+DoD groundwater modeling system  uses
+natural neighbor interpolation for groundwater plume characterization.
+ 
+    Geophysical
+applications of natural neighbors .
+A group at ANU Canberra uses Voronoi diagram based interpolation
+for a range of geophysical problems.
+ 
+    Mosaic / stained glass graphic effect .  One gets interesting
+visual effects by taking a random sample of pixels from a bitmap image,
+computing the Voronoi diagram of the sample, and filling each cell
+with the corresponding sample's color.  This appears to be what
+Photoshop does in its "Pixelate-&gt;Crystalize" filter;
+it can be thought of as a form of piecewise constant function interpolation.
+ 
+    Visualization of three different interpolation methods : k-nearest neighbors, natural neighbors, and gamma-observable neighbors. Java applet by Michaël Aupetit.
+ 
+     
+Part of
+ Geometry in Action ,
+a collection of applications of computational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file. 
+ </body> 

@@ -1,0 +1,325 @@
+ Untitled Document 
+
+ 
+
+  Learning in
+Graphical Models – spring 2006      
+
+  ICS: 274B 
+Instructor: Max Welling         
+
+   
+     Code     
+   
+   
+     Typ     
+   
+   
+     Sec     
+   
+   
+     Unt     
+   
+   
+     Instructor     
+   
+   
+     Time     
+   
+   
+     Place     
+   
+    
+    36745    
+   
+   
+    Lec    
+   
+   
+    A    
+   
+   
+    4    
+   
+   
+    WELLING, M.    
+   
+   
+    TuTh  
+  2:00- 3:20p    
+   
+   
+    CS 213    
+   
+     
+
+   
+
+  Prerequisites      
+
+  ICS 274A    Probabilistic Learning: Theory 
+and Algorithms, or with consent of instructor.    
+
+  
+
+   
+
+  Goals      
+
+  Many modern approaches to
+probabilistic modeling of real world 
+data sets can be formulated in the unifying framework of graphical 
+models. Graphical models provide a common language to think and 
+communicate about probabilistic models and makes explicit the 
+underlying assumptions. Moreover, it provides the appropriate 
+structure for computations necessary for inference and learning in 
+these models.      
+
+  It is the primary goal of this
+course to familiarize the student 
+with the concepts of graphical models, and in particular with 
+learning these models from data. A student who has successfully 
+completed the course should be able to understand a wide variety 
+of well known models in terms of this unifying framework and feel 
+comfortable using it to design new models. The course will contain 
+1) formal mathematical sections necessary for the development of 
+the theory, 2) examples of probabilistic models (re)formulated in 
+the language of graphical models and 3) examples of successful 
+applications to real data.    
+
+  This secondary goal of this class is to give
+the  
+students hands on experience in solving real world problems. 
+For that purpose I have negotiated a deal with SciTech, a San Diego based
+company: 
+if we improve their (naive Bayes) classifier on a particular classification
+problem  
+(prediction of activity levels of chemical compounds - for data, see below)
+then they  
+will provide a $300 bonus for the student who will come down and present this
+work. 
+In addition, provided their goals are met one student can implement this
+algorithm into  
+their software package as a summer intern.    
+
+  
+
+   
+
+  Homework :   (slides serve to give
+you an impression what was done last time, but I expect                      
+ that we will significantly deviate from that. Also, homework will be
+updated as we go.)    
+
+  Book:   Book-chapters can be found in this  password protected directory       
+
+  week 1:      ROC   - read sections 2.1, 2.2, 2.3 from   chapter 2   of David MacKay's
+book.   - read chapter 2, 5 (until "plates") &amp;
+13 from Mike Jordan's book.   - read   classnotes   -   Excercises HW1        
+
+  week 2:       - read chapter 6, 7 from Mike Jordan's book.   -   Excercises HW2      (only
+the relevant ones on topics we have treated in class)   
+-  Project 1  (due May 4)    
+
+    week 3:    - read chapter 9, 19, 20 from Mike Jordan's book.   -   Excercises HW3   ,      Excercises HW4          (only the relevant ones
+on topics we have treated in class. At this point homework is optional but
+instructive. )      week 4,5,6:   - read chapters 10,11,14 from Jordan’s
+book. 
+- read the following classnotes:  classnotes (EM)  ,  classnotes (PPCA, FA, ICA)   
+- start on  Project 2  (due Tu June 6)    
+
+  --------------------------------------------------------------------------------------   (stuff below this line is not
+updated)    
+
+     week 7: belief propagation, junction
+trees.      
+
+     week 8:
+  classnote (Sampling)       
+
+    week 9:     classnotes(HMM)     classnotes(KF)       
+
+  week 10:    - presentation projects:        
+
+    week 11:     final exam:        
+
+         
+
+  
+
+   
+
+  MATLAB Demos:      
+
+  week 1:    demo_Bayes  ,   demo_MAP  ,   demo_ML  ,   plotGauss1D  ,   plotGauss2D,   ginput2   week 2:     demo_LinReg  ,   demo_LogReg   week5:   demo_EM   week6:   MoG_demo  ,   plotGauss_color  ,   randMean  ,   randCovariance  ,   kmeans  ,   dist2  ,
+  randvec  ,   gaussian   week7:   demo_pca ,  FA   week8:   demo_gibbs ,  demo_mcmc   week9:   demo_HMM   demo_KF ,  demo_KF2     
+
+  
+
+   
+
+  SciTech Dataset:
+    
+
+   training_data.mat       This
+files includes:      
+
+  Training labels:   0: inactive compound, 1: medium active compound, 2:
+active compound, sparse format.    
+
+  Continuous attributes:   2 continuous attributes: AlogP and Molecular_Weight    
+
+  Discrete attributes:   3 discrete attributes: Num_H_Acceptors,    Num_H_Donors, Num_RotatableBonds.    
+
+  Binary finger print:   very sparse binary matrix where      1’s
+code for the presence of certain substructures, sparse format.    
+
+  Using all the available attributes we wish
+to predict the activity level of the compound. 
+Background Reading:
+ paper1 ,     paper2 ,     SciTech
+powerpoint slides .    
+
+  
+
+   
+
+  Syllabus:      
+
+  The course will primarily be lecture-based
+with homework and 
+exams. Most homework will revolve around the implementation of various 
+classification algorithms on the SciTech dataset provided above. 
+It is required that you use MATLAB for this coding work.     
+
+  The following is a rough syllabus subject to
+change.    
+
+  1. Review of Statistical
+Concepts      
+
+  Random variables, probability distributions
+and 
+probability densities. The multivariate Gaussian distribution. 
+Marginal and conditional independence. Bayes' rule. Estimation: 
+maximum likelihood, MAP-estimates, Bayesian inference, 
+bias-variance tradeoff. Model selection and averaging, 
+over-fitting.    
+
+  2. Graphical Models.      
+
+  Markov random fields and undirected 
+graphical models. Bayesian networks and directed acyclic graphical 
+models. Semantics of graphical models: independence assumptions, 
+Markov properties, Markov blanket, separability. Factor graphs, 
+chain graphs. Plates.    
+
+  3. Hidden Variables and Exact
+Inference.      
+
+  Observed and hidden random variables. Bayes'
+ball algorithm. Exact inference: 
+junction tree propagation and cut-set conditioning.    
+
+  4. Learning in Graphical
+Models.      
+
+  The expectation 
+maximization algorithm and free energy minimization. Iterative 
+conditional modes. Iterative scaling.    
+
+  5. Unsupervised Learning -
+Directed Graphical Models.      
+
+  Mixture of Gaussians, K-means, principal
+components analysis, 
+probabilistic principal components analysis, factor analysis, 
+independent components analysis, latent Dirichlet allocation.    
+
+  6. Unsupervised Learning -
+Undirected Graphical Models.      
+
+  Boltzmann machines, products of experts,
+additive random field 
+models. Examples in vision and text.    
+
+  7. Supervised Learning -
+Directed and Undirected Graphical Models.      
+
+  Naive Bayes as a graphical model, 
+logistic regression, linear regression. 
+Conditional mixture models, mixtures of experts. Conditional 
+random fields.    
+
+  8. Graphical Models of Time
+Series.      
+
+  State space models, autoregressive models. 
+Hidden Markov Models. The Baum-Welch and Viterbi algorithm. The 
+Kalman filter and smoother. Dynamic Bayes nets. Examples in speech 
+and biological sequence data.    
+
+  9. Approximate Inference.      
+
+  Mean field methods and 
+structured variational inference. Loopy belief propagation. Region 
+graphs and generalized belief propagation. Sampling: rejection 
+sampling, importance sampling, particle filters, Markov chain 
+Monte Carlo sampling, Gibbs sampling, Hybrid Monte Carlo
+sampling.    
+
+  10. Bayesian Learning and
+Structure Learning in Graphical Models.      
+
+  Conjugate priors. 
+Fully observed Bayes' nets. Variational Bayes algorithm. Sampling 
+from the posterior. Laplace approximation.
+Chow-Liu's algorithm 
+for trees. Structure learning in fully observed Bayes' nets. 
+Structure learning in the presence of hidden variables: structural 
+EM.    
+
+  
+
+   
+
+  Grading Criteria      
+
+   
+Grading will be based on a combination of weekly homework and a project (40% 
+of the grade), a midterm exam (30%) and a final exam (30%) .      
+
+  
+
+   
+
+  Textbook      
+
+   
+The textbook that will be used for this course has not been 
+published yet, but copies will distributed during class.      
+
+  1. M.I. Jordan: An Introduction
+to Graphical Models.      
+
+   
+Optional side readings are:      
+
+  2. D. MacKay: Information
+Theory, Inference and Learning 
+Algorithms 
+3. M.I. Jordan: Learning in Graphical Models 
+4. B. Frey: Graphical Models for Machine Learning and Digital 
+Communication 
+5. J. Pearl: Probabilistic Reasoning in Intelligent 
+Systems 
+6. R.O. Duda, P.E. Hart, D. Stork: Pattern 
+Classification 
+7. C.M. Bishop: Neural Networks for Pattern Recognition 
+8. T. Hastie, R. Tibshirani, J.H, Friedman: The Elements of 
+Statistical Learning 
+9. B.D. Ripley: Pattern Recognition and Neural Networks  
+
+ 
+
+</body> 

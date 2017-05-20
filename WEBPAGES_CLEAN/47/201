@@ -1,0 +1,274 @@
+ Program 1<body>
+
+ 
+ Program 1 
+ Simple Program Suite 
+ 
+  Introduction to Computer Science I 
+ICS-21  
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+  Please print a copy of this assignment, read it carefully, and
+    highlight material you think will be useful to you while you
+    are working on the program or submitting it.
+   
+  This first real programming assignment is designed to ensure that you know
+    the fundamentals of writing, testing, and debugging simple programs using
+    the Eclipse Integrated Development Environment (Eclipse IDE).
+  You will fill-in parts of one program and then write three simple programs
+    in this assignment: each consists of a  main  method whose body 
+    includes statements that
+     Declare some variables (sometimes also initializing them),
+      Prompt the user for input (values to store into variables)
+          from the console via methods in the  Prompt  class,
+      Calculate values from these variables using expressions, and store
+          the calculated values into other variables (typically to output at
+          the end of the program),
+      Output results to the user via the console
+          (using the  System.out.print  and/or  System.out.println 
+           methods)
+     
+  In this assignment you may assume that all input entered by the user of your
+     program is correct; in the next assignment we will practice validating
+     user input.
+    
+  You can better understand this assignment, and check the behavior of your
+     programs against my solutions, by downloading the
+      Program #1 Executables  zip file, unzipping
+     it, and running the programs it contains.
+    
+  On a PC
+      Double click each of the  Run ...  icons to run its
+            associated program.
+    
+  On any platform running Eclipse (PC or Mac)
+     Start Eclipse and create a new project, using the unzipped executable
+           folder as its existing source.
+         Disclose the project (at the top),
+            then disclose the  Referenced Libraries  icon,
+            then disclose the  program1solution.jar  icon inside it,
+             and then disclose the  (default package)  icon inside it.
+         Finally, right click any of the  .class  files
+           and then select  Run As  and  Java Application .
+    
+  Please run these programs now, both ways if possible (see sample inputs in
+    the sections below), and observe the user interaction with the programs.
+   
+  Note that although you can run these three programs, you cannot examine
+    their Java code.
+  Before writing your programs, run my executables and examine the form in
+    which the do their input/output, and use the same form in the programs
+    that you write.
+    
+  To start working on this assignment, download and unzip
+     Program #1 Project Folder , which contains
+    statements from the first program you must write.
+  Rename this project folder  Program1 ).
+  Then create three more new Java classes in it (as you did for one class in 
+    Program #0).
+  The existing class is named  ExpressionTest ; each of the three 
+    remaining classes will contain a program that you will write from scratch
+    to solve one problem; name the classes  EscapeVelocity ,
+     ChangeMaker , and  PizzaPricer .
+  Write, run, and debug each class/program as you did in Program #0.
+  When you finish each part, submit its  .java  file.
+    
+   Only one programmer of the pair should dropoff the programs: the same one
+       for each part.
+     It doesn't matter which of the pair submits, but that person should
+       submit all the parts.
+     Of course, each program should contain both student names (see below). 
+    
+  IMPORTANT: 
+    Download the  Drop Time  program
+      and examine and run it; use it as a model for all three of your programs.
+    It declares variables, prompts the user for inputs (stored in some
+       variables), computes values (stored in other variables), and prints the
+       values of some variables along with some text.
+    
+  Please cut, paste, and fill in the following comment at the top of each of
+     your programs (see how I did this in the Drop Time program mentioned
+     above).
+  Ensure that the names and email addresses of  both programmers  in the
+    pair appear in each program that you write, at the top of this big comment.
+  
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
+// Name/e-mail    : e.g., Richard Pattis/pattis@ics.uci.edu
+//                        Norm Jacobson/jacobson@ics.uci.edu
+//                        You must list both in paired projects
+// Course/Lab     : e.g., ICS-21/Lab 1, 2, or 3
+// Program #/Name : e.g., Program #1/ExpressionTest
+//
+// Description:
+//
+//    Fill in this section with a description of your program. A good rule of
+// thumb is that a description should be about 1/10th to 1/5th the size (in
+// lines) of the program (in lines) that it describes.
+//
+// Known Bugs (if any)  : (if you know about/explain a bug here, you will lose
+//                        less credit for it than if you don't acknowledge it).
+//
+// Program History:
+//   List dates for any major events in the program's life-cycle: e.g.,
+//   program started, removal of a major bug, program finished; get into the
+//   habit of documenting (with an audit trail) major changes to every file
+//   that you edit. The first entries might be...
+//   9/1/08: R. Pattis/N. Jacobson  - Started program, working as a pair
+//   9/1/08: R. Pattis/N. Jacobson  - suspended work; met with TA to discuss complicated bug
+//   9/2/08: R. Pattis/N. Jacobson  - Finished program, submitted for grading
+//
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+  
+  
+All programs prompt the user for information on the console. 
+To get access to the class and its needed method names, you will have to add
+  the import statement  import edu.uci.ics.pattis.introlib.Prompt; 
+  after the big comment above (and of course, you will also have to
+  add the   introlib.jar  file to Eclipse, if you haven't done so).
+This import gives this program access to all methods in the  Prompt 
+  class.
+Note that you will also use methods from the  Math  class, but
+  this class is implicitly/automatically imported into every Java program.
+  
+Finally, it is a mistake to try to do all these problems in one sitting
+  (especially on the night that they all are due).
+While all are simple, each part gets progressively harder.
+Sit down during the first lab and try to finish the first part; over the 
+  weekend, try to finish the second and third parts; if you succeed and have
+  more time, finsh the last part (otherwise save it for next week) -maybe you
+  will finish them all quickly.
+Even though the programming problems get more complicated, the first one is
+  likely to cause you the most trouble: understanding the basics of the
+  assignment (shared by all three programs), setting up everything, etc.
+It is important that you encounter all these difficulties early, by attempting
+  to finish one problem over the first lab/weekend, well before the entire
+  assignment is due; this will give you time to seek and obtain help, if you
+  need it.
+  
+    
+       Part 1: Calculating Escape Velocity  
+ 
+  The velocity needed to escape the gravitation field of a planet is given by
+  the mathematical formula
+    
+          +---------
+         /  2 g mP
+  v =   /  --------
+      \/      rP
+  
+where  g  is the Gravitational constant (6.67x10 -11  in the
+  metric system),
+ mP  is the mass of the planet (in kilograms),  rP  is the radius of
+  the planet (in meters) and  v  is the escape velocity in
+  (in meters/second). 
+ 
+Here is a short table of planets and their ( approximate ) calculated
+  escape velocities.
+  
+     Planet  Mass (kilograms)  Radius (meters)  Approximate Escape  Velocity (meters/sec) 
+     Earth  5.983x10 24   6.357x10 6   11,200  
+   Venus  4.906x10 24   6.185x10 6   10,300 
+   Mars  6.581x10 23   3.382x10 6   5,100 
+   Jupiter  1.904x10 27   6.974x10 7   60,300 
+   Earth's Moon  7.347x10 22   1.738x10 6   2,370 
+    
+Write a program that prompts the user for a planet's mass and radius, and then
+  computes and displays the escape velocity of the planet.
+Verify these answers in the table above to ensure that your program is working
+  correctly.  
+To use the  sqrt  function (function is a mathematical term), remember to
+  call the  Math.sqrt  method (method is a programming term) in your
+  program.
+  
+The  Drop Time  program, mentioned
+  above, also uses such a call to a method in the  Math  library class,
+  and has similar code to what you need to write.
+Examine this program and use it as a model for the one that solves the Escape
+  Velocity program.
+Remember to fill in all the information in the comment at the top of the
+ program.
+  
+    
+       Part 2: Formulas -&gt; Expressions  
+ 
+  The following three lines contain a total of 13 formulas 
+     
+    
+       Part 3: Change Maker  
+ 
+  Write a program that prompts the user for some amount of change to make (an
+     int  from  1  to  99  cents; don't worry about bad input),
+    and then computes and displays the number of quarters, dimes, nickels, and
+    pennies to make that amount of change.
+  Always compute the fewest coins to make that change.
+  For example, if the user entered  69  the program would display
+        To make change for 69 cents:
+      2 quarters
+      1 dimes
+      1 nickels
+      4 pennies  
+  Don't worry about displaying things like  1 dimes  (mismatching a
+    singular and plural).
+   
+  Algorithm Hint: After the user inputs the amount of change to make, first
+    determine the number of quarters to return (using  /  on  int s:
+    here truncation is useful), and then update the amount of change to make to
+    be the remaining amount to return after accounting for the quarters
+    returned; repeat this process for dimes, then nickels, and finally for
+    pennies.
+    
+  For example, to make  69  cents in change, the program computes  2 
+     quarters, leaving  19  cents in change to be made by dimes, nickels,
+     and pennies; then the program computes  1  dime, leaving  9 
+     cents in change to be made by nickels and pennies; etc.
+  Finally, note that some amounts may be zero:
+         To make change for 55 cents:
+      2 quarters
+      0 dimes
+      1 nickels
+      0 pennies  
+  Some solutions make use the the  %  operator; there are many different
+     ways to solve this problem.
+  Before programming the solution in Java, develop a procedure that allows
+     you  to calculate the right values when you follow it, and then
+    automate that solution  by translating it into a Java program.
+ 
+    
+       Part 4: Pizza Pricer  
+ 
+  Write a program that computes pizza prices.
+  The program should prompt the user to enter the diameter of the pizza (as an
+     int , in inches, not as a  double ) and the price of the pizza
+    (as a  double , in dollars).
+  Then the program should compute and display
+    How many people the pizza feeds, assuming each person gets to eat a
+           minimum
+           50 in 2   of pizza: this value must be an  int ,
+          so if your program computes  2.8  people are fed, then the
+          "correct" number of people it feeds is  2  (with each person
+          getting a bit more than the minimum amount of pizza).
+      The relative price of the pizza (in  cents/in 2  ).
+      The cost (in  dollars per person ; include a  15%  tip).
+    
+  To get an excellent approximation to pi, use the static field  PI  in
+     the  java.lang.Math  class in your area calculations; refer to it in 
+     your program as  Math.PI .
+   
+  Test and check your program on various sizes and prices of pizzas (and
+    compare its results with my executable).
+  See the sample program
+     Trip Planner  for a similar
+    program.
+  Use this program as a model for the one that you are writing.
+  
+   </body> 

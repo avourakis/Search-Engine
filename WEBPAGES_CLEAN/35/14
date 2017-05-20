@@ -1,0 +1,789 @@
+ CHEM.DB.rdb.BeautifulSoup.BeautifulStoneSoup<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package DB  ::
+         Package rdb  ::
+         Module BeautifulSoup  ::
+        Class BeautifulStoneSoup
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class BeautifulStoneSoup    
+           PageElement  --+    
+                        |    
+                       Tag  --+
+                            |
+markupbase.ParserBase --+   |
+                        |   |
+       sgmllib.SGMLParser --+
+                            |
+                            BeautifulStoneSoup</strong>
+ 
+
+  Known Subclasses: 
+ 
+     BeautifulSOAP ,
+     BeautifulSoup ,
+     RobustXMLParser 
+    
+This class contains the basic parser and search code. It defines
+a parser that knows nothing about tag behavior except for the
+following:
+
+  You can't close a tag without closing all the tags it encloses.
+  That is, "&lt;foo&gt;&lt;bar&gt;&lt;/foo&gt;" actually means
+  "&lt;foo&gt;&lt;bar&gt;&lt;/bar&gt;&lt;/foo&gt;".
+
+[Another possible explanation is "&lt;foo&gt;&lt;bar /&gt;&lt;/foo&gt;", but since
+this class defines no SELF_CLOSING_TAGS, it will never use that
+explanation.]
+
+This class is useful for parsing XML or made-up markup languages,
+or when BeautifulSoup makes an assumption counter to what you were
+expecting.
+
+     
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self ,
+         markup =  '    '  ,
+         parseOnlyThese = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         fromEncoding = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         markupMassage = True ,
+         smartQuotesTo =  '  xml  '  ,
+         convertEntities = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         selfClosingTags = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  )  
+      The Soup object is initialized as the 'root tag', and the
+provided markup (which can be a string or a file-like object)
+is fed into the underlying parser. 
+           
+            
+            
+           
+           
+     
+         
+      
+             _feed ( self ,
+         inDocumentEncoding = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  )  
+           
+            
+            
+           
+           
+     
+         
+      
+           __getattr__ ( self ,
+         methodName )  
+      This method routes method call requests to either the SGMLParser 
+      superclass or the Tag superclass, depending on the method name. 
+           
+            
+            
+           
+           
+     
+         
+      
+             isSelfClosingTag ( self ,
+         name )  
+      Returns true iff the given string is the name of a self-closing 
+      tag according to this parser. 
+           
+            
+            
+           
+           
+     
+         
+      
+           reset ( self )  
+      Reset this instance. 
+           
+            
+            
+           
+           
+     
+         
+      
+             popTag ( self )  
+           
+            
+            
+           
+           
+     
+         
+      
+             pushTag ( self ,
+         tag )  
+           
+            
+            
+           
+           
+     
+         
+      
+             endData ( self ,
+         containerClass = &lt;class 'CHEM.DB.rdb.BeautifulSoup.NavigableString'&gt; )  
+           
+            
+            
+           
+           
+     
+         
+      
+           _popToTag ( self ,
+         name ,
+         inclusivePop = True )  
+      Pops the tag stack up to and including the most recent instance of
+      the given tag. 
+           
+            
+            
+           
+           
+     
+         
+      
+           _smartPop ( self ,
+         name )  
+      We need to pop up to the previous tag of this type, unless
+one of this tag's nesting reset triggers comes between this
+tag and the previous tag of this type, OR unless this tag is a
+generic nesting trigger and another generic nesting trigger
+comes between this tag and the previous tag of this type. 
+           
+            
+            
+           
+           
+     
+         
+      
+           unknown_starttag ( self ,
+         name ,
+         attrs ,
+         selfClosing = 0 )  
+           
+            
+            
+           
+           
+     
+         
+      
+           unknown_endtag ( self ,
+         name )  
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_data ( self ,
+         data )  
+           
+            
+            
+           
+           
+     
+         
+      
+             _toStringSubclass ( self ,
+         text ,
+         subclass )  
+      Adds a certain piece of text to the tree as a NavigableString 
+      subclass. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_pi ( self ,
+         text )  
+      Handle a processing instruction as a ProcessingInstruction object,
+      possibly one with a %SOUP-ENCODING% slot into which an encoding will 
+      be plugged later. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_comment ( self ,
+         text )  
+      Handle comments as Comment objects. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_charref ( self ,
+         ref )  
+      Handle character references as data. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_entityref ( self ,
+         ref )  
+      Handle entity references as data, possibly converting known HTML 
+      entity references to the corresponding Unicode characters. 
+           
+            
+            
+           
+           
+     
+         
+      
+           handle_decl ( self ,
+         data )  
+      Handle DOCTYPEs and the like as Declaration objects. 
+           
+            
+            
+           
+           
+     
+         
+      
+           parse_declaration ( self ,
+         i )  
+      Treat a bogus SGML declaration as raw data. 
+           
+            
+            
+           
+           
+     
+      Inherited from   Tag   :
+        __call__  ,
+        __contains__  ,
+        __delitem__  ,
+        __eq__  ,
+        __getitem__  ,
+        __iter__  ,
+        __len__  ,
+        __ne__  ,
+        __nonzero__  ,
+        __repr__  ,
+        __setitem__  ,
+        __str__  ,
+        __unicode__  ,
+        append  ,
+        childGenerator  ,
+        fetch  ,
+        fetchText  ,
+        find  ,
+        findAll  ,
+        findChild  ,
+        findChildren  ,
+        first  ,
+        firstText  ,
+        get  ,
+        has_key  ,
+        prettify  ,
+        recursiveChildGenerator  ,
+        renderContents  
+       
+           Inherited from   Tag    (private):
+        _getAttrMap  
+        
+      Inherited from   PageElement   :
+        extract  ,
+        fetchNextSiblings  ,
+        fetchParents  ,
+        fetchPrevious  ,
+        fetchPreviousSiblings  ,
+        findAllNext  ,
+        findAllPrevious  ,
+        findNext  ,
+        findNextSibling  ,
+        findNextSiblings  ,
+        findParent  ,
+        findParents  ,
+        findPrevious  ,
+        findPreviousSibling  ,
+        findPreviousSiblings  ,
+        insert  ,
+        nextGenerator  ,
+        nextSiblingGenerator  ,
+        parentGenerator  ,
+        previousGenerator  ,
+        previousSiblingGenerator  ,
+        replaceWith  ,
+        setup  ,
+        substituteEncoding  ,
+        toEncoding  
+       
+           Inherited from   PageElement    (private):
+        _findAll  ,
+        _findOne  ,
+        _lastRecursiveChild  
+        
+      Inherited from  sgmllib.SGMLParser  :
+       close ,
+       convert_charref ,
+       convert_codepoint ,
+       convert_entityref ,
+       error ,
+       feed ,
+       finish_endtag ,
+       finish_shorttag ,
+       finish_starttag ,
+       get_starttag_text ,
+       goahead ,
+       handle_endtag ,
+       handle_starttag ,
+       parse_endtag ,
+       parse_pi ,
+       parse_starttag ,
+       report_unbalanced ,
+       setliteral ,
+       setnomoretags ,
+       unknown_charref ,
+       unknown_entityref 
+       
+           Inherited from  sgmllib.SGMLParser   (private):
+       _convert_ref 
+        
+      Inherited from  markupbase.ParserBase  :
+       getpos ,
+       parse_comment ,
+       parse_marked_section ,
+       unknown_decl ,
+       updatepos 
+       
+           Inherited from  markupbase.ParserBase   (private):
+       _parse_doctype_attlist ,
+       _parse_doctype_element ,
+       _parse_doctype_entity ,
+       _parse_doctype_notation ,
+       _parse_doctype_subset ,
+       _scan_name 
+        
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         XML_ENTITY_LIST  =   {  '  amp  '  :  True ,   '  gt  '  :  True ,   '  lt  '  :  True ,   '  quote  ...  
+     
+     
+         
+      
+           SELF_CLOSING_TAGS  =   {  }  
+     
+     
+         
+      
+           NESTABLE_TAGS  =   {  }  
+     
+     
+         
+      
+           RESET_NESTING_TAGS  =   {  }  
+     
+     
+         
+      
+           QUOTE_TAGS  =   {  }  
+     
+     
+         
+      
+         MARKUP_MASSAGE  =   [  ( re.compile(r' ( &lt; [  ^ &lt;&gt; ]  *  ) /&gt;') ,  &lt;function &lt;lamb ...  
+     
+     
+         
+      
+           ROOT_TAG_NAME  =   u'  [document]  '  
+     
+     
+         
+      
+           HTML_ENTITIES  =   '  html  '  
+     
+     
+         
+      
+           XML_ENTITIES  =   '  xml  '  
+     
+     
+         
+      
+           i  =   '  amp  '  
+     
+     
+      Inherited from   Tag   :
+        XML_SPECIAL_CHARS_TO_ENTITIES  
+       
+      Inherited from  sgmllib.SGMLParser  :
+       entity_or_charref ,
+       entitydefs 
+       
+           Inherited from  sgmllib.SGMLParser   (private):
+       _decl_otherchars 
+        
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ,
+         markup =  '    '  ,
+         parseOnlyThese = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         fromEncoding = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         markupMassage = True ,
+         smartQuotesTo =  '  xml  '  ,
+         convertEntities = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ,
+         selfClosingTags = &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingModel.SearchSentence ...  ) 
+      (Constructor) 
+   
+     
+     
+     
+The Soup object is initialized as the 'root tag', and the
+provided markup (which can be a string or a file-like object)
+is fed into the underlying parser. 
+
+sgmllib will process most bad HTML, and the BeautifulSoup
+class has some tricks for dealing with some HTML that kills
+sgmllib, but Beautiful Soup can nonetheless choke or lose data
+if your data uses self-closing tags or declarations
+incorrectly.
+
+By default, Beautiful Soup uses regexes to sanitize input,
+avoiding the vast majority of these problems. If the problems
+don't apply to you, pass in False for markupMassage, and
+you'll get better performance.
+
+The default parser massage techniques fix the two most common
+instances of invalid HTML that choke sgmllib:
+
+ &lt;br/&gt; (No space between name of closing tag and tag close)
+ &lt;! --Comment--&gt; (Extraneous whitespace in declaration)
+
+You can pass in a custom list of (RE object, replace method)
+tuples to get Beautiful Soup to scrub your input the way you
+want.
+
+ 
+    Overrides:
+       Tag.__init__ 
+     
+       
+  
+ 
+   
+     
+     __getattr__ ( self ,
+         methodName ) 
+      (Qualification operator) 
+   
+     
+     
+    
+  
+  This method routes method call requests to either the SGMLParser 
+  superclass or the Tag superclass, depending on the method name.
+    Overrides:
+       Tag.__getattr__ 
+     
+       
+  
+ 
+   
+     
+     reset ( self ) 
+   
+     
+     
+    
+  
+  Reset this instance. Loses all unprocessed data.
+    Overrides:
+      sgmllib.SGMLParser.reset
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     _popToTag ( self ,
+         name ,
+         inclusivePop = True ) 
+   
+     
+     
+    
+  
+  Pops the tag stack up to and including the most recent instance of the
+  given tag. If inclusivePop is false, pops the tag stack up to but *not* 
+  including the most recent instqance of the given tag.
+        
+  
+ 
+   
+     
+     _smartPop ( self ,
+         name ) 
+   
+     
+     
+     
+We need to pop up to the previous tag of this type, unless
+one of this tag's nesting reset triggers comes between this
+tag and the previous tag of this type, OR unless this tag is a
+generic nesting trigger and another generic nesting trigger
+comes between this tag and the previous tag of this type.
+
+Examples:
+ &lt;p&gt;Foo&lt;b&gt;Bar&lt;p&gt; should pop to 'p', not 'b'.
+ &lt;p&gt;Foo&lt;table&gt;Bar&lt;p&gt; should pop to 'table', not 'p'.
+ &lt;p&gt;Foo&lt;table&gt;&lt;tr&gt;Bar&lt;p&gt; should pop to 'tr', not 'p'.
+ &lt;p&gt;Foo&lt;b&gt;Bar&lt;p&gt; should pop to 'p', not 'b'.
+
+ &lt;li&gt;&lt;ul&gt;&lt;li&gt; *&lt;li&gt;* should pop to 'ul', not the first 'li'.
+ &lt;tr&gt;&lt;table&gt;&lt;tr&gt; *&lt;tr&gt;* should pop to 'table', not the first 'tr'
+ &lt;td&gt;&lt;tr&gt;&lt;td&gt; *&lt;td&gt;* should pop to 'tr', not the first 'td'
+
+ 
+        
+  
+ 
+   
+     
+     unknown_starttag ( self ,
+         name ,
+         attrs ,
+         selfClosing = 0 ) 
+   
+     
+     
+      Overrides:
+      sgmllib.SGMLParser.unknown_starttag
+     
+       
+  
+ 
+   
+     
+     unknown_endtag ( self ,
+         name ) 
+   
+     
+     
+      Overrides:
+      sgmllib.SGMLParser.unknown_endtag
+     
+       
+  
+ 
+   
+     
+     handle_data ( self ,
+         data ) 
+   
+     
+     
+      Overrides:
+      sgmllib.SGMLParser.handle_data
+     
+       
+  
+ 
+   
+     
+     handle_pi ( self ,
+         text ) 
+   
+     
+     
+    
+  
+  Handle a processing instruction as a ProcessingInstruction object, 
+  possibly one with a %SOUP-ENCODING% slot into which an encoding will be 
+  plugged later.
+    Overrides:
+      sgmllib.SGMLParser.handle_pi
+     
+       
+  
+ 
+   
+     
+     handle_comment ( self ,
+         text ) 
+   
+     
+     
+    
+  
+  Handle comments as Comment objects.
+    Overrides:
+      sgmllib.SGMLParser.handle_comment
+     
+       
+  
+ 
+   
+     
+     handle_charref ( self ,
+         ref ) 
+   
+     
+     
+    
+  
+  Handle character references as data.
+    Overrides:
+      sgmllib.SGMLParser.handle_charref
+     
+       
+  
+ 
+   
+     
+     handle_entityref ( self ,
+         ref ) 
+   
+     
+     
+    
+  
+  Handle entity references as data, possibly converting known HTML 
+  entity references to the corresponding Unicode characters.
+    Overrides:
+      sgmllib.SGMLParser.handle_entityref
+     
+       
+  
+ 
+   
+     
+     handle_decl ( self ,
+         data ) 
+   
+     
+     
+    
+  
+  Handle DOCTYPEs and the like as Declaration objects.
+    Overrides:
+      sgmllib.SGMLParser.handle_decl
+     
+       
+  
+ 
+   
+     
+     parse_declaration ( self ,
+         i ) 
+   
+     
+     
+    
+  
+  Treat a bogus SGML declaration as raw data. Treat a CDATA declaration 
+  as a CData object.
+    Overrides:
+      markupbase.ParserBase.parse_declaration
+     
+       
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   XML_ENTITY_LIST 
+  
+      Value: 
+           
+ {  '  amp  '  :  True ,   '  gt  '  :  True ,   '  lt  '  :  True ,   '  quote  '  :  True ,   '  squot  '  :  True } 
+     
+       
+  
+ 
+   
+   MARKUP_MASSAGE 
+  
+      Value: 
+           
+[(re.compile('(&lt;[^&lt;&gt;]*)/&gt;'), lambda x: x.group(1)+ ' /&gt;'), (re.compile   
+('&lt;!\s+([^&lt;&gt;]*)&gt;'), lambda x: '&lt;!'+ x.group(1)+ '&gt;')]
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:29 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

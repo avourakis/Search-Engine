@@ -1,0 +1,57 @@
+ 4.92 OEMacroModelTypeNames<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.91 OEMacroModelTypeName 
+ Up:   4. OEChem Functions 
+ Next:   4.93 OEMDLClearParity 
+   
+
+
+  
+4.92 OEMacroModelTypeNames 
+ 
+   
+bool OEMacroModelTypeNames(OEMolBase &amp;mol)
+    
+This function loops through the atoms of the molecule, setting the
+string atom type property of each atom, to atom type name of the
+MacroModel atom type encoded in the atoms integer atom type property.
+This is approximately equivalent to following operation:
+
+  
+    
+  atm-&gt;SetType(OEMacroModelTypeName(atm-&gt;GetIntType()))
+    
+If both the string and integer atom types are required, it is faster
+to call OEMacroModelAtomTypes and then OEMacroModelTypeNames (which
+reuses the results of the first call) than it is to call
+OEMacroModelAtomTypes and OEMacroModelAtomTypeNames.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.91 OEMacroModelTypeName 
+ Up:   4. OEChem Functions 
+ Next:   4.93 OEMDLClearParity 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

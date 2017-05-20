@@ -1,0 +1,219 @@
+ Ray_3&lt;Kernel&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Ray_3&lt;Kernel&gt;  
+ 
+
+  Definition An object  r  of the data type   Ray_3 &lt; Kernel &gt;  is a directed
+straight ray in the three-dimensional Euclidean space     3  . It starts
+in a  point called the  source  of   r  and it goes to infinity.
+ 
+
+  Creation 
+ 
+
+    
+          Ray_3 &lt; Kernel &gt; r (   Point_3 &lt; Kernel &gt; p,   Point_3 &lt; Kernel &gt; q);
+         
+              
+    introduces a ray  r  
+             with source  p  and passing through point  q .
+ 
+
+          
+          Ray_3 &lt; Kernel &gt; r (   Point_3 &lt; Kernel &gt; p,   Direction_3 &lt; Kernel &gt; d);
+         
+              
+    introduces a ray  r  with source  p  and with 
+             direction  d .
+ 
+
+          
+          Ray_3 &lt; Kernel &gt; r (   Point_3 &lt; Kernel &gt; p,   Vector_3 &lt; Kernel &gt; v);
+         
+              
+    introduces a ray  r  with source  p  and with 
+             a direction given by  v .
+ 
+
+          
+          Ray_3 &lt; Kernel &gt; r (   Point_3 &lt; Kernel &gt; p,   Line_3 &lt; Kernel &gt; l);
+         
+              
+    introduces a ray  r  starting at source  p  with 
+             the same direction as  l .
+ 
+
+     
+
+  Operations 
+ 
+
+    
+         
+    bool  
+
+         
+          
+         
+    r.operator== (  h)
+         
+                
+    Test for equality: two rays are equal, iff they have the same 
+        source and the same direction.
+                 
+         
+    bool  
+
+         
+          
+         
+    r.operator!= (  h)
+         
+                
+    Test for inequality.
+                 
+           
+ Point_3 &lt; Kernel &gt;
+         
+          
+         
+    r.source ()
+         
+          
+    returns the source of  r 
+                 
+           
+ Point_3 &lt; Kernel &gt;
+         
+          
+         
+    r.point ( int i)
+         
+          
+    returns a point on  r .  point(0)  is the source.
+         point(i) , with  i&gt;0 , is different from the 
+        source.  Precondition:   i    0 .
+                 
+           
+ Direction_3 &lt; Kernel &gt;
+         
+              
+         
+    r.direction ()
+         
+          
+    returns the direction of  r .
+                 
+           
+ Vector_3 &lt; Kernel &gt;
+         
+          
+         
+    r.to_vector ()
+         
+          
+    returns a vector giving the direction of  r .
+                 
+           
+ Line_3 &lt; Kernel &gt;
+         
+          
+         
+    r.supporting_line ()
+         
+                
+    returns the line supporting  r  which has the same direction.
+                 
+           
+ Ray_3 &lt; Kernel &gt;
+         
+          
+         
+    r. opposite  ()
+         
+          
+    returns the ray with the same source and the  opposite  direction.
+                 
+           
+bool
+         
+          
+         
+    r.is_degenerate ()
+         
+          
+    ray  r  is degenerate, if the source and the second defining
+        point fall together (that is if the direction is degenerate).
+                 
+           
+bool
+         
+          
+         
+    r.has_on (   Point_3 &lt; Kernel &gt; p)
+         
+                
+    A point is on  r , iff it is equal to the source 
+        of  r , or if it is in the interior of  r .
+                 
+           
+ Ray_3 &lt; Kernel &gt;
+         
+          
+         
+    r.transform (   Aff_transformation_3 &lt; Kernel &gt; t)
+         
+                
+    returns the ray obtained by applying  t  on the source 
+        and on the direction of  r .
+            
+
+  See Also   Kernel::Ray_3  
+ 
+
+    Next:    Segment_3&lt;Kernel&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

@@ -1,0 +1,73 @@
+ 
+      PartEnumDoc –
+      Group
+    <body>  Back to Index    
+        
+           
+AppString &gt; AppStringDoc
+ 
+ PartEnum 
+ Overview 
+ 
+The module contains an implementation of the technique presented in [1]. The technique was invented in the   Data Cleaning Project   at Microsoft, Research.
+ 
+ Usage 
+ 
+For compiling instructions, please see CompileDoc.
+ 
+ 
+The module uses C++ STL TR1 library provided by GNU GCC and Boost 1.34.1 library.
+ 
+ 
+On systems with the aptitude package manager (e.g. Ubuntu, Debian) you can install all required packages by typing the following as root user (or using sudo):
+ 
+ $ sudo apt-get install libboost-dev
+  
+An example of how to use the module is available in src/partenum/example.cc.
+ 
+ Interface 
+ 
+The main class of the module is ParEnum which is declared in src/partenum/partenum.h.
+ 
+ 
+The main methods of PartEnum are:
+ 
+   PartEnum(const vector&lt;string&gt; &amp;data, 
+           unsigned q, 
+           unsigned editdist, 
+           unsigned n1, 
+           unsigned n2);
+
+  PartEnum(const vector&lt;string&gt; &amp;data, 
+           const string &amp;filename);
+
+  void build();
+  void saveIndex(const string &amp;filename) const;  
+
+  void search(const string &amp;query, vector&lt;unsigned&gt; &amp;results);
+  void search(const string &amp;query, const unsigned editdist,
+              vector&lt;unsigned&gt; &amp;results);
+  
+The main idea is that the user can create a PartEnum object by specifying a vector of strings (dataset) and a few extra parameters (see [1] for details) or load an existing object from a file. If the object was not loaded, then it needs to be built. Next, the user has the option of saving the object to a file. In order to search approximately in the dataset for a given string, the user calls the function  search . 
+ 
+ Performance 
+ 
+Pentium D 3.4GHz Dual Core, 2GB memory, Linux (Ubuntu), g++. A data set of 54,000 person names.
+ 
+     Technique</strong>     Dataset Size</strong>     Ed Threshold</strong>     Q</strong>     Time (ms)</strong>     Index size (MB)</strong>     Comments</strong> 
+     Scan               54k    1    -    11.86     1.3    
+     Scan               54k    2    -    21.30     1.6    
+     Scan               54k    3    -    35.49     4.2    
+     -                    
+     PartEnum    54k    1    2     1.21    57.3    n1=2,n2=8 
+     PartEnum    54k    2    2    12.04    60.2    n1=3,n2=8 
+     PartEnum    54k    3    1    35.24    34.8    n1=2,n2=7 
+    Contributors 
+  Rares Vernica
+    
+[1] Arvind Arasu, Venkatesh Ganti, Raghav Kaushik: Efficient Exact Set-Similarity Joins. VLDB 2006: 918-929
+ 
+
+        
+        
+           Back to Index   </body> 

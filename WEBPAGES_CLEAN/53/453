@@ -1,0 +1,256 @@
+ \documentclass[10pt]{beamer}
+
+\usepackage{pgfpages} 
+\usepackage{verbatim}
+\pgfpagesuselayout{resize to}[letterpaper,border shrink=5mm, landscape] 
+
+\input{../common/style.tex}
+\input{../common/symbol-definitions.tex}
+
+\def\cat{\begin{center}\begin{figure}\includegraphics[width=2in]{maceo.jpg}\caption{Obligatory cat picture}\end{figure}\end{center}}
+\def\R{{\color{blue}{\textbf{R}}}}
+\def\C{{\color{red}{\textbf{C}}}}
+\def\Sweave{{\color{purple}{\textbf{Sweave}}}}
+
+\lecture[2]{Sweave}{lecture-text}
+\date{May 6, 2009\\Lab Meeting}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section {Front Matter}
+\begin{frame}[containsverbatim]{Motivation}
+\begin{block}{What is Sweave?}
+\begin{itemize}
+\item In my own words, {\Sweave} is a way to include {\R} code (directly or indirectly) within a {\LaTeX} document. 
+\item {\Sweave} was written by Friedrich Leisch, and is included as a part of {\R}.
+\item This lecture will demo some of the things you can do using {\Sweave}, and provide a template to work off of.
+\end{itemize}
+\end{block}
+\begin{block}{Flow}
+\begin{enumerate}
+    \item Write {\R} code within your {\LaTeX} source, use extension \verb@.Rnw@.
+    \item Compile your \verb@.Rnw@ using \verb@R CMD Sweave@ to generate a \verb@.tex@.
+    \item Compile your \verb@.tex@ using \verb@pdflatex@.
+  \end{enumerate}
+\end{block}
+\begin{block}{Example}
+&gt;=
+help("Sweave", package="utils");
+@ 
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Motivation}
+\begin{block}{Why use Sweave?}
+  \begin{itemize}
+    \item Literate programming
+    \item Reproducible Research
+    \item Generating figures
+    \item Generating tables
+    \item Demoing {\R}
+    \item Generating reports
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Outline of talk}
+\begin{block}{Outline}
+  Noweb
+  \begin{itemize}
+  \item Sexpr
+  \item Sweave options
+  \item Reusing code blocks
+  \end{itemize}
+  Figures\\
+  Tables\\
+  Extras
+  \begin{itemize}
+  \item cacheSweave
+  \item ESS
+  \item Ryacas
+  \item Networks
+  \item Untangle
+  \end{itemize}
+  My scripts\\
+\end{block}
+\end{frame}
+
+\section{Noweb}
+\begin{frame}[containsverbatim]{Noweb}
+  \begin{block}{What is Noweb?}
+A way to include code (not just {\R}) inside {\LaTeX}:
+\begin{verbatim}
+ \def\dsum{\displaystyle\sum}
+ Let's compute $\dsum_{i=1}^{10}{i}$ in {\R}:
+ &gt;=
+ sum(1:10)
+ @ 
+\end{verbatim}
+\end{block}
+
+\begin{block}{Example}
+\def\dsum{\displaystyle\sum}
+Let's compute $\dsum_{i=1}^{10}{i}$ in {\R}:
+&gt;=
+sum(1:10)
+@ 
+\end{block}
+\end{frame}
+
+\def\dsum{\displaystyle\sum}
+\begin{frame}[containsverbatim]{Noweb}
+\begin{block}{Sexpr}
+Pronounced ``S expression'' not ``Sex PR''. These allow you to include smaller bits of {\R} code into {\LaTeX}.\\
+\ \\
+\verb@$\dsum_{i=1}^{10}{i} = \Se@\verb@xpr{sum(1:10)}$@
+\end{block}
+
+\begin{block}{Example}
+ $\dsum_{i=1}^{10}{i} = \Sexpr{sum(1:10)}$
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Noweb}
+\begin{block}{Sweave options}
+There are a number of options that you can use in a chunk.\\
+The most important are:\\
+\begin{tabular}{r|l}
+echo &amp; print the {\R} code as if it had been run in a session\\
+results &amp; either hide, verbatim, or tex to hide all printed \\
+        &amp; output, or print as {\LaTeX}\\
+label &amp; the name of the code chunk\\
+strip.white &amp; if set to \verb@FALSE@, newlines will be preserved\\
+term &amp; similar to echo, but does not print the {\R} code, \\
+     &amp; just the output\\
+eval &amp; a toggle to turn off the evaluation of a code chunk\\
+fig &amp; if TRUE, will generate a {\LaTeX} figure\\
+\end{tabular}
+\end{block}
+
+\begin{block}{Example}
+\verb@&gt;=@
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Noweb}
+\begin{block}{Code chunk reuse}
+You can reuse a named code chunk in later code chunks, by referencing the name.
+\end{block}
+
+\begin{block}{Example}
+\begin{verbatim}
+ &gt;=
+ cat("Michael Zeller (c) 2009")
+ @ 
+ &gt;=
+ &gt;
+ &gt;
+ @ 
+\end{verbatim}
+\end{block}
+&gt;=
+cat("Michael Zeller (c) 2009")
+@ 
+&gt;=
+&gt;
+&gt;
+@ 
+\end{frame}
+
+\section{Figures}
+\begin{frame}[containsverbatim]{Figures}
+\begin{block}{Example}
+\begin{verbatim}
+ \setkeys{Gin}{width=2in}
+ &gt;=
+  n &gt;=
+ plot(data, xlab='Dim 1', ylab='Dim 2')
+ @ 
+ \begin{figure}
+ \begin{center}
+ &gt;=
+ &gt;
+ @
+ \end{center}
+\end{verbatim}
+\verb@ \caption{Random sample ($n=\S@\verb@expr{n}$) of our data}@
+\verb@ \label{fig:one}@
+\verb@ \end{figure}@
+\end{block}
+\end{frame}
+
+\setkeys{Gin}{width=2in}
+&gt;=
+ n &gt;=
+plot(data, xlab='Dim 1', ylab='Dim 2')
+@ 
+\begin{frame}[containsverbatim]{Figures}
+\begin{figure}
+\begin{center}
+&gt;=
+&gt;
+@
+\end{center}
+\caption{Random sample ($n=\Sexpr{n}$) of our data}
+\label{fig:one}
+\end{figure}
+\end{frame}
+
+\section{Tables}
+\begin{frame}[containsverbatim]{Tables}
+\begin{block}{Generating tables}
+To generate tables, you can use the \verb@xtable@ package. It is easy to read in a file of data in {\R} and to output it as a {\LaTeX} table.
+\verbatiminput{examples/test.txt}
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Tables}
+\begin{block}{Example}
+\begin{verbatim}
+ &gt;=
+ library(xtable)
+ data &gt;=
+library(xtable)
+data &gt;=
+ c &gt;=
+  library(Ryacas)
+  eq &gt;=
+ print(ret)
+ @ 
+ &gt;=
+ print(eq)
+ @ 
+\end{verbatim}
+}}
+\end{block}
+&gt;=
+ library(Ryacas)
+ eq &gt;=
+print(eq)
+@ 
+\ \\
+&gt;=
+print(ret)
+@ 
+\end{frame}
+
+\section{Networks}
+\begin{frame}[containsverbatim]{Networks}
+\begin{block}{Networks}
+The \verb@network@ package is written by UCI's very own, Carter Butts. It can be used (as an example) to demo the much more advanced plots that you can make using {\R}, that are very hard to do using {\LaTeX} and \verb@PSTricks@.
+\begin{verbatim}
+ &gt;=
+ library(network)
+ @
+ &gt;=
+ #Construct a sparse graph
+ m&gt;=
+library(network)
+@ 
+&gt;=
+#Construct a sparse graph
+m 

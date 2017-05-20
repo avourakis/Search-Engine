@@ -1,0 +1,272 @@
+ ICS 23 / CSE 23 - Project #5: Rock and Roll Stops the Traffic<body>
+
+ 
+
+ ICS 23 / CSE 23 - Project #5:  Rock and Roll Stops Traffic  
+
+ 
+
+ 
+
+  Due date and time:   Friday, December 5, 6:59pm  
+
+ 
+
+ 
+
+  Introduction 
+
+ As residents of southern California, most of us face the realities of heavy traffic.  If we attempt to drive on a local freeway during rush hour, we invariably experience major traffic jams and long delays.  What's worse, we are rarely apprised of unusual delays (e.g. accidents, road closures) before we've encountered them.  Even if we know about a delay in advance, it's often difficult to find a suitable alternate route, either because we're unfamiliar with the area or because those alternatives are just as clogged with traffic as the route we're trying to avoid. 
+
+ It's not hard to imagine how the presence of wireless Internet connections in everyone's car could help the situation.  Aside from providing the obvious ability to download traffic reports and maps on demand, with up-to-the-minute traffic information and a little computing, your car could actively aid you in finding the best way to get from one place to another, optimized not only for distance, but also for the shortest drive time given the current traffic conditions.  Further, if all cars were using the system, as drivers were diverted around the scene of an accident, traffic conditions would change; the advice offered by drivers' in-car systems would also change, optimally routing cars around a traffic jam by sending different cars down different alternate paths.  This way, even the alternatives might flow as quickly as possible. 
+
+ For this project, you will write a simplified version of such a system.  Given a map of streets and freeways, along with a snapshot of the current traffic between points on the map, your program will be capable of finding the shortest distance or fastest route to get from one location to another. 
+
+ 
+
+ 
+
+  Our abstraction of a street map 
+
+ Real-life street maps, such as those created by companies like Thomas Bros., are a handy way for (most) human beings to determine an appropriate route to take from one location to another.  They present an abstraction of the world as a scaled-down drawing of the actual streets.  In order to be useful to us, a street map needs to give us the names of streets and freeways, to accurately demonstrate distances and directions, and to show us where the various streets and freeways intersect. 
+
+ For our program, we'll need to develop a different abstraction of a street map.  Our abstraction must contain the information that is pertinent to the problem we're trying to solve, presented in a way that will make it as easy as possible for our program to solve it.  Not surprisingly, a picture made up of lines and words is not an abstraction that is useful to our program; it would require a tremendous amount of effort to design and implement an algorithm to interpret the lines and words and build up some alternate representation that's more convenient.  It's better that we first design the more convenient representation, then train our program to read and understand an input file that specifies it.  To do so, we'll need to consider the problem a bit further. 
+
+ Our program's main job is to discover the shortest distance or time between two  locations .  There's no reason we couldn't think of locations as being any particular point on a street map (for example, every valid street address, or even any valid GPS coordinate).  For simplicity, we'll think of them as one of two things: 
+
+  The intersection of two or more streets. 
+   A point on a freeway at which there is an entrance and/or an exit. 
+  Connecting pairs of locations on the map are stretches of road.  In order to solve our problem, we'll need to know two things about each stretch of road: 
+
+  Its length, in miles. 
+   The current speed of traffic traveling on it, in miles per hour. 
+  Our map will consist of two kinds of roads:  streets  and  freeways .  A street is a sequence of intersections, connected by stretches of road in opposite directions.  The lengths of the stretches of road are generally the same, or at least nearly the same, on both sides of the street, though the amount of traffic -- and, therefore, the current speed of traffic -- on either side of the street may differ.  In real life, many intersections control traffic using stop signs or traffic lights.  Our program will ignore them; we'll instead assume that the traffic speeds on streets have been adjusted appropriately downward to account for the time spent waiting at stop signs and lights. 
+
+ Freeways seem like bi-directional roads, but they're actually two separate, divided stretches of road traveling in opposite directions.  For a few reasons, we will need to treat each side of the freeway as an entirely separate road: 
+
+  The sequence of ramps on one side of a freeway is sometimes different than the sequence on the opposite side.  For example, near UCI, the 405 South has a transition ramp that leads to the 73 South, but the 405 North has no such ramp.  For this reason, there may be a different number of locations on one side of a freeway than another. 
+   The amount of traffic on one side of a freeway may be radically different from the amount on the other, so the speed of the cars traveling in one direction may also differ widely. 
+  It turns out that our program will not need to think about streets and freeways separately, since they are both represented the same way: as a sequence of locations, connected by stretches of road.  Also, to keep the problem relatively simple, absolute directions (i.e. north, south, east, and west) will not be considered by our program or reported in its output.  For that reason, they won't be included in our abstraction of a street map, except optionally in the names of locations. 
+
+ The output of our program will be a  trip .  A trip is a sequence of visits to locations on the map.  For example, when I used to live in Costa Mesa, my typical trip home from UCI looked like this: 
+
+  Start at Peltason &amp; Los Trancos 
+   Continue at Bison &amp; Peltason 
+   Continue to Bison &amp; California 
+   Continue to Bison &amp; 73N on-ramp 
+   Continue to 73N @ Birch 
+   Continue to 73N @ 73N-to-55N transition 
+   Continue to 55N @ Baker 
+   Continue to 55N Baker/Paularino ramp &amp; Baker 
+   Continue to Baker &amp; Bristol 
+  In addition to the information above, our program will also output information about the distance in miles and travel time of each of the segments of the trip, as well as the overall distance and travel time for the whole trip. 
+
+ 
+
+ 
+
+  Representing our abstraction of a street map 
+
+ If you consider all of the data that we'll need to represent this abstraction, the task of organizing it can seem overwhelming.  However, there is a well-known data structure that represents this system in a straightforward way: a directed graph. 
+
+ Using a directed graph, vertices can represent locations, and edges can represent the stretches of road that connect them.  Since traffic travels in only one direction on a given stretch of road, it makes good sense that the graph should be directed. 
+
+ Each vertex in the graph will have a human-readable name for the location it represents.  For example, a vertex might be named  Culver &amp; Harvard  or it might be named  I-405N @ Jamboree .  The name will be used only for display purposes; it won't have any significance in the shortest-path algorithm.  The vertices should be numbered uniquely and consecutively, starting at zero.  If there are  n  vertices, they should be numbered 0 ..  n  - 1. 
+
+ Each edge will contain the two necessary pieces of information about the stretch of road it represents: the distance between the two vertices (in miles, stored as a double) and the current speed of traffic (in miles per hour, stored as a double). 
+
+ Since a trip is a sequence of visits to adjacent locations on the map, locations are represented by vertices, and two locations are adjacent only when there is an edge connecting them, a trip can be represented as a path in the graph. 
+
+ 
+
+ 
+
+  The input 
+
+ Your program should read its input from a file.  So that we can keep everything straight during the grading process, please write your  main( )  method in a class called  Project5 , so that we can run your program using the following command: 
+
+ 
+java Project5 sample.txt
+ 
+
+ where the name of the input file is specified as a command-line argument to the program.  If we ran your program with the command above, it would read its input from the file  sample.txt . 
+
+ Check out this  sample input file .  A description of its format follows. 
+
+ The input file is separated into three sections: the locations, the road segments connecting them, and the trips to be analyzed.  Blank lines should be ignored.  Lines beginning with a  #  character indicate comments and should likewise be ignored.  This allows the input file to be formatted and commented, for readability. 
+
+ The first section of the file defines the names of the map locations.  First is a line that contains the number of locations.  If there are  n  locations, the next  n  lines of the file contain the names of each location.  The locations will be stored in a graph as vertices.  Each vertex is given a number.  You should number the vertices consecutively in the order they appear in the file, starting at 0. 
+
+ The next section of the file defines the road segments.  Each road segment will be an edge in the graph.  The first line of this section defines the number of segments.  Following that are the appropriate number of road segment definitions.  Each segment is defined on a line, with four values on it: 
+
+  The vertex number where the segment begins. 
+   The vertex number where the segment ends. 
+   The distance covered by the segment, in miles. 
+   The current speed of traffic on the segment, in miles per hour. 
+  Finally, the trips are defined.  Again, the section begins with a line containing the number of trips.  Following that are an appropriate number of trip requests.  Each trip request is a line with three values on it: 
+
+  The starting location for the trip. 
+   The ending location for the trip. 
+    D  if the program should determine the shortest distance,  T  if the program should determine the shortest driving time. 
+  Your program should read the vertices and edges from the file, build the graph, then process the trip requests in the order that they appear.  The output for each trip request is described later in this write-up. 
+
+ You may assume that the input file will be formatted as described above. 
+
+ 
+
+ 
+
+  Implementing the graph 
+
+ There are two well-known approaches that can be used to implement a graph: an  adjacency matrix  and  adjacency lists .  As we've discussed in class, sparse graphs (that is, graphs with few edges relative to the number of vertices) are better implemented using adjacency lists, since an adjacency matrix would waste a great deal of memory storing the vast number of blank cells in the matrix.  Our street map is clearly a sparse graph, since each vertex will have edges to and from only a few relatively "nearby" vertices.  So, adjacency lists are a far superior approach in our case.  You are required to use this approach to represent your graph. 
+
+ A good way to store adjacency lists is to place each vertex's information into the cell of an array indexed by its vertex number.  Each cell has a vertex name and a reference to the first node in a list of its outgoing edges.  For each of these edges, we store the ID number of the adjacent vertex, the distance to that vertex, and the time to travel to it.  (Remember that an adjacent vertex is one that can be reached from the current vertex by following one edge.)  You will obviously need methods to build up the adjacency lists and to access them to get information about a particular vertex or edge. 
+
+ 
+
+ 
+
+  Finding the shortest paths 
+
+ The problem we need to solve, that of finding the fastest or shortest trip along a network of roads, is not an uncommon one in computing.  In fact, it's so common that it's already been solved abstractly.  Our problem is an instance of the  single-source, positive-weighted, shortest-path problem .  In other words, from one particular vertex (a "single source"), we'll be finding the shortest path to another vertex, where all of the edges have a "positive weight" (in our case, distance or speed, neither of which will ever be negative) associated with them.  We'll use a well-known algorithm called Dijkstra's Algorithm to solve this problem. 
+
+ Dijkstra's Algorithm actually finds the shortest path from some start vertex to  all  the other vertices in a graph -- this doesn't slow the algorithm down, since it needs to calculate them all in order to work -- though we're only interested in one of the paths that it will find.  There's a benefit to Dijkstra's calculation of all the shortest paths from some vertex.  Suppose the file has multiple trips starting from the same vertex.  With Dijkstra's Algorithm, we can compute shortest paths from any particular start vertex to all other vertices once for distance and once for time, storing the results in memory.  Then, to learn the shortest path from that start vertex to any other vertex, we can just look up the answer.  Use this approach in your program; it is likely the file will contain multiple trips that start from a particular place, and only a poorly-designed solution would require the program to re-compute data it has already computed. 
+
+ For each vertex  v , Dijkstra's Algorithm keeps track of three pieces of information:  k v  ,  d v  ,  p v  . 
+
+   k v   is a boolean flag that indicates whether the shortest path to vertex  v  is known.  Initially,  k v   is  false  for all vertices. 
+    d v   is the length of the shortest known path from the start vertex to  v .  When the algorithm begins, no shortest paths are known, so  d v   is initially set to ∞ for all vertices, except the start vertex, for which  d v   = 0. 
+    p v   is the predecessor of the vertex  v  on the shortest known path from the start vertex to  v .  Initially,  p v   is  unknown  for all vertices, except for the start vertex, for which  p v   is  none . 
+  As the algorithm proceeds, it will need to calculate the  cost  for individual edges.  The cost of the edge from  v  to  w  will be called  C ( v ,  w ).  How you calculate the cost depends on whether you're minimizing driving distance or driving time: 
+
+  If you're minimizing driving distance,  C ( v ,  w ) is the number of miles on the edge from  v  to  w . 
+   If you're minimizing driving time,  C ( v ,  w ) is the number of minutes required to drive along the edge from  v  to  w , given its length and traffic speed. 
+  Dijkstra's Algorithm proceeds in phases.  The following steps are performed in each pass: 
+
+  From the set of vertices for which  k v   is  false , select the vertex  v  having the smallest  d v  .  In other words, of the shortest paths to each vertex that we've found that we're not yet sure about, pick the one that is the shortest. 
+   Set  k v   to  true  for the vertex you picked in step 1.  The shortest of the "unknown" paths is now considered to be known. 
+   For each vertex  w  adjacent to  v  (i.e. there is an edge from  v  to  w ) for which  k w   is  false , test whether  d w   is greater than  d v   +  C ( v ,  w ).  If it is, set  d w   to  d v   +  C ( v ,  w ) and set  p w   to  v .  In other words, if the path through  v  to  w  is better than the shortest path we'd found to  w  so far, the shortest path to  w  (so far) is the path we've just found through  v  to  w . 
+  For each pass, exactly one vertex has its  k v   set to  true  (in other words, we discover one known shortest path per pass). 
+
+ Here is psuedocode for the algorithm.  Notice the use of a priority queue, which allows you to easily find the vertex with the smallest  d v   in step 1. 
+
+ 
+    for each vertex v
+    {
+        set k v  to false
+        set p v  to unknown (or none, if v is the start vertex)
+        set d v  to ∞ (or 0, if v is the start vertex)
+    }
+
+    let pq be an empty priority queue
+    enqueue the start vertex into pq with priority 0
+    
+    while (pq is not empty)
+    {
+        vertex v = the vertex in pq with the smallest priority
+        
+        if (k v  is false)
+        {
+            k v  = true
+
+            for each vertex w such that edge v -&gt; w exists
+            {
+                if (d w  &gt; d v  + C(v, w))
+                {
+                    d w  = d v  + C(v, w)
+                    p w  = v
+                    enqueue w into pq with priority d w 
+                }
+            }
+        }
+    }
+ 
+
+ At the conclusion of the main loop, the  d v   value corresponding to the end vertex will be the amount of the shortest path.  You can find the actual path of vertices by working your way backward from the end vertex to the start vertex, following the  p v   values as you go along.  (This implies, of course, that you need to store all the  p v   values.) 
+
+ Remember that, after the algorithm has finished, you should store the results in memory so that you can look them up later.  I suggest storing the  p v   values long-term.  There's no reason to store the  k v   values, because they will all be  true  after the algorithm is completed.  And there's no need to store the  d v   values, because you will need to lookup the times or distances between each vertex in the path anyway, since we always output all of the segments of a trip, and you can easily sum these up to calculate a total while you're generating your answer. 
+
+ As you can see from the pseudocode, you will need to implement a priority queue in order to implement Dijkstra's Algorithm.  You are required to implement it using a binary heap, as we discussed in class, so that all enqueues and dequeues run in  O (log  n ) time.  The priority queue should be implemented in its own class, of course. 
+
+ 
+
+ 
+
+  The output 
+
+ For each of the trip requests in the input file, your program should output a neatly-formatted report to the console that includes each leg of the trip with its distance and/or time (as appropriate), and the total distance and/or time for the trip. 
+
+ If the trip request asks for the shortest distance, the output might look something like the following (these are phony trips, to show you the output format; they are not related to the sample data file provided above): 
+
+ 
+Shortest distance from Alton &amp; Jamboree to MacArthur &amp; Main
+  Begin at Alton &amp; Jamboree
+  Continue to Main &amp; Jamboree (1.1 miles)
+  Continue to Jamboree &amp; I-405N on ramp (0.3 miles)
+  Continue to I-405N @ MacArthur (1.3 miles)
+  Continue to MacArthur &amp; I-405N off ramp (0.1 miles)
+  Continue to MacArthur &amp; Main (0.2 miles)
+Total distance: 3.0 miles
+ 
+
+ On the other hand, if the trip request asks for the shortest time, the output might look like this: 
+
+ 
+Shortest driving time from Alton &amp; Jamboree to MacArthur &amp; Main
+  Begin at Alton &amp; Jamboree
+  Continue to Alton &amp; MacArthur (2.7 miles @ 33.7mph = 4 mins 48.8 secs)
+  Continue to Main &amp; MacArthur (1.1 miles @ 40.1mph = 1 min 38.7 secs)
+Total time: 6 mins 27.5 secs
+ 
+
+ When outputting a time, you should separate it into its components -- hours, minutes, and seconds -- as appropriate.  Here are some examples: 
+
+ 
+32.5 secs
+2 mins 27.8 secs
+13 mins 0.0 secs
+3 hrs 13 mins 12.3 secs
+6 hrs 0 mins 0.0 secs
+ 
+
+ Don't show hours if there are zero of them.  Don't show hours or minutes if there are zero of both of them. 
+
+ 
+
+ 
+
+  Starting point 
+
+ You're required to write the code for this project from scratch.  No code is provided. 
+
+ 
+
+ 
+
+  Deliverables 
+
+ You must turn in all of your  .java  files.  Please do not include any  .class  files, or other files generated by your development environment. 
+
+ Follow  this link  for an explanation of how to turn in your project. 
+
+ 
+
+ 
+
+  Limitations 
+
+ Except for  java.util.ArrayList , you may not use any of the collection classes in the  java.util  library (e.g. LinkedList, TreeMap, HashMap).  Remember, as always, you are to implement your own data structures.  You're free, and encouraged, to use other utility classes, such as BufferedReader and StringTokenizer to read the input file. 
+
+ 
+
+ 
+
+   A few typos corrected, along with a small amount of additional explanation about Dijkstra's Algorithm added by Alex Thornton, Summer 2004. 
+   Additional modifications and clarifications by Alex Thornton, Spring 2003. 
+   Revised again by Alex Thornton, Fall 2002. 
+   Minor revisions by Norman Jacobson, December 2001, March 2002, May 2002, and June 2002. 
+   Revised for ICS 23 Fall 2001 by Norman Jacobson, September 2001. 
+   Originally written by Alex Thornton, Spring 2001.  Portions of the description of Dijkstra's algorithm based on a description in  Data Structures and Algorithms with Object-Oriented Design Patterns in Java  by Bruno R. Preiss. 
+  
+
+</body> 

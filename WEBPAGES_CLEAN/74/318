@@ -1,0 +1,1044 @@
+ HalfedgeDS&lt;Traits,Items,Alloc&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  HalfedgeDS&lt;Traits,Items,Alloc&gt;  
+
+
+  
+ 
+
+  Release Note 
+ 
+
+Beginning with C GAL  R2.3, this package has a new design.  The old
+design is still available for backwards compatibility and to support
+older compiler, such as MSVC++6.0. However its use is deprecated and
+the manual pages are not converted into this new manual
+format. Instead, see its old documentation in the manual of 
+deprecated packages.  The two designs are not interchangeable.
+  
+
+  Definition 
+ 
+
+The concept of a halfedge data structure (abbreviated as   HalfedgeDS  , or
+ HDS  for template parameters) defines an edge-centered data structure
+capable of maintaining incidence informations of vertices, edges, and
+faces, for example for planar maps or polyhedral surfaces. It is a
+combinatorial data structure, geometric interpretation is added by
+classes built on top of the halfedge data structure.
+  
+
+The data structure defined here is known as the
+FE-structure [ Wei85 ], as
+halfedges [ Män88 ,  BFH95 ] or as the doubly connected edge
+list (DCEL) [ dBvKOS97 ], although the original reference for
+the DCEL [ MP78 ] describes a different data structure. The
+halfedge data structure can also be seen as one of the variants of the
+quad-edge data structure [ GS85 ]. In general, the quad-edge
+data can represent non-orientable 2-manifolds, but the variant here is
+restricted to orientable 2-manifolds only. An overview and comparison
+of these different data structures together with a thorough
+description of the design implemented here can be found
+in [ Ket99 ].
+  
+
+Each edge is represented by two halfedges with  opposite  orientations.
+Each halfedge can store a reference to an incident face and an
+incident vertex.  For each face and each vertex an incident halfedge
+is stored.  Reduced variants of the halfedge data structure can omit
+some of these incidences, for example the reference to halfedges in
+vertices or the storage of vertices at all. See 
+Figure 
+     
+
+for the incidences, the mandatory and optional member functions
+possible for vertices, halfedges, and faces.
+  
+
+  
+     
+      
+            Figure: 
+    The three classes  Vertex ,  Halfedge , and 
+           Face  of the halfedge data structure. Member
+          functions with shaded background are mandatory. The others
+          are optionally supported.
+     
+ 
+
+A   HalfedgeDS &lt;Traits,Items,Alloc&gt;  organizes the internal storage of its items.  Examples
+are a list-based or a vector-based storage. The   HalfedgeDS &lt;Traits,Items,Alloc&gt;  exhibits
+most of the characteristics of the container class used internally,
+for example the iterator category. A vector resizes
+automatically when a new item exceeds the reserved space. Since
+resizing is an expensive operation for a   HalfedgeDS &lt;Traits,Items,Alloc&gt;  in general and
+only possible in a well defined state of the data structure (no
+dangling handles), it must be called explicitly in advance for a
+  HalfedgeDS &lt;Traits,Items,Alloc&gt;  before inserting new items beyond the current capacity.
+Classes built on top of a   HalfedgeDS &lt;Traits,Items,Alloc&gt;  are advised to call the
+ reserve()  member function before creating new items.
+  
+
+  Parameters 
+ 
+
+A   HalfedgeDS &lt;Traits,Items,Alloc&gt;  is a class template and will be used as argument for
+other class templates, for example   CGAL::Polyhedron_3  . The
+template parameters to instantiate the   HalfedgeDS &lt;Traits,Items,Alloc&gt;  will be provided by
+this other class template. Therefore, the three template parameters
+and their meaning are mandatory. We distinguish between the template
+  HalfedgeDS &lt;Traits,Items,Alloc&gt;  and an instantiation of it.
+  
+
+ Traits  is a traits class that will be passed to the 
+item types in  Items . It will not be used in   HalfedgeDS &lt;Traits,Items,Alloc&gt;  itself.  Items  is a model of the   HalfedgeDSItems   concept.
+ Alloc  is a standard allocator that fulfills all requirements 
+of allocators for STL container classes. The   rebind 
+mechanism from  Alloc  will be used to create appropriate 
+allocators internally. A default argument is mandatory for
+ Alloc , for example, the macro  CGAL_ALLOCATOR(int) 
+from the  &lt;CGAL/memory.h&gt;  header file can be used as default
+allocator.
+  
+
+  Types 
+ 
+
+    
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Traits
+         
+              
+    traits class.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Items
+         
+              
+    model of   HalfedgeDSItems   concept.
+ 
+
+          
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::size_type
+         
+              
+    size type.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::difference_type
+         
+              
+    difference type.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::iterator_category
+         
+              
+    iterator category for all iterators.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::allocator_type
+         
+              
+    allocator type  Alloc .
+ 
+
+          
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Vertex
+         
+              
+    model of   HalfedgeDSVertex   concept.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Halfedge
+         
+              
+    model of   HalfedgeDSHalfedge   concept.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Face
+         
+              
+    model of   HalfedgeDSFace   concept.
+ 
+
+     
+
+The following handles and iterators have appropriate non-mutable
+counterparts, i.e.,  const_handle  and  const_iterator . The
+mutable types are assignable to their non-mutable counterparts. The
+iterators are assignable to the respective handle types. Wherever the
+handles appear in function parameter lists, the corresponding
+iterators can be used as well.  Note:  The handle types must have
+a default constructor that creates a unique and always the same handle
+value. It will be used in analogy to  NULL  for pointers.
+  
+
+    
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Vertex_handle
+         
+              
+    handle to vertex.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Halfedge_handle
+         
+              
+    handle to halfedge.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Face_handle
+         
+              
+    handle to face.
+ 
+
+          
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Vertex_iterator
+         
+              
+    iterator over all vertices.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Halfedge_iterator
+         
+              
+    iterator over all halfedges.
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Face_iterator
+         
+              
+    iterator over all faces.
+ 
+
+     
+
+   
+     
+     
+    advanced  
+    
+       Types for Tagging Optional Features 
+ 
+
+The following types are equal to either   CGAL::Tag_true   or
+  CGAL::Tag_false  , depending on whether the named feature is
+supported or not.
+  
+
+    
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_vertex_halfedge
+         
+              
+     Vertex::halfedge() .
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_halfedge_prev
+         
+              
+     Halfedge::prev() .
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_halfedge_vertex
+         
+              
+     Halfedge::vertex() .
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_halfedge_face
+         
+              
+     Halfedge::face() .
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_face_halfedge
+         
+              
+     Face::halfedge() .
+ 
+
+     
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;::Supports_removal
+         
+              
+    removal of individual elements.
+ 
+
+     
+
+The following dependencies among these options must be regarded:
+  
+
+Vertices are supported      Supports_halfedge_vertex        CGAL::Tag_true  . 
+
+Faces are supported      Supports_halfedge_face        CGAL::Tag_true  .  Supports_vertex_halfedge        CGAL::Tag_true        Supports_halfedge_vertex        CGAL::Tag_true  .  Supports_vertex_point        CGAL::Tag_true        Supports_halfedge_vertex        CGAL::Tag_true  .  Supports_face_halfedge        CGAL::Tag_true        Supports_halfedge_face        CGAL::Tag_true  .
+  
+
+    
+     
+    advanced  
+    
+       
+ 
+
+   
+     
+     
+    advanced  
+    
+       Static Member Functions 
+ 
+
+When writing an items type, such as a user defined vertex, certain
+functions need to create a handle but knowing only a pointer, for
+example, the  this -pointer. The following static member functions
+of   HalfedgeDS &lt;Traits,Items,Alloc&gt;  create such a corresponding handle for an item type
+from a pointer. This conversion encapsulates possible adjustments for
+hidden data members in the true item type, such as linked-list
+pointers. Note that the user provides item types with the
+ Items  template argument, which may differ from the  Vertex ,
+ Halfedge , and  Face  types defined in   HalfedgeDS &lt;Traits,Items,Alloc&gt; . If they 
+differ, they are derived from the user provided item types. We denote the
+user item types with  Vertex_base ,  Halfedge_base , and
+ Face_base  in the following. The fully qualified name for 
+ Vertex_base  would be for example - assuming that the type  Self 
+refers to the instantiated   HalfedgeDS   -
+  
+
+       typedef typename Items::template Vertex_wrapper&lt;Self,Traits&gt;                  Vertex_wrapper;  
+
+       typedef typename Vertex_wrapper::Vertex  Vertex_base; 
+  
+
+Implementing these functions relies on the fundamental assumption that
+an iterator (or handle) of the internally used container class can be
+constructed from a pointer of a contained item only. This is true and
+controlled by us for   CGAL::In_place_list  . It is true for the
+ std::vector  of major STL distributions, but not necessarily 
+guaranteed. We might switch to an internal implementation if need
+arises.
+  
+
+    
+           
+static Vertex_handle
+         
+              
+          HalfedgeDS ::vertex_handle ( Vertex_base* v) 
+         
+        
+    
+            
+           
+static Vertex_const_handle
+         
+              
+          HalfedgeDS ::vertex_handle ( const Vertex_base* v) 
+         
+        
+    
+                 
+           
+static Halfedge_handle
+         
+              
+          HalfedgeDS ::halfedge_handle ( Halfedge_base* h) 
+         
+        
+    
+            
+           
+static Halfedge_const_handle
+         
+              
+          HalfedgeDS ::halfedge_handle ( const Halfedge_base* h) 
+         
+        
+    
+                 
+           
+static Face_handle
+         
+          
+          HalfedgeDS ::face_handle ( Face_base* f) 
+         
+        
+    
+            
+           
+static Face_const_handle
+         
+              
+          HalfedgeDS ::face_handle ( const Face_items* f) 
+         
+        
+    
+            
+
+    
+     
+    advanced  
+    
+       
+ 
+
+  Creation 
+ 
+
+    
+          HalfedgeDS &lt;Traits,Items,Alloc&gt; hds;
+         
+              
+    empty halfedge data structure.
+ 
+
+          
+             
+     HalfedgeDS &lt;Traits,Items,Alloc&gt; hds (     
+    size_type v, 
+
+size_type h, 
+
+size_type f);     
+              
+    storage reserved for  v  vertices,  h  halfedges, and  f  faces.
+ 
+
+          
+          HalfedgeDS &lt;Traits,Items,Alloc&gt; hds (  hds2);
+         
+              
+    copy constructor.  Precondition:   hds2  contains no dangling handles.
+ 
+
+     
+
+            
+          HalfedgeDS &lt;Traits,Items,Alloc&gt;&amp;
+         
+              
+         
+     hds =  hds2  
+
+         
+          
+    assignment operator.  Precondition:   hds2  contains no dangling handles.
+                 
+           
+void
+         
+          
+         
+    hds.reserve ( size_type v,  size_type h,  size_type f)
+         
+                
+    reserves storage for  v  vertices,  h  halfedges, and  f  faces.
+     If all capacities are already greater or equal than the requested sizes
+     nothing happens. Otherwise,  hds  will be resized and all handles, 
+     iterators and circulators invalidate.  Precondition:  If resizing is
+     necessary  hds  contains no dangling handles.
+            
+
+  Access Member Functions 
+ 
+
+    
+           
+Size
+         
+          
+         
+    hds.size_of_vertices ()
+         
+                
+    number of vertices.
+            
+           
+Size
+         
+          
+         
+    hds.size_of_halfedges ()
+         
+                
+    number of halfedges.
+            
+           
+Size
+         
+          
+         
+    hds.size_of_faces ()
+         
+                
+    number of faces.
+            
+           
+Size
+         
+          
+         
+    hds.capacity_of_vertices ()
+         
+                
+    space reserved for vertices.
+            
+           
+Size
+         
+          
+         
+    hds.capacity_of_halfedges ()
+         
+                
+    space reserved for halfedges.
+            
+           
+Size
+         
+          
+         
+    hds.capacity_of_faces ()
+         
+                
+    space reserved for faces.
+            
+           
+size_t
+         
+          
+         
+    hds.bytes ()
+         
+          
+    bytes used for  hds .
+            
+           
+size_t
+         
+          
+         
+    hds.bytes_reserved ()
+         
+                
+    bytes reserved for  hds .
+                 
+           
+allocator_type
+         
+          
+         
+    hds.get_allocator ()
+         
+                
+    allocator object.
+            
+
+The following member functions return the non-mutable iterator if
+ hds  is declared const.
+  
+
+    
+           
+Vertex_iterator
+         
+          
+         
+    hds.vertices_begin ()
+         
+                
+    iterator over all vertices.
+            
+           
+Vertex_iterator
+         
+          
+         
+    hds.vertices_end ()
+         
+        
+    
+            
+           
+Halfedge_iterator
+         
+          
+         
+    hds.halfedges_begin ()
+         
+                
+    iterator over all halfedges
+            
+           
+Halfedge_iterator
+         
+          
+         
+    hds.halfedges_end ()
+         
+        
+    
+            
+           
+Face_iterator
+         
+          
+         
+    hds.faces_begin ()
+         
+          
+    iterator over all faces.
+            
+           
+Face_iterator
+         
+          
+         
+    hds.faces_end ()
+         
+         
+    
+           
+
+  Insertion 
+ 
+
+Note that the vertex-related and the face-related member functions may
+not be provided for a   HalfedgeDS &lt;Traits,Items,Alloc&gt;  that does not support vertices or
+faces respectively.
+  
+
+    
+           
+Vertex_handle
+         
+          
+         
+    hds.vertices_push_back ( const Vertex&amp; v) 
+         
+                
+    appends a copy of  v  to  hds . Returns a handle of the new vertex.
+                 
+           
+Halfedge_handle
+         
+          
+             
+    hds.edges_push_back (     
+    const Halfedge&amp; h, 
+
+const Halfedge&amp; g)     
+                
+    appends a copy of  h  and a copy of  g  to  hds  and makes them
+      opposite  to each other. Returns a handle of the copy of  h .
+                 
+           
+Halfedge_handle
+         
+          
+         
+    hds.edges_push_back ( const Halfedge&amp; h) 
+         
+                
+    appends a copy of  h  and a copy of  h-&gt; opposite ()  to  hds  and 
+     makes them  opposite  to each other. Returns a handle of the copy of  h .  Precondition:   h-&gt; opposite ()  denotes a halfedge.
+                 
+           
+Face_handle
+         
+          
+         
+    hds.faces_push_back ( const Face&amp; f) 
+         
+                
+    appends a copy of  f  to  hds . Returns a handle of the new face.
+            
+
+  Removal 
+ 
+
+Erasing single elements is optional and indicated with the type tag
+ Supports_removal . The  pop_back  and the  clear  member 
+functions are mandatory. If vertices or faces are not supported 
+for a   HalfedgeDS &lt;Traits,Items,Alloc&gt;  the  pop_back  and the  clear  member 
+functions must be provided as null operations.
+  
+
+    
+           
+void
+         
+          
+         
+    hds.vertices_pop_front () 
+         
+                
+    removes the first vertex if vertices are supported and
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.vertices_pop_back () 
+         
+                
+    removes the last vertex.
+                 
+           
+void
+         
+          
+         
+    hds.vertices_erase ( Vertex_handle v) 
+         
+                
+    removes the vertex  v  if vertices are supported and
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+             
+    hds.vertices_erase (     
+    Vertex_handle first, 
+
+Vertex_handle last)     
+                
+    removes the range of vertices  [ first , last )  if vertices 
+    are supported and  Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.edges_pop_front () 
+         
+                
+    removes the first two halfedges if
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.edges_pop_back () 
+         
+                
+    removes the last two halfedges.
+                 
+           
+void
+         
+          
+         
+    hds.edges_erase ( Halfedge_handle h) 
+         
+                
+    removes the pair of halfedges  h  and  h-&gt; opposite () 
+    if  Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+             
+    hds.edges_erase (     
+    Halfedge_handle first, 
+
+Halfedge_handle last)     
+                
+    removes the range of edges  [ first , last )  if
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.faces_pop_front () 
+         
+                
+    removes the first face if faces are supported and
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.faces_pop_back () 
+         
+                
+    removes the last face.
+                 
+           
+void
+         
+          
+         
+    hds.faces_erase ( Face_handle f) 
+         
+                
+    removes the face  f  if faces are supported and
+     Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.faces_erase ( Face_handle first,  Face_handle last) 
+         
+                
+    removes the range of faces  [ first , last )  if faces are 
+    supported and  Supports_removal        CGAL::Tag_true  .
+                 
+           
+void
+         
+          
+         
+    hds.vertices_clear () 
+         
+                
+    removes all vertices.
+            
+           
+void
+         
+          
+         
+    hds.edges_clear () 
+         
+                
+    removes all halfedges.
+            
+           
+void
+         
+          
+         
+    hds.faces_clear () 
+         
+                
+    removes all faces.
+                 
+           
+void
+         
+          
+         
+    hds.clear () 
+         
+          
+    removes all elements.
+            
+
+   
+     
+     
+    advanced  
+    
+       Operations with Border Halfedges 
+ 
+
+The following notion of  border halfedges  is particular useful
+where the halfedge data structure is used to model surfaces with
+boundary, i.e., surfaces with missing faces or open regions. Halfedges
+incident to an open region are called  border halfedges . A
+halfedge is a  border edge  if the halfedge itself or its
+ opposite  halfedge is a border halfedge. The only requirement to work
+with border halfedges is that the
+ Halfedge  class provides a member function  is_border() 
+returning a  bool . Usually, the halfedge data structure
+supports faces and the value of the default constructor of the face
+handle will indicate a border halfedge, but this may not be the only
+possibility. The  is_border()  predicate divides the edges into
+two classes, the border edges and the non-border edges. The
+following normalization reorganizes the sequential storage of the
+edges such that the non-border edges precede the border edges, and
+that for each border edge the latter of the two halfedges is a
+border halfedge (the first one might be a border halfedge too). The
+normalization stores the number of border halfedges, as well as the
+halfedge iterator where the border edges start at, within the
+halfedge data structure.  These values will be invalid after further
+halfedge insertions or removals and changes in the border status of 
+a halfedge. There is no automatic update required.
+  
+
+    
+           
+void
+         
+          
+         
+    hds.normalize_border () 
+         
+                
+    sorts halfedges such that the non-border edges precede the
+     border edges. For each border edge that is incident to a face,
+     the halfedge iterator will reference the halfedge incident to the
+     face right before the halfedge incident to the open region.
+                 
+           
+Size
+         
+          
+         
+    hds.size_of_border_halfedges () const
+         
+                
+    number of border halfedges. An edge with no incident face
+      counts as two border halfedges.  Precondition:   normalize_border()  has been called and no
+    halfedge insertion or removal and no change in border
+    status of the halfedges have occurred since then.
+                 
+           
+Size
+         
+          
+         
+    hds.size_of_border_edges () const
+         
+                
+    number of border edges. If  size_of_border_edges()  is equal
+    to  size_of_border_halfedges()  all border edges are incident to
+    a face on one side and to an open region on the other side.  Precondition:   normalize_border()  has been called and no
+    halfedge insertion or removal and no change in border
+    status of the halfedges have occurred since then.
+                 
+           
+Halfedge_iterator
+         
+          
+         
+    hds.border_halfedges_begin () 
+         
+                
+    halfedge iterator starting with the border edges. The range
+      [ halfedges_begin(), border_halfedges_begin() ) denotes
+    all non-border edges. The range
+    [ border_halfedges_begin(), halfedges_end() ) denotes all
+    border edges.  Precondition:   normalize_border()  has been called and no
+    halfedge insertion or removal and no change in border
+    status of the halfedges have occurred since then.
+            
+
+    
+     
+    advanced  
+    
+       
+ 
+
+  Has Models 
+ 
+
+  CGAL::HalfedgeDS_default     CGAL::HalfedgeDS_list     CGAL::HalfedgeDS_vector  
+  
+
+  See Also 
+ 
+
+  HalfedgeDSItems     CGAL::Polyhedron_3 &lt;Traits&gt;    CGAL::HalfedgeDS_vertex_base &lt;Refs&gt;    CGAL::HalfedgeDS_halfedge_base &lt;Refs&gt;    CGAL::HalfedgeDS_face_base &lt;Refs&gt;    CGAL::HalfedgeDS_items_decorator &lt;HDS&gt;    CGAL::HalfedgeDS_decorator &lt;HDS&gt;    CGAL::HalfedgeDS_const_decorator &lt;HDS&gt; 
+  
+
+  Implementation 
+ 
+
+Classes parameterized with a halfedge data structure, such as
+  CGAL::Polyhedron_3  , need to declare a class template as one of its
+template parameters for the   HalfedgeDS &lt;Traits,Items,Alloc&gt; . For compilers not supporting
+this (i.e. the flag  CGAL_CFG_NO_TMPL_IN_TMPL_PARAM  is set), the
+following workaround is required, which defines a   HalfedgeDS &lt;Traits,Items,Alloc&gt;  as a
+normal class that contains a member class template named  HDS ,
+which is the actual halfedge data structure as defined here. The
+following program fragment illustrates this workaround:
+  
+
+  
+#ifndef CGAL_CFG_NO_TMPL_IN_TMPL_PARAM
+    template &lt;class Traits, class Items, class Alloc&gt; 
+    class  HalfedgeDS  {
+    public:
+        typedef  HalfedgeDS &lt;Traits,Items,Alloc&gt; Self;
+         HalfedgeDS_vector (); // constructors
+#else
+    struct  HalfedgeDS  {
+    template &lt;class Traits, class Items, class Alloc&gt; 
+    class HDS {
+    public:
+        typedef HDS&lt;Traits,Items,Alloc&gt; Self;
+        HDS(); // constructors
+#endif
+        // ... further member functions. Self denotes the  HalfedgeDS .
+    };
+#ifdef CGAL_CFG_NO_TMPL_IN_TMPL_PARAM
+    };
+#endif
+ 
+ 
+
+    Next:    HalfedgeDSFace   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

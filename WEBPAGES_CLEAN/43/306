@@ -1,0 +1,58 @@
+ 4.28 OECenter<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.27 OEChemGetVersion 
+ Up:   4. OEChem Functions 
+ Next:   4.29 OEClearAromaticFlags 
+   
+
+
+  
+4.28 OECenter 
+ 
+
+ 
+    
+void OECenter(OEMolBase &amp;mol, double *t = 0)
+void OECenter(OEConfBaseT&lt;float,3&gt; &amp;conf, double *t = 0)
+void OECenter(OEMCMolBaseT&lt;float,3&gt; &amp;mcmol, double *t = 0)
+    
+The  OECenter  function moves the molecule so that its center of mass
+is located at the Cartesian position origin.  An optional array t can be
+passed in, which
+will be filled with the vector which describes the translation to move the
+molecule back to its original position.  For the OEMolBase and OEConfBaseT
+overloads, the t array, if present, is assumed to be at least of length three.
+For the OEMCMolBaseT overload, the t array is assumed to be at least of length
+ OEMCMolBaseT::GetMaxConfIdx()*3 .  In this case, the vector to move
+and conformer back to its original position would be located at
+ t[OEConfBaseT::GetIdx()*3] .
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.27 OEChemGetVersion 
+ Up:   4. OEChem Functions 
+ Next:   4.29 OEClearAromaticFlags 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

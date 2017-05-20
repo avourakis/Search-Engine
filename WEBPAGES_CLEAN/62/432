@@ -1,0 +1,72 @@
+ /* convert dictionary (in one-word-per-line format) into trie
+   David Eppstein, UC Irvine, 27 Sep 2000
+
+   In more detail, we output a sequence of bytes, forming a tree.
+   Each byte has:
+       bit 7: on if tree node has a child, off otherwise
+       bit 6: on if tree node has a sibling, off otherwise
+       bit 5: off if tree node represents a word, off otherwise
+       bits 4-0: the character
+
+   Prior to the tree, we output a sequence of 32 bytes
+   describing what each combination of bits 4-0 should be translated to.
+   */
+
+#include 
+
+void *malloc(long);
+
+struct node {
+    struct node * child;
+    struct node * sibling;
+    char data;
+    char isword;
+};
+
+int encoding[256];
+int decoding[32];
+int lasttrans = -1;
+
+void output(struct node * root) {
+    while (root != 0) {
+	int byte = encoding[root-&gt;data]; /* find translation of data */
+	if (root-&gt;child) byte |= (1sibling) byte |= (1isword) byte |= (1child);
+	root = root-&gt;sibling;
+    }
+}
+
+struct node * newNode(int c) {
+    /* make new node and fill in its fields */
+    struct node * n = malloc(sizeof(struct node));
+    n-&gt;child = 0;
+    n-&gt;sibling = 0;
+    n-&gt;data = c;
+    n-&gt;isword = 0;
+
+    /* now make sure its char has an encoding */
+    if (encoding[c]  037) {
+	    fprintf(stderr, "Too many distinct chars in input!\n");
+	    for (lasttrans = 0; lasttrans data) {
+	if (n-&gt;sibling == 0) n-&gt;sibling = newNode(c);
+	n = n-&gt;sibling;
+    }
+
+    /* test if more characters in word, if so call self recursively */
+    c = getchar();
+    if (c == '\n' || c == ' ')
+    {
+	while (c != '\n') c = getchar();
+	n-&gt;isword = 1;
+    }
+    else {
+	ungetc(c,stdin);
+	n-&gt;child = readWord(n-&gt;child);
+    }
+
+    return root;
+}
+
+int main(int ac, char** av) {
+    int i;
+    struct node * root;
+    for (i = 0; i  

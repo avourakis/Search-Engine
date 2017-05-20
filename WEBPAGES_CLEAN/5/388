@@ -1,0 +1,638 @@
+ 
+RemoteFileSystemView
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.remoteView.FileSystem 
+ 
+Class RemoteFileSystemView 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.remoteView.FileSystem.RemoteFileSystemView 
+ 
+   All Implemented Interfaces:    java.awt.event.FocusListener, java.awt.event.MouseListener, java.util.EventListener, javax.swing.event.ListSelectionListener,  IRemoteFileSystemView ,  IRemoteView  
+    Direct Known Subclasses:     RemoteFileSearchView  
+     public class  RemoteFileSystemView   extends java.lang.Object implements  IRemoteFileSystemView , java.awt.event.FocusListener, java.awt.event.MouseListener, javax.swing.event.ListSelectionListener     
+   
+
+
+  
+     
+ Field Summary   
+    
+ protected static java.util.HashMap&lt;java.lang.String,java.lang.String&gt;   
+    actions   
+
+ 
+            
+    
+ protected   RemoteFileSystemPopupMenu    
+    popupMenu   
+
+ 
+            
+    
+ protected  javax.swing.JScrollPane   
+    scrollPane   
+
+ 
+            
+    
+ protected   AbstractStorageServer    
+    server   
+
+ 
+            
+    
+  java.lang.String   
+    structure_name   
+
+ 
+            
+    
+ protected   XmlFileSystemModel    
+    system   
+
+ 
+            
+    
+ protected   RemoteFileSystemViewModel    
+    tableModel   
+
+ 
+            
+    
+ protected  javax.swing.JTable   
+    theList   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      RemoteFileSystemView  () 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    addFile  ( AbstractObjectData  object) 
+
+ 
+            
+    
+  void   
+    addItem  ( FileObjectData  file) 
+
+ 
+            
+    
+  void   
+    associateServer  ( AbstractStorageServer  s) 
+
+ 
+            
+    
+  void   
+    clearAllFiles  () 
+
+ 
+            
+    
+  void   
+    deleteFile  (java.lang.String fileId) 
+
+ 
+            
+    
+  void   
+    displayContentsOfDirectory  (java.lang.String dirId) 
+
+ 
+            
+    
+  void   
+    focusGained  (java.awt.event.FocusEvent e) 
+
+ 
+            
+    
+  void   
+    focusLost  (java.awt.event.FocusEvent e) 
+
+ 
+            
+    
+  void   
+    format  () 
+
+ 
+            
+    
+  java.lang.String   
+    getAction  (java.lang.String actionType) 
+
+ 
+            
+    
+  javax.swing.JPopupMenu   
+    getFilePopupMenu  () 
+
+ 
+            
+    
+   XmlFileSystemModel    
+    getFileSystem  () 
+
+ 
+            
+    
+  javax.swing.JPopupMenu   
+    getFolderPopupMenu  () 
+
+ 
+            
+    
+  javax.swing.JComponent   
+    getOutputPane  () 
+
+ 
+            
+    
+  java.util.Random   
+    getRandom  () 
+
+ 
+            
+    
+   AbstractStorageServer    
+    getRemoteServer  () 
+
+ 
+            
+    
+  java.lang.String   
+    getRemoteUniqueCode  () 
+
+ 
+            
+    
+  javax.swing.JScrollPane   
+    getScrollPane  () 
+
+ 
+            
+    
+   AbstractObjectData    
+    getSelectedFile  () 
+
+ 
+            
+    
+   AbstractObjectData []   
+    getSelectedFiles  () 
+
+ 
+            
+    
+  java.lang.String[]   
+    getSelectedFilesName  () 
+
+ 
+            
+    
+  int   
+    getSelectedFilesNumber  () 
+
+ 
+            
+    
+  javax.swing.JPopupMenu   
+    getVoidPopupMenu  () 
+
+ 
+            
+    
+ protected  void   
+    initializeMenuItem  () 
+
+ 
+            
+    
+  void   
+    mouseClicked  (java.awt.event.MouseEvent e) 
+
+ 
+            
+    
+  void   
+    mouseEntered  (java.awt.event.MouseEvent e) 
+
+ 
+            
+    
+  void   
+    mouseExited  (java.awt.event.MouseEvent e) 
+
+ 
+            
+    
+  void   
+    mousePressed  (java.awt.event.MouseEvent e) 
+
+ 
+            
+    
+  void   
+    mouseReleased  (java.awt.event.MouseEvent e) 
+
+ 
+            
+    
+  void   
+    openDirectory  (java.lang.String dirName) 
+
+ 
+            
+    
+  void   
+    populate  () 
+
+ 
+            
+    
+  void   
+    refresh  () 
+
+ 
+            
+    
+  void   
+    setSystem  ( XmlFileSystemModel  system) 
+
+ 
+            
+    
+ protected  void   
+    setupColumns  () 
+
+ 
+            
+    
+  void   
+    valueChanged  (javax.swing.event.ListSelectionEvent e) 
+
+ 
+            
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+structure_name 
+ 
+public final java.lang.String  structure_name  
+    See Also:    Constant Field Values        
+theList 
+ 
+protected javax.swing.JTable  theList  
+        
+tableModel 
+ 
+protected  RemoteFileSystemViewModel   tableModel  
+        
+scrollPane 
+ 
+protected javax.swing.JScrollPane  scrollPane  
+        
+system 
+ 
+protected  XmlFileSystemModel   system  
+        
+server 
+ 
+protected  AbstractStorageServer   server  
+        
+popupMenu 
+ 
+protected  RemoteFileSystemPopupMenu   popupMenu  
+        
+actions 
+ 
+protected static java.util.HashMap&lt;java.lang.String,java.lang.String&gt;  actions  
+      
+    
+ Constructor Detail   
+     
+RemoteFileSystemView 
+ 
+public  RemoteFileSystemView () 
+    
+    
+ Method Detail   
+     
+getScrollPane 
+ 
+public javax.swing.JScrollPane  getScrollPane () 
+     
+    
+     
+setupColumns 
+ 
+protected void  setupColumns () 
+     
+    
+     
+addItem 
+ 
+public void  addItem ( FileObjectData  file) 
+     
+    
+     
+displayContentsOfDirectory 
+ 
+public void  displayContentsOfDirectory (java.lang.String dirId) 
+     Specified by:     displayContentsOfDirectory   in interface   IRemoteFileSystemView     
+    
+     
+focusGained 
+ 
+public void  focusGained (java.awt.event.FocusEvent e) 
+     Specified by:    focusGained  in interface  java.awt.event.FocusListener    
+    
+     
+focusLost 
+ 
+public void  focusLost (java.awt.event.FocusEvent e) 
+     Specified by:    focusLost  in interface  java.awt.event.FocusListener    
+    
+     
+refresh 
+ 
+public void  refresh () 
+     Specified by:     refresh   in interface   IRemoteFileSystemView     
+    
+     
+clearAllFiles 
+ 
+public void  clearAllFiles () 
+     
+    
+     
+mouseClicked 
+ 
+public void  mouseClicked (java.awt.event.MouseEvent e) 
+     Specified by:    mouseClicked  in interface  java.awt.event.MouseListener    
+    
+     
+mousePressed 
+ 
+public void  mousePressed (java.awt.event.MouseEvent e) 
+     Specified by:    mousePressed  in interface  java.awt.event.MouseListener    
+    
+     
+mouseReleased 
+ 
+public void  mouseReleased (java.awt.event.MouseEvent e) 
+     Specified by:    mouseReleased  in interface  java.awt.event.MouseListener    
+    
+     
+mouseEntered 
+ 
+public void  mouseEntered (java.awt.event.MouseEvent e) 
+     Specified by:    mouseEntered  in interface  java.awt.event.MouseListener    
+    
+     
+mouseExited 
+ 
+public void  mouseExited (java.awt.event.MouseEvent e) 
+     Specified by:    mouseExited  in interface  java.awt.event.MouseListener    
+    
+     
+getFileSystem 
+ 
+public  XmlFileSystemModel   getFileSystem () 
+     Specified by:     getFileSystem   in interface   IRemoteFileSystemView     
+    
+     
+setSystem 
+ 
+public void  setSystem ( XmlFileSystemModel  system) 
+     
+    
+     
+valueChanged 
+ 
+public void  valueChanged (javax.swing.event.ListSelectionEvent e) 
+     Specified by:    valueChanged  in interface  javax.swing.event.ListSelectionListener    
+    
+     
+getOutputPane 
+ 
+public javax.swing.JComponent  getOutputPane () 
+     Specified by:     getOutputPane   in interface   IRemoteView     
+    
+     
+populate 
+ 
+public void  populate () 
+     Specified by:     populate   in interface   IRemoteView     
+    
+     
+addFile 
+ 
+public void  addFile ( AbstractObjectData  object) 
+     Specified by:     addFile   in interface   IRemoteFileSystemView     
+    
+     
+deleteFile 
+ 
+public void  deleteFile (java.lang.String fileId) 
+     Specified by:     deleteFile   in interface   IRemoteFileSystemView     
+    
+     
+format 
+ 
+public void  format () 
+     Specified by:     format   in interface   IRemoteFileSystemView     
+    
+     
+getSelectedFile 
+ 
+public  AbstractObjectData   getSelectedFile () 
+     Specified by:     getSelectedFile   in interface   IRemoteFileSystemView     
+    
+     
+getSelectedFiles 
+ 
+public  AbstractObjectData []  getSelectedFiles () 
+     Specified by:     getSelectedFiles   in interface   IRemoteFileSystemView     
+    
+     
+getSelectedFilesName 
+ 
+public java.lang.String[]  getSelectedFilesName () 
+     Specified by:     getSelectedFilesName   in interface   IRemoteFileSystemView     
+    
+     
+getSelectedFilesNumber 
+ 
+public int  getSelectedFilesNumber () 
+     Specified by:     getSelectedFilesNumber   in interface   IRemoteFileSystemView     
+    
+     
+openDirectory 
+ 
+public void  openDirectory (java.lang.String dirName) 
+     Specified by:     openDirectory   in interface   IRemoteFileSystemView     
+    
+     
+associateServer 
+ 
+public void  associateServer ( AbstractStorageServer  s) 
+     Specified by:     associateServer   in interface   IRemoteView     
+    
+     
+getRemoteServer 
+ 
+public  AbstractStorageServer   getRemoteServer () 
+     Specified by:     getRemoteServer   in interface   IRemoteView     
+    
+     
+getRandom 
+ 
+public java.util.Random  getRandom () 
+     
+    
+     
+getAction 
+ 
+public java.lang.String  getAction (java.lang.String actionType) 
+     Specified by:     getAction   in interface   IRemoteView     
+    
+     
+getRemoteUniqueCode 
+ 
+public java.lang.String  getRemoteUniqueCode () 
+     Specified by:     getRemoteUniqueCode   in interface   IRemoteView     
+    
+     
+initializeMenuItem 
+ 
+protected void  initializeMenuItem () 
+     
+    
+     
+getFilePopupMenu 
+ 
+public javax.swing.JPopupMenu  getFilePopupMenu () 
+     Specified by:     getFilePopupMenu   in interface   IRemoteFileSystemView     
+    
+     
+getFolderPopupMenu 
+ 
+public javax.swing.JPopupMenu  getFolderPopupMenu () 
+     Specified by:     getFolderPopupMenu   in interface   IRemoteFileSystemView     
+    
+     
+getVoidPopupMenu 
+ 
+public javax.swing.JPopupMenu  getVoidPopupMenu () 
+     Specified by:     getVoidPopupMenu   in interface   IRemoteFileSystemView     
+    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+   NEXT CLASS    
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

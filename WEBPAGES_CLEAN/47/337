@@ -1,0 +1,175 @@
+ DataGuard -
+    DataGuard 
+     
+                   
+
+                                              
+                     
+          
+     
+     
+
+
+
+
+
+
+
+             
+        Last Published: 03/12/2008
+                       
+             
+
+
+
+
+
+
+   
+       
+          
+     
+     
+       
+
+
+
+
+
+
+
+                    DataGuard 
+          
+               Home 
+         
+
+     
+               Download 
+         
+
+     
+               Screenshot 
+         
+
+     
+               User Guide 
+         
+
+     
+               People 
+         
+            Overview 
+          
+               Architecture 
+         
+
+     
+               Translational Layers</strong>
+         
+
+     
+               Future work 
+         
+            Documentation 
+          
+               JavaDoc 
+         
+
+     
+               Add a Layer 
+         
+
+     
+               Source Code 
+         
+            
+              
+
+
+
+
+
+
+
+         
+     
+     
+       
+
+
+
+        Translational Layer 
+
+    	    What are translational layers? 
+    		 
+    			The translational layers are trusted software component which run
+    			inside the client machine. They cointain the server specific implementation
+    			that is required by the DataGuard middleware.
+    		 
+    		 
+    			A simple translational layer contain the implementation of five functions.
+    		 
+    		  
+    			public int connect(String username, String password);
+    			public int disconnect();
+    			public int store(AbstractObjectData O);
+    			public int fetch(AbstractObjectData O);
+    			public int delete(AbstractObjectData O);
+    		  
+    		 
+    			The functions connect and disconnect open and close a session with
+    			the Internet Data Provider. The funtction store(AbstractObjectData O) stores
+    			an object O at the server and the function fetch(AbstractObjectData O)
+    			retrieves the object from the server. The function delete(AbstractObjectData O)
+    			deletes the object O stored at the server.
+    		 
+    	 
+
+    	    RESCUE DB2 
+    		 
+    			The first translational layer has been built on top of a DB2 database.
+    		 
+    	 
+
+    	    Gmail 
+	    	 
+	    		Probably everybody has a Gmail account, or more than one. So, why don't use
+	    		all the storage space offered by Gmail?.
+	    		This layer built a secure network file system on top of Gmail. Using
+	    		this layer you will transform your Gmail account into a secure file storage
+	    		space.
+	    	 
+    	 
+
+    	    Amazon S3 
+	    	 
+	    		Amazon S3 is a storage for the Internet. It provides a simple web services
+	    		interface that can be used to store and retrieve any amount of data, at anytime,
+	    		from anywhere on the web. Then, exactly what I need to build another secure
+	    		network file system.
+	    	 
+    	 
+
+     
+
+  Roberto Gamboni - March 2008 
+     
+     
+        
+     
+       ©
+          2007
+
+
+
+
+
+
+
+
+   
+       
+          
+     
+
+</body> 

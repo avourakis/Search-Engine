@@ -1,0 +1,61 @@
+ PMVS by Jia Chen<body> Patch-based Multi View Stereo      Introduction  This
+project is an implementation of PAMI 2010 paper "Accurate, dense, and
+robust multi-view stereopsis" by Yasutaka Furukawa and Jean Ponce. The
+system is able to reconstruct patches from a set of calibrated images,
+by going through the match -&gt; expand -&gt; filter procedure. Some of
+the results are shown as below. Since currently only the patch
+reconstruction part of the algorithm (section III of the paper) is
+implemented, the polygonal mesh cannot be generated yet. Besides that,
+considering that there are still a big space to be improved for my
+current patch reconstruction result, I expect everything to be ready in
+early March.         Source code (Feb 22, 2014 version)   Patches generated for Skull data set (Feb 22, 2014)  can be viewed by PatchViewer provided by  PMVS    Algorithm and Implementation Details  Step 1. Initial Match  1.1 Feature Detection  For
+each images, blob and corner features are detected by Harris and
+DoG operators, as shown below.  Currently, for convenience, this
+part is implemented with OpenCV (Version 2.6.4), which lead my
+implementation dependent on OpenCV, so I plan to replace it with my own
+code later.         1.2 Feature Matching  Since
+all the images are calibrated, for each feature f0 in image 0 (as shown
+in the left figure), we can determine the epipolar line in another
+image i from their corresponding projection matrices (shown as green
+line in the figure below). And only the features (1) fall on the
+epipolar line and (2) with the same type (Harris or DoG) as the
+reference feature wil be considered as matching candidates.  For
+the epipolar geometry calculation, I tried to use OpenCV at first, but
+the results produce by OpenCV triangulation methods seems quite
+problematic. So I had to create my own implementation, and found the
+bible book "Multiple view geometry in computer vision" an excellent
+reference for implementing this.         Left:
+A feature detected in view 0, Right: the epipolar line are shown as
+green,  while the matching candidates are red points   1.3 Initial Match  As
+shown in the figure above, there are often multiple candidates which
+meet geometry constraints, so we still have to filter out those fake
+positives with photometric discrepancy function as eq (1) in the paper.
+ For this part, I generally follows the algorithm below. Except for
+the Patch Optimization (Refine) part, while the conjugate gradient
+method was applied by the paper using Wnlib library, I met some
+problems when compiling Wnlib under Windows. So as a temporary
+solution, I applied a simple searching method (iteratively search for
+minimum point in the nearby value space) instead, which I think
+although slower, but should have the same effect as conjugate gradient
+method.         Step 2. Expansion   As
+the initial match has only a sparse set of patches, expansion is
+important to produce patches dense enough for reconstruction. In this
+stage, I followed the algorithm below. And since most of the patches
+are actually added into patch list in this stage, expansion took the
+most of processing time (70% percent of total time).          Step 3. Filtering Currently
+filtering is the most problematic part of the system, some outliers are
+not filtered out properly.  A big improvement is expected to be
+done.   Known Issues and Future Work  As the project is still on going, the tasks below are to be finished:  1. The filtering issue mentioned above.  2. Polygonal mesh reconstruction.  3.
+Performance improvement. This implementation runs over an hour to
+produce patches, while official PMVS needs less than 20 minutes. I
+guess that the reasons for the performance issue include:  (1) The
+searching method I applied in patch optimization is much slower than
+conjugate gradient method (2) PMVS might apply multi thread (or GPU ? I
+am not sure) (3) Some calculation duplication in my implementation  4.
+PatchViewer. Currently the 3D views are rendered using PatchViewer
+provided by PMVS, as a customized viewer will provide more convenience
+for debugging and testing, I plan to implement my own PatchViewer in
+next step.  References:  1.
+Furukawa Y, Ponce J. Accurate, dense, and robust multiview
+stereopsis[J]. Pattern Analysis and Machine Intelligence, IEEE
+Transactions on, 2010, 32(8): 1362-1376. 2. R. I. Hartley and A. Zisserman,Multiple View Geometry in Computer Vision. Cambridge University Press, 2004. </body> 

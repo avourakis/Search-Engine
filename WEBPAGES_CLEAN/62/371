@@ -1,0 +1,303 @@
+ // Copyright 2007, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: wan@google.com (Zhanyong Wan)
+
+#include "gtest/internal/gtest-tuple.h"
+#include 
+#include "gtest/gtest.h"
+
+namespace {
+
+using ::std::tr1::get;
+using ::std::tr1::make_tuple;
+using ::std::tr1::tuple;
+using ::std::tr1::tuple_element;
+using ::std::tr1::tuple_size;
+using ::testing::StaticAssertTypeEq;
+
+// Tests that tuple_element &gt;::type returns TK.
+TEST(tuple_element_Test, ReturnsElementType) {
+  StaticAssertTypeEq &gt;::type&gt;();
+  StaticAssertTypeEq &gt;::type&gt;();
+  StaticAssertTypeEq &gt;::type&gt;();
+}
+
+// Tests that tuple_size::value gives the number of fields in tuple
+// type T.
+TEST(tuple_size_Test, ReturnsNumberOfFields) {
+  EXPECT_EQ(0, +tuple_size &gt;::value);
+  EXPECT_EQ(1, +tuple_size &gt;::value);
+  EXPECT_EQ(1, +tuple_size &gt;::value);
+  EXPECT_EQ(1, +(tuple_size &gt; &gt;::value));
+  EXPECT_EQ(2, +(tuple_size &gt;::value));
+  EXPECT_EQ(3, +(tuple_size &gt;::value));
+}
+
+// Tests comparing a tuple with itself.
+TEST(ComparisonTest, ComparesWithSelf) {
+  const tuple a(5, 'a', false);
+
+  EXPECT_TRUE(a == a);
+  EXPECT_FALSE(a != a);
+}
+
+// Tests comparing two tuples with the same value.
+TEST(ComparisonTest, ComparesEqualTuples) {
+  const tuple a(5, true), b(5, true);
+
+  EXPECT_TRUE(a == b);
+  EXPECT_FALSE(a != b);
+}
+
+// Tests comparing two different tuples that have no reference fields.
+TEST(ComparisonTest, ComparesUnequalTuplesWithoutReferenceFields) {
+  typedef tuple FooTuple;
+
+  const FooTuple a(0, 'x');
+  const FooTuple b(1, 'a');
+
+  EXPECT_TRUE(a != b);
+  EXPECT_FALSE(a == b);
+
+  const FooTuple c(1, 'b');
+
+  EXPECT_TRUE(b != c);
+  EXPECT_FALSE(b == c);
+}
+
+// Tests comparing two different tuples that have reference fields.
+TEST(ComparisonTest, ComparesUnequalTuplesWithReferenceFields) {
+  typedef tuple FooTuple;
+
+  int i = 5;
+  const char ch = 'a';
+  const FooTuple a(i, ch);
+
+  int j = 6;
+  const FooTuple b(j, ch);
+
+  EXPECT_TRUE(a != b);
+  EXPECT_FALSE(a == b);
+
+  j = 5;
+  const char ch2 = 'b';
+  const FooTuple c(j, ch2);
+
+  EXPECT_TRUE(b != c);
+  EXPECT_FALSE(b == c);
+}
+
+// Tests that a tuple field with a reference type is an alias of the
+// variable it's supposed to reference.
+TEST(ReferenceFieldTest, IsAliasOfReferencedVariable) {
+  int n = 0;
+  tuple t(true, n);
+
+  n = 1;
+  EXPECT_EQ(n, get(t))
+      ().
+  EXPECT_EQ(&amp;n, &amp;(get(t)))
+      (t) = 2;
+  EXPECT_EQ(2, n)
+       empty;
+
+  tuple a1, b1;
+  b1 = a1;
+  EXPECT_EQ(0, get(b1));
+
+  tuple a2, b2;
+  b2 = a2;
+  EXPECT_EQ(0, get(b2));
+  EXPECT_EQ(0.0, get(b2));
+
+  tuple a3, b3;
+  b3 = a3;
+  EXPECT_EQ(0.0, get(b3));
+  EXPECT_EQ('\0', get(b3));
+  EXPECT_TRUE(get(b3) == NULL);
+
+  tuple a10, b10;
+  b10 = a10;
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+  EXPECT_EQ(0, get(b10));
+}
+
+// Tests constructing a tuple from its fields.
+TEST(TupleConstructorTest, ConstructsFromFields) {
+  int n = 1;
+  // Reference field.
+  tuple a(n);
+  EXPECT_EQ(&amp;n, &amp;(get(a)));
+
+  // Non-reference fields.
+  tuple b(5, 'a');
+  EXPECT_EQ(5, get(b));
+  EXPECT_EQ('a', get(b));
+
+  // Const reference field.
+  const int m = 2;
+  tuple c(true, m);
+  EXPECT_TRUE(get(c));
+  EXPECT_EQ(&amp;m, &amp;(get(c)));
+}
+
+// Tests tuple's copy constructor.
+TEST(TupleConstructorTest, CopyConstructor) {
+  tuple a(0.0, true);
+  tuple b(a);
+
+  EXPECT_DOUBLE_EQ(0.0, get(b));
+  EXPECT_TRUE(get(b));
+}
+
+// Tests constructing a tuple from another tuple that has a compatible
+// but different type.
+TEST(TupleConstructorTest, ConstructsFromDifferentTupleType) {
+  tuple a(0, 1, 'a');
+  tuple b(a);
+
+  EXPECT_DOUBLE_EQ(0.0, get(b));
+  EXPECT_EQ(1, get(b));
+  EXPECT_EQ('a', get(b));
+}
+
+// Tests constructing a 2-tuple from an std::pair.
+TEST(TupleConstructorTest, ConstructsFromPair) {
+  ::std::pair a(1, 'a');
+  tuple b(a);
+  tuple c(a);
+}
+
+// Tests assigning a tuple to another tuple with the same type.
+TEST(TupleAssignmentTest, AssignsToSameTupleType) {
+  const tuple a(5, 7L);
+  tuple b;
+  b = a;
+  EXPECT_EQ(5, get(b));
+  EXPECT_EQ(7L, get(b));
+}
+
+// Tests assigning a tuple to another tuple with a different but
+// compatible type.
+TEST(TupleAssignmentTest, AssignsToDifferentTupleType) {
+  const tuple a(1, 7L, true);
+  tuple b;
+  b = a;
+  EXPECT_EQ(1L, get(b));
+  EXPECT_EQ(7, get(b));
+  EXPECT_TRUE(get(b));
+}
+
+// Tests assigning an std::pair to a 2-tuple.
+TEST(TupleAssignmentTest, AssignsFromPair) {
+  const ::std::pair a(5, true);
+  tuple b;
+  b = a;
+  EXPECT_EQ(5, get(b));
+  EXPECT_TRUE(get(b));
+
+  tuple c;
+  c = a;
+  EXPECT_EQ(5L, get(c));
+  EXPECT_TRUE(get(c));
+}
+
+// A fixture for testing big tuples.
+class BigTupleTest : public testing::Test {
+ protected:
+  typedef tuple BigTuple;
+
+  BigTupleTest() :
+      a_(1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+      b_(1, 0, 0, 0, 0, 0, 0, 0, 0, 3) {}
+
+  BigTuple a_, b_;
+};
+
+// Tests constructing big tuples.
+TEST_F(BigTupleTest, Construction) {
+  BigTuple a;
+  BigTuple b(b_);
+}
+
+// Tests that get(t) returns the N-th (0-based) field of tuple t.
+TEST_F(BigTupleTest, get) {
+  EXPECT_EQ(1, get(a_));
+  EXPECT_EQ(2, get(a_));
+
+  // Tests that get() works on a const tuple too.
+  const BigTuple a(a_);
+  EXPECT_EQ(1, get(a));
+  EXPECT_EQ(2, get(a));
+}
+
+// Tests comparing big tuples.
+TEST_F(BigTupleTest, Comparisons) {
+  EXPECT_TRUE(a_ == a_);
+  EXPECT_FALSE(a_ != a_);
+
+  EXPECT_TRUE(a_ != b_);
+  EXPECT_FALSE(a_ == b_);
+}
+
+TEST(MakeTupleTest, WorksForScalarTypes) {
+  tuple a;
+  a = make_tuple(true, 5);
+  EXPECT_TRUE(get(a));
+  EXPECT_EQ(5, get(a));
+
+  tuple b;
+  b = make_tuple('a', 'b', 5);
+  EXPECT_EQ('a', get(b));
+  EXPECT_EQ('b', get(b));
+  EXPECT_EQ(5, get(b));
+}
+
+TEST(MakeTupleTest, WorksForPointers) {
+  int a[] = { 1, 2, 3, 4 };
+  const char* const str = "hi";
+  int* const p = a;
+
+  tuple t;
+  t = make_tuple(str, p);
+  EXPECT_EQ(str, get(t));
+  EXPECT_EQ(p, get(t));
+}
+
+}  // namespace
+ 

@@ -1,0 +1,286 @@
+ Box_intersection_d::Box_d&lt;NT,int D,IdPolicy&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Box_intersection_d::Box_d&lt;NT,int D,IdPolicy&gt;  
+
+
+ Definition 
+ 
+
+  Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt;  is a generic iso-oriented bounding box in dimension  D .
+It provides in each dimension an interval with lower and upper
+endpoints represented with the number type  NT .  This class is
+designed to work smoothly with the algorithms for intersecting
+sequences of iso-oriented boxes. For degeneracy handling, the boxes
+need to provide a unique  id -number. The policy parameter
+ IdPolicy  offers several choices. The template parameters have to
+comply with the following requirements:
+  
+
+    NT : number type for the box boundaries, needs to be a model
+    of the  Assignable  and the  LessThanComparable  concept.
+     int D : the dimension of the box.
+     IdPolicy : specifies how the  id -number will be
+    provided. Can be one of the following types, where
+     ID_EXPLICIT  is the default for this parameter:
+       ID_NONE : no  id -number is provided. Can be useful
+        if  Box_d  is used as a base class for a different
+        implementation of  id -numbers than the ones provided
+        here.
+         ID_EXPLICIT : the  id -number is stored explicitly in
+        the box and automatically created and assigned at construction
+        time of the box. Note that copying a box (copy-constructor and
+        assignment) does not create a new  id -number but keeps
+        the old one, which is the behavior needed by the
+         CGAL::box_self_intersection  algorithm. This is therefore
+        the safe default implementation. 
+         ID_FROM_BOX_ADDRESS : casts the address of the box into a
+         std::ptrdiff_t  to create the  id -number. Works fine 
+        if the  intersection  algorithms work effectively with pointers
+        to boxes, but not in the case where the algorithms work with
+        box values, because the algorithms modify the order of the
+        boxes, and the  CGAL::box_self_intersection  algorithm
+        creates copies of the boxes that would not have identical
+         id -numbers.  
+         
+
+ #include &lt; CGAL/Box_intersection_d/Box_d.h &gt; 
+  
+
+ 
+
+and also automatically with  #include &lt; CGAL/box_intersection_d.h &gt; 
+  
+
+  Is Model for the Concept 
+ 
+
+  BoxIntersectionBox_d  
+  
+
+  Types 
+ 
+
+    
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt;::NT
+         
+              
+    number type to represent the box
+  boundaries. Allowed  are the builtin types  int ,  unsigned   int ,  float , and  double .
+ 
+
+     
+
+            
+           
+  
+typedef std::size_t
+         
+              
+         
+    ID;
+         
+          
+    type for the box  id -number.
+            
+
+  Creation 
+ 
+
+    
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt; box;
+         
+              
+    Default constructor. No particular initialization.
+ 
+
+          
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt; box ( bool complete);
+         
+              
+    initializes to the complete or 
+  the empty space. If empty, all interval starting(end) points will be
+  set to positive(negative) infinity.
+ 
+
+          
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt; box ( NT lo[D],  NT hi[D]);
+         
+              
+    initializes the box
+  intervals to [ lo[i] , hi[i] ],  0    i &lt; D .  Precondition:   lo[i]   &lt;  hi[i]  for  0    i &lt; D .
+ 
+
+          
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt; box (   Bbox_2  bbox);
+         
+              
+    constructs from bbox,
+  exists iff  D=2  and  NT       double .
+ 
+
+     
+          Box_intersection_d::Box_d &lt;NT,int D,IdPolicy&gt; box (   Bbox_3  bbox);
+         
+              
+    constructs from bbox,
+  exists iff  D=3  and  NT       double .
+ 
+
+     
+
+  Modifiers 
+ 
+
+    
+           
+void
+         
+          
+         
+    box.init ( bool complete = false)
+         
+                
+    initializes to the complete or 
+  the empty space. If empty, all interval starting(end) points will be
+  set to positive(negative) infinity.
+                 
+           
+void
+         
+          
+         
+    box.extend ( NT point[D])
+         
+                
+    extend  box  to contain the
+  old  box  and  point .
+            
+
+  Access Functions 
+ 
+
+    
+           
+int
+         
+          
+         
+    Box_d::dimension ()
+         
+                
+    returns  D , the dimension of the box.
+                 
+           
+std::size_t
+         
+          
+         
+    box.id ()
+         
+          
+    returns a unique box id, see the
+   IdPolicy  template parameter above for the different
+  choices. Does not exist if  ID_NONE  has been chosen for the
+   IdPolicy .
+                 
+           
+NT
+         
+          
+         
+    box.min_coord ( int d)
+         
+                
+    returns the lower boundary in dimension  d ,  0     d   &lt; D .
+                 
+           
+NT
+         
+          
+         
+    box.max_coord ( int d)
+         
+                
+    returns the upper boundary in dimension  d ,  0     d   &lt; D .
+                 
+           
+  Bbox_2 
+         
+          
+         
+    box.bbox ()
+         
+          
+    returns the bounding box iff
+   D=2  and  NT       double .
+            
+           
+  Bbox_3 
+         
+          
+         
+    box.bbox ()
+         
+          
+    returns the bounding box iff
+   D=3  and  NT       double .
+            
+
+  See Also 
+ 
+
+  CGAL::box_intersection_d     CGAL::box_self_intersection_d     CGAL::box_intersection_all_pairs_d     CGAL::box_self_intersection_all_pairs_d  
+  
+
+  CGAL::Box_intersection_d::Box_with_handle_d &lt;NT, int D,  Handle , IdPolicy&gt; 
+  
+
+  CGAL::Box_intersection_d::Box_traits_d &lt;BoxHandle&gt;    BoxIntersectionTraits_d  
+  
+
+    Next:    Box_intersection_d::Box_traits_d&lt;BoxHandle&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

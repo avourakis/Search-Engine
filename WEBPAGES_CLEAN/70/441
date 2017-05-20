@@ -1,0 +1,87 @@
+   
+  Class c2.framework.SimpleArchitecture
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.SimpleArchitecture
+ 
+ 
+ java.lang.Object 
+   |
+   +---- c2.framework.Brick 
+           |
+           +---- c2.framework.Component 
+                   |
+                   +---- c2.framework.Architecture 
+                           |
+                           +----c2.framework.SimpleArchitecture
+ 
+    public class  SimpleArchitecture 
+    extends  Architecture 
+   
+Implements a stand-alone C2 architecture that is not connected
+to other components in a system, and thus does not handle any messages.
+    See Also: 
+        Architecture 
+     
+ 
+    
+      SimpleArchitecture  ()
+     
+        SimpleArchitecture  (String)
+     
+   
+    
+      create  (String)
+     Creates and initializes an instance of the SimpleArchitecture.
+        handle  (Notification)
+     Intended to handle notifications the architecture receives.
+        handle  (Request)
+     Intended to handle requests the architecture receives.
+    
+ 
+    
+  
+   
+ SimpleArchitecture 
+ 
+  public SimpleArchitecture()
+ 
+   
+ SimpleArchitecture 
+ 
+  public SimpleArchitecture( String  _name)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  public void create( String  _name)
+ 
+   Creates and initializes an instance of the SimpleArchitecture.
+      Parameters: 
+       name - Name of the architecture.
+         
+  handle  
+ 
+  public synchronized void handle( Request  r)
+ 
+   Intended to handle requests the architecture receives.  It is 
+empty since SimpleArchitecture does not receive any messages.
+      Overrides: 
+        handle  in class  Component 
+         
+  handle  
+ 
+  public synchronized void handle( Notification  n)
+ 
+   Intended to handle notifications the architecture receives.  
+It is empty since SimpleArchitecture does not receive any messages.
+      Overrides: 
+        handle  in class  Component 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

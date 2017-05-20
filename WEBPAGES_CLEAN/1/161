@@ -1,0 +1,101 @@
+   
+  Class Foundation.Objv.ObjectStore
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class Foundation.Objv.ObjectStore
+ 
+ 
+ java.lang.Object 
+   |
+   +----Foundation.Objv.ObjectStore
+ 
+    public class  ObjectStore 
+    extends  Object 
+   
+This is the object for caching Teamware Foundation level objects
+from disk. Objects are stored incore, until changes are made to
+that object, then they are written out to the local directory
+specified by the environment variable TMW_PERSIST externally and
+ObjectClass.tmw_obj_store internally.
+    See Also: 
+        ObjectClass ,  MetaClass 
+     
+ 
+    
+      InternalTable  
+     
+   
+    
+      ObjectStore  ()
+     
+   
+    
+      Delete  (Integer)
+     Delete an object from the local cache.
+        Insert  (Integer, Object)
+     Insert an object into the local cache.
+        Lookup  (Integer)
+     Find an object by it's unique internal id.
+        Lookup  (String)
+     Find an object by it's name.
+        Peek  (Integer)
+     Check to see if an object is locally stored.
+    
+ 
+    
+   
+ InternalTable 
+ 
+  public static  Hashtable  InternalTable
+ 
+  
+ 
+    
+  
+   
+ ObjectStore 
+ 
+  public ObjectStore()
+ 
+  
+ 
+    
+   
+  Lookup  
+ 
+  public static  ObjectClass  Lookup( Integer  pid)
+ 
+   Find an object by it's unique internal id.
+     
+  Lookup  
+ 
+  public static  ObjectClass  Lookup( String  name)
+ 
+   Find an object by it's name.  This operation is
+slightly more expensive as it iterates thorugh
+all available id's matching on name.
+     
+  Peek  
+ 
+  public static boolean Peek( Integer  pid)
+ 
+   Check to see if an object is locally stored.  This is used
+for caching and searching between distributed Foundation levels.
+     
+  Insert  
+ 
+  public static void Insert( Integer  pid,
+                             Object  obj)
+ 
+   Insert an object into the local cache.
+     
+  Delete  
+ 
+  public static void Delete( Integer  pid)
+ 
+   Delete an object from the local cache.
+    
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

@@ -1,0 +1,47 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Fast pair algorithm: hybrid of conga line and nearest neighbors
+
+#include "FastPair.h"
+#include "Error.h"
+
+// Subroutine to find nearest neighbor of a given point
+void FastPair::FindNeighbor(point p)
+{
+	// if no neighbors avail, set flag for UpdatePoint to find
+	if (npoints == 1) {
+		neighbors[p] = p;
+		nbr_dist[p] = MAX_DISTANCE;
+		return;
+	}
+
+	// find first point unequal to p itself
+	int first_nbr = 0;
+	if (p == points[first_nbr]) first_nbr = 1;
+	neighbors[p] = points[first_nbr];
+	nbr_dist[p] = dist(p, neighbors[p]);
+
+	// now test whether each other point is closer
+	for (long i = first_nbr + 1; i  1) {
+	
+		// find neighbor to p[0]
+		point nbr = 1;
+		double nbd = dist(p[0], p[1]);
+		for (i = 2; i  nbr_dist[q]) FindNeighbor(q);
+				else nbr_dist[q] = d;
+			}
+		}
+	}
+}
+
+// Single distance has changed, check if our structures are ok
+void FastPair::UpdateDistance(point p, point q)
+{
+	double d = dist(p,q);
+
+	if (d  nbr_dist[p]) FindNeighbor(p);
+
+	if (d  nbr_dist[q]) FindNeighbor(q);
+}
+ 

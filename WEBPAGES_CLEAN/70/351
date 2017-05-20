@@ -1,0 +1,173 @@
+ ICS 31 Lab 8<body>
+  ICS 31 • DAVID G. KAY • UC IRVINE • FALL 2016  
+   Lab Assignment 8   
+ 
+ This assignment is due  by 10:00 p.m.  on Friday, November 18. Choose a new partner for this assignment, someone you haven't worked with already.
+  Reports from the lab indicate that some students are still not reading the lab problems carefully (if at all). You can't succeed (as a programmer or in this class) if you just skim the problem specifications to "get the general idea" (you can do that the first time through, but then you have to go back to read it in detail, and check back yet again when you run into questions or difficulties). We've said this before, but it bears repeating: Read the problem more
+  than once to be sure you understand precisely what your
+  code is supposed to do.  Come up with some examples that
+  show the code's behavior, inputs or arguments and their
+  expected results.  (These will become your assertions or
+  other tests.)  Follow the  design recipe :  annotations of
+  the types of the parameters and the return value;
+  docstring comments to give a brief "purpose statement";
+  assertions or other tests.  The TAs and tutors won't be
+  able to help you unless and until you can show them
+these things. 
+   
+   Preparation</strong>  (Do this part individually) 
+   (1)</strong>  If you need to go back and re-read some of the assigned portions of the textbook, this is your opportunity to do that. Also, (re-)read section 5.3 in the Perkovic text. 
+
+   (2) </strong>  We will  post some code  to implement a music-management program like the one we worked on in class.  If you're using your own computer, download and run this code to make sure it works in your environment. Then you should read it. Reading code is an important skill, one that beginning programmers ignore too often. Sure, code isn't as easy to read as a novel; you need to go over it carefully and ask yourself what it does and how it works. Don't let this intimidate you! Just take it one function at a time. 
+   
+   Lab Work</strong>  (Do this part with your partner in lab) 
+  (a) </strong>Choose a partner for this assignment and register your partnership using the  partner app , ideally by Monday. Remember that you'll choose a different partner for each lab assignment, so you'll work with this partner only this week. Make sure you know your partner's name (first and last) and contact information (Email or cellphone or whatever) in case one of you can't make it to lab. 
+  (b)</strong> Prepare your  lab8.py  file as in previous labs, including a line like this:  
+ 
+#  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab asst 8.
+ 
+  (c) </strong>     Complete the following set of exercises, using the definition  Dish = namedtuple('Dish', 'name price calories') :
+
+   (c.1)</strong> Download this file and save it in the directory where you've saved your  lab8.py  file: 
+ http://www.ics.uci.edu/~kay/courses/31/hw/menu1.txt .  [In your downloaded copies, keep the filename  menu1.txt ; changing it interferes with accurate grading.] 
+ Take a look at the file's contents:  Its first line is a number; it says how many more lines are in the file.  Each remaining line represents one Dish, with its three field values separated from one another with a tab ( \t ) character. 
+ 
+Write a function called  read_menu_with_count  that  takes as an
+argument a string naming a file in this format, reads the file, and returns a list of Dish structures created  from the data.  (With the list returned by this function, you could print out a menu (dishlist) as you did in a previous lab. You don't have to do that again here; we're just noting how the components might fit.).  Note that the price and calories fields are numbers, so you'll have to convert the text data you read (including getting rid of the dollar sign). 
+ Test that your code also works with this file:
+ http://www.ics.uci.edu/~kay/courses/31/hw/menu2.txt . [Again, use the same file name,   menu2.txt .] 
+
+
+  (c.2)</strong> Next, download and examine this file:
+ http://www.ics.uci.edu/~kay/courses/31/hw/menu3.txt .
+[And don't rename it.] It's similar to the others, in that it contains lines with Dish information.  But there's no count of lines at the top of the file; there's just the data. 
+ 
+Write a function called  read_menu  that  takes as an
+argument a string naming a file in this format, reads the file, and returns a list of Dish structures created  from the data.
+ 
+
+
+
+
+ 
+ (c.3)</strong> Implement the function  write_menu  that takes as its argument a list of Dish namedtuples and a string that names a file.
+Your function should write the Dish data to the named file (in the first format, with the number of dishes on the first line).
+ 
+
+
+
+
+  (d) </strong>These definitions should be familiar:     Course = namedtuple('Course', 'dept num title instr units')
+  # Each field is a string except the number of units
+  ics31 = Course('ICS', '31', 'Intro to Programming', 'Kay', 4.0)
+  ics32 = Course('ICS', '32', 'Programming with Libraries', 'Thornton', 4.0)
+  wr39a = Course('Writing', '39A', 'Intro Composition', 'Alexander', 4.0)
+  wr39b = Course('Writing', '39B', 'Intermediate Composition', 'Gross', 4.0)
+  bio97 = Course('Biology', '97', 'Genetics', 'Smith', 4.0)
+  mgt1  = Course('Management', '1', 'Intro to Management', 'Jones', 2.0)
+  
+  Student = namedtuple('Student', 'ID name level major studylist')
+  # All are strings except studylist, which is a list of Courses.
+  sW = Student('11223344', 'Anteater, Peter', 'FR', 'PSB', [ics31, wr39a, bio97, mgt1])
+  sX = Student('21223344', 'Anteater, Andrea', 'SO', 'CS', [ics31, wr39b, bio97, mgt1])
+  sY = Student('31223344', 'Programmer, Paul', 'FR', 'COG SCI', [ics32, wr39a, bio97])
+  sZ = Student('41223344', 'Programmer, Patsy', 'SR', 'PSB', [ics32, mgt1])
+  
+  StudentBody = [sW, sX, sY, sZ] 
+ 
+  
+   (d.1)</strong> Define the function  Students_at_level  that takes a list of Students and a string
+  (representing a class level, e.g.,  'FR'   or  'SO' ) and returns a list of students whose class
+  level matches the parameter.
+ 
+
+ This kind of task is called  filtering</strong>: It takes a list and returns just selected items from that list, according to
+some selection criterion (in this case, matching the class level). 
+  (d.2)</strong>  Define the function  Students_in_majors   that does another filtering task:
+    It takes a list of Students
+and a list of strings (where each string represents a major) and returns a list of Students that have majors on
+the specified list.
+ 
+
+  (d.3)</strong>  Define the function  Students_in_class   that takes a list of Students, and two strings—a department name
+and a course number (e.g.,  'ICS'   and  '31' )—and returns a list of those Students who 
+    are enrolled in the
+specified class.  You should include definitions of these functions (for more context, see the Winter 2013 second midterm): 
+  def Course_equals(c1: Course, c2: Course) -&gt; bool:
+    ''' Return True if the department and number of c1 match the department and
+	     number of c2 (and False otherwise)
+    '''
+def Course_on_studylist(c: Course, SL: 'list of Course') -&gt; bool:
+    ''' Return True if the course c equals any course on the list SL (where equality
+	     means matching department name and course number) and False otherwise.
+    '''
+def Student_is_enrolled(S: Student, department: str, coursenum: str) -&gt; bool:
+    ''' Return True if the course (department and course number) is on the student's
+	     studylist (and False otherwise)
+    '''  
+
+  (d.4)</strong>  Define the function  Student_names  that takes a list of Students and
+returns a list of just the  names  of those students.
+This is called a  mapping</strong> operation:  We apply one operation (extracting the
+name in this case) to every item on a list and collect the results. 
+
+  (d.5)</strong>  By using these (and similar) filtering and mapping operations, you can easily compute
+results like the following:
+   
+    A list of Students who are majors from the School of ICS (those majors are
+ ['CS', 'CSE', 'BIM', 'INFX', 'CGS', 'SE', 'ICS'] )
+ 
+      
+A list of the  names  of Students who are majors from the School of ICS  
+ 
+     The number of Students who are majors from the School of ICS. This is called a  reducing</strong> operation (or sometimes  folding</strong> or  accumulating</strong>)—it reduces a sequence down to a single value (e.g., by adding up the items) 
+ 
+    A list of the names of seniors who are majors in the School of ICS
+  
+    The number of seniors who are majors from the School of ICS
+  
+    The percentage of majors from the School of ICS who are seniors
+  
+    The number of freshmen who are majors from the School of ICS and enrolled in ICS 31
+ 
+ The average number of units that freshmen in ICS 31 are enrolled in 
+  For each quantity described above, write a statement (or short series of statements)
+to compute and print it.  Enhance your test data collection so you can run meaningful
+tests; you may share test data with your classmates outside your pairs.
+    (e)</strong> Download  the ICStunes program on the lab machine (or whatever machine you and your partner are using) and run it to make sure it works. As you work on this part, make your changes in (copies of) the  ICStunes.py  file you downloaded; use your  lab8.py  file for the other parts of this assignment. 
+  (e.1)</strong> Write a function called  Song_str  that takes a song and returns a string containing that song's information in an easily readable format suitable for printing. You may choose the exact layout. 
+ Then write a function called  Album_str  that takes an album and returns a string containing that album's information (including the  Song_str  information for each song on the album) in an easily readable format suitable for printing. 
+ Test your functions by printing a couple of the sorted collections from the first part of the ICStunes file. 
+ Finally, write a function called  Songdisplay_str  that takes a Songdisplay and returns a string containing that information in an easily readable form suitable for printing. Test it using the results of  top_n_played  (located at the bottom of the ICStunes file). 
+  (e.2)</strong> As we did previously with the albums' year, title, length, and ID, write a key function and a call to the  sort()  method to sort the collection  MUSIC  by the number of tracks on each album, lowest to highest; then print the resulting collection using  Album_str .  
+ Next, sort the collection  MUSIC  by some  other  key to rearrange it. Then perform the number-of-tracks sorting task by calling  collection_sort  and then printing the resulting sorted collection. 
+  (e.3)</strong>
+Write a function called  unplayed_songs  that takes a music collection (a list of albums) and returns a list of Songdisplays, one for each song that has never been played. Print the resulting list using  Songdisplay_str . [Please note: At this point it should be clear to everyone that the print statement does not go inside the  unplayed_songs  function. That function, as specified above,  returns  a list of Songdisplays; you print that result  in the calling program—where you call the function.  That's what this problem specifies.]  
+  (e.4)</strong> Write a function called  length_from_songdisplay  that takes a Songdisplay and returns the length of the song. (This is quick and easy.) 
+  (e.5)</strong> Write a function called  favorite_album  that takes a list of albums and returns the album that is the "favorite." We'll define the favorite album as the one that the user has spent the most time listening to.  [The total time the user has spent listening to an album is computed from the play counts and the song lengths.]  
+ Try to work out this function out together; that's how you learn. Use the following hints only if you're totally stuck (and then take them just one at a time): (i) Write a function  Song_listening_time  that takes a single song and returns the total number of seconds the user has spent listening to it (see above). (ii) Write a function  Album_listening_time  that takes an album and returns the total listening time for all the songs in an album together. (iii) Use  sort()  or  collection_sort  and the functions you defined to implement  favorite_album . 
+ Figure out by hand which album in the collection  MUSIC  has the greatest listening time (it's okay to collaborate with your classmates outside of your partnership on this specific fact); then print (using  Album_str , of course) the result of calling  favorite_album  on the collection  MUSIC  and see if it matches. [Hint: Songdisplays aren't involved in this part.] 
+  (e.6) </strong>Generalize the  top_n_played  function (i.e, make it apply to a broader range of criteria than just play counts) as follows: Write a function called  top_n  that takes a list of albums and a number, as before, plus two additional parameters—(the name of) a function we can use as a sort key for comparing albums and a Boolean (that's true if you want the  n  highest values and false if you want the  n  lowest). Thus, you could use the new  top_n  to produce the same result as
+ top_n_played  by calling    top_n(MUSIC, 3, play_count_from_songdisplay, True)   
+ and you could use it to produce the 10 shortest songs by calling
+   top_n(MUSIC, 10, length_from_songdisplay, False)   
+  (e.7)</strong> Total listening time isn't the only way of determining a favorite album. Generalize your  favorite_album  function by writing a function called   favorite_album2  that takes a list of albums and a second argument—a "favorite measurement function" that   favorite_album2  can apply to each album, comparing those results to determine the favorite. This call to    favorite_album2  would behave the same way as a call to the original    favorite_album  function: 
+  favorite_album2(MUSIC, Album_listening_time) 
+ 
+ Write at least one example of a favorite measurement function other than total listening time. Then test your    favorite_album2  function by applying that new function. [Hint: Songdisplays aren't involved in this part.] 
+  (e.8)</strong> Music manager programs typically provide a search box into which you can type a keyword; the program then searches your collection for songs containing that keyword in their title, their artist, or their album's title. Write a function called   collection_search  that behaves in the same way, taking a collection and a string as parameters and returning a list of Songdisplays of songs whose title, artist, or album title include that string. (We hope you notice that this task is similar to one you've already done in a recent lab.) 
+  (e.9) </strong>Submit your  ICStunes.py  file (including your modifications and any of the original code that you didn't modify) via Checkmate. Running your file should demonstrate the operation of each part of this problem. 
+  (f)</strong> Read over the " Anteater Bed and Breakfast " problem. This will be a large part of Lab Assignment 9; it will be helpful for you to get a head start by reading the specification and learning what it's all about. 
+ Then write and submit a solution to Stage I of the BandB problem, in a file called  BandBI.py . Do not solve or submit more than Stage I; that's for the next lab with a new partner. 
+  </strong> (g)</strong> If time permits, take the opportunity to go back and finish any of the previous weeks' lab problems that you didn't complete. The point of this is less for credit than to let you gain the experience that those problems provided. You may do this with your current partner or individually. 
+  (h)</strong> Remember that each partner must complete a partner evaluation form and submit it individually. Do this using the  partner app . Make sure you know your partner's name, first and last, so you can evaluate the right person.
+  
+Please complete your evaluation by the end of the day on Friday, or Saturday morning at the latest. It only takes a couple of minutes and not doing it hurts your participation score. 
+  What to turn in:</strong> Submit via Checkmate your   lab8.py  file containing your solutions to parts (c) and (d), your  ICStunes.py  file with your solutions to part (e), and your  BandBI.py  file with your solution to part (f). Remember what we've said in previous labs about rereading the assignment and rerunning your Python files. 
+ Also remember that each student must complete a partner evaluation form in the usual manner; these evaluations contribute to your class participation score.  
+   
+  Written by David G. Kay in Fall 2012 for ICS 31, based in part on assignments from ICS H21 and Informatics 41. Modified by David G. Kay, Winter 2013  Fall 2013, Winter 2014, Winter 2015, Fall 2015.  
+    David G. Kay ,  kay@uci.edu      
+Tuesday, September 13, 2016 10:18 AM
+  
+</body> 

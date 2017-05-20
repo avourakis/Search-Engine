@@ -1,0 +1,76 @@
+ Computational Vision | ICS | UC Irvine  
+   
+     Computational Vision at UC Irvine    
+   
+   
+       home  
+        projects  
+        people  
+        publications  
+        datasets  
+        events  
+        courses  
+        contact  
+        links  
+      
+
+   
+     Learning Affinity Functions for Image Segmentation: Combining Patch-Based and Gradient-Based Approaches 
+      Charless Fowlkes , David Martin, Jitendra Malik 
+     
+       
+      This paper studies the problem of combining region and boundary cues for
+natural image segmentation. We employ a large database of manually segmented
+images in order to learn an optimal affinity function between pairs of pixels.
+These pairwise affinities can then be used to cluster the pixels into visually
+coherent groups. Region cues are computed as the similarity in brightness,
+color, and texture between image patches. Boundary cues are incorporated by
+looking for the presence of an "intervening contour", a large gradient along a
+straight line connecting two pixels.
+
+We first use the dataset of human segmentations to individually optimize
+parameters of the patch and gradient features for brightness, color, and
+texture cues. We then quantitatively measure the power of different feature
+combinations by computing the precision and recall of classifiers trained
+using those features. The mutual information between the output of the
+classifiers and the same-segment indicator function provides an alternative
+evaluation technique that yields identical conclusions.
+
+As expected, the best classifier makes use of brightness, color, and
+texture features, in both patch and gradient forms. We find that for
+brightness, the gradient cue outperforms the patch similarity. In
+contrast, using color patch similarity yields better results than using
+color gradients. Texture is the most powerful of the three channels,
+with both patches and gradients carrying significant independent
+information. Interestingly, the proximity of the two pixels does not
+add any information beyond that provided by the similarity cues. We
+also find that the convexity assumptions made by the intervening
+contour approach are supported by the ecological statistics of the
+dataset.
+
+
+     
+     
+       Download:  pdf  
+       Text Reference 
+Charless Fowlkes, David Martin, and Jitendra Malik.
+Learning affinity functions for image segmentation: combining patch-based and gradient-based approaches.
+In  CVPR , II: 54–61. 2003.  BibTeX Reference 
+@inproceedings{FowlkesMM_CVPR_2003, 
+    AUTHOR = "Fowlkes, Charless and Martin, David and Malik, Jitendra", 
+    TITLE = "Learning Affinity Functions for Image Segmentation: Combining Patch-Based and Gradient-Based Approaches", 
+    BOOKTITLE = "CVPR", 
+    YEAR = "2003", 
+    PAGES = "II: 54-61", 
+    TAG = "grouping,ecological_statistics" 
+}  
+   
+   
+     
+       Computational Vision  |
+       School of Information and Computer Sciences  |
+       UC Irvine 
+     
+     © 2007-2016 UC Irvine 
+   
+   </body> 

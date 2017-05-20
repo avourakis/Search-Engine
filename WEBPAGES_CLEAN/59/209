@@ -1,0 +1,63 @@
+ aolibILP - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   aolibILP  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    aolibILP  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+   
+   aolibILP</strong> 
+   Computes the minimum cost solution to a 0/1 Integer Linear Program (ILP).       
+  Author 
+    Radu_Marinescu        
+  Description 
+   The library contains the implementations of the depth AND/OR Branch-and-Bound as well as the Best-First AND/OR search algorithms for solving 0-1 Integer Linear Programs.       
+  Input format 
+   The 0/1 ILP instance has to be specified in the  MPS_file_format .       For some example problems please see our  Repository .       
+  Usage 
+   The algorithm is invoked with the following command line arguments:                          aolibILP</strong> -f &lt;input file&gt;
+           -h &lt;pseudo tree&gt;
+           -a &lt;algorithm&gt;
+           -l &lt;time limit&gt;
+           -vo &lt;ordering&gt;
+           -v &lt;verbosity&gt;    Detailed step-by-step instructions are available  here .        
+  Parameters 
+   Parameters for the algorithm are:          f</strong>: (string) specifies the input file name        h</strong>: (string) the heuristic to use for finding an variable elimination order by which to construct the And/Or search space:        hypergraph : i.e., hypergraph partitioning heuristic          a</strong>: (integer) specifies which algorithm to run. The following values can be used:      1: OR Branch-and-Bound search     2: AND/OR Branch-and-Bound search without caching (i.e., tree search)     3: AND/OR Branch-and-Bound search with caching (i.e., graph search)     4: Best-First AND/OR tree search     5: Best-First AND/OR graph search         l</strong> (integer) specifies the time limit in seconds. Default value is -1, which indicates no time limit        vo</strong> (string): specifies the variable ordering heuristic. The following values can be used:        svo : stands for Static Variable Ordering (this is the ordering determined by the pseudo tree)      Note: applicable to algorithm selections: 2, 3, 4, 5         pvo : stands for Partial Variable Ordering      Note: applicable to algorithm selections: 2, 4           v</strong> (string): verbosity. The following values can be used:        yes : enabled        no : disabled.         
+  Example 
+          aolibILP</strong> -f test.mps -h hypergraph -a 2 -l 100 -vo pvo -v yes     aolibILP</strong> will solve the 0/1 ILP specified in "test.mps" file by a depth-first AND/OR Branch-and-Bound tree search guided by a hypergraph based pseudo tree and using partial variable orderings. The time limit is set to 100 seconds and verbosity is enabled.       
+  Download 
+   A 32-bit Windows binary is available  here .       If you are interested in obtaining the source code, please contact the program author.       
+  References 
+   [1] Radu Marinescu and Rina Dechter.  AND/OR Branch-and-Bound Search for 0-1 Integer Programming.  In Proceedings of the International Conference on Integration of AI and OR Techniques in Constraint Programming for Combinatorial Optimization Problems (CPAIOR), 2006.  Link        [2] Radu Marinescu and Rina Dechter.  Best-First AND/OR Search for 0-1 Integer Programming.  In Proceedings of the International Conference on Integration of AI and OR Techniques in Constraint Programming for Combinatorial Optimization Problems (CPAIOR), 2007.  Link         aolibILP  (last edited 2008-03-10 19:07:37 by  localhost ) 
+
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

@@ -1,0 +1,58 @@
+ 3.24.9 GetAtoms<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.24.8 GetAtom 
+ Up:   3.24 OEMolBase 
+ Next:   3.24.10 GetBond 
+   
+
+
+  
+3.24.9 GetAtoms 
+ 
+
+ 
+    
+virtual OESystem::OEIterBase&lt;OEAtomBase&gt; *GetAtoms() const
+    
+Return an iterator over all the atoms of a molecule.  By default, this
+returns all the atoms of the molecule in the order they were created.
+The ordering of the atoms returned by GetAtoms may be modified by
+OEMolBase::OrderAtoms.
+
+  
+    
+virtual OESystem::OEIterBase&lt;OEAtomBase&gt; *GetAtoms(
+  const OESystem::OEUnaryPredicate&lt;OEChem::OEAtomBase&gt; &amp;) const
+    
+Return an iterator over all of the atoms of a molecule that match the
+specified atom predicate.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.24.8 GetAtom 
+ Up:   3.24 OEMolBase 
+ Next:   3.24.10 GetBond 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,633 @@
+ 
+VerticalFlowLayout
+<body> 
+ 
+
+
+
+
+   
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+org.itr_rescue.dataGuard.ui 
+ 
+Class VerticalFlowLayout 
+ 
+java.lang.Object
+    org.itr_rescue.dataGuard.ui.VerticalFlowLayout 
+ 
+   All Implemented Interfaces:    java.awt.LayoutManager, java.io.Serializable 
+     public class  VerticalFlowLayout   extends java.lang.Object implements java.awt.LayoutManager, java.io.Serializable     
+   VerticalFlowLayout  is a layout manager that arranges
+  components vertically from top to bottom. It is similar to a vertical
+  version of  java.awt.FlowLayout  (which is strictly horizontal)
+  with 2 key exceptions: 
+      It puts components in a single column, and will not
+  "wrap" the components when it reaches the bottom of the container. 
+      It is far more flexible for adjusting component
+  alignment. 
+   There are methods to adjust the vertical alignment and the horizontal
+  alignment of all components in the container. The horizontal fill of the
+  components can also be adjusted, causing them to display at their
+  preferred widths, justifying to match the width of the widest component,
+  or filling the width of their parent container.  This makes it simple to
+  neatly aligned layouts. 
+   Example:
+     
+VerticalFlowLayout vfLayout = new VerticalFlowLayout();
+vfLayout.setHorizontalAlign(VerticalFlowLayout.LEFT);
+vfLayout.setVerticalAlign(VerticalFlowLayout.BOTTOM);
+vfLayout.setHorizontalFill(VerticalFlowLayout.NO_FILL);
+JPanel pane = new JPanel(vfLayout);
+pane.add(new JTextField(14);
+pane.add(new JTextField(8);
+pane.add(new JTextField(20);
+    
+  Produces something like this:   Adjusting the layout settings can produce a very different look:
+     
+vfLayout.setHorizontalAlign(VerticalFlowLayout.CENTER);
+vfLayout.setVerticalAlign(VerticalFlowLayout.CENTER);
+vfLayout.setHorizontalFill(VerticalFlowLayout.MATCH_COMPONENTS);
+    
+    
+
+  
+    Version:  
+   1.0, 2002-03-21 
+  Author:  
+   James Brundege 
+  See Also:    Serialized Form     
+
+
+  
+     
+ Field Summary   
+    
+ static float   
+    BOTTOM   
+
+ 
+          Sets alignment to the bottom (value = 1). 
+    
+ static float   
+    CENTER   
+
+ 
+          Sets alignment to the center (value = 0.5). 
+    
+ static int   
+    FILL_SPACE   
+
+ 
+          Sets the horizontal fill so all components are as wide as their
+  parent container. 
+    
+ static float   
+    LEFT   
+
+ 
+          Sets alignment to the left (value = 0). 
+    
+ static int   
+    MATCH_COMPONENTS   
+
+ 
+          Sets the horizontal fill so all components match the width of the
+  widest component. 
+    
+ static int   
+    NO_FILL   
+
+ 
+          Sets the horizontal fill to adjust components to their preferred size. 
+    
+ static float   
+    RIGHT   
+
+ 
+          Sets alignment to the right (value = 1). 
+    
+ static float   
+    TOP   
+
+ 
+          Sets alignment to the top (value = 0). 
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      VerticalFlowLayout  () 
+
+ 
+          Creates a  VerticalFlowLayout  with the defaults of: 
+  Horizontal alignment: CENTER 
+  Vertical alignment: TOP 
+  Horizontal gap: 5 pixels 
+  Vertical gap: 5 pixels 
+  Horizontal fill: NO_FILL  
+      VerticalFlowLayout  (float horizontalAlign,
+                   float verticalAlign) 
+
+ 
+          Creates a  VerticalFlowLayout  with the specied horizontal
+  and vertical alignments and
+  with the defaults of: 
+  Horizontal gap: 5 pixels 
+  Vertical gap: 5 pixels 
+  Horizontal fill: NO_FILL  
+      VerticalFlowLayout  (float horizontalAlign,
+                   float verticalAlign,
+                   int hgap,
+                   int vgap) 
+
+ 
+          Creates a  VerticalFlowLayout  with the specied horizontal
+  and vertical alignments and horizontal and vertical gaps and
+  with the default of: 
+  Horizontal fill: NO_FILL  
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+  void   
+    addLayoutComponent  (java.lang.String name,
+                   java.awt.Component comp) 
+
+ 
+          Not implemented 
+    
+  int   
+    getHgap  () 
+
+ 
+          Gets the horizontal space next to each component. 
+    
+  float   
+    getHorizontalAlign  () 
+
+ 
+          Returns a float value between 0 and 1 that represents the horizontal
+  alignment. 
+    
+  int   
+    getHorizontalFill  () 
+
+ 
+          Returns the Horizontal Fill value that specifies the horizontal fill
+  policy which determines how wide the components are. 
+    
+  float   
+    getVerticalAlign  () 
+
+ 
+          Returns a float value between 0 and 1 that represents the vertical
+  alignment. 
+    
+  int   
+    getVgap  () 
+
+ 
+          Gets the vertical space between components. 
+    
+  void   
+    layoutContainer  (java.awt.Container parent) 
+
+ 
+          Sets the size and location of the components within this
+  container and displays the container using this layout. 
+    
+  java.awt.Dimension   
+    minimumLayoutSize  (java.awt.Container parent) 
+
+ 
+          Determines the minimum size of the container using this Layout
+  based on the components contained within, and the space surrounding
+  each component. 
+    
+  java.awt.Dimension   
+    preferredLayoutSize  (java.awt.Container parent) 
+
+ 
+          Determines the preferred size of the container using this Layout
+  based on the components contained within, and the space surrounding
+  each component. 
+    
+  void   
+    removeLayoutComponent  (java.awt.Component comp) 
+
+ 
+          Not implemented 
+    
+  void   
+    setAlignment  (float horizontal,
+             float vertical) 
+
+ 
+          Convienence method that sets both the horizontal and vertical
+  alignments. 
+    
+  void   
+    setHgap  (int hgap) 
+
+ 
+          Sets the horizontal space next to each component to the specified value. 
+    
+  void   
+    setHorizontalAlign  (float horizontalAlign) 
+
+ 
+          Sets the horizontal alignment. 
+    
+  void   
+    setHorizontalFill  (int fillPolicy) 
+
+ 
+          Sets the Horizontal Fill
+  policy which determines how wide the components are. 
+    
+  void   
+    setSpace  (int hgap,
+         int vgap) 
+
+ 
+          Sets both the horizontal and vertical space between components to the
+  specified values. 
+    
+  void   
+    setVerticalAlign  (float verticalAlign) 
+
+ 
+          Sets the vertical alignment. 
+    
+  void   
+    setVgap  (int vgap) 
+
+ 
+          Sets the vertical space between components to the specified value. 
+  
+   
+    Methods inherited from class java.lang.Object  
+    clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+TOP 
+ 
+public static final float  TOP  
+  Sets alignment to the top (value = 0).
+ 
+    See Also:    Constant Field Values         
+BOTTOM 
+ 
+public static final float  BOTTOM  
+  Sets alignment to the bottom (value = 1).
+ 
+    See Also:    Constant Field Values         
+CENTER 
+ 
+public static final float  CENTER  
+  Sets alignment to the center (value = 0.5).
+ 
+    See Also:    Constant Field Values         
+LEFT 
+ 
+public static final float  LEFT  
+  Sets alignment to the left (value = 0).
+ 
+    See Also:    Constant Field Values         
+RIGHT 
+ 
+public static final float  RIGHT  
+  Sets alignment to the right (value = 1).
+ 
+    See Also:    Constant Field Values         
+NO_FILL 
+ 
+public static final int  NO_FILL  
+  Sets the horizontal fill to adjust components to their preferred size.
+ 
+    See Also:    Constant Field Values         
+MATCH_COMPONENTS 
+ 
+public static final int  MATCH_COMPONENTS  
+  Sets the horizontal fill so all components match the width of the
+  widest component.
+ 
+    See Also:    Constant Field Values         
+FILL_SPACE 
+ 
+public static final int  FILL_SPACE  
+  Sets the horizontal fill so all components are as wide as their
+  parent container.
+ 
+    See Also:    Constant Field Values       
+    
+ Constructor Detail   
+     
+VerticalFlowLayout 
+ 
+public  VerticalFlowLayout () 
+  Creates a  VerticalFlowLayout  with the defaults of: 
+  Horizontal alignment: CENTER 
+  Vertical alignment: TOP 
+  Horizontal gap: 5 pixels 
+  Vertical gap: 5 pixels 
+  Horizontal fill: NO_FILL  
+       
+VerticalFlowLayout 
+ 
+public  VerticalFlowLayout (float horizontalAlign,
+                          float verticalAlign) 
+  Creates a  VerticalFlowLayout  with the specied horizontal
+  and vertical alignments and
+  with the defaults of: 
+  Horizontal gap: 5 pixels 
+  Vertical gap: 5 pixels 
+  Horizontal fill: NO_FILL  
+    Parameters:    horizontalAlign  - a float between 0 and 1 representing the
+  horizontal alignment or the constants:  VerticalFlowLayout.LEFT,
+  VerticalFlowLayout.CENTER, VerticalFlowLayout.RIGHT.  verticalAlign  - a float between 0 and 1 representing the
+  vertical alignment or the contstants:  VerticalFlowLayout.TOP,
+  VerticalFlowLayout.CENTER, VerticalFlowLayout.BOTTOM.         
+VerticalFlowLayout 
+ 
+public  VerticalFlowLayout (float horizontalAlign,
+                          float verticalAlign,
+                          int hgap,
+                          int vgap) 
+  Creates a  VerticalFlowLayout  with the specied horizontal
+  and vertical alignments and horizontal and vertical gaps and
+  with the default of: 
+  Horizontal fill: NO_FILL  
+    Parameters:    horizontalAlign  - a float between 0 and 1 representing the
+  horizontal alignment or the constants:  VerticalFlowLayout.LEFT,
+  VerticalFlowLayout.CENTER, VerticalFlowLayout.RIGHT.  verticalAlign  - a float between 0 and 1 representing the
+  vertical alignment or the contstants:  VerticalFlowLayout.TOP,
+  VerticalFlowLayout.CENTER, VerticalFlowLayout.BOTTOM.  hgap  - The horizontal border size in pixels.  vgap  - The vertical border size in pixels.         
+    
+ Method Detail   
+     
+getHgap 
+ 
+public int  getHgap () 
+  Gets the horizontal space next to each component.
+ 
+     
+    Returns:   The horizontal space size in pixels.   
+      
+setHgap 
+ 
+public void  setHgap (int hgap) 
+  Sets the horizontal space next to each component to the specified value.
+ 
+     
+    Parameters:    hgap  - The horizontal space size in pixels.   
+      
+getVgap 
+ 
+public int  getVgap () 
+  Gets the vertical space between components.
+ 
+     
+    Returns:   The vertical space size in pixels.   
+      
+setVgap 
+ 
+public void  setVgap (int vgap) 
+  Sets the vertical space between components to the specified value.
+ 
+     
+    Parameters:    hgap  - The vertical space size in pixels.   
+      
+setSpace 
+ 
+public void  setSpace (int hgap,
+                     int vgap) 
+  Sets both the horizontal and vertical space between components to the
+  specified values.
+ 
+     
+    Parameters:    hgap  - The horizontal space size in pixels.  vgap  - The vertical space size in pixels.    
+      
+getHorizontalFill 
+ 
+public int  getHorizontalFill () 
+  Returns the Horizontal Fill value that specifies the horizontal fill
+  policy which determines how wide the components are. This will be one of
+  the following values:
+    
+VerticalFlowLayout.NO_FILL (component width determined by its preferred size)
+VerticalFlowLayout.MATCH_COMPONENTS (all components have the width of the widest component)
+VerticalFlowLayout.FILL_SPACE (all components are as wide as their parent container)
+    
+ 
+     
+    Returns:   an int matching one of the Fill values described above.   
+      
+setHorizontalFill 
+ 
+public void  setHorizontalFill (int fillPolicy) 
+  Sets the Horizontal Fill
+  policy which determines how wide the components are. This will be one of
+  the following values:
+    
+VerticalFlowLayout.NO_FILL (component width determined by its preferred size)
+VerticalFlowLayout.MATCH_COMPONENTS (all components have the width of the widest component)
+VerticalFlowLayout.FILL_SPACE (all components are as wide as their parent container)
+    
+ 
+     
+    Parameters:    fillPolicy  - an int matching one of the Fill values described above.   
+      
+getHorizontalAlign 
+ 
+public float  getHorizontalAlign () 
+  Returns a float value between 0 and 1 that represents the horizontal
+  alignment.
+ 
+     
+    Returns:   a float between 0 and 1   
+      
+setHorizontalAlign 
+ 
+public void  setHorizontalAlign (float horizontalAlign) 
+  Sets the horizontal alignment. Can be given any float value
+  between 0 and 1 including the predefined values:
+    
+VerticalFlowLayout.LEFT
+VerticalFlowLayout.CENTER
+VerticalFlowLayout.RIGHT
+    
+ 
+     
+    Parameters:    horizontalAlign  - a float between 0 and 1.   
+      
+getVerticalAlign 
+ 
+public float  getVerticalAlign () 
+  Returns a float value between 0 and 1 that represents the vertical
+  alignment.
+ 
+     
+    Returns:   a float between 0 and 1.   
+      
+setVerticalAlign 
+ 
+public void  setVerticalAlign (float verticalAlign) 
+  Sets the vertical alignment. Can be given any float value
+  between 0 and 1 including the predefined values:
+    
+VerticalFlowLayout.TOP
+VerticalFlowLayout.CENTER
+VerticalFlowLayout.BOTTOM
+    
+ 
+     
+    Parameters:    verticalAlign  - a float between 0 and 1.   
+      
+setAlignment 
+ 
+public void  setAlignment (float horizontal,
+                         float vertical) 
+  Convienence method that sets both the horizontal and vertical
+  alignments. This is equivalent to calling:  setHorizontalAlign(horizontal);   setVerticalAlign(vertical);  
+  The parameters can use the same predefined value as these two methods.
+ 
+     
+    Parameters:    horizontal  - a float between 0 and 1.  vertical  - a float between 0 and 1.    
+      
+addLayoutComponent 
+ 
+public void  addLayoutComponent (java.lang.String name,
+                               java.awt.Component comp) 
+  Not implemented
+ 
+     Specified by:    addLayoutComponent  in interface  java.awt.LayoutManager    
+    
+      
+removeLayoutComponent 
+ 
+public void  removeLayoutComponent (java.awt.Component comp) 
+  Not implemented
+ 
+     Specified by:    removeLayoutComponent  in interface  java.awt.LayoutManager    
+    
+      
+preferredLayoutSize 
+ 
+public java.awt.Dimension  preferredLayoutSize (java.awt.Container parent) 
+  Determines the preferred size of the container using this Layout
+  based on the components contained within, and the space surrounding
+  each component.
+ 
+     Specified by:    preferredLayoutSize  in interface  java.awt.LayoutManager    
+    Parameters:    parent  - the container in which to do the layout.
+   Returns:   the preferred dimensions to lay out the
+                      subcomponents of the specified container.   
+      
+minimumLayoutSize 
+ 
+public java.awt.Dimension  minimumLayoutSize (java.awt.Container parent) 
+  Determines the minimum size of the container using this Layout
+  based on the components contained within, and the space surrounding
+  each component.
+ 
+     Specified by:    minimumLayoutSize  in interface  java.awt.LayoutManager    
+    Parameters:    parent  - the container in which to do the layout.
+   Returns:   the dimensions to lay out the
+                      subcomponents of the specified container.   
+      
+layoutContainer 
+ 
+public void  layoutContainer (java.awt.Container parent) 
+   Sets the size and location of the components within this
+  container and displays the container using this layout. 
+   This method lays out the components in a single vertical column
+  from top to bottom. 
+ 
+     Specified by:    layoutContainer  in interface  java.awt.LayoutManager    
+    Parameters:    parent  - The container in which to do the layout.   
+     
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

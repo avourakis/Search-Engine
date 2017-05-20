@@ -1,0 +1,54 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Name space munging ... blech!<body> Re: Name space munging ... blech! 
+ Jim Whitehead  (  ejw@ics.uci.edu  )  Wed, 12 Jun 1996 00:14:03 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Previous message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe in reply to:   Jim Whitehead: "Name space munging ... blech!" 
+
+    Next in thread:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+    
+&gt;| At this point, let me introduce resource C.html, which, like A.html, has
+&gt;| three versions, 1.0, 2.0 and 2.1.  As you might imagine, C.html also
+&gt;| includes logo.gif, but C.html is an older page which has not been updated
+&gt;| recently, and hence includes logo.gif version 1.0. So the URL for C.html
+&gt;| is:
+&gt;|
+&gt;|  http://foo.bar.com/top/version=2.1/C.html 
+&gt;|
+&gt;| Utilizing the solution of adding a symbolic link to logo.gif, version 1.0
+&gt;| into collection "version=2.1", we suddenly realize that a symbolic link to
+&gt;| logo.gif already exists (left over from adding the link to version 2.0 of
+&gt;| logo.gif for A.html version 2.1).  This is a problem.
+&gt;
+&gt;Your examples are confusing versions (generically) and revision numbers.
+&gt;Revisions are usually file-specific.  That is, each file has its own
+&gt;independent revision space.  Versions are more generic, and include
+&gt;symbolic labels (the example I used) which occupy a separate namespace
+&gt;from revisions.
+&gt;
+&gt;Thus
+&gt;
+&gt;         http://foo.bar.com/version=best/A.html 
+&gt;         http://foo.bar.com/version=best/B.html 
+&gt;
+&gt;May get revision 2.1 of A.html and 2.0 of B.html.  Surfing works.
+&gt;
+
+But how do you handle the C.html case?  C.html wants to grab logo.gif,
+version 1.0, but A.html is already grabbing version 2.0 (and hence version
+2.0 is presumably already mapped into "version=best", right?)
+
+- Jim
+ 
+
+  
+     Next message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Previous message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Maybe in reply to:   Jim Whitehead: "Name space munging ... blech!" 
+
+    Next in thread:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+  </body> 

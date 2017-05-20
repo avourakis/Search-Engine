@@ -1,0 +1,181 @@
+   
+  Class c2.framework.Message
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class c2.framework.Message
+ 
+ 
+ java.lang.Object 
+   |
+   +----c2.framework.Message
+ 
+    public class  Message 
+    extends  Object 
+   
+All communication between components occurs through message passing.
+The Message class is the base class for other types of messages.  
+Each message as a name, a type, and parameters.  In C2, the type is
+either Request or Notification.  Parameters are named and may be of any
+type.   
+NOTE: This class should not be used directly.  Use either Request or
+Notification instead.
+     See Also: 
+        Request ,  Notification 
+     
+ 
+    
+      name  
+     Name of the message
+        params  
+     List of named parameters in the message
+        type  
+     Type (request or notification) of the message
+        typeNotification  
+     A notification message type
+        typeRequest  
+     A request message type
+   
+    
+      Message  (String)
+     
+        Message  (String, String)
+     
+   
+    
+      addParameter  (String, Object)
+     Adds a parameter to the message.
+        create  (String)
+     
+        getParameter  (String)
+     Retrieves the value of a parameter in the message.
+        name  ()
+     Returns the name of the message.
+        removeParameter  (String)
+     Removes a parameter from the message.
+        setName  (String)
+     Sets the name of the message.
+        toString  ()
+     Returns a String representation of the Message, including the 
+messages's name, type and parameters.
+        type  ()
+     Returns the type of the message.
+    
+ 
+    
+   
+ typeRequest 
+ 
+  public final static  String  typeRequest
+ 
+   A request message type
+     
+ typeNotification 
+ 
+  public final static  String  typeNotification
+ 
+   A notification message type
+     
+ type 
+ 
+  protected  String  type
+ 
+   Type (request or notification) of the message
+     
+ name 
+ 
+  protected  String  name
+ 
+   Name of the message
+     
+ params 
+ 
+  protected  Hashtable  params
+ 
+   List of named parameters in the message
+    
+ 
+    
+  
+   
+ Message 
+ 
+  protected Message( String  _type)
+ 
+   
+ Message 
+ 
+  protected Message( String  _type,
+                     String  _name)
+ 
+  
+ 
+    
+   
+  create  
+ 
+  protected void create( String  _type)
+ 
+   
+  name  
+ 
+  public  String  name()
+ 
+   Returns the name of the message.
+     
+  setName  
+ 
+  public void setName( String  _name)
+ 
+   Sets the name of the message.
+     
+  type  
+ 
+  public  String  type()
+ 
+   Returns the type of the message. The type is set by specific message
+types, like Request and Notification.
+      See Also: 
+        Request ,  Notification 
+         
+  addParameter  
+ 
+  public void addParameter( String  name,
+                            Object  value)
+ 
+   Adds a parameter to the message.
+      Parameters: 
+       name - The name of the parameter.
+      value - The value of the parameters.  Note that the value is not
+cloned.
+          
+  getParameter  
+ 
+  public  Object  getParameter( String  name)
+ 
+   Retrieves the value of a parameter in the message.
+      Parameters: 
+       name - The name of the parameter to retrieve.
+        Returns: 
+       Object Returns the object, or null if it doesn't not exist.
+         
+  removeParameter  
+ 
+  public void removeParameter( String  name)
+ 
+   Removes a parameter from the message.
+      Parameters: 
+       name - The name of the parameter to remove.
+         
+  toString  
+ 
+  public  String  toString()
+ 
+   Returns a String representation of the Message, including the 
+messages's name, type and parameters.
+      Overrides: 
+        toString  in class  Object 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

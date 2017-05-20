@@ -1,0 +1,45 @@
+ HelpOnInstalling/AolServer - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   HelpOnInstalling    AolServer  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    AolServer  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+                 
+  Configure Aolservers nscgi module for MoinMoin 
+     Put the following lines in the  Aolserver  configuration file, inside the  nscgi  module configuration               ns_param  map "GET  /mywiki /var/lib/moin/moin.cgi"
+  ns_param  map "POST /mywiki /var/lib/moin/moin.cgi"      where:        /mywiki  -- URL at which the Wiki-Instance will be accessible        /var/lib/moin/moin.cgi  -- Path of the moin CGI script       
+  Mapping the /usr/share/moin/htdocs directory 
+     The easiest way to map the .. htdocs  directory to an url (say  /moin_static160 ) is by creating a symbolic link inside the documenttree.    Another option (on Microsoft Operating Systems) is copying the whole directory tree to where it is needed.                 cd $DOCROOT
+  ln -s /usr/share/moin/htdocs moin_static160      
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

@@ -1,0 +1,23 @@
+ 1. In class we described van Emde Boas trees with a simplifying assumption that each item has a different key from each other item. But what if this assumption is not true? Describe how to modify the data structure to handle the case that more than one item may have the same priority. Your solution should have the same asymptotic running time per operation as the van Emde Boas tree as described in class.
+
+(Possible solutions include storing linked lists of items with the same priority, or using a separate data structure to map priorities to the set of items having those priorities. You may assume that hash tables can solve the dictionary problem in constant time per operation. You should describe how your modifications affect the operation of the three basic priority queue operations: insert, delete, and find-min).
+
+
+2. Slot-size bound for hash chaining (Cormen, Leiserson, Rivest, and Stein,
+Introduction to Algorithms, Problem 11-2, page 250):
+
+Suppose we have a hash table with n slots, with collisions resolved by
+chaining -- that is, each slot stores a linked list of the (key,value) pairs that the hash function maps to that slot. Suppose also that n keys are inserted into the table. (That is, the fill ratio is 1). Each key is equally likely to be hashed to each slot, independently of the other keys. Let M be the maximum number of keys in any slot after all the keys have been inserted. Your mission is to prove an O(log n / log log n) upper bound on E[M], the expected value of M.
+
+(a) Argue that the probability Q_k that exactly k keys hash to a
+particular slot is given by
+    Q_k = (1/n)^k (1 - 1/n)^(n-k) (n choose k)
+(The last term is the binomial coefficient that counts the number of
+distinct k-tuples that can be formed by n items; it equals n!/k!(n-k)!.)
+
+(b) Let P_k be the probability that M = k; that is, the probability that
+the slot containing the most keys contains k keys. Show that P_k  1 such that Q_k0 = k0.
+
+(e) By arguing that
+    E[M]  c log n / log log n] +
+		(c log n / log log n) Pr[ M  

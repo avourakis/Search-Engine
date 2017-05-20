@@ -1,0 +1,484 @@
+ CHEM.CombiCDB.ReactionProcessor.ReactionProcessor<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package CombiCDB  ::
+         Module ReactionProcessor  ::
+        Class ReactionProcessor
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class ReactionProcessor    
+Given a set of SMIRKS reactions and reactant molecules, generates as many 
+combinatorial products as possible by running every reactant permutation 
+through each reaction
+
+Also includes a script to generate the output in a format easily inserted
+into the application database.  Assuming starting with some reactant
+and SMIRKS files that have NOT been inserted to the database, a complete
+run, including inserting the product info into the database could be
+accomplished with the following from the command line:
+
+===========================================================================
+python ReactionProcessor.py reactant.smi example.smirks product.smi
+python DBUtil.py -ireactant.smi     -tMOLECULE -oreactant.smi.id    CAN_SMILES LABEL
+python DBUtil.py -iexample.smirks   -tREACTION -oexample.smirks.id  SMIRKS LABEL
+python DBUtil.py -iproduct.smi      -tMOLECULE -oproduct.smi.id     CAN_SMILES LABEL
+python ReactionProcessor.py -dsynthesis.txt -pproduct.smi reactant.smi.id example.smirks.id product.smi.id
+python DBUtil.py -isynthesis.txt    -tSYNTHESIS -osynthesis.id      PRODUCT_ID  REACTION_ID REACTANT_ID REACTANT_POSITION
+===========================================================================
+
+Alternatively, if you wish to use reactants and SMIRKS from the database, something like this:
+
+===========================================================================
+python DBUtil.py "select CAN_SMILES, LABEL, MOLECULE_ID from MOLECULE"  reactant.smi
+python DBUtil.py "select SMIRKS, LABEL, REACTION_ID from REACTION"      example.smirks
+python ReactionProcessor.py reactant.smi example.smirks product.smi
+python DBUtil.py -iproduct.smi      -tMOLECULE -oproduct.smi.id     CAN_SMILES LABEL
+python ReactionProcessor.py -dsynthesis -pproduct.smi reactant.smi example.smirks product.smi.id
+python DBUtil.py -isynthesis        -tSYNTHESIS -osynthesis.id      PRODUCT_ID  REACTION_ID REACTANT_ID REACTANT_POSITION
+===========================================================================
+
+Input: 
+- Reacant molecule file
+    Can be any format understandable by oemolistream, assuming a properly 
+    named extension.  For example, "molecules.smi" for SMILES format.
+
+- SMIRKS reaction file
+    File containing one SMIRKS reaction string per line that will 
+    be used to process the reactants
+
+Either of the above can take stdin as their source by specifying the 
+filename "-" or ".smi" or something similar.  See documentation of 
+oemolistream for more information
+
+Output:
+- Product molecule file
+    Outputs all possible products generated from the SMIRKS reactions
+    out of the reactant molecules.  Again, redirection to stdout possible 
+    by specifying the filename "-".  Each product SMILES will be followed 
+    by a molecule "title" of the format "SMIRKS[A]Reactants[X,Y,Z,etc.]" where
+        A = Index / position in the SMIRKS reaction file of the reaction 
+            used to generate this product.  Index is zero-based
+        X,Y,Z,etc. = Index / position in the Reactant molecule file of 
+            the respective reactant used
+
+     
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+             getIncludeReactants ( self )  
+           
+            
+            
+           
+           
+     
+         
+      
+             setIncludeReactants ( self ,
+         value )  
+           
+            
+            
+           
+           
+     
+         
+      
+             generateProductsByFilename ( self ,
+         reactantFilename ,
+         smirksFilename ,
+         productFilename )  
+      Opens files with respective names and delegates most work to 
+      "generateProducts" 
+           
+            
+            
+           
+           
+     
+         
+      
+           generateProducts ( self ,
+         reactantOEISFactory ,
+         smirksFile ,
+         productOEOS )  
+      Primary method, reads the source files to generate products to the
+      output file. 
+           
+            
+            
+           
+           
+     
+         
+      
+           readSMIRKSFile ( self ,
+         smirksFile )  
+      Read the contents of the file as a list of SMIRKS strings. 
+           
+            
+            
+           
+           
+     
+         
+      
+           applyReaction ( self ,
+         libgen ,
+         reactantOEISFactory ,
+         productOEOS ,
+         reactionIndex = 0 ,
+         currReactantIndexes = None ,
+         reactantList = None ,
+         rejectProductSmiSet = None )  
+      Recursive function to apply the reaction in libgen to all possible
+permutations of reactants from the reactantOEIS and outputting the results
+to the productOEOS. 
+           
+            
+            
+           
+           
+     
+         
+      
+           applyReactionBySmirks ( self ,
+         smirks ,
+         reactantList ,
+         uniqueOnly = True )  
+      Convenience method. 
+           
+            
+            
+           
+           
+     
+         
+      
+           addReactants ( self ,
+         product ,
+         libgen ,
+         reactantList )  
+      Given a reaction product molecule (OEMolBase) and the library 
+      generator that created it (OELibraryGen), find all of the reactants 
+      (starting materials) from the libGen and add them as part of the 
+      product molecule such that the product molecule will instead 
+      represent the whole reaction, reactants included. 
+           
+            
+            
+           
+           
+     
+         
+      
+           productPostProcessing ( self ,
+         product ,
+         reactantOEISFactory ,
+         reactantList )  
+      Post-processing of product just before it is finally written to 
+      the output. 
+           
+            
+            
+           
+           
+     
+         
+      
+             formatDBFileByFilename ( self ,
+         productFilename ,
+         reactantIDFilename ,
+         smirksIDFilename ,
+         productIDFilename ,
+         dbFilename )  
+      Opens files with respective names and delegates most work to 
+      "formatDBFile" 
+           
+            
+            
+           
+           
+     
+         
+      
+           formatDBFile ( self ,
+         productOEIS ,
+         reactantIDFile ,
+         smirksIDFile ,
+         productIDFile ,
+         dbFile )  
+      Given the database IDs of reactants, reactions (smirks) and 
+      products and information indicating how they are all related, 
+      generate a simple text file that should be very easy to import into 
+      the database to persist that association information. 
+           
+            
+            
+           
+           
+     
+         
+      
+           __visitBondedAtoms ( self ,
+         atom ,
+         visitedAtomIndexes = None )  
+      Starting from the given atom, add every visited atom's index to 
+      the visistedAtomIndexes Set. 
+           
+            
+            
+           
+           
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+           ignoreSelfReactions  =  False 
+     
+     
+         
+      
+         includeReactants  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingM ...  
+     
+     
+         
+      
+           includeUnusedReactants  =  False 
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     generateProducts ( self ,
+         reactantOEISFactory ,
+         smirksFile ,
+         productOEOS ) 
+   
+     
+     
+     Primary method, reads the source files to generate products to the 
+  output file.  See module documentation for more information. 
+   Note:  This method takes actual File objects, oemolistreams and 
+  oemolostreams, not filenames, to allow the caller to pass "virtual 
+  Files" for the purpose of testing and interfacing.  Use the 
+  "main" method to have the module take care of opening files 
+  from filenames. 
+  Note that the reactantOEISFactory is not a simple oemolistream either,
+  but a factory object that can generate oemolistreams over the list of 
+  reactants.  This is necessary as nested loops iterating over the 
+  reactants simultaneously is required.
+        
+  
+ 
+   
+     
+     readSMIRKSFile ( self ,
+         smirksFile ) 
+   
+     
+     
+     
+Read the contents of the file as a list of SMIRKS strings.
+Comment lines prefixed with "#" will be ignored.  
+Expects one SMIRKS string per line of the file.  Each SMIRKS string can be followed
+    by any title / comment, etc. separated by whitespace.  These will be ignored.
+
+ 
+        
+  
+ 
+   
+     
+     applyReaction ( self ,
+         libgen ,
+         reactantOEISFactory ,
+         productOEOS ,
+         reactionIndex = 0 ,
+         currReactantIndexes = None ,
+         reactantList = None ,
+         rejectProductSmiSet = None ) 
+   
+     
+     
+     
+Recursive function to apply the reaction in libgen to all possible
+permutations of reactants from the reactantOEIS and outputting the results
+to the productOEOS.  Returns the number of products added for this function call.
+
+libgen = OELibraryGen initialized with a SMIRKS (or other reaction) string
+        and any number of reactants upto libgen.NumReactants()
+reactantOEISFactory = IteratorFactory object that can generate
+        oemolistreams over the reactant molecules to feed into libgen.
+productOEOS = Oemolostream to write output products from reaction processing to
+reactionIndex = Index indicating what reaction was used in this libgen.
+        Just for labelling purposes of output.
+currReactantIndexes = List of indexes of reactants that have already been set
+        on the libgen.  Length of list indicates how many have already been set
+        (i.e. the current depth of recursion)
+        and the actual indexes are again useful for labelling the output.
+
+If reactions always had 2 reactants, this design would not be necessary.
+A simple doubly nested loop could enumerate all permutations.  However,
+since an arbitrary reaction may have n reactants, an "n-leveled" nested
+loop would be required, which cannot be determined until runtime.  Thus,
+this recursive approach is used instead.
+
+ 
+        
+  
+ 
+   
+     
+     applyReactionBySmirks ( self ,
+         smirks ,
+         reactantList ,
+         uniqueOnly = True ) 
+   
+     
+     
+     Convenience method.  Parse out the SMIRKS string for the caller and 
+  collect product results in a list, rather than requiring an OE output 
+  stream. This instantiates separate copies of every product list, thus 
+  being less efficient in memory usage than a streaming process.  Should 
+  only be used for convenience. 
+   Reactant list parameter is expected to be a list of molecule 
+  objects. 
+  If uniqueOnly, will only return non-redundant results
+        
+  
+ 
+   
+     
+     addReactants ( self ,
+         product ,
+         libgen ,
+         reactantList ) 
+   
+     
+     
+     Given a reaction product molecule (OEMolBase) and the library 
+  generator that created it (OELibraryGen), find all of the reactants 
+  (starting materials) from the libGen and add them as part of the product 
+  molecule such that the product molecule will instead represent the whole 
+  reaction, reactants included. 
+  Note that this method assumes that there is only one starting material
+  per reactant position.  For other library generation applications, this 
+  assumption may be true.
+        
+  
+ 
+   
+     
+     productPostProcessing ( self ,
+         product ,
+         reactantOEISFactory ,
+         reactantList ) 
+   
+     
+     
+    
+  
+  Post-processing of product just before it is finally written to the 
+  output. Return True if everything is okay.  Return False if this product 
+  has an error and should be rejected from final output
+        
+  
+ 
+   
+     
+     formatDBFile ( self ,
+         productOEIS ,
+         reactantIDFile ,
+         smirksIDFile ,
+         productIDFile ,
+         dbFile ) 
+   
+     
+     
+     Given the database IDs of reactants, reactions (smirks) and products 
+  and information indicating how they are all related, generate a simple 
+  text file that should be very easy to import into the database to persist
+  that association information. 
+  Each line should correspond to a row in the SYNTHESIS table, with 
+  values to insert respective to PRODUCT_ID, REACTION_ID, REACTANT_ID and 
+  REACTANT_POSITION
+        
+  
+ 
+   
+     
+     __visitBondedAtoms ( self ,
+         atom ,
+         visitedAtomIndexes = None ) 
+   
+     
+     
+    
+  
+  Starting from the given atom, add every visited atom's index to the 
+  visistedAtomIndexes Set.  Recursively visit all bonded atoms
+        
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   includeReactants 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:27 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

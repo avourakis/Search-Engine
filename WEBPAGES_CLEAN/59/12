@@ -1,0 +1,429 @@
+ Program Analyses for Bloat Detection and Optimization 
+
+ 
+
+     Program Analyses
+for Bloat Detection and Optimization      
+
+  
+
+   
+
+   About     
+
+       
+
+  Despite the employment of faster CPUs and
+larger memory systems, the levels of inefficiencies in real-world programs grow
+surprisingly fast and there is an ever-increasing demand for performance
+optimization in modern software. Performance and scalability issues are
+becoming increasingly critical partly due to the pervasive use of
+object-oriented programming languages. The inefficiencies inherent in the
+implementation of an object-oriented language as well as the commonly adopted
+design and implementation principles in the object-oriented community often
+combine to hurt performance. The community-wide recognition of the importance
+of  abstraction  and  reuse  results in increased emphasis on modular
+design, declaration of general interfaces, and use of models and patterns. Programmers
+are taught to focus first and foremost on them, taking it for granted that
+compilers and run-time systems can remove all the inefficiencies. In a large
+program that is typically built on top of many layers of frameworks and
+libraries, a small set of inefficiencies can multiply and quickly get magnified
+to slow down the system. When the call stack grows to be deep, the usefulness
+of the dataflow analyses in a dynamic compiler becomes limited and the
+optimizer can no longer remove these inefficiencies. As a result, many
+applications suffer from chronic run-time performance problems that
+significantly affect scalability and performance. This is a serious problem for
+real-world software systems used every day by thousands of businesses. The
+pressing need for new optimization techniques can be especially seen as
+object-orientation goes everywhere into systems of any size. The extensive use
+of object-oriented languages in the development of memory-constrained
+applications such as smartphone apps (e.g., Java used in Android and C# used in
+Windows phones) and data-intensive systems (e.g., Hadoop,  Giraph ,
+and  Hyracks ) introduces numerous research
+challenges-- these systems have small memory space but large amounts of data to
+process and inefficiencies in these systems can be significantly exacerbated.
+The burden of reducing unnecessary work should not be only on the shoulder of
+hardware designers, especially in the modern era when Moore's dividend becomes
+less obvious. It strongly calls for higher-level performance optimization
+techniques that can detect and remove inefficiencies for all categories of
+object-oriented applications. Our group has an established record on
+performance optimization for large-scale systems. Our recent efforts focus on
+the following projects:      
+
+       
+
+   (1) Providing efficient infrastructures for detecting bloat     
+
+  A recent piece of work focuses on the development of a tunable
+object lifetime profiling technique, called  Resurrector 
+[ OOPSLA13 ]. Many existing
+optimization techniques (such as object pooling and  pretenuring )
+require precise identification of object lifetimes. However, it is particularly
+challenging to obtain object lifetimes both precisely and efficiently: precise
+profiling techniques such as Merlin introduce several hundred times slowdown
+even for small programs while efficient approximation techniques often
+sacrifice precision and produce less useful lifetime information. Resurrector
+solves the problem by exploring the middle ground between high precision and
+high efficiency to find the precision-scalability  sweetspot 
+for various optimization techniques.  Resurrector's 
+design is motivated by an important observation that the scalability bottleneck
+of a traditional OLP algorithm (such as Merlin) lies in the need to compute
+transitive closures on the dead objects (e.g., Merlin's backward pass).
+Resurrector improves efficiency by completely eliminating this need. Similarly
+to Merlin, Resurrector first identifies the root dead objects whose reference
+counts are zero. Instead of computing transitive closures from them,
+Resurrector exploits object caching and reusing to find dead objects
+(transitively reachable from the roots) that have non-zero reference counts.     
+
+       
+
+  Another infrastructure we have built is a runtime framework that
+performs  abstract dynamic slicing  [ PLDI10-a ,  TOSEM14 ] to identify performance
+problems that manifest themselves in dataflow activities.  A bstract dynamic slicing, a technique that applies
+dynamic slicing over an abstract domain whose size is limited by bounds
+independent of the runtime execution.     This technique is embedded in the general
+framework parameterized by the abstract domain. The output of this framework is
+an abstract dependence graph that contains abstractions of instructions, rather
+than their actual runtime instances. This new approach is motivated by the
+observation that a client of dynamic slicing often needs to access only a small
+portion of the complete execution trace collected by a regular slicing
+algorithm and thus tremendous effort is wasted on collecting information not
+used by the client. The runtime (space and time) overhead can be significantly
+reduced if the slicing algorithm is client aware, that is, it understands what
+information would be needed by its client and records only such information
+during the execution. Abstract dynamic slicing makes this possible by asking
+the analysis developer to provide an abstraction that specifies this knowledge.      
+
+       
+
+   (2) Improved performance debugging and testing        
+
+  Performance
+problems in a large-scale application are extremely difficult to find.
+Traditional performance test oracles such as time/memory checks are
+coarse-grained and subjective; as a result, performance bugs often escape to
+production runs, hurting software reliability and user experience. We are in
+the process of developing a general technique, called     PerfBlower     , that  can  amplify
+ the effects of a class of performance problems whose symptoms can be
+described by logical statements over a history of heap updates as well as
+provide precise diagnostic information. Amplification serves as an  automated
+test oracle  because it increases memory consumption significantly for tests
+that trigger performance problems while having a very small impact on bug-free
+runs. As a result, developers can easily divide tests into successful and
+failing runs, and focus their effort on failing tests. Please read our  ECOOP  '  15 paper  for details.     
+
+       
+
+  Caching/ resuing  opportunities can often be found in large-scale
+applications. A big source of run-time performance problems in large-scale, object-oriented
+applications is the frequent creation of data structures whose lifetimes are
+disjoint, and whose shapes and data content are always the same. Constructing
+these data structures and computing the same data values many times is
+expensive; significant performance improvements can be achieved by reusing
+their instances, shapes, and/or data values rather than reconstructing them. We
+first classify caching/reusing opportunities into three categories: instance
+reusability, shape reusability, and data reusability [ OOPSLA12 ]. We next develop scalable
+runtime techniques that can quickly detect these opportunities by exploiting
+cooperative compiler and runtime system support. For example, work from [ OOPSLA12 ] is a technique that
+piggybacks on GC to find reuse opportunities while  Cachetor 
+[ FSE13 ] relies on heavyweight
+dependence profiling to understand if data values are cacheable.     
+
+       
+
+   (3)
+Adaptive selection of algorithms and data structures     
+
+  A  n important source of runtime bloat is the
+inefficient use of container implementations. Standard libraries of
+object-oriented languages such as Java and C# contain collection frameworks
+that provide with users, for each abstract data type (such as   List  ),
+many different implementations (such as    ArrayList   
+  and  L inkedList  ),
+each of which features a different design choice suitable for a specific
+execution scenario. However, in real-world development, choosing the most
+appropriate container implementation is challenging. As a result, developers
+tend to keep using the implementations that are most general or well-known
+(e.g.,    HashSet      for
+  Set  ),
+regardless of whether or not they fit the usage context. We develop a novel
+container optimization technique, called  CoCo , that
+is able to (1) determine at run time, for each container instance (e.g., a    LinkedList   
+  object) used in the
+program, whether or not there exists another container implementation (e.g.,    ArrayList   ) that is more suitable for the execution; and (2) automatically
+and safely switch to this new container implementation (e.g., replace the old    LinkedList   
+  object with a new    ArrayList   
+  object    online   ) for increased  efficiency.While  there
+exists work (such as Chameleon and Brainy) that could identify Java collection
+inefficiencies and report them to users for    offline    inspection,
+none of these techniques can change implementations    online   . Details about  CoCo  can found in the  ECOOP  '  13  paper. In collaboration with the
+information system group, we are currently developing techniques that can
+automatically select table joining algorithms for message-based Big Data
+systems (such as graph processing systems). Details of this project will be
+reported later.     
+
+       
+
+   (4)
+Static and dynamic detection of Java memory leaks         
+
+  In
+managed languages such as Java and C#, developers do not need to worry about
+memory correctness issues such as dangling pointers and double free errors. However,
+it remains challenging to avoid leaks. A memory leak in a managed language is
+caused by keeping unnecessary references to objects that are no longer used.
+These objects cannot be reclaimed by the garbage collector (GC), often leading
+to severe performance degradation and even program crashes. We have developed
+both static and dynamic techniques for memory leak detection. In particular, we
+propose LeakChaser [ PLDI11 ], a
+specification-based leak detector, that exploits user insight (expressed in the
+form of liveness assertions) to narrow down causes of memory leaks. Another
+attractive direction is to perform static leak detection because it does not
+rely on any leak-triggering inputs, allowing compile-time tools to find leaks
+before software is released. A long-standing issue that prevents practical
+static memory leak detection for Java is that it can be very expensive to
+statically determine object liveness in large applications. We present a
+practical static leak detection technique, called  LeakChecker 
+[ CGO14 ] that bypasses this problem by
+considering a common leak pattern. In many cases severe leaks occur in loops
+where,  in each iteration , some objects created by the
+iteration are unnecessarily referenced by objects external to the loop. These
+unnecessary references are never used in later loop iterations. Based on this
+insight, we shift our focus from computing liveness, which is very difficult to
+achieve precisely and efficiently for large programs, to the easier goal of
+identifying objects that flow out of a loop but never flow back in.      
+
+  
+
+   
+
+   Papers     
+
+       
+
+   o   
+      PerfBlower :  Quickly Detecting
+Memory-Related Performance Problems via Amplification  ,    
+
+   Lu Fang, Liang Dou, and Guoqing (Harry) Xu.       
+
+   ECOOP'15:
+European Conference on Object-Oriented Programming   .    
+
+  [ Slides ]    
+
+       
+
+   o   
+      LeakChecker :
+Practical Static Memory Leak Detection for Managed Languages ,    
+
+   Dacong Yan, Guoqing (Harry) Xu, Shengqian Yang,
+and Atanas Rountev.       
+
+   CGO'14:
+International Conference on Code Generation and Optimization   .    
+
+  [ Slides ]    
+
+       
+
+   o   
+     Scalable Runtime Bloat
+Detection Using Abstract Dynamic Slicing ,    
+
+   Guoqing (Harry)
+Xu,    Nick
+Mitchell, Matthew Arnold, Atanas Rountev, Edith Schonberg, and Gary  Sevitsky . </strong>      
+
+    TOSEM'14,  ACM Transactions on Software Engineering and
+Methodology  .       
+
+       
+
+   o   
+     Resurrector: A Tunable
+Object Lifetime Profiling Technique for Optimizing Real-World Programs ,    
+
+   Guoqing (Harry)
+Xu.       
+
+   OOPSLA'13,  ACM
+SIGPLAN Conference on Object-Oriented Programming Systems, Language, and
+Applications.      
+
+  [ Slides ]    
+
+       
+
+   o   
+      Cachetor : Detecting Cacheable Data to Remove Bloat ,    
+
+   Khanh Nguyen and
+Guoqing (Harry) Xu.       
+
+   FSE'13,  ACM
+SIGSOFT Symposium on the Foundations of Software Engineering.      
+
+  [ Slides ]    
+
+       
+
+   o   
+      CoCo :  Sound and
+Adaptive Replacement of Java Collections    ,    
+
+   Guoqing (Harry)
+Xu.       
+
+   ECOOP'13,  European
+Conference on Object-Oriented Programming.      
+
+  [ Slides ]    
+
+       
+
+   o   
+     Finding Reusable
+Data Structures   ,    
+
+   Guoqing (Harry)
+Xu.       
+
+   OOPSLA'12,  ACM
+SIGPLAN Conference on Object-Oriented Programming Systems, Language, and
+Applications.       
+
+  [ Slides ]    
+
+       
+
+   o   
+     Static Detection
+of Loop-Invariant Data Structures   ,    
+
+   Guoqing (Harry)
+Xu, Dacong Yan, and Atanas Rountev.       
+
+   ECOOP'12,  European
+Conference on Object-Oriented Programming.      
+
+  [ Slides ]    
+
+       
+
+   o   
+      LeakChaser : Helping Programmers Narrow Down Causes of
+Memory Leaks   ,    
+
+  Guoqing (Harry) Xu, Michael D. Bond, Feng Qin,
+and Atanas Rountev,    
+
+   PLDI'11,  ACM
+SIGPLAN Conference on Programming Language Design and Implementation      
+
+  [ Slides ]    
+
+       
+
+   o   
+     Finding
+Low-Utility Data Structures   ,    
+
+  Guoqing (Harry) Xu, Nick Mitchell, Matthew
+Arnold, Atanas Rountev, Gary  Sevitsky , and Edith
+Schonberg,    
+
+   PLDI'10,  ACM
+SIGPLAN Conference on Programming Language Design and Implementation      
+
+  [ Slides ]    
+
+       
+
+   o   
+     Detecting
+Inefficiently-Used Containers to Avoid Bloat   ,    
+
+  Guoqing (Harry) Xu and Atanas Rountev,     
+
+   PLDI'10,  ACM
+SIGPLAN Conference on Programming Language Design and Implementation      
+
+  [ Slides ]    
+
+       
+
+   o   
+     Go with the Flow:
+Profiling Copies To Find Runtime Bloat   ,    
+
+  Guoqing (Harry) Xu, Matthew Arnold, Nick
+Mitchell, Atanas Rountev, and Gary  Sevitsky ,    
+
+   PLDI'09,  ACM
+SIGPLAN Conference on Programming Language Design and Implementation      
+
+  [ Slides ]    
+
+       
+
+  
+
+   
+
+   People     
+
+         
+
+   o   
+     Lu Fang     
+
+   o   
+     Khanh Nguyen     
+
+   o   
+     Harry Xu     
+
+  
+
+   
+
+   Software     
+
+         
+
+   o   
+      PerfBlower  , a performance problem amplification tool    
+
+   o   
+      LeakChaser  , a specification-based memory leak detector
+for Java    
+
+   o   
+     Resurrector :
+a tunable object lifetime profiling tool based on Jikes RVM    
+
+       
+
+  
+
+   
+
+   Support       
+
+         
+
+  This research is funded in part by NSF under grants CNS-1321179,
+CCF-140982, and CNS-1613023, and by ONR under grants  N00014-14-1-0549
+and N00014-16-1-2913.     
+
+  
+
+   
+
+     main  page           
+
+ 
+
+</body> 

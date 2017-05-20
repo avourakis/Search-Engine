@@ -1,0 +1,61 @@
+ 10.27 OEWriteSettings<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.26 OEParseCommandLineLW 
+ Up:   10. OESystem Functions 
+ Next:   11. OESystem Templates 
+   
+
+
+  
+10.27 OEWriteSettings 
+ 
+
+ 
+    
+bool OEWriteSettings(OEInterface&amp; itf,
+                     OEPlatform::oeostream&amp; ostr = OEOUT,
+                     bool include_default = true);
+    
+The function writes the current setting of  itf  to  ostr .
+
+  
+If  include_default  is true all parameter will be listed, otherwise
+only parameters specified by the user will be listed.
+
+  
+The format of this output is such that if ostr is a file stream, the created
+file can be used as a parameter file ( i.e. , passed to a
+ param_file  parameter) in a subsequent run.
+
+  
+The function returns true if it succeeeds and false otherwise.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   10.26 OEParseCommandLineLW 
+ Up:   10. OESystem Functions 
+ Next:   11. OESystem Templates 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

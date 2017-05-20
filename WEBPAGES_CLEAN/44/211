@@ -1,0 +1,113 @@
+ Andrew Frank - Research<body>
+
+ 
+
+ 
+
+ 
+ Andrew Frank - Research 
+
+
+ 
+      
+     
+
+ 
+ 
+ Andrew J. Frank 
+ PhD Candidate in Computer Science, University of California, Irvine 
+ 
+   
+  
+ 
+
+ 
+   Home 
+   Research 
+
+   
+   ajfrank@ics.uci.edu 
+       
+ 
+  
+ 
+
+
+
+ 
+   Unsupervised Learning in Multi-Target Tracking 
+ 
+
+  
+Broadly speaking, multi-target tracking involves the use of a sensor (e.g. camera or radar) to detect and follow targets (e.g. people or airplanes) as they move around the world. Targets are often detected at fixed time intervals, resulting in data like that shown in Figure 1a. Due to imperfect or low-information sensors, it is difficult to link observations from the same target together across time steps. As a result it can be hard to distinguish between multiple conflicting explanations of a set of observations, like those shown in Figure 1b and 1c. The resolution of this uncertainty is known as the  data association problem .
+ 
+ 
+The track-oriented multiple hypothesis tracker is a heuristic approach to finding the best data association for a given sequence of observations. It often performs quite well, but is sensitive to a number of parameters describing the appearance and behavior of targets. Both for convenience and for more robust performance, it would be nice to learn these parameters from the unlabeled observations. In this work we use a graphical model to represent the posterior distribution over possible data associations. Belief propagation in this graphical model produces approximate marginals that can be used in the context of an expectation-maximization (EM) algorithm to perform online parameter estimation.
+ 
+ 
+
+ 
+ Publication: 
+ 
+
+ Frank, A.; Smyth, P.; Ihler, A.; , "A graphical model representation of the track-oriented multiple hypothesis tracker," Statistical Signal Processing Workshop (SSP), 2012 IEEE , vol., no., pp.768-771, 5-8 Aug. 2012.  (pdf)   (bib)   (poster) 
+  
+ 
+
+ 
+
+ 
+   Sampling-Based Variational Message-Passing 
+ 
+
+ The sum-product algorithm, a.k.a. belief propagation (BP), is a general algorithm for approximate marginalization in graphical models. At the time of its introduction in the 1980s it was poorly understood and had unpredictable performance. Since then, a new perspective based on variational optimization has led to variants of BP that offer convergence guarantees, bounds on quantities of interest, and more predictable performance.
+ 
+ 
+ 
+Belief propagation was originally developed for discrete and Gaussian graphical models. Recent advances have extended the vanilla BP algorithm to arbitrary (non-Gaussian) continuous models, but the variationally motivated extensions remain confined to discrete models. We show that importance sampling, as used in the recent Particle BP algorithm, provides a mechanism for applying these variational extensions (e.g. tree-reweighted BP, mean field, weighted mini-bucket, etc.) to arbitrary continuous models.
+ 
+
+ 
+
+ 
+ Publication: 
+ 
+
+ A. Ihler, A. Frank, and P. Smyth. Particle-based variational inference for continuous systems. Neural Information Processing Systems, 2009.  (pdf)   (bib)   (poster) 
+  
+ 
+
+ 
+
+ 
+   Forest Cover Estimation From Satellite Imagery 
+ 
+
+  
+Industrial logging and farming operations are contributing to rapid deforestation in some of the world's largest tropical regions. Since some of this activity is illegal (and thus not reported to the local government), the precise extent of the deforestation is difficult to quantify. Accurate estimates of forest cover are needed to understand the impact of land use change on atmospheric CO2.
+ 
+ 
+Satellite imagery offers a way around the lack of reliable reporting. NASA has two satellites in orbit equipped with Moderate Resolution Imaging Spectroradiometers (MODIS) that view the entire Earth's surface every 1 to 2 days. From this satellite imagery, one can compute the Normalized Difference Vegetation Index (NDVI), which is a useful feature in forest cover estimation. However, NDVI detects all green vegetation – not just forest. To further improve the accuracy of satellite-based forest cover estimation, we consider the use of land surface temperature measurements. Using a logistic regression classifier, we show that the day/night temperature range is a useful predictor of tropical forest cover. In a tropical forest, the moist leaves of the canopy mitigate the temperature rise during the day, and the coldest air pools beneath the canopy at night.
+ 
+
+ 
+
+ 
+ Publication: 
+ 
+
+ van Leeuwen, T. T., A. J. Frank, Y. Jin, P. Smyth, M. L. Goulden, G. R. van der Werf, and J. T. Randerson (2011), Optimal use of land surface temperature data to detect changes in tropical forest cover, J. Geophys. Res., 116, G02002,  &lt;doi:10.1029/2010JG001488&gt; .  (pdf)   (bib) 
+ 
+
+
+ 
+ 
+ 
+  
+
+ 
+ 
+ 
+
+
+</body> 

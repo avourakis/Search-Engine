@@ -1,0 +1,51 @@
+ 16.12 OERegisterIStream<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   16.11 OEOpenOStream 
+ Up:   16. OEPlatform Functions 
+ Next:   16.13 OERegisterOStream 
+   
+
+
+  
+16.12 OERegisterIStream 
+ 
+   
+typedef oeistream *(*oeistream_alloc_t)(const char *);
+typedef void       (*oeistream_dealloc_t)(oeistream *);
+
+bool OERegisterIStream(const char *protocol, oeistream_alloc_t   alloc,
+                                             oeistream_dealloc_t dealloc)
+    
+Registers the specified input stream allocation and deallocation functions to
+be used with the specified  protocol . See
+ OEPlatform::OEOpenIStream  for details on how these functions are used.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   16.11 OEOpenOStream 
+ Up:   16. OEPlatform Functions 
+ Next:   16.13 OERegisterOStream 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

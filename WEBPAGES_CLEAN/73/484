@@ -1,0 +1,320 @@
+ ICS 10A Assignment 6 * Fall 2003<body>
+  
+  
+        
+ 
+ This assignment is due at the beginning of
+your discussion section on Wednesday, November 12.  Unlike previous assignments,
+this one requires some open-ended experimentation in the labs, so don't
+expect to be able to complete it in one sitting.  
+ 
+  Summary:  In this assignment you will
+gain familiarity different tools for creating, editing, and storing images
+and with applying compression techniques and understanding their effects.  
+  
+  (a)  The lab machines provide these
+three tools for image manipulation:  
+ 
+    * The drawing layer in Microsoft
+Word
+ 
+   * Paint (in the Accessories menu)
+ 
+   * Microsoft Photo Editor (in the Office Suite) or Iview image
+editor (the labs will have one or the other)  
+ 
+ Spend some time familiarizing yourself with
+each of these tools, getting answers to the questions below.  Remember that
+the main point is  finding  the answer, not the answer itself.  You
+won't get much from the assignment if you let someone else do the work.  
+ 
+ Most people who become experts at using a
+particular application program get their expertise through experience, not
+(primarily) by reading the documentation.  Moreover, that experience comes
+not only from working on specific tasks but also from experimentation, or
+"playing around"--trying different commands or actions to see
+what results.  You should take this opportunity to do the same.  
+  
+ Which tool(s) do vector (line) graphics? 
+Which edit bitmaps?  
+   
+ What graphics file formats (GIF, JPEG, BMP,
+etc.) do these tools read?  (Check the "Open" dialog or the "Import"
+command.)  Which do they write?  (Check "Save As" or "Export".)  
+   
+ Create one or two images of some complexity
+using each tool (or read images, e.g., from the Web, if the tool doesn't
+allow creation of new images).  Spend some time trying out the menus and
+buttons to see what they do, and make a note of the most useful or interesting
+features (which will probably be different in the different tools).  
+   
+ How big is each of these images when you save
+it in the tool's default format?  How does the size change if you choose
+other resolutions, other bit depths, and other file formats?  What's
+the smallest size at which you can save your image without losing noticeable
+quality?  What's the smallest size that may lose quality but still keeps
+the image recognizable?  Are these results what you expect, given your knowledge
+of image representation, or were there surprising results?  
+   
+ What happens when you copy an image from one
+tool and paste it into another?  Are there things you can do to the image
+in the second tool that you can't in the original tool, or vice versa?
+   
+   
+ Can the second tool save the image as a significantly
+smaller file (and if so, is any noticeable quality lost)?  
+  
+ The main goal of this lab is to give you enough
+experience with these tools to appreciate the ways you might use them. 
+Don't short-change the time you spend exploring and experimenting. 
+Your answers to the questions above don't have to be long, but they
+should be complete enough to show you've spent some time.  Printed illustrations
+will be helpful.  You'll submit this on paper, clearly marked "part
+ (a) ."  
+  
+  (b)   Below is a cryptogram from the
+ Saturday Review.   Your job is to decode it back into the original
+English message.  Feel free to work on this in groups of two or three. 
+However, if you have past experience solving cryptograms, please work by
+yourself; otherwise, the experienced person will overwhelm everyone else
+in the group.  
+ 
+ A cryptogram is a message or quotation written
+in a substitution cipher--for each letter in the original message, a different
+letter has been uniformly substituted in the cryptogram.  
+ 
+ Here's a hint for working in groups: 
+Everyone should work on the same copy of this sheet at once.  That way,
+if you want to start over you can use a new, clean worksheet.  
+ 
+ BSL  PLXB  NFIB  CR  BSL  RDEBDCV  DV  JFVA
+VCYLUX  DX  BSL  VCBDEL BSFB  BSL  ESFIFEBLIX  FIL  NHILUA  DJFKDVFIA. 
+     -- RIFVOUDV N. FTFJX  
+ 
+ Now, ask yourself:  What property of natural
+language do cryptograms illustrate?  Print your solution to the cryptogram
+and the one-word answer to this question, both clearly marked "part
+ (b) ."  
+  
+  (c)   In class we discussed delta encoding.
+ Here you will perform delta encoding on two sequences and calculate their
+compression ratios.  You will also plot the two sequences in a line graph
+and write a paragraph or two describing your results.  In addition, you
+will compress one of the sequences by varying the quantization (i.e., by
+using fewer digits of precision), again plotting and commenting on the results.  
+ 
+  (c.1)   First, download the file    http://www.ics.uci.edu/~kay/courses/10a/hw/CompressionMaster.xls   
+.  Then open the file in Excel.  
+ 
+ Follow the instructions in the file for identifying
+the two columns of data you will work with.  (Everyone gets different data,
+depending on their student ID; use the correct set or you won't get
+credit.)  
+ 
+ Create a new spreadsheet with your name and
+other identifying information.  Copy into that spreadsheet your own two
+columns of data from the CompressionMaster spreadsheet.  Mark those columns
+"Original Data A" and "Original Data B."  
+ 
+  (c.2)   Do these three steps for both
+A and B:  
+ 
+ -- In an adjacent column, produce a delta-encoded
+version of the sequence (i.e., compute just the differences between each
+item and its predecessor).  (Selecting the cells in the new column and using
+"Fill Down" from the Edit menu will save you from having to type
+repetitively similar formulas.)  
+ 
+ -- Calculate the compression rate (the number
+of ASCII symbols in the compressed data divided by the number of ASCII symbols
+in the uncompressed data).  (Cutting and pasting to use "Word Count"
+from the "Tools" menu of Microsoft Word is better than counting
+by hand.)  
+ 
+ -- Plot a chart of the sequence, using a line
+graph with no markers.  Be sure to include an appropriate heading.  
+ 
+  (c.3)   Now, do this additional task,
+just for the A data:  Create a new column, dividing each value by 1000.
+ (The original data was in millimeters; your new column is in meters.) 
+This new column will have three digits to the right of the decimal point.
+ To vary the quantization, create three  more  columns:  One with two
+digits to the right, one with one digit to the right, and one with no digits
+to the right of the decimal point.  The Round function helps here.  
+ 
+ As before, calculate the compression rates
+for each of the three reduced-precision columns.  Then produce a bar graph
+showing the relative sizes of the four representations.  
+ 
+ Next, plot the original data (in meters) against
+each of the three reduced-precision versions (i.e., produce three plots).
+ Be sure to label the graphs appropriately.  
+ 
+  (c.4)   Finally, write a couple of paragraphs
+describing your results.  What you write should provide answers and explanations
+to the following questions, at least:  Did both sequences compress equally
+well using delta encoding?  Could you have predicted the results from looking
+at the graphs?  How much reduction of precision was possible before the
+quality of the data degraded significantly (i.e., at what point could you
+detect a difference between the original and compressed data)?  
+ 
+ Print these answers, marking them clearly
+"part  (c) ."  
+  
+  (d)   The class and the text describe
+run-length encoding (RLE).  Find three images of flags on the Web:  one
+that will compress very well using RLE, one that will compress very poorly
+using RLE, and one in the middle.  Justify your choices in a few brief sentences
+(i.e., say why the good one's good, and so on).  (Hint:  The study of
+flags is called vexillology, so using that as a search term will point to
+lots of flag images.)  Download the images from the Web and place them in
+your report, adjusting them so they're uniformly sized and neatly aligned.
+ (The graphics tools from the first part of this assignment should help.)
+ Mark this all "part  (d) ."  
+  
+  (e)   Below are three images.  Image
+A is the original; the other two are compressed using lossy techniques.
+ One used a reduced quantization; the other used coarser sampling.  Which
+is which (with a sentence explaining your answer)?  Print it and mark it
+as usual.  
+ 
+  
+  
+  (f)   Below are three more images. 
+Which would compress best using delta encoding?  Which would compress worst?
+ Again, justify your answer in a sentence or two, printed out and marked
+"part  (f) ."  
+ 
+  
+  
+  (g)   Select a pair of DNA strings from
+the list below.  (Be sure to select the correct pair according to the instructions,
+or you won't get credit.)  Compress the two strings using run-length
+encoding and calculate the compression rates, showing your work fully. 
+Then describe in a couple of sentences why the strings didn't compress
+equally well (i.e., what is it about one string that made it more amenable
+to compression than the other?).  Print and mark this part, too.  
+ 
+ If the first digit of your student ID is 0,
+compress the following two DNA strings:  
+ 
+  1)  ACGGGGGGGGGGGGGGGGGCCCCCCCCCCGGGGGGGGGGGGGGGGGGGGG
+ 
+2)  AAGGGGGGAAGAGTATGGAGTAAGGGATTGGGCACCCCGTCCCGGTCGCA   
+ 
+ If the first digit of your student ID is 1,
+compress the following two DNA strings:  
+ 
+  1)  GGGGGGGAAAAAACCCCCCCCCGGGGGGGGGGGGGGGGGGGTAAAAAAAA
+ 
+2)  TTAAGGGTTTATATGTTTTTAAACACCGGCATTTAACCAACCCGTTTTAA   
+ 
+ If the first digit of your student ID is 2,
+compress the following two DNA strings:  
+ 
+  1)  AAAAATTTTTTTTTAAAAAATTTTGGTTTTTCCCCCCCCCTAATTTTTTT
+ 
+2)  AAGATTGTACCGGAAAAAACCAGTTTTTGGCCCGTTCTTATATTTCGCTA   
+ 
+ If the first digit of your student ID is 3,
+compress the following two DNA strings:  
+ 
+  1)  TTTTGGGGGGGGGGGGGGGGAAAAAAAAAAAGGGGGGGGGGGGGGGGGGG
+ 
+2)  TAATTTGCGTCCAGAGCCGTGCAGGCAACGGGGAAACCTCGGTTTTCTTA   
+ 
+ If the first digit of your student ID is 4,
+compress the following two DNA strings:  
+ 
+  1)  TTTTTTTTTTTTTTTTTTGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAT
+ 
+2)  GCCCCAATAAAAATTCTCCCCTCCAAGCGTTTAGCGGCCAAACCTCAAAA   
+ 
+ If the first digit of your student ID is 5,
+compress the following two DNA strings:  
+ 
+  1)  AAGGGGGGGGGGGGGGCCCCCCCCCCCGGGGGGTTTAATTTTTTTTTTTA
+ 
+2)  GAGGACAAGCGCCTTTTTGGAGGGAAGGGGCGCAAACCGGGTGGGCGTGC   
+ 
+ If the first digit of your student ID is 6,
+compress the following two DNA strings:  
+ 
+  1)  CCCGGGGGGGGGGTTTTAAAAAACCCCCCCTTAAAAAAAAAATTTTTTTT
+ 
+2)  CAGCCGCCCTGGCATACGGCCGGACAATTTGTTTTTAAGCCTCCCTTAAA   
+ 
+ If the first digit of your student ID is 7,
+compress the following two DNA strings:  
+ 
+  1)  CCCCCCCGGGGGGGGGGGGGGGCCCCCTTTTTTTTTTTTTTTTGGGGGGG
+ 
+2)  CCCTTTAGCGTTCCCTATTCCGCCCATAGAAATACAAACTTTCTAGATAC   
+ 
+ If the first digit of your student ID is 8,
+compress the following two DNA strings:  
+ 
+  1)  CCCCCAAAAAAAAAAAAAAAAAAAAAAAAAATTTCCCGGGGGGGGGAAAA
+ 
+2)  CATGGCGCTGGAACCCCCAAAAAAGGTTTCTTTTTCCAAAGTTCTCAAAG   
+ 
+ If the first digit of your student ID is 9,
+compress the following two DNA strings:  
+ 
+  1)  AAAAAGACCCAAAAAAAAAAAAAAAAAGGGGGGGTTTTTTTTTTTTTGGG
+ 
+2)  CTTCAAAAAAACGGGGGATGAAATTTTTTCTAGTCCCTTGCCGGGGAGTT   
+  
+  (h)  (extra credit)  As we showed in
+class, LZW compression finds previously occurring portions of a text and,
+rather than spelling them out again fully, includes a (shorter) reference
+to the portion's first occurrence.  Thus, "Mississippi" could
+be compressed to "Miss[2,3]ippi" (without compressing single-letter
+pieces).  Another way to represent this same kind of compression is with
+a dictionary:  
+ 
+      #
+iss    (This single-entry dictionary
+says to substitute "  iss  "
+for the shorter "  #  ")  
+ 
+      M##ippi  
+ 
+ Even the above short example saves one character
+if we ignore white space.  If we do the same with "Hodgepodge,"
+we save even more since the dictionary would contain the one entry "  #
+odge   "  and the word itself contains
+just the characters "  H#p#  ";
+this would be a compression rate of 0.9, since the dictionary plus the word
+take up 9 characters (ignoring white space) while the original word took
+up 10.  
+ 
+ Here, then is the task:  Find an English word
+with a better compression ratio (using this method) than 0.9.  You're
+allowed to have multiple entries in the dictionary; that might help in some
+cases.  We'll share the best ones in class.  (For a slightly easier
+task, find a short English  sentence  that has a better compression
+ratio than 0.9.)  
+  
+ Written by David G. Kay, Summer 1999; revised Fall 1999, Fall
+2000, Fall 2001, and Fall 2003.  
+ 
+ Compression exercises written by Eamonn Keough and David G.
+Kay, Summer 1999; revised Fall 1999, Fall 2000, Fall 2001, and Fall 2003.  
+  
+ 
+  
+  
+  David G. Kay ,
+ 406B Computer Science
+   University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --     (949) 824-5072   
+ --  Fax    (949) 824-4056   
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Wednesday, November 5, 2003 -- 8:26 AM  
+</body> 

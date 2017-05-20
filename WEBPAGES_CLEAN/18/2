@@ -1,0 +1,921 @@
+ /*
+** ofind - search for oscillators in semitotalistic cellular automata
+** David Eppstein, UC Irvine, 5 April 2000
+**
+** For usage help, run this program and type a question mark at the prompts.
+**
+** As in gfind, we use a hybrid breadth first / depth first search, but
+** with a state space in which each step adds rows in all phases at once.
+** To do this, we find for each phase a set of rows which produce the
+** correct evolution in the following phase, build a graph representing
+** compatibility relations between rows from successive phases (where two
+** rows are compatible if one can be made to evolve into the next) and
+** search for cycles in the graph formed by one row from each phase.
+**
+** History:
+** 0.9, Aug 2001:
+**    Search for still lifes when period=1
+**    Fix bug in makeNewState causing duplicate states to remain in search tree
+**    Bump NCOMPAT, was running out for big still-life searches
+*/
+
+#include 
+#include 
+
+/* codewarrior doesn't include random() in stdlib?? */
+#ifdef __MWERKS__
+#include "rand48.h"
+extern unsigned short _rand48_seed[3];
+extern long nrand48(unsigned short xseed[3]);
+#define random() (nrand48(_rand48_seed))
+#endif
+
+void exit(int);
+static void failure();
+
+/* define DEBUG */
+
+typedef enum { none, odd, even } sym_type;
+sym_type symmetry = even;
+sym_type row_symmetry;
+int row_sym_phase_offset;
+int allow_row_sym = 1;
+int rule = 010014;
+int period = 5;
+int rotorWidth = 4;
+int leftStatorWidth = 0;
+int rightStatorWidth = 0;
+int maxDeepen = 0;
+int hashing = 1;
+int sparkLevel = 0;
+int zeroLotLine = 0;
+#define totalWidth (rotorWidth+leftStatorWidth+rightStatorWidth)
+#define MAXPERIOD 20
+
+/* ============================================================== */
+/*  Behave nicely under non-preemptive multitasking (i.e. MacOS)  */
+/* ============================================================== */
+
+#ifdef __MWERKS__
+
+#include 
+#include 
+
+long niceTimer = 0;
+#define NICE() if (--niceTimer = lastState) {
+		printf("Queue full, aborting!\n");
+		failure();
+	}
+	return (struct state *) l;
+}
+
+static struct state * previousState(struct state * s)
+{
+	return (struct state *) ((unsigned long *) s - (period+1));
+}
+
+static void makeInitialStates(void)
+{
+	int phase;
+	firstUnprocessedState = firstState;
+	firstUnprocessedState-&gt;parent = firstUnprocessedState;
+	for (phase = 0; phase rows[phase] = 0;
+	firstFreeState = nextState(firstUnprocessedState);
+}
+
+/* ============================================ */
+/*  Hash table for duplicate state elimination  */
+/* ============================================ */
+
+#define HASHSIZE (1rows[p]&gt;&gt;(b*8))&amp;0xff)
+#define HASHBYTE(phase,byte,s) (hashValTab[HASHIDX(phase,byte,s)]+hashValPTab[HASHIDX(phase,byte,s-&gt;parent)])
+
+static void clearHash() {
+	int i;
+	for (i = 0; i parent;
+	struct state * pt = t-&gt;parent;
+	int phase;
+	for (phase = 0; phase rows[phase] != t-&gt;rows[phase] ||
+			 ps-&gt;rows[phase] != pt-&gt;rows[phase]) return 0;
+	return 1;
+}
+
+/* hash a value, return nonzero if not hashed because duplicate exists */
+static int hash(struct state * s)
+{
+	long hashKey = 0;
+	int nTries = 3;
+	int phase;
+	
+	/* compute hash key */
+	for (phase = 0; phase  0) {
+		if (hashTable[hashKey &amp; HASHMASK] == 0) {
+			hashTable[hashKey &amp; HASHMASK] = s;
+			return 0;	/* successfully hashed */
+		} else if (isDuplicate(s, hashTable[hashKey &amp; HASHMASK])) return 1;
+		hashKey += (hashKey &gt;&gt; 16);
+	}
+	return 0;	/* unable to find blank, ignore but dont treat as a duplicate */
+}
+
+/* ================================================================ */
+/*  Make structure representing possible extension rows x,a,b -&gt; c  */
+/* ================================================================ */
+
+/*
+** Structure consists of an array of ints, each a bitmap representing
+** the allowable states of three consecutive cells of x.  Mapping cells-&gt;bits
+**    000 -&gt; 01
+**    100 -&gt; 02
+**    010 -&gt; 04
+**    110 -&gt; 010
+**    001 -&gt; 020
+**    101 -&gt; 040
+**    011 -&gt; 0100
+**    111 -&gt; 0200
+** The first cell in extensions[i] corresponds to row&amp;(1&gt;1))
+int extTab[NEXTTAB];
+#define nextExtension(x,a,b,c) extTab[EXTIDX(x,a,b,c)]
+#define maskedExtension(x,a,b,c,m) (extTab[EXTIDX(x,a,b,c)]&amp;extTab[(m)&amp;(EXTIDX(x,a,b,c))])
+
+static void makeExtTab(void)
+{
+	int base,x,a,b,c;
+	for (x = 0; x &gt;ruleBit) &amp; 1)&gt;1));
+					}
+}
+
+static void setupExtensions(unsigned long a, unsigned long b, unsigned long c, unsigned long sparkMask)
+{
+	int x, i;
+	switch (symmetry) {
+		case none:
+			x = 1;
+			x = maskedExtension(x,a&gt;1), (b&gt;1), c&gt;= 1;
+		b &gt;&gt;= 1;
+		c &gt;&gt;= 1;
+	}
+}
+
+/* ====================================================================== */
+/*  Make list of possible extension rows given info from setupExtensions  */
+/* ====================================================================== */
+
+#define NROWS (1= NROWS) {
+				printf("max number of new rows/state exceeded, aborting\n");
+				failure();
+			}
+			NICE();
+		} else {
+			extension &amp;= extensions[bit];
+			listRows(partialRow, phase, bit-1, downShift(extension &amp; 0125));
+			listRows(partialRow+(1&gt;5;
+		if (firstCompat[phase]+(compatBlockLength[phase]*nRows[phase]) &gt; NCOMPAT) {
+			fprintf(stderr,"Compatibility block space exceeded, aborting.\n");
+			failure();
+		}
+	}
+	b = compatBits + firstCompat[phase] + (compatBlockLength[phase]*(rowIndex-firstRow[phase]));
+	if (prevRowIndex == firstRow[prevPhase]) {	/* clear bits if first test for rowIndex */
+		int i;
+		for (i = 0; i rows[prevPhase],rows[rowIndex],-1L);
+	if (03 &amp; extensions[totalWidth - 1]) {	/* path exists? */
+		int i = prevRowIndex - firstRow[prevPhase];
+		b[i&gt;&gt;5] |= 1 &gt;5] &amp; (1 &gt;5)
+unsigned long reachBits[NCOMPAT];
+int firstReach[MAXPERIOD];
+
+static long reachable(int phase, int firstRowIndex, int rowIndex) {
+	return reachBits[firstReach[phase] + (rowIndex*REACHLENGTH) + (firstRowIndex&gt;&gt;5)]
+		&amp; (1 &gt;5)] |= (1 = 0; phase--) {
+		firstReach[phase] = firstReach[phase+1] + nRows[phase+1]*REACHLENGTH;
+		if (firstReach[phase] + nRows[phase]*REACHLENGTH &gt;= NCOMPAT) {
+			printf("Reachability block storage exceeded, aborting\n");
+			failure();
+		}
+		for (i = 0; i &gt;1))
+#define EVEXT(r) ((r 0; bit--) putCell(theRow,bit);
+			break;
+		case even:
+			for (bit = totalWidth-1; bit &gt;= 0; bit--) putCell(theRow,bit);
+			break;
+	}
+	for (bit = 0; bit b2 and b3b4
+ */
+
+#define NEXTTERM(t,r,pr,sr,i) NXTERM(t,((r)&gt;&gt;i)&amp;7,count[((pr)&gt;&gt;i)&amp;7],((sr)&gt;&gt;(i+1))&amp;1)
+#define NXTERM(t,r,pr,sr) nxTerm[(t) | ((r)rows[0] != 0);
+
+	p[0] = -1;
+	for (i = 1; i rows[p[i]] != s-&gt;rows[i])
+			if (p[i] == 0) {
+				p[i] = -1;
+				break;
+			} else p[i] = p[p[i]-1]+1;
+	}
+	/* now set i to min possible period length and test if it divides full period */
+	i = period - (p[period-1] + 1);
+	return (i == period || ((period % i) != 0));
+}
+
+/* test whether a state can be concluded */
+static int terminal(struct state * s) {
+	int i;
+	int phase;
+	struct state * ps = s-&gt;parent;
+	unsigned short term = initialTermState;
+	unsigned short nextTerm;
+
+	row_symmetry = none;
+	if (ps == s) return 0;	/* initial state is not terminal */
+	
+	if (allow_row_sym) {
+		struct state * pps = ps-&gt;parent;
+		
+		/* test even row symmetry */
+		row_sym_phase_offset = 0;
+		for (phase = 0; phase rows[phase] != ps-&gt;rows[phase]) break;
+		if (phase == period) {
+			row_symmetry = even;
+			return 1;
+		}
+		
+		/* test odd row symmetry */
+		for (phase = 0; phase rows[phase] != pps-&gt;rows[phase]) break;
+		if (phase == period) {
+			row_symmetry = odd;
+			return 1;
+		}
+		
+		/* test phase-shifted even row symmetry */
+		if ((period &amp; 1) == 0) {
+			row_sym_phase_offset = period&gt;&gt;1;
+			for (phase = 0; phase rows[phase] != ps-&gt;rows[(phase + row_sym_phase_offset) % period]) break;
+			if (phase == period) {
+				row_symmetry = even;
+				return 1;
+			}
+			
+			/* test phase-shifted odd row symmetry */
+			for (phase = 0; phase rows[phase] != pps-&gt;rows[(phase + row_sym_phase_offset) % period]) break;
+			if (phase == period) {
+				row_symmetry = odd;
+				return 1;
+			}
+		}
+	}
+
+	/* see if we can finish with some rows of stator */
+	/* the stator itself will be found later */
+	for (i = totalWidth-1; i &gt;= 0; i--) {
+		nextTerm = (unsigned short) -1;
+		if (term == 0) return 0;
+		for (phase = 0; phase rows[phase],ps-&gt;rows[phase],s-&gt;rows[(phase+1)%period],i);
+		}
+		term = nextTerm;
+	}
+	nextTerm = (unsigned short) -1;
+	switch (symmetry) {
+		case odd:
+			for (phase = 0; phase rows[phase]),ODDEXT(ps-&gt;rows[phase]),
+										   s-&gt;rows[(phase+1)%period]rows[phase]),EVEXT(ps-&gt;rows[phase]),
+										   s-&gt;rows[(phase+1)%period]rows[phase]rows[phase]rows[(phase+1)%period]rows[phase]rows[phase]rows[(phase+1)%period]rows[phase];
+		unsigned long pr = s-&gt;parent-&gt;rows[phase];
+		unsigned long sr = s-&gt;rows[(phase+1)%period];
+		if (col &gt;= 0) {
+			r &gt;&gt;= col;
+			pr &gt;&gt;= col;
+			sr &gt;&gt;= col;
+		} else switch (symmetry) {
+			case odd:
+				r = (r&gt;1)&amp;1);
+				pr = (pr&gt;1)&amp;1);
+				sr = (sr&gt;1)&amp;1);
+				break;
+			case even:
+				r = (r&gt;1)&amp;1)])
+			return 0;
+	}
+	return 1;
+}
+
+static int terminate(struct state * s) {
+	int i,j;
+	int col = totalWidth + addlStatorCols;
+	int lastCol = -1;
+	
+
+	if (symmetry == none) lastCol = -2;
+	if (col &gt; 63) col = 63;
+	for (i = 0; i  lastCol) {
+		int foundAny = 0;
+		col--;
+		for (i = 0; i = 0) {
+			int k;
+			for (k = 0; k &gt;1)&amp;1) + ((i&gt;&gt;2) &amp; 1);
+		count[i] = j &gt;1)&amp;1) + ((i&gt;&gt;2) &amp; 1) + ((i&gt;&gt;3)&amp;1) + ((i&gt;&gt;4) &amp; 1);
+	}
+
+	/* first pass at compatibility: only low 3 bits of each word */
+	for (i = 0; i &gt;1)&amp;1);
+			count += (i&amp;1) + ((i&gt;&gt;1)&amp;1) + ((i&gt;&gt;2)&amp;1);
+			count += (k&amp;1) + ((k&gt;&gt;1)&amp;1) + ((k&gt;&gt;2)&amp;1);
+			count += (j&amp;1) + ((j&gt;&gt;2)&amp;1);
+			tcomp3(i,j,k) = 0;
+			if ((rule&amp;(1&gt;1,j&gt;&gt;1,k&gt;&gt;1) &amp;&amp; tcomp3(i&gt;&gt;2,j&gt;&gt;2,k&gt;&gt;2) &amp;&amp;
+				  tcomp3(i&gt;&gt;3,j&gt;&gt;3,k&gt;&gt;3) &amp;&amp; tcomp3(i&gt;&gt;4,j&gt;&gt;4,k&gt;&gt;4) );
+		}
+	}
+	
+	/* stabilization for full terminate() */
+	/* format of index: iijjkkrrrppps */
+	/* where ijkrrrppp -&gt; s (low bits from ii jj kk respectively) */
+	/* and   ijkijkrrr -&gt; j (high and low bits from ii jj kk) */
+	for (i = 0; i &gt;5)&amp;1);
+		j += ((i&gt;&gt;11)&amp;1) + ((i&gt;&gt;9)&amp;1) + ((i&gt;&gt;7)&amp;1);
+		j += ((i&gt;&gt;6)&amp;1) + ((i&gt;&gt;4)&amp;1);
+		j += ((i&gt;&gt;3)&amp;1) + ((i&gt;&gt;2)&amp;1) + ((i&gt;&gt;1)&amp;1);
+		if (rule &amp; (1 s ? */
+			j = 9 - 9*((i&gt;&gt;9)&amp;1);
+			j += ((i&gt;&gt;12)&amp;1) + ((i&gt;&gt;11)&amp;1) + ((i&gt;&gt;10)&amp;1) + ((i&gt;&gt;8)&amp;1);
+			j += ((i&gt;&gt;7)&amp;1) + ((i&gt;&gt;6)&amp;1) + ((i&gt;&gt;5)&amp;1) + ((i&gt;&gt;4)&amp;1);
+			if (rule &amp; (1&gt;9)&amp;1) : !((i&gt;&gt;9)&amp;1))
+				stabtab[i] = 1;
+		}
+	}
+	
+	/* reversal of terminal state */
+	for (i = 0; i &gt;1);
+			if (i &amp; (1&gt;1)&amp;3;
+			nti[(j&gt;3)&amp;1) + ((i&gt;&gt;5)&amp;1);
+			count += (j&amp;1) + ((j&gt;&gt;1)&amp;1);
+			count += 9 - 9*((i&gt;&gt;4)&amp;1);
+			succ2 = (j&amp;1);
+			count2 = 9 - 9*succ2 + ((j&gt;&gt;1)&amp;1) + ((j&gt;&gt;2)&amp;1) + ((j&gt;&gt;3)&amp;1);
+			count2 += ((i&gt;&gt;3)&amp;1) + ((i&gt;&gt;4)&amp;1) + ((i&gt;&gt;5)&amp;1);
+			for (inner = 0; inner &gt;16)|(jparent != s &amp;&amp; s != 0) {
+		rows[2*i] = s-&gt;rows[0];
+		rows[2*i+1] = s-&gt;rows[row_sym_phase_offset];
+		i++;
+		s = s-&gt;parent;
+	}
+	j = i;
+	while (i-- &gt; 0) putRow(rows[2*i]);
+	switch (row_symmetry) {
+		case none:
+			break;
+		case even:
+			i = 2;
+			while (i = firstState &amp;&amp; s parent != s) {
+			putRow(s-&gt;rows[0]);
+			s = s-&gt;parent;
+		}
+	} else printf("\nUnable to find current search line.\n");
+	exit(0);
+}
+
+/* test whether a state is actually an oscillator of the appropriate period */
+static int nontrivial(struct state * s) {
+	while (s-&gt;parent != s) {
+		if (aperiodic(s)) return 1;
+		s = s-&gt;parent;
+	}
+	return 0;
+}
+
+/* ==================================================================== */
+/*  Compute successors of a given state and append them to state space  */
+/* ==================================================================== */
+
+/* make new state out of given row indices */
+/* stator/rotor check is here for now */
+static void makeNewState(struct state * parent) {
+	struct state * s = firstFreeState;
+	int phase;
+	s-&gt;parent = parent;
+	firstFreeState = nextState(s);	/* make sure we're not at end of array */
+	for (phase = 0; phase rows[phase] = rows[firstRow[phase]+rowIndices[phase]];
+	if (parent-&gt;parent == parent) {
+		int nonzero = 0;
+		for (phase = 0; phase rows[phase]) nonzero++;
+		if (!nonzero) {
+			firstFreeState = s;	/* zero successor of zero, abort */
+			return;
+		}
+	}
+	if (hashing &amp;&amp; hash(s)) firstFreeState = s;	/* test if duplicate, and if so abort new state */
+}
+
+/* handle subset of rows having a common stator */
+static void processGroup(struct state * s)
+{
+	int phase;
+#ifdef DEBUG
+		int i;
+#endif
+
+	/* set up compatibility information for extensions in adjacent phases */
+	for (phase = 0; phase  0 &amp;&amp; !compatible(phase, firstRow[phase-1]+rowIndices[phase-1],
+												firstRow[phase]+rowIndices[phase])) {
+#ifdef DEBUG
+			printf(" incompatible, backtracking\n");
+#endif
+			phase--;
+		} else if (phase == period-1) {
+			if (compatible(0, firstRow[phase]+rowIndices[phase], firstRow[0]+rowIndices[0])) {
+#ifdef DEBUG
+				printf(" complete, queueing\n");
+#endif
+				makeNewState(s);
+			}
+#ifdef DEBUG
+			else printf(" wrap incompatible, continuing\n");
+#endif
+			phase--;
+		}
+#ifdef DEBUG
+		else printf(" incomplete, continuing\n");
+#endif
+	}
+}
+
+/* qsort subroutine to sort rows by stator type */
+/* ties are broken in favor of smaller rotor since qsort appears to be unstable */
+static int statorCompare(const void * p, const void * q)
+{
+	unsigned long pr = *(unsigned long *)p;
+	unsigned long qr = *(unsigned long *)q;
+	if ((pr&amp;STATMASK) != (qr&amp;STATMASK))
+		return (int) ((pr&amp;STATMASK) - (qr&amp;STATMASK));
+	return (int) (pr-qr);
+}
+
+/* find a single stator group */
+int lastRow[MAXPERIOD];
+int currentRow[MAXPERIOD];
+static void findStatorGroup(struct state * s) {
+	int phase;
+	unsigned long stator;
+
+	for (phase = 0; phase  (rows[firstRow[phase]] &amp; STATMASK))
+				if (++firstRow[phase] &gt;= lastRow[phase]) { /* ran out of rows in one phase? */
+					firstRow[0] = lastRow[0];	/* make process() terminate stator group loop */
+#ifdef DEBUG
+					printf("Out of rows in phase %d, aborting findStatorGroup and process\n", phase);
+#endif
+					return;
+				}
+			if (stator != (rows[firstRow[phase]] &amp; STATMASK)) {
+#ifdef DEBUG
+				printf("Empty group in phase %d, aborting findStatorGroup\n", phase);
+#endif
+				return; /* no matches in phase */
+			}
+		}
+		
+		/* here with at least one matching stator in the given phase */
+		/* find and count all the rest of the matches */
+		while (firstRow[phase]+nRows[phase] rows[phase]);
+	printf("...\n");
+#endif
+	NICE();
+	
+	/* check if we've finished the search! if so, success doesn't return */
+	if (terminal(s) &amp;&amp; nontrivial(s)) success(s);
+	
+	/* determine how many rows of the state should be treated as sometimes-present sparks */
+	if (sparkLevel) {
+		int level = 0;
+		struct state * p = s-&gt;parent-&gt;parent;	/* discount original two rows */
+		if (p-&gt;parent != p) {
+			level = 1;
+			if (p-&gt;parent-&gt;parent != p-&gt;parent) level = 2;
+		}
+		if (sparkLevel &gt; level) {
+			if (sparkLevel &gt; level+1) sparkMask =~ EXTIDX(0,-1L,-1L,-1L);
+			else sparkMask =~ EXTIDX(0,0,-1L,0);
+		}
+	}
+	
+	/* find representation of set of extensions for each row */
+	for (phase = 0; phase rows[phase],s-&gt;parent-&gt;rows[phase],s-&gt;rows[(phase+1)%period],sparkMask);
+		listRows(0,phase,totalWidth-1,03);
+		if (nRows[phase] == 0) return;	/* no possible extensions in this phase */
+	}
+
+	/* simple case: no stators. just process all extension rows together */
+	if (STATMASK == 0) {
+		processGroup(s);
+		return;
+	}
+	
+	/* have to break things into groups by stator type.  first, sort */
+	/* and set up arrays for stator grouping */
+	for (phase = 0; phase parent = unused;
+		s = nextState(s);
+	}
+}
+
+/* ============================ */
+/*  Garbage-collect full queue  */
+/* ============================ */
+
+static int depth(struct state * s) {
+	int i = 0;
+	while (s != s-&gt;parent) {
+		s = s-&gt;parent;
+		i++;
+	}
+	return i;
+}
+
+static void printApprox(long n) {
+	n /= period;
+	if (n  999999) {
+			n /= 1000;
+			unit = 'M';
+		}
+		if (n &gt; 99999) printf("%d%c", n/1000, unit);
+		else printf("%d.%c%c", n/1000, (n%1000)/100+'0', unit);
+	}
+}
+
+static void compact() {
+	struct state * oldFirstUnproc = firstUnprocessedState;
+	struct state * oldFirstFree = firstFreeState;
+	struct state * x, * y;
+	int counter = 0;
+	static int lastDepth = 0;
+	int frontierDepth = depth(firstUnprocessedState);
+	if (frontierDepth &gt; lastDepth) lastDepth = frontierDepth;
+	lastDepth++;
+	
+	/* initial output and call to iterative deepening code */
+	printf("Queue full, depth = %d, ", frontierDepth);
+	if (maxDeepen &gt; 0 &amp;&amp; rotorWidth &gt; 0 &amp;&amp; lastDepth - frontierDepth &gt; maxDeepen) {
+		rotorWidth--;
+		rightStatorWidth++;
+		if (leftStatorWidth &gt; 0 &amp;&amp; rotorWidth &gt; 0) {
+			leftStatorWidth++;
+			rotorWidth--;
+		}
+		printf("shrinking rotor, ");
+		lastDepth = frontierDepth + 1;
+	}
+	printf("deepening %d, ",lastDepth - frontierDepth);
+	printApprox(oldFirstFree - oldFirstUnproc);
+	printf("/");
+	printApprox(oldFirstFree - firstState);
+	fflush(stdout);
+	hashing = 0;
+	deepen(lastDepth - frontierDepth);	/* do this before outputting arrow */
+	hashing = 1;
+	printf(" -&gt; ");						/* so user can tell what stage of compaction */
+	fflush(stdout);
+	
+	/* queue compaction stage 1: mark unused nodes
+		we work backwards through the queue, with
+		x = next node to be checked for being unused
+		y = node that might have x as parent */
+	x = previousState(firstUnprocessedState);
+	y = previousState(firstFreeState);
+	clearHash();
+	while (y-&gt;parent == unused) y = previousState(y);
+	do {
+		NICE();
+		while (y-&gt;parent != x) {	/* search backwards for y's parent, marking other nodes */
+			if (x-&gt;parent == x) {	/* sanity check */
+				fprintf(stderr,"Unable to find parent of y!\n");
+				failure();
+			}
+			x-&gt;parent = unused;
+			x = previousState(x);
+			counter++;
+		}
+		if (x-&gt;parent == x) break;
+		while (y-&gt;parent == x || y-&gt;parent == unused)
+			y = previousState(y);	/* search backwards for non-child of x */
+		x = previousState(x);		/* now done with x, move on to another node */
+	} while (x-&gt;parent != x);
+
+	if (counter) {
+
+		/* queue compaction stage 2: move used nodes forward
+			we work forwards through the queue, with
+			x = next place to move a node
+			y = next node to be moved */
+
+		x = firstState;
+		while (x-&gt;parent != unused) x = nextState(x);
+		y = x;
+		while (y parent != unused) {
+				int phase;
+				x-&gt;parent = y-&gt;parent;
+				for (phase = 0; phase rows[phase] = y-&gt;rows[phase];
+				x = nextState(x);
+			}
+			if (y == firstUnprocessedState) firstUnprocessedState = x;
+			y = nextState(y);
+		}
+		firstFreeState = x;
+	
+		/* queue compaction stage 3: fix parent pointers
+		   at this point, although the actual pointers are all wrong, the pattern
+		   of equal/unequal is significant -- if x-&gt;parent != previousState(x)-&gt;parent,
+		   then x-&gt;parent should be nextState(previousState(x)-&gt;parent).
+		   We work forwards through the queue, with x=next node to be fixed,
+		   y=old value of previousState(x)-&gt;parent */
+
+		x = y = firstState;
+		x = nextState(x);
+		while (x parent == y) x-&gt;parent = previousState(x)-&gt;parent;
+			else {
+				y = x-&gt;parent;
+				x-&gt;parent = nextState(previousState(x)-&gt;parent);
+			}
+			(void) hash(x);
+			x = nextState(x);
+		}
+	}
+	
+	printApprox(firstFreeState - firstUnprocessedState);
+	printf("/");
+	printApprox(firstFreeState - firstState);
+	printf("\n");
+	fflush(stdout);
+}
+
+/* ================================ */
+/*  Breadth first search algorithm  */
+/* ================================ */
+
+static void breadthFirst(void)
+{
+	while (firstUnprocessedState != firstFreeState) {
+		struct state * s;
+		if (firstFreeState &gt;= queueFull) compact();
+		s = firstUnprocessedState;
+		firstUnprocessedState = nextState(s);
+		process(s);
+	}
+}
+
+/* ================ */
+/*  User interface  */
+/* ================ */
+
+/* read cmd line from stdin */
+static char * readString(char * prompt) {
+	static char buf[1024];
+	char *s = buf;
+	int i = 0;
+	char c;
+	
+	fprintf(stderr, prompt);
+	while ((c = getchar()) != '\n')
+		if (i++ = '0' &amp;&amp; *s  9 &amp;&amp; phase  totalWidth) {
+			fprintf(stderr,"Too many cells in row!\n");
+			return readRow(phase);
+		}
+	}
+}
+
+static int nonInt(char * s) {
+	if (*s == '-') s++;
+	while (*s != 0)
+		if (*s  '9') return 1;
+		else s++;
+	return 0;
+}
+
+static void helpWidth() {
+	printf("Typical oscillators consist of some number of rotor cells (cells that\n");
+	printf("actually oscillate) surrounded by other stator cells (still life  patterns\n");
+	printf("that stabilize the rotor).  This program allows certain columns to be\n");
+	printf("designated as stator cells, which speeds up the search compared to allowing\n");
+	printf("all columns to be rotors.  Since you have specified ");
+	switch (symmetry) {
+		case none:
+			printf("no symmetry,\n");
+			printf("the columns form three groups: the left stator, the rotor, and the\n");
+			printf("right stator.  The width parameters specify how wide to make each group.\n");
+			break;
+
+		case even:
+			printf("even symmetry,\n");
+			printf("the number of stator columns must be equal on each side of the rotor.\n");
+			printf("The stator width parameter specifies this number; the number of rotor\n");
+			printf("columns is twice the rotor width parameter (because each column appears\n");
+			printf("once on each side of the pattern).\n");
+			break;
+
+		case odd:
+			printf("odd symmetry,\n");
+			printf("the number of stator columns must be equal on each side of the rotor.\n");
+			printf("The stator width parameter specifies this number; the number of rotor\n");
+			printf("columns is twice the rotor width parameter minus one (because each column\n");
+			printf("other than the center one appears once on each side of the pattern).\n");
+			break;
+
+		default:
+			printf("an unknown symmetry mode,\n");
+			printf("I can't help you explain how the width parameters are used.\n");
+			break;
+	}
+}
+
+static void readParams() {
+	char * s;
+	int nInitial;
+	enum { rp_rule, rp_period, rp_sym, rp_complete, rp_rotor, rp_left, rp_right, rp_zll,
+			 rp_deep, rp_nrows, rp_rows } readParamState = rp_rule;
+	fprintf(stderr,"Type ? at any prompt for help, or ^ to return to a previous prompt.\n");
+	for (;;) switch (readParamState) {
+		case rp_rule:
+			readRule();
+			readParamState = rp_period;
+		
+		case rp_period:
+			s = readString("Period: ");
+			if (*s == '^') {
+				readParamState = rp_rule;
+				continue;
+			}
+			if (*s == '?') {
+				printf("Enter the number of generations needed for the pattern\n");
+				printf("to repeat its initial configuration.\n");
+			}
+			period = atoi(s);
+			if (nonInt(s) || period = MAXPERIOD) {
+				fprintf(stderr,"Period must be an integer in the range 1..%d\n",MAXPERIOD-1);
+				continue;
+			}
+			readParamState = rp_sym;
+
+		case rp_sym:
+			s = readString("Symmetry type (even, odd, none): ");
+			switch (*s) {
+				case '^': readParamState = rp_period; continue;
+				case '?':
+					printf("This program is capable of restricting the patterns it seeks\n");
+					printf("to those in which each row is symmetric (palindromic).\n");
+					printf("This restriction reduces the number of partial patterns that\n");
+					printf("must be considered, allowing the program to find patterns\n");
+					printf("roughly twice as wide as it could without the symmetry restriction.\n");
+					printf("To find patterns in which the rows are symmetric and have even\n");
+					printf("length, type E. To find patterns in which the rows are symmetric\n");
+					printf("and have odd length, type O. To find asymmetric patterns\n");
+					printf("(the default), type N.\n");
+					continue;
+				case 'e': case 'E': symmetry = even; break;
+				case 'o': case 'O': symmetry = odd; break;
+				case 'n': case 'N': case '\0': symmetry = none; break;
+				default: printf("Unrecognized symmetry option.\n"); continue;
+			}
+			readParamState = rp_complete;
+
+		case rp_complete:
+			s = readString("Allow symmetric completion of patterns (yes, no): ");
+			switch (*s) {
+				case '^': readParamState = rp_sym; continue;
+				case '?':
+					printf("If this program detects a symmetric configuration of rows\n");
+					printf("in the partial patterns it constructs (for instance, if two\n");
+					printf("adjacent rows are the same in each phase) it can immediately\n");
+					printf("complete the pattern by repeating the sequence of rows in the\n");
+					printf("opposite order, forming a pattern that is symmetric across a\n");
+					printf("horizontal axis.  However, this may lead to patterns that are\n");
+					printf("roughly twice as long as if they were completed asymmetrically.\n");
+					printf("Type Y (the default) to allow symmetric completion, or type N\n");
+					printf("to force the search to finish all patterns without early\n");
+					printf("symmetry detection.\n");
+					continue;
+				case 'y': case 'Y': case '\0': allow_row_sym = 1; break;
+				case 'n': case 'N': allow_row_sym = 0; break;
+				default: printf("Unrecognized completion option.\n"); continue;
+			}
+			readParamState = rp_rotor;
+
+		case rp_rotor:
+			if (period == 1) s = readString("Still life width: ");
+			else s = readString("Rotor width: ");
+			if (*s == '^') { readParamState = rp_complete; continue; }
+			if (*s == '?') { helpWidth(); continue; }
+			rotorWidth = atoi(s);
+			if (nonInt(s) || rotorWidth  32) {
+				fprintf(stderr,"Width must be an integer in the range 1..32\n");
+				continue;
+			}
+			if (period == 1) readParamState = rp_zll;
+			else readParamState = rp_left;
+			continue;
+
+		case rp_left:
+			if (symmetry == none) {
+				s = readString("Left stator width: ");
+				if (*s == '^') { readParamState = rp_rotor; continue; }
+				if (*s == '?') { helpWidth(); continue; }
+				leftStatorWidth = atoi(s);
+				if (nonInt(s) || leftStatorWidth  32) {
+					fprintf(stderr,"Width must be an integer in the range 0..32\n");
+					continue;
+				}
+			} else leftStatorWidth = 0;
+			readParamState = rp_right;
+
+		case rp_right:
+			if (symmetry == none) s = readString("Right stator width: ");
+			else s = readString("Stator width: ");
+			if (*s == '^') {
+				if (symmetry == none) readParamState = rp_left;
+				else readParamState = rp_rotor;
+				continue;
+			}
+			if (*s == '?') { helpWidth(); continue; }
+			rightStatorWidth = atoi(s);
+			if (nonInt(s) || rightStatorWidth  32) {
+				fprintf(stderr,"Width must be an integer in the range 0..32\n");
+				continue;
+			}
+			readParamState = rp_zll;
+			
+		case rp_zll:
+			s = readString("Allow final stator rows to exceed width limit (yes, no): ");
+			switch(*s) {
+			case '^':
+				if (period == 1) readParamState = rp_rotor;
+				else readParamState = rp_right;
+				continue;
+			case '?':
+				printf("The final stator rows of a pattern are found by a different method\n");
+				printf("from the main search, that can search for arbitrarily wide patterns\n");
+				printf("without significant time penalties.  Normally, to increase the\n");
+				printf("chance of a successful search, this stator search is run with a width\n");
+				printf("several columns wider than the main search.  Type no here to force\n");
+				printf("the whole pattern to stay completely within the given width limits.\n");
+				continue;
+			case 'n': case 'N': zeroLotLine = 1; break;
+			case 'y': case 'Y': case '\0': zeroLotLine = 0; break;
+			}
+			readParamState = rp_deep;
+
+		case rp_deep:
+			s = readString("Maximum deepening amount: ");
+			if (*s == '^') { readParamState = rp_zll; continue; }
+			if (*s == '?') {
+				printf("This program uses a combination of breadth-first and depth-first search\n");
+				printf("explained in more detail in http://arXiv.org/abs/cs.AI/0004003.\n");
+				printf("When the breadth first queue becomes full, it searches depth-first\n");
+				printf("to a level one past the previous depth-first iteration.\n");
+				printf("The number of levels of depth first searching provides some indication\n");
+				printf("of how the search is progressing; high levels of deepening may\n");
+				printf("mean that the difficult part of a pattern has been found and that the\n");
+				printf("search is bogging down while trying to finish it off.  In this case,\n");
+				printf("it may be appropriate to limit the deepening amount.  If the limit is\n");
+				printf("reached, the program attempts to speed the search by restricting\n");
+				printf("additional rotor columns to be stators in future rows.  The default\n");
+				printf("is to allow arbitrarily large deepening amounts.\n");
+				continue;
+			}
+			maxDeepen = atoi(s);
+			if (nonInt(s) || maxDeepen  2 || nInitial  0) {
+				int phase;
+				struct state * s = firstFreeState;
+				firstFreeState = nextState(firstFreeState);
+				s-&gt;parent = firstUnprocessedState;
+				firstUnprocessedState = s;
+				for (phase = 0; phase rows[phase] = readRow(phase);
+			}
+			return;
+
+		default:
+			printf("readParams(): unrecognized state!\n");
+			exit(0);
+	}		
+
+	
+}
+
+/* ============ */
+/*  Main entry  */
+/* ============ */
+
+int main(void)
+{
+	printf("ofind 0.9, D. Eppstein, 14 August 2000\n");
+	initHash();
+	readParams();
+	printf("Initializing... "); fflush(stdout);
+	makeDownShifts();
+	makeExtTab();
+	initTermTabs();
+	if (tcompatible(0,2,0)) printf("bad tcompat!\n");
+	printf("Searching...\n"); fflush(stdout);
+	fflush(stdout);
+	breadthFirst();
+	printf("No patterns found\n");
+	failure();
+	return 0;
+}
+
+ 

@@ -1,0 +1,534 @@
+ % bc_alzml<body>
+
+   Differential Diagnosis of Dementia:  A Knowledge Discovery and Data Mining (KDD) Approach 
+   Subramani Mani  �  , William Rodman Shankle  ��  , Michael J. Pazzani  �  , 
+ Padhraic Smyth  �  ,  and Malcolm B. Dick  �   
+ University of California at Irvine, Irvine, CA  92697 
+  ( �  Dept. of Information and Computer Science,  �  Dept. of Cognitive Science,  �  Dept. of Neurology) 
+     
+   We are applying Knowledge Discovery and Data Mining ( KDD )  methods in conjunction with Electronic Medical Records ( EMR s) of  normally aging and demented subjects to automate the screening and differential diagnosis of Alzheimer's Disease ( AD ), Vascular  Dementia ( VD ) and other causes.  Having successfully developed  dementia screening tools with KDD methods, this report describes the  extension of these techniques to the harder task of differential  diagnosis.  We show that the domain of neuropsychologic test  performance helps diagnose AD, but not VD, and that additional domains  are needed for accurate diagnosis.  An additional benefit of KDD methods  applied to EMRs includes detecting subtle data entry errors. 
+    
+   INTRODUCTION 
+    
+ The Electronic Medical Record (EMR) has potential value when used in  conjunction with Knowledge Discovery and Data Mining (KDD)  methods.  Clinically, KDD methods can be used to produce decision  trees, rules, graphs, quality controls, as well as to detect  protocol violations and inconsistent patient data.  We are applying  KDD methods to understand normal brain aging and dementia.  In phase I  of this project, we have successfully applied KDD methods to a  dementia database to identify a screening test    1    that has much higher accuracy than the same test using nationally recommended scoring criteria   2   .  In this report, we describe the initial work related  to the development of decision rules for diagnosing Alzheimer's  Disease (AD) and Vascular Dementia (VD) using KDD methods  applied to the EMR of the UC Irvine Dementia Database.
+      
+   METHODS 
+     
+   The Electronic Medical Record of the UCI Dementia Database 
+ The EMR of the UCI Alzheimer's Disease Research Center  ( ADRC )  uses a Sybase relational database  with a JAM graphical front-end that can be accessed remotely from any  platform (MAC, PC, or UNIX).  It consists of more than 60 data entry  screens with the underlying tables developed in third normal form.  Each data entry screen has a standardized graphical format which  allows direct data entry through mouse or direct typing by all  personnel to reduce the incidence of missing data and transcription  errors.  Features keyed to data entry include immediate error checking  for data type, value range, and logical consistency, plus  auto-calculation of categorical and summary scores. To avoid confusion  between null values and missing data, there is a mandatory field  specifying each screen's status (not done, done, failed to  comprehend, refused, or too slow to complete).  Standardized coding  includes the International Classification of Diseases ( ICD9 ), and the  National Drug Codes ( NDC ), which are accessed by entering partial strings of  the disease, symptom or drug name.  Disorders, symptoms and drugs  specific to dementia that are not included in the ICD9 or NDC have  been coded and added so as not to conflict with existing or future  ICD9 or NDC codes.  The structure of the medical assessment screens is  generic and follows DeGowin and Degowin's  Bedside Diagnostic  Examination    3   .  The screens devoted to  pertinent  positive and negative features of the chief complaint collect data  relevant to memory loss and dementia;  otherwise, this EMR can be used for any medical  problem.  The database currently holds more than 2,000 patient-visits  (patients are longitudinally followed) and collects more than 1,200  fields per patient-visit.  Since both clinical staff and researchers  use this database, there are multiple security access levels to  protect patient confidentiality.  The data used for the present  analysis were generated using standard SQL scripts into formats  acceptable to the Machine Learning ( ML ) algorithms.
+    
+   Sample Description 
+ Table 1 characterizes the 428 mildly demented patients  (Clinical Dementia Rating Scale ( CDRS )  &lt; 
+ = 
+1; 4 ) seen  at the UCI ADRC, whose diagnoses were either possible or probable AD    5   , possible or probable VD   6   , or other  causes.  Patients with multiple dementia etiologies were included to  render the decision trees and rules more clinically useful as well as  to force the KDD methods to search for unique patterns of positive  criteria for these diseases.  For each patient, we created three  binary diagnosis attributes (AD, VD, and Other Causes).  For example,  a patient with probable VD and possible AD would be coded as having AD  and VD but not Other Causes.
+   
+ Table 1:  Characteristics of the UCI  ADRC  AD and VD Samples  
+      
+  AD (AD = 197,  NAD = 231)   
+   
+  Attribute   
+ 
+  AD   
+ 
+  NAD   
+ 
+  Total   
+      
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+   
+  % Female 1    
+ 
+  105   
+ 
+  54   
+ 
+  -   
+ 
+  129   
+ 
+  56   
+ 
+  -   
+ 
+  234   
+ 
+  55   
+ 
+  -   
+   
+  Age 1    
+ 
+  195   
+ 
+  74   
+ 
+  7.9   
+ 
+  231   
+ 
+  69   
+ 
+  12.9   
+ 
+  426   
+ 
+  71   
+ 
+  11.3   
+   
+  Yrs Education 1    
+ 
+  194   
+ 
+  14   
+ 
+  3.3   
+ 
+  230   
+ 
+  15   
+ 
+  3.7   
+ 
+  424   
+ 
+  14.3   
+ 
+  3.6   
+   
+  CDRS 1    
+ 
+  195   
+ 
+  0.8   
+ 
+  0.25   
+ 
+  215   
+ 
+  0.6   
+ 
+  0.33   
+ 
+  410   
+ 
+  0.7   
+ 
+  0.31   
+   
+  Recall 1    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+  Recog 1    
+ 
+  192   
+ 
+  16   
+ 
+  2.8   
+ 
+  222   
+ 
+  18   
+ 
+  2.3   
+ 
+  414   
+ 
+  17   
+ 
+  2.8   
+   
+  Naming 1    
+ 
+  171   
+ 
+  20   
+ 
+  6.2   
+ 
+  227   
+ 
+  24   
+ 
+  5.7   
+ 
+  398   
+ 
+  22   
+ 
+  6.2   
+      
+   
+  VD (VD = 120,  NV = 308)   
+   
+  Attribute   
+ 
+  VD   
+ 
+  NVD   
+ 
+  Total   
+      
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+ 
+  N   
+ 
+  M   
+ 
+  SD   
+   
+  % Female 2    
+ 
+  49   
+ 
+  59   
+ 
+  -   
+ 
+  163   
+ 
+  53   
+ 
+  -   
+ 
+  234   
+ 
+  55   
+ 
+  -   
+   
+  Age 2    
+ 
+  120   
+ 
+  76   
+ 
+  7.2   
+ 
+  306   
+ 
+  69   
+ 
+  11.9   
+ 
+  426   
+ 
+  71   
+ 
+  11.3   
+   
+  Yrs Education   
+ 
+  120   
+ 
+  14   
+ 
+  3.8   
+ 
+  304   
+ 
+  14.3   
+ 
+  3.5   
+ 
+  424   
+ 
+  14   
+ 
+  3.6   
+   
+  CDRS   
+ 
+  116   
+ 
+  0.8   
+ 
+  0.30   
+ 
+  294   
+ 
+  0.7   
+ 
+  0.32   
+ 
+  410   
+ 
+  0.7   
+ 
+  0.31   
+   
+  Recall   
+ 
+  119   
+ 
+  2.7   
+ 
+  2.7   
+ 
+  297   
+ 
+  3.1   
+ 
+  2.8   
+ 
+  416   
+ 
+  3.0   
+ 
+  2.8   
+   
+  Recog   
+ 
+  117   
+ 
+  17.0   
+ 
+  2.8   
+ 
+  297   
+ 
+  17.0   
+ 
+  2.9   
+ 
+  414   
+ 
+  17.0   
+ 
+  2.8   
+   
+  Naming   
+ 
+  118   
+ 
+  22   
+ 
+  6.0   
+ 
+  280   
+ 
+  22.4   
+ 
+  6.3   
+ 
+  398   
+ 
+  22   
+ 
+  6.2   
+   
+
+    
+   
+    N=number of examples, M=Mean, and SD=Standard Deviation 
+  1   T-test for AD vs. NAD (unpaired samples with unequal variances) was significant at P &lt; 0.0001
+  2   T-test for VD vs. NVD (unpaired samples with unequal variances) was significant at P &lt; 0.0001
+   
+   
+   Approach to Automated Diagnosis 
+ Although space limitations preclude a discussion of prior work on machine learning and differential diagnosis, our previous paper addresses this issue    1   .  In diagnosing AD and VD with KDD methods, we constructed a binary  decision tree for AD vs. not-AD ( NAD ) and a separate binary  decision tree for VD vs. not-VD ( NVD ).  This is because the occurrence of these two dementias is statistically independent of each other (the product of their probabilities equals the probability of their co-occurrence, which is roughly 15%).  Hence we argue that the criteria for each etiology should be applied independently.  We initially considered automated feature selection but later concluded that it is not feasible due to the computational cost involved. (Feature selection from a subset consisting of 140 attributes ran for more than 3 weeks.) We decided to approach the diagnostic problem in several phases.  In the first phase, we will examine specific knowledge domains to identify the best attributes within them.  In this paper, we restricted the attributes examined to the set of demographics and the total scores  from those neuropsychological tests with relatively few missing  values.  Tests not administered routinely were excluded from the attribute set.  In subsequent phases, we will examine other knowledge domains, then evaluate the best attributes from all domains simultaneously.  The specific attributes used in the present analysis measured  gender, age, education, dementia severity, judgment, abstract  reasoning, category fluency, letter fluency, delayed free recall and  recognition, simple and complex attention span, visual-constructional  abilities, and object naming.
+      
+   Machine Learning Methods 
+ Specific algorithms. We concentrated on decision tree learners, rule learners and the Naive Bayesian classifier.  Decision trees and rules generate clear descriptions of how the ML method arrives at a particular classification.  The Naive Bayesian classifier was included for comparison purposes.    MLC++    7    (Machine Learning in C++) is a software package developed at    Stanford University which implements commonly used machine    learning algorithms.  It also provides standardized methods of    running experiments using these algorithms.  C4.5   8    is a decision tree generator and C4.5rules produce rules of the form,   if..then  from the decision tree.  Naive Bayes   9    is a classifier based on Bayes Rule.  Even though it makes the assumption that the attributes are conditionally independent of each other given the class, it is a robust classifier and serves as a good comparison in terms of accuracy for evaluating other algorithms.  CART   10    is a classifier which uses a tree-growing algorithm that minimizes the standard error of the classification accuracy based on a particular tree-growing method   applied to a series of training subsamples.  We used Caruana and Buntine's implementation of CART (the "IND" package), and ran CART fifty times on randomly selected 2/3 training sets and 1/3 testing sets.   For each training set, CART built a classification tree where the   size of the tree was chosen based on cross-validation accuracy   on the training set.  The test accuracy of the chosen tree was then evaluated on the unseen test set.
+   
+   Treatment of missing data.  We used each ML's method for handling missing data. In C4.5 missing attributes are assigned to both   branches of the decision node, and the average of the classification   accuracy is used for these cases.  Therefore, it attempts to learn a set of rules that tolerates missing values in some variables.  In the Naive Bayesian Classifier, missing values are ignored in the   estimation of probabilities.  CART uses surrogate tests for missing values. 
+   
+   Generation of Training and Testing Samples.  The samples for the AD and NAD (not AD) as well as VD and NVD (not VD)  were the same.  There were 428 instances after eliminating 15 records  which had missing values for all the neuropsychological tests.   For the AD versus NAD runs we had 428 instances�197 AD and 231 NAD;   for the VD versus NVD runs we had 428 instances�120 VD and 308 NVD.   We averaged the analytical results   in the following manner.  The complete sample was used to randomly assign subjects to either the training or testing set in a 2/3 to 1/3 ratio.  This was done 50 times with the complete sample of  subjects to generate 50 pairs of training and testing sets. 
+      
+   ML Analyses.  We ran experiments in which data from the AD-NAD and VD-NVD samples were   used separately by each learning algorithm.   The ML algorithms were  trained on the training set and the resulting decision model then classified the unseen testing set.  The classification   accuracy of each ML algorithm is hence the mean of the accuracies obtained for the 50  runs of the testing set.  An example of one  decision tree rule-set appears in Figure 1. 
+     
+ RESULTS 
+     
+ The sensitivity (probability of correctly classifying a  positive diagnosis) and specificity (probability of correctly classifying a negative diagnosis) for AD and VD classification are given in  Table 2. 
+     
+ Table 2:  Sensitivity and Specificity of the machine learning algorithms used.  C45R � C45Rules, and NB � Naïve Bayes  
+   
+  AD (AD = 197,  NAD = 231)   
+   
+  %   
+ 
+  C45   
+ 
+  C45R   
+ 
+  NB   
+ 
+  CART *    
+   
+  Accuracy   
+ 
+  68.54   
+ 
+  68.44   
+ 
+  73.17   
+ 
+  67.77   
+   
+  Sensitivity   
+ 
+  64.73   
+ 
+  74.91   
+ 
+  78.17   
+ 
+  -   
+   
+  Specificity   
+ 
+  71.74   
+ 
+  62.80   
+ 
+  68.81   
+ 
+  -   
+     
+   
+  VD (VD = 120,  NVD = 308)   
+   
+  %   
+ 
+  C45   
+ 
+  C45R   
+ 
+  NB   
+ 
+  CART *    
+   
+  Accuracy   
+ 
+  66.03   
+ 
+  67.25   
+ 
+  60.41   
+ 
+  68.95   
+   
+  Sensitivity   
+ 
+  32.41   
+ 
+  20.31   
+ 
+  51.44   
+ 
+  -   
+   
+  Specificity   
+ 
+  79.04   
+ 
+  85.52   
+ 
+  63.89   
+ 
+  -   
+      
+      * 
+   Only total accuracy scores available
+   
+     
+ Figure 1:  A C45rule Set 
+      
+     Rule 1:  If Delayed Recall  &gt; 
+4,  Þ 
+ class  NAD  
+   
+   Rule 2:  If Education  &gt; 
+10, and Delayed Recall  &gt; 
+2 and Delayed Recognition  &gt; 
+11,  Þ 
+ class  NAD  
+   
+   Rule 3:  If Delayed Recognition  &lt; 
+ = 
+17,  Þ 
+ class  AD  
+   
+   Rule 4:  Default  Þ 
+class  NAD  
+   
+      
+   
+   DISCUSSION 
+     
+ In classifying AD vs. NAD, the clinical gold standard consists of the CERAD criteria, which when consistently applied, give about a 17% false positive rate in detecting autopsy-confirmed AD    11   .  These criteria use domains in addition to demographics and neuropsychologic testing.  Results obtained with C4.5Rules and Naïve Bayes (25% and 22% false positive rate) are encouraging because they use only a small subset of the domain information that goes into the CERAD criteria.  False negatives for C4.5Rules and naïve Bayes were 37% and 31% respectively. The ML results warrant a search for additional, preferably inexpensive, attributes that can raise diagnostic accuracy at or above that obtained by CERAD criteria.  If achieved without imaging (a $1,000 cost) for a significant proportion of subjects, a substantial cost savings would be obtained while maintaining diagnostic accuracy.  The dementia diagnostic work up costs are presently estimated to be about $1,400   12   .  Since current diagnostic accuracy among general practitioners is about 65%   13   , applying our results would significantly improve diagnostic accuracy of AD vs. NAD in the community. 
+   
+ For VD vs. NVD, the mean accuracies generated from each ML  algorithm did not perform better than chance.   These results are consistent with the  consensus criteria established by the Alzheimer's Disease Diagnosis and Treatment Center ( ADDTC ) in that they did not  include neuropsychological test results in the diagnostic criteria for  probable and possible VD.  The initial results of the ML algorithms  indicate that alternative domains are needed for diagnosis of VD.  It  should also be noted that accurate diagnosis of VD by humans is at  present still difficult due to a lack of consensus about the  neuropathological definition of vascular dementia    14   .
+    
+ The decision rules generated by the ML algorithms also proved useful  in identifying subtle types of errors in the database.  For example,  in generating decision rules for dementia screening    1   , we found a rule which classified persons as  normal if they could no longer perform their job.  After reviewing these cases, we discovered that they misunderstood the question regarding job performance and indicated that they no longer  could perform their job if they had retired. This error was missed by  all other data validation procedures implemented in the database.
+   
+ The eradication of decision rules which make no clinical sense is  critical for the overall success of this project.  Pazzani has shown  that, over a broad range of experience, clinicians are unlikely to use  decision rules if they contain elements that make no sense  clinically, even if the rules give highly accurate results    15   .  To this end, he has developed simple constraints in  FOCL   16    which minimize the occurrence of  such   nonsense rules .
+    
+ There are several limitations of the present work.  The first  limitation is sample size.  In order to examine more attributes  simultaneously we will require data from multiple centers.  This is also  true if we are to obtain accurate classifications of the less common  dementia etiologies, for which no one center will have a sufficient  sample.  The second limitation, inherent to any clinical sample, is  potential bias. Are the patients with AD, VD and other causes  representative of their respective populations?  The answer to this  question can only be established by similar analyses of other centers'  data or by randomly selecting patients with these diseases from their  respective populations.  The other limitation stems from the lack of  well-defined and reliable diagnostic criteria for assigning class (diagnostic)  labels even after looking at all available data.    This is less of a problem for AD, in which  application of the CERAD criteria reliably results in greater than  83% accuracy compared to neuropathologically confirmed cases    11    (which is  typically done post-mortem), than it  is for VD.  One deficiency of the literature is the lack of reporting on false negative rates for non-AD dementia; studies have focused on false positive rates for AD.  Multiple sets of diagnostic criteria exist for VD and the neuropathologic definition of VD is still debated.  This introduces  a margin of error at the class assignment stage itself, particularly for  VD, and makes the learned classifiers liable to bias in the process.
+     
+   CONCLUSIONS 
+      
+ When interfaced with EMRs, KDD methods show great promise in providing online,   real-time high quality differential diagnostic information to physicians.  The use of the domains of  neuropsychological test performance and demographics alone achieved  68% to 73% accuracies for diagnosing AD, and achieved 60% to  69% accuracies for diagnosing VD. This work begins phase II  of our overall project.   
+     
+ Future Work 
+   
+ We propose to extend this work using other parameters including image data  for improving differential diagnosis.  We also plan to use prior knowledge  as constraints to weed out rules which do not make clinical sense. 
+ Acknowledgments 
+   
+ We thank professor Carl Cotman for his support of our efforts.  We also warmly acknowledge the comments of the three anonymous reviewers which helped us considerably in revising the manuscript.  This  work was supported by the Alzheimer's Association Pilot Research  Grant, PRG-95-161,   The Alzheimer's Intelligent Interface:  Diagnosis, Education and Training.  
+   
+ References 
+   
+    WR Shankle, S Mani, M Pazzani, and P Smyth. Dementia screening with machine learning methods.  In Intelligent Data Analysis in Medicine and Pharmacology, Eds. Elpida Keravnou, Nada Lavrac and Blaz Zupan.  Kluwer Academic Publishers.  (To be published in 1997) 
+   TF Williams and PT Costa.  Recognition and initial assessment of alzheimer's disease and related dementias: Clinical practice guidelines.  Technical report, Department of Health and Human Services, 1995. 
+   E.L. DeGowin and R.L. DeGowin.  Bedside Diagnostic Examination.  Macmillan, New York, 7th edition, 1976. 
+   JC Morris.  The clinical dementia rating (CDR): current version and scoring rules.  Neurology, 43(11):2412�4, Nov 1993. 
+   G McKhann, D Drachman, M Folstein, R Katzman, D Price, and EM Stadlan.  Clinical diagnosis of Alzheimer's disease: Report of  the NINCDS-ADRDA work group under the auspices of the department of health and human services task force on alzheimer's disease.  Neurology, 34(7):939�44, Jul 1984. 
+   H.C. Chui, J.I. Victoroff, D. Margolin, W. Jagust, R. Shankle, and R. Katzman.  Criteria for the diagnosis of ischemic vascular dementia proposed by the state of California Alzheimer's disease diagnostic and treatment centers.  Neurology, 42(3):473�80, Mar 1992. 
+   R Kohavi, George John, Richard Long, David Manley, and Karl Pfleger.  MLC++: A machine learning library in C++.  In  Tools with Artificial Intelligence, pages 740�743. IEEE Computer Society Press, 1994. 
+   JR Quinlan.  C4.5: Programs for Machine Learning.  Morgan Kaufmann, Los Altos, California, 1993. 
+   RO Duda and PE Hart.  Pattern Classification and Scene Analysis.  John Wiley, New York, 1973. 
+   L Brieman, J.H. Friedman, R.A. Olshen, and C.J. Stone.  Classification and Regression Trees.  Wadsworth, Belmont, 1984. 
+   Gearing M, Mirra SS, Hedreen JC, Sumi SM, Hansen LA and Heyman A.  The Consortium to establish a registry for Alzheimer�s Disease (CERAD).  Part X.  Neuropathology confirmation of the clinical diagnosis of Alzheimer�s Disease.  Neurology 45:461�6. 
+   Ernst RL and Hay JW.  The US economic and social costs of Alzheimer�s disease revisited.  American Journal of Public Health, 84(8):1261�4, Aug 1994. 
+   Hoffman RS.  Diagnostic errors in the evaluation of behavioral disorders.  JAMA, 248:225�8, 1982. 
+   T. Wetterling, R.D. Kanitz, and K.J. Borgis.  Comparison of different diagnostic criteria for vascular dementia  (ADDTC, DSM IV, ICS-10, NINDS-AIREN).  Stroke, 27(1):30--6, Jan 1996. 
+   M Pazzani, S Mani, and WR Shankle.  Comprehensible knowledge discovery in databases.  In  Cognitive Science Conference, Stanford University, 1997. 
+   Michael Pazzani and Dennis Kibler.  The utility of knowledge in inductive learning.  Machine Learning, (9):57�94, 1992.   </body> 

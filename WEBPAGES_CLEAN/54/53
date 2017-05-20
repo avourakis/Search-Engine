@@ -1,0 +1,61 @@
+ 3.26.1 operator <body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.26 oemolostream 
+ Up:   3.26 oemolostream 
+ Next:   3.26.2 close 
+   
+
+
+  
+3.26.1 operator     
+ 
+
+ 
+    
+oemolostream&amp; operator &lt;&lt; (OEMolBase &amp;mol)
+oemolostream&amp; operator &lt;&lt; (OEQMolBase &amp;mol)
+oemolostream&amp; operator &lt;&lt; (OEMCMolBase &amp;mol)
+    
+Write a molecule to an output oemolstream.  The molecule is written to
+the output oemolstream in the file format currently associated with that
+oemolstream.  This method is equivalent to the  OEWriteMolecule 
+function.
+The return value returns the state of the stream after the write
+allowing multiple  «  operators to be chained together.
+
+  
+This (high-level) method may automatically update the aromaticity,
+atom names and atom and bond types and reorder the atoms and bonds of
+a molecule to achieve the appropriate molecular file format variant.
+OEChem also contains low-level file I/O APIs that allow finer control
+over the variants of molecular file formats read and written.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.26 oemolostream 
+ Up:   3.26 oemolostream 
+ Next:   3.26.2 close 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

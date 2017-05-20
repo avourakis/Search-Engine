@@ -1,0 +1,94 @@
+   
+  Class Foundation.Toolbox.TMWParameter
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class Foundation.Toolbox.TMWParameter
+ 
+ 
+ java.lang.Object 
+   |
+   +---- Foundation.Toolbox.TMWStateVariable 
+           |
+           +----Foundation.Toolbox.TMWParameter
+ 
+    public class  TMWParameter 
+    extends  TMWStateVariable 
+   
+The Internal Parameter structure for describing the types, slots, 
+values, and defaults of a given message interface.
+    See Also: 
+        TMWValue ,  TMWStateVariable ,  TMWMessage ,  TMWMessageHandler 
+     
+ 
+    
+      Default  
+     
+        Direction  
+     
+   
+    
+      TMWParameter  ()
+     
+        TMWParameter  (String, String, String, Integer, Vector)
+     
+   
+    
+      decode  (DataInputStream)
+     Decode the values of the Parameter from a textual PrintStream.
+        encode  (PrintStream)
+     Encode the values of the Parameter into a textual PrintStream.
+    
+ 
+    
+   
+ Direction 
+ 
+  public  Integer  Direction
+ 
+   
+ Default 
+ 
+  public  Vector  Default
+ 
+  
+ 
+    
+  
+   
+ TMWParameter 
+ 
+  public TMWParameter()
+ 
+   
+ TMWParameter 
+ 
+  public TMWParameter( String  Nm,
+                       String  Cm,
+                       String  Tp,
+                       Integer  Dr,
+                       Vector  Df)
+ 
+  
+ 
+    
+   
+  encode  
+ 
+  public void encode( PrintStream  strs)
+ 
+   Encode the values of the Parameter into a textual PrintStream.
+      Overrides: 
+        encode  in class  TMWStateVariable 
+         
+  decode  
+ 
+  public void decode( DataInputStream  strs) throws  IOException 
+ 
+   Decode the values of the Parameter from a textual PrintStream.
+      Overrides: 
+        decode  in class  TMWStateVariable 
+        
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

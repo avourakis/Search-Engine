@@ -1,0 +1,83 @@
+ //  
+// $Id: NFANode.cpp 1106 2007-04-16 23:20:29Z chenli $
+//
+//  Copyright (C) 2004 - 2007 by The Regents of the University of
+//  California
+//
+// Redistribution of this file is permitted under the terms of the GNU
+// Public License (GPL).
+//
+// Date: October, 2004
+//
+// Author: 
+//          Liang Jin (liangj@ics.uci.edu)
+//
+
+#include "stdafx.h"
+#include "NFANode.h"
+#include 
+#include 
+#include "parameters.h"
+//#include 
+
+NFANode::NFANode (char name, bool finalState, bool initState)
+{
+	this-&gt;name = name;
+	this-&gt;finalState = finalState;
+    this-&gt;initState = initState;
+	//branches = new vector();
+    //backBranches = new vector();
+    //downBranches = new vector();
+    //upBranches = new vector();
+}
+
+NFANode::NFANode (char name, bool finalState, bool initState, int level)
+{
+	this-&gt;name = name;
+	this-&gt;finalState = finalState;
+    this-&gt;initState = initState;
+	this-&gt;level = level;
+	//branches = new vector();
+    //backBranches = new vector();
+    //downBranches = new vector();
+    //upBranches = new vector();
+}
+
+
+NFANode::~NFANode ()
+{
+	int i;
+	for(i = 0; i branches.size(); i++)
+		delete (NFATransition*)branches[i];
+	
+	//for(i = 0; i backBranches.size(); i++)
+	//	delete (NFATransition*)backBranches[i];
+
+	for(i = 0; i upBranches.size(); i++)
+		delete (NFATransition*)upBranches[i];
+
+	//for(i = 0; i downBranches.size(); i++)
+	//	delete (NFATransition*)downBranches[i];
+}
+
+void NFANode::printMe()
+{
+	int i;
+
+    cout printMe(TO);
+    }
+
+    cout printMe(BACK);
+    }
+    cout printMe(TO);
+    }
+
+    cout printMe(BACK);
+    }
+
+    cout printMe(DOWN);
+    }
+
+    cout printMe(UP);
+    }
+    cout  

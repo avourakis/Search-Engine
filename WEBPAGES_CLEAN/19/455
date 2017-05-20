@@ -1,0 +1,315 @@
+ Changes Between -08 and -09 Revision of draft-ietf-webdav-protocol<body>
+
+   WebDAV Distributed Authoring Protocol 
+Changes Between -08 and -09 Revision 
+
+   
+   Issue ID    
+ 
+   Type    
+ 
+   Issue Description  [Modification]     
+ 
+   Reference    
+   
+  TITLE   
+ 
+  Editorial   
+ 
+  The title would be more clear if "HTTP" were explicitly mentioned.  [Title changed to, "HTTP Extensions for Distributed Authoring - WEBDAV"]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  REFS   
+ 
+  Editorial   
+ 
+  The references in the -08 revision were not in the form typically found in RFCs (e.g., [RFC-2068] instead of [Fielding et al., 1997]), and would need to be changed by the RFC editor prior to publication, thus delaying publication as an RFC.  [All references in the text were changed to conform in style to recent RFCs, and formatting of the References section was modified to indent reference text.]    
+ 
+  None.   
+   
+  TERMINOLOGY   
+ 
+  Editorial   
+ 
+  Many terms were discussed before their definition appeared in the text, leading to potential confusion.   [The Terminology section was moved to become section 3, thus causing all section numbers after section 3 to be incremented.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  LIVE_PROPS   
+ 
+  Change   
+ 
+  There is confusion over whether a live property can have different behavior on different resources, or servers.  [The following requirement was added to section 4.1: "All instances of a given live property MUST comply with the definition associated with that property name." Also, clarification text was added to section 4.5.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  DUBLIN_CORE   
+ 
+  Editorial   
+ 
+  RFC 2413, published after �08 was submitted, is a better reference for the Dublin Core than the "OCLS/NCSA Metadata Workshop Report" reference.  [References to [Weibel et al., 1995] changed throughout to [RFC2413]].    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  WELL_FORMED   
+ 
+  Change   
+ 
+  Some confusion over whether WebDAV properties need to be persistently stored as XML, or must simply behave as XML when accessed via the protocol, but are capable of being stored in many possible ways. 
+   [Added the following requirement to section 4.4: "The value of a property when expressed in XML MUST be well formed."]   
+ 
+  None.   
+   
+  LANGUAGE_TAGGING   
+ 
+  Change   
+ 
+  The �08 draft isn�t as explicit as it could be about handling the "xml:lang" attribute, used by XML to tag the human language of an XML element.  [Added text to section 4.4 describing the use of "xml:lang", and added the following requirement to section 12.13.2: "Language tagging information in the property's value (in the "xml:lang" attribute, if present) MUST be persistently stored along with the property, and MUST be subsequently retrievable using PROPFIND."]    
+ 
+  None.   
+   
+  URL_RFC   
+ 
+  Editorial   
+ 
+  RFC 2396, which defines URI/URL syntax, was published after the �08 draft, becoming the best reference for URI/URL definitions and syntax issues. 
+   [Added a pointer in the Terminology section to RFC 2396 for the definition of URI and URL. Added RFC 2396 to the references section.]   
+ 
+  None.   
+   
+  NAMESPACE   
+ 
+  Change   
+ 
+  Confusion over exactly what is a "consistent" namespace, and what requirements WebDAV imposes on repositories w.r.t. maintaining consistency of namespaces.  [Added language to section 5.1 and 5.2 to clarify the requirements on DAV namespaces. Deleted what was section 4.3 in the �08 draft. For more information, see:       http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0086.html     ]   
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html    
+Also, list discussions: Jim Whitehead replys in:
+     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0237.html    
+to comments made during this thread:    http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0227.html   
+   
+  UUIDS   
+ 
+  Editorial   
+ 
+  The UUIDS/GUIDS I-D by Paul Leach, normatively referenced by the �08 specification, was not approved by the IESG due to existing, nearly identical UUIDS in Annex A of ISO-11578, the ISO Remote Procedure Call specification.  The IESG prefers that the ISO RPC specification be used instead of the UUID/GUID I-D.  [Changed references from the UUID/GUID I-D to ISO-11578, and added ISO-11578 to the references section.  This is only an editorial change because the format and semantics of GUIDs in ISO-11578 is nearly identical to those in the UUID/GUID I-D.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  UUID_SECURITY   
+ 
+  Change   
+ 
+  The UUIDs generated according to the ISO-11578 (ISO RPC) specification contain a "node" field which is the (a) IEEE 802 address for the server machine. This is a security concern, due to the potential to trace hardware by following the IEEE 802 address. The UUID/GUID I-D by Paul Leach contains an alternate mechanism for generating the "node" field using pseudo-random numbers which doesn�t have this security concern.  [Added section 17.8, "Risks Connected With Lock Tokens", to document the security concerns associated with UUIDs. Added section 6.4.1 which documents an alternate mechanism (copied from the UUID/GUID I-D) for generating the "node" field of a UUID.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  WRITE_LOCK_TOKEN   
+ 
+  Change   
+ 
+  As stated by Jim Amsden, "The app knows which credential it submitted in the lock request, but the activelock in the lockdiscovery returned in the prop of a lock result entity body does not contain this information. Owner is not sufficient as it is optional and does not necessarily  contain the authorization credentials. So if 
+ there are a number of shared write locks on the resource, there is no way for the client app to figure out which one is his - the one just granted."  [Section 8.10.1 was modified to include a requirement that the lock token be returned in the Lock-Token header on successful completion of a LOCK request. A new section 7.2 was added which requires each lock request to generate a new lock token (i.e., every principal in a shared write lock has a separate lock token). A new paragraph was added to section 9.5 stating that the Lock-Token header is also be used as a response header. For a list message detailing the changes, see:       http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0031.html     ]   
+ 
+  Discussion on the list:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0021.html  
+      http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0024.html   
+   
+  COLLECTION_LOCK   
+ 
+  Editorial   
+ 
+  Off-list discussions revealed some confusion on the semantics of locks on collections.  [Language was added to the specification in section 7.5 to clarify the meaning of collection locks.]    
+ 
+  None.   
+   
+  DEPTH_USE   
+ 
+  Editorial   
+ 
+  Inconsistent use of "depth=infinity", "Depth: infinity" and "depth locked" to refer to a collection locked with "Depth: infinity".  [Changed to use "Depth: infinity" consistently throughout the document.]    
+ 
+  None.   
+   
+  MOVE_WITH_LOCK   
+ 
+  Editorial   
+ 
+  Off-list discussions indicated that it was possible to interpret the requirement, "A MOVE MUST NOT move the write lock with the resource" as requiring a MOVE of a write-locked resource to fail, rather than the desired behavior of moving the resource and dropping the lock.  [The language of section 7.7 was modified to clarify the interaction of MOVE and locks.]    
+ 
+  None.   
+   
+  MIME_XML   
+ 
+  Change   
+ 
+  The publication of RFC 2376 ("XML Media Types") set rules for the transfer of XML MIME entities, stating that both text/xml and application/xml could be used to label XML MIME entities. The WebDAV draft, written before publication of RFC 2376, needed to be updated to conform with XML MIME rules.  [The language of section 8.1 was modified to note that a server can also return application/xml. All examples which show use of XML with HTTP have been changed to use the "charset" parameter to label the charset of the HTTP entity. Similarly, the "encoding" attribute has been added to all XML examples to label the charset encoding within the XML. Added text to the Security Considerations section noting that the security considerations for XML also apply to WebDAV. Added text to the Internationalization Considerations section noting that implementors should read RFC 2376.]    
+ 
+      http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0024.html  
+      http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0072.html   
+   
+  XML_NAMESPACE   
+ 
+  Change   
+ 
+  Due to concerns over embedding XML within HTML, and insufficient scoping rules, the W3C made significant modifications to XML Namespaces since the �08 specification. However, to ensure interoperability with other XML processors, it would be desirable to use the same format for XML Namespaces.  [Since the W3C has not yet finished work on XML Namespaces, Appendix 4 (section 24.4) was deleted, and replaced with the normative contents of WD-xml-names-19980916 ("Namespaces in XML"). All examples in the specification which use XML namespaces were modified to use the new XML namespaces. The requirements on scoping of XML namespaces in an XML document were removed from section 24.4.9, which has been renamed to "Meaning of Qualified Names".]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html  
+  Also, list discussion at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0010.html  
+   
+   
+  XML_LOCK_ELEMS   
+ 
+  Editorial   
+ 
+  The example in section 8.1.2 doesn�t correctly enclose the lock description elements in the appropriate "lockscope" and "locktype" elements.  [The example in 8.1.2 has been fixed to conform with the DTD.]    
+ 
+  Alan Babich caught this error:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0341.html   
+   
+  STATUS_CODES   
+ 
+  Change   
+ 
+  Status code 425 (Insufficient Space on Resource) is really a server error, and hence should be a 5xx series status code. Status code 424 could use some improvement in its definition. The HTTP/1.1 spec. always puts the status-phrase in parentheses to emphasize that it is non-normative. Many descriptions of status codes could use improvement, as they are too minimal.  [Status code 425 has been changed to 507 (Insufficient Storage). Status code 424 has been changed to 424 (Failed Dependency). All status phrases have been placed in parentheses. Descriptions of status codes have been improved in section 10.]    
+ 
+  Roy Fielding caught this error: 
+     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0069.html   
+   
+  COPY_AT_DEST   
+ 
+  Editorial   
+ 
+  Keith Moore writes: 
+
+ However, the exact state and behavior of the destination resource depend on what information the source resource is able to provide and what information the destination resource is able to accept. 
+
+ which seems a bit inconsistent with the third paragraph: 
+
+ All properties on the source resource MUST be duplicated on the destination resource, subject to modifying headers and XML elements, following the definition for copying properties. 
+
+   [Section 8.8.1 was modified to clarify the behavior of the server during copy operations.]   
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  COPY_MOVE_SKIP_SUBTREES   
+ 
+  Editorial   
+ 
+  There was some confusion over the "best effort" semantics for copy and move when they encounter an error while trying to copy/move a subtree. There was similar confusion over when to report, and when to not report errors in this situation.  [Sections 8.8.3 and 8.9.2 were modified to add clarifying text to the descriptions of the COPY and MOVE methods when applied to collection hierarchies.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  COPY_MOVE_SRC_EQ_DST   
+ 
+  Change   
+ 
+  Off-list discussions indicated that the specification was silent on the behavior when the source and the destination of a COPY/MOVE are the same. 
+   [Sections 8.8.5 and 8.9.4 have been modified so that the 403 status code is returned for this condition.]   
+ 
+  None.   
+   
+  409_COPY_MOVE   
+ 
+  Change   
+ 
+  The 409 status code is returned by MKCOL when an intermediate collection needs to be created to complete the operation, but COPY and MOVE do not have 409 defined for the same error condition.  [Sections 8.8.5 and 8.9.4 have been modified to add a 409 response when a COPY/MOVE cannot be completed until one or more intermediate collections are created. Added Greg Stein to Acknowledgements.]    
+ 
+  Greg Stein caught this error:  
+     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0342.html  
+   
+   
+  RESPONSEDESCRIPTION   
+ 
+  Change   
+ 
+  Greg Stein writes: 
+ 7.1.1  (ed: in the �08 spec.)  has an example with a multi-status response. The second &lt;propstat&gt; element contains a &lt;responsedescription&gt;. According to the DTD (and under the propstat element description), this is not allowed.  [The DTD has been changed to allow responsedescription within a propstat element.]    
+ 
+      http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0058.html  
+   
+   
+  REPLICATE   
+ 
+  Change   
+ 
+  There was some question concerning what "replicate" means in the context of section 8.10.3. 
+   [This section has been re-written to discuss the phenomenon of replication in terms of the same resource being accessible via multiple URIs.]   
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html  
+  Also discussed on the list by Larry Masinter: 
+     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JulSep/0227.html   
+   
+  REQUEST_URI   
+ 
+  Editorial   
+ 
+  "Request-URI" was used inconsistently throughout the �08 specification.  [All instances changed to "Request-URI" throughout.]    
+ 
+  None.   
+   
+  URI_TO_ABSOLUTEURI   
+ 
+  Change   
+ 
+  The Destination header and the If header both used the URI production, which allows the use of relative URIs in these headers.  However, this raises some awkward questions concerning what the base is for these relative URIs. 
+   [The Destination header and the If header have been changed to use the absoluteURI production, mandating use of absolute, and precluding use of relative URIs.]      
+ 
+  None.   
+   
+  ETAG   
+ 
+  Editorial   
+ 
+  Change references to "e-tag" to "Etag" throughout.   
+ 
+  None.   
+   
+  OVERWRITE_409_TO_412   
+ 
+  Change   
+ 
+  The correct status code for when a resource exists at the destination and the Overwrite header is "T" is 412, not 409. 
+   [Changed section 9.6 to use status code 412 rather than 409 for this condition.]   
+ 
+  None.   
+   
+  DEPTH_XML_ELEM   
+ 
+  Change   
+ 
+  DASL needs to reuse the Depth XML element for specifying searches, and as a result needs to have "1" be a legal value.  [The Depth XML element now has "1" as a valid value.]    
+ 
+  None.   
+   
+  DAV_XML_PROCESSING   
+ 
+  Editorial   
+ 
+  The title to Section 14 was changed to avoid using the term "Processing Instruction" which has a specific meaning for XML processors.   
+ 
+  None.   
+   
+  TLS_CLARIFY   
+ 
+  Editorial   
+ 
+  TLS doesn�t necessarily provide a secure connection unless secure ciphersuites are used in conjunction with mutual authentication of client and server.  [Section 17.1 was modified to add these conditions to its discussion of secure connections with TLS.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+   
+  XML_ENTERNAL_ENTITIES   
+ 
+  Editorial   
+ 
+  XML has "include by value" capability with its external entities feature.  This raises some security risks.  [Added section 17.7 to the Security Considerations section describing the security risks associated with XML external entities.]    
+ 
+  None.   
+   
+  NITS   
+ 
+  Editorial   
+ 
+  Keith Moore�s comments contained several modifications labeled "[NIT]".  [Accepted all proposed changes.]    
+ 
+  Comments from Keith Moore, at:     http://lists.w3.org/Archives/Public/w3c-dist-auth/1998OctDec/0065.html   
+    </body> 

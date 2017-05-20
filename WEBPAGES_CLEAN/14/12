@@ -1,0 +1,57 @@
+ 11.8 OEUnaryFunction<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.7 OETypeId 
+ Up:   11. OESystem Templates 
+ Next:   11.8.1 Specializations 
+   
+
+
+  
+11.8 OEUnaryFunction 
+ 
+
+ 
+    
+template&lt;class Arg, class Result, bool ConstArg = true, bool ConstFcn = true&gt;
+class OEUnaryFunction
+
+virtual Result operator()(const Arg &amp;) const = 0;
+virtual OEUnaryFunction&lt;Arg,Result&gt; *CreateCopy() = 0;
+    
+This is the default functor base-class in OEChem.  It provides an operator()
+which takes a const argument and is a const function.  CreateCopy is a virtual
+constructor which allows copying of concrete derived objects using a reference
+to this base class.
+
+  
+
+      Subsections</strong> 
+
+   11.8.1 Specializations 
+   
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11.7 OETypeId 
+ Up:   11. OESystem Templates 
+ Next:   11.8.1 Specializations 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

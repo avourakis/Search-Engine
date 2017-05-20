@@ -1,0 +1,52 @@
+ ;; image-ref: vector number number -&gt; color<body>
+  
+  
+ 
+ ;; image-ref: vector number number -&gt;
+color  
+ 
+ ;; Return a pixel from an image (a vector
+of vectors); the input  
+ 
+ ;; numbers specify the row and the column,
+respectively.  
+ 
+ (define image-ref  
+ 
+    (lambda (v row col)  
+ 
+       (vector-ref (vector-ref
+v row) col)))  
+  
+ ;; image-set!: vector number number color
+-&gt; side effect, changing vector  
+ 
+ ;; Set the specified pixel in an image (a
+vector of vectors) to a new color.  
+ 
+ ;; The input numbers specify the row and
+the column, respectively.  
+ 
+ (define image-set!  
+ 
+    (lambda (v row col color)  
+ 
+       (vector-set! (vector-ref
+v row) col color)))  
+  
+ 
+  
+  
+  David G. Kay ,
+  406B Computer Science
+    University of California, Irvine 
+   Irvine, CA  92697-3425  
+ --    (949) 824-5072  
+ --  Fax   (949) 824-4056  
+ --  Email   
+     kay@uci.edu 
+    
+
+ 
+ Monday, December 6, 2004 -- 6:57 AM  
+</body> 

@@ -1,0 +1,813 @@
+   
+  Class Foundation.TMWFoundation
+<body>
+ 
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+  
+  Class Foundation.TMWFoundation
+ 
+ 
+ java.lang.Object 
+   |
+   +----Foundation.TMWFoundation
+ 
+    public class  TMWFoundation 
+    extends  Object 
+   
+This is the control point for the logical separation
+   between the System and Foundation levels in Teamware.
+   Functionality below this interface deals with object
+   persistency, manipulation, and distribution.  Foundation
+   levels can service peer-to-peer messages from other
+   Foundation levels to support group collaboration.  Calls
+   are made to the Foundation interfaces either from the
+   Teamware System level or directly from the Artists
+   when needed.
+    See Also: 
+        UniversalArtist ,  TMWCategory ,  TMWSpecification ,  TMWInstance ,  TMWNetwork ,  TMWTypes 
+     
+ 
+    
+      ProjectSet  
+     
+   
+    
+      TMWFoundation  ()
+     
+   
+    
+      Add  (Integer, String, String)
+     Adds a single value to a list of values.
+        AddInheritanceMessage  (Integer, TMWMessage)
+     Add a TMWMessage to the inheritance interface of an object.
+        AddInheritanceVariable  (Integer, TMWStateVariable)
+     Add a TMWStateVariable to the inheritance variables of an object.
+        AddInternalHandler  (Integer, TMWMessageHandler)
+     Add a TMWMessageHandler to respond to a message.
+        AddInternalMessage  (Integer, TMWMessage)
+     Add a TMWMessage to the internal interface of an object.
+        AddInternalVariable  (Integer, TMWStateVariable)
+     Add a TMWStateVariable to the internal variables of an object.
+        AddList  (Integer, String, Vector)
+     Adds a lisg of values to a list of values.
+        AddOperationalMessage  (Integer, TMWMessage)
+     Adds a TMWMessage to the operational interface of an object.
+        Assign  (Integer, String, String)
+     Assigns the value of a single value variable.
+        AssignList  (Integer, String, Vector)
+     Assigns the values of a multiple value variable.
+        ConvertObject  (Integer, Integer)
+     Attempt to convert an object instance between classes.
+        DeleteInstance  (Integer)
+     Delete this instance.
+        GetBases  (Integer)
+     Gets the immediate inheritance objects.
+        GetClass  (Integer)
+     Retrieve the name of the class given the Id.
+        GetClasses  ()
+     Retrieve a listing of available classes.
+        GetInheritanceMessages  (Integer)
+     Gets the list of inheritance messages that the object responds to.
+        GetInheritanceVariables  (Integer)
+     Gets the list of variables that the object inherits.
+        GetInstance  (String, String)
+     Retrieve the Foundation instance.
+        GetInstances  (Integer)
+     Get a list of instances from a Foundation Level object.
+        GetInternalHandlers  (Integer)
+     Get the internal handlers that respond to messages.
+        GetInternalMessages  (Integer)
+     Gets the internal messages of an object.
+        GetInternalVariables  (Integer)
+     Get the internal variables of an object.
+        GetName  (Integer)
+     Gets the name of the object.
+        GetObject  (String)
+     Retrieve the object id from the name
+
+        GetOperationalMessages  (Integer)
+     Gets the list of operational messages that object responds to.
+        GetState  (Integer, String)
+     Unformatted Retrieve call for debugging.
+        GetStateList  (Integer, String)
+     Unformatted RetrieveList call for debugging.
+        InClass  (Integer, String)
+     Checks to see if an object is in a certain class.
+        Inherited_Send  (Integer, String, String, Vector)
+     Invokes an inherited message after being resolved at the System level.
+        InitializedInstance  (Integer, Vector, Vector)
+     Creates an initialized instance from a Foundation Level object.
+        LoadObjects  ()
+     Loads a project set into a Hashtable from disk.
+        NewInstance  (Integer, Vector, Vector)
+     Creates an instance from a Foundation Level object.
+        NewObject  (Integer)
+     Creates a new Foundation Level object.
+        NewObject  (Integer, Vector)
+     Creates a new Foundation Level object.
+        NewObject  (Integer, Vector, Vector)
+     Creates a new Foundation Level object.
+        ObjectLock  (Integer)
+     Lock an object from being changed.
+        ObjectLock  (Integer, Integer)
+     Lock an object with a priority level.
+        ObjectUnlock  (Integer)
+     Unlock an object.
+        ObjectUnlock  (Integer, Integer)
+     Unlock a specific priority of an object.
+        ParallelInheritedSend  (Vector, Vector, Vector)
+     Threaded InheritedSend call.
+        ParallelSend  (Vector, Vector, Vector)
+     Threaded Send call.
+        Remove  (Integer, String, String)
+     Removes a value from a multiple value variable.
+        RemoveInheritanceMessage  (Integer, String)
+     Remove a TMWMessage to the inheritance interface of an object.
+        RemoveInheritanceVariable  (Integer, String)
+     Remove a TMWStateVariable from the inheritance variables of an object.
+        RemoveInternalHandler  (Integer, String)
+     Remove a TMWMessageHandler from responding to a message.
+        RemoveInternalMessage  (Integer, String)
+     Remove a TMWMessage to the internal interface of an object.
+        RemoveInternalVariable  (Integer, String)
+     Remove a TMWStateVariable from the internal variables of an object.
+        RemoveList  (Integer, String, Vector)
+     Removes a list of values from a multiple value variable.
+        RemoveOperationalMessage  (Integer, String)
+     Removes a TMWMessage from the operational interface of an object.
+        Retrieve  (Integer, String)
+     Retrieves the value of a single value variable.
+        RetrieveList  (Integer, String)
+     Retrieves the value of a multiple value variable.
+        Send  (Integer, String, Vector)
+     Sends a message to an object
+
+        SetClassName  (Integer, String)
+     Sets the class name of an object.
+        SetName  (Integer, String)
+     Sets the name of an object.
+        SetProject  (String)
+     Sets access environment variables and loads objects.
+        StateVarLock  (Integer, String)
+     Lock a variable within an object.
+        StateVarUnlock  (Integer, String)
+     Unlock a variable within an object.
+        confirmChanges  (Integer)
+     Explicit persistence call; will save all changes to an object.
+    
+ 
+    
+   
+ ProjectSet 
+ 
+  public static  Integer  ProjectSet
+ 
+  
+ 
+    
+  
+   
+ TMWFoundation 
+ 
+  public TMWFoundation()
+ 
+  
+ 
+    
+   
+  confirmChanges  
+ 
+  public static void confirmChanges( Integer  Obj)
+ 
+   Explicit persistence call; will save all changes to an object.
+      Parameters: 
+       Obj - is the object id
+         
+  LoadObjects  
+ 
+  public static void LoadObjects()
+ 
+   Loads a project set into a Hashtable from disk.
+     
+  SetProject  
+ 
+  public static void SetProject( String  Project)
+ 
+   Sets access environment variables and loads objects.
+      Parameters: 
+       Project - is the complete pathname to the project repository
+         
+  Send  
+ 
+  public static  Vector  Send( Integer  Obj,
+                             String  MessageName,
+                             Vector  MessageArguments)
+ 
+   Sends a message to an object
+      Parameters: 
+       Obj - is the target object id.
+      MessageName - is the name of the message.
+      MessageArguments - is the list of arguments.
+          Returns: 
+       s one or more return values.
+         
+  Inherited_Send  
+ 
+  public static  Vector  Inherited_Send( Integer  Obj,
+                                       String  FromClass,
+                                       String  MessageName,
+                                       Vector  MessageArguments)
+ 
+   Invokes an inherited message after being resolved at the System level.
+      Parameters: 
+       Obj - is the target object id.
+      FromClass - is the object in the inheritance hierarchy.
+      MessageName - is the name of the message.
+      MessageArguments - is the list of arguments.
+           Returns: 
+       s one or more return values.
+         
+  GetObject  
+ 
+  public static  Integer  GetObject( String  ClassName)
+ 
+   Retrieve the object id from the name
+      Parameters: 
+       ClassName - is the String version of the class name.
+        Returns: 
+       s the object id
+         
+  GetInstance  
+ 
+  public static  Integer  GetInstance( String  ObjectName,
+                                     String  ClassName)
+ 
+   Retrieve the Foundation instance.
+      Parameters: 
+       ObjectName - is the name of the instance.
+      ClassName - is the name of the class it was instantiated from.
+         Returns: 
+       s the instance id
+         
+  GetClass  
+ 
+  public static  String  GetClass( Integer  Obj)
+ 
+   Retrieve the name of the class given the Id.
+      Parameters: 
+       Obj - is the class id.
+        Returns: 
+       s the class name.
+         
+  GetClasses  
+ 
+  public static  Vector  GetClasses()
+ 
+   Retrieve a listing of available classes.
+      Returns: 
+       s a list of class names.
+         
+  InClass  
+ 
+  public static boolean InClass( Integer  Obj,
+                                 String  ClassName)
+ 
+   Checks to see if an object is in a certain class.
+      Parameters: 
+       Obj - is the object id.
+      ClassName - is the name of class to check.
+         Returns: 
+       s true or false based on inclusion.
+         
+  SetName  
+ 
+  public static void SetName( Integer  Obj,
+                              String  Name)
+ 
+   Sets the name of an object.
+      Parameters: 
+       Obj - is the object id
+      Name - is the name of the object.
+          
+  SetClassName  
+ 
+  public static void SetClassName( Integer  Obj,
+                                   String  Name)
+ 
+   Sets the class name of an object.
+      Parameters: 
+       Obj - is the object id.
+      Name - is the class name.
+          
+  AddOperationalMessage  
+ 
+  public static void AddOperationalMessage( Integer  Obj,
+                                            TMWMessage  Msg)
+ 
+   Adds a TMWMessage to the operational interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      Msg - is a TMWMessage describing the structure of the message.
+          
+  RemoveOperationalMessage  
+ 
+  public static void RemoveOperationalMessage( Integer  Obj,
+                                               String  MsgName)
+ 
+   Removes a TMWMessage from the operational interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      MsgName - is the name of the message to remove.
+          
+  AddInheritanceMessage  
+ 
+  public static void AddInheritanceMessage( Integer  Obj,
+                                            TMWMessage  Msg)
+ 
+   Add a TMWMessage to the inheritance interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      Msg - is a TMWMessage describing the structure of the message.
+          
+  RemoveInheritanceMessage  
+ 
+  public static void RemoveInheritanceMessage( Integer  Obj,
+                                               String  MsgName)
+ 
+   Remove a TMWMessage to the inheritance interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      MsgName - is the name of the message to remove.
+          
+  AddInheritanceVariable  
+ 
+  public static void AddInheritanceVariable( Integer  Obj,
+                                             TMWStateVariable  Var)
+ 
+   Add a TMWStateVariable to the inheritance variables of an object.
+      Parameters: 
+       Obj - is the object id.
+      Var - is a TMWStateVariable describing the structure of the variable.
+          
+  RemoveInheritanceVariable  
+ 
+  public static void RemoveInheritanceVariable( Integer  Obj,
+                                                String  VarName)
+ 
+   Remove a TMWStateVariable from the inheritance variables of an object.
+      Parameters: 
+       Obj - is the object id.
+      VarName - is the name of the variable to remove.
+          
+  AddInternalMessage  
+ 
+  public static void AddInternalMessage( Integer  Obj,
+                                         TMWMessage  Msg)
+ 
+   Add a TMWMessage to the internal interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      Msg - is a TMWMessage describing the structure of the message.
+          
+  RemoveInternalMessage  
+ 
+  public static void RemoveInternalMessage( Integer  Obj,
+                                            String  MsgName)
+ 
+   Remove a TMWMessage to the internal interface of an object.
+      Parameters: 
+       Obj - is the object id.
+      MsgName - is the name of the message to remove.
+          
+  AddInternalVariable  
+ 
+  public static void AddInternalVariable( Integer  Obj,
+                                          TMWStateVariable  Var)
+ 
+   Add a TMWStateVariable to the internal variables of an object.
+      Parameters: 
+       Obj - is the object id.
+      Var - is a TMWStateVariable describing the structure of the variable.
+          
+  RemoveInternalVariable  
+ 
+  public static void RemoveInternalVariable( Integer  Obj,
+                                             String  VarName)
+ 
+   Remove a TMWStateVariable from the internal variables of an object.
+      Parameters: 
+       Obj - is the object id.
+      VarName - is the name of the variable to remove.
+          
+  AddInternalHandler  
+ 
+  public static void AddInternalHandler( Integer  Obj,
+                                         TMWMessageHandler  Handler)
+ 
+   Add a TMWMessageHandler to respond to a message.
+      Parameters: 
+       Obj - is the object id.
+      Handler - is a TMWMessageHandler describing how to respond.
+          
+  RemoveInternalHandler  
+ 
+  public static void RemoveInternalHandler( Integer  Obj,
+                                            String  HandlerName)
+ 
+   Remove a TMWMessageHandler from responding to a message.
+      Parameters: 
+       Obj - is the object id.
+      HandlerName - is the name of the handler to remove.
+          
+  GetName  
+ 
+  public static  String  GetName( Integer  Obj)
+ 
+   Gets the name of the object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the name of the object.
+         
+  GetBases  
+ 
+  public static  Vector  GetBases( Integer  Obj)
+ 
+   Gets the immediate inheritance objects.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s a list of immediate parents to the object.
+         
+  GetOperationalMessages  
+ 
+  public static  Hashtable  GetOperationalMessages( Integer  Obj)
+ 
+   Gets the list of operational messages that object responds to.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s a list of operational TMWMessage's.
+         
+  GetInheritanceMessages  
+ 
+  public static  Hashtable  GetInheritanceMessages( Integer  Obj)
+ 
+   Gets the list of inheritance messages that the object responds to.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s a list of TMWMessage's in its inheritance interface.
+         
+  GetInheritanceVariables  
+ 
+  public static  Hashtable  GetInheritanceVariables( Integer  Obj)
+ 
+   Gets the list of variables that the object inherits.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the list of TMWStateVariable's in its inheritance list.
+         
+  GetInternalMessages  
+ 
+  public static  Hashtable  GetInternalMessages( Integer  Obj)
+ 
+   Gets the internal messages of an object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the list of TMWMessage's that is visible internally.
+         
+  GetInternalVariables  
+ 
+  public static  Hashtable  GetInternalVariables( Integer  Obj)
+ 
+   Get the internal variables of an object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the list of TMWStateVariable's that is visible internally.
+         
+  GetInternalHandlers  
+ 
+  public static  Hashtable  GetInternalHandlers( Integer  Obj)
+ 
+   Get the internal handlers that respond to messages.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the list of TMWMessageHandler's that are available.
+         
+  NewInstance  
+ 
+  public static  Integer  NewInstance( Integer  Obj,
+                                     Vector  Parameters,
+                                     Vector  Values)
+ 
+   Creates an instance from a Foundation Level object.
+      Parameters: 
+       Obj - is the object id.
+      Parameters - are the parameters needed to create the instance.
+      are - the default values for each of the parameters.
+          Returns: 
+       s an object id based on the parent class.
+         
+  InitializedInstance  
+ 
+  public static  Integer  InitializedInstance( Integer  Obj,
+                                             Vector  Parameters,
+                                             Vector  Values)
+ 
+   Creates an initialized instance from a Foundation Level object.
+      Parameters: 
+       Obj - is the object id.
+      Parameters - are the parameters needed to create the instance.
+      are - the initial values for each of the parameters.
+          Returns: 
+       s an object id based on the parent class.
+         
+  DeleteInstance  
+ 
+  public static void DeleteInstance( Integer  Obj)
+ 
+   Delete this instance.
+      Parameters: 
+       Obj - is the object id.
+         
+  GetInstances  
+ 
+  public static  Vector  GetInstances( Integer  Obj)
+ 
+   Get a list of instances from a Foundation Level object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the list of associated instances.
+         
+  NewObject  
+ 
+  public static  Integer  NewObject( Integer  Parent)
+ 
+   Creates a new Foundation Level object.
+      Parameters: 
+       Parent - is the object id.
+        Returns: 
+       s a new unnamed object.
+         
+  NewObject  
+ 
+  public static  Integer  NewObject( Integer  Parent,
+                                   Vector  Vars)
+ 
+   Creates a new Foundation Level object.
+      Parameters: 
+       Parent - is the object id.
+      Vars - are the initial variables.
+         Returns: 
+       s a new unnamed object with associated variables.
+         
+  NewObject  
+ 
+  public static  Integer  NewObject( Integer  Parent,
+                                   Vector  Vars,
+                                   Vector  Vals)
+ 
+   Creates a new Foundation Level object.
+      Parameters: 
+       Parent - is the object id.
+      Vars - are the initial variables.
+      Vals - are the initial values.
+          Returns: 
+       s a new unnamed object with associated variables assigned values.
+         
+  ConvertObject  
+ 
+  public static boolean ConvertObject( Integer  Inst,
+                                       Integer  ToClass)
+ 
+   Attempt to convert an object instance between classes.
+      Parameters: 
+       Inst - is the object id.
+      ToClass - is the target parent class.
+         Returns: 
+       s true if was able to complete without losing information.
+         
+  ObjectLock  
+ 
+  public static  Integer  ObjectLock( Integer  Obj)
+ 
+   Lock an object from being changed.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the priority of the lock.
+         
+  ObjectLock  
+ 
+  public static  Integer  ObjectLock( Integer  Obj,
+                                    Integer  Level)
+ 
+   Lock an object with a priority level.
+      Parameters: 
+       Obj - is the object id.
+      Level - is the priority of the lock.
+         Returns: 
+       s the priority of the lock.
+         
+  ObjectUnlock  
+ 
+  public static  Integer  ObjectUnlock( Integer  Obj)
+ 
+   Unlock an object.
+      Parameters: 
+       Obj - is the object id.
+        Returns: 
+       s the resulting priority.
+         
+  ObjectUnlock  
+ 
+  public static  Integer  ObjectUnlock( Integer  Obj,
+                                      Integer  Level)
+ 
+   Unlock a specific priority of an object.
+      Parameters: 
+       Obj - is the object id.
+      Level - is the priority to unlock.
+         Returns: 
+       s the resulting priority.
+         
+  StateVarLock  
+ 
+  public static  Integer  StateVarLock( Integer  Obj,
+                                      String  Var)
+ 
+   Lock a variable within an object.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the variable to lock.
+         Returns: 
+       s the priority of the lock.
+         
+  StateVarUnlock  
+ 
+  public static  Integer  StateVarUnlock( Integer  Obj,
+                                        String  Var)
+ 
+   Unlock a variable within an object.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the variable to unlock.
+         Returns: 
+       s the resulting priority.
+         
+  ParallelSend  
+ 
+  public static  Vector  ParallelSend( Vector  Objs,
+                                     Vector  Names,
+                                     Vector  Args)
+ 
+   Threaded Send call.
+      Parameters: 
+       Obj - is the object id.
+      Names - are the names of the events.
+      Args - are the arguements of the events.
+          Returns: 
+       s the results of each call.
+         
+  ParallelInheritedSend  
+ 
+  public static  Vector  ParallelInheritedSend( Vector  Objs,
+                                              Vector  Names,
+                                              Vector  Args)
+ 
+   Threaded InheritedSend call.
+      Parameters: 
+       Obj - is the object id.
+      Names - are the names of the events.
+      Args - are the arguements of the events.
+          Returns: 
+       s the results of each call.
+         
+  GetState  
+ 
+  public static  String  GetState( Integer  Obj,
+                                 String  Var)
+ 
+   Unformatted Retrieve call for debugging.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the variable to retrieve the state from.
+         Returns: 
+       s same as Retrieve for now.
+         
+  GetStateList  
+ 
+  public static  Vector  GetStateList( Integer  Obj,
+                                     String  Var)
+ 
+   Unformatted RetrieveList call for debugging.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the variable to retrieve the state from.
+         Returns: 
+       s same as RetrieveList for now.
+         
+  Retrieve  
+ 
+  public static  String  Retrieve( Integer  Obj,
+                                 String  Var)
+ 
+   Retrieves the value of a single value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+         Returns: 
+       s a single value of the variable.
+         
+  RetrieveList  
+ 
+  public static  Vector  RetrieveList( Integer  Obj,
+                                     String  Var)
+ 
+   Retrieves the value of a multiple value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+         Returns: 
+       s all values of the variable.
+         
+  Assign  
+ 
+  public static void Assign( Integer  Obj,
+                             String  Var,
+                             String  Val)
+ 
+   Assigns the value of a single value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Val - is the value of the variable.
+           
+  AssignList  
+ 
+  public static void AssignList( Integer  Obj,
+                                 String  Var,
+                                 Vector  Vals)
+ 
+   Assigns the values of a multiple value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Vals - is the values of the variable.
+           
+  Add  
+ 
+  public static void Add( Integer  Obj,
+                          String  Var,
+                          String  Val)
+ 
+   Adds a single value to a list of values.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Val - is the value to add.
+           
+  AddList  
+ 
+  public static void AddList( Integer  Obj,
+                              String  Var,
+                              Vector  Vals)
+ 
+   Adds a lisg of values to a list of values.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Val - is the list of values to add.
+           
+  Remove  
+ 
+  public static void Remove( Integer  Obj,
+                             String  Var,
+                             String  Val)
+ 
+   Removes a value from a multiple value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Val - is the value to remove.
+           
+  RemoveList  
+ 
+  public static void RemoveList( Integer  Obj,
+                                 String  Var,
+                                 Vector  Vals)
+ 
+   Removes a list of values from a multiple value variable.
+      Parameters: 
+       Obj - is the object id.
+      Var - is the name of the variable.
+      Val - is the list of values to remove.
+          
+ All Packages    Class Hierarchy    This Package    Previous    Next    Index  
+</body> 

@@ -1,0 +1,397 @@
+ Max Welling NSF Career Page 
+		 
+			   
+		 
+		 
+			 
+				   Undirected Bipartite Graphical Models      
+				  with applications to Image Restoration and Information Retrieval.  
+			 
+		 
+		 
+			 
+				  
+			 
+		 
+		 
+			 
+				    Max Welling   University   of CaliforniaIrvine       
+				   
+				  This project is supported by an NSF Career Grant.   I like to personally thank NSF for supporting my research during the past 5 years.   
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									  
+									   Introduction  
+									   Max Welling  (2007)  Products of Experts  ScholarPedia 2007 [ pdf , url ]  
+									 Most large scale data mining problems require efficient algorithms for processing, querying and storing information. It has been recognized that these algorithms need to be able to model uncertainty in our model assumptions and noise in the data. Probabilistic models and in particular graphical models are the ideal framework for these tasks, but also pose new computational challenges. Directed graphical models have been the dominant paradigm for many large scale data applications. However, properties inherent to the semantics of this class of models form an important hurdle for processing of queries and learning from data. The current approach to deal with this problem is to focus on approximate inference algorithms, which are often iterative and inefficient. In this manuscript we propose a new class of models, the ``undirected bipartite graphical'' (UBG) models, that largely avoids this computational barrier. Processing of queries is very fast while learning is achieved through a recently introduced technique called contrastive divergence. 
+									  
+									   Project 1:    Probablistic Models      
+									    Max Welling, Michal Rosen-Zvi &amp; Geoffrey Hinton      (2004)      Exponential Family Harmoniums with an Application to Information Retrieval      NIPS 2004 [ ps   pdf ]   
+									   Peter Gehler, Alex Holub and Max Welling  (2006)  The Rate Adapting Poisson (RAP) model for Information Retrieval and Object Recognition.  ICML 2006 [ pdf , software ]  
+									 Directed models have become the dominant paradigm in machine learning. There are many good reasons this: they are easy to sample from, there is a nice (expectation maximization) framework to learn the parameters and it is even possible to search for optimal structure in a full Bayesian setting. Undirected models are much harder to handle, in particular because of the presence of a normalization constant (or partition function) that depends on the parameters and is usually intractable to compute. 
+									 Harmoniums are two layer undirected graphical models (see picture below) where the top layer represents an array of hidden variables (or topic variables) while the bottom layer represents the observed random variables (e.g. the count values of words in documents). Effcient learning of parameter values is possible using the "contrastive divergence algorithm" (Hinton). This type of model has been particularly suitable for modeling of text data, where we (and others) have shown that classiffication and retrieval performance is better than for directed counterparts such as LDA (Blei,Ng,Jordan) . One particularly interesting feature that follows from the undirected nature of this model is that the process of inferring topic representations for documents is very fast (one bottom pass or equivalently one matrix multiplication) whereas directed models have to deal with issues like "explaining away" which makes approximate algorithms often the only way out. 
+									  
+									   
+									  
+									  Affiiliated people : 
+										Peter Gehler - PhD candidate, Max Planck institute in Tuebingen 
+										Alex Holub - PhD candidate,Caltech 
+										Geoffrey Hinton - professor univerity of Toronto 
+										Michal Rosen Zvi - former postdoc UCI  
+									  
+									   
+									  Project 2:  Image Denoising by Products of "EdgePerts".    
+									   Peter Gehler and max Welling  (2005)    Products of “Edge-Perts”    NIPS 2005 [ pdf ] [ software ]  
+									 One successful approach to image denoising is to 1) transform the image into the wavelet domain using a wavelet pyramid, 2) build a realistic probabilistic joint model of the wavelet coeffcients which captures their statistical dependencies, 3) use this model to see how the statistics of the observed (noisy) wavelet coefficients differs from what you expect from your model, 4) correct these discrepencies using a denoising algorithm (compute the maximum a posterior estimate of the clean wavelet coeffcients given your noisy estimates, assuming a known noise model) 5) invert the wavelet pyramid. 
+									 In this project we have proposed a new model to describe the statistical regularities of wavelet coeffcients, based on the "neural network" shown below. Coeffcients get mapped to an energy, which serves as the (unnormalized) negative log-probability. As explained in our paper, this models accurately describes both the heavy tails of the marginal distributions as well as the "bowtie" dependencies between wavelet coefficients. 
+									 As an additional feature, our denoiser will automatically pick the wavelet coeffcients which should be modelled jointly by one expert. We have shown that our results are competative with the current stat-of-the-art. 
+									  
+									  
+									                                  
+									  
+									  Affiiliated people : 
+										Peter Gehler - PhD candidate, Max Planck institute in Tuebingen  
+									   Project 3:    Bayesian Inference and structure learning in undirected graphical models   
+									   Sridevi Parise and Max Welling  (2005)    Learning in Markov Random Fields: An Empirical Study  Joint Statistical Meeting JSM2005 [ pdf , software ]  
+									   Max Welling and Sridevi Parise  (2006)  Bayesian Random Fields: The Bethe-Laplace Approximation  UAI 2006 [ pdf ]  
+									   Sridevi Parise and Max Welling  (2006)  Bayesian Structure Scoring in Markov Random Fields  
+											NIPS 2006 [ ps , pdf ]</strong> 
+									 Learning the structure of a graphical model is very important to build good models. Where much progress has been made with infering structure for directed graphical models (i.e. Bayes' nets), there has been very little progress with undirected graphical models (MRFs) of which the "unidrected bipartite graphical model" is an instance. The reason for this is the presence of the normalization constant which depends on the parameters and which is intractable to compute. 
+									 We propose to combine two approximations. First we use the assumption that the posterior is close to a Gaussian distribution. This makes a lot of sense for fully observed MRFs because the likelihood function is known to be convex in its parameters. The second approximation is based on an algorithm called "linear response propagation" to compute the covariance of this Gaussian. This approximation is in turn based on belief propagation. If we then finally approximate the log-partition function with the Bethe free energy (again belief propagation) and find good estimates for the "maximum-a-posteriori" (MAP) parameter values we are all set to go... 
+									 Our main finding is that this approximation was indeed very accurate for fully observed MRFs and moreover orders of magnitude faster than sampling based methods. The bottleneck turns out to be a good estimate for the MAP parameter values. Performance is seen to crucially depend on this estimate. Next, we will look into models with hidden variables. 
+									  
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								   
+									Fit of estimates posterior distribution over parameter (red bars) compared to ground truth posterior (blue bars) 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									  
+									  Affiiliated people : 
+										Sridevi Parise - PhD candidate, UCI  
+									  
+									   Project 4:    Lifelong Learning with Nonparametric Bayesian Models   (This project was not covered in the original career proposal but added after consent from the programme director in charge.)    
+									   Ian Porteous, Alex Ihler, Padhriac Smyth and Max Welling  (2006)  Gibbs Sampling for (Coupled) Infinite Mixture Models in the Stick-Breaking Representation  UAI 2006 [ pdf ]  
+									   Yee Whye Teh, Dave Newman and Max Welling  (2006)  A Collapsed Variational Bayesian Inference Algorithm for Latent Dirichlet Allocation  
+											NIPS 2006 [ ps , pdf ]</strong>  
+									   Kenichi Kurihara, Max Welling and Nikos Vlassis  (2006)  Accelerated Variational DP mixture Models  
+											NIPS 2006 [ ps , pdf ]</strong> 
+									   Kenichi Kurihara, Max Welling and Yee Whye Teh  (2007)  Collapsed Variational Dirichlet Process Mixture Models  
+											IJCAI 2007 [ ps , pdf ]</strong> 
+									   Yee Whye Teh, Kenichi Kurihara and Max Welling  (2007)  Collapsed Variational Inference for HDP  
+											NIPS 2007 [ pdf ]</strong> 
+									   Max Welling, Ian Porteous and Evgeniy Bart  (2007)  Infinite State Bayesian Networks For Structured Domains  
+											NIPS 2007 [ pdf ]</strong>  
+									   Dave Newman, Arthur Ascuncion, Padhriac Smyth and Max Welling  (2007) </strong>  Distributed Inference for Latent Dirichlet Allocation </strong>  
+											NIPS 2007 [ pdf ]</strong> 
+									   A. Ascuncion, P. Smyth and M. Welling (2008)    Asynchronous Distributed Learning of Topic Models  NIPS 2008 [ pdf ]  
+									   I. Porteous, A. Ascuncion, D. Newman, A. Ihler, P. Smyth and M. Welling (2008)    Fast Collapsed Gibbs Sampling For Latent Dirichlet Allocation  KDD 2008 [ pdf ]  
+									   Max Welling, Y.W. Teh and B. Kappen (2008)    Hybrid Variational-MCMC Inference in Bayesian Networks  UAI 2008 [ pdf ]  
+									   R. Gomes, M. Welling and P. Perona (2008)    Memory Bounded Inference in Topic Models  ICML 2008 [ pdf ]  
+									   Ian Porteous, Evgeniy Bart and Max Welling  (2008)    Multi-HDP: A Nonparametric Bayesian Model for Tensor Factorization  AAAI 2008 [ pdf ]  
+									   Ryan Gomes, Max Welling and Pietro Perona (2008)    Incremental Learning of Nonparametric Bayesian Mixture Models  CVPR 2008 [ pdf ]  
+									   A. Asuncion, P. Smyth, M. Welling, Y.W. Teh  (2009)  On Smoothing and Inference for Topic Models  
+											UAI 2009 [ pdf]   
+									   D. Newman, A. Asuncion, P. Smyth, M. Welling  (2009)  Distributed Algorithm for Topic Models  
+											Journal Machine Learning Research 2009 [ pdf ]  
+									   I. Porteous, A. Asuncion, M. Welling  (2010)  Bayesian Matrix Factorization with Side Information and Dirichlet Process Mixtures  
+											AAAI 2010 [ pdf ]</strong> 
+									   A. Asuncion, P. Smyth, M. Welling  (2010)  Asynchronous Distributed Estimation of Topic Models for Document Analysis  
+											Statistical Methodology 2010 [ url ] </strong> 
+									   A. Asuncion, D. Newman, I. Porteous, S. Triglia, P. Smyth and M. Welling  (2010)  Distributed Gibbs Sampling for Latent Variable Models  
+											Bookchapter in: Scaling Up Machine Learning, Cambridge University Press</strong> 
+									   D. Gorur, L. Boyles and M. Welling  (2011)  Scalable Inference on Kingman’s Coalescent using Pair Similarity  
+											AISTATS 2012 [ pdf ] </strong> 
+									   M. Welling, I. Porteous and K. Kurihara  (2012)  Exchangeable Inconsistent Priors for Bayesian Posterior Inference  
+											Workshop on Information Theory and Applications (ITA) 2012 [ pdf ]</strong> 
+									 Data generated by society is doubling every year. Google has currently more images stored than any single human will see in a lifetime (in the order of 1 billion images assuming we process approximately one image per second). Big science projects such as the Large Hadron Collider (LHC), the Large Synoptic Survey Telescope (LSST) and the Low Frequency Array (LOFAR) will generate in the order of 10 peta-bytes of data each year (1 peta-byte is the equivalent of 1 billion books of text). Industry and government agencies collect large quantities of data in the form of hyperlink clicking patterns, purchasing behaviour, credit histories, surveillance camera video, and so on. Multimedia applications such as cell-phones and digital cameras will acquire new data (and store it at websites such as Flickr and YouTube) at an unprecedented scale. 
+								 
+							 
+						 
+					 
+				 
+				 
+					 
+						
+					 
+				 
+				 
+					 
+						 
+							 
+								 
+									 Modern datasets are dynamic, i.e. continuously changing. The tools of traditional statistics, which are mainly concerned with static datasets of fixed size, are no longer adequate. Instead we need statistical machinery that can handle "open ended" streams of information. This necessitates novel learning paradigms that adapt the complexity of the statistical model in response to the amount of structure available in the data. A model that is too simple will not capture all predictive structure in the data while a model that is too complex will have over-fitted to noise (or unpredictive "structure") in the data. Moreover, unlike most of today's learning algorithms, this new class of algorithms should learn as long as it is in operation, a property which we will refer to as "lifelong learning". 
+									 As a motivating biological example, consider a young child: At birth s/he will only recognize very simple object categories (such as mommies face), but this representation will quickly grow more complex as more of the world is observed. It is estimated that by the age of two years a child has learned 10,000 different object categories which implies approximately 5 new categories every day on average. This representation of the visual world changes as long as we live. 
+									 How will we respond to this data deluge? It presents an opportunity as well as a challenge on the plate of the computer scientist. Promising new developments in this respect is “grid computing” and “cloud computing”. Already, Amazon is allowing anyone to log into their network of servers called “Elastic Cloud Computing” and run processes on thousands of CPUs in parallel. The computing power of grid networks can only be exploited if algorithms use their parallel architecture. It follows that algorithms have to operate in a distributed fashion: analyze data locally and exchange or combine partial results. 
+									 This project has started the ambitious goal of developing algorithms that can handle very large streams of data. Inference algorithms are based on variational approximations or collapsed Gibbs sampling. The algorithms can perform inference distributed over many machines allowing them to scale to billions of tokens. Moreover, the algorithms can grow in response to newly discovered structure in the data and process information in an online fashion. The essential ingredient that allows this feature is the nonparametric Bayesian modeling paradigm. Combining this statistical tool with Bayesian networks and fast inference has led us to develop the  infinite state Bayesian network  (ISBN). See the figure below for an example. In this model, variables are related to other variables through the usual dependency structure of Bayesian networks, but have a potentially infinite number of hidden states available to model the structure of the data (not all of these states are "alive"). 
+									     
+										Infinite State Bayesian Network 
+									  Affiiliated people : 
+										Ian Porteous - PhD candidate at UCI 
+										Arthur Acuncion - PhD candidate at UCI 
+										Kenichi Kurihara - Former PhD Student at Tokyo Institute of Technology 
+										Yee Whye Teh - Reader at University College London 
+										Dave Newman - Project Scientist at UCI 
+										Ryan Gomes - PhD candidate at Caltech 
+										Padhriac Smyth - Professor at UCI 
+										Alex Ihler - Assistant Professor at UCI 
+										Pietro Perona - Professor at Caltech 
+										Nikos Vlassis - Assistant Professor at University Crete 
+										Evgeniy Bart - Former Postdoc 
+										Dilan Gorur 
+										Levi Boyles  
+									  
+									 
+										   
+										  Project 5:      eXtreme Components Analaysis (XCA)      
+										  
+										    Max Welling, Felix Agakov &amp; Chris Williams      (2003)      Extreme Components Analysis      NIPS 2003 [ pdf ]   
+										  
+										 XCA is a statistical technique that extends PCA (principal component analysis) and MCA (minor components analysis) into one probabilistic model. The XCA algorithm extracts the optimal combination of principal and minor components to fit the data. In addition it formulates a probabilistic model based on these components. The XCA algorithm is based on a single eigenvalue decomposition of the data-covariance matrix. 
+										 Estimating minor components is difficult from a statistical perspective. The reason is that minor components are prone to overfitting: due to sample fluctuations there are bound to be directions with very low variance. We have recently extended this technique to a Bayesian variant which provides a principled regularization of the minor components. We can show that the Bayesian XCA model only picks minor components when they are really present in the data. 
+										 In a dataset of landmark points on the wing of a mosquito (see figure below) we found as minor components directions which changed the landmark positions that attached to the mosquito's body. Clearly this is represents real evolutionary constraint. 
+										  
+										  
+										   
+										  
+										  Affiiliated people : 
+											Felix Agakov 
+											Chris Williams 
+											Yutian Chen 
+										  
+										   
+										  Project 6:    Bayesian Kmeans    
+										  
+										   Kenichi Kurihara and Max Welling  (2008)    Bayesian K-Means as a “Maximization-Expectation” Algorithm  Neural Computation, Neural Computation 21(4), pp.1-28 [ pdf ]  
+										   Max Welling and Kenichi Kurihara  (2005)    Bayesian K-Means as a “Maximization-Expectation” Algorithm  SIAM Conference on Data Mining SDM2006 [ pdf , tech-report , software ]  
+										  
+										 The Expectation Maximization algorithm (EM) is a well known tool to find the maximum likelihood parameters settings for a probabilistic model with hidden variables. Bayesian extentions exist that iterate between estimating distribution sover hidden variables and distributions over parameters. This is the variational Bayesian framework. Under certain circumstances it is more efficient to treat the hidden variables as point estimates instead of full distributions. 
+										 We developed this idea under the name "Maximization Expectation" algorithm (ME). It still has the advantage of a full Bayesian treatment in the sense that overly complex models are being penalized. This provides a level of protection against overfitting. On the other hand, the point estimates for the states of the hidden variables allow for fast datastructures to speed up learning. 
+										 As an example we considered Bayesian K-means where we still maximize over cluster assignments but treat the parameters such as the cluster means, variances and mixture weights in a Bayesian manner. KD trees are then used to speed up learning which makes Bayesian clustering with millions of datapoints feasible. As a bonus, one can estimate the number of clusters necessary to model the data well. 
+										 In the figure below we show how this philosophy fits into the general scheme of algorithms already known. 
+										  
+									 
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								   
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									 
+										  
+										  
+										  Affiiliated people : 
+											Kenichi Kurihara  
+										  
+									 
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									 
+										   
+										  Project 6:  Learning with Dynamic Weights   
+										   M. Welling  (2009)  Herding Dynamic Weights to Learn  
+												ICML 2009 [ pdf ]</strong> 
+										   M. Welling  (2009)  Herding Dynamic Weights for Partially Observed Random Field Models  
+												UAI 2009 [ pdf ]</strong> 
+										   Y. Chen and M. Welling  (2010)  Parametric Herding  
+												AISTATS 2010 [ pdf ]</strong> 
+										   M. Welling and Y. Chen  (2010)  Statistical Inference Using Weak Chaos and Infinite Memory  
+												Proceedings of the Int'l Workshop on Statistical-Mechanical Informatics 
+												(IW-SMI 2010)[ pdf ]  
+										   Y. Chen, M. Welling and A. Smola  (2010)  Supersamples from Kernel-Herding  
+												UAI 2010 [ pdf ]  
+										   A. Gelfand, L. Van Der Maaten, Y. Chen, M. Welling  (2010)  On Herding and the Perceptron Cycling Theorem  
+												NIPS 2010 [ pdf ]  
+										   Y. Chen, A. Gelfand, C. Fowlkes and M. Welling  (2011)  Integrating Local Classifiers through Nonlinear Dynamics on Label Graphs with an Application to Image Segmentation  
+												ICCV 2011  [pdf ]   
+										  
+											 Learning a Markov random field is difficult due to a number of problems: 
+											 1. To compute the gradient of the log-likelihood one needs to compute sufficient statistics under the model. These are intractable. 
+											 2. In the presence of hidden variables, the log-likelihood is highly non-convex as a function of the parameters, leading to many local minima in which learning can (and will) get stuck. 
+											 3. Convergence to the optimal ML parameter is slow (linear) for almost any algorithm that is used in practice. 
+											 4. Even given a model, sampling states from it is difficult because the sampler might get stuck in local minima is state space. 
+											 These considerations have led me to define a deterministic dynamical system that performs learning and sampling in one go. The major advantage is that the system mixes very fast between what one would expect are reasonable modes of a distribution (see figure below where successive samples of the digit 4 are shown). The disadvantage is that it is hard to assess what the inductive bias represents. One thing can be proved, namely that the average sufficient statisics which hold at the maximum likelihood solution for the corresponding MRF problem still hold for the samples of herding. However, the entropy away from those constraints is likely not maximal. 
+											 Intriguingly, the set of allowed weights often has fractal dimension (zero Lebesque measure). One can also show that the entropy production of this dynamical system is polynomial, (instead of exponential for stochastic and fully chaotic systems) consistent with what is known in the literature as "weak chaos" or "pseudochaos". We are currently exploring whether we can formulate a generalized maximum entropy principle. We are also interested in what design features make herding work and if we can define deep herding systems with many layers of neurons. 
+											  
+											  
+											    
+											 
+												 
+													 
+														 
+															 
+																 
+																	 
+																		  
+																	 
+																 
+															 
+														 
+													 
+												 
+											 
+											  Affiiliated people : 
+												Yutian Chen 
+												Andrew Gelfand 
+												Laurens van der Maaten  
+											   
+											  Project 7:    Dynamical Product Models for Financial Time Series   
+											   Y. Chen and M. Welling  (2010) 
+													Dynamical Products of Experts for Modeling Financial Time Series 
+													ICML 2010 [ pdf ]</strong> 
+											 We describe a dynamical model based on the hierarchical Product of Student-t distribution to model volatility of stocks. This model is similar to GARCH type models in that they can describe the persistence of volatility over time which is a form of higher order dependency between the variances of two consecutive random variables. But unlike GARCH models, the dependencies are stochastic and not deterministic. The model can also be considered as ICA over time. We show improved performance in predicting "Value at Risk". 
+											   
+											  
+											  Affiiliated people : 
+												Yutian Chen   
+											   Project 8:    Statistical Optimization   
+											   A. Korattikara, L. Boyles, J. Kim, H. Park and M. Welling  (2011)  Statistical Optimization for Nonnegative Matrix Factorization  
+													AISTATS 2011 [ pdf ] </strong> 
+											   L. Boyles, A. Korattikara, D. Ramanan and M. Welling  (2011)  Statistical Tests for Optimization Efficiency  
+													NIPS 2011 [ pdf ][ software ]</strong> 
+											 Machine learning is often presented as choosing a loss function and minimizing that loss on some dataset (hopefully resulting in some convex optimization problem). This view is limiting in the sense that statistical optimization problems are not ordinary optimization problems due to the random nature of the data. In this frequentist view of the world we may imagine sampling a few other datasets and observing how our loss function fluctuates due to this resampling. One of  the consequences of these simple observations is of course that we can overfit. In other words, the scale of the fluctuations in the optimal parameters due to resampling the dataset is the scale of precision to which we should fit the parameters. Methods such as bagging leverage this idea.  
+												What is much less exploited is the fact these observations also allow one to perform optimization of the loss function much more efficiently. In particular, during the initial stages of learning, every datapoint will carry roughly the same information on how to improve a parameter. Thus, when the model is still bad, there is a lot of redundancy in the data in terms of how to change the model. As a result we only need to query a few data items to get a good idea of  how to update the model. We exploit this idea by performing hypothesis tests before every update to inform us how many data-points to use for our updates. More precisely, if the probability of making an error in the update direction of more than 90 degrees is too large we will recruit more datapoints in our batch in order to increase our precision. Moreover, when we can not pass these tests even when we have recuited all the data in our dataset, we should stop updating altogether. This has lead to a highly effcient learning algorithm with a principled stopping criterion that unlike methods such as stochastic gradient descent have basically no hyperparameters to tune (except for an interpretable threshold of how large the probability of updating in the wrong direction is tolerated).  
+											   
+											 
+											 
+											  Affiiliated people : 
+												Levi Boyles 
+												Anoop Koratikkara 
+												Deva Ramanan   
+											  
+											   Project 9:    Stochastic Gradient Bayesian Posterior Sampling   
+											   M. Welling and Y.W. Teh  (2011)  Bayesian Learning via Stochastic Gradient Langevin Dynamics  
+													ICML 2011  [pdf]  </strong> 
+											 Frequentist methods such as stochastic gradient descent or statistical optimization (see project 8 above) are very efficient at quickly finding good predictive models. Their main trick is to realize that we do not need to use all the data to improve the model parameters. In fact for models far from optimality we can use few data items and large stepsizes to improve our models and then either decrease our stepsize (SGD) or increase our batchsize (SO) to increase the resolution of the updates as we get closer to the optimal solution.  
+											 In contrast, Bayesian MCMC methods that sample from the posterior distribution are hopelessly ineffcient in this respect. For example, a single accept/reject step will have to inspect all the data-items twice. Clearly, because burn-in is often nothing more than a stochastic version of optimization this is a huge waste of  computational resources. But we argue that even when the sampler has reached the high probablity regions we can trade-off a little bit of  approximation error (bias) for large computational wins that can pay back in terms of faster mixing and reduction of error due to variance. In fact, when we have only a fixed amount of time to reduce our error, this bias is often completely masked by sampling variance during the relevant time interval that we allow ourselves to run our samplers. 
+											 We have developed new samplers that leverage this trade-off. The stochastic gradient Langevin sampler starts of with basically being a stochastic gradient ascent optimizer. But since we add noise to the gradients, at a certain point the noise we add is going to dominate the noise that we create due to subsampling the data, and the sampler automatically turns into a Langevin posterior sampler. By adding the approapriate preconditioner we can also make sure that for large stepsizes (and thus fast mixing) the sampler draws from the optimal Gaussian approximation of the posterior (as given by the "Bayesian Central Limit Theorem").  
+											 I believe that it is time to start thinking about approximate Bayesian posterior sampling and the inherent trade-offs that come from the fact that we only have a limited amount of time to learn our models and make predictions.  
+											    
+										 
+									 
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									 
+										 
+											
+										 
+									 
+								 
+							 
+						 
+					 
+				 
+			 
+		 
+		 
+			 
+				 
+					 
+						 
+							 
+								 
+									 
+										 
+											  Affiiliated people : 
+												Yee Whye Teh 
+												Sungjin Ahn 
+												Anoop Korattikara  
+											   
+											  
+												 
+													 
+														 
+															 
+																 
+																	  
+																 
+															 
+														 
+													 
+												 
+											 
+										 
+									 
+								 
+							 
+						 
+					 
+				 
+				  [ Back to Max  Welling's's  home page ]   
+			 
+		 
+	</body> 

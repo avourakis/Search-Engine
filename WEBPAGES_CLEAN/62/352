@@ -1,0 +1,71 @@
+ VHDL Reference Guide - Null Statement<body>  This is Google's cache of  http://www.vdlande.com/VHDL/nulls.html . It is a snapshot of the page as it appeared on Oct 15, 2009 20:54:23 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   Null Statement  
+        Sequential Statement 
+ ---- used in ----&gt; 
+ Process Function Procedure 
+            Syntax        
+  
+
+ 
+      null; 
+  
+    
+  
+
+
+
+ 
+See LRM section 8.12
+
+         Rules and Examples        
+  
+
+ 
+    The null statement performs no action. It is usualls used with the
+case statement, to indicate that under certain conditions, no action is
+required.
+ case ENCRYPTION is
+  when "00" =&gt; 
+    CPU_DATA_TMP := (B &amp; A) - OPERAND;
+  when "01" =&gt; 
+    CPU_DATA_TMP := (B &amp; A) + OPERAND;
+  when "10" =&gt; 
+    CPU_DATA_TMP := (A &amp; B) - OPERAND; 
+  when "11" =&gt; 
+    CPU_DATA_TMP := (A &amp; B) + OPERAND;
+  when others =&gt;
+    null;
+end case;
+  
+    
+  
+
+
+
+ 
+         Synthesis Issues        
+  
+
+The  null  statement is supported by synthesis tools.
+ 
+Note: using a  null  statement in a "combinational process" can
+result in latches being inferred, unless all signals driven by the
+process are given unconditional default assignments.
+
+  
+         Whats New in '93        
+
+In  VHDL -93, the  null  may have an optional label:
+  
+label null; 
+
+  
+
+  </body> 

@@ -1,0 +1,48 @@
+ Geometry in Action: Sequence Alignment<body>
+
+ 
+ 
+  
+ 
+  
+  Biological Sequence Alignment 
+
+Sequence alignment is a problem of taking multiple sequences of characters,
+representing DNA sequences or proteins, and finding subsequences which
+match well with each other (according to some measure involving the
+lengths of the subsequences, the number and lengths of the gaps in them,
+etc).  A common method of performing this is by finding small
+ fragments  that match (e.g. by exact string matching techniques)
+and then stringing the fragments together to form a longer alignment.  By
+considering the positions of the fragments in each string to be
+coordinates in some Euclidean space, the problem becomes one amenable to
+orthogonal range searching techniques from computational geometry
+(and the decomposition of space formed by, for each point, determining
+the best previous point to chain it to, has strong resemblances to a
+rectilinear Voronoi diagram).
+Similar ideas also apply to a problem of comparing sequences of gene markers
+(where now the coordinates are positions of markers on a chromasome).
+     Chaining Multiple-Alignment Fragments in Sub-Quadratic Time ,
+G. Myers and W. Miller, U. Arizona,
+from SODA '95.
+ 
+
+    Graph partitioning .
+Geometric methods for finding graph separators.
+Lecture notes from CS267, UC Berkeley, on high performance computing.
+This problem has applications in scientific computation,
+and, apparently, in DNA sequencing.
+ 
+    Sparse dynamic programming , D. Eppstein et al., SODA 1990 and JACM 1992.
+ 
+     
+Part of
+ Geometry in Action ,
+a collection of applications of computational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file. 
+ </body> 

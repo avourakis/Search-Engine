@@ -1,0 +1,118 @@
+ SLI | Classes / CS273 Student Discussion Page <body>
+
+       
+   
+  
+     
+     (?) 
+   
+
+     
+           Classes 
+   Group 
+   Research 
+   Publications 
+   Code 
+       
+ 
+
+       
+
+            login 
+   
+
+         
+            Classes  / 
+           CS273 Student Discussion Page  
+
+ 
+  Back to Course Page  
+  Please  sign up  on Piazza for a better discussion forum. 
+      
+ 
+   
+   
+ IAmAnonymous  —   08 October 2012, 17:23    
+   
+ @roblim1 Yes, I figured out it was because if that. We have to consider only the first two features of the knn object. Thanks for posting this!
+ 
+ As a side question, do we need to visualize the classification boundary for 2c? It doesn't say we need to.
+ 
+   No, just the error rate comparison. 
+  
+   
+   
+ roblim1  —   08 October 2012, 16:48    
+   
+ @IAmAnonymous:  Yes, it throws that error b/c plotClassify2D() (by default) is evaluating the first two features of X.  I take that your knn variable is the one from the example (m x 4).
+ 
+   This response is correct -- plotClassify2D does not behave well if given non-2D data. 
+  
+   
+   
+ IAmAnonymous  —   08 October 2012, 01:21    
+   
+ plotClassify2D () seems to be throwing some error:
+   knn = knnClassify ( Xtr , Ytr , 10 ); 
+plotClassify2D ( knn , Xtr , Ytr );
+ 
+ ??? Error using ==&gt; bsxfun
+Non-singleton dimensions of the two input arrays must match each other.
+ 
+ Error in ==&gt; knnClassify.predict at 9
+          dist = sum( bsxfun( @minus, obj.Xtrain, Xte(i,:) ).^2 , 2);  % compute sum of squared
+        differences
+  Error in ==&gt; plotClassify2D at 13
+pred = predict(learner,[X1sp(:),X2sp(:)]);
+ 
+    The bsxfun() is not getting the current dimensions of matrices. I think the problem is in the way X1sp, X2sp is computed. Can someone throw more light on this?
+  
+   
+   
+ mkm  —   07 October 2012, 22:23    
+   
+ Just replace obj.degree with degree in fpoly.m
+ 
+   That also works. 
+  
+   
+   
+ machine learner  —   07 October 2012, 12:18    
+   
+ fpoly seems a bit buggy:
+ 
+ &gt;&gt; fpoly([1, 2, 3], 2)
+??? Undefined variable "obj" or class "obj.degree".
+ 
+ Error in ==&gt; fpoly at 11
+    Xext = zeros(m,n*obj.degree+1);
+    See updated code on the website. 
+  
+   
+   
+ anonymous  —   04 October 2012, 11:54    
+   
+ Also it would be great if you upload the schedule of HW/quizzes for us to have a rough idea about the due dates. Some of us have to attend conferences in this quarter. It would be great if we can do the home works in advance to avoid missing the deadlines.
+ 
+   Homework is due approximately once per week; generally slightly less often.  Only the midterm requires in-class attendance, and if you have a conference you can speak to me and arrange something. 
+  
+   
+   
+ anonymous  —   04 October 2012, 11:47    
+   
+ Prof Ihler,
+ 
+ Would you please upload the slides before each class so that we can have them printed and bring them to the class?
+ 
+   I'm not easily able to do that; often my slides are not finished beforehand. 
+  
+ 
+
+       
+       
+      Last modified October 09, 2012, at 10:33 AM 
+     
+     Bren School of Information and Computer Science   University of California, Irvine 
+     
+   
+</body> 

@@ -1,0 +1,212 @@
+ SSH tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+ 
+ This is an old revision of the document!</strong>
+ 
+  
+ Table of Contents 
+ 
+
+     Generating a key    
+    The config file    
+    Other resources      
+ 
+
+
+
+
+  SSH tutorial  
+ 
+
+ 
+
+  Generating a key  
+ 
+  ssh-keygen   -t  dsa  -C   "user@school.edu"  
+ 
+Generating public/private dsa key pair.
+Enter file in which to save the key (/home/user/.ssh/id_dsa):
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/user/.ssh/id_dsa.
+Your public key has been saved in /home/user/.ssh/id_dsa.pub.
+The key fingerprint is:
+70:85:4f:e5:91:b8:ab:a4:95:ce:fb:df:11:75:df:de user@school.edu
+The key's randomart image is:
++--[ DSA 1024]----+
+|         ..oo.   |
+|        ..o...   |
+|      . .o ..   o|
+|       o  o    .+|
+|        S. .  . o|
+|        + .    o.|
+|       * .    . E|
+|      . +    . . |
+|        .o... .  |
++-----------------+
+ 
+
+ 
+
+  The config file  
+ 
+   config  
+  
+Host redwood
+    HostName redwood.ics.uci.edu
+    User git
+    IdentityFile ~/.ssh/school_rsa
+ 
+     config  
+  
+Host family-guy
+    HostName family-guy.ics.uci.edu
+    User &lt;user&gt;
+    IdentityFile ~/.ssh/school_rsa
+ 
+   
+
+  Other resources  
+ 
+
+ 
+  
+
+ 
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    SSH tutorial  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/ssh_tutorial.1362704806.txt.gz · Last modified: Fri Mar  8 01:06:46 2013 by michael  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

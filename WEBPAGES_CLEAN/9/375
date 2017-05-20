@@ -1,0 +1,227 @@
+ LaTeX tips &amp; tricks - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+ 
+ This is an old revision of the document!</strong>
+ 
+  
+ Table of Contents 
+ 
+
+     LaTeX Symbol Lookup    
+    LaTeX make file    
+    Internal hyperlinks    
+    Less than and greater than signs in text mode      
+ 
+
+
+
+
+  LaTeX tips &amp; tricks  
+ 
+
+ 
+
+  LaTeX Symbol Lookup  
+ 
+
+ 
+
+ http://detexify.kirelabs.org/classify.html 
+ 
+
+ 
+
+  LaTeX make file  
+ 
+ name  =  paper
+options  =   -- file - line -  error 
+ ifeq   "$(shell uname)"   "Darwin" 
+        options  +=   -- shell - escape  -- synctex = 1
+ endif 
+ 
+all :   $  (  name  )  . pdf
+ 
+ $  (  name  )  . pdf :      *. tex  *. bib figures /*  
+        pdflatex  $  (  options  )   $  (  name  ) 
+        bibtex  $  (  name  ) 
+        pdflatex  $  (  options  )   $  (  name  ) 
+        pdflatex  $  (  options  )   $  (  name  ) 
+ 
+clean : 
+        rm  - f  $  (  addprefix   $  (  name  )  ,   . aux  . blg  . log  . out  . synctex . gz ) 
+ 
+distclean :               clean
+        rm  - f  $  (  addprefix   $  (  name  )  ,   . bbl  . pdf )  
+
+ 
+
+  Internal hyperlinks  
+ 
+
+ 
+Include this in your preamble:
+ 
+ \usepackage{hyperref} 
+
+ 
+Then, instead of
+ 
+ Theorem~\ref{thm:name-of-theorem} 
+
+ 
+use
+ 
+ \autoref{thm:name-of-theorem} 
+
+ 
+as well as working better when you change a lemma to a theorem (etc), this produces better hyperlinks: the link covers the whole “Theorem 3” text not just the number.
+ 
+
+ 
+
+  Less than and greater than signs in text mode  
+ 
+
+ 
+With the default settings, LaTeX turns &lt; and &gt; in text-mode input into ¡ and ¿. This is usually just a minor annoyance (they should probably have been in math mode rather than text mode) but occasionally you really need them to render properly: for instance, when they are part of a DOI in a bibliography reference, where you don't have as much control over how to render them. The following magic code in your preamble causes them to be rendered properly:
+ 
+ \usepackage[T1]{fontenc} 
+
+ 
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    LaTeX tips &amp; tricks  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/latex_tips_tricks.1409255163.txt.gz · Last modified: Thu Aug 28 19:46:03 2014 by david  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

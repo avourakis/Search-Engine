@@ -1,0 +1,97 @@
+ DAV Final Call Issues List<body>
+ 
+ WebDAV Distributed Authoring Protocol 
+Changes Between -07 and -08 Revision 
+ 
+ Key: 
+  Changes:  These are changes which represent new functionality or requirements since the -07 revision.  D'oh:  These are just plain screw-ups which are fixed in the -08 draft but which introduce no new functionality or requirements.  Ancient:  These are changes to sections of text which were not properly updated in -07, and do not represent any new functionality or requirements.  Editorial:  These are changes to make the draft easier to read, prettier, or more clear.  They do not represent any new functionality or requirements. 
+          
+   Issue ID   
+   Issue Description   
+   Reference   
+    D'oh  
+  L_to_CL  
+  Location header used where Content Location header was needed. The authors used the wrong header from HTTP/1.1  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0261.html  
+    Changes  
+  NULL_DEF  
+  We need to define the term NULL resource and lock-null resource, define what methods it takes (LOCK, UNLOCK, PROPFIND, OPTIONS, etc.), what errors it returns for other methods (404 &amp; 405), and what properties it must support (all mandatory DAV properties although most will be empty).  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0278.html, http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0005.html, http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0006.html  
+    D'oh  
+  Prop_Lock_207  
+  In 7.10.10 the example does not currently return the lockdiscovery property as it is required to.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0275.html  
+    D'oh  
+  locktoken_href  
+  Current DTD allows an empty href for the locktoken element, that is illegal.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0275.html  
+    D'oh  
+  7.1.2_empty  
+  In 7.1.2 we refer to an empty resource as undefined not empty  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0276.html  
+    Ancient  
+  5.3_locktoken_in_header  
+  5.3 states that a lock token must be returned in the locktoken response header, but we now return the lock token in the body  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0277.html  
+    Editorial  
+  4.1_collection_def  
+  The current collection definition could be interpreted to restrict the use of GET on collections.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0282.html  
+    Ancient  
+  4.4_single_source  
+  The text in the last paragraph in section 4.4 says that the source link is only to be used when there is a single source, however that was never intended to be the requirement and in fact the current syntax allows for multiple source/dst elements.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998JanMar/0282.html  
+    D'oh  
+  7.2_propatch  
+  The first sentence of the last paragraph of section 7.2 specifies that a PROPPATCH must contain at least one PROPERTYUPDATE element, this is a bug, it meant one and only one.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0002.html  
+    Ancient  
+  7.10.6_refresh  
+  7.10.6's table talks about regranting and the last paragraph does as well but this is a bug, it is illegal to ask for the same lock twice.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0002.html  
+    Ancient  
+  7.11.1_lock_token  
+  The lock-token header in the unlock example in 7.11.1 uses the old lock-token format  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0002.html  
+    D'oh  
+  7.6.2.1_d'oh  
+  One of the URLs in the explination paragraph uses ww. Instead of www.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0002.html  
+    Ancient  
+  11.10.1.1_Propstat  
+  The propstat description is from ancient version of the draft, the descriptive language and examples are all correct.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0002.html  
+    Editorial  
+  22_references  
+  We have divided the references into normative and informational, apparently this sort of division makes the RFC editor very happy.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Editorial  
+  9.5_424  
+  The last sentence in the paragraph is unclear, I have tightened its language.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Changes  
+  XML_Names  
+  The appendix has been updated to the latest XML namespace draft. All namespace examples in the draft have been updated to use the new syntax.  Also updated reference to a WD from a NOTE. The only change of relevance to us is that the name attribute became "ns" and "as" became "prefix".  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Editorial  
+  7.1.1_non-collection  
+  Example 7.1.1 has been turned into a PROPFIND on a non-collection resource because there were questions on what this would look like.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Editorial  
+  xml_null_warning  
+  Split 24.3 into two parts, the first on the difference in meaning between &lt;a&gt;&lt;/a&gt; and &lt;a/&gt; and the second on illegally formatted XML.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Editorial  
+  if_examples  
+  Made the examples in sections 8.4.1 &amp;  8.4.2 into their own sections.  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    Editorial  
+  example_headers  
+  We use a number of different formats to identify an example in the headers, we have gone through and made them all consistent. They are all now in the form "example - �."  
+  http://lists.w3.org/Archives/Public/w3c-dist-auth/1998AprJun/0007.html  
+    
+  Last Updated on 4/7/98
+ By Jim Whitehead
+ Email:  ejw@ics.uci.edu 
+   
+ </body> 

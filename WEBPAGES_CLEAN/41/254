@@ -1,0 +1,155 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 28 Sep 1997
+//
+// Endgame database (application version only!)
+//
+// Usage:
+//
+// Call endgameDatabase.lookup(Board b)) to look up an individual board.
+// It will return true if the database is set up and the board is there,
+// with the correct value set in the board's evaluation.  Note that the board
+// is assumed (but not checked) to be not midCapture().
+//
+// Call endgameDatabase.search(Board b) to find the best move for a board.
+// The board may be midCapture(). Again, it returns true if successful,
+// false if a full alpha-beta search needs to be performed.
+
+import java.io.*;
+
+public class EndgameDatabase {
+	// The database contents
+	byte db[];
+	boolean ready = false;
+	
+	// Conditional compilation for db construction code
+	static final boolean CREATE_DATABASE = false;
+	static final boolean SANITY_CHECKS = false;
+	
+	// Convert contents to and from compact single-byte representation.
+	// Assumes winning evals are always an odd multiple of PLY_DECREMENT
+	// and losing evals are always an even multiple.
+	final byte evalByte(int eval) {
+		if (eval == 0) return 0;
+		int x = (eval = 64) {
+			if (SANITY_CHECKS) System.out.println("Huge ply! " + ply + " from eval " + eval);
+			ply = 63;
+		} int b = base - ply;
+		return (byte)(eval  j) continue;
+				short c = compact(Bits.at(i,j) | Bits.at(k,l));
+				if (SANITY_CHECKS &amp;&amp; shortReps[c] != 0)
+					System.out.println("Short rep already nonzero!");
+				shortReps[c] = numShortReps++;
+			}
+		if (SANITY_CHECKS &amp;&amp; numShortReps != 45*23)
+			System.out.println("Number of short reps: " + numShortReps);
+		if (CREATE_DATABASE) {
+			pieces = new long[numShortReps];
+			for (i = 0; i  j) continue;
+					long p = Bits.at(i,j) | Bits.at(k,l);
+					pieces[shortReps[compact(p)]] = p;
+				}
+		}
+	}
+	
+	// Fourth step in database lookup: action of symmetry
+	//
+	// The symmetry group is Z2 * Z2 which we represent as a two-bit number,
+	// one bit reversing rows, the other reversing columns.
+	// Fortunately, we don't need to distinguish group elements from their inverses.
+	//
+	short syms[][];	// indexed by symmetry(0-3), shortRep
+	byte minSym[];		// which symmetry produces the smallest shortRep?
+	short symReps[];	// conversion table to symmetric representations
+	short shortRepForSym[];	// and vice versa
+	short numSymReps;
+	final void setupSyms() {
+		syms = new short[4][];
+		for (int i = 0; i  j) continue;
+				short s = shortReps[compact(Bits.at(i,j) | Bits.at(k,l))];
+				syms[0][s] = s;
+				syms[1][s] = shortReps[compact(Bits.at(4-i,j) | Bits.at(4-k,l))];
+				syms[2][s] = shortReps[compact(Bits.at(i,8-j) | Bits.at(k,8-l))];
+				syms[3][s] = shortReps[compact(Bits.at(4-i,8-j) | Bits.at(4-k,8-l))];
+				if (minSym[s] == 0) {
+					symReps[s] = numSymReps++;
+					for (byte r = 1; r = 0) {
+			b.setChild(move);
+			int childEval;
+			if ((b.child.opponentPieces &amp; Bits.ON_BOARD) == 0) {	// wipe out
+				childEval =
+					Bits.count(b.myPieces &amp; Bits.ON_BOARD) * Board.WON_POSITION;
+			} else if (b.child.myPieces  0) childEval -= Board.PLY_DECREMENT;
+			else if (childEval  b.evaluation) {
+				b.evaluation = childEval;
+				b.bestMove = move;
+				if (ready) b.setPrincipalVariation();
+			}
+		}
+		if (SANITY_CHECKS &amp;&amp; b.evaluation == -Integer.MAX_VALUE)
+			System.out.println("No moves found!");
+		return true;
+	}
+	
+	// Compute database!
+	//
+	// There are more sophisticated ways of doing this, but it's a little complicated
+	// (involving generating moves backwards rather than forwards) and made even more
+	// complex by the fact that our eval counts material at the win not just plys to win.
+	// So, the algorithm we use is straightforward:
+	//
+	//	do {
+	//		call search() on all positions in the db
+	//		store changed evaluations back into the db
+	// } while (!changed &gt; 0)
+	//
+	final void setupDatabase() {
+		if (SANITY_CHECKS) {
+			for (short symRep = 0; symRep  0 &amp;&amp; newEval " + newEval);
+							else if (db[index]  db[index])
+								System.out.println("Eval got better after loss found! " +
+									db[index] + "=&gt;" + newEval);
+						}
+						db[index] = newEval;
+						numChanges++;
+					}
+				}
+			}
+			System.out.println("Iteration " + (++iterations) + ": " + numChanges + " updated evals");
+		} while (numChanges &gt; 0);
+		ready = true;
+	}
+	
+	// set up the whole shebang
+	EndgameDatabase()
+	{
+		setupShortReps();
+		setupSyms();
+		try {
+			String filename = System.getProperty( "endgame.database.filename" );
+			if (filename != null) {
+				InputStream stream = new FileInputStream(filename);
+				db = new byte[numSymReps * numShortReps];
+				stream.read(db);
+				stream.close();
+				ready = true;
+			}
+		} catch (IOException e) {
+			System.out.println("Unable to read endgame database: " + e.getMessage());
+			if (CREATE_DATABASE) {
+				setupDatabase();
+				System.out.println("Writing database to file");
+				try {
+					OutputStream stream = new FileOutputStream("endgame.db");
+					stream.write(db);
+					stream.close();
+				} catch (IOException ioe) {
+					System.out.println("Write failed: " + ioe.getMessage());
+				}
+			} else {
+				db = null;
+				ready = false;
+			}
+		}
+	}
+}
+ 

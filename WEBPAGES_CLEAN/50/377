@@ -1,0 +1,99 @@
+ Geometry in Action<body>
+
+ 
+   
+ 
+  
+ From:             wpt@math.berkeley.edu  (Bill Thurston)
+ Newsgroups:      sci.math
+ Subject:         Re: Hexahedral decomposition of polyhedra
+ Date:            25 Oct 1993 04:28:19 GMT
+ Organization:    U.C. Berkeley Math. Department.
+   
+In article &lt;29sb7v$b4b@news.delphi.com&gt;,
+ MCASALE@DELPHI.COM  &lt; mcasale@news.delphi.com &gt; wrote:
+&gt;In the process of generating hexahedral finite element meshes,
+&gt;the following question is important: What are the conditions
+&gt;on a polyhedron that allow a hexahedral decomposition
+&gt;of the polyhedron without modifying its boundary? One
+&gt;condition is that all the faces be quads, i.e., have four
+&gt;edges. What are the other conditions? Note, for example, that
+&gt;it is possible to mesh a tetrahedron with hexes, but not
+&gt;without modifying its faces, i.e., adding vertices. 
+&gt;
+&gt;Any help would be appreciated. 
+&gt;   Mac Casale
+&gt;    casale@pda.com 
+
+Hexahedron here means combinatorially equivalent to a cube.
+This can be taken as a question in combinatorial topology,
+where the faces can be curvilinear, or one can insist that
+the hexahedra really have linear faces.   Let's look at
+the topological question first.
+
+One way to view this problem is to dualize, that is, take
+the dual subdivision.   The dual of a cell division of the
+sphere by quadrilaterals
+is characterized by the property that edges meet in 4's.  You
+can think of it as a subdivision of the sphere obtained by
+drawing some possibly self-intersecting  closed curves that meet
+themselves and meet each other transversely.  This is like
+a knot or link projection.   
+
+A hexahedral cell division of the ball is dual to a subdivision
+obtained by a collection of surfaces inside the ball, intersecting
+transverely.  
+
+Each double curve (where a surface intersects itself) has to either
+be closed, or meet the boundary in two points.  So a necessary condition
+is that there be an even number of quadrilaterals.  (There do exist
+convex polyhedra with an odd number of quadrilateral sides, so
+this is a nonvacuous condition.)
+
+Given a system of curves that does have an even number of self-intersections,
+it is possible to find a surface with transveral self-intersections having
+the system of curves as its boundary.  (not necessarily dual to
+a hexahedral decomposition yet though, at this point).
+First, a simple closed curve bounds a disk.  Second, if there is any
+pair of self-intersections connected by an arc on the system of
+curves, you can pair them up with a double line of surface, and
+reduce the problem to one with two fewer double points.  The only
+remaining possibility is that each component of the curve is
+a figure eight.  You can connect any two such together.
+
+This gives a way to construct the surface with boundary the given
+curves.  It may not be dual to a hexahedral decomposition, because
+for instance there may be no interior vertices (corresponding to
+hexahedra) at all.   So, add a bunch of spheres with enough intersection
+points with the existing surface to make lots of interior vertices.
+This turns it into the dual of a hexahedral decomposition.
+
+This answers the topological question.
+****
+As for the geometric question:  My first guess is it can be done
+geometrically if it can be done topologically, but it
+looks very tricky.  If you're using curvilinear coordinates, then
+it's irrelevant.  Which question are you really trying to answer?
+
+It is known that any
+combinatorial subdivision of the sphere into quadrilaterals can
+be realized by a convex polyhedron; one strategy would be first
+to try to show everything can be gotten into convex form (by constructing
+quadrilateral-cross-section tubes), then analyzing further obstructions.
+
+By the way, one easy construction for certain hexahedral decompositions:
+a tetrahedron divides into 4 hexahedra, so if you start with something
+with triangulated boundary and divide into quadrilateals, you can
+always extend it.
+
+	Bill Thurston
+ 
+  
+Part of
+ Geometry in Action ,
+a collection of applications of computational geometry.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Last update: . 
+ </body> 

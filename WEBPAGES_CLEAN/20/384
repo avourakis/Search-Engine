@@ -1,0 +1,174 @@
+  // TournamentDoc.cpp : implementation of the CTournamentDoc class
+//
+
+#include "stdafx.h"
+#include "Tournament.h"
+
+#include "TournamentDoc.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CTournamentDoc
+
+IMPLEMENT_DYNCREATE(CTournamentDoc, CDocument)
+
+BEGIN_MESSAGE_MAP(CTournamentDoc, CDocument)
+	//{{AFX_MSG_MAP(CTournamentDoc)
+		// NOTE - the ClassWizard will add and remove mapping macros here.
+		//    DO NOT EDIT what you see in these blocks of generated code!
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CTournamentDoc construction/destruction
+
+CTournamentDoc::CTournamentDoc()
+{
+	CWinApp* pApp = AfxGetApp();
+
+	CString szRetVal;
+
+	szRetVal = pApp-&gt;GetProfileString("Settings", "Old Directory");
+	if (szRetVal == "") 
+	{
+		pApp-&gt;WriteProfileString("Settings", "Old Directory", "C:\\Tournament\\Old");
+		m_szOldDir = "C:\\Tournament\\Old";
+	}
+	else 
+	{
+		m_szOldDir = szRetVal;
+	}
+
+	szRetVal = pApp-&gt;GetProfileString("Settings", "New Directory");
+	if (szRetVal == "")
+	{
+		pApp-&gt;WriteProfileString("Settings", "New Directory", "C:\\Tournament\\New");
+		m_szNewDir = "C:\\Tournament\\New";
+	}
+	else
+	{
+		m_szNewDir = szRetVal;
+	}
+
+	szRetVal = pApp-&gt;GetProfileString("Settings", "HTML Directory");
+	if (szRetVal == "")
+	{
+		pApp-&gt;WriteProfileString("Settings", "HTML Directory", "C:\\Tournament\\Html");
+		m_szHtmlDir = "C:\\Tournament\\Html";
+	}
+	else
+	{
+		m_szHtmlDir = szRetVal;
+	}
+
+	M = pApp-&gt;GetProfileInt("Settings", "M", 6);
+	pApp-&gt;WriteProfileInt("Settings", "M", M);
+
+	N = pApp-&gt;GetProfileInt("Settings", "N", 7);
+	pApp-&gt;WriteProfileInt("Settings", "N", N);
+
+	K = pApp-&gt;GetProfileInt("Settings", "K", 4);
+	pApp-&gt;WriteProfileInt("Settings", "K", K);
+
+	int nG = pApp-&gt;GetProfileInt("Setttings", "G", 1);
+	(nG) ?  G = true : G = false;
+	pApp-&gt;WriteProfileInt("Settings", "G", nG);
+
+	m_nTimeLimit = pApp-&gt;GetProfileInt("Settings", "Time Limit", 60);
+	pApp-&gt;WriteProfileInt("Settings", "Time Limit", m_nTimeLimit);
+
+	// game board
+	board = 0;
+	numOccupied = 0;
+
+	m_nNumMatches = 0;
+	m_nCompetitors = 0;
+}
+
+CTournamentDoc::~CTournamentDoc()
+{
+	if (board != 0)
+	{
+		for ( int i = 0; i = 0 &amp;&amp; j  -1 &amp;&amp; row  -1 &amp;&amp; col = 0; i-- )
+		{
+			if ( !isOccupied(i, col) )   // ...until it hits another token or... 
+			{
+				board[i][col] = mark;
+				numOccupied++;
+				return true;
+			}
+		}
+
+	    return false;                    // ...until it hits the top
+	}
+	else								// otherwise the token can occupy
+	{									// any position
+		if ( isOccupied(row, col) )
+			return false;
+
+		board[row][col] = mark;
+		numOccupied++;
+		return true;
+	}
+}
+
+bool CTournamentDoc::tie()
+{
+	return numOccupied == M * N; 
+}
+
+bool CTournamentDoc::win(char &amp; mark)
+{
+	switch ( evaluate() )
+	{
+		case WIN_X:
+		    mark = X;
+		    return true;
+	    case WIN_O: 
+		    mark = O;
+		    return true;
+        default:
+			mark = BLANK;
+		    return false;
+	}
+}
+
+void CTournamentDoc::newBoard()
+{
+	numOccupied = 0;
+
+	if ( M &gt; 0 &amp;&amp; N &gt; 0 )
+	{
+		board = new CharArray[M];
+		for ( int i = 0; i  0)
+	{
+		m_arCompetitors[0].nRank = 1;
+	}
+	for (int k = 1; k  Tournament Results";
+	fileHtml.WriteString(strOut);
+	strOut = " Current Tournament Standings ";
+	fileHtml.WriteString(strOut);
+
+	strOut = "    RANK    POINTS    TEAM/PROGRAM NAME   ";
+	fileHtml.WriteString(strOut);
+
+	for (int i = 0; i  " + strRank + "  " + strScore + "  " + GetFileName(m_arCompetitors[i].strCompetitor) + " ";
+		fileHtml.WriteString(strOut);
+	}
+
+	strOut = "  Match Details (moves, times)  ";
+	fileHtml.WriteString(strOut);
+
+	
+	while(fileMatchLog.ReadString(strOut))
+	{
+		strOut += "\n";
+		fileHtml.WriteString(strOut);
+	}
+
+	strOut = "  

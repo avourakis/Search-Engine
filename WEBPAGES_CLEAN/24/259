@@ -1,0 +1,129 @@
+ Triangulation_vertex_base_with_info_3&lt;Info, TriangulationTraits_3, TriangulationVertexBase_3&gt;<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Triangulation_vertex_base_with_info_3&lt;Info, TriangulationTraits_3, TriangulationVertexBase_3&gt;  
+ 
+
+  Definition 
+ 
+
+The class   Triangulation_vertex_base_with_info_3   is a model of the concept
+  TriangulationVertexBase_3  , the base vertex of a 3D-triangulation.
+It provides an easy way to add some user defined information in vertices.
+Note that input/output operators discard this additional information.
+  
+
+ #include &lt; CGAL/Triangulation_vertex_base_with_info_3.h &gt; 
+  
+
+  Parameters 
+ 
+
+The first template argument is the information the user would like to add
+to a vertex.  It has to be  DefaultConstructible  and  Assignable .
+  
+
+The second template argument is the geometric traits class
+  TriangulationTraits_3   which provides the   Point_3  .
+  
+
+The third template argument is a vertex base class from which
+  Triangulation_vertex_base_with_info_3   derives.  It has the default
+value   Triangulation_vertex_base_3 &lt; TriangulationTraits_3 &gt; .
+  
+
+  Is Model for the Concept   TriangulationVertexBase_3  
+ 
+
+  Inherits From   TriangulationVertexBase_3  
+ 
+
+  Types 
+           
+           
+  
+typedef Info
+         
+          
+         
+    Info;
+         
+         
+    
+           
+
+  Access Functions 
+ 
+
+    
+           
+const Info&amp;
+         
+          
+         
+    v.info () const
+         
+          
+    Returns a const reference to the object of type  Info  stored in the
+vertex.
+            
+           
+Info&amp;
+         
+          
+         
+    v.info () 
+         
+          
+    Returns a reference to the object of type  Info  stored in the vertex.
+            See Also 
+ 
+
+  CGAL::Triangulation_cell_base_with_info_3     CGAL::Triangulation_vertex_base_3  
+  
+
+    Next:    Triangulation_hierarchy_vertex_base_3&lt;TriangulationVertexBase_3&gt;   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

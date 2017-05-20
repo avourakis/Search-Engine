@@ -1,0 +1,134 @@
+ VHDL Reference Guide - If Statement<body>  This is Google's cache of  http://www.vdlande.com/VHDL/ifs.html . It is a snapshot of the page as it appeared on Oct 3, 2009 00:18:13 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+
+ 
+   If Statement  
+        Sequential Statement 
+ ---- used in ----&gt; 
+ Process Function Procedure 
+            Syntax        
+  
+
+ 
+      if  condition_1  then 
+	sequential statements
+ elsif  condition2  then 
+	sequential statements
+ else 
+	sequential statements
+ end if;   
+    
+  
+
+ 
+See LRM section 8.6
+
+         Rules and Examples        
+  
+
+ 
+    Conditions may overlap -  only  the statements after the
+ first  "true" condition are executed.
+ if (X = 5) and (Y = 9) then
+	Z &lt;= A;
+elsif (X &gt;= 5) then
+	Z &lt;= B;
+else
+	Z &lt; C;
+end if;  
+    
+  
+
+ 
+    The  elsif  and  else  clauses are optional. This process
+models a transparent latch:
+ process (EN, D)
+begin
+	if (EN = '1') then Q &lt;= D;
+	end if;
+end process;
+  
+    
+  
+
+ 
+    A condition is any boolean expression:
+ process (ALARM_TIME, CURRENT_TIME)
+	variable AL_EQ_CUR: boolean;
+begin
+	AL_EQ_CUR := (ALARM_TIME = CURRENT_TIME);
+	if AL_EQ_CUR then
+		SOUND_ALARM &lt;= '1';
+	else
+		SOUND_ALARM &lt;= '0';
+	end if;
+end process;
+  
+    
+  
+
+ 
+    An  if  statement may be used to infer edge-triggered registers
+in a process sensitive to a clock signal. Asynchronous reset may also be
+modelled:
+ process(CLK, RESET)
+begin
+	if RESET = '1' then
+		COUNT &lt;= 0;
+	elseif CLK'event and CLK='1' then
+		if (COUNT &gt;= 9) then
+			COUNT &lt;= 0;
+		else
+			COUNT &lt;= COUNT + 1;
+		end if;
+	end if
+end process;
+  
+    
+  
+
+ 
+     If  statements may be used to specify conditional assignments
+or state transitions in a finite state machine:
+ case READ_CPU_STATE is
+	when WAITING =&gt;
+		if CPU_DATA_VALID = '1' then
+			CPU_DATA_READ &lt;= '1';
+			READ_CPU_STATE &lt;= DATA1;
+		end if;
+	when DATA1 =&gt;
+	-- other branches of the case statement
+end case;
+  
+    
+  
+
+ 
+         Synthesis Issues        
+  
+
+The  if  statement is generally synthesisable. Where an  if 
+statement is used to detect the clock edge in a "clocked process",
+certain conventions must be obeyed. Using an  if  statement without
+an  else  clause in a "combinational process" can result in latches
+being inferred, unless all signals driven by the process are given
+unconditional default assignments. For more details see
+ Process .
+
+ 
+         Whats New in '93        
+  
+
+ 
+    In  VHDL -93, the  if  may have an optional label:
+ label:  if  condition  then 
+...etc
+ end if  label  
+    
+  
+
+  </body> 

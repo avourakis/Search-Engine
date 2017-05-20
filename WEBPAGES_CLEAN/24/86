@@ -1,0 +1,54 @@
+ 4.72 OEGetSmallestSubtree<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.71 OEGetResidueName 
+ Up:   4. OEChem Functions 
+ Next:   4.73 OEGetSubtree 
+   
+
+
+  
+4.72 OEGetSmallestSubtree 
+ 
+   
+OESystem::OEIterBase&lt;OEAtomBase&gt;
+                        *OEGetSmallestSubtree(const OEBondBase *bond)
+    
+This function traverses the subgraph of all connected atoms on one end
+of a bond passed as the argument without crossing the bond itself.  If
+the number of contiguous atoms connected to the beginning atom of the
+bond exceeds half of the atoms in the molecule, that subtree is
+discarded and a new traversal begins starting with the end atom of the
+bond.  The bond itself may not be crossed in the second traversal.  An
+iterator over the atoms that are members of the smallest subgraph is
+returned.  The root atom of the bond from which the smallest subtree
+originates is included in the atom iterator returned.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.71 OEGetResidueName 
+ Up:   4. OEChem Functions 
+ Next:   4.73 OEGetSubtree 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,76 @@
+ 3.12.10 Init<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.9 GetValenceCorrection 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.11 NumReactants 
+   
+
+
+  
+3.12.10 Init 
+ 
+   
+bool Init(const char *smirks, bool strictSmirks=true)
+    
+This method is used to initialize an  OELibraryGen  instance with
+a SMIRKS pattern passed as a pointer to a constant character string
+given as the first argument to the method.  If the  OELibraryGen 
+instance is initialized successfully the method will return boolean
+true.  If the SMIRKS string is invalid or initialization fails the
+method will return boolean false.  The second argument to the method
+is used to specify whether the SMIRKS string should be interpreted
+using strict SMIRKS semantics.  By default, the SMIRKS string is
+interpreted using strict semantics.  SMIRKS requires that reactant
+atoms that are mapped must appear and have corresponding mapped atoms
+on the product side.  In addition, unmapped reactant atoms are
+destroyed as part of the reaction.  Passing a boolean value of false
+to the second method argument relaxes both of these restrictions.  A
+mapped reactant atom that does not have a corresponding mapped product
+atom is valid, and will be destroyed as part of the reaction.
+Unmapped reactant atoms will be used to match the reactant pattern,
+but are not destroyed when the reaction is applied.  The resulting
+SMIRKS like reactions may therefore be more easily readable by humans
+as fewer atoms may be required to be mapped.
+
+  
+    
+bool Init(const OEQMolBase &amp;qmol, bool strictSmirks=true)
+    
+This method initializes an  OELibraryGen  instance with a
+query molecule.  If query molecule is created using the
+ OEParseSmirks  function, and if the reaction is desired to be
+interpreted using strict SMIRKS semantics (see  Init(const
+char*, bool strictSmirks  for explanation of strict SMIRKS) then the
+default value for the second argument to the method should be used.
+Passing a boolean value of false to the second argument will relax the
+restrictions imposed by strict SMIRKS semantics.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.9 GetValenceCorrection 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.11 NumReactants 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

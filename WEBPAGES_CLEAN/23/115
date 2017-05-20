@@ -1,0 +1,169 @@
+ Nef_polyhedron_S2&lt;Traits&gt;::SFace<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::Nef_polyhedron_S2&lt;Traits&gt;::SFace  
+ 
+
+  Definition 
+ 
+
+Figure 
+     
+ and
+figure 
+     
+ illustrate the incidences of an sface. An sface is described
+by its boundaries. An entry item to each boundary cycle can be accessed
+using the iterator range ( sface_cycles_begin() / sface_cycles_end() ).
+Additionally,   Nef_polyhedron_S2   provides the macro 
+ CGAL_forall_sface_cylces_of . The iterators are of type 
+ SFace_cycle_const_iterator  and represent either a shalfedge, a shalfloop,
+or a svertex.
+  
+
+ #include &lt; CGAL/Nef_polyhedron_S2.h &gt; 
+  
+
+  Types 
+ 
+
+The following types are the same as in   Nef_polyhedron_S2 &lt;Traits&gt; .
+  
+
+    
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::Mark
+         
+              
+    type of mark.
+ 
+
+          
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::Object_list
+         
+              
+    list of  Object  handles.
+ 
+
+          
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::Vertex_const_handle
+         
+              
+    const handle to Vertex.
+ 
+
+     
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::Volume_const_handle
+         
+              
+    const handle to Volume.
+ 
+
+     
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::SFace_const_handle
+         
+              
+    const handle to SFace.
+ 
+
+     
+          Nef_polyhedron_S2&lt;Traits&gt;::SFace ::SFace_cycle_const_iterator
+         
+              
+    const iterator over the entries to all sface cycles of a sface.
+ 
+
+     
+
+  Creation 
+ 
+
+There is no need for a user to create a  SFace  explicitly. The
+class   Nef_polyhedron_S2 &lt;Traits&gt;  manages the needed sfaces internally.
+  
+
+  Operations 
+ 
+
+    
+           
+ Mark
+         
+          
+         
+    sf.mark ()
+         
+          
+    the mark of  sf  .
+                 
+           
+SFace_cycle_const_iterator
+         
+              
+         
+    sf.sface_cycle_begin ()
+         
+                
+    iterator over the entries to all sface cycles of  sf  .
+                 
+           
+SFace_cycle_const_iterator
+         
+              
+         
+    sf.sface_cycle_end ()
+         
+                
+    past-the-end iterator.
+            
+
+  See Also 
+ 
+
+  CGAL::Nef_polyhedron_S2 &lt;Traits&gt;    CGAL::Nef_polyhedron_S2&lt;Traits&gt;::SVertex  
+  
+
+    Next:    Nef_polyhedron_S2&lt;Traits&gt;::SFace_cycle_iterator   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

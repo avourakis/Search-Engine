@@ -1,0 +1,226 @@
+ Glossary<body>
+
+ 
+ Glossary of Programming (and Java) Terms 
+ 
+  
+  
+
+
+      Cascaded Method Calls  
+ 
+In a cascaded method call, we use the result returned by one method (a
+  reference to an object) to immediatley call another method.
+If we declare  String s = "foo";  and then the cascaded method call
+   s.toUpperCase().replace('F','G')  it returns a result of  "GOO" :
+    toUpperCase  is called on the object  s  refers to, and returns 
+  a reference to a new object whose state is  "FOO" ; the cascaded method
+  call immediately calls  replace  on this reference, and return a
+  reference to a newer object whose state is  "GOO" .
+Cascaded method calls is similar to composition of functions in mathematics.
+ 
+         Checked Exception  
+ 
+A checked exception is a sublcass of Throwable but not of RunTimeException.
+Such exceptions generally indicate an extra-logical failure (one not related
+  to programming errors; e.g. EndOfFileException).).
+They are required either to be caught, or appear in a method that specifies
+  in its prototyp that it throws that kind of exception.
+Contrast to Unchecked Exception.
+ 
+         Access Modifier  
+ 
+A Java keyword that describes whether/how some class member can be
+  referred to (accessed).
+Common access modifiers are  public ,  private ,  protected ,
+   static , and  final .
+ 
+         Accessor  
+ 
+A Java method that examines the state of an object but does not change it
+  is called an accessor
+Accessors typically return a result (otherwise, calling one would produce
+  not visible effect).
+Accessors are often call "getters", and their names often start with
+    get .
+See mutator.
+ 
+         Constructor  
+ 
+A class member whose purpose is to help initialize all the fields of a class.
+Constructors can be overloaded.
+ 
+         Driver  
+ 
+A program with a simple menu for testing the constructors and methods of
+  a class.
+The user selects which method to call via the menu, and the result of
+  the operation is printed (often along with the current state of the
+  object via the  toString  method).
+ 
+         EBNF  
+ 
+Extended Backus-Naur Form: A notation for formally describing the syntax of
+  a programming language (i.e., specifying which programs are grammatically
+  correct).
+ 
+         Evaluate  
+ 
+What Java does with an expression.
+ 
+         Exception  
+ 
+If a built-in Java operator or programmer supplied Java method cannot
+   correctly compute its result (e.g., the user has specified the bad
+   arguments) it throws an exception to indicate a problem.
+Exceptions are classified as either checked or not-checked.
+When such operators/methods occur in try/catch blocks, the programmer can
+  indicate how to proceed if an exception is thrown.
+ 
+         Excecute  
+ 
+What Java does with a statement.
+ 
+         Identifier  
+ 
+A kind of token, used for names: variable names, method names, class names,
+  etc.
+Identifiers always start with letters; a dollar sign is allowed, but this
+  character should be reserved for special identifiers created by the
+  Java compiler.
+ 
+         Immutable  
+ 
+A class is immutable if is defines no mutator methods.
+This means that once the state of an object is initialized by
+  a constructor, it will never change.
+ String  and the wrapper classes are all immutable.
+ 
+         Java  
+ 
+A programming language designed by James Gosling at Sun Microsystems.
+Java is meant to be easier (and safer) to use than C++ (the language that 
+  it most closely resembles) at the cost of being less efficient.
+The implications of this tradeoff are very interesting.
+ 
+         Keyword  
+ 
+A kind of token, used for names/identifiers reserved by Java with immutable
+  meanings.
+ 
+         Literal  
+ 
+A kind of token, used for the value of a type.
+Java allows us to specify literals for the primitive types int, double,
+  boolean, and char; and for the reference/class type String.
+ 
+         Members  
+ 
+Java classes define and document three kinds of  members:
+  constructors, methods, and fields.
+Almost everything that we can say about a class is said about
+  one of these members.
+ 
+         Mutator  
+ 
+A Java method that changes the state of an object is called a mutator.
+Mutators typically do not return a result (are declared to return  void ),
+  although some mutators both change state and return a result
+  (e.g.,  nextToken  in  StringTokenizer ).
+Mutators just change state, without looking at current values, are often call
+  "setters", and their names often start with  set .
+See accessor.
+ 
+         new  
+ 
+ new  is a unary prefix operator, which takes as an operand the
+  name of any class.
+Following the class name is a pair of open/close parentheses;
+  inside these parentheses, separated by commas, is any information
+  that the class requires to specify the initial state of the
+  object being constructed.
+The  new  operator constructs a new object from this class, initializes
+  it, and then returns as a result (all operators return results) a reference
+  to this object.
+ 
+         Operator  
+ 
+A kind of token, mostly used for arithmetic, relational, logical, or textual
+  operations (operating on primtive types or references -but not on the
+  state of the objects that they refer to).
+ 
+         Overloaded  
+ 
+An operator or method is overloaded if it has more than one prototype.
+Java determines which actual operator/method to use based on its
+  signature.
+ 
+         Primitive Type  
+ 
+A type built in to the Java language (as a keyword).
+The main primtive types are  int ,  double ,  boolean ,
+  and  char ; less often used primitive types are  short ,
+   long , and  float .
+ 
+         Prototype  
+ 
+A specification of the types and exceptions involved in an operator or method.
+It shows the types of the operands/parameter, the type of the result, and any
+  exceptions that can be thrown during the computation.
+ 
+         Reference Type  
+ 
+A reference type includes the names of interfaces and classes (either declared
+  in the standard Java library or by a programmer).
+ 
+         Separator  
+ 
+A kind of token, used for punctuation (period, comma, semi-colon) or grouping
+  (parentheses, brackets, braces -which all come in paris: one for openining
+  the group and one for closing it).
+ 
+         Signature  
+ 
+A specification of the types involved in an operator or method.
+It shows the types of the operands/parameters only.
+It is a subset of the prototype information (it omits the type of the result
+  and any exceptions that can be thrown during the computation).
+ 
+         Syntax Constraint  
+ 
+An extra rule imposed by the compiler on some statement.
+The rule either cannot be encoded in the EBNF, or it is just
+  very cumbersome to do so.
+Example: in an  if  statement, the  expression  in the
+  parentheses (which is specified in the EBNF) must be of type
+   boolean.
+  
+         Token  
+ 
+The smallest lexical unit in a program.
+The Java compiler scans the characters in a program, grouping them into tokens.
+The 6 basic kinds of tokens are identifiers, keywords, separators, operators,
+  literals (either type int, double, boolean, char, or String), and comments.
+ 
+         Types  
+ 
+Java types include primitive types and reference types.
+Types are a bit more general than classes; while every class is a types,
+   types also include interfaces.
+ 
+         Variable  
+ 
+Variables are declared to have names and types (either primitive or reference).
+A variable of a primitive type a value of that type.
+A variable of a reference type stores either  null  (meaning it
+  refers to no object), or a reference to an object constructed from
+  some compatible class: the object stores more information.
+ 
+         Unchecked Exception  
+ 
+An unchecked exception is a sublcass of RunTimeException.
+Such exceptions generally indicate a programming error (e.g.
+  IllegalArgumentException).
+Contrast to Checked Exception.
+ 
+    </body> 

@@ -1,0 +1,88 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Version identifier in URL<body> Re: Version identifier in URL 
+ David J. Fiander  (  davidf@worf.mks.com  )  Fri, 07 Jun 1996 08:51:14 -0400 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Fabio Vitali: "Re: Version identifier in URL" 
+    Previous message:   David J. Fiander: "Re: High-level capabilities" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Fabio Vitali: "Re: Version identifier in URL" 
+
+    
+&gt; 5) GET /path/resource HTTP/1.0
+&gt;    Content-version: x
+&gt;
+&gt; proposed by Kenji Takahashi and generally criticized for requiring
+&gt; versioning-aware clients and for being impossible to specify in an anchor.
+
+I never criticised this option (much).  I &lt;em&gt;did&lt;/em&gt; criticise
+Kenji's suggestion that this is the only way that should be
+available.  I think that HTTP headers are quite appropriate, as
+long as there's also a way to create a link to a version.
+
+&gt; - The slash is already reserved for hierarchies. Hierarchies of different
+&gt; origin can be piled by juxtaposing the path name. This can't be said for
+&gt; the other proposed schemas:
+&gt;        ftp://host/dir/file;A;version=x 
+&gt; or
+&gt;        wais://host/database/c/A;B;version=x 
+&gt; while being outside of the scope of a discussion on HTTP, look pretty silly
+&gt; anyway and would make the ftp or wais access to these resources impossible
+&gt; or completely different.
+
+Umm... how would the ftp server (which was written by a
+completely different people and doesn't know a URL from a hole in
+the ground) deal with  ftp://host/dir/projectX/1.5/Mac/French/file.c 
+given that, more than likely, "projectX" is the name of a
+configuration file, 1.5 specifies a revision in a VCS file, and
+"Mac" and "French" are, respectively, a compile-time option and a
+run-time locale specification?
+
+I think that this particular argument is specious.
+
+&gt; Finally, I find slashes easier to read than adding yet another decoration.
+&gt; Suppose I want to access  anchor "chapter1" of the document described by
+&gt; author="bill" and name="foo" as retrieved by version Y of the search engine
+&gt; "application". For instance, what would be the right syntax in this case?
+&gt;
+&gt;        http://host/cgi-bin/application;version=Y?author=bill+name=foo#chapter1 
+&gt;        http://host/cgi-bin/application?author=bill+name=foo;version=Y#chapter1 
+&gt;        http://host/cgi-bin/application?author=bill+name=foo#chapter1;version=1 
+&gt;
+&gt; Compare to the simple:
+&gt;        http://host/cgi-bin/application/Y?author=bill+name=foo#chapter1 
+
+Since the HTTP URL syntax states that URL parameters preceed
+queries, the correct syntax would be
+
+         http://host/cgi-bin/application;version=Y?author=bill+name=foo#chapter1 
+
+That is, your first option.
+
+&gt; - I don't know if there exists a file system in which a file and a
+&gt; directory can have exactly the same name, and are distinguished by the fact
+&gt; that one is a directory and the other is a file. I mean, if it were
+&gt; possible for a directory to have both a file and a directory called
+&gt; file.html, then the URL:
+&gt;        http://host/dir/file.html/1.5 
+&gt; would be ambiguous. If there is such a perverted file system, I will
+&gt; withdraw my points and leave to become a goatherd in Sardinia (Italy).
+
+Well the Thoth operating system from the university of waterloo
+allowed a node in the filesystem to contain both data and links
+to subnodes.  So a "directory" could be opened and read as a
+file, or it could be traversed to find subdirs.  I understand
+that the weather in Italy is very nice ;-)
+
+- David
+ 
+
+  
+     Next message:   Fabio Vitali: "Re: Version identifier in URL" 
+    Previous message:   David J. Fiander: "Re: High-level capabilities" 
+    Maybe in reply to:   Jim Whitehead: "Version identifier in URL" 
+
+    Next in thread:   Fabio Vitali: "Re: Version identifier in URL" 
+
+  </body> 

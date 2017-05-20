@@ -1,0 +1,845 @@
+ Program 2<body>
+
+ 
+ Program 2 
+ 
+Classes, Overloaded Operators, and Iterators
+ 
+ 
+  ICS-33: Intermediate Programming  
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+This programming assignment is designed first to ensure that you know how to
+  write classes that overload many of the standard Python operators by defining
+  various double-underscore methods.
+It also ensures that you know how to write classes that implement iterators,
+  by defining an  __iter__  method that returns an object that we/Python
+  can call  __next__  on.
+ These Iterators are covered near the end of the due date for this project;
+  skip writing these functions (only in the first class) until the material is
+  covered in class, or read ahead. 
+ 
+You should download the  program2  project folder and
+  unzip it to produce an Eclipse project with two modules.
+You will write classes in these modules, which can be tested in the script and
+  using the standard driver using the batch self-check files that I supplied.
+Eventually you will submit each of these modules you write separately to
+  Checkmate.
+  
+I recommend that you work on this assignment in pairs, and I recommend that you
+  work with someone in your lab section (so that you have 4 hours each week of
+  scheduled time together).
+These are just recommendations.
+Try to find someone who lives near you, with similar programming skills,
+  and work habits/schedule: e.g., talk about whether you prefer to work
+  mornings, nights, or weekends; what kind of commitment you will make to submit
+  program early.
+
+  
+ Only one student should submit all parts of the the assignment , but both
+  students' UCInetID and name should appear in a comment at the  top  of
+   each submitted .py file .
+A special grading program reads this information.
+The format is a comment starting with  Submitter  and  Partner  (when
+  working with a partner), followed by a  colon , followed by the student's  UCInetID  (in all lower-case), followed by the student's  name in
+  parentheses  (last name, comma, first name -capitalized appropriately).
+If you omit this information, or do not follow this exact form, it will require
+  extra work for us to grade your program, so we will deduct points.
+Note: if you are submitting by yourself, and do  NOT  have a partner, you
+  should  OMIT  the partner line and the "...certify" sentence.
+  
+For example if Romeo Montague (whose UCInetID is romeo1) submitted a program
+  that he worked on with his partner Juliet Capulet (whose UCInetID is jcapulet)
+  the comment at the top of each .py file would appear as:
+   # Submitter: romeo1(Montague, Romeo)
+# Partner  : jcapulet(Capulet, Juliet)
+# We certify that we worked cooperatively on this programming
+#   assignment, according to the rules for pair programming  
+If you do not know what the terms  cooperatively  and/or
+   rules for pair programming  mean, please read about
+   Pair Programming  
+   before  starting this assignment.
+Please turn in each program  as you finish it , so that I can more
+  accurately assess the progress of the class as a whole during this assignment.
+ 
+Print this document and carefully read it, marking any parts that contain
+  important detailed information that you find (for review before you turn in
+  the files).
+The code you write should be as compact and elegant as possible, using 
+  appropriate Python idioms.
+  
+    
+       Problem #1: Bag Class  
+ 
+ Problem Summary: 
+Write a class that represents and defines methods, operators, and an iterator
+  for the  Bag  class.
+Bags are similar to sets, and have similar operations (of which we will
+  implement just the most important) but unlike sets they can store multiple
+  copies of items.
+We will store the information in bags as dictionaries (I suggest using a 
+    defaultdict ) whose keys are associated with  int  values that
+   specify the number of times the key occurs in the  Bag .
+ You must store Bags using this one data structure, as specified 
+ Details 
+  Define a class named  Bag  in a module named  bag.py 
+ 
+   Define an  __init__  method that has one parameter, an iterable of
+       values that initalize the bag.
+    Writing  Bag()  constructs an empty bag.
+    Writing  Bag(['d','a','b','d','c','b','d'])  construct a bag with
+      one  'a' , two  'b' s, one  'c' , and three  'd' s.
+    Objects in the  Bag  class should store only the dictionary specified
+      above: it should  not  store/manipulate any other  self 
+      variables.
+ 
+   Define a  __repr__  method that returns a string, which when passed to
+        eval  returns a newly constructed bag with the same value
+       ( == ) to the object  __repr__  was called on.
+    For example, for the  Bag  in the discussion of  __init__  the
+         __repr__  method would print its result as
+        Bag(['a', 'c', 'b', 'b', 'd', 'd', 'd']) .
+    Bags like sets are not sorted, so these 7 values can appear in any order.
+    We might require that information in the list is sorted, but not all values
+      we might put in a bag may be ordered (and therefore not sortable): e.g.,
+      a bag storing both string and int values,  Bag(['a',1])  which is
+      allowed.
+     
+     Note : This method is used to test several other methods/operators
+       in the batch self-check file; so it is critical to write it correctly.
+  
+   Define a  __str__  method that returns a string that more compactly
+      shows a bag.
+    For example, for the  Bag  in the discussion of  __init__  the
+         __str__  method would print its result as
+        Bag(a[1], c[1], b[2], d[3]) .
+    Bags like sets are not sorted, so these 7 values can appear in any order.
+ 
+   Define a  __len__  method that returns the total number of values in
+      the  Bag .
+    For example, for the  Bag  in the discussion of  __init__  the
+         __len__  method would return  7 .
+ 
+   Define a  unique  method that returns the number of different
+      ( unique ) values in the  Bag .
+    For example, for the  Bag  in the discussion of  __init__  the
+         unique  method would return  4 , because there are four
+        different values in the  Bag ; contrast this method with
+         __len__ .
+       
+   Define a  __contains__  method that returns whether or not its
+      argument is in the  Bag  (one or more times).
+ 
+   Define a  count  method that returns the number of times its argument
+      is in the  Bag :  0  if the argument is not in the  Bag .
+ 
+   Define an  add  method that adds its argument to the  Bag : if
+      that value is already in the  Bag , its count is incremented by
+       1 ; if it is not already in the  Bag , it is added to the
+       Bag  with a count of  1 .
+ 
+   Define an  __add__  method that unions its two  Bag  operands:
+      it returns a new  Bag  with all the values in  Bag  operands.
+    For example:  str(Bag(['a','b']) + Bag(['b','c']))  should be
+       'Bag(a[1],b[2],c[1])' 
+    Neither  Bag  operand should change.
+ 
+   Define a  remove  method that removes its argument from the
+       Bag : if that value is already in the  Bag , its count is
+      decremented by  1  (and if the count reduces to  0 , the value
+      is removed from the dictionary; if it is not in the  Bag , raise a
+       ValueError  exception, with an appropriate message that includes
+      the value that could not be removed.
+ 
+   Define  __eq__ / __ne__  methods that return whether one
+       Bag  is equal/not equal to another: contains the same values the
+      same number of times.
+    A  Bag  is not equal to anything whose type is not a  Bag 
+    This this method should not change either  Bag .
+ 
+   Define an  __iter__  method that that returns an object on which
+       next  can be called to produce every value in the  Bag : all
+       len  of them.
+    For example, for the  Bag  in the discussion of  __init__ , 
+      the following code
+    for i in x:
+      print(i,end='')  
+would print
+    acbbddd  
+    Bags like sets are not sorted, so these 7 values can appear in any order.
+ 
+Ensure that the iterator produces those values in the  Bag  at the time
+      the iterator starts executing; so mutating the  Bag  afterwards,
+      or even during the iteration, will  not  affect what values it
+      produces.
+  
+     Hint : Write this method as a call to a local generator, passing a
+      copy of the dictionary (covered in Friday's lecture in Week 4).
+   
+I have shown only examples of  Bag s storing strings, because they are
+  convenient to write.
+But bags can store any type of data.
+The  __repr__ ,  __str__ , and  __iter__/__next__  methods must
+  be written independently: neither should call the other to get things done.
+ 
+  Testing 
+The  bag.py  module includes a script that calls  driver.driver() .
+The project folder contains a  bsc1.txt  file (examine it) to use for
+   batch-self-checking your class.
+These are rigorous but not exhaustive tests.
+Incrementally write and test your class; check each method as you write it.
+ 
+Note that when exceptions are raised, they are printed by the driver but the 
+   Command:  prompt sometimes appears misplaced.
+  
+You can write other code at the bottom of your  bag.py  module to test the
+   Bag  class, or type code into the driver as illustrated below.
+Notice the default for each command is the command previously entered.
+    Driver started
+  Command[!]: from bag import Bag
+  Command[from bag import Bag]: b = Bag(['d','a','b','d','c','b','d'])
+  Command[b = Bag(['d','a','b','d','c','b','d'])]: print(b)
+  Bag(a[1], b[2], c[1], d[3])
+  Command[len(b)]: print(len(b))
+  7
+  Command[print(len(b))]: print(b.count('d'))
+  3
+  Command[print(b.count('d'))]: quit
+  Driver stopped  
+  
+    
+       Problem #2: Graph Class (operators)  
+ 
+ Problem Summary: 
+The  Graph  class is defined in the  graph.py  module.
+The  Graph  class represents a graph consisting of  nodes  and
+   edges .
+Each  edge  is pictured as an  arrow  that connects its
+   origin node  at the tail (a  str ) to its  destination node 
+  at the head (a  str ).
+Each  edge value  appears as a label on an arrow.
+ 
+Examine the following graph.
+  
+   
+Note that some nodes are  origin nodes  ( a ,  b , and  d ),
+  some nodes are  destination nodes  ( a ,  b , and  c ),
+  some nodes are both ( a  and  b ), 
+  and some nodes are neither ( e : a node in the graph with no edges
+  connecting it to any other node).
+  
+We represent graphs as an outer- dict  that stores as keys all the
+   nodes  in the graph; each  node  (treated as an  origin node )
+  is associated with an inner- dict  that stores as keys all its
+    destination nodes  (if any); each  destination node  in this
+  inner- dict  is associated with an  edge value  (here an  int )
+  between the  origin node  (key in the outer- dict )) and
+   destination node  (key in in the inner- dict ).
+So, the graph pictured above can be represented by the following
+  outer/inner- dict  data structure
+
+  
+  {'a': {'b': 1, 'c': 3}, 'b': {'a': 2}, 'c': {}, 'd': {'b': 2, 'c': 1}, 'e': {}}
+  
+Of course, because the data structures are  dict s, their keys can appear
+  in any order.
+  
+Note that all five nodes are in the outer- dict , even  c  and
+   e , which are not the  origin node  of any  edge .
+Also, although this graph uses  int s for edge values, we will allow
+  values of any type (although see the predicate parameter in  __init__ )
+  to be edge values.
+Finally, it is possible (although not shown) for an edge to go from some node
+  to the same node (called a  self edge ).
+  
+You will write a  __str__  method for the  Graph  class that shows
+  translates this  dict  more clearly into a string.
+If we called  str  to print this graph, it would appear as
+
+  
+  Graph:
+    a: b(1), c(3)
+    b: a(2)
+    c: 
+    d: b(2), c(1)
+    e:   
+Here, the line  a: b(1), c(3)  means that  origin node a  has
+  an  edge  to  destination node b  (with  edge value 1 ), and
+  an  edge  to  destination node c  (with  edge value 3 ).
+This  __str__  method alphabetizes the  origin nodes  (vertically,
+  one per line) and the  destination nodes  (horizontally, all on the same
+  line) for easy reading (and so each graph has a unique  str 
+  representation, independent of the iteration order of the outer- and
+  inner-dictionaries).
+  
+All the methods in the  Graph  class process only this
+  outer/inner- dict  data structure, representing the graph.
+  
+
+  Details 
+Define a class named  Graph  in a module named
+       graph.py .
+ 
+You may define other (helper) Python  methods  in this class (but no other
+   functions  in its module), but you do not have to define any.
+I have included the helper methods  legal_tuple2  and  legal_tuple3 
+  in the download, which you can use to simplify checking the requirements in
+  other methods that you must write.
+  
+I suggest that you first write simple code to test/debug your methods, before
+  calling  driver()  to test your class in its script; later you can use
+  the driver and the large  bsc.txt  file supplied with the project.
+If you want to see the exceptions raised, and their messsages, uncomment the
+  code before the call to  driver.driver() .
+  
+   Define an  __init__  method that has two parameters: the first matches
+    a predicate defining what types of values are legal for edge values; the
+    second matches zero or more arguments, where each argument is expected to
+    be either
+       
+         a 3- tuple  specifying an  origin node ,
+             destination node , and  edge value :
+            e.g,  ('a','b',1) 
+       
+          a single value specifying a node: e.g.,  'e' 
+         
+    We can specify the original  Graph  above (whose edge values must
+      store  int  values) by
+    Graph( (lambda x: type(x) is int), ('a','b',1),('a','c',3),('b','a',2),('d','b',2),('d','c',1),'e')  
+    Note  node e  appears by itself, because it is neither an
+       origin node  nor a  destination node  of any  edge , but
+      still must be included in the  Graph ; all other nodes are one, the
+      other, or both; finally, the 3-tuples/strings arguments can appear in ANY
+      order.
+      
+    For each of these possibilities, ensure that all the specified nodes
+      (whether specifying the  origin  and  destination  nodes of an
+       edge  or appearing as a node by itself)
+      become keys in the outer/inner- dict , and that the
+      outer/inner- dict  stores the appropiate  edge value (s).
+      
+    Raise the  GraphError  exception with an appropriate message if
+       Any argument isn't
+            a 3- tuple  whose first two values are  str s, and
+                   whose third value satisifies the predicate passed as the
+                   first argument to  __init__ 
+               a single  str 
+             
+       The specified  origin node  and  destination node  in a
+          3- tuple  are already in the  Graph  (even if the edge
+          value is the same); or if the specified single  node  is already
+          in the  Graph  (possibly from being included in a
+          previous 3- tuple  argument).
+       
+     IMPORTANT : You  must  use the name  self.edges  (all
+         lower-case) to store the outer/inner- dict  constructed
+         from the arguments; you must also use  self.is_legal_edge_value 
+         to store the function that is the first argument to  __init__ .
+    The name  self.edges  is used in some tests in the batch self-check
+       file; the name  self.is_legal_edge_value  appears in the
+        legal_tuple3  method.
+    Store  no  other  self  variables besides these two; all the
+       methods in the  Graph  class process only this information.
+  
+
+   Define a  __str__  method that returns a string representation of a
+     graph that is easier to read than the  str  of its dictionaries.
+See the  Problem Summary  above for the details of the specification of
+     this method.
+ 
+
+   Define a  __getitem__  method as follows (with  item  parameter):
+      be careful to access the outer/inner- dict  only for legal keys.
+     
+       If the  item  parameter is a  str , treat it as an
+            origin node  and return the  dict  of  destination
+           nodes  and their  edge values  for that  origin node 
+           in the  Graph ;
+        if there is no such  origin node , raise a  GraphError 
+           exception with an appropriate message.
+     
+       If the  item  parameter is a 2- tuple  specifying an
+            origin node  and  destination node  (as  str s),
+           return the  edge value  going from that  origin node  to
+           that  destination node ;
+        if there is no such  edge , raise a  GraphError 
+          exception with an appropriate message.
+     
+       If the  item  parameter is anything else, raise a  GraphError 
+           exception with an appropriate message.
+      
+   For example, if  g  refers to the original  Graph  above, then
+     g['a']  returns  {'b': 1, 'c': 3} ; and
+     g['a','b']  returns  1 .
+    But atempting  g['x']  and  g['a','d']  raise exceptions, because
+       'x'  (in the first case) is not a node, and  ('a','d')  (in
+       the second case) is not an edge in the graph.
+     
+   Note that writing  g['a','b']  is the same as writing 
+      g[('a','b')] : Python turns the  'a','b'  in the  [] 
+     brackets into a  2-tuple .
+  
+
+   Define a  __setitem__  method as follows (with  item  and
+    value  parameters): be careful to access
+      the outer/inner- dict  only for legal keys.
+     
+       If the  item  parameter is a 2- tuple  specifying an
+            origin node  and  destination node  (as  str s),
+           set the appropriate outer/inner- dict  so that the  edge 
+           going from the  origin node  to the  destination node 
+           stores the  value  parameter.
+        If there is no such  edge , add it; if there already is such
+           an  edge , update its  edge value  it to the  value 
+           parameter.
+         
+         IMPORTANT : if the  destination node  is NOT already a key
+          in the outer- dict , make it a key that associates with an empty
+           dict ; doing so guarantees that ALL nodes in the  Graph ,
+          even those that are are not  origin nodes  for  edges ,
+          always appear as keys in the outer- dict .
+      
+       If the  item  parameter is anything else, or if the  value 
+           is not legal as an  edge value  in that graph, raise a
+            GraphError  exception with an appropriate message.
+      
+   For example, if  g  refers to the original  Graph  above, then
+     g['a','f'] = 5  would result in the following outer/inner- dict 
+  
+  {'a': {'b': 1, 'c': 3, 'f': 5}, 'b': {'a': 2}, 'c': {}, 'd': {'b': 2, 'c': 1}, 'e': {}, 'f': {}}  
+Note the addition of  'f': 5  in  a 's inner- dict  and the
+  addition of  f: {}  to the outer- dict .
+Now,  str(g)  would print as
+  
+  Graph:
+    a: b(1), c(3), f(5)
+    b: a(2)
+    c: 
+    d: b(2), c(1)
+    e:
+    f:   
+  
+After you write  __setitem__ , I suggest that you review your
+       __init__  method, and simplify it by making appropriate use of
+      __setitem__ .
+  
+
+   Define a  node_count  method that returns the number of  nodes 
+      in the  Graph .
+    For example  g.node_count()  of the original  Graph  above is
+       5 .
+ 
+
+   Define a  __len__  method that returns the number of  edges  (not
+      nodes ) in the  Graph .
+    For example the  len  of the original  Graph  above is  5 
+      because it has  5  edges ( a  to  b ,  a  to  c ,
+       b  to  a ,  d  to  b , and  d  to  c ).
+ 
+
+   Define an  out_degree  method that takes a  node  as a
+      parameter: it returns the number of  edges  for which this
+       node  is an  origin node .
+    If the node is not a  str , or it not in the  graph , raise a
+       GraphError  exception with an appropriate message.
+     
+    For example, in the original  Graph  above,  g.out_degree('a') 
+      returns  2 ,  g.out_degree('c')  returns  0 , and
+       g.out_degree('x')  raises a  GraphError  exception.
+  
+
+   Define an  in_degree  method that takes a  node  as a
+      parameter: it returns the number of  edges  for which this
+       node  is a  destination node .
+    If the node is not a  str , or it not in the  graph , raise a
+       GraphError  exception with an appropriate message.
+     
+    For example, in the original  Graph  above,  g.in_degree('c') 
+      returns  2 ,  g.in_degree('d')  returns  0 , and
+       g.in_degree('x')  raises a  GraphError  exception.
+  
+
+   Define a  __contains__  method (with  item  parameter) so that
+      the  in  operator returns whether or not  item  is in the
+       Graph .
+     
+       If the  item  parameter is a  str , return  True  if it
+          is a  node  in the  Graph , otherwise  False ;
+          remember that all nodes should be keys in the outer- dict .
+     
+       If the  item  parameter is a 2- tuple  specifying an
+            origin node  and  destination node   (as  str s),
+           return  True  if there is an edge in the  Graph  going
+           from the  origin node  to the  destination node 
+           (regardless of its  edge value ), otherwise return  False .
+     
+       If the  item  parameter is a 3- tuple  specifying an
+            origin node ,  destination node   (as  str s)
+           and  edge value  (legal according to the predicate passed to
+            __init__ , return  True  if there is an edge in the
+            Graph  going from the  origin node  to the
+            destination node  WITH THAT  edge value , otherwise
+           return  False .
+     
+       If the value to check is anything else, raise a  GraphError 
+          exception with an appropriate message.
+      
+    For example, if  g  refers to the original  Graph  above, then
+     'a' in g  returns  True , but
+       'x' in g  returns  False ;
+    also,  ('a','b') in g  returns  True , but
+       ('e','b') in g  returns  False ;
+    finally,  ('a','b',1) in g  returns  True  and, but
+       ('a','b',2) in g  returns  False , and
+       ('e','b',1) in g  returns  False .
+  
+
+   Define a  __delitem__  method as follows (with  item  parameter):
+      be careful to access the outer/inner- dict  only for legal keys.
+     
+       If the  item  parameter is a  str , treat it as an
+            node ; if this  str  is a key in the outer- dict 
+         
+           Delete that key  origin node  from the outer- dict .
+           
+             Delete that key from every inner- dict  in which
+                it is a  destination node .
+           
+        The result of  __delitem__  is that the  node  specified by
+           the  item  parameter does not appear anywhere in the graph: 
+           nowhere in the outer/inner- dict .
+        If this  str  is NOT a  node  in the  Graph , do
+          nothing.
+          
+        For example, if  g  (on the left) refers to the original
+           Graph  above, then
+           del g['x']  would do nothing (there is no node  x ),
+          but  del g['b']  would change the graph to the one on the right.
+  
+            
+   
+        Now node  b  is deleted: it is not the  origin node  for any
+          edges and it is not the  destination node   of any edges.
+        The outer/inner- dict  of  g  would be
+  
+  {'a': {'c': 3}, 'c': {}, 'd': {'c': 1}, 'e': {}}
+  
+        Now  str(g)  would print as
+  
+  Graph:
+    a: c(3)
+    c: 
+    d: c(1)
+    e:   
+  
+       If the  item  parameter is a 2- tuple  specifying an
+           origin node  and  destination node   (as  str s),
+          and that  edge  is in the  Graph , delete only that one
+           edge  from the  Graph ;
+        in this case, do NOT delete any keys from the outer-dict.
+        If this 2- tuple  is NOT an  edge  in the  Graph , do
+          nothing.
+     
+        For example, if  g  (on the left) refers to the original
+           Graph  above, then
+           del g['a','e']  would do nothing (there is no edge from
+           a  to  e ), but
+           del g['a','b']  would change the graph to the one on the right.
+  
+            
+   
+           The  edge  going from  origin node a  to
+               destination node b  is deleted from the  Graph .
+        The outer/inner- dict  of  g  would be
+  
+  {'a': {'c': 3}, 'b': {'a': 2}, 'c': {}, 'd': {'b': 2, 'c': 1}, 'e': {}}
+  
+        Now  str(g)  would print as
+  
+  Graph:
+    a: c(3)
+    b: a(2)
+    c: 
+    d: b(2), c(1)
+    e:   
+  
+       If the  item  parameter is anything else, raise a  GraphError 
+           exception with an appropriate message.
+      
+
+   Define a  __call__  method (with  d  parameter) as follows:
+     
+       If the  d  parameter is a  str  that is a  node  in
+           the  Graph , treat it as a  destination node  and return a
+            dict  of all  origin nodes  and  edge values  for
+           that  destination node  in the  Graph .
+        Note: this information is  not stored explicitly  in the
+            Graph , but  must be computed .
+         
+        For example, if  g  refers to the original  Graph  above, then
+            g('c')  returns the  dict {'a': 3, 'd': 1} , which
+           includes the two  edge values  for  origin nodes  leading
+           to  destination node c .
+        Calling  g('d')  returns the  dict {} , because  d  is
+           a  node  in the  Graph , but it is not the
+            destination node  of any  edge .
+      
+       If the  d  parameter is anything else, or is a  str  that
+          is NOT a  node  in the  Graph , raise a  GraphError 
+           exception with an appropriate message.
+         
+        For example, if  g  refers to the original  Graph  above, then
+          calling  g(1)  or  g('x')  raises an exception.
+       
+   Note:  g['a']  returns a  dict  of all  destination nodes 
+     and the  edge values  starting at  origin node a , while
+      g('a')  returns a  dict  of all  origin nodes  and the
+      edge values  ending at  destination node a .
+  
+   Define a  clear  method that is parameterless.
+It removes all  node  and  edge values  from the graph.
+
+ 
+   Define a  dump  method that has 3 parameters
+    a text file already open for writing information into it
+      a separation string (see below), whose default value is  ':' 
+      a function that converts an edge value to its string equivalent, whose
+          default value is the  str  function
+     
+  This method prints one line for every node in the graph: on that line it
+    prints the node and all the destination nodes (and the edge value of each),
+    with the separation string between all the values.
+  The nodes that appear at the start of each line must occur in alphabetical
+    order, and the destination nodes in each line must occur in alphabetical
+    order as well.
+  For example, if  g  refers to the original  Graph  above, then
+    calling  g.dump(open('g.txt')  or  g.dump(open('g.txt'),':',str) 
+    would result in the file  g.txt  storing
+  
+a:b:1:c:3
+b:a:2
+c
+d:b:2:c:1
+e
+  
+Note the alphabetical ordering of the nodes at the start of each line, and of
+  the destination nodes appearing afterward in each line.
+Finally,  dump  closes the file after dumping the graph into it.
+  
+
+   Define a  load  method that has 3 parameters
+    a text file already open for reading information out of
+      a separation string (see below), whose default value is  ':' 
+      a function that converts a string into its equivalant edge value, whose
+          default value is the  int  function
+     
+  This method is the opposite of  dump : it reads a file in the form
+    specified by  dump  and recreates the graph  dump  was called on.
+  It closes the file after loading it.
+  
+
+   Define a  reverse  method that returns a new graph (and does not
+       mutate the argument graph) that has the same nodes and edge values, but
+       the direction of each edge reverses, by exchanging its origin and
+       destination nodes.
+    For example, if  g  refers to the original  Graph  above, then
+        g.reverse()  would be the graph.
+ 
+   
+And  str(g.reverse())  would print as
+  Graph:
+  a: b(2)
+  b: a(1), d(2)
+  c: a(3), d(1)
+  d: 
+  e:  
+  
+
+   Define a  natural_subgraph  method that takes any number of argument
+       (each of which is a string): it returns a new graph (and does not
+       mutate the argument graph) that has only the nodes specified as
+       arguments, and only the edges in the original graph that connect these
+       nodes.
+    For example, if  g  refers to the original  Graph  above, then
+        g.natural_subgraph('a','b','c')  would be the graph.
+ 
+   
+And  str(g.natural_subgraph('a','b','c'))  would print as
+  Graph:
+  a: b(1), c(3)
+  b: a(2)
+  c:  
+If any of the arguments are not  str s, raise a  GraphError 
+  exception with an appropriate message.
+Note that the arguments are not required to name nodes in the graph (if they
+  don't, just ignore them), but they must be strings (or else the
+   GraphError  exception  is raised).
+  
+
+   Define an  __iter__  method so that each call to  next  produces
+      either (a) a 3- tuple  (containing  origin node ,
+       destination node ,  edge value  triplets) or (b) just a
+       str ; such that the  origin nodes / str s are produced in
+      ascending order, and for each  origin node  its
+       destination nodes  are produced in ascending order.
+    Note: A  node  is produced as just a  str  if it is not the
+       origin node  or  destination node  of any  edge .
+     
+    For example, iterating over the original  Graph  above produces the
+       3- tuple s in the following order:  ('a', 'b', 1) ,
+        ('a', 'c', 3) ,  ('b', 'a', 2) ,  ('d', 'b', 2) ,
+        ('d', 'c', 1) , and finally  'e'  (the alphabetically last
+        node  which is not an  origin node  or  destination node 
+       for any  edge ).
+  
+
+   Define the  ==  and  !=  operators ( __eq__  and
+     __ne__  methods) for comparing two  Graph s.
+    We define the meaning of  g1 == g2  as  g1  contains exactly the
+      same nodes and edges as  g2 .
+    The  !=  operator means the opposite of that: some nodes or edges
+      are different.
+ 
+
+   Define the  &lt;=  operator ( __le__  method) for comparing two
+       Graph s.
+    We define the meaning of  g1  as  g1 is a subgraph of
+      g2 , which means that
+      All the  nodes  in  g1  are in  g2 .
+      All the  edge values  in  g1  ( origin node ,
+          destination node , and  value ) are in  g2 .
+        
+    So, for example any  Graph g ,  g  evaluates to  True .
+       
+    If  g1 's  dict  is  {'a': {'b': 1}, 'b': {'a': 2}}  and
+       g2 's  dict  is
+       {'a': {'b': 1, 'c':3}, 'b': {'a': 2}, 'c': {}}  then 
+       g1  evaluates to  True : both nodes in  g1  are in
+          g2 , and both edges in  g1  are in  g2 .
+   
+
+   Define the  +  operator for adding two  Graph s or for adding a
+       Graph  to a  str  (a  node ) or a 3- tuple 
+      (containing an  origin node ,  destination node ,
+        edge value  triplet).
+    Note, adding always produces a new  Graph  without changing any operand
+       Graphs .
+     Hint : copy the left-operand  Graph ,  add  the information
+      specified below to it, and return it.
+     
+       If both arguments are  Graph s, then the returned  Graph 
+          should contain all the  nodes  and   edge values  from each
+           Graph : if the two  Graph s have the same  edge  with
+          a different  value , the returned  Graph  should have the
+           value  from the left-operand  Graph  for this  edge .
+     
+       If one argument is  str , then the returned  Graph  should
+          contain all the  nodes  and  edge values  from the
+           Graph , updated to include the  node  specified by the
+           str : if the  node  is already in the result, don't change
+          anything; if it isn't in the result, add it as a key in the
+          outer- dict  and associate it with an empty inner- dict .
+     
+        For example, if  g  refers to the original  Graph  above, then
+           g + 'x'  or  'x' + g  would return the  Graph 
+  
+  {'a': {'b': 1, 'c': 3}, 'b': {'a': 2}, 'c': {}, 'd': {'b': 2, 'c': 1}, 'e': {}, 'x': {}}
+  
+It is almost the same, with only the new  node x  now appearing in the
+   Graph .
+      
+       If one argument is 3- tuple , then the returned  Graph  should
+          contain all the  nodes  and  edge values  from  Graph ,
+          updated by the 3- tuple : either including a new
+           edge value  or updating an  edge value  already in the
+          graph.
+         
+        For example, if  g  refers to the original  Graph  above, then
+           g + ('a','c',5)  or  ('a','c',5) + g  would return the
+           Graph 
+  
+  {'a': {'b': 1, 'c': 5}, 'b': {'a': 2}, 'c': {}, 'd': {'b': 2, 'c': 1}, 'e': {}}
+  
+It is almost the same, with only the  edge value  from  origin node 
+  a  to  destination node c  changing from  3  to  5 .
+  
+   For any other arguments, raise the  GraphError  exception with an
+       appropriate message.
+   
+
+   Define a  +=  operator ( __iadd__  method) that works like
+       +  but updates/mutates the graph on the left.
+    That is,  g+='x'  produces the same result as  g = g+'x' 
+      but does it without constructing a new  Graph : it just
+      updates/mutates  g .
+    Do not use the  +  operator (but its body will look simlar to what
+      you wrote for  + ).
+ 
+
+   Define a  __setattr__  method so that it ensures objects in the
+       Graph  class cannot store new attributes or rebind old attributes.
+    The methods you will write should never bind any instance names
+       (except in   __init__ ).
+    If an attempt is made to add new attributes to a  Graph  object (by
+      defining a new attribute or rebinding an existing attribute), raise an
+       AssertionError  with an appropriate message.
+     
+    Do not attempt to solve this part of the problem until all other parts
+      are working correctly.
+    If you fail to solve this part correctly comment out this method so that
+      the other batch self-check tests pass.
+    
+
+  Testing 
+The  graph.py  module includes a script that does some simple
+   Graph  manipulations and then calls  driver.driver() .
+The project folder contains a  bsc1.txt  file (examine it) to use for
+   batch-self-checking your class.
+These are rigorous but not exhaustive tests.
+Incrementally write and test your class: writing some methods may create a
+  pattern you can reuse for the others.
+ 
+Note that when exceptions are raised, they are printed by the driver but the 
+   Command:  prompt sometimes appears misplaced.
+  
+You can also test code you type into the driver as illustrated below; but if you
+  want to perform the same test over and over again when debugging, it is
+  better to put this code in the script before the driver is called.
+Notice the default for each command (printed in the square brackets) is the
+  command previously entered.
+    Driver started
+  Command[!]: Driver started
+  Command[!]: from graph import Graph
+  Command[from graph import Graph]: g = Graph( (lambda x : type(x) is int),
+                                       ('a','b',1),('a','c',3),('b','a',2),
+                                       ('d','b',2),('d','c',1),'e')
+  Command[g = Graph( (lambda x : type(x) is int), ...)]: print(g)
+  Graph:
+    a: b(1), c(3)
+    b: a(2)
+    c:
+    d: b(2), c(1)
+    e:
+  Command[print(g)]: g['a']
+  Command[g['a']]: print(g['a'])
+  {'c': 3, 'b': 1}
+  Command[print(g['a'])]: print(g('c'))
+  {'a': 3, 'd': 1}
+  Command[print(g('c'))]: print(g.reverse())
+  Graph:
+    a: b(2)
+    b: a(1), d(2)
+    c: a(3), d(1)
+    d:
+    e:
+  Command[print(g.reverse())]: quit
+  Driver stopped  
+  
+   </body> 

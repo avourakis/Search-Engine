@@ -1,0 +1,276 @@
+ Layered Graph Drawing<body>
+ 
+     
+
+  Layered Graph Drawing 
+ 
+
+ A planar graph is one that can be drawn in the plane with no
+crossing edges. Planar graphs have been investigated for a long
+time, and it is known (Fáry's theorem) that any planar graph
+can be drawn in such a way that all edges are straight line
+segments. 
+
+ But what can you do when a graph is not planar? I and my co-authors
+have been studying drawings in which the edges are grouped into layers
+(shown here as colors) such that no two edges in the same layer
+cross. It turns out (unlike for planar graphs) that it makes a
+difference whether you require the edges to be straight line
+segments. The minimum number of layers in a drawing, if you allow curved
+edges, is a well studied concept known as the  thickness  of the
+graph. The minimum number of layers in a drawing with straight edges is
+a less well studied concept which we call the  geometric
+thickness.  
+
+ Complete Graphs 
+
+ The following drawing shows that the geometric thickness of the
+complete graph on twelve vertices (K 12 ) is at most
+three: 
+
+    
+
+ The central hexagon of this drawing is a little hard to see, so
+here is a closer view: 
+
+    
+
+ The pattern used for this drawing can be generalized to show that,
+for any n, the graph K n  can be drawn in at most ceiling(n/4)
+layers [Eppstein et al, JGAA 2000]. We also have a lower bound that at
+least n/5.646 layers are needed. Since K n  is known to have
+n/6-layer drawings with curved edges, this lower bound shows that
+geometric thickness is not the same concept as thickness. 
+
+ The following table shows what we know about lower bounds and
+upper bounds for the number of layers required for complete graphs
+K n . 
+
+ 
+   n 
+ 1 - 4 
+ 5 - 8 
+ 9 - 12 
+ 13 - 14 
+ 15 - 16 
+ 17 - 20 
+ 21 - 24 
+ 25 - 26 
+ 27 - 28 
+ 29 - 31 
+ 32 
+   lower bound 
+ 1 
+ 2 
+ 3 
+ 3 
+ 4 
+ 4 
+ 5 
+ 6 
+ 7 
+   upper bound 
+ 4 
+ 5 
+ 6 
+ 7 
+ 8 
+   
+
+ Subdivisions of Complete Graphs 
+
+ If one splits each edge of a complete graph (or any other graph) into
+a two-edge path, the resulting subdivided graph has geometric thickness two.
+The following picture shows a drawing for K 8 : 
+
+   
+
+ Interestingly, a Ramsey-theoretic argument shows that the book
+thickness of subdivisions of K n  is not bounded by any constant.
+So, there are graphs with geometric thickness two and arbitrarily large
+book thickness [Eppstein, 2001].  A very similar Ramsey-theoretic
+argument, applied to graphs
+formed by starting with n points and adding a new point adjacent to each
+triple of the n points, shows that there are also graphs with thickness
+three and arbitrarily large geometric thickness [Eppstein,
+Contemp. Math. 2004]. 
+
+ Complete Bipartite Graphs 
+
+ In our JGAA 2000 paper
+we also investigated the geometric thickness of complete bipartite
+graphs.  When a is much smaller than b, the geometric thickness of
+K a,b  is just a/2, but complete bipartite graphs in which both
+sides are of nearly equal size are more interesting.  For
+instance, here is a two-layer drawing of the complete bipartite
+graph K 6,6 : 
+
+   
+
+ K 1,n  and K 2,n  are planar (one layer), and
+K 3,n  and K 4,n  always require exactly two
+layers, so the first nontrivial cases are K 5,n  and
+K 6,n . K 5,n  requires two layers for
+n  &lt;  8 and three layers for n  &gt;  11.
+For 9  &lt;  n  &lt;  10 we don't
+know whether two or three layers are needed. A drawing of
+K 5,8  is below.  K 6,n 
+requires three layers for n  &gt;  8. For
+K 6,7  we don't know whether two or three layers are
+needed. 
+
+   
+
+ Hypercubes 
+
+ Below we show a two-layer drawing of a six-dimensional hypercube.
+More generally the d-cube has geometric thickness at most
+ceiling(d/3) [Eppstein, GD 2004]. 
+
+   
+
+ Minor-Closed Graph Families 
+
+Blankenship and Oporowski [2001,2003] showed that all proper
+minor-closed graph families have bounded book thickness.
+Therefore, they also have bounded geometric thickness.
+
+ Low Degree Graphs 
+
+ Graphs with maximum degree up to four require geometric
+thickness at most two [Duncan et al., SCG 2004].  How does the geometric
+thickness behave for bounded degree graphs with higher degree bounds?
+Some progress has been made by [Dujmović et al., GD 2004] who
+showed that the geometric thickness is O(1) for bounded-degree interval
+graphs, co-comparability graphs, and AT-free graphs, and that it is
+O(log n) for bounded-degree bounded-treewidth graphs. Duncan [CCCG
+2009] showed that the geometric treewidth is also O(log n) for
+graphs that can be decomposed into the union of two bounded-treewidth
+graphs, without degree restrictions. 
+
+ However, Barát, Matoušek, and Wood [math.CO/0509150]
+have shown that larger constant bounds on degree need not imply bounded
+thickness for arbitrary graphs.  In particular, they use counting
+arguments to prove the existence of
+Δ-regular graphs for any Δ &gt; 8 with geometric thickness
+Ω(n c ) for some c &gt; 0, where c depends on
+Δ and approachs 1/2
+in the limit of large Δ. 
+
+ Computational complexity 
+
+For arbitrary graphs, testing whether the graph has thickness k is
+NP-complete, even for k=2 [Mansfield, MPCPS 1983].  Testing the
+geometric thickness of a particular drawing is polynomial time for
+thickness two but NP-complete for higher thickness [Eppstein, SODA
+2004]. Recognizing whether a graph has geometric thickness two is also
+NP-complete, as is coloring graphs of geometric thickness  t 
+with 4 t  − 1 colors [Durocher, WG 2013].
+
+
+ Open Problems 
+
+  The complete graphs K n  should require a number of
+layers of the form c*n, for some constant c. What is c? 
+
+ Similarly, what is the asymptotic number of layers needed for
+K n,n ? 
+
+ If a multi-layer drawing of a graph is made in which all the
+vertices have integer coordinates, how big do those integers need
+to be? (For planar graphs, it is known that all coordinates can be
+O(n).) 
+
+ How large can the ratio between thickness and book thickness of a graph be,
+as a function of the number of vertices in the graph?
+Similarly how large can the ratio between geometric thickness and
+thickness be?
+The examples of Barát, Matoušek, and Wood [math.CO/0509150]
+show that this ratio can at least approach sqrt n. 
+
+ What happens if we allow restricted types of curves other than
+straight line segments?  For instance, Wood [ENDM 2001] has looked at
+thickness for curves with one bend that are allowed to change layers at
+the bend. What if the curves can bend in a restricted way but can't
+change layers?
+
+  Hutchinson et al. proved that the number of edges of a  n -vertex
+graph with geometric thickness two is at most
+6 n  − 18.
+However, the largest number of edges that is known for an example of
+such a graph is
+6 n  − 19 (for all  n  at least 9, by Durocher
+et al.) Which of these two is the correct bound?
+
+  Determining the chromatic number of thickness-two graphs is Ringel's
+famous  Earth-Moon
+problem .  What about the chromatic number of graphs with low
+geometric thickness?
+The best lower bound for Ringel's problem comes from the graph
+K 6 +C 5 , which has thickness two and requires nine
+colors; however this graph has 50 edges, violating a 6n-18 upper bound
+on the number of edges of a geometric thickness two graph due to
+Hutchinson et al.
+Is there a different nine-chromatic graph with geometric thickness two?
+   References 
+
+ J. Barát, J. Matoušek, and D. R. Wood.  Bounded-degree graphs have arbitrarily large geometric thickness.   arxiv.org,
+math.CO/0509150 , 2005. 
+
+ L. W. Beineke.  Biplanar graphs: a survey.   Graph theory in computer science, chemistry, and other
+fields,  Las Cruces, New Mexico, USA, 1991.  Comput. Math. Appl.  34(11):1-8, 1997. 
+
+ R. Blankenship.  Book Embeddings of Graphs.  
+Ph. D. thesis, Louisiana State Univ., Dept. of Mathematics, 2003. 
+
+ R. Blankenship and B. Oporowski.  Book embeddings of graphs and minor-closed classes.  
+Proc. 32nd Southeastern International Conf. on Combinatorics, Graph
+Theory and Computing, 2001. 
+
+ M. B. Dillencourt, D. Eppstein, and D. S. Hirschberg.  Geometric thickness of complete graphs.   6th Int. Symp. Graph Drawing,  Montréal,
+1998.  Lecture Notes in Comp. Sci.  1547, pp. 102-110, 1998.  arXiv:math.CO/9910185 .   J. Graph
+Algorithms and Applications  4(3):5-17, 2000 . 
+
+ C. Duncan.  On graph thickness, geometrick thickness, and separator theorems.   Proc. 21st Canad. Conf. Comput. Geom., Vancouver, 2009, pp. 13-16 . 
+
+ C. Duncan, D. Eppstein, and S. Kobourov.  The geometric thickness of low degree graphs.   arXiv:cs.CG/0312056 .  20th ACM Symp. Comp. Geom.,  Brooklyn, 2004, pp. 340-346. 
+
+ V. Dujmović, M. Suderman, and D. R. Wood.  Really straight graph drawings.  
+Proc. 12th Int. Symp. Graph Drawing, New York, 2004.  arXiv:cs.DM/0405112 . 
+
+ S. Durocher, E. Gethner, and D. Mondal.  Thickness and Colorability of Geometric Graphs.   Proc. 39th International Workshop on Graph-Theoretic Concepts in
+Computer Science, 2013 . 
+
+ D. Eppstein.  Separating geometric thickness from book thickness.   arXiv:math.CO/0109195 . 
+
+ D. Eppstein.  Separating thickness from geometric thickness.   arXiv:math.CO/0204252 . 
+10th Int. Symp. Graph Drawing, Irvine, 2002.  Lecture Notes in Comp. Sci.  2528, 2001, pp. 150-161. 
+In  Towards a Theory of Geometric Graphs , AMS, Contemporary
+Math 342, J. Pach, ed., pp. 75-86, 2004. 
+
+ D. Eppstein.  Testing bipartiteness of geometric intersection graphs.  
+Proc. 15th Symp. Discrete Algorithms, New Orleans, pp. 853-861, 2004.  arXiv:cs.CG/0307023 .   ACM Trans. Algorithms  5(2):15, 2009 . 
+
+ D. Eppstein.  Algorithms for drawing media.  
+Proc. 12th Int. Symp. Graph Drawing, New York, 2004.  arXiv:cs.DS/0406020 . 
+
+ J. P. Hutchinson, T. Shermer, and A. Vince.  On representation of some thickness-two graphs.   3rd Int. Symp. Graph Drawing,  Passau, Germany, 1995.  Lecture Notes in Comp. Sci.  1027, pp. 324-332, 1995.  Computational Geometry: Theory and Applications  13(3):161-171, 1999. 
+
+ P. C. Kainen.  Thickness and coarseness of graphs.   Abhandlungen aus dem Mathematischen Seminar der Univ.
+Hamburg  39:88-95, 1973. 
+
+ A. Mansfield.  Determining the thickness of a graph is NP-hard.   Math. Proc. Cambridge Phil. Soc.  93(9):9-23, 1983. 
+
+ P. Mutzel, T. Odenthal, and M. Scharbrodt.   The
+thickness of graphs: a survey.    Graphs Combin.  14(1):59-73, 1998. 
+
+ D. R. Wood.  Geometric thickness in a grid of linear area.    Proc.
+Euroconf. Combinatorics, Graph Theory, and Applications, 
+pp. 310-315, 2001.   
+Electronic Notes in Discrete Mathematics 10, 2001 . 
+
+  
+From the  Geometry Junkyard ,
+computational and recreational geometry.  David Eppstein ,  Theory Group ,  ICS ,  UC
+Irvine . 
+</body> 

@@ -1,0 +1,68 @@
+ user.websites.chimera2.concepts.attributes<body>
+
+     Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+     
+
+  Attributes  
+
+ Attributes consist of a name and a value both stored as strings. They
+can be attached to any of Chimera's hypermedia concepts. Typically, viewers
+use the attribute mechanism to store application-specific information with
+a concept to manipulate at a later time. This frees the viewer from having
+to store this information separately. 
+
+ For instance, links and anchors can be named by associating a  Name 
+attribute with them. The name can then be used to display the concept in
+lists in a more user-friendly manner. Another example, is using attributes
+on anchors to store the information needed to reconstruct them for a particular
+view. For instance, a rectangle on an image can be recreated if its top-left
+and bottom-right coordinates are stored as attributes on the anchor which
+represents the rectangle. 
+
+ Developer Information 
+
+ The available operations on attributes are listed below. The type  concept 
+used in the table below indicates that these operations are available on
+all of the previous hypermedia concepts (viewers, objects, views, anchors,
+and links). For more information see the  on-line
+documentation . 
+
+       clearAttributes(concept)  
+ Deletes all attributes associated with the specified concept.     deleteAttribute(concept, String)  
+ Deletes the named attribute from the specified concept.     getAttribute(concept, String)  
+ Returns the value of the named attribute associated with the specified concept.     getAttributes(concept)  
+ Returns all of the attributes associated with the specified concept.     numberOfAttributes(concept)  
+ Returns the number of attributes associated with the specified concept.     setAttribute(concept, attribute) 
+setAttribute(concept, String, String)  
+ Sets the specified attribute on the specified concept. The latter operation
+avoids the creation of an attribute object by allowing the developer to
+specify the name and value of the attribute directly. If the attribute already
+exists on the concept, its value is updated with the new information supplied
+by these operations.     setAttributes(concept, attributes)  
+ Associates the specified set of attributes with the specified concept. As
+with the previous operations, if an attribute is already specified, the
+new information contained in the list replaces the previous value of the
+attribute.    
+
+      Local Site Map 
+   Overview  
+  Viewers  
+  Objects      Views  
+  Anchors  
+  Links      Attributes  
+  Clients  
+  Hyperwebs     
+
+  This page is part of the  Chimera 
+web site. 
+Send feedback and questions to  Ken
+Anderson . 
+ </body> 

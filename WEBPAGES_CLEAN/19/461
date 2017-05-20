@@ -1,0 +1,27 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 11 Jun 1997
+//
+// Bit manipulation
+//
+// We represent Fanorona positions using two bitboards (64-bit longs)
+// one for the pieces of each player.  The bits in the bitboard form
+// six 10-bit groups: an empty group followed by one for each row of the board.
+// Each row has an empty bit followed by a bit for each position in the row.
+// The empty bits help avoid extra range checking while finding captures.
+//
+// The top four bits are free for other purposes; we use one
+// to determine which color pieces are on each side, and one to determine
+// whether the side on move's most recent move was a capture.
+//
+// This class is not instantiable; instead it consists of constants
+// for various board configurations, used in game setup, move generation,
+// and evaluation.
+
+public abstract class Bits {
+	public static final long IS_WHITE = 0x4000000000000000L; // 1L &gt;&gt; 1) &amp; ONES;
+		set = (set &amp; TWOS) + ((set &gt;&gt;&gt; 2) &amp; TWOS);
+		int result = (int) set + (int) (set &gt;&gt;&gt; 32);
+		return (((result &amp; FOURS) + ((result &gt;&gt;&gt; 4) &amp; FOURS)) * 0x01010101) &gt;&gt;&gt; 24;
+	}
+}
+ 

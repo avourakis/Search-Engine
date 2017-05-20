@@ -1,0 +1,114 @@
+ CS 295--Run-time Techniques for Efficient and Reliable Program Execution 
+
+ 
+
+   Useful
+resource    :     
+
+   More
+information will be added as the class progresses    .     
+
+   Pointer
+Help!       
+
+    Everything
+     you need to know about pointers video     
+    A tutorial on
+     pointers and C  -  Def  need for pointer
+     arithmetic    
+          
+
+   C and C++
+Tutorials       
+
+    C++
+     Tutorial     
+    C
+     Tutorial     
+    C++
+     FAQ lite     
+    C++
+     Function Pointer Tutorial     
+   You can always mix C and C++.    
+    CDECL  - C gibberish to   english  !    
+          
+
+   Where do I
+find the x86 instruction set?       
+
+    At intel.com.
+     Volume 2a and 2b.     
+          
+
+    JVM
+Spec?        
+
+    VM
+     Spec here.     
+          
+
+   Calling
+Conventions       
+
+    Wikipedia -
+     CDECL     
+    Wikipedia
+     - Call Stack     
+          
+
+   Binary File
+Format spec:       
+
+   [magic numbers - 0xABCDEEFF]    
+   [number of constant pool entries -  int ]    
+   [constant pool * size for each entry] - This is not in
+     the actual .out file. Just a logical order of what needs to happen next.    
+   [Each constant pool entry - CP_NONE (0) | CP_INT (1) |
+     CP_METHOD(2)] - | means OR    
+   [CP_NONE - 1 byte]    
+   [CP_INT -  int ]    
+   [CP_METHOD -  int  method name
+     length, then method name length * byte]    
+   [end constant pool - 0xAAAAAAAA] -  int     
+   [number of methods] -  int     
+   [the method begin to end method * number of methods] //
+     Not a real part of the .class file either. Just telling you how many times
+     you need to do this.    
+   [method begin marker - 0xBBBBBBBB] -  int     
+   [method name length] -  int     
+   [method name string] - char * name length    
+   [end method marker 0xFFFFFFFF] -  int     
+   [method  arg  count -  int ]    
+   [method local count -  int ]    
+   [ bytecode  length] -  int     
+   [ bytecodes ] - bytes *  bytecode  length    
+   [method end marker - 0xCCCCCCCC] -  int     
+   [... same * number of methods ]    
+   [0xDEADBEEF] - end file -  int     
+          
+
+   Software:       
+
+    0xED
+     hex editor  for OSX    
+     HxD  hex editor  for Windows    
+    Java Disassembler  and
+      BCEL  - Run via (java -jar dis.jar  TestFile.class . Needs BCEL in same directory)    
+    Disassembler.java 
+     if you want to modify the output of dis.jar     
+     Assert.h   and  Assert.cpp  - Assert implementation for
+     WINDOWS    
+     assert.h  
+     and  assert.cpp  - Assert for OSX / UNIX    
+    Opcodes.h  -
+     Definitions for JVM  Opcodes     
+     Registers.h  
+     -  Enum  for x86 Registers in their Assembler
+     order    
+    PerfomanceTest.java 
+     - Test how fast you can go!    
+        
+
+ 
+
+</body> 

@@ -1,0 +1,59 @@
+ 12.1 Cycle Membership<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12. Ring Processing 
+ Up:   12. Ring Processing 
+ Next:   12.2 Number of Ring 
+   
+
+
+  
+12.1 Cycle Membership 
+ 
+
+ 
+The simplest form of ring processing in OEChem is testing for
+ring/cycle membership,  i.e.  whether an atom or bond is in a ring or
+not.  The OEChem function OEFindRingAtomsAndBonds is used to determine which
+atoms and bonds are members of one or more cycles and which are acyclic.
+This function uses an efficient  O(n)  algorithm.  Once
+OEFindRingAtomsAndBonds has been called, an atom or bond can be tested
+for being in a ring by calling either the  OEAtomBase::IsInRing 
+or the  OEBondBase::IsInRing  methods respectively.
+
+  
+Because it is common to test IsInRing (or aromaticity) in user
+applications, the function OEFindRingAtomsAndBonds is called
+automatically by the high-level file I/O functions (including OEChem
+oemolistream iterators or OEReadMolecule).  However, whenever you modify
+a molecule by adding or deleting bonds, you'll need to call
+OEFindRingAtomsAndBonds.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12. Ring Processing 
+ Up:   12. Ring Processing 
+ Next:   12.2 Number of Ring 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

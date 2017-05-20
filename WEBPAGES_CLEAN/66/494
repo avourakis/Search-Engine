@@ -1,0 +1,590 @@
+ 
+NetModuleImpl
+<body>
+
+
+
+  
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+  
+ 
+Raccoon.NET 
+ 
+Class NetModuleImpl 
+ 
+java.lang.Object
+   java.rmi.server.RemoteObject
+       java.rmi.server.RemoteServer
+           java.rmi.server.UnicastRemoteObject
+                Raccoon.NET.NetModuleImpl 
+ 
+   All Implemented Interfaces:     NetModule , java.rmi.Remote, java.io.Serializable 
+    public class  NetModuleImpl  extends java.rmi.server.UnicastRemoteObject implements  NetModule      
+NetModuleImpl : The implementation of NetModule. You can modify
+ this class in order to modify the implementation of different 
+ search algorithms.
+  
+
+  
+    Author:  
+   Qi Zhong 
+  See Also:    Serialized Form     
+
+
+
+
+
+  
+     
+ Field Summary   
+    
+  int   
+    DEFAULT_PORT   
+
+ 
+            
+    
+  java.lang.String   
+    myNodeID   
+
+ 
+            
+    
+   NeighborList    
+    neighborList   
+
+ 
+            
+    
+   QueryEngine    
+    qe   
+
+ 
+            
+    
+   ResourceManager    
+    rm   
+
+ 
+            
+    
+   SearchEngine    
+    se   
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Constructor Summary   
+      NetModuleImpl  (java.lang.String nodeID,
+               NeighborList  theList) 
+
+ 
+            
+  
+ 
+
+
+  
+    
+ Method Summary   
+    
+   AttributeMappingAnswer    
+    callRmAttributeMapping  (java.lang.String nodeID,
+                        PVRelation  relation,
+                        PVSchema  resultSchema) 
+
+ 
+          call remote node to do the attribute mapping between 
+ remote node (resultSchema) and current node (relation) 
+    
+  void   
+    callRmCreateMapping  (java.lang.String targetNodeID,
+                    java.lang.String nodeID) 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    callRmGetNeighborInfo  (java.lang.String nodeID) 
+
+ 
+            
+    
+   NeighborList    
+    callRmGetNeighborList  (java.lang.String nodeID) 
+
+ 
+            
+    
+   PVNode    
+    callRmGetNodeInfo  (java.lang.String nodeID) 
+
+ 
+            
+    
+   QueryAnswer    
+    callRmQuery  (java.lang.String nodeID,
+             QueryCriteria  queryCriteria) 
+
+ 
+            
+    
+   SearchAnswer    
+    callRmSearch  (java.lang.String nodeID,
+              SearchCriteria  searchCriteria) 
+
+ 
+            
+    
+  void   
+    createMapping  (java.lang.String nodeID) 
+
+ 
+            
+    
+   PVInstance    
+    executeSFW  (java.lang.String nodeID,
+           java.lang.String sfwStmt) 
+
+ 
+            
+    
+  java.lang.String   
+    getID  () 
+
+ 
+            
+    
+  java.lang.String   
+    getNeighbor  (int index) 
+
+ 
+            
+    
+  int   
+    getNeighborNum  () 
+
+ 
+            
+    
+  void   
+    initNeighborList  () 
+
+ 
+            
+    
+   AttributeMappingAnswer    
+    rmAttributeMapping  ( PVRelation  relation,
+                    PVSchema  resultSchema) 
+
+ 
+          method called by the callRmAttributeMapping from another node. 
+    
+  void   
+    rmCreateMapping  (java.lang.String nodeID) 
+
+ 
+            
+    
+   PVInstance    
+    rmExecuteSFW  (java.lang.String sfwStmt) 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    rmGetNeighborInfo  () 
+
+ 
+            
+    
+   NeighborList    
+    rmGetNeighborList  () 
+
+ 
+            
+    
+   PVNode    
+    rmGetNodeInfo  () 
+
+ 
+            
+    
+   QueryAnswer    
+    rmQuery  ( QueryCriteria  queryCriteria) 
+
+ 
+            
+    
+   SearchAnswer    
+    rmSearch  ( SearchCriteria  searchCriteria) 
+
+ 
+            
+    
+  com.touchgraph.graphlayout.graphelements.GraphEltSet   
+    searchNeighbor  (java.lang.String nodeID) 
+
+ 
+            
+    
+  void   
+    setQueryEngine  ( QueryEngine  newQE) 
+
+ 
+            
+    
+  void   
+    setResourceManager  ( ResourceManager  newRM) 
+
+ 
+            
+    
+  void   
+    setSearchEngine  ( SearchEngine  newSE) 
+
+ 
+            
+    
+  void   
+    setupRmiServer  () 
+
+ 
+            
+  
+   
+    Methods inherited from class java.rmi.server.UnicastRemoteObject  
+    clone, exportObject, exportObject, exportObject, unexportObject  
+  
+   
+    Methods inherited from class java.rmi.server.RemoteServer  
+    getClientHost, getLog, setLog  
+  
+   
+    Methods inherited from class java.rmi.server.RemoteObject  
+    equals, getRef, hashCode, toString, toStub  
+  
+   
+    Methods inherited from class java.lang.Object  
+    getClass, notify, notifyAll, wait, wait, wait  
+  
+ 
+ 
+
+
+
+  
+     
+ Field Detail   
+     
+rm 
+ 
+public  ResourceManager   rm  
+        
+se 
+ 
+public  SearchEngine   se  
+        
+qe 
+ 
+public  QueryEngine   qe  
+        
+myNodeID 
+ 
+public java.lang.String  myNodeID  
+        
+neighborList 
+ 
+public  NeighborList   neighborList  
+        
+DEFAULT_PORT 
+ 
+public final int  DEFAULT_PORT  
+    See Also:    Constant Field Values      
+    
+ Constructor Detail   
+     
+NetModuleImpl 
+ 
+public  NetModuleImpl (java.lang.String nodeID,
+                      NeighborList  theList)
+              throws java.rmi.RemoteException 
+    
+    
+ Method Detail   
+     
+getNeighborNum 
+ 
+public int  getNeighborNum () 
+     
+    
+     
+setResourceManager 
+ 
+public void  setResourceManager ( ResourceManager  newRM) 
+     
+    
+     
+setSearchEngine 
+ 
+public void  setSearchEngine ( SearchEngine  newSE) 
+     
+    
+     
+setQueryEngine 
+ 
+public void  setQueryEngine ( QueryEngine  newQE) 
+     
+    
+     
+searchNeighbor 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  searchNeighbor (java.lang.String nodeID) 
+     
+    Parameters:    nodeID  - 
+   Returns:   java.util.Vector   
+     
+setupRmiServer 
+ 
+public void  setupRmiServer () 
+     
+    
+     
+createMapping 
+ 
+public void  createMapping (java.lang.String nodeID) 
+     
+    Parameters:    nodeID  -    
+     
+initNeighborList 
+ 
+public void  initNeighborList () 
+     
+    
+     
+rmGetNeighborInfo 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  rmGetNeighborInfo ()
+                                                                       throws java.rmi.RemoteException 
+     Specified by:     rmGetNeighborInfo   in interface   NetModule     
+    Returns:   java.util.Vector
+   Throws: 
+   java.rmi.RemoteException    
+     
+callRmGetNeighborInfo 
+ 
+public com.touchgraph.graphlayout.graphelements.GraphEltSet  callRmGetNeighborInfo (java.lang.String nodeID) 
+     
+    Parameters:    nodeID  - 
+   Returns:   java.util.Vector   
+     
+rmGetNodeInfo 
+ 
+public  PVNode   rmGetNodeInfo ()
+                     throws java.rmi.RemoteException 
+     Specified by:     rmGetNodeInfo   in interface   NetModule     
+    Returns:   PVNodeInfo
+   Throws: 
+   java.rmi.RemoteException    
+     
+callRmGetNodeInfo 
+ 
+public  PVNode   callRmGetNodeInfo (java.lang.String nodeID) 
+     
+    Parameters:    nodeID  - 
+   Returns:   PVNodeInfo   
+     
+rmQuery 
+ 
+public  QueryAnswer   rmQuery ( QueryCriteria  queryCriteria)
+                    throws java.rmi.RemoteException,
+                           java.sql.SQLException 
+     Specified by:     rmQuery   in interface   NetModule     
+    Parameters:    queryCriteria  - 
+   Returns:   QE.QueryAnswer
+   Throws: 
+   java.rmi.RemoteException 
+  java.sql.SQLException     
+     
+callRmQuery 
+ 
+public  QueryAnswer   callRmQuery (java.lang.String nodeID,
+                                QueryCriteria  queryCriteria)
+                        throws java.sql.SQLException 
+     
+    Parameters:    nodeID  -   queryCriteria  - 
+    Returns:   QE.QueryAnswer
+   Throws: 
+   java.sql.SQLException    
+     
+rmSearch 
+ 
+public  SearchAnswer   rmSearch ( SearchCriteria  searchCriteria)
+                      throws java.rmi.RemoteException 
+     Specified by:     rmSearch   in interface   NetModule     
+    Parameters:    searchCriteria  - 
+   Returns:   SE.SearchAnswer
+   Throws: 
+   java.rmi.RemoteException    
+     
+callRmSearch 
+ 
+public  SearchAnswer   callRmSearch (java.lang.String nodeID,
+                                  SearchCriteria  searchCriteria) 
+     
+    Parameters:    nodeID  -   searchCriteria  - 
+    Returns:   SE.SearchAnswer   
+     
+rmCreateMapping 
+ 
+public void  rmCreateMapping (java.lang.String nodeID)
+                     throws java.rmi.RemoteException 
+     Specified by:     rmCreateMapping   in interface   NetModule     
+    Parameters:    nodeID  - 
+   Throws: 
+   java.rmi.RemoteException    
+     
+callRmCreateMapping 
+ 
+public void  callRmCreateMapping (java.lang.String targetNodeID,
+                                java.lang.String nodeID) 
+     
+    Parameters:    targetNodeID  -   nodeID  -     
+     
+callRmAttributeMapping 
+ 
+public  AttributeMappingAnswer   callRmAttributeMapping (java.lang.String nodeID,
+                                                      PVRelation  relation,
+                                                      PVSchema  resultSchema) 
+  call remote node to do the attribute mapping between 
+ remote node (resultSchema) and current node (relation)
+ 
+     
+    
+      
+rmAttributeMapping 
+ 
+public  AttributeMappingAnswer   rmAttributeMapping ( PVRelation  relation,
+                                                  PVSchema  resultSchema) 
+  method called by the callRmAttributeMapping from another node.
+ it does the attributes mapping locally and return the result
+ 
+     Specified by:     rmAttributeMapping   in interface   NetModule     
+    
+      
+rmGetNeighborList 
+ 
+public  NeighborList   rmGetNeighborList ()
+                               throws java.rmi.RemoteException 
+     Specified by:     rmGetNeighborList   in interface   NetModule     
+    Returns:   NET.NeighborList
+   Throws: 
+   java.rmi.RemoteException    
+     
+callRmGetNeighborList 
+ 
+public  NeighborList   callRmGetNeighborList (java.lang.String nodeID) 
+     
+    Parameters:    nodeID  - 
+   Returns:   NET.NeighborList   
+     
+getNeighbor 
+ 
+public java.lang.String  getNeighbor (int index) 
+     
+    
+     
+getID 
+ 
+public java.lang.String  getID () 
+     
+    
+     
+executeSFW 
+ 
+public  PVInstance   executeSFW (java.lang.String nodeID,
+                             java.lang.String sfwStmt)
+                      throws java.sql.SQLException 
+     
+    Throws: 
+   java.sql.SQLException    
+     
+rmExecuteSFW 
+ 
+public  PVInstance   rmExecuteSFW (java.lang.String sfwStmt)
+                        throws java.sql.SQLException 
+     Specified by:     rmExecuteSFW   in interface   NetModule     
+    Throws: 
+   java.sql.SQLException    
+    
+  
+   
+  
+          Overview     
+          Package     
+       Class    
+          Use     
+          Tree     
+          Deprecated     
+          Index     
+          Help     
+     
+  
+ 
+ 
+    
+   PREV CLASS   
+ NEXT CLASS  
+  
+    FRAMES     
+   NO FRAMES     
+  
+    All Classes  
+ 
+
+  
+    
+  SUMMARY: NESTED |  FIELD  |  CONSTR  |  METHOD   
+  
+DETAIL:  FIELD  |  CONSTR  |  METHOD   
+    
+
+
+ </body> 

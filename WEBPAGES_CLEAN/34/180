@@ -1,0 +1,184 @@
+ The Schark Research Group<body>
+
+     Welcome to the Schark Research Group 
+ at the University of California, Irvine 
+ 
+
+      Principal Investigator 
+   Isaac D. Scherson  
+
+   Research Interests  
+
+ -Parallel Computing Architectures  
+-Operating Systems for Parallel Computers  
+-Parallel Algorithms  
+-Simulation Models  
+-Performance Evaluation
+ 
+
+  Research Associates 
+  Graduated Students 
+  PhD  
+Elisha Caspari
+ Sener Ilgan
+ David Kramer
+ Brian Alleyne
+ Peter Corbett
+ Raghu Subramanian
+ Chi-Kai Chien
+ Umesh Krishnaswamy
+ Veronica Reis
+ Luis Miguel Campos
+ Vara Ramakrishnan
+ Fabricio Silva 
+ David Wangerin
+ Shean T. McMahon
+ Daniel Valencia
+
+ M.S. 
+Sandeep Sen
+ Yiming Ma
+ Li-Wei Gary Chen
+ John  LastMinute  Zapisek 
+  
+  Current Students 
+Enrique Cauich
+ Richert Wang
+ John Duselis
+ Martin Pieters
+
+
+      Research Review and Current Research 
+Our group's research interests fall in the general areas of Parallel and Distributed computer architectures and concurrent computations and its applications. The research group is currently working on five main subjects: operating systems for parallel computers, interconnection networks, performance evaluation, parallel algorithms, simulation models, predictive parallelism, and resource management and discovery. 
+ Service Address Routing (SAR)  
+The idea behind SAR is that nodes are not aware of each other, but of functionality there is for them to use.
+Nodes do not explicitly send messages to each other, but instead request instances of a particular function (service) to be used.
+In this manner, addresses do not identify nodes directly, but rather identify types of services nodes can provide. 
+The intelligence related to finding and selecting which node will receive a service request (when there are multiple nodes capable of providing such service) is in the network.
+Although the network is envisioned as a single switching entity, a hierarchical, multi-module implementation is proposed for scalability purposed using the Least Common Ancestor Network (LCAN) as the interconnection design. 
+The LCAN architecture inherently provides fast simultaneous service discovery and redundancy, which increases performance and fault tolerance within the system.
+The paradigm has been shown to be feasible using a combination of hardware/firmware fabric that can efficiently perform the service name search necessary for discovery.
+The approach does not use the conventional DNS service and performs the equivalent of an associative, location independent search
+   The LCAN-embedded Hierarchical Service Directory is an embodiment of a SAR network. 
+We have shown the feasibility of this idea and also that it can be efficiently mapped to the amorphous GRID with highly desirable properties such as scalability, fault tolerance, and fully distributed operation. 
+    Other advantages, obtained in tightly coupled implementations where the switching network contains the resource management functionality for the cluster, are also present in loosely-coupled systems with systems in either software and/or hardware.
+  Transparent Remote Execution (TREx) 
+  TREx is an environment destined to use idle CPU cycles in a network to provide cost-effective, high-performance distributed computing.
+Typically, clerical stations are underutilized in an institutional network. 
+Processes from overloaded nodes on the network might utilize this idle computing power.
+TREx is a mechanism to federate lightly used stations to perform useful calculations. 
+Furthermore, TREx provides execution speedup, increases productivity, and can create a low-cost, high-performance cluster.
+   TREx allows programs to execute locally or remotely without user intervention with a properly administered workstation. 
+Process execution is transparent to the user and remote execution appears as if it was done locally. 
+We refer to a set of participating computers as a Federated Cluster of Workstations. 
+TREx consists of three components: the first one is a daemon that will subscribe itself to the federated cluster if the computer is underutilized and unsubscribe it otherwise; the second is a "server program" that organizes the nodes into hierarchical structures handling the static service discovery and static load distribution inside the federated cluster; the third component is a fully distributed resource manager that handles the number of federations defined in a single network, dynamic membership in the federations, and dynamic load distribution and migration within federations.
+   This project involves two major challenges.
+The first one is how to dynamically organize the nodes and how to structure the network in order to provide efficient discovery and executions. 
+The second involves maintaining a secure group membership in the federated cluster in order to avoid malicious behavior such as denial of service attacks or mal-intentioned code execution.
+
+
+ Low-level Resource Management 
+In high speed networks, individual resources, such as solid state memory, are being employed by a remote user individually, as opposed to having to utilize the whole remote system. This implementation is done at the driver level. 
+
+ Advanced Quality of Service (AQoS) 
+Quality of Service is an important feature when dealing with real-time applications such as VOIP or Streaming Media.
+However, due to the internet's heterogeneous architecture, controlling the QoS is a challenging task if a receiver is located outside of a private network and must traverse other service providers' domains.
+Overlay networks are a solution to improve QoS when sending information outside a controlled network. 
+The Advanced Quality of Service (AQoS) project extends TREx's resource manager by monitoring the network as a resource in order to use its local information to find better quality routes than the underlying internet backbone. 
+This is a novel, purely distributed, adaptive, and scalable solution for improving routes regardless of a node's physical location on the internet using an overlay network. 
+
+
+      Research Interests 
+
+  Operating Systems 
+The design goal of operating systems for parallel computers is to provide a level of support to the programmer similar to that provided by current uniprocessor operating systems. The programmer programs a virtual machine with as many virtual processors necessary to exploit the inherent parallelism of the application. The operating system emulates this virtual machine, making parallel programs portable. In this context various problems are being addressed: spatial and temporal scheduling of virtual processors, efficient synchronization techniques, virtual memory management and I/O issues.
+  Interconnection Networks 
+Our work on interconnection networks for massively parallel systems involves the development of cost-effective high performance networks capable of supporting thousands or millions of processing elements. Included in this study is the performance analysis of Expanded Delta Networks (EDNs) and Least Common Ancestor Networks (LCANs) under commonly occurring sets of processor to processor communication patterns. As a result of the effort, efficient off-line routing algorithms for EDNs were developed and applied to commercially available massively parallel computers.
+  Performance Evaluation 
+Current research in performance evaluation deals with the development of models and methodologies for a general supercomputer performance evaluation theory. Such methods are being developed bottom up by building on known computational models and benchmarks.   Parallel Algorithms  Algorithmic topics include parallel models of computation and algorithms. Additionally, based on the development of Shearsort, our research group is looking for a proper taxonomy of parallel sorting. Many similarities can be found among sorting techniques and a unified framework is needed to enable further advances in this important area of study.   Simulation Models  Current research focuses on the development of all areas of advanced simulation models and techniques. Topics of interest include general purpose discrete-events simulation, synthetic workload generation, performance evaluation, and analysis of scheduling and load balancing algorithms through simulation.
+
+  Synthetic Workload Generation  
+The NASA Remote Exploration and Experimentation Project (REE) is interested in supporting academic research projects in areas that are needed to facilitate the development of fault-tolerant, COTS-based, parallel processors for use in space. The Schark research group is investigating the development of synthetic workload models for use in characterizing REE system performance over a wide range of application-types and fault conditions.
+      Software 
+  Load Balancing/Scheduling Simulator  
+
+
+   Selected Publications 
+
+   Ph.D. Theses  
+
+        Service Address Routing for Concurrent Computing    Daniel Valencia Sanchez, 2007         Predictive Adaptive Parallelism    David Wangerin, 2006         Suitability Measures for High Performance Computers    Shean McMahon, 2004         The Convergence of Massively Parallel Processors and Multiprocessors    Vara Ramakrishnan, 2000         Resource Management Techniques for Multiprogrammed Distributed Systems    Luis Miguel Campos, 1999         Designing Virtual Memory Systems for Parallel and Distributed Computing    Veronica Reis, 1996         Computer Evaluation Using Performance Vectors    Umesh Krishnaswamy, 1995         A Framework for Parallel Job Scheduling    Raghu Subramanian, 1995         Journal and Conference Papers  
+
+     
+Isaac D. Scherson, Daniel Valencia,and  Enrique Cauich
+   Service Address Routing: A Network-Embedded Resource Management Layer for Cluster Computing  
+  accepted for publication in  "Cluster Computing" , Elsevier.
+     
+Richert Wang, Enrique Cauich, and Isaac D. Scherson
+   Federated Clusters Using the Transparent Remote Execution (TREx) Environment  
+  The Thirteenth International Conference on Parallel and Distributed Systems (ICPDS) Hsinchu, Taiwan, December 5-7, 2007. 
+     
+Isaac D. Scherson, Daniel Valencia, Enrique Cauich, John Duselis, and Richert Wang
+   Federated Grid Clusters Using Service Address Routed Optical Networks  
+ "Future Generation Computing Systems" (FGCS): International Journal of Grid Computing: Theories, Methods, and Applications, Volume 23, Issue 8, Elsevier,  November 2007. 
+     
+Isaac D. Scherson, Daniel Valencia,and  Enrique Cauich
+   Service Discovery for Grid Computing Using LCAN Mapped Hrarchical Directories  
+  "Journal of Supercomputing" , Special Issue on GRID Computing, Volume 42, Issue 1, Springer, USA, October 2007.
+     
+Aljundi A. Ch., Dekeyser J.-L., Kechadi M.-T., and Scherson I. D.
+   A Universal Performance Factor for Multi-Criteria Evaluation of Multistage Interconnection Networks  
+ Special Issue on Future Generation Computer Systems, Volume 22, Issue 7, Elsevier, August 2006.
+     
+David Wangerin and Isaac D. Scherson
+   Using Predictive Adaptive Parallelism to Address Portability and Irregularity  
+ Proceedings of the 2005 International Symposium on Parallel Architectures, Algorithms, and Networks, Las Vegas, NV, USA, December 7-9, 2005, pp 370-375.
+     
+S. Meftali, J-L Dekeyser, and Scherson I. D.
+  Scalable Multistage Networks for Multiprocessor System-on-Chip Design 
+ Proceedings of the 2005 International Symposium on Parallel Architectures, Algorithms, and Networks, Las Vegas, NV, USA, December 7-9, 2005, pp 352-356.
+     
+Daniel Valencia and Isaac D. Scherson
+   Service Address Routing:A Network Architecture for Tightly Coupled Distributed Computing Systems  
+ Proceedings of the 2005 International Symposium on Parallel Architectures, Algorithms, and Networks, Las Vegas, NV, USA, December 7-9, 2005, pp 296-303.
+     
+C. Morin, R. Lottiaux, G. Vall�e, P. Gallard, D. Margery, J.-Y. Berthou, I. Scherson
+   Kerrighed and Data Parallelism: Cluster Computing on Single System Image Operating Systems  
+ Proceedings of the 2004 IEEE International Conference on Cluster Computing, San Diego, CA, USA, September 2004.
+     
+Aljundi A. Ch., Dekeyser J.-L., and Scherson I. D.
+   An Interconnection Networks Comparative Performance Evaluation
+Methodology: Delta and Over-Sized Delta Networks  
+ 16th International Conference on Parallel and Distributed Computing Systems, Reno, USA, August 2003.
+     
+David Wangerin and Isaac D. Scherson
+   Automatic Resource Management using an Adaptive Parallel Environment  
+ Proceedings of IPDPS 2003 Workshop on Massively Parallel Processing, Nice, France, April 2003
+     
+Aljundi A. Ch., Dekeyser J.-L., Kechadi M.-T., and Scherson I. D.
+   A Study of an Evaluation Methodology for Unbuffered Multistage Interconnection Networks  
+ Proceedings of the 17th International Parallel and Distributed Processing Symposium (IPDPS'03), Nice, France, April 2003
+     
+Gaetan Scotto di Apollonia, Isaac Scherson, Christophe Gransart, Jean-Marc Geib
+  Simulation-Aided Deployment of Distributed Applications in Heterogeneous Systems 
+ Proceedings of the 2002 International Symposium on Performance Evaluation of Computer and Telecommunication Systems, San Diego, California, July 2002, pp.278-287
+     
+Aljundi A. Ch., Dekeyser J.-L., Kechadi M.-T., Scherson I. D.
+   Comparitive Simulations and Performance Evaluation of MCRB Networks Using Multidimensional Queue Management  
+ Proceedings of the 2002 International Symposium on Performance Evaluation of Computer and Telecommunication Systems, San Diego, California, July 2002, pp.288-296
+     
+Shean T. McMahon and Isaac D. Scherson
+   A
+Statistical Mechanical Approach to a Framework for Modeling Irregular Programs on Distributed or Cluster Computers  
+ Proceedings of the 35th Annual Simulation Symposium 2002, San Diego, USA, April 2002
+     
+D. Wangerin, C. DeCoro, L.M. Campos, H. Coyote, and I.D. Scherson
+   A Modular Client-Server Discrete Event Simulator for Networked Computers  
+ Proceedings of the 35th Annual Simulation Symposium 2002, San Diego, USA, April 2002
+      H.D. Karatza and I.D. Scherson
+ "Scheduling Job Classes in a Distributed System".
+ Proceedings of SPECTS'2001, 2001 SCS Symposium on Performance Evaluation of Computer
+and Telecommunication Systems, SCS, Orlando, Florida, July 2001, pp. 322-329.       Luis Miguel Campos et al.    A General Purpose Discrete Event Simulator    Symposium on Performance Evaluation of Computer and Telecommunication Systems, Orlando, USA , July 2001       Fabricio Silva and Isaac D. Scherson    Efficient Parallel Job Scheduling Using Gang Service    To appear, International Journal of Foundations of Computer Science (June 2001)       Fabricio Silva and Isaac D. Scherson    Simulation-based Average Case Analysis for Parallel Job Scheduling    Proceedings of the 34th Annual Simulation Symposium, Seattle, April 2001       Fabricio Silva and Isaac D. Scherson    Improving Parallel Job Scheduling Using Runtime Measurements    Proceedings of the 6th Workshop on Job Scheduling Strategies for Parallel Processing , Cancun, Mexico, May 2000.       Vara Ramakrishnan and Isaac D. Scherson    Executing Communication-Intensive Irregular Programs Efficiently    Proceedings of Irregular 2000, Cancun, Mexico, May2000.       Fabricio Silva and Isaac D. Scherson    Improving Throughput and Utilization in Parallel Machines Through Concurrent Gang    Proceedings of the IEEE International Parallel and Distributed Processing Symposium 2000, Cancun, Mexico, May 2000.       Luis Miguel Campos and Isaac D. Scherson    Rate of Change Load Balancing in Distributed and Parallel Systems    Parallel Computing Journal, Volume 26, pages 1213-1230.       Fabricio Silva and Isaac D. Scherson    Towards Flexibility and Scalability in Parallel Job Scheduling    11th IASTED International Conference on Parallel and Distributed Computing and Systems, Boston, USA, November 1999.       Fabricio Silva and Isaac D. Scherson    Concurrent Gang: Towards a Flexible and Scalable Gang Scheduler    11th Symposium on Computer Architecture and High Performance Computing, Natal, Brazil, September 1999.       Fabricio Silva and Isaac D. Scherson    Bounds on Gang Scheduling Algorithms    2nd International Conference on Parallel Computing Systems, Ensenada, Mexico, August 1999.       Vara Ramakrishnan, Isaac D. Scherson and Raghu Subramanian    Efficient Techniques for Nested and Disjoint Barrier Synchronization    Journal of Parallel and Distributed Computing, Special Issue on Compilation and Architectural Support for Parallel Applications, vol. 58, pp 333-356.       Fabricio Silva and Isaac D. Scherson    Improvements in Parallel Job Scheduling Using Gang Service    1999 International Symposium on Parallel Architectures, Algorithms and Networks, Freemantle, Australia, June 1999.       Luis Miguel Campos and Isaac D. Scherson    Rate of Change Load Balancing in Distributed and Parallel Systems    IPPS/SPDP, San Juan, Puerto Rico, April 1999, pp 701-707.       Isaac D. Scherson and Luis Miguel Campos    Efficient Task Scheduling Heuristic for Multiprocessor Systems,    Parallel and Distributed Computing and Systems, Las Vegas, USA, October 1998, pp 32-37.       Fabricio Silva, Luis Miguel Campos and Isaac D. Scherson    Improvements in Gang Scheduling for Parallel Computers,    Parallel Computing Workshop, Singapore, September 1998, pp P2-H1--P2-H5.       Isaac D. Scherson and Luis Miguel Campos    A Distributed Dynamic Load Balancing Strategy Based on Rate of Change,    Parallel Computing Workshop, Singapore, September 1998, pp P2-I1--P2-I8.       Fabricio Silva, Luis Miguel Campos and Isaac D. Scherson    A Lower Bound for Dynamic Scheduling of Data Parallel Programs,    Euro-Par 98, Southampton, UK, September 1998, pp 367-372.       Christophe Rapine, Isaac D. Scherson and Denis Trystram    On Line Scheduling of Parallelizable Jobs,    Euro-Par 98, Southampton, UK, September 1998, pp 322-327.       V. L. Reis and Isaac D. Scherson    Impacts of Network Latency on Parallel Virtual Memory Management,    Symposium on Performance Evaluation of Computer and Telecommunication Systems, Reno, USA, July 1998.       Luis Miguel Campos, V. L. Reis and Isaac D. Scherson    Swap File Organizations for Parallel Virtual Memory,    Parallel and Distributed Computing and Systems, Washington DC, USA,October 1997, pp 209-214.      V. L. Reis, Luis Miguel Campos and Isaac D. Scherson,    Parallel Virtual Memory for Time Shared Environments,    Eighth Brasilian Symposium on Computer Architectures and High Performance Processing, Recife, Brazil, August 1996, pp 223-233.       R. Subramanian, Isaac D. Scherson, V. L. Reis and Luis Miguel Campos,    Scheduling Computationally Intensive Data Parallel Programs,    Placement Dynamique et Repartition de Charge: application aux systemes paralleles et repartis, Paris, France, July 1996, pp 39-60.       U. Krishnaswamy and Isaac D. Scherson,    Micro-architecture Evaluation Using Performance Vectors,    SIGMETRICS'96, May 1996.       Luis Miguel Campos, V. L. Reis and Isaac D. Scherson,    A distributed fault tolerant implementation of a stock market and brokerage office,    First International Workshop on Distributed Systems, Salvador, Brazil, May 1996.       V. L. Reis and Isaac D. Scherson,    A Virtual Memory Model for Parallel Supercomputers,    International Parallel Processing Symposium, April 1996, pp 537-543.       F. Chen, V. L. Reis and Isaac D. Scherson,    A Study of Parallel Input/Output Subsystems,    International Workshop on Advanced Parallel Processing Technologies, Beijing, China, September 1995, pp 10-15.       V. Ramakrishnan, Isaac D. Scherson and R. Subramanian,    Efficient Techniques for Fast Nested Barrier Synchronization,    Symposium on Parallel Algorithms and Architectures, Santa Barbara, USA, July 1995, pp 157-164.       Isaac D. Scherson and C.-K. Chien,    Least Common Ancestor Networks,    VLSI Design, 1995, Vo. 2, No. 4, pp 353-364.       R. Subramanian and Isaac D. Scherson,    An Analysis of Diffusive Load-Balancing,    Symposium on Parallel Algorithms and Architectures, June 1994, pp 220-225.       Isaac D. Scherson and R. Subramanian,    Efficient Off-line Routing of Permutations on Restricted Access Expanded Delta Networks,    International Parallel Processing Symposium, April 1993, pp 248-290.       U. Krishnaswamy and Isaac D. Scherson,    A Methodology for Performance Evaluation of Supercomputers,    International Parallel Processing Symposium - Parallel Systems Fair, April 1993, pp 46-49.       Isaac D. Scherson, D. A. Kramer, and B. D. Alleyne,   Bit-Parallel Arithmetic in a Massively Parallel Associative Processor,   IEEE Transactions on Computers, Vol. 41, Number 10, October 1992, pp.1201-1210.       B. D. Alleyne and Isaac D. Scherson,   Expanded Delta Networks for Very Large Parallel Computers,   International Conference on Parallel Processing, August 1992, pp 127-131.       Isaac D. Scherson,   Orthogonal Graphs for the Construction of a Class of Interconnection Networks,   IEEE Transactions on Parallel and Distributed Systems, January 1991.          School of Information and Computer Science ,
+ University of California, Irvine CA 92697-3425 
+
+</body> 

@@ -1,0 +1,160 @@
+ ICS 31 Lab 4<body>
+  ICS 31 • DAVID G. KAY • UC IRVINE • FALL 2016  
+   Lab Assignment 4   
+ 
+  This assignment is due by 10:00 p.m.on Friday, October 21.   
+   Preparation</strong>  (Do this part individually, but do whatever preparation you need for the midterm first; the early parts of this assignment may help you review on Monday in lab) 
+   (1)</strong>  After you get your midterm back from your TA, review what you missed, and learn the concepts you didn't know before. Then take the midterm again for yourself: Cover up your answers and re-create them from scratch. (It's okay to skip the questions you answered correctly the first time, but it wouldn't hurt to do them again, too.) The topics on the midterm are fundamental; you'll have a hard time moving forward without mastering them.  
+
+  (2)</strong> Read any sections of Chapter 3 that you haven't read yet, particularly section 3.4. Try the practice problems, especially 3.15 and 3.16 (before looking at the solutions). Do at least four of the parts of Exercise 3.23.  
+  (3) </strong>At  www.pythontutor.com  you can run simple Python code and see the values change in memory; if you have a question about what's going on in some code, this site may help you see step by step what's happening. Be sure to choose Python 3 and not Python 2.7. 
+   
+   Lab Work</strong>  (Do this part with your partner in lab) 
+  (a)</strong> Choose a partner for this assignment and register your partnership using the  partner app , ideally by Monday. Remember that you'll choose a different partner for each lab assignment, so you'll work with this partner only this week. Make sure you know your partner's name (first and last) and contact information (Email or cellphone or whatever) in case one of you can't make it to lab.  
+ Note that doing these problems by yourself, at home, is not pair programming and will not receive full credit (at least for participation). It's great if you want to work outside of lab, but whatever you prepare alone you must explain to your partner so that he or she understands it as well as you do. (This is to your benefit as well as your partner's: One of the most common workplace situations (and not just in science and technology) is to bring a co-worker up to speed on some project.) 
+  Scary warning:</strong> There's another reason to do all your work jointly with your assigned partner: You protect yourself from getting in trouble for academic dishonesty. Something like this occasionally happens in programming classes: Partner A works alone and submits some code that Partner B didn't work on and hasn't examined. But Partner A gets that code from another student in the class, or a roommate who's a CS major, or someone who took the course before. All of these are instances of academic dishonesty, and often they come to the notice of the TAs or instructor. Then both partners, A and B, get in trouble because the work is submitted jointly by both students. These are difficult and unhappy situations; you can avoid them by doing pair programming properly and, when you get stuck, asking the lab tutors, the TAs, the instructor, or Piazza for help.  
+  (b)</strong> 
+Prepare your  lab4.py  file as in previous labs, including a line like this:  
+ 
+#  Paula Programmer 11223344 and Andrew Anteater 44332211.  ICS 31 Lab sec 7.  Lab asst 4.
+ 
+ All the Python code you write for this assignment should be executable (i.e., not commented out) in your  lab4.py  file and should produce the correct results when you (and the TA) run the file. We can't give you credit for code that doesn't run and produce the correct results. On lab assignments, unlike on exams,  there's rarely partial credit for partially working code because you have the ability to test it out and refine it until it does work correctly. 
+ As you work, organize and prepare this file according to part (b) of Lab 3. 
+  (c)</strong> Python exercises: 
+
+  (1) </strong>Implement the function  test_number  that takes as input a number
+and a string (one of  'even' ,  'odd' ,  'positive' ,
+or  'negative' ).  The function returns True if the number has the
+property indicated by the string, and False if it doesn't.  See the assertions 
+below for examples. 
+  assert test_number(14, 'even')
+assert not test_number(100, 'odd')
+assert test_number(33, 'positive')
+assert not test_number(100, 'negative')  
+
+
+
+
+  (2)</strong>
+Implement the function  display  that takes no parameters. It prompts the user to enter any word or phrase and then prints out every character in that phrase, one per line.
+User input is indicated in  bold face</strong>. 
+  &gt;&gt;&gt; display()
+Enter a word:  Anteater</strong>
+A
+n
+t
+e
+a
+t
+e
+r  
+
+  (3)</strong>
+Implement a function  square_list  that takes a list of integers and prints out each integer squared. 
+  &gt;&gt;&gt; square_list([2, 3, 4, 10])
+4
+9
+16
+100  
+
+
+  (4)</strong>
+Implement the function  match_first_letter  that takes a one-character string and a list of strings and prints all the strings in the list that start with the specified character.
+ 
+  &gt;&gt;&gt; match_first_letter('I', [‘Iron Man’, ‘Iron Man 2’, ‘The Avengers’, ‘Superman’, ‘I am Legend’])
+Iron Man
+Iron Man 2
+I am Legend  
+
+
+
+  (5)</strong>
+Implement the function  match_area_code  that takes as a list of telephone area codes (three-digit strings) and a list of phone numbers in the form shown below.  The function will print the phone numbers whose area code is on the list of area codes.
+
+   &gt;&gt;&gt; match_area_code(['949', '714'], ['(714)824-1234', '(419)312-8732', '(949)555-1234'])
+(714)824-1234
+(949)555-1234  
+an item in codes """
+	for n in nums:
+		if n[1:4] in codes:
+			print(n)
+	return
+--&gt;
+ (6)</strong> Copy your  match_area_code  function and name the copy  matching_area_codes .
+Now modify your new function so that instead of printing out the matching phone numbers,
+it returns a list of the matching numbers. Follow the pattern of accumuating a result that we've seen in class.
+
+an item in codes """
+	result = []
+	for n in nums:
+		if n[1:4] in codes:
+			result.append(n)
+	return result
+assert matching_area_codes(['949', '714'],
+	['(714)824-1234', '(419)312-8732', '(949)555-1234']) == ['(714)824-1234','(949)555-1234']
+--&gt;
+
+  (d.1)</strong> Write a function called  is_vowel  that takes a
+  
+one-character-long string and returns True if that character is a vowel and False otherwise. [A vowel, for our purposes here, is one of the letters a, e, i, o, or u (lower case or upper case).] You can do the central part of this task using the  in  operator and a string containing the vowels; your task here is to package this up into a function that returns a boolean value. [Please check that the function name is capitalized precisely as shown above; it helps your TA in the grading.] 
+ Your function definition should follow the " design recipe " pattern we've described before. You should do all of this  before  you write the code for the body of the function.
+  And we expect you to do this for every function you write from now on. If you ask a TA or tutor for help and you haven't done it, they'll just send you back to do it. (Of course, if you have questions about  how  to do this, they'll be glad to help.) 
+ [Novice programmers are often tempted to code the body of this task as 
+  if ... :  
+    return True
+else:
+    return False 
+ But this is rather clumsy and redundant, because the boolean expression itself (the " ... " above)
+  has exactly the value you want to return; you should just say  return ...  and be done. 
+ Take a minute to re-read this and understand it fully. ] 
+ Finally, run your code (including the tests) to make sure the tests all pass.  This is the pattern you will follow for every function you design and code. 
+  (d.2)</strong> Write a function called  print_nonvowels  that takes a string and prints out all the characters in the string that are  not  vowels. Use your  is_vowel  function (and one of the logical/boolean operators).  (Note that this function prints its result rather than returning it.  Whenever you define a function, the first thing to determine is whether the result should be returned or printed. When in doubt, return the value and let the program that called the function decide what to do with it. For class purposes, we'll typically just tell you which to do, as we did here.)  
+ 
+ Write some tests (also involving print statements), enough so that if they pass, you're convinced that your function works correctly. And run the tests, of course. 
+  (d.3)</strong> Write a function called  nonvowels  that takes a string and  returns  a string containing all the characters in the parameter string that are  not  vowels. Since you're returning a string instead of printing a character at a time, you'll need to construct that string in your function. Start with a variable (let's call it  result ) whose value is the empty string. Each time you find a nonvowel, add it to the end of  result . Then, once you've gone through the whole parameter,  result  is what you return. [We just gave you the algorithm; your job is to implement it in Python.] 
+ Functions that return values are somewhat more convenient to test than functions that print values. You could do it the same way, printing out the tests and the results or printing out boolean expresions that are true if the test passes. Instead of print statements, though, you should use  assert  statements as shown below. Their advantage is that if the test passes, nothing happens, so you can leave the  assert  statements in your code after you're satisfied your function works, without their cluttering up your output. (It's good to keep the  assert  statements there because later you may make changes that "break" your existing code, or you may need to change your existing code, and with the tests still in place you'll find any problems at the earliest possible time.) 
+ Here are some  assert  statements for  double  and for  is_vowel ; note that the the  assert  statement expects a boolean expression., and that you'll have to define  double  if you actually want to run the assertions that call  double . 
+ assert double(0) == 0
+assert double(17.5) == 35
+assert double(-223344) == -446688
+assert is_vowel('a') 
+assert is_vowel('U')
+assert not is_vowel('X')
+assert not is_vowel('?') 
+ To see what happens when a test fails,  assert  something false like  assert double(2)==5 . (Note that when an assertion fails, there could be  two reasons: (i) Your function may be incorrect, or (ii) your assertion—what you think the right answer is—may be wrong. You should consider both possibilities). 
+ Write some tests for  nonvowels  using  assert  statements. 
+  (d.4)</strong> Write a function called  consonants  that takes a string and returns a string containing all the letters in the parameter string that are not vowels. (This is not the same as  nonvowels , whose definition refers to "characters," which include digits and spaces and punctuation. Did you test  nonvowels  with strings including non-letters? If not, go back and do it, changing the function's definition if necessary to make it work correctly.) 
+ Before you write the body of the function, follow the "design recipe" steps: specify the types of the parameter and return value; include a short purpose statement as a docstring; write examples in the form of  assert  statements. 
+  (d.5)</strong> Write a function called  select_letters  that takes two parameters, both strings, and returns a string. If the first parameter is  'v' , it returns a string containing all the vowels in the second parameter; if the first parameter is  'c' , it returns a string containing all the consonants in the second parameter. If the first parameter is anything else, it returns the empty string. So,  select_letters('v', 'facetiously')  would return  aeiou  and  select_letters('c', 'facetiously')  would return  fctsly . [If you count Y as a vowel, your results will be slightly different.] 
+  (d.6)</strong> Write a function called  hide_vowels  that takes a string and returns a string in which every vowel in the parameter is replaced with a hyphen (" - ") and all other characters remain unchanged. After your testing shows that it's correct, try running it with a couple of sentences; you may be able to understand the sentences even with all the vowels hidden. 
+  (e)</strong> Using the definition  Restaurant = namedtuple('Restaurant', 'name cuisine phone dish price') , write the function  Restaurant_change_price  that takes two arguments, a Restaurant object and a number, and returns a Restaurant object with the same contents as the parameter except that the price has been increased by the specified number. 
+  (f)</strong> You can download code from  http://www.ics.uci.edu/~kay/python/restaurants.py ; it defines a list called  RL  that contains 26 Restaurant objects. 
+ (In that file, each of the 26 restaurants is given an individual variable name,  R1  through  R26 . That is not necessary; we could create the list of restaurants as we did in Lab Assignment 2, by putting 26 calls to  Restaurant()  within square brackets. But having individual variable names makes constructing tests more convenient; we can say, e.g.,  assert cheapest(RL) == R10  .) 
+ Paste the code into your  lab4.py  file. 
+  (f.1)</strong> Write a function called  alphabetical  that takes a list of restaurants and returns that list in alphabetical order by name. Except for making this a function, you did this task in last week's lab. 
+  (f.2) </strong>Write a function called  alphabetical_names  that takes a list of restaurants and returns a list of the  names  of all the restaurants in alphabetical order by name. [One of the things you learn in this course is to read technical documents very closely. Part (f.1) asked for a list of restaurants; this part asks for a list of strings, with each string the name of a restaurant.] 
+  (f.3) </strong>Write a function called  all_Thai  that takes a list of restaurants and returns a list of all the Thai restaurants (i.e., whose cuisine attribute is Thai). The body of the function follows the same pattern as your vowel-selecting function above. Recognizing these similar patterns is a programming skill you will develop. 
+  (f.4) </strong>Write a function called  select_cuisine  that takes a list of restaurants and a string representing a cuisine. It should return a list of all the restaurants that serve the specified cuisine. 
+  (f.5)</strong> Write a function called  select_cheaper  that takes a list of restaurants and a number (a float) and returns a list of all the restaurants whose price is less than the specified number. 
+  (f.6) </strong>Write a function called  average_price  that takes a list of restaurants and returns the average price of (the best dishes at) those restaurants. (You may wish to write a separate function that takes a list of restaurants and returns the sum of the prices of (the best dishes at) those restaurants. But that's not required.) 
+  (f.7) </strong>Write a print statement that calls one or more of the functions you defined above to print the average price of the Indian restaurants in the list  RL . 
+  (f.8) </strong>Write a print statement that calls one or more of the functions you defined above to print the average price at the Chinese and Thai restaurants (taken as one group) in the list  RL .  
+  (f.9) </strong>Write a print statement that calls one or more of the functions you defined above to print a list of the names of all the restaurants in RL with a price under $15.00. 
+  (g)</strong> When we draw a rectangle in tkinter (and similarly for other figures), we have to specify the coordinates of its upper left and lower right corners.  But sometimes it's more convenient to specify the center point of the rectangle and its height and width.
+Write a function  create_rectangle_from_center  that takes four  arguments:  the x-value and y-value of the point in the center of the rectangle and the height and width of the rectangle.
+ 
+ We don't know yet how to make  create_rectangle_from_center()  into a method that would let us say  my_canvas.create_rectangle_from_center() , but you can call 
+ create_rectangle_from_center()  without the  my_canvas  prefix: In the body of your function, you just call  my_canvas.create_rectangle()  with the appropriate arguments (based on the parameters of  create_rectangle_from_center() ). 
+Note that the body of your function should only contain a call to  create_rectangle ; all the tkinter setup should be outside your function, in the main program.
+ 
+
+  (h)</strong> </strong> Remember that each partner must complete a partner evaluation form and submit it individually. Do this using the  partner app . Make sure you know your partner's name, first and last, so you can evaluate the right person.  Please complete your evaluation by the end of the day on Friday, or Saturday morning at the latest. It only takes a couple of minutes and not doing it hurts your participation score.
+  
+   What to turn in:</strong> Submit via Checkmate  your   lab4.py  file containing your solutions to parts (c) through (g). Remember what we've said in previous labs about rereading the assignment and rerunning your Python files. 
+ Also remember that each student must complete a partner evaluation form; these evaluations contribute to your class participation score. Get in the habit of doing this every week on Friday after you've submitted your assignment; the survey closes on Saturday.
+    
+  Written by David G. Kay in Fall 2012 for ICS 31, based in part on assignments from ICS H21 and Informatics 41. Modified by David G. Kay, Winter 2013, Fall 2013, Fall 2014, Winter 2015, Fall 2015.  
+    David G. Kay ,  kay@uci.edu      
+Monday, October 17, 2016 11:31 AM
+  
+</body> 

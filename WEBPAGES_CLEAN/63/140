@@ -1,0 +1,14 @@
+ # find kth element in a list L
+# David Eppstein, UC Irvine, 28 Jan 2001
+
+# You wouldn't actually want to use this algorithm -- I wrote it
+# for an exam question asking to analyze it.  Its time turns out to be
+# T(n) = 2 T(2n/3) + O(n) = O(n^{log_{3/2} 2} = O(n^{1.71}).
+
+def slowSelect(L, k):
+	# avoid infinite recursion, throw exception if k out of range
+	if len(L)  pivot]
+
+	# continue in one of the three sublists
+	if len(A) &gt; k: return slowSelect(A,k)
+	elif len(A) + len(B)  

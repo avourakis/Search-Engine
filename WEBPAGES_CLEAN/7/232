@@ -1,0 +1,62 @@
+ 4.114 OERandomizeTorsions<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.113 OEPerceiveSymmetry 
+ Up:   4. OEChem Functions 
+ Next:   4.115 OEReadCDXFile 
+   
+
+
+  
+4.114 OERandomizeTorsions 
+ 
+
+ 
+    
+bool OERandomizeTorsions(OEMolBase &amp;, double maxRadians)
+bool OERandomizeTorsions(OEMolBase &amp;, double maxRadians,
+                         const OESystem::OEUnaryPredicate&lt;OEBondBase&gt; &amp;isRotor)
+    
+This function modifies each of the torsions in a molecule by a random value
+between +maxRadians and -maxRadians.  While most people think about this
+sort of function in degrees, all angles in OEChem are measures in radians.
+The following simple constants may be used  OEMath::Pi ,
+ OEMath::Rad2Deg  and  OEMath::Deg2Rad  to generate the appropriate
+value.
+There are two API points, the one with two arguments applies the random
+torsion adjustment to every bond for which the OEChem bond predicate
+ IsRotor  returns true.  The second API point has an additional
+argument in which the user can specify a functor which defines which bonds
+are rotatable.  If the user's functor causes the function to attempt to
+apply a random rotation on a ring bond, no change in the internal
+coordinates will occur, however, the frame of reference of the molecule may
+change.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.113 OEPerceiveSymmetry 
+ Up:   4. OEChem Functions 
+ Next:   4.115 OEReadCDXFile 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

@@ -1,0 +1,28 @@
+ COPY<body>
+
+ 
+   
+               
+            
+            
+            
+            
+             
+            
+          Slide 10 of 14 
+ 
+
+      Notes:  </strong>       
+What a client expects may be different for collections than for individual resources.  When copying a collection that contains references, do you expect to end up with a collection that behaves like the original (e.g.., gives 302s where the original collection did) or one that has copies of all the targets of the references, so that they can be operated on independently of their source?
+  
+Is the size of the resulting collection an issue?  Of course, it would be larger if targets are copied in.
+  
+Remember that a reference-aware client can get the behavior it wants in any case.  The issue is, what should the default behavior be.
+  
+It seems unfortunate that the spec treats direct and redirect references differently: for direct references, it applies to the target, for redirect it applies to the reference.  If you have a collection with both direct and redirect references, this seems pretty weird.
+  
+Appeal to precedent doesn�t help, since NT copies the reference but Unix copies the target.
+  
+Take the site administrator�s point of view: Are there operations that we would like to PREVENT down-level clients from performing?
+  
+If you let COPY apply to the reference, you have to worry about fixing up relative URIs in DAV:reftarget. (You have to do this in either the non-default case or the default case anyhow.) </body> 

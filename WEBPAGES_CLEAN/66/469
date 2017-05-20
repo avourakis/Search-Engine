@@ -1,0 +1,87 @@
+ /*
+  $Id: cluster.cc 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#include "cluster.h"
+
+Cluster::Cluster(const Cluster &amp;c): pivot(c.pivot), radius(c.radius)
+{
+  index = new ContCluster;
+  *index = *c.index;
+  ftable = new FTable;
+  *ftable = *c.ftable;
+}
+
+Cluster&amp; Cluster::operator=(const Cluster &amp;c)
+{
+  if (this == &amp;c)
+    return *this;
+  *index = *c.index;
+  *ftable = *c.ftable;
+  pivot = c.pivot;
+  radius = c.radius;
+  return *this;
+}
+
+bool Cluster::operator==(const Cluster &amp;c) const 
+{
+  if (this == &amp;c)
+    return true;
+  if (*index == *c.index &amp;&amp; 
+      pivot == c.pivot &amp;&amp; 
+      radius == c.radius &amp;&amp; 
+      *ftable == *c.ftable)
+    return true;
+  return false;
+}
+
+void Cluster::buildFTable(const vector *data)
+{
+  for(ContCluster::const_iterator i = index-&gt;begin(); i != index-&gt;end(); i++)
+    ftable-&gt;insert(SimVect((*data)[pivot], (*data)[*i]));
+}
+
+bool Cluster::improve(const vector &amp;data) 
+{
+  SimType minSum = 0;
+  unsigned newPivot = 0;
+  for (ContCluster::const_iterator i = index-&gt;begin(); i != index-&gt;end(); ++i) {
+    SimType crtSum = 0;
+    for (ContCluster::const_iterator j = index-&gt;begin(); j != index-&gt;end(); ++j)
+      crtSum += SimDist(data[*i], data[*j]);
+    if (i == index-&gt;begin() || crtSum (c.index-&gt;size()) begin(), c.index-&gt;end(), ostream_iterator (out, "\n"));
+  out &gt;(istream &amp;in, Cluster &amp;c)
+{
+  /* cluster input:
+     - n: number of elements
+     - \n
+     - v: elements
+     - \n
+     - p: pivot
+     - \n
+     - ftable
+     - \n
+     - r: radius
+     - \n
+  */
+  unsigned n;
+  in&gt;&gt;n;
+  //return in;
+  for (unsigned i=0; i&gt;v;
+    c.index-&gt;insert(v);
+    //if (i==10) return in;
+  }
+  in&gt;&gt;c.pivot;
+  in &gt;&gt; *c.ftable;
+  in&gt;&gt;c.radius;
+  return in;
+}
+ 

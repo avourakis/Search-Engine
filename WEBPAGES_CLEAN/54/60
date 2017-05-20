@@ -1,0 +1,1051 @@
+ ICS 46 Spring 2016, Notes and Examples: Linear-Time Sorting<body>
+
+ 
+
+ 
+ICS 46 Spring 2016 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 46 Spring 2016 
+   Notes and Examples: Linear-Time Sorting 
+
+ 
+
+ 
+
+  A lower bound on comparison-based sorting 
+
+ All of the sorting algorithms we've seen so far are comparison-based, because they all do their work primarily by comparing pairs of elements and making decisions on the basis of those comparisons. 
+
+  Insertion sort compares elements when doing its insertions. 
+   Selection sort compares elements when looking for maximums. 
+   Treesort compares elements when inserting them into a binary search tree. 
+   Heapsort compares elements to build and maintain the heap structure. 
+   Quicksort compares elements when partitioning them. 
+   Mergesort compares elements when merging them. 
+  You may have noticed that we keep reaching the same limitation, that the worst-case performance of these algorithms has been Ω( n  log  n ).  (In other words, the worst case for each of these algorithms has either been Θ( n  log  n ) time or something worse than that.)  We'd love to do better, and it certainly seems theoretically possible to sort elements in Θ( n ) time in the worst case; all we need is an algorithm that does something like this: 
+
+  
+MagicSort(Array a):
+    for each element in a:
+        determine in Θ(1) time where the element belongs
+        swap the element into the correct position
+  
+
+ So why do we keep running into the same limitation?  Why are these algorithms all Ω( n  log  n ) in the worst case?  If we continue trying to find new comparison-based sorting algorithms, will we ever find one that's as good as our hypothetical MagicSort?  Just because we haven't found one yet doesn't mean one doesn't exist; it just means we haven't found it yet.  But if we could prove that it's impossible for such an algorithm to exist, we could stop looking altogether; we'd know that we'd never find it. 
+
+ Modeling a comparison-based sorting algorithm as a decision tree 
+
+ To consider comparison-based sorting algorithms generally, we'll need a general way to model them.  A comparison-based sorting algorithm does its work by comparing pairs of elements, then taking action based on the results of those comparisons.  We could represent such an algorithm as a  decision tree , in which the non-leaf nodes represent comparisons the algorithm makes, and the leaf nodes represent the final conclusions that the algorithm can reach regarding the correct sorted order of the elements. 
+
+ For example, this decision tree represents a comparison-based sorting algorithm capable of sorting three elements. 
+
+   
+
+ Notice that there is a leaf node for every possible ordering that the three elements might have:  a ≤ b ≤ c ,  a ≤ c ≤ b ,  b ≤ a ≤ c ,  b ≤ c ≤ a ,  c ≤ a ≤ b ,  c ≤ b ≤ a .  This allows the algorithm to determine the correct sorted order regardless of what it is; if any of these leaf nodes was missing, the algorithm would be incapable of sorting the elements in at least one case. 
+
+ Determining the height of a decision tree 
+
+ For a decision tree to represent a comparison-based sorting algorithm capable of sorting  n  elements, it would have to have a leaf node for every possible ordering of those elements.  If there are  n  elements, there are  n ! permutations of those elements (i.e.,  n ! different ways we could arrange them), any one of which might be the correct sorted order.  This means that the decision tree would need to have at least  n ! leaf nodes in order to be a correct sorting algorithm capable of sorting  n  elements. 
+
+ So what would the height of such a decision tree have to be?  We've seen before that the shortest tree that has  n  leaves would have height Θ(log  n ).  What's the shortest tree with  n ! leaves?  The answer is Θ(log  n !), which we've seen previously is Θ( n  log  n ). 
+
+ This means that a decision tree would require a height of Ω( n  log  n ) in order to have enough leaves to represent every possible answer that a sorting algorithm needs to be able to find.  It might be taller than that, but it can never be shorter.  For this reason, we can be certain that a comparison-based sorting algorithm will simply never be better than this in the worst case; if there was such an algorithm, it would be represented by a decision tree with a height less than that, but such a decision tree could only exist if it was missing leaf nodes it needs to have. 
+
+ Therefore, comparison-based sorting algorithms take Ω( n  log  n ) time in the worst case.  So if we want to do better than this, we're going to have to consider sorting algorithms that do their work in some way other than comparing pairs of elements.  For example, we might need to exploit certain properties of the kinds of elements we're sorting, leading to algorithms that can beat the  n  log  n  limitation, but that will only work in more limited circumstances. 
+
+ 
+
+ 
+
+  Counting sort 
+
+ Suppose we want to sort  n  integers that are between 0 and  m  − 1 inclusive.  (Or, alternatively, we want to sort  n  objects by a  key  that is in that range.)  In that case, there's a straightforward way to do it: 
+
+  Look through the elements, counting how many occurrences of each integer we find.  How many 0's were there?  How many 1's?  How many 2's?  And so on. 
+   Knowing how many of each element we found, rearrange the elements accordingly.  If, for example, we want to know where a 2 goes, it should be placed directly after all of the 0's and 1's.  If we know how many 0's and 1's there are, we'll know exactly where the 2 belongs. 
+  This algorithm is called  counting sort , so named because it counts the number of occurrences of each possible key. 
+
+  
+CountingSort(Array source, Array target, int range):
+    counters = an array of integers with indices 0 .. range - 1
+    initialize all counters to 0
+
+    for each element in source:
+        counters[element.key]++
+
+    offsets = an array of integers with indices 0 .. range - 1
+    initialize all offsets to 0
+
+    for i in 1 .. range - 1:
+        offsets[i] = offsets[i - 1] + counters[i - 1]
+
+    for i in 0 .. source.length - 1:
+        target[offsets[source[i].key]] = source[i]
+        offsets[source[i].key]++
+  
+
+ The algorithm sorts the elements in the  source  array, placing the result into the  target  array.  It proceeds through four high-level steps: 
+
+  Iterate through the source elements, counting the number of occurrences of each key, storing the result in an array called  counters . 
+   Determine the  offsets  for each key, which is to say the index where that key belongs in the sorted order.  Each offset is the sum of the counters that precede it (e.g., offset[3] is counters[0] + counters[1] + counters[2]). 
+   Iterate through the source elements again.  Each time, look up the offset for that element's key, then copy the element into that position in the target array.
+      If we encounter another element with the same key, we would want it to be placed after the one we just copied, so also increment that offset. 
+      
+  Let's suppose that we're sorting this sequence of elements with keys in the range 0..4.  (This could be elements of arbitrary type, but with keys in that range.  For example, the keys could be the number of years someone has studied at UCI as an undergraduate.)  There are 13 elements total that we want to sort. 
+
+    source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+     First, we would determine the counters, i.e., how many times does each key appear? 
+
+    
+     0 
+     1 
+     2 
+     3 
+     4 
+      counters  
+     2 
+     1 
+     5 
+     2 
+     3 
+     Next, we'd determine the offsets.  Each offset is the sum of the counters that precede it. 
+
+    
+     0 
+     1 
+     2 
+     3 
+     4 
+      counters  
+     2 
+     1 
+     5 
+     2 
+     3 
+      offsets  
+     0 
+     2 
+     3 
+     8 
+     10 
+     Finally, we iterate through the source elements, copying them into the appropriate position in the target array.  (Note that we don't need the  counters  array anymore.)  That process starts this way: 
+
+    
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     2 
+     3 
+     8 
+     10 
+         
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     The first element in the source array has the key 4.  The offset for the key 4 is 10, so we'd copy the element into index 10 of the target array, then increment the offset of the key 4. 
+
+    
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     2 
+     3 
+     8 
+     11 
+         
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     4 
+       
+       
+     This process would continue for each of the elements in the source array, shown below. 
+
+    
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     2 
+     4 
+     8 
+     11 
+         
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+       
+     2 
+       
+       
+       
+       
+       
+       
+     4 
+       
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     2 
+     4 
+     8 
+     12 
+         
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+       
+     2 
+       
+       
+       
+       
+       
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     3 
+     4 
+     8 
+     12 
+         
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+     1 
+     2 
+       
+       
+       
+       
+       
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     3 
+     5 
+     8 
+     12 
+         
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+     1 
+     2 
+     2 
+       
+       
+       
+       
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     0 
+     3 
+     5 
+     9 
+     12 
+         
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+       
+       
+     1 
+     2 
+     2 
+       
+       
+       
+     3 
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     1 
+     3 
+     5 
+     9 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+       
+     1 
+     2 
+     2 
+       
+       
+       
+     3 
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     1 
+     3 
+     6 
+     9 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+       
+     1 
+     2 
+     2 
+     2 
+       
+       
+     3 
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     2 
+     3 
+     6 
+     9 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+     0 
+     1 
+     2 
+     2 
+     2 
+       
+       
+     3 
+       
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     2 
+     3 
+     6 
+     10 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+     0 
+     1 
+     2 
+     2 
+     2 
+       
+       
+     3 
+     3 
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     2 
+     3 
+     7 
+     10 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+       
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+     0 
+     1 
+     2 
+     2 
+     2 
+     2 
+       
+     3 
+     3 
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     2 
+     3 
+     8 
+     10 
+     12 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+     0 
+     1 
+     2 
+     2 
+     2 
+     2 
+     2 
+     3 
+     3 
+     4 
+     4 
+       
+         
+     0 
+     1 
+     2 
+     3 
+     4 
+      offsets  
+     2 
+     3 
+     8 
+     10 
+     13 
+         
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     i ↓ 
+      source  
+     4 
+     2 
+     4 
+     1 
+     2 
+     3 
+     0 
+     2 
+     0 
+     3 
+     2 
+     2 
+     4 
+      target  
+     0 
+     0 
+     1 
+     2 
+     2 
+     2 
+     2 
+     2 
+     3 
+     3 
+     4 
+     4 
+     4 
+     And note that the target array is the sorted version of the source array.  How good is this algorithm?  Let's do some analysis. 
+
+ Analysis 
+
+ For the purposes of this analysis, we'll say that there are  n  elements we want to sort, and that there are  m  possible keys.  The performance of this algorithm will be affected by both of these variables, which can vary independently. 
+
+ This algorithm is not in-place, because it requires the ancillary arrays to store the counters and offsets; it also requires a target array into which to place its result.  The total amount of memory required is Θ( m ) for the counters and offsets — one integer for each of the possible keys — plus Θ( n ) for the target array.  So we'd say that the memory requirement, above and beyond the source array, is Θ( n  +  m ). 
+
+ To determine the running time of the algorithm, we'll consider the steps separately. 
+
+   Step 
+     Running Time 
+     Commentary 
+     Initializing counters 
+     Θ( m ) 
+     We first have to initialize all of the counters to zero.  There are  m  of them. 
+     Counting occurrences 
+     Θ( n ) 
+     Here, we iterate through the  n  elements and incrementing the appropriate counter for each one. 
+     Determining offsets 
+     Θ( m ) 
+     The offsets are determined by iterating through the counters and adding each one to a running sum.  There are  m  counters and  m  offsets. 
+     Copying elements into target 
+     Θ( n ) 
+     There are  n  elements to copy, each of which can be copied into the right position in Θ(1) time, because the offset tells us definitively what that position is. 
+     TOTAL 
+     Θ( n  +  m ) 
+     The big question, of course, is whether this is a good result.  How good (or bad) is Θ( n  +  m )?  Generally, it depends very much on what  m  is.  What this analysis tells us is that this algorithm would be a very interesting choice  if and only if  the number of elements  n  is large  and  the number of possible keys  m  is small.  If, for example, the keys are arbitrary 32-bit integers, we would need over four billion counters and offsets!  But if we had a large number of elements with keys in the range 0..9, this algorithm would potentially be a good choice.  When  n  &gt;&gt;  m , this algorithm is more or less linear with respect to  n : just what we've been looking for, albeit only in a very narrowly-defined circumstance. 
+
+ Note, also, that this algorithm is stable.  Given multiple elements that have the same key, we'd iterate through them and also copy them into the target array in a left-to-right fashion.  As we'll see, this turns out to be an important fact. 
+
+ 
+
+ 
+
+  Radix sort 
+
+ While counting sort sounds at first like a promising choice, some analysis leads us to the grim conclusion that it's only useful in an extremely narrow circumstance: when we have a large number of elements with integer keys that are in a very small range.  Suppose we wanted to sort students by their UCI student ID numbers.  UCI student IDs are eight-digit numbers, so counting sort would be an severely impractical choice, because it would need 100,000,000 counters and offsets; in that case, the  m  dwarfs the  n  and we'd be crazy to use counting sort. 
+
+ All is not lost, though; we just have to be a little more creative.  To keep the example simpler, suppose we had this sequence of three-digit positive integers and we wanted to sort them — though what we're about to see would work on eight-digit student ID numbers, as well. 
+
+   315 
+     412 
+     597 
+     264 
+     531 
+     587 
+     972 
+     935 
+     239 
+     842 
+     To perform a counting sort on these would be silly; we'd need many more counters and offsets than we have elements to sort.  But there is a trick we could employ: sort by a single digit at a time.  If we're careful about how we do it, we can make it work.  Then the only question will be whether it works well or not. 
+
+ An algorithm that can sort elements one digit at a time is called  radix sort  — or, more specifically,  least-significant-digit radix sort .  (There is also a  most-significant-digit radix sort , which works somewhat differently, and is beyond the scope of our work here.)  Here's how radix sort works: 
+
+  Choose a  radix , which is the weight of each digit that we want to sort by.  If we wanted to sort by one base-10 digit at a time, the radix would be 10.  (In practice, we might also choose a power of 2, such as 16, which would make some of the algorithm's calculations run faster.) 
+   Given that radix and an array of elements to sort, sort the elements based only on the least-significant (i.e., rightmost) digit.  If the radix is 10, we're talking about the rightmost base-10 digit, so we would treat 412 as coming before 315, since the last digit of 412 is 2 and the last digit of 315 is 5. 
+   Next, we'll sort the elements again by the next-least-significant digit (i.e., the digit to the left of the rightmost digit).  Again, we'll ignore the other digits and focus only on the one we're presently interested in. 
+   We'll continue sorting the elements by one digit at a time until we finally sort by the most-significant (i.e., leftmost) digit. 
+  At first blush, this sounds like it couldn't possibly work, because whatever work we do in the first pass — sorting by the least-significant digit — will be undone in the second.  And if we weren't careful, that would be true.  But here's the important thing: If we use a stable sorting algorithm each time we sort by one digit, then the right thing happens automatically.  During the second pass, when two elements have the same second-least-significant digit, their relative order will be maintained; that relative order will be correct already for the least-significant digit.  The numbers 315 and 412 in our example sequence will be swapped (412 before 315) in the first pass, and remain unchanged in the second pass.  So, ultimately, when the  i   th   pass is completed, the element will be sorted by their  i  least-significant digits. 
+
+ A handy sorting algorithm we could use in each pass would be counting sort, which we saw previously.  If the radix is small, the number of possible keys will be quite small, which is precisely the circumstance where counting sort excels. 
+
+ Returning to our example, the array starts out this way: 
+
+   315 
+     412 
+     597 
+     264 
+     531 
+     587 
+     972 
+     935 
+     239 
+     842 
+     We would first do a counting sort on the rightmost digit of the numbers, ignoring the other digits.  Since counting sort is stable, the result would look like this.  (Run through the counting sort algorithm on paper to verify these results.) 
+
+   531 
+     412 
+     972 
+     842 
+     264 
+     315 
+     935 
+     597 
+     587 
+     239 
+     Next, we would do another counting sort on the middle digit, again ignoring the other digits.  But because counting sort is stable, the result will be that the numbers are sorted by the combination of the middle and last digits. 
+
+   412 
+     315 
+     531 
+     935 
+     239 
+     842 
+     264 
+     972 
+     587 
+     597 
+     Finally, we would do one more counting sort on the leftmost digit, which would lead to our final result: 
+
+   239 
+     264 
+     315 
+     412 
+     531 
+     587 
+     597 
+     842 
+     935 
+     972 
+     Analysis 
+
+ There are a few variables that we need to consider in our analysis, each of which can vary independently from the others. 
+
+  We'll say that  n  is the number of elements we're sorting. 
+   The radix — the number of possible values each digit can have — will be denoted by  r .  Note that this doesn't necessarily have to be 10; a power of 2 (such as 16) makes a nice choice in practice, since operations like division and modulo will be a lot faster with a divisor that is a power of 2. 
+   We'll use  w  to represent the  width  of the numbers — the number of digits, at most, that each number can have.  (In our example above,  w  would be 3.) 
+  We'd need to run  w  passes of counting sort, one for each digit that each number can have.  We saw before that counting sort runs in Θ( n  +  m ) time, where  n  is the number of elements we're sorting and  m  is the number of possible keys there are.  So, in this case, each counting sort pass would take Θ( n  +  r ) time, since  r  (the radix) would be the number of possible keys used in the counting sort. 
+
+ If we run  w  iterations of an algorithm that takes Θ( n  +  r ) time, the total time required would be Θ( w ( n  +  r )). 
+
+ At a glance, that doesn't look like linear time — and, technically, it isn't.  But think about a scenario where you'd be interested in using radix sort.  Suppose you're sorting 30,000 students by their UCI student ID numbers.  If the radix was 10, then the width of the numbers would be 8 — student ID numbers have eight digits.  So think about the variables at work here: 
+
+   n  = 30,000 
+    r  = 10 
+    w  = 8 
+  As a practical matter, Θ( w ( n  +  r )) feels a lot like Θ( n ) in this case, because both  w  and  r  are much smaller than  n . 
+
+ In general, where radix sort can excel is when sorting a large number of elements that can cheaply be broken down into a relatively small number of digits; in a case like that, the behavior approaches Θ( n ). 
+
+ 
+
+</body> 

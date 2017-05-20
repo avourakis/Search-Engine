@@ -1,0 +1,144 @@
+ 11.1 Determining bonds from 3D coordinates<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11. Connectivity Processing 
+ Up:   11. Connectivity Processing 
+ Next:   11.2 Kekule Form Assignment 
+   
+
+
+  
+11.1 Determining bonds from 3D coordinates 
+ 
+
+ 
+For file formats that provide 3D coordinates, but not explicit bond
+information (or only partial bond information), OEChem uses the
+OEDetermineConnectivity function.  This function deduces the pattern
+of covalent bonding in a molecule from the proximity of atoms.  Two
+atoms are considered bonded if they within the sum of their covalent
+radii plus an additional ``slop'' factor of 0.45 Angstroms.  The
+covalent radii used are those prescribed by the Cambridge
+Crystallographic Database.  The values used for the common organic
+subset of elements is given by the table below.
+
+  
+    
+ 
+   Table 11.1:</strong>
+Covalent Radii in OEChem 
+  
+ 
+    Element  
+  Symbol  
+  Number  
+  Covalent Radius  
+   Hydrogen 
+ H 
+ 1 
+ 0.23 
+   Boron 
+ B 
+ 5 
+ 0.83 
+   Carbon 
+ C 
+ 6 
+ 0.68 
+   Nitrogen 
+ N 
+ 7 
+ 0.68 
+   Oxygen 
+ O 
+ 8 
+ 0.68 
+   Fluorine 
+ F 
+ 9 
+ 0.64 
+   Silicon 
+ Si 
+ 14 
+ 1.20 
+   Phosphorus 
+ P 
+ 15 
+ 1.05 
+   Sulfur 
+ S 
+ 16 
+ 1.02 
+   Chlorine 
+ Cl 
+ 17 
+ 0.99 
+   Arsenic 
+ As 
+ 33 
+ 1.21 
+   Selenium 
+ Se 
+ 34 
+ 1.22 
+   Bromine 
+ Br 
+ 35 
+ 1.21 
+   Tellurium 
+ Te 
+ 52 
+ 1.47 
+   Iodine 
+ I 
+ 53 
+ 1.40 
+         
+  
+These values may also be retrieved from OEChem using the
+OEGetCovalentRadius function.
+
+  
+OEDetermineConnectivity will not create a bond between two atoms that
+are less than 0.4 Angstroms apart.  Such unreasonably short bond
+lengths indicate the structure is either severely distorted, or
+doesn't have coordinate information at all.  All bonds created by
+OEDetermineConnectivity have bond orders set to one.  To perceive bond
+order information, see OEChem's OEPerceiveBondOrders function
+described below.
+
+  
+The OEDetermineConnectivity function checks whether a bond already
+exists between two atoms before creating a new bond.  This allows this
+function to be used with file formats that may specify partial
+connectivity, such as only multiple (double, triple or quadruple)
+bonds.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   11. Connectivity Processing 
+ Up:   11. Connectivity Processing 
+ Next:   11.2 Kekule Form Assignment 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

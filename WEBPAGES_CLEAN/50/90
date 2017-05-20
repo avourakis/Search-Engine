@@ -1,0 +1,104 @@
+ VHDL Reference Guide - Arrays<body>  This is Google's cache of  http://www.vdlande.com/VHDL/arrays.html . It is a snapshot of the page as it appeared on Sep 26, 2009 14:09:54 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  reference   guide   vdlande       
+
+
+
+
+ 
+   Arrays  
+        Declaration 
+ ---- used in ----&gt; 
+ Package Entity Architecture Process Procedure Function 
+            Syntax        
+  
+
+ 
+     type  type_name  is array  (range)  of  element_type; 
+    
+  
+
+ 
+See LRM section 3.2.1
+
+         Rules and Examples        
+  
+
+ 
+    An  array contains multiple elements of the same type.
+When an array object is declared, an existing array type must be used.
+ type NIBBLE is array (3 downto 0) of std_ulogic;
+type RAM is array (0 to 31) of integer range 0 to 255;
+signal A_BUS : NIBBLE;
+signal RAM_0 : RAM;
+  
+    
+
+ 
+    An array type definition can be  unconstrained , i.e. of undefined length.
+ String, bit_vector  and  std_logic_vector  are defined in this way. An object
+(signal, variable or constant) of an unconstrained array type must have it's index type
+range defined when it is declared.
+ type INT_ARRAY is array (integer range &lt;&gt;) of integer;
+variable INT_TABLE: INT_ARRAY(0 to 9);
+variable LOC_BUS : std_ulogic_vector(7 downto 0);
+  
+     
+    Arrays with character elements such as  string, bit_vector  and  std_logic_vector 
+may be assigned a literal value using double quotes (see  literals) :
+ CONSTANT MSG_o: string := "Test 1 Completed";
+...
+A_BUS &lt;= "0000";
+LOC_BUS &lt;= "10101010";
+  
+    
+
+ 
+    Arrays may also be assigned using  concatenation  (&amp;),  aggregates ,
+ slices , or a mixture. By default, assignment is made be  position. 
+ A_BUS &lt;= (A_BIT, B_BIT, C_BIT, D_BIT);
+-- an equivalent assignment:
+A_BUS &lt;= (A_BIT &amp; B_BIT &amp; C_BIT &amp; D_BIT);
+-- rotate A_BUS to the left:
+A_BUS &lt;= A_BUS(2 downto 0) &amp; A_BUS(3);;
+ 
+ 
+     
+    Arrays of arrays may be declared. These are useful for memories, vector tables, etc.:
+ type NIBBLE is array (3 downto 0) of std_ulogic;
+type MEM is array (0 to 7) of NIBBLE;
+-- an array "array of array" type
+variable MEM8X4 : MEM;
+...
+-- accessing the whole array:
+MEM8X4 := ("0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111");
+-- accessing a "word"
+MEM8X4(5) := "0110";
+-- accessing a single bit
+MEM8X4(6) (0) := '0';
+  
+     
+    True two (or more) dimensional arrays may also be declared:
+ type T_2D is array (3 downto 0, 1 downto 0) of integer;
+signal X_2D : T_2D;
+...
+X_2D &lt;= ((0,0), (1,1), (2,2), (3,3));
+X_2D(3,1) &lt;= 4;
+  
+    
+
+ 
+         Synthesis Issues        
+
+Most logic synthesis tools accept one-dimensional  arrays  of other supported types.
+1-D arrays of 1-D arrays are often supported. Some tols also allow true 2-D arrays, but not more dimensions.
+  
+Note that arrays are usually implemented using gates and flip-flops, not ROM's and RAM's.
+  
+
+ 
+         Whats New in '93        
+
+Array types have not changed in  VHDL -93.
+
+  
+  </body> 

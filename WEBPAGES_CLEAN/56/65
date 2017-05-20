@@ -1,0 +1,25 @@
+ // Test of closest pair algorithms
+// David Eppstein, UC Irvine, 19 Apr 1997
+//
+// Brute force closest pair algorithm implementation
+
+#include "BruteForce.h"
+#include "Error.h"
+
+BruteForceCP::~BruteForceCP()
+{
+	delete points;
+	delete where_are_the_points;
+}
+
+BruteForceCP::BruteForceCP(long np, long max_points, Distance &amp; d)
+	: ClosestPairs(np, max_points, d), dist(d)
+{
+	points = new point[max_points];
+	where_are_the_points = new point[max_points];
+	if (points == 0 || where_are_the_points == 0)
+		error("BruteForceCP: unable to initialize arrays, out of memory");
+
+	npoints = np;
+	gInsertions += np;
+	for (long i = 0; i  

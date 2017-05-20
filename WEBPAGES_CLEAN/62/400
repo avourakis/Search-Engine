@@ -1,0 +1,339 @@
+ Git tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+ 
+ This is an old revision of the document!</strong>
+ 
+  
+ Table of Contents 
+ 
+
+     Setting up git   
+     Mandatory setup    
+    Ignoring files    
+  
+    Git workflow   
+     Simple workflow    
+    Add-commit workflow    
+    Fetch-merge workflow    
+  
+    I've made a huge mistake...    
+    Best practices   
+     Tagging versions    
+  
+    Tips &amp; tricks   
+     What repositories do I have access to?    
+    Word level diffs    
+  
+    Other resources      
+ 
+
+
+
+
+  Git tutorial  
+ 
+
+ 
+Under construction   
+
+ 
+
+  Setting up git  
+ 
+
+ 
+
+  Mandatory setup  
+ 
+
+ 
+At the very least you will need to tell git who you are. The following two commands will set your name and email address. This information will show up in the commit log.
+
+ 
+ git config  --global  user.name  "Your Name" 
+git config  --global  user.email  "your_email@whatever.edu"  
+
+ 
+
+If you have  Gravatar  account, the associated image will appear in many git  GUI  programs.
+ 
+
+ 
+
+  Ignoring files  
+ 
+
+ 
+  
+
+ 
+
+  Git workflow  
+ 
+
+ 
+
+  Simple workflow  
+ 
+
+ 
+The first step is to clone the repository you will be working in. To clone a repository with the name  repo-name  use the following command:
+
+ 
+ git clone git @ redwood.ics.uci.edu:repo-name 
+
+ 
+Before a file can be tracked by the version control it will need to be added to the repository. To add the file  foo.bar  to the repository use the following command:
+
+ 
+ git add foo.bar 
+
+ 
+When you have edited files to the point where you are ready to “check in” your changes, you can use can use the following command to commit all changes.
+
+ 
+ git commit  -a  
+
+ 
+In git commits are only to your local repository. To share your local commits with your coauthors you use the push command.
+
+ 
+ git push 
+
+ 
+On the first push to an empty repository you will get the error:
+
+ 
+ 
+No refs in common and none specified; doing nothing.
+Perhaps you should specify a branch such as 'master'.
+fatal: The remote end hung up unexpectedly
+error: failed to push some refs to '&lt;repo name&gt;'
+ 
+
+ 
+
+For the first push you will need to specify the full branch name with the command:
+
+ 
+ git push origin master 
+
+ 
+
+This only needs to be done once per repository.
+ 
+
+ 
+To receive the commits of your coauthors you use the pull command.
+
+ 
+ git pull 
+
+ 
+
+Make sure you have committed all local changes before pulling.
+ 
+
+ 
+
+  Add-commit workflow  
+ 
+
+ 
+
+  Fetch-merge workflow  
+ 
+
+ 
+
+  I've made a huge mistake...  
+ 
+
+ 
+
+  Best practices  
+ 
+
+ 
+
+  Tagging versions  
+ 
+ git tag WADS2013-submission 
+
+ 
+To move a tag you do the same thing, but you need to for the tag to move with -f
+
+ 
+ git tag WADS2013-submission  -f  
+
+ 
+
+  Tips &amp; tricks  
+ 
+
+ 
+
+  What repositories do I have access to?  
+ 
+  ssh   -T  git @ redwood.ics.uci.edu 
+
+ 
+
+  Word level diffs  
+ 
+
+ 
+  
+
+ 
+
+  Other resources  
+ 
+     Git Immersion : A general git tutorial. 
+ 
+    Pro Git : An online book on git. 
+ 
+    Git - SVN Crash Course : Compares git with subversion 
+ 
+    Collaborating with LaTeX and git : Blog post. 
+ 
+    git + LaTeX workflow : A stackoverflow post. 
+ 
+  
+
+    
+      
+   
+  
+
+  
+    
+     Trace:   »    Git tutorial  
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/git_tutorial.1362022947.txt.gz · Last modified: Thu Feb 28 03:42:27 2013 by michael  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

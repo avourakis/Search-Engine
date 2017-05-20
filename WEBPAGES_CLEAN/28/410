@@ -1,0 +1,63 @@
+ Multifragment TSP heuristic in R^20<body>
+  Test of Closest Pair Data Structures  
+ Multifragment TSP heuristic in R 20  
+
+    
+     Brute Force 
+     Neighbors 
+     Quadtree 
+     Conga Line 
+     MultiConga 
+     FastPair     n  = 250 
+      8.89s  
+      0.36s  
+       0.21s   
+      1.50s  
+      0.49s  
+      0.22s     500 
+      80.48s  
+      1.56s  
+      1.07s  
+      7.83s  
+      2.05s  
+       1.04s      1000 
+      667.60s  
+      6.48s  
+      4.77s  
+      40.36s  
+      9.03s  
+       4.33s      2000 
+       
+      31.45s  
+       
+      214.28s  
+      45.73s  
+       20.96s      4000 
+       
+      141.75s  
+       
+      1195.54s  
+      211.04s  
+       98.09s      8000 
+       
+      592.23s  
+       
+       
+      912.09s  
+       425.53s      16000 
+       
+      2417.69s  
+       
+       
+      3858.78s  
+       1800.13s      A traveling salesman tour was formed by starting with fragments 
+consisting of isolated points, and repeatedly choosing the shortest edge 
+combining a pair of fragments. Points were placed 
+uniformly at random in the unit hypercube.Times include only the 
+construction of the closest pair data structure and algorithm execution 
+(not the initial point placement) and are averages over ten runs.  The 
+quadtree data structure was only run on data sets of 1000 or fewer points 
+due to its high storage requirements.  Code was written in C++, compiled 
+and optimized by Metrowerks Codewarrior 10, and run on a 200MHz PowerPC 
+603e processor (Apple Powerbook 3400c).
+ </body> 

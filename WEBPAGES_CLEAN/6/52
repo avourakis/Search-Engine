@@ -1,0 +1,99 @@
+ VHDL Reference Guide - Component Instantiation<body>  This is Google's cache of  http://www.vdlande.com/VHDL/compinst.html . It is a snapshot of the page as it appeared on Oct 15, 2009 22:32:49 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl   list       
+
+
+
+
+
+ 
+   Component Instantiation  
+        Concurrent Statement 
+ ---- used in ----&gt; 
+ Architecture 
+            Syntax        
+  
+
+ 
+     instance_label: component_name
+	 generic map  (generic_association_list)
+	 port map  (port_association_list);
+  
+    
+  
+
+ 
+See LRM section 9.6
+
+         Rules and Examples        
+  
+
+ 
+    The instance label is compulsory. The component name must match the
+relevant component declaration. architecture STRUCT of INC is
+  signal X,Y,S,C : bit;
+  component HALFADD
+    port(A,B : in bit;
+         SUM, CARRY : out bit);
+  end component;
+begin
+  U1: HALFADD port map (X,Y,S,C);
+  -- other statements
+end STRUCT;
+  
+    
+  
+
+ 
+    The association  list  defines which local signals connect to which
+component ports. The association  list  above is  positional , i.e.
+the signals are connected up in the order in which the ports were
+declared.
+ 
+    
+
+ 
+    the alternative is  named association , where ports are
+explicitly referenced and order is not important: ADDER1: HALFADD port map
+    (  B =&gt; Y,     A =&gt; X,
+     SUM =&gt; S, CARRY =&gt; C);
+  
+    
+  
+
+ 
+    Ports may be left unconnected using the keyword  open : ADDER2: HALFADD port map
+  (B=&gt;Y,A=&gt;X,SUM=&gt;S,CARRY=&gt;open);
+  
+    
+  
+
+ 
+    An instance of a component with generics, has a  generic map 
+declared before the port map: U1 : PARITY
+  generic map (  N =&gt; 8)
+  port map    (  A =&gt; DATA_BYTE,
+               ODD =&gt; PARITY_BYTE);
+  
+    
+
+ 
+         Synthesis Issues        
+  
+
+Component instantiation is supported for synthesis, although  generic
+map  is usually ignored. Whether a logic synthesis tool will "flatten
+through" a component, treat it as a "black box", or recognise it as a
+primitive is usually under the user's control.
+
+ 
+         Whats New in '93        
+
+In  VHDL -93, an entity-architecture pair may be directly instantiated,
+i.e. a component need not be declared. This is more compact, but does
+not allow the flexibility of configuration  DIRECT: entity HA_ENTITY(HA_ARCH)
+              port map (A,B,S,C);
+ 
+
+ 
+
+  </body> 

@@ -1,0 +1,146 @@
+ GoogleTest Installation and Use in Eclipse/C++ Instructions<body>
+
+ 
+ GoogleTest Installation for Eclipse/C++ Instructions 
+ 
+  
+  
+These instructions review how to install the GoogleTest unit testing
+  framework library folder ( googletestlib ) in Eclipse/C++.
+Then they explain how to create a project that uses the library.
+At various times during the quarter you will be supplied with unit tests to
+  run on the code you are writing.
+We often grade programs using these unit tests may be asked to replace various
+   .hpp  or  .cpp  files and recompile the library.
+  
+   Googletestlib Installation (Quick!) 
+  Download and unzip the
+        googletestlib.zip   file;
+    the result is a  googletestlib  folder.
+ 
+   Locate the workspace folder 
+      (typically  C:\Users\ yourname \workspace )
+      and put the  googletestlib  folder you downloaded and unzipped into
+      this workspace folder.
+    This folder contains  .a  files (groups of  .o  files) that allow
+      us to perform unit tests easily on the code that we develop.
+   
+
+   
+
+  Creating a Project that Uses the Googletestlib 
+  Download and unzip the
+        test_googletest.zip   file;
+    the result is a  googletest  folder.
+ 
+
+   Put the  googletest  folder you downloaded and unzipped into
+     the workspace folder (mentioned above).
+
+ 
+   Create a project from this folder.
+Normally you will perform the steps needed to ensure this program uses the
+   courselib  correctly, but this simple test does not require these 
+ steps, so they are not included in this document.
+ 
+
+   Right-click the  test_googletest  icon in the  Project Explorer 
+      tab.
+     
+   Select  Properties  which appears at the bottom as follows.
+ 
+
+   In the  Properties for test_googletest  popup window
+    Under  type filter text , disclose  C/C++ Build  and
+          select  Settings .
+      Under the  Tool Settings  tab, under  GCC C++ Compiler 
+          select  Miscellaneous .
+      In the  Other flags  textbox, type  -std=gnu++11  at the
+          end.
+      Click  Apply .
+     
+
+       Under the  Tool Settings  tab, under  GCC C++ Compiler 
+          select  Includes .
+      In the  Include paths (-I)  pane,
+          click the  add  icon  .
+      In the  Add directory path  popup window,
+          click the  File system...  button.
+      In the  Browse For Folder  popup window,
+          navigate to and select the  include  folder in the
+           googletestlib  folder in the Eclipse workspace.
+      Click  OK  in the  Browse For Folder  popup window.
+      Click  OK  in the  Add directory path  popup window.
+      The  Properties for test_googletest  popup window should
+          appear as follows (your folder names may be a bit different).
+          
+            
+       Click  Apply .
+     
+       Under the  Tool Settings  tab, under  MinGW C++ Linker 
+          select  Libraries .
+      In the  Libraries (-l)  pane,
+          click the  add  icon  .
+      In the  Enter Value  popup window,
+          enter  gtest  in the textbox.
+      Click  OK  in the  Enter Value  popup window.
+     
+       In the  Library search path (-L)  pane,
+          click the  add  icon  .
+      In the  Add directory path  popup window,
+         click the  File system...  button.
+      In the  Browse For Folder  popup window,
+          navigate to and select the  make  folder in the
+           googletestlib  folder in the Eclipse workspace.
+      Click  OK  in the  Browse For Folder  popup window.
+      Click  OK  in the  Add directory path  popup window.
+      The  Properties for test_googletest  popup window should
+          appear as follows (your folder names may be a bit different).
+           
+             
+           Click  Apply .
+        
+
+       Click  OK .
+     
+
+   Disclose the  test_googletest  icon in the  Project Explorer . 
+    Disclose the  src  icon in the  Project Explorer ,  which appears
+       as follows.
+     
+       
+    Examine the  counter  files (both  .hpp  and  .cpp ), which
+      describe a trivial class.
+    The  test_counter.cpp  is the code that is run by GoogleTest.
+
+   Double-click the  test_counter.cpp  icon.
+The  test_counter.cpp  editor tab appears as follows (ignore the errors).
+     
+       
+
+
+   Either click the  Hammer  icon   or 
+      right-click in the  test_googletest  icon in the
+       Project Explorer 
+      tabl and select  Build Project .
+    The Console window should show the following.
+     
+       
+
+   Either click the  Run  icon   or 
+      right-click in the  test_counter.cpp  editor tab and select
+      select  Run As | 1 Local C/C++ Application  illustrated below.
+       
+    The program should begin running and the Console window should show the
+      following.
+      
+       
+    The output shows passed and failed tests.
+    Examine the  counter  files (both  .hpp  and  .cpp ), which
+      describe a trivial class, and the  test_counter.cpp  which contains
+      the code that is run by GoogleTest to see why the first test passed and
+      the second one failed.
+    
+   
+
+ </body> 

@@ -1,0 +1,251 @@
+ CHEM.Annotation.ChemicalAnnotators.EnthalpyAnnotator<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Annotation  ::
+         Module ChemicalAnnotators  ::
+        Class EnthalpyAnnotator
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class EnthalpyAnnotator    
+BaseAnnotator.BaseAnnotator --+    
+                              |    
+  BaseAnnotator.SingleAnnotator --+
+                                  |
+                                  EnthalpyAnnotator</strong>
+ 
+
+  Predicts the enthalpy (heat) of formation for the molecule, based on 
+  linear regression of simple tree, ring and aromaticity features for 
+  now. 
+  DocTest examples.  Specific values provided will likely not be precise
+  as try to improve accuracy with different methods, etc.
+ 
+ &gt;&gt;&gt;  annotator = EnthalpyAnnotator();
+ &gt;&gt;&gt;   print   "%.1f"  % callBySmiles( annotator,  "CC(N)O" )[0];
+ 112.1 
+   &gt;&gt;&gt;   print   "%.1f"  % callBySmiles( annotator,  "CC1NCOCO1" )[0];
+ 424.8      
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Always set specificCols to None, doesn't make sense to filter a 
+      single annotator that can only produce 1 value. 
+           
+            
+            
+           
+           
+     
+         
+      
+             getFeatureValueFilename ( self )  
+      Return the full path to the file containing the feature values 
+      needed to make predictions for new molecules. 
+           
+            
+            
+           
+           
+     
+         
+      
+           allColumns ( self )  
+      Return an ordered sequence of all the column names that this 
+      multiple annotator can generate values for. 
+           
+            
+            
+           
+           
+     
+         
+      
+           allValues ( self ,
+         input )  
+      Return an ordered sequence of all the values this multiple 
+      annotator can calculate off of the input. 
+           
+            
+            
+           
+           
+     
+      Inherited from  BaseAnnotator.SingleAnnotator  :
+       __call__ ,
+       columnName 
+       
+      Inherited from  BaseAnnotator.BaseAnnotator  :
+       annotateDict ,
+       iteritems ,
+       iterkeys ,
+       itervalues ,
+       keys ,
+       specifyColumns ,
+       values 
+       
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+           featureExtractors  =  [] 
+     
+     
+         
+      
+         featureRegression  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatching ...  
+     
+     
+         
+      
+         featureValueDict  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchingM ...  
+     
+     
+         
+      
+         __featureValueFilename  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMat ...  
+     
+     
+      Inherited from  BaseAnnotator.BaseAnnotator  :
+       specificCols 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Always set specificCols to None, doesn't make sense to filter a single
+  annotator that can only produce 1 value.
+    Overrides:
+       BaseAnnotator.SingleAnnotator.__init__ 
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     allColumns ( self ) 
+   
+     
+     
+     Return an ordered sequence of all the column names that this multiple 
+  annotator can generate values for. 
+  To facilitate ease of filtering with case-insensitivity, all of the 
+  values returned by this method should be lowercase.
+    Overrides:
+       BaseAnnotator.BaseAnnotator.allColumns 
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     allValues ( self ,
+         input ) 
+   
+     
+     
+    
+  
+  Return an ordered sequence of all the values this multiple annotator 
+  can calculate off of the input.  The order must correspond to the column 
+  list returned by allColumns so the caller can know which element is 
+  which.
+    Overrides:
+       BaseAnnotator.BaseAnnotator.allValues 
+           (inherited documentation)  
+    
+       
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   featureRegression 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   featureValueDict 
+  
+      Value: 
+           
+None
+     
+       
+  
+ 
+   
+   __featureValueFilename 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:26 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

@@ -1,0 +1,126 @@
+ Project RADICLE Website 
+
+ 
+
+  RADICLE     
+
+  Risk Aware Data Management in Cloud
+Environments     
+
+  Donald Bren School of Computer Science    
+
+  University of California, Irvine     
+
+
+
+ 
+
+ 
+
+       
+
+  Motivation     
+
+  As data management systems become more distributed, risk of
+data loss arises whenever data migrates from more secure environments to those
+that are less secure. One way to mitigate such risk is to identify components
+that are vulnerable, and fortify them with security solutions. Nonetheless,
+such actions cannot prevent attacks carried out by insiders. For example, a
+malicious database administrator would still have access to the sensitive data
+within the databases he or she manages. In other instances, performance
+overheads involved might prevent usage of strong security practices, such as  encrypting all sensitive data in motion or
+at rest . Hence, new security solutions need to be developed as data
+management systems become more distributed and migrate to the cloud.    
+
+       
+
+  Overview    
+
+  In this project, we take an alternate/complementary
+approach towards securing query processing for database workloads. We
+acknowledge the fact that  different
+system components/environments through which data moves during query processing
+offer different security guarantees . Instead of attempting to prevent or
+thwart attacks, we design risk aware query processing techniques that control
+how data flows through different components (in particular from more secure to
+less secure ones) such that the risk of loss of data, while not entirely eliminated,
+is substantially reduced. The major intuition behind our approaches is that
+migration/motion of data during query processing is primarily guided by
+efficiency concerns (such as, how much data to cache, how to access the data,
+via index or table scan etc.). Therefore, varying the characteristics of data
+movement through these components exposes a tradeoff between risk and
+performance.     
+
+  For instance, query processing on a typical database
+server requires that data be brought into memory and be kept in memory (cached)
+for as long as possible to prevent expensive disk I/ Os .
+Indeed, given the large amounts of data involved, often the primary
+optimization that database  servers  support is
+minimizing the number of disk I/ Os . However, longer
+the data resides in memory, larger the risk that it can be stolen through a
+variety of  memory scraping  attacks.
+Instead, an alternate strategy like  toss-immediately
+after use  may incur performance degradation, but significantly reduce risk
+of data loss. Likewise, consider  an  public-private
+hybrid cloud setup, where and organization utilizes the public cloud resources
+during peak demands to offload some of the work. Again, limiting the queries
+and data offloaded to the (less-trusted) public cloud can limit exposure risks.
+    
+
+  Given the potential tradeoffs between performance and
+risks of data loss, we postulate the problem of risk aware query processing
+wherein the goal changes from purely attempting to minimize costs (and hence
+maximize performance) to that of achieving a balance between performance and
+exposure risks. Given the above postulation, multi-criteria optimization
+techniques can be employed to achieve a balance between performance and
+exposure risk. Two specific settings could be: (a) optimize for performance
+while ensuring that exposure risks are constrained, or alternatively, (b)
+constrain the additional overhead of query processing, while minimizing the
+risk of data loss.     
+
+  The mechanisms we will design will address risk
+management at both the query optimization level, as well as, at the level of
+redesign of individual relational operators (such as joins, selections, etc.)
+so as to limit exposure risks. Additionally, we will explore data and workload
+partitioning methods for the hybrid cloud models that minimize exposure risks
+while ensuring performance goals.     
+
+       
+
+  Project Funding     
+
+  This project is partially supported by grants from  NSF  and NEC Labs, USA.     
+
+ 
+
+
+
+ 
+
+    Main Page     
+    News     
+    People     
+    Publications     
+    Related Links      
+        
+
+ 
+
+ 
+
+
+
+ 
+
+ 
+
+  © RADICLE |  Design
+by Cirkuit Networks, Inc. Modified by Kerim Yasin Oktay, ICS      
+
+ 
+
+ 
+
+ 
+
+</body> 

@@ -1,0 +1,58 @@
+ 3.12.12 SetExplicitHydrogens<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.11 NumReactants 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.13 SetStartingMaterial 
+   
+
+
+  
+3.12.12 SetExplicitHydrogens 
+ 
+   
+bool SetExplicitHydrogens(bool)
+    
+This variable sets the hydrogen handling mode for the
+ OELibraryGen  instance.   OELibraryGen  instance are
+constructed by default with the explicit hydrogen mode set to true.
+Reactions may be executed using either implicit or explicit hydrogens
+represented in the starting materials for a reaction.  If the value is
+true, the  OELibraryGen  instance will add explicit hydrogens to
+reactant molecules when they are initialized using either of the
+ SetStartingMaterial  methods.  If the value is false, then both of the
+ SetStartingMaterial  methods will suppress any explict hydrogens in the
+reactant molecules, and simply retain the implicit hydrogen counts for
+remaining non-hydrogen atoms.  The hydrogen handling mode must be
+assigned prior to calling  SetStartingMaterial .  Calling
+ SetExplicitHydrogens  after  SetStartingMaterial  will have not
+effect.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   3.12.11 NumReactants 
+ Up:   3.12 OELibaryGen 
+ Next:   3.12.13 SetStartingMaterial 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

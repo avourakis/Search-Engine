@@ -1,0 +1,138 @@
+ """IntegerPartitions.py
+
+Generate and manipulate partitions of integers into sums of integers.
+
+D. Eppstein, August 2005.
+"""
+
+import unittest
+
+def mckay(n):
+    """
+    Integer partitions of n, in reverse lexicographic order.
+    Note that the generated output consists of the same list object,
+    repeated the correct number of times; the caller must leave this
+    list unchanged, and must make a copy of any partition that is
+    intended to last longer than the next call into the generator.
+    The algorithm follows Knuth v4 fasc3 p38 in rough outline.
+    """
+    if n == 0:
+        yield []
+    if n  1) - 1
+    while True:
+        yield partition
+        if last_nonunit  1 and p[-1]  1 and p[-1] &gt;= 1
+    
+    # Find all partitions of numbers up to n into powers of two &gt; 1,
+    # in revlex order, by repeatedly splitting the smallest nonunit power,
+    # and replacing the following sequence of 1's by the first revlex
+    # partition with maximum power less than the result of the split.
+    
+    # Time analysis:
+    #
+    # Each outer iteration increases len(partition) by at most one
+    # (only if the power being split is a 2) and each inner iteration
+    # in which some ones are replaced by x decreases len(partition),
+    # so the number of those inner iterations is less than one per
+    # output.
+    #
+    # Each time a power 2^k is split, it creates two or more 2^{k-1}'s,
+    # all of which must eventually be split as well.  So, it S_k denotes
+    # the number of times a 2^k is split, and X denotes the total
+    # number of outputs generated, then S_k &gt; 1    # make the split!
+        last_nonunit += 1
+        while x &gt; 1:
+            if len(partition) - last_nonunit - 1 &gt;= x:
+                del partition[-x+1:]
+                last_nonunit += 1
+                partition[last_nonunit] = x
+            else:
+                x &gt;&gt;= 1
+
+def fixed_length_partitions(n,L):
+    """
+    Integer partitions of n into L parts, in colex order.
+    The algorithm follows Knuth v4 fasc3 p38 in rough outline;
+    Knuth credits it to Hindenburg, 1779.
+    """
+    
+    # guard against special cases
+    if L == 0:
+        if n == 0:
+            yield []
+        return
+    if L == 1:
+        if n &gt; 0:
+            yield [n]
+        return
+    if n  partition[1]:
+            partition[0] -= 1
+            partition[1] += 1
+            continue
+        j = 2
+        s = partition[0] + partition[1] - 1
+        while j = partition[0] - 1:
+            s += partition[j]
+            j += 1
+        if j &gt;= L:
+            return
+        partition[j] = x = partition[j] + 1
+        j -= 1
+        while j &gt; 0:
+            partition[j] = x
+            s -= x
+            j -= 1
+        partition[0] = s
+
+def conjugate(p):
+    """
+    Find the conjugate of a partition.
+    E.g. len(p) = max(conjugate(p)) and vice versa.
+    """
+    result = []
+    j = len(p)
+    if j = p[j-1]:
+            j -= 1
+            if j == 0:
+                return result
+    
+# If run standalone, perform unit tests
+
+class PartitionTest(unittest.TestCase):
+    counts = [1,1,2,3,5,7,11,15,22,30,42,56,77,101,135]
+
+    def testCounts(self):
+        """Check that each generator has the right number of outputs."""
+        for n in range(len(self.counts)):
+            self.assertEqual(self.counts[n],len(list(mckay(n))))
+            self.assertEqual(self.counts[n],len(list(lex_partitions(n))))
+            self.assertEqual(self.counts[n],len(list(revlex_partitions(n))))
+
+    def testSums(self):
+        """Check that all outputs are partitions of the input."""
+        for n in range(len(self.counts)):
+            for p in mckay(n):
+                self.assertEqual(n,sum(p))
+            for p in revlex_partitions(n):
+                self.assertEqual(n,sum(p))
+            for p in lex_partitions(n):
+                self.assertEqual(n,sum(p))
+    
+    def testRevLex(self):
+        """Check that the revlex generators' outputs are in revlex order."""
+        for n in range(len(self.counts)):
+            last = [n+1]
+            for p in mckay(n):
+                self.assert_(last &gt; p)
+                last = list(p)  # make less-mutable copy
+            last = [n+1]
+            for p in revlex_partitions(n):
+                self.assert_(last &gt; p)
+                last = list(p)  # make less-mutable copy
+
+    def testLex(self):
+        """Check that the lex generator's outputs are in lex order."""
+        for n in range(1,len(self.counts)):
+            last = []
+            for p in lex_partitions(n):
+                self.assert_(last  

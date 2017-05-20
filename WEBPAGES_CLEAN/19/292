@@ -1,0 +1,186 @@
+ Dave Long's Slides for San Mateo Distributed Authoring Meeting<body>
+
+ 
+ AOLpress/AOLserver 
+
+ Dave Long 
+America Online, Santa Barbara 
+
+ 
+ dave@sb.aol.com 
+ 
+ 
+
+ 
+ AOLserver "webstore" 
+   
+current version of resource in filesystem   
+meta-data, indices, etc. in database
+  
+DBMS not required; "stackable" with other servers    
+ HTML source 
+   
+With server-side includes and other dynamic content, how does one request the "original" page? 
+(Accept: text/x-html-ssi ?)
+  
+How much canonicalizing should an authoring tool attempt?  (more palatable when pretty-printed, line-break conventions preserved)    
+ Rewriting relative links... 
+   
+duck the issue - do nothing
+  
+duck the issue - use collections
+  
+user-specified (state space?)
+  
+template specified
+   
+ Rewriting relative links... 
+   
+user-specified: by type
+  
+convert { none, relative links, all }
+  
+convert relative to absolute
+    
+template-specified: for &lt;APPLET&gt; specifies which &lt;PARAM&gt;s can be rewritten (as above)    
+ Lost Update 
+   
+do nothing (ostriching)
+  
+detect lost updates (versioning)
+  
+prevent lost updates\tab (locking)
+  
+fairness issues (leasing)
+   
+ Lost Update - versioning 
+   
+reads include "Content-Version:" headers   
+writes provide "Derived-From:" headers
+  
+server prevents dirty writes
+  
+solves the "CREATE" problem
+  
+header syntax has changed for HTTP/1.1
+   
+ Lost Update - locking 
+   
+LOCK/UNLOCK methods
+  
+"Locked-By:" header
+  
+use OPTIONS to detect server support
+  
+runs on top of Content-Version scheme
+  
+fair UNLOCK? collaborative groups hopefully share trust!    
+ Access Control 
+   
+users / groups (multiple membership)
+  
+METHOD URL (specific/inherited)
+  
+machine address (netmask)
+   
+ Access Control List 
+   
+METHOD+aliases URL (+inheritance)
+  
+allow/deny (user0 user1 ... userN)
+  
+allow/deny (group0 group1 ... groupN)
+  
+allow + deny (netmask0 netmask1 ... netmaskN)    
+ Versions 
+   
+resource revisions are timestamped and saved   
+accessed through prefixed URL, therefore   
+relative links, images, resolved as of that revision's timestamp   
+absolute links? version != snapshot?
+   
+ PUT vs. POST to publish 
+   
+PUT method simplifies access control
+  
+PUT method simplifies infrastructure  caching proxies, gateways, etc...
+  
+general-use servers starting to support PUT    
+ namespace methods 
+   
+DELETE
+  
+MKDIR
+  
+BROWSE
+   
+ BROWSE sample 
+  HTTP/1.0 200 OK
+MIME-Version: 1.0
+Date: Tuesday, 09-Jul-96 23:35:44 GMT
+Server: NaviServer/2.0 AOLserver/2.033
+Content-Type: application/x-navibrowse
+Content-Length: 289
+
+application/x-navidir .
+text/html .odo.index.htm
+application/x-navidir download
+text/html download.html
+text/html feedback.html
+application/x-navidoc images
+text/html index.html
+application/x-navidoc press
+text/html search.html
+application/x-navidoc server
+application/x-navimap tools.nvm
+ 
+ 
+ URL mapping  
+magic URLs used for:  
+http://server/NS/operation/path... (or form data)    
+page permissions
+  
+page versions
+  
+administer server
+  
+PrimeHost Advanced Control Panel
+  
+use methods instead?
+   
+ PrimeHost Control Panel  
+linked to server administration page, provides    
+log analysis, log rolling
+  
+MIME type configuration
+  
+FTP reporting, configuration
+  
+email configuration: aliases/mailing lists    
+transparent extension!
+  
+ Server API's 
+   
+should we standardize?
+  
+can "stack" servers for some functionality   
+ISAPI is a possibility
+   
+ Editing variants 
+   
+editable variants have their own URLs
+  
+does this apply to versioning, as well?
+  
+assigning variants to resources similar to access control    
+ PICS, etc... 
+   
+data-driven support for metadata systems (such as PICs rating)   raters provide form-driven well-known URLs to produce their encoding?   
+old NaviPress "Describe" functionality  (forms-based association of metadata with resource)    
+ miscellanea 
+   
+cross-server searching (WAIS, MARC, ...)   
+cross-vendor AutoLinking?
+  
+better support for link checking (spec'd, just needs to be implemented?)    
+ </body> 

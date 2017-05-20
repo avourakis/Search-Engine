@@ -1,0 +1,55 @@
+ 20.3.2 OEGetDefaultMass<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20.3.1 OEGetAverageWeight 
+ Up:   20.3 Properties of the 
+ Next:   20.3.3 OEGetCovalentRadius 
+   
+
+
+  
+20.3.2 OEGetDefaultMass 
+ 
+
+ 
+ OEGetDefaultMass  returns an unsigned integer representing the most
+common (or default) isotope for an element.  For elements, such as
+Bromine that have two or more almost equally common isotopes, OEChem
+uses the same  default  mass as MDL.  This value is used when
+converting between OEChem's internal mass value,
+ OEAtomBase::GetIsotope , to and from MDL's mass differences.  For
+atomic number zero and values greater than or equal to
+ OEElemNo::MAXELEM , this function returns zero.  Remember that in
+OEChem, an isotopic mass of zero represents a composition of isotopes
+base upon their natural abundance (with average isotopic mass), but an
+explicit nonzero mass represents a single isotope (with monoisotopic
+mass).
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   20.3.1 OEGetAverageWeight 
+ Up:   20.3 Properties of the 
+ Next:   20.3.3 OEGetCovalentRadius 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

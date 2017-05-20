@@ -1,0 +1,52 @@
+ 15.16.5 open<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.16.4 flush 
+ Up:   15.16 oeostream 
+ Next:   15.16.6 putbyte 
+   
+
+
+  
+15.16.5 open 
+ 
+   
+bool open(const char        *name)
+bool open(const std::string &amp;name)
+bool open(unsigned char     *buffer, oefpos_t len)
+    
+Opens the output stream to the specified sources. Passing a  name 
+parameter will result in invocation of a protected virtual method
+to appropriate handle the specified output source. Passing a pointer to a
+character buffer along with the buffer's size will result in the stream
+wrapping the  buffer  and using that as the stream data destination.
+Returns whether or not data can now be written to the stream.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.16.4 flush 
+ Up:   15.16 oeostream 
+ Next:   15.16.6 putbyte 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

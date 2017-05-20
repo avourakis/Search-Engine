@@ -1,0 +1,53 @@
+ ICS 160E / EECS 114  - Programming Project 2<body>
+
+ 
+
+ ICS 160E / EECS 114 - Programming Project 2, 50 Points
+ 
+Due: Friday, May 6, 2005, at 11:59pm,
+using the
+ 
+Checkmate Submission System .
+ 
+
+ 
+
+ 
+Write a Java program that can play tic-tac-toe effectively.
+To do this, you will need to create a 
+ game tree   T , which is a tree where each node corresponds to
+a  game configuration , which in this case is a
+representation of the tic-tac-toe board.
+The root node corresponds to the initial configuration.
+For each internal node  v  in  T , the children of  v  correspond to
+the game states we can reach from  v 's game state in a single 
+legal move for the appropriate player,  A  (the first player) or  B 
+(the second player).
+Nodes at even depths correspond to moves for  A  and nodes at 
+odd depths correspond to moves for  B .
+External nodes are either final game states 
+or are at a depth beyond which we don't wish to explore.
+We score each external node with a value that indicates how
+good this state is for player  A .
+In large games, like chess, we have to use a heuristic scoring function,
+but for small games, like tic-tac-toe, we can construct
+the entire game tree and score external nodes as +1, 0,
+-1, indicating whether player  A  has a win, draw, or lose in that
+configuration.
+A good algorithm for choosing moves is \emph{minimax}.
+In this algorithm, we assign a score to each internal node  v  in  T , such
+that if  v  represents  A 's turn, we compute  v 's score as the
+maximum of the scores of  v 's children (which corresponds to  A 's
+optimal play from  v ).
+If an internal node  v  represents  B 's turn, then we compute  v 's
+score as the minimum of the scores of  v 's children (which
+corresponds to  B 's optimal play from  v ).
+
+  
+Note: you may use the following class in your program:
+     
+java.util.Scanner 
+  
+You may read expressions from System.in and output to System.out or
+use a GUI.
+</body> 

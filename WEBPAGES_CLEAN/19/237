@@ -1,0 +1,91 @@
+ PlanarMapDcel_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  PlanarMapDcel_2  
+ 
+
+A model for the   PlanarMapDcel_2   concept defines the underlying
+   combinatorial data structure (halfedge data structure) used in the
+   planar map data structure   Planar_map_2 &lt;Dcel,Traits&gt; .
+  
+
+The
+  PlanarMapDcel_2  
+concept is a refinement of the   TopologicalMapDcel  . Hence, the requirements for the latter are requirements for the former. 
+The difference in requirements is that the  
+
+
+ Vertex  and  Halfedge 
+
+
+types should be models of the more refined concepts 
+  PlanarMapDcelVertex_2   and   PlanarMapDcelHalfedge_2  .
+  
+
+  Types 
+           
+          PlanarMapDcel_2 ::Vertex
+         
+              
+    The vertex type. Should be a model of the
+         PlanarMapDcelVertex_2   concept.
+ 
+
+          
+          PlanarMapDcel_2 ::Halfedge
+         
+              
+    The halfedge type. Should be a model of the
+         PlanarMapDcelHalfedge_2   concept.
+ 
+
+     
+
+The concept   ArrangementDcel_2   is  not  (!) a refinement
+   of   PlanarMapDcel_2  . Using a model of the   ArrangementDcel_2   such as
+    CGAL::Arr_2_default_dcel&lt;Traits&gt;  will result in an error.
+  
+
+    Next:    PlanarMapDcelVertex_2   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

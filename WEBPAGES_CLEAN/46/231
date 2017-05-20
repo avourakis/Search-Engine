@@ -1,0 +1,896 @@
+ Alloy<body>
+
+ 
+
+ 
+Alloy
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+ Table of contents 
+
+ 
+    The Alloy logic  
+    Quick reference  
+    Signatures and relations  
+    Multiplicity constraints in declarations  
+    Disjointness   
+    Cardinality constraints   
+    The Alloy language  
+    Language constructs  
+    Which construct to use where?  
+    Functions  
+    Predicates  
+    Facts  
+    Assertions  
+     Learnt by experience   
+     When to use  @    
+ 
+
+
+ The Alloy logic 
+
+ 
+The Alloy logic is a first-order logic
+in which the domain is the set of all relations,
+and terms include relational expressions
+such as joins. 
+ 
+
+ 
+Everything in Alloy is a relation! 
+ 
+
+   A relation is a set of tuples of the same (positive) arity. 
+    Each tuple lists entities that are related to each other. 
+    The size of the relation
+    is the number of tuples;
+    the arity of the relation
+    is the arity of the tuples. 
+   
+    Sets are represented by unary relations. 
+    Each 1-tuple in the unary relation
+    contains an element of the set. 
+   
+    Scalars are represented by
+     singleton sets . 
+    Since a set is a unary relation,
+    an scalar is thus represented as a singleton (size 1) unary relation. 
+   
+  
+As a result,
+the operators apply to relations, sets, and scalars,
+and there are very few cases that produce no result. 
+ 
+
+ 
+Page numbers refer to
+Daniel Jackson,
+ Software Abstractions ,
+MIT Press 2006. 
+ 
+
+ 
+ How to update the book
+for Alloy 4 
+ 
+
+
+ Quick reference 
+
+    Set constants  50     univ
+       
+        The universal set
+       
+     none
+       
+        The  empty set 
+       
+         Relation constants  50     iden
+       
+       The  identity relation 
+       
+         Set operators  52     Symbol  Name  Result 
+     +
+       
+        Union 
+       
+       A set
+       
+     &amp;
+       
+        Intersection 
+       
+     -
+       
+        Difference 
+       
+     in
+       
+         Subset 
+       
+       T or F
+       
+     =
+       
+        Equality 
+       
+      
+ Set examples 
+ 
+
+    Relation operators  55     Symbol   Name   Syntax 
+     -&gt;
+       
+     (Arrow)  product 
+       
+      R1   -&gt; 
+       R2 
+       
+     .
+       
+      Join 
+       
+      R1   . 
+       R2 
+       
+     []
+       
+     Join (a second notation for it)
+       
+      R2 
+       [  R1  ] 
+       
+     ~
+       
+      Transpose 
+       
+      ~   R 
+       
+     ^
+       
+      Transitive
+      closure 
+       
+      ^   R 
+       
+     *
+       
+     Reflexive transitive closure
+       
+      *   R 
+       
+     &lt;:
+       
+     Domain restriction
+       
+      Set   &lt;: 
+       R 
+       
+     :&gt;
+       
+     Range restriction
+       
+      R   :&gt; 
+       Set 
+       
+     ++
+       
+     Override
+       
+      R1   ++ 
+       R2 
+       
+         Logical operators  69     Symbol  Keyword  Name or result 
+     !
+     
+     not
+     
+      negation 
+     
+     &amp;&amp;
+     
+     and
+     
+      conjunction 
+     
+     ||
+     
+     or
+     
+      disjunction 
+     
+     =&gt;
+     
+     implies
+     
+      implication 
+     
+     &lt;=&gt;
+     
+     iff
+     
+      logical
+      equivalence 
+     
+     
+     
+     else
+     
+      A  =&gt;  B   else   C 
+        ≡
+         (  A  &amp;&amp;  B  )||(!  A  &amp;&amp;  C  ) 
+     
+      
+  else  example 
+ 
+
+    Quantifiers/predicates  70     
+       
+       Quantification  Q var:set | formula  
+       Predicate on relations  Q e  
+     all
+       
+        universal 
+       
+       —
+       
+     some
+       
+        existential 
+       
+       size is 1 or greater
+       
+     no
+       
+       ¬∃
+       
+       size is 0
+       
+     lone
+       
+       zero or one exists
+       
+       size is 0 or 1
+       
+     one
+       
+       exactly one exists
+       
+       singleton
+       
+      
+ Relation and logic examples 
+ 
+
+     let   73      let   x  =
+         e  |  A 
+       
+        A  with every occurrence of
+         x  replaced by expression  e 
+       
+      Signatures and relations 
+
+ 
+(Parts of this subsection describe the
+ Alloy language .)
+ 
+
+ 
+Each set of atoms is defined by a
+ signature ,
+with keyword  sig . 
+ 
+
+ 
+A signature can contain
+zero or more relation  declarations , separated by commas.
+Each declaration names a (binary) relation
+between the set defined by the signature
+and a set or relation.
+ 
+
+ 
+  //  Simple example
+  abstract sig Person {     // Signature
+    father: lone Man,       //   A declaration
+    mother: lone Woman      //   Another declaration
+  }
+  sig Man extends Person {
+    wife: lone Woman
+  }
+  sig Woman extends Person {
+    husband: lone Man
+  }
+ 
+
+    Relationships among signatures     S   in 
+           T 
+        U   in 
+           T 
+       
+       subset
+       
+       Every
+           S 
+          is a
+           T ,
+       and
+       every
+           U 
+          is a
+           T 
+       
+       An
+           S 
+          can also be a
+           U 
+       
+      S   extends 
+           T 
+        U   extends 
+           T 
+       
+       extension
+       
+       An
+           S 
+          cannot also be a
+           U 
+       
+      
+The extended signature must be either
+a top-level signature
+or a subsignature. 
+ 
+
+
+ Constraining a declaration 
+
+ 
+There are two ways: 
+ 
+
+   with  set  or
+     relation 
+    multiplicity constraints in the signature. 
+    These are a quick shorthand. 
+    The  example above 
+    has several of these (all are  lone ).
+   
+    with a  fact   117 
+    that states a constraint on the set or relation. 
+    The constraint is expressed in the Alloy logic. 
+     
+    (The  fact  keyword may be omitted
+    if the fact is only about the relations of a single signature,
+    and it immediately follows that signature —
+    then it is a
+     signature fact ,
+    and is implicitly universally quantified over the signature's set,
+    and may use  this 
+    as if it were the variable of this implied quantification.) 
+     
+   
+  
+ A
+more extensive example of signatures, declarations, and constraints 
+ 
+
+
+ Multiplicity constraints in declarations 
+
+    Set declarations with multiplicities  76      e  is a expression producing a set
+      (arity 1) 
+      x :  set   e 
+     
+      x  a subset of  e 
+     
+      x :  lone 
+     e 
+     
+      x  empty or a singleton subset of
+     e 
+     
+      x :  some   e 
+     
+      x  a nonempty subset of  e 
+     
+      x :  one   e 
+     
+      x  a singleton subset of  e  
+        (i.e. a scalar)
+     
+      x :  e 
+     
+      x  a singleton subset of  e  
+        (equivalent to  one )
+     
+         Relation declarations with
+     -&gt;  multiplicities  77     
+       A  and  B 
+      are expressions producing a relation
+        m  and  n  are
+       some ,
+       lone ,
+       one ,
+      or
+      not present (which is equivalent to  set )
+     
+      r :  A   m 
+       -&gt;   n   B 
+     
+      m  elements of
+       A 
+      map to each element of
+       B 
+     
+     each element of
+       A 
+      maps to  n  elements of
+       B 
+     
+      Facts  
+
+ 
+ 117 
+A  fact  contains a formula in the Alloy logic
+that is assumed to always be true.
+See the  Alloy language  for more details. 
+ 
+
+
+
+ Disjointness  
+
+ 
+ 71 
+ disj 
+before a list of variables
+restricts their bindings to be disjoint. 
+ 
+
+ 
+ Disjointness example 
+ 
+
+
+ Cardinality constraints  
+
+ 
+ 80 
+The prefix operator  #  (cardinality)
+on a relation
+produces the relation's size. 
+The result can be operated on with
+ + - = &lt; &gt; =&lt; &gt;= . 
+Positive integer literals can appear in cardinality expressions. 
+ 
+
+ 
+ sum   x :
+ e  |  ie 
+sums the value of  ie 
+for each  x  in set  e . 
+ 
+
+
+ The Alloy language 
+
+ 
+The Alloy language uses the Alloy logic
+plus some other constructs
+to make  models . 
+In Alloy,
+a model is
+"a description of a software abstraction"  4 . 
+ 
+
+ 
+(Recall that in FOL
+a model means
+ something different .) 
+ 
+
+
+ Language constructs 
+
+ 
+The Alloy language adds these constructs to the
+ Alloy logic : 
+ 
+
+  
+    A  module  line
+    gives the relative pathname
+    of the model's file (minus the ".als" suffix). 
+    The pathname is relative to the directory
+    that imported module pathnames are going to be relative to. 
+    (Obviously,
+    the  module  line is mostly redundant
+    with the file's full pathname.) 
+   
+
+   
+    A  sig  ( signature )
+    declares one or more sets of atoms,
+    and their relations to other sets. 
+   
+
+   
+    A  fun  ( function )
+    defines a way of getting a relation (or set, or atom). 
+    It can take parameters
+    that are used in getting its result. 
+    It can define a relation (usually using  -&gt; )
+    and make use of it to produce its result. 
+    It is a  FOL function 
+    for the Alloy logic,
+    in which expressions are relations. 
+   
+
+   
+    A  pred  ( predicate )
+    defines a formula (true or false). 
+    It can take parameters
+    that are used in getting its result. 
+    It is a  FOL predicate 
+    for the Alloy logic. 
+   
+
+   
+    A   fact  
+    defines a formula
+    that you assume is valid (always true, for any world). 
+    The Alloy analyzer uses  fact s as axioms
+    in constructing its examples and counterexamples. 
+   
+
+   
+    You  run 
+    a  pred icate
+    in order to see the examples (if any) the Alloy analyzer finds
+    for which the predicate is true. 
+     
+    You define the  scope 
+    that the analyzer checks
+    by saying things like " run for 3 " or
+    " run for 3 but 4 Dog ". 
+    The analyzer will then check only possible examples
+    that contain no more than that many
+    of atoms from each set. 
+     
+     
+     If it finds an example ,
+    then the predicate is
+     satisfiable . 
+     
+     
+     If it finds no examples ,
+    the predicate may be either
+     invalid 
+    (false for all possible examples);
+    or it may be
+     satisfiable 
+    but not within the scope you used. 
+     
+   
+
+   
+    An  assert  (assertion)
+    defines a formula that you claim
+    will always be true. 
+    An  assert ion differs from
+    a  fact 
+    in that the Alloy analyzer will check
+    an  assert ion to see if it is true
+    for all the examples in a scope,
+    whereas the analyzer assumes each  fact  is true
+    and uses them to constrain which examples it looks at. 
+   
+
+   
+    You  check 
+    an  assert ion
+    in order to see whether the Alloy analyzer finds any counterexamples. 
+     
+    You define the scope
+    as for a  run  command. 
+     
+     
+     If it finds a counterexample ,
+    then the predicate is
+     unsatisfiable . 
+     
+     
+     If it finds no counterexamples ,
+    the predicate may be either
+     valid 
+    (true for all possible examples);
+    or it may be
+     unsatisfiable 
+    but not within the scope you used. 
+     
+   
+
+  Which construct to use where? 
+
+   Writing a model (Alloy file) that might need to import
+    other models? 
+    Use  module . 
+   
+    Need a set of atoms?  Use a  sig . 
+   
+    Need an expression, whose value is a function (or set, or scalar)? 
+    Use a  fun  (function). 
+   
+    Need a formula, whose value is true or false? 
+    Use a  pred  (predicate). 
+   
+    Need to state an axiom that you want to be true always? 
+    Use a  fact  (function). 
+   
+    Need an example for which a  pred  is true? 
+     run  the predicate to see if one exists. 
+    It's like using an existential quantifier over
+    all the predicate's parameters. 
+   
+    Want to claim something is always true? 
+    Use an  assert  (assertion). 
+   
+    Want to see if an  assert  is unsatisfiable? 
+     check  the assertion
+    to see if any counterexample can be found. 
+   
+  Signatures 
+
+    Signatures  91      sig   A 
+         {  fields  } 
+     
+     Declares a set  A  of atoms
+     
+      sig   A 
+         extends   B 
+         {  fields  } 
+     
+     Declares a subset  A  of set  B ,
+        disjoint from  
+        all other  extends  subsets of
+         B 
+     
+      sig   A 
+         in   B 
+         {  fields  } 
+     
+     Declares a subset  A  of
+         B 
+     
+      sig   A 
+         in   B 
+         +   C 
+         {  fields  } 
+     
+     Declares a subset  A  of the
+        union ( + ) of sets
+         B  and  C 
+     
+      abstract sig   A 
+         {  fields  } 
+     
+     Declares a set  A  that contains no atoms 
+        other than the ones in its subsets (if any)
+     
+      one  sig   A 
+         {  fields  } 
+     
+     Declares a singleton set  A 
+     
+      lone sig   A 
+         {  fields  } 
+     
+     Declares a set  A  of 0 or 1 atom
+     
+      some sig   A 
+         {  fields  } 
+     
+     Declares a nonempty set  A 
+     
+      sig   A ,
+         B 
+         {  fields  } 
+     
+     Declares two sets  A  and
+         B  of atoms 
+        Wherever  A  appeared above, a list of names can appear
+     
+         Fields (in a signature for set  A )
+     95       f  :  e
+     
+     Declares a relation   f  
+        that's a subset of
+         A  -&gt; e.   e  can be
+        any expression that produces a set — 
+        union, intersection, ... , any combination.
+     
+      f  : lone 
+         e 
+     
+     Each  A  is related to
+        no  e  or one  e .
+     
+      f  : one 
+         e 
+     
+     Each  A  is related to exactly one
+         e .
+     
+      f  : some 
+         e 
+     
+     Each  A  is related to at least one
+         e .
+     
+      f  :  
+         g  -&gt;  h 
+     
+     Each  A  is related to a relation from
+         g  to  h .
+     
+       f  : one 
+         g   lone -&gt; some 
+         h 
+     
+     The multiplicities have their
+         usual meanings . 
+        Here, each  A  is related to exactly one relation 
+        relating each  g  to 1 or more
+         h 's, and 
+        each  h  is related to 0 or 1
+         g .
+     
+      Functions 
+
+    Function  121 s     fun   Name 
+         [  parameters  ] 
+         :   type 
+         {  e  } 
+     
+     Defines a function, with the given  name 
+        and (possibly empty)  parameters , 
+        and producing a relation (or set, or scalar) of the given
+         type .  
+        The result is defined by the expression  e ,
+        which may reference the  parameters . 
+     
+      Predicates 
+
+    Predicates   121      pred   Name 
+         [  parameters  ] 
+         {  f  } 
+     
+     Defines a predicate, with the given  name 
+        and (possibly empty)  parameters .  
+        A predicate always produces true or false,
+        so no type is needed.  
+        The result is defined by the formula  f ,
+        which may reference the  parameters . 
+     
+      Facts 
+
+    Facts  117      fact
+      {  e  } 
+     
+     The expression  e 
+        is a constraint that  
+        the analyzer will assume is always true. 
+     
+      fact   Name 
+         {  e  } 
+     
+     You can name a  fact  if you wish; 
+        the analyzer will ignore the name.
+     
+      Assertions 
+
+    Assertions  124      assert   Name 
+         {  f  } 
+     
+     Defines a assertion, with the given  name . 
+        Assertions take no parameters.  
+        An assertion always produces true or false,
+        so no type is needed.  
+        The result is defined by the formula  f . 
+     
+      Modules and polymorphism  130 
+ — section under construction  
+
+
+  Learnt by experience  
+
+  When to use  @   
+
+ 
+The cryptic message
+ 
+
+ 
+A type error has occurred:
+This cannot be a legal relational join where
+left hand side is ...
+right hand side is ...
+ 
+
+ 
+if for a join in a signature fact,
+can mean that
+the last relation before the offending '.'
+has the same name
+as a relation in the signature; 
+in this case, the Alloy Analyzer
+will grab the name as belonging to  this 
+rather than the result of the preceding join. 
+The solution is to put a  @  after the dot;
+the  @  disables the grab for  this . 
+ 
+
+ 
+I found out about this from an Alloy
+ community post . 
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2010Mar16Tu10:56 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

@@ -1,0 +1,783 @@
+ Design Patterns<body>
+
+ 
+
+ 
+Java Design Patterns
+ 
+
+  
+    Home 
+ 
+   
+    Foundations home 
+ 
+   
+ 
+ Sets   Relations   Correspondences   Ordered Sets   Lattices   Graphs   Powersets   Binary Strings   Logic   AIA   Greek   
+   
+ 
+ Glossary   Abstracts   Argument   Glossaries   Inquiry Cycle   Legal Relations   Presentations   
+   
+ 
+ Elicitation   Glossaries   Goals   i*   SCR   Tracing   
+   
+ 
+ Alloy   MSCs   Regular Exprs.   
+   
+ 
+ Design Patterns   Javadoc   Java Packages   Java Types   
+   
+ 
+ (X)HTML   XML Schemas   XSLT   
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+Design patterns are patterns of organizing program implementations. 
+They express good coding ideas that can be reused in other programs. 
+ [GHJV95]  is the basic reference,
+and a large number of patterns are published in other sources;
+of which a few of the most useful are discussed here. 
+ 
+
+
+ Table of contents 
+ 
+ 
+
+
+ The example 
+
+ 
+Consider a group of classes that represent
+logical expressions. 
+These classes represent all the simple and compound elements
+of such expressions,
+described in the grammars below. 
+The grammar is set up for ease of parsing. 
+Lexical elements are named in  small caps 
+and specified as regular expressions. 
+ 
+
+
+
+    formula
+     
+     →
+     
+      logicalConstant 
+      |  logicalVariable 
+      |  negation 
+      |  conjunction 
+      |  disjunction 
+     
+     logicalConstant
+     
+     →
+     
+      0  |  1 
+     
+     logicalVariable
+     
+     →
+     
+     [ a-z ][ A-Za-z0-9 ]*
+     
+     negation
+     
+     →
+     
+      ~   formula 
+     
+     conjunction
+     
+     →
+     
+      (   formula   &amp; 
+         formula   ) 
+     
+     disjunction
+     
+     →
+     
+      [   formula   | 
+         formula   ] 
+     
+      
+A basic Java implementation of this grammar is the
+  formula   package. 
+It and the   formulaVisited   package,
+which makes use of the patterns described below,
+are specified with  javadoc documentation . 
+ 
+
+
+ The Factory pattern 
+
+ 
+A constructor always produces an object
+of a specific class, the class whose constructor it is. 
+In some situations,
+it would be more helpful to be able to construct
+an object belonging to a subclass,
+without having to know ahead of time
+which subclass any particular object will belong to. 
+A factory is a class or method
+that constructs objects of a particular interface or superclass,
+choosing which subclass is appropriate at run-time. 
+For example,
+a method that reads strings for formulas, as defined in the grammar above,
+might construct a Negation object if the top-level operation in the formula
+is a negation,
+or a Conjunction object if the top level was a conjunction. 
+The return type of the method would simply be Formula. 
+ 
+
+ 
+package formulaVisited;
+import java.io.*;
+
+
+/**
+  A factory for creating formulas from a reader.
+  The specific Formula subclass that is returned
+  depends on what the reader reads.
+  Because the factory is stateless,
+  all its methods are static.
+  True and false are represented by 1 and 0;
+  variables are strings of letters and digits beginning with a lowercase letter;
+  the negation operator is '~';
+  conjunctions are in () with '&amp;' as the infix operator;  and
+  disjunctions are in [] with '|' as the infix operator.
+*/
+public class Factory {
+
+  /**
+    Reads a character stream and returns
+    the formula corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static public Formula factory(PushbackReader _in) throws IOException {
+    int cc;
+    cc = _in.read();  _in.unread(cc);
+    if /**/ ( -1 == cc) {  throw new RuntimeException("Expected formula, found EOF");  }
+    else if ('(' == cc) {  return factoryConjunction    (_in);  }
+    else if ('[' == cc) {  return factoryDisjunction    (_in);  }
+    else if ('~' == cc) {  return factoryNegation       (_in);  }
+    else if ('0' == cc) {  return factoryLogicalConstant(_in);  }
+    else if ('1' == cc) {  return factoryLogicalConstant(_in);  }
+    else if (Character.isLowerCase((char) cc)) {
+      return factoryLogicalVariable(_in);
+    }
+    else {
+      throw new RuntimeException("Expected formula, found " + printable(cc));
+    }
+  }
+
+  /**
+    Reads a character stream and returns
+    the conjunction corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static Formula factoryConjunction(PushbackReader _in) throws IOException {
+    expect('(', _in);
+    Formula left  = factory(_in);
+    skipWhitespace(_in);
+    expect('&amp;', _in);
+    Formula right = factory(_in);
+    skipWhitespace(_in);
+    expect(')', _in);
+    return new Conjunction(left, right);
+  }
+
+  /**
+    Reads a character stream and returns
+    the disjunction corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static Formula factoryDisjunction(PushbackReader _in) throws IOException {
+    expect('[', _in);
+    Formula left  = factory(_in);
+    skipWhitespace(_in);
+    expect('|', _in);
+    Formula right = factory(_in);
+    skipWhitespace(_in);
+    expect(']', _in);
+    return new Disjunction(left, right);
+  }
+
+  /**
+    Reads a character stream and returns
+    the logical constant corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static LogicalConstant factoryLogicalConstant(PushbackReader _in) throws IOException {
+    String name = readName(_in);
+    if /**/ (name.equals("0")) {  return LogicalConstant.zero();  }
+    else if (name.equals("1")) {  return LogicalConstant.one ();  }
+    else {
+      throw new RuntimeException("Expected 0 or 1, found \"" + name + "\"");
+    }
+  }
+
+  /**
+    Reads a character stream and returns
+    the logical variable corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static Formula factoryLogicalVariable(PushbackReader _in) throws IOException {
+    String name = readName(_in);
+    expectedLowerCase(name.charAt(0));
+    return new LogicalVariable(name);
+  }
+
+  /**
+    Reads a character stream and returns
+    the negation corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static Formula factoryNegation(PushbackReader _in) throws IOException {
+    expect('~', _in);
+    Formula subformula = factory(_in);
+    return new Negation(subformula);
+  }
+
+  /**
+    Reads a character stream and returns
+    the name corresponding to it, if any.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If there is a syntax error in the character stream.
+  */
+  static String readName(PushbackReader _in) throws IOException {
+    StringBuffer name = new StringBuffer();
+    int cc;
+    while (-1 &lt; (cc = _in.read()) &amp;&amp; Character.isLetterOrDigit((char) cc)) {
+      name.append((char) cc);
+    }
+    _in.unread(cc);
+    if (0 == name.length()) {  throw new RuntimeException("Name expected");  }
+    return name.toString();
+  }
+
+  /**
+    Skips a string of whitespace in a character stream.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+  */
+  static void skipWhitespace(PushbackReader _in) throws IOException {
+    int cc;
+    while (-1 &lt; (cc = _in.read()) &amp;&amp; Character.isWhitespace((char) cc)) {}
+    _in.unread(cc);
+  }
+
+  /**
+    Reads a character and throws an exception
+    if the character is not the expected one.
+    @param _expected The expected character.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If the expected character was not next in the stream.
+  */
+  static void expect(char _expected, PushbackReader _in) throws IOException {
+    int cc;
+    if (_expected != (cc = _in.read())) {
+      throw new RuntimeException("Expected '(', found " + printable(cc));
+    }
+  }
+
+  /**
+    Reads a character and throws an exception
+    if the character is not lowercase.
+    @param _in A pushback reader for the stream.
+    @throws IOException If the stream operations do.
+    @throws RuntimeException If the stream did not begin with a lowercase character.
+  */
+  static void expectedLowerCase(char _cc) {
+    if (!Character.isLowerCase(_cc)) {
+      throw new RuntimeException("Expected lowercase, found " + printable(_cc));
+    }
+  }
+
+  /**
+    Returns a printable string representing a character.
+    @param  _cc The character.
+    @return _in A string describing _cc: 
+      "EOF" if _cc is -1, "newline" if _cc is '\n',
+      _cc in single quotes if _cc is printable,
+      and the numerical value of _cc otherwise.
+  */
+  static String printable(int _cc) {
+    if /**/ (-1   == _cc) {  return "EOF";  }
+    else if ('\n' == _cc) {  return "newline";  }
+    else if (Character.isISOControl((char) _cc))
+                         {  return "" + _cc;  }
+    else                 {  return "'" + (char) _cc + "'";  }
+  }
+
+}
+
+ 
+
+ 
+This pattern is not discussed in  [GHJV95] ,
+although two closely related patterns are
+(Abstract Factory and Factory Method). 
+ 
+
+
+ The Singleton pattern 
+
+ 
+A singleton is the only instance of its type. 
+The singleton pattern is a way of coding a class
+so that only one instance of the class is constructed,
+and that instance is reused every time an object of the class is needed. 
+It can be adapted for classes that have only two or a small finite number
+of distinct instances,
+so they can be reused. 
+ 
+
+ 
+To write a class  C  that follows the Singleton pattern,
+make its constructor private
+(so that no one outside the class can construct one). 
+Give the class a private static variable  singleton 
+of type  C ,
+and a public static method  singleton() 
+with no parameters and
+returning a value of type  C . 
+Methods outside the class call this  singleton()  method
+to get an object of the class. 
+ 
+
+ 
+There are two ways to give the variable its value: 
+ 
+
+    eagerly :  initialize the variable by calling the (private) constructor,
+    then the  singleton()  method returns its value.
+   
+     lazily :   initialize the variable to null; 
+    then the  singleton()  method checks to see if the variable is null,
+    gives it a non-null value by calling the (private) constructor if so,
+    and then returns the variable's value. 
+   
+  Example:  the LogicalConstant class,
+which needs no more than two distinct instances. 
+The class is reimplemented using the Singleton pattern twice,
+once for  0  and once for  1 . 
+ 0  uses the eager Singleton pattern,
+and
+ 1  uses the lazy Singleton pattern. 
+ 
+
+ 
+package formulaVisited;
+
+
+/**
+  A logical constant, representing true or false.
+*/
+public class LogicalConstant implements Formula {
+  
+  static private LogicalConstant one = new LogicalConstant(true);
+  /**
+    Returns a logical constant for 1 (true).
+    The same constant is returned for every call.
+    The constant is constructed at initialization time (eager initialization).
+  */
+  static public  LogicalConstant one() {  return one;  }
+  
+  static private LogicalConstant zero = null;
+  /**
+    Returns a logical constant for 0 (false).
+    The same constant is returned for every call.
+    The constant is not constructed until the first call (lazy initialization).
+  */
+  static public  LogicalConstant zero() {
+    if (null == zero) {
+      zero = new LogicalConstant(false);
+    }
+    return zero;
+  }
+  
+  boolean value;
+  /**
+    Constructs a logical constant.
+    @param _value The constant's value.
+  */
+  private LogicalConstant(boolean _value) {  value = _value;  }
+
+  public Object accept(Visitor _v) {  return _v.visit(this);  }
+
+}
+
+ 
+
+
+ The Visitor pattern 
+
+ 
+A visitor is an object that traverses a tree (or other data structure)
+and performs an operation for each node of the tree,
+choosing the appropriate operation for each node
+based on the node's static type. 
+It allows the code that implements an operation
+to be localized in a single class,
+and can reduce the cost of adding a new operation
+on the trees. 
+Once the node classes are set up for the visitor pattern,
+they need not be changed if a new operation is added; 
+instead, a new visitor is implemented. 
+ 
+
+ 
+To implement the Visitor pattern,
+give each node class a method  accept(Visitor _v) 
+that calls the visitor's  visit(C _c)  method,
+where  C  is the node class. 
+This method is textually the same for every node class; 
+the compiler sets up a call to the right  visit  method
+based on the type of the node. 
+ 
+
+ 
+public Object accept(Visitor _v) {  return _v.visit(this);  }
+ 
+
+ 
+Then the visitor class is implemented
+with a separate  visit(C _c)  method for each node class
+ C . 
+Each  visit(C _c)  method does whatever is desired
+for objects of that class  C . 
+If a result is needed,
+it is packaged up as some kind of object and returned. 
+ 
+
+ 
+Example: 
+The formula package rewritten to take visitors,
+with a  Visitor  interface added
+to be the type of all visitors: 
+ 
+
+ 
+package formulaVisited;
+
+
+/**
+  A visitor to formulas.
+  The visitor traverses the syntax tree of a formula,
+  and calculates some result for each kind of formula.
+  For kinds of formulas that have subformulas,
+  the results for the subformulas are combined
+  into the result for the formula.
+  Each formula's result is returned from the visit() method.
+*/
+public interface Visitor {
+  /**  Calculates the result for a Conjunction.  */
+  public Object visit(Conjunction _f);
+  /**  Calculates the result for a Disjunction.  */
+  public Object visit(Disjunction _f);
+  /**  Calculates the result for a LogicalConstant.  */
+  public Object visit(LogicalConstant _f);
+  /**  Calculates the result for a LogicalVariable.  */
+  public Object visit(LogicalVariable _f);
+  /**  Calculates the result for a Negation.  */
+  public Object visit(Negation _f);
+}
+
+ 
+
+ 
+Now all formula classes accept visitors:
+ 
+
+ 
+package formulaVisited;
+
+
+/**
+  The type of all logic formulas that accept visitors.
+*/
+public interface Formula {
+  /**
+    Accepts a visitor.
+    Each subclass implements this method as 
+     {  return _v.visit(this);  } ,
+    and the compiler identifies the right {@link Visitor} method
+    based on the subclass (which is the type of  this ).
+    @param _v The visitor.
+    @return The result _v calculates for this formula.
+  */
+  public Object accept(Visitor _v);
+
+}
+
+ 
+
+ 
+Each formula class implements the  accept  method
+by calling the visitor on itself: 
+ 
+
+ 
+package formulaVisited;
+
+
+/**
+  The conjunction ("and") of two subformulas.
+  A conjunction is true if both subformulas are true,
+  and false if either or both subformulas are false.
+*/
+public class Conjunction implements Formula {
+  Formula left;
+  Formula right;
+  /**
+    Constructs the conjunction of two subformulas.
+    @param _left  The first subformula.
+    @param _right The second subformula.
+  */
+  public Conjunction(Formula _left, Formula _right) {  left = _left;  right = _right;  }
+  
+  public Object accept(Visitor _v) {  return _v.visit(this);  }
+  
+}
+
+ 
+
+ 
+Each visitor class implements a  visit  method
+for each type of formula,
+with the method producing the right result for that formula type. 
+For formula classes with subformulas,
+the visitor uses the result it produces for each subformula
+in making the result for the formula containing them. 
+The  VisitorToString  class is a good example; 
+for a Conjunction, for example,
+it uses its own results for the left subformula
+and the right subformula
+in producing the result for the Conjunction. 
+ 
+
+ 
+package formulaVisited;
+
+
+/**
+  A visitor that produces a string representation for each formula.
+*/
+public class VisitorToString implements Visitor {
+  
+  public Object visit(Conjunction _f) {
+    return "(" + (String) _f.left .accept(this) + 
+           "&amp;" + (String) _f.right.accept(this) + ")";
+  }
+  
+  public Object visit(Disjunction _f) {
+    return "[" + (String) _f.left .accept(this) + 
+           "|" + (String) _f.right.accept(this) + "]";
+  }
+  
+  public Object visit(LogicalConstant _f) {
+    if (LogicalConstant.one().equals(_f)) {  return "1";  }
+    else                                  {  return "0";  }
+  }
+  
+  public Object visit(LogicalVariable _f) {
+    return _f.name;
+  }
+  
+  public Object visit(Negation _f) {
+    return "~" + _f.subformula.accept(this);
+  }
+  
+}
+
+ 
+
+ 
+Now that the node classes are set up to accept visitors,
+we can easily write a visitor to add any function. 
+Below is a visitor to evaluate the value of a logical formula. 
+ 
+
+ 
+In order to implement this visitor,
+we need to write an  Environment  class
+that gives the truth values (if any) for the logical variables
+and the domain constant values (if any) for the domain variables,
+and the truth values for the applications of each predicate to
+each of the domain constants. 
+The visitor is given an environment to use
+in determining the value of a formula; 
+we assume this environment has been set up to show (for example)
+that logical variable  b  represents false,
+and that predicate  P  is true
+when applied to domain constant  E12 . 
+ 
+
+ 
+The visitor returns Boolean.FALSE
+if the formula being visited is false,
+Boolean.TRUE if the formula is true,
+and  null  if the value of the formula can't be determined. 
+ 
+
+ 
+package formulaVisited;
+import java.util.*;
+
+
+/**
+  A visitor that evaluates each formula, returning
+  Boolean.TRUE  if the formula is true,
+  Boolean.FALSE if the formula is false, and
+  null if its value cannot be determined.
+  The presence of undefined logical values,
+  or predicates whose value is not defined for every domain entity,
+  can result in formulas whose logical values that cannot be determined.
+*/
+public class VisitorEvaluate implements Visitor {
+
+  Environment env;
+  /**
+    Construct a VisitorEvaluate that evaluates formulas
+    in the given environment.
+    @param _env The environment.
+  */
+  public VisitorEvaluate(Environment _env) {
+    env = _env;
+  }
+
+  /**
+    {@inheritDoc}
+    A conjunction is true if both its subformulas are true,
+    false if either of its subformulas is false,
+    and unknown otherwise.
+  */
+  public Object visit(Conjunction _f) {
+    Boolean leftValue  = (Boolean) _f.left .accept(this);
+    Boolean rightValue = (Boolean) _f.right.accept(this);
+    if /**/ (!leftValue .booleanValue()) {  return Boolean.FALSE;  }
+    else if (!rightValue.booleanValue()) {  return Boolean.FALSE;  }
+    else if ( leftValue .booleanValue() &amp;&amp;
+              rightValue.booleanValue()) {  return Boolean.TRUE;   }
+    else                                 {  return null;  }
+  }
+
+  /**
+    {@inheritDoc}
+    A disjunction is false if both its subformulas are false,
+    true if either of its subformulas is true,
+    and unknown otherwise.
+  */
+  public Object visit(Disjunction _f) {
+    Boolean leftValue  = (Boolean) _f.left .accept(this);
+    Boolean rightValue = (Boolean) _f.right.accept(this);
+    if /**/ ( leftValue .booleanValue()) {  return Boolean.TRUE;   }
+    else if ( rightValue.booleanValue()) {  return Boolean.TRUE;   }
+    else if (!leftValue .booleanValue() &amp;&amp;
+             !rightValue.booleanValue()) {  return Boolean.FALSE;  }
+    else                                 {  return null;  }
+  }
+
+  /**
+    {@inheritDoc}
+    The value of {@link LogicalConstant#one  LogicalConstant.one() } is true, and
+    the value of {@link LogicalConstant#zero LogicalConstant.zero()} is false.
+  */
+  public Object visit(LogicalConstant _f) {
+    if (LogicalConstant.one().equals(_f)) {  return "1";  }
+    else                                  {  return "0";  }
+  }
+
+  /**
+    {@inheritDoc}
+    The value of a logical variable is
+    the value the variable is bound to in the environment,
+    and unknown if the variable is bound to no value.
+    The environment used is the one with which this visitor was constructed.
+  */
+  public Object visit(LogicalVariable _f) {
+    return env.get(_f);
+  }
+
+  /**
+    {@inheritDoc}
+    A negation is false if its subformula is true,
+    false if its subformula is true,
+    and unknown if its subformula's value is unknown.
+  */
+  public Object visit(Negation _f) {
+    Boolean subformulaValue = (Boolean) _f.subformula.accept(this);
+    if /**/ (null == subformulaValue)        {  return null;  }
+    else if (subformulaValue.booleanValue()) {  return Boolean.FALSE;  }
+    else                                     {  return Boolean.TRUE;   }
+  }
+
+}
+
+ 
+
+
+ References 
+
+ [GHJV95] 
+Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides. 
+ Design Patterns: Elements of reusable object-oriented software . 
+Addison-Wesley, 1995.
+ 
+
+
+
+ 
+
+ 
+
+ 
+ 
+     
+      
+ 
+ 2009Sep23We10:12 
+ 
+ Thomas A. Alspaugh 
+  alspaugh 
+     at  · ics · uci · edu 
+      
+ 
+ 
+
+
+</body> 

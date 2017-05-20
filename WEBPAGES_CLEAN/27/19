@@ -1,0 +1,116 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 11 Jun 1997
+//
+// UI for changing game parameters
+
+import java.awt.*;
+import java.util.*;
+import gui.*;
+
+class Options extends FlatPanel {
+	// checkbox groups
+	public static final int BOARD_ORIENTATION = 0;
+	public static final int WHO_GOES_FIRST = 1;
+	public static final int WHO_IS_WHITE = 2;
+	public static final int WHO_IS_BLACK = 3;
+	public static final int HOW_FAST = 4;
+	public static final int MULTIPLE_CAPTURES = 5;
+	public static final int NOTATION_TYPE = 6;
+	public static final int NOTATION_LENGTH = 7;
+	public static final int NUMBER_OF_GROUPS = 8;	
+	static CheckboxGroup groups[] = null;
+
+	// checkbox parameters
+	public static final int BLACK_AT_TOP = 0;
+	public static final int WHITE_AT_TOP = 1;
+	public static final int BLACK_GOES_FIRST = 2;
+	public static final int WHITE_GOES_FIRST = 3;
+	public static final int HUMAN_PLAYS_BLACK = 4;
+	public static final int COMPUTER_PLAYS_BLACK = 5;
+	public static final int HUMAN_PLAYS_WHITE = 6;
+	public static final int COMPUTER_PLAYS_WHITE = 7;
+	public static final int FAST_SPEED = 8;
+	public static final int MEDIUM_SPEED = 9;
+	public static final int SLOW_SPEED = 10;
+	public static final int NO_MULTIPLE_CAPTURES = 11;
+	public static final int MULTIPLE_CAPTURES_OK = 12;
+	public static final int NOTATION_ALGEBRAIC = 13;
+	public static final int NOTATION_NUMERIC = 14;
+	public static final int NOTATION_LONG = 15;
+	public static final int NOTATION_SHORT = 16;
+	public static final int ONE_PLY = 17;
+	public static final int TWO_PLY = 18;
+	public static final int THREE_PLY = 19;
+	public static final int NUMBER_OF_PARAMS = 20;
+	static Option gameOptions[] = {
+		new Option("Human plays the black pieces", HUMAN_PLAYS_BLACK, false, WHO_IS_BLACK),
+		new Option("Computer plays the black pieces", COMPUTER_PLAYS_BLACK, true, WHO_IS_BLACK),
+		new Option("Human plays the white pieces", HUMAN_PLAYS_WHITE, true, WHO_IS_WHITE),
+		new Option("Computer plays the white pieces", COMPUTER_PLAYS_WHITE, false, WHO_IS_WHITE),
+		new Option("Black's pieces start at top of board", BLACK_AT_TOP, true, BOARD_ORIENTATION),
+		new Option("White's pieces start at top of board", WHITE_AT_TOP, false, BOARD_ORIENTATION),
+		new Option("Black makes the first move", BLACK_GOES_FIRST, false, WHO_GOES_FIRST),
+		new Option("White makes the first move", WHITE_GOES_FIRST, true, WHO_GOES_FIRST),
+		new Option("Algebraic notation", NOTATION_ALGEBRAIC, true, NOTATION_TYPE),
+		new Option("Numeric notation", NOTATION_NUMERIC, false, NOTATION_TYPE),
+		new Option("Short move log format", NOTATION_SHORT, true, NOTATION_LENGTH),
+		new Option("Long move log format", NOTATION_LONG, false, NOTATION_LENGTH),
+		new Option("No multiple captures on first move", NO_MULTIPLE_CAPTURES, true, MULTIPLE_CAPTURES),
+		new Option("Multiple captures on first move ok", MULTIPLE_CAPTURES_OK, false, MULTIPLE_CAPTURES),
+	};
+	static Option levelOptions[] = {
+		new Option("One-ply fixed depth search", ONE_PLY, true, HOW_FAST),
+		new Option("Two-ply fixed depth search", TWO_PLY, false, HOW_FAST),
+		new Option("Three-ply fixed depth search", THREE_PLY, false, HOW_FAST),
+		new Option("1/4 to 1 1/2 seconds/move", FAST_SPEED, false, HOW_FAST),
+		new Option("1 1/2 to 10 seconds/move", MEDIUM_SPEED, false, HOW_FAST),
+		new Option("10 to 60 seconds/move", SLOW_SPEED, false, HOW_FAST),
+	};
+	
+	// code to add matching pairs of left and right panels 
+	transient Panel left = null;
+	transient Panel right = null;
+	void switchSides() {
+		if (right != null) finishPanels();
+		Panel p = new FlatPanel();
+		p.setLayout(new StackLayout(StackLayout.VERTICAL));
+		if (left == null) left = p;
+		else right = p;
+	}
+	Panel finishedPanel() {
+		Panel p = new FlatPanel();
+		p.setLayout(new StackLayout(StackLayout.HORIZONTAL));
+		if (right != null) {
+			p.add("Wide", left);
+			p.add("Wide", right);
+		} else p.add("Center", left);
+		left = right = null;
+		return p;
+	}
+	void finishPanels() {
+		if (left == null) return;
+		add("Wide", finishedPanel());
+	}
+	void addComponent(String s, Component c) {
+		if (right != null) right.add(s, c);
+		else {
+			if (left == null) switchSides();
+			left.add(s, c);
+		}
+	}
+	void addOptions(Option optArray[], Container c, Game g, Color bg) {
+	}
+	
+	// main inialization of options panel
+	Game game;
+	Option options[];
+	Options(Game g, Color bg, Color but, Option opts[]) {
+		game = g; options = opts;
+
+		setBackground(bg);
+		setLayout(new StackLayout(StackLayout.VERTICAL));
+
+		if (groups == null) {
+			game.setParameters(new BitSet(NUMBER_OF_PARAMS));
+			groups = new CheckboxGroup[NUMBER_OF_GROUPS];
+			for (int i = 0; i  

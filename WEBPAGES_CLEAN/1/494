@@ -1,0 +1,45 @@
+ // Game of Fanorona
+// David Eppstein, UC Irvine, 20 Jun 1997
+//
+// Hash table
+//
+// Note this only hashes current piece positions, not history.
+// In particular, it doesn't hash the sequence of recent captures, so it's only safe to
+// hash positions that are not midCapture().  This should be ok since the hashtable
+// should mainly kick in towards the endgame when captures are less frequent.
+//
+// Since this is the most space-consuming part of the program
+// (and to avoid the hassle of allocating an individual object per hash table member)
+// we use an array of longs rather than of objects.  Each hash table entry consists
+// of four longs:
+//		table[4*key] = myPieces
+//		table[4*key+1] = opponentPieces
+//		table[4*key+2] = bestMove
+//		table[4*key+3] = (evalType &gt;&gt; (64 - hashSize));
+//		long n = (b.myPieces - b.opponentPieces);
+//		return (int) ((n * 0x1121400305112141L) &gt;&gt;&gt; (64 - hashSize));
+	}
+	
+	// perform hash lookup.
+	// sets Board.evaluation, Board.evalDepth, Board.bestMove, Board.extensions
+	// returns true on successful lookup, false otherwise
+	// (but a false return may still end up changing bestMove and extensions).
+	//
+	public final boolean getHash(Board board, int key, int alpha, int beta, int depth) {
+		key &gt;&gt; 57) &amp; 0xff;
+			int evalDepth = ((int)(info &gt;&gt;&gt; 32) &amp; 0x00ffff) - DEPTH_ADJUSTMENT;
+			int evaluation = (int) info;
+			
+			if (evalDepth = beta)) {
+				board.evaluation = evaluation;
+				if (COLLECT_STATISTICS) hits++;
+				return true;
+			} else if (COLLECT_STATISTICS) badBound++;
+		} else if (COLLECT_STATISTICS) misses++;
+		return false;
+	}
+
+	// store board in hash table for future lookup
+	public final void setHash(Board board, int key, int evalType, int depth) {
+		depth += DEPTH_ADJUSTMENT;
+		if (depth  

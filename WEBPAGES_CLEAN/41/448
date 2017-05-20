@@ -1,0 +1,94 @@
+ random_selection<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::random_selection  
+ 
+
+  Definition 
+ 
+
+  random_selection   chooses  n  items at random from a random
+access iterator range which is useful to produce degenerate input data
+sets with multiple entries of identical items.
+  
+
+ #include &lt; CGAL/random_selection.h &gt; 
+  
+
+    
+         
+    template &lt;class RandomAccessIterator, class Size, class OutputIterator, class Random&gt;
+         
+            
+           
+OutputIterator
+         
+          
+             
+     random_selection  (     
+    RandomAccessIterator first, 
+
+RandomAccessIterator last, 
+
+Size n, 
+
+OutputIterator result, 
+
+Random&amp; rnd = default_random)     
+                
+    chooses a random item from the range  [ first , last )  and
+    writes it to  result , each item from the range with equal
+    probability, and repeats this  n  times, thus writing  n  items to
+     result .
+    A single random number is needed from  rnd  for each item.
+    Returns the value of  result  after inserting the  n  items.  Precondition:   Random  is a random number generator type as provided 
+    by the STL or by  Random .
+            
+
+  See Also   CGAL::perturb_points_2    
+
+    Next:    RandomConvexSetTraits_2   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

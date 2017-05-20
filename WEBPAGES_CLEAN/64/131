@@ -1,0 +1,107 @@
+ HelpOnFormatting - GraphModAlg@UCI  
+
+
+ 
+ Search: 
+ 
+
+     
+ 
+
+
+   HelpOnFormatting  
+  
+
+  
+ 
+ Wiki 
+
+   Main_Page    RecentChanges    FindPage    HelpContents    HelpOnFormatting  
+  
+ 
+ Page 
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+   
+ 
+ User 
+   Login    
+  
+   
+                    HelpForUsers  &gt;  HelpOnEditing  &gt; HelpOnFormatting       This page describes using the  MoinMoin  wiki syntax (which is the default syntax for a  MoinMoin  based wiki, but not the only one).   For other parsers/syntaxes take a look at  HelpOnParsers .       
+  General 
+      Use one or more blank lines to separate paragraphs.      Use  &lt;&lt;BR&gt;&gt;  to insert linebreaks into paragraphs.         
+  Typeface 
+                  Name/Sample</strong>   
+       Markup </strong>     
+       Notes </strong>            
+         italic        
+      ''italic''          
+     Double single quotes.    
+         bold</strong>       
+      '''bold'''          
+     Triple single quotes.    
+         monospace       
+      `monospace`     
+     Single backticks.  Wiki markup is ignored.     
+         code        
+      {{{code}}}          
+      Example.   Wiki markup is ignored.   
+         underline     
+      __underline__       
+                               
+         super script    
+      ^super^script       
+                               
+         sub script    
+      ,,sub,,script       
+                               
+         smaller       
+      ~-smaller-~         
+                               
+         larger        
+      ~+larger+~          
+                               
+        stroke       
+      --(stroke)--        
+                               
+         
+  Colorize text 
+     Colorizing is enabled in tables without additional macros (see  HelpOnTables ).          See also  How can I colorize my text?  in the FAQ.       
+  Colorize code (Syntax Highlighting) 
+     There are several ways to highlight code:       Start a special code block containing the parser's name:  {{{#!parsername        Embed a file attachment bearing a supported extension (such as  ".py" ) with  {{attachment:test.py}}        Begin a page with the format processing instruction:  #format parsername           Example.        To see the list of supported languages see  HelpOnParsers .                   
+  Examples 
+     
+  Mixing ''italic'' and '''bold''' 
+                        Markup</strong>                         
+      Result</strong>                       
+        '''''Mix''' at the beginning''     
+        Mix</strong> at the beginning     
+        '''''Mix'' at the beginning'''     
+        Mix  at the beginning</strong>    
+        '''Mix at the ''end'''''           
+       Mix at the  end </strong>          
+        ''Mix at the '''end'''''           
+       Mix at the  end</strong>           
+           
+  Code 
+                 {{{      10 PRINT "Hello, world!"      20 GOTO 10      }}}         Result:                 10 PRINT "Hello, world!"
+  20 GOTO 10        
+  Superscript &amp; Subscript 
+      You might recall ''a''^2^  +  ''b''^2^  =  ''c''^2^ from your math lessons, unless your head is filled with H,,2,,O.        Result:       You might recall  a  2  +   b  2  =   c  2  from your math lessons, unless your head is filled with H 2 O.         
+  Colorized Code, Method #1 
+                              {{{#!python
+  from colors import palette
+  palette.colorize('python')
+  }}}      Result:                  
+       1        from   colors   import   palette  
+      2        palette . colorize ( '  python  ' ) 
+        
+  
+  
+   MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

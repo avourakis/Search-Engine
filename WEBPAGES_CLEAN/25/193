@@ -1,0 +1,350 @@
+ Computing Complexity Classes of Code, Applications, Big-Omega/Theta
+
+
+In this lecture we will learn how to compute the complexity class of all the
+code in a function (and therefore the complexity class of the function)
+statically (without RUNNING the function) by using simple rules for composition.
+We will see how apply these rules in various functions and combinations of
+functions in classes using the lens of analysis of algorithms, and compare
+fundamentally differerent algorithms for solving the same problem. Next, we
+will compare some time and space metrics for array vs. linked list
+implementations of simple data types (e.g., queue).
+
+Finally, we will discuss Big-Omega/Big-Theta notations and discuss lower bounds
+on the complexity classes of problems (not functions). We will revisit this
+topic later in the quarter to prove a non-trivial (and interesting) lower bound
+on sorting.
+
+------------------------------------------------------------------------------
+
+Composing Complexity Classes: Sequential and Nested Statements
+
+In this section we will learn how to combine complexity class information about
+simple operations into complexity information about complex operations
+(composed from simple operations). The goal is to be able to analyze all the
+statements in a functon/method and determine the complexity class of executing
+that function/method.
+
+----------
+
+Law of Addition for big-O notation
+
+ O(f(n)) + O(g(n)) is O( f(n) + g(n) ) is O( max(f(n),g(n)) )
+
+That is, we when adding complexity classes, we bring the two complexity classes
+inside the O(...). Ultimately, O( f(n) + g(n) ) results in the BIGGER of the two
+complexity class (because we drop lower added terms). So,
+
+O(N) + O(Log N)  =  O(N + Log N)  =  O(max(N,Log N) = O(N)
+
+because N is the faster growing function; also
+
+O(N) + O(N)  =  O(2N)  =  O(N)
+
+because we also drop constants using big-O notation.
+
+This rule helps us understand how to compute the complexity of doing some 
+SEQUENCE of operations: executing some statements that are O(f(n)) followed by
+executing some statements that are O(g(n)). Executing all the statements
+SEQUENTAILLY, the first followed by the second, is O(f(n)) + O(g(n)) which is
+O( f(n) + g(n) ) which is O(max(f(n),g(n))).
+
+For example, if some function call f(...) is O(N) and another function call
+g(...) is O(N Log N), then doing the sequence
+
+   f(...);
+   g(...);
+
+is O(N) + O(N Log N) = O(N + N Log N) = O(N Log N).  Of course,
+doing the sequence
+
+  f(...);
+  f(...);
+
+is O(N) + O(N) which is O(N + N) which is O(2N) which is O(N).
+
+In an if statement, we execute a sequence: always the test code, followed by
+the code in the block that the test indicates to execute. Note that for an if
+statment like
+
+  if (test)    	 assume complexity of test is O(T)
+     block 1     assume complexity of block 1 is O(B1)
+  else
+     block 2     assume complexity of block 2 is O(B2)
+
+The complexity class for the if is O(T) + max(O(B1),O(B2)). The test is always
+evaluated first; next, one of the two blocks is always executed. In the worst
+case, the if will execute the block with the largest complexity. As an example,
+given
+
+  if (test)    	 complexity is O(N)
+     block 1     complexity is O(N^2)
+  else
+     block 2     complexity is O(N)
+
+The complexity class for the if is O(N) + max (O(N^2),O(N))) = O(N) + O(N^2) =
+O(N + N^2) = O(N^2). This is because in the worst case, the test will be true
+and therefore block 1 will execute. Note that the test is always executed so
+
+  if (test)    	 complexity is O(N)
+     block 1     complexity is O(N)
+  else
+     block 2     complexity is O(1)
+
+has a complexity class of O(N) + max(O(N),O(1)) = O(N) + O(N)= O(2N) = O(N).
+
+
+----------
+
+Law of Multiplcation for big-O notation
+
+ O(f(n)) * O(g(n)) is O( f(n) * g(n) )
+
+If we repeat O(N) times an O(f(N)) process, the resulting complexity is
+O(N)*O(f(N)) = O( N*f(N) ). An example of this is, if some function call f(...)
+is O(N^2), then executing that call N times (in the following loop)
+
+  for (int i=0; iinfinity, but gets smaller slowly because Log N grows so slowly).
+
+3) Algorithm 3: An array is unique if when we insert its values into a set, its
+size is the same as the size of the array: if duplicate values were inserted
+into the set, its size would be smaller than the size of the array by exactly
+the number of duplicates in the array. We will examine various implementations
+of Sets during the quarter, and learn that by using hashing, most Set
+operations (including insertion) are O(1). Therefore
+
+bool is_unique3 (int a[], int N) {
+  ics::HashSet s;		       O(1)
+
+  for (int i=0; i s;
+
+  for (int i=0; i infniity, the logarithmic term is dominated by the linear term in
+#ai, so #ai/#lli -&gt; .5 (the ratio of the cost of a new divided by the cost of
+a copy); so for large N, filling an array takes about 50% of the time of filling
+a linked list: it is about twice a fast.
+
+If the coefficient for allocation is four times the coefficient for copying,
+using an array becomes four times as fast. So if we actually time both methods
+for a large N, we can compute the ratio of the instructions needed to do a new
+divided by the # of instructions to do a copy.
+
+Now let's look a bit at analyzing the space for these data structures. First,
+let's assume we are storing a queue of int, so storing each value requires 1
+word of memory. Also, let's assume that a pointer (used in the linked list)
+requires 1 word of memory too.
+
+  1) For the array implementation, if we are storing N values we need between
+  N+2 and 2(N-1)+2=2N memory locations: e.g., if we need to store 1,024 values
+  we would need 1,026 memory locations (1,024 int values in a filled array + 1
+  each to store the array's length and the number of array values used); but if
+  we need to store 1,025 values we would need 2050: 2,048 int values in a
+  filled array (because of doubling) + 1 each to store the array's length and
+  the number of array values used).
+
+  2) For the linked implementation, if we are storing N values at exactly 2N
+  memory locations (one each for the int value and the .next field pointer).
+  So storing 1,024 values requires 2,048 memory locations.
+
+So, for storing ints, arrays always need n0.
+
+Typically the "f" function we are interested in measures the effort (often the
+amount of time) it takes for some algorithm a (coded in some language as
+a method m) to run, which we write either Ta(N) or Tm(N). Note that Ta(N) is
+O(N), then Ta(N) is also O(N^2), O(N^3), etc. because these functions are even
+bigger bounds: if f(n) = c g(n) for all
+n&gt;n0.
+
+Notice the = in big-Omega
+notation.  Although big-O notation is mostly used to analyze "algorithms",
+big-Omega notation is mostly used to analyze "problems". With big-O notation
+we analyze one SPECIFIC algorithm/method to determine an upper bound on its
+performance. In big-Omega notation we analyze all possible algorithms/methods
+to determine a lower bound on performance. This second task is much harder.
+
+Now let's return to using big-Omega notation for finding the lower bound of
+problems. It is trivial to prove that any algorithm that solves the "find the
+maximum of an unordred array problem" is Omega(N) because it has to look at
+least at every value in the array: if it missed looking at some value in the
+array, that value might be the biggest, and the algorithm would return the
+wrong value.
+
+Interesting lower bounds on problems are much harder to prove than upper bounds
+on algorithms. The lower bound on a problem is much more general: it says,
+"for ANY ALGORITHM that solves this problem, it will take AT LEAST g(n)
+operations". Whereas, for upper bounds we are analyzing something much
+more concrete: one actual agorithm; we say, "for this particular algorithm,
+it will take AT MOST g(n) operations."
+
+Often the only lower bound that we can get on a problem is trivial -like that
+we must examine every value in an array. Later in the quarter we will examine
+an interesting/beautiful lower bound for sorting via comparisons: such a
+problem is Omega(N Log N). We also will examine sorting algorithms that are
+O(N Log N). This means that within comparison based sorting, we have optimally
+solved the problem according to its complexity class: any algorithm to solve
+this problem requires work proportional to N Log N and we have an algorithm that
+solves this problem in work proportional to N Log N. So, a new algorithm might
+have a better/smaller constant (which is very important, once we have resolved
+in which complexity class is the problem), but a better algorithm cannot have a
+lower complexity class: the lower bound forces its complexity class to at least
+be O(N Log N).
+
+One interesting example of a LACK of an obvious lower and upper bounds concerns
+matrix multiplication. When we multiply two NxN matrices we get another NxN
+matrix. Since the input matrices have N^2 values and the result has N^2 values,
+we know trivially that this problem is Omega(N^2): it must at least look at
+2N^2 inputs and produce N^2 outputs. But, the standard algorithm to multiply
+matrices is O(N^3): each of the N^2 entries in the resulting matrix is computed
+by an inner-product requiring N multiplications and additions (one matrix's
+row values times the other matrix's column value), which itself is O(N).
+
+So there is a gap between the complexity class of the problem (the lower bound
+for the problem is Omega(N^2)) and the complexity class of the solution (the
+upper bound for the standard matrix multiplication algorithm is O(N^3)). Either
+we should be able to improve the lower bound by raising it: by proving more
+work is always needed; or we should be able to improve the upper bound by 
+lowering it: finding a better algorithm and proving that it needs to do less
+work than the standard one.
+
+In the 60s, a Computer Scientist named Strassen devised an algorithm to solve
+this problem in O(N ^ Log 7): N raised to the power of Log (base 2) of 7, which
+is ~N^2.8 (recall Log (base 2) of 8 = 3 so Log (base 2) of 7 will be a bit less
+than 3), somewhat better than N^3 but still higher than N^2.
+
+In the 90s two Computer Scientists, Coopersmith and Winograd, devised an
+algorithm whose complexity is O(N^2.376). Interestingly enough -and not often
+the case- the constant on this algorithm is so huge, the n0 for which is starts
+being faster than Strassen is bigger than matrices easily storable on today's
+computers (more than billions of values). In 2002, a computer scientist named
+Raz proved a new lower bound of Omega(N^2 LogN), which is the product of
+N^2 and LogN, and is bigger than Omega(N^2).
+
+So, at this point we know the actualy complexity of the problem, call it c(n)
+is somewhere between N^2 Log N and N^2.376. Note that N^.376 is  close to the
+cube root of N, so N^2.376 = N^.376 * N^2 is close to cube_root(N)*N^2. So the
+actual term before N^2 is going to lie somewhere between LogN and cube_root(N).
+
+For more information, check http://en.wikipedia.org/wiki/Strassen_algorithm
+
+In summary, better algorithms decrease the big-O complexity class, better lower
+bound proofs increase the big-Omega minimal complexity. If the big-O and
+big-Omega bounds are the same functions, then we have discovered an optimal
+algorithm to solve the problem. Well, best to say "optimal within a constant",
+as other algorithms in the same (optimal) complexity class might exhibit a
+smaller constant and be faster.
+
+-----
+
+Sometimes we do want to prove just that some function f(n) is Omega(g(n)).
+For example, we want to prove that f(n) = 5n^2 + 3nlogn + 2n + 5 is Omega(n^2).
+So, we need to prove that c n^2 n0. We can
+easily ignore all positive lower order terms. That is,
+
+  f(n) &gt;= f(n) - 3nlogn -2n - 5 (for all n&gt;1) =  5n^2
+  f(n) &gt;= 5n^2 &gt;= 4n^2 (choosing c = 4, for all n &gt; 0)
+
+following the inequalities (and reversing how it is shown),
+4n^2 0). That is,
+4n^2 =0
+
+so f(n) is Omega(n^2).
+
+By a similar subtraction we can can ignore all positive lower-order  terms.
+
+Likewise, we can see that for f(n) = 2n - 100log n, f(n) is O(n) because we
+can choose c to be 1, so we need to know when
+
+  2n - 100log n &gt;= n 
+  n - 100log n &gt;= 0   (subtract 1n from each side)
+  n &gt;= 100log n       (add 100log n to each side)
+
+It is not easy to solve this inequality, but log 1024 is 10, and 100log 1024
+is 1000, so n &gt;= 100log n for n = 1024, and n grows faster than log n, so for
+bigger n, n is even bigger than 100log n.
+ 
+Before using big-Omega to analyze the lower bounds  for algorithms we will
+analyze two simple functions to compute their big_Omega lower bounds.
+
+If f(n) = 3n^2 - 2n - 10, then we can choose c = 2 and solve for n such that
+   3n^2 - 2n - 10 &gt; 2n^2
+    n^2 - 2n - 10 &gt; 0		subtract n^2 from each side
+    n^2 - 2n &gt; 10		add 10 to each side
+    n(n-2) &gt; 10			factor
+
+Notice that n(n-2) increases whenever n increases, and for n = 5, n(n-2) is
+15, which is &gt; 10. So for all n &gt;= 5,  f(n) &gt; 2n^2 (with constant c). 
+
+In summary, for any simply expressed polynomial function:
+   f(x) = c1 x^n + c2 x^n-1 + .... + c
+
+it is both O(x^n) and Omega(x^n).
+
+We will return to this kind of analysis later in the notes, when we analyze
+upper and lower bounds for the n! function, which is not a simple polynomial.
+
+Finally if f(n) = n, then
+f is O(N), O(N^2), O(2^N), etc. all are upper bounds on the growth of f
+f is Omega(N), Omega(Log N), Omega(1) etc. all are lower bounds on the growth
+of F
+
+-----
+
+
+
+Big-Theta:
+
+This brings us to our final notation. Big-Theta notation is a combination of
+big-O and big-Omega, which bounds a function from below and above. A function
+f(n) is Theta(g(n)) if there are values c1, c2, and n0 such that
+   c1 g(n) n0.
+
+We use Theta notation for two purposes. First, we use it to show that the O
+notation is "tight" not only is some function O(g(n)) but we cannot really find
+a smaller complexity class because it is Omega(g(n)) too.
+
+For example, we proved f(n) = 5n^2 + 3nlogn + 2n + 5 is O(n^2) (for c2=15 and
+n0=1) and we proved above that f(n) is Omega(n^2) (for c1 = 4 and n0=1) so
+we have our c1, c2, and n0 (n0 is generally the bigger of the two, but here
+both are 0). So talking about f(n) in terms of the n^2 complexity class makes
+sense for an upper (O) and lower (Omega) bound. So, if we say a function f(n) is
+Theta(g(n)) it means c1 g(n) n0.
+
+We also use Theta notation to mean that we have found an optimal (within a
+constant) algorithm for a problem: if our algorithm is O(g(n))and the problem
+is Omega(g(n)) then our solution's complexity class, g(n), is as good as we can
+get. We will see that as a problem, sorting with comparisons is Omega(N Log N)
+and we will see various sorting algorithms (mergesort and heapsort) that are
+O(N Log N) so sorting is Theta(N Log N).
+
+Finally, to make matters a bit worse (but more truthful), there is a sorting
+algorithm called quicksort that is O(N^2) in the worst case, but O(N Log N)
+for almost all inputs. In fact, the constant for a method implementing this
+algorithm is typically smaller (by a factor of 2-3) than the constant for
+mergesort and heapsort, two other sorting algorithms that guarantee to run in
+O(N Log N).
+
+So, even though quicksort's worst complexity class is higher than other fast
+sorting algorithms, its average performance is in the same complexity class as
+other fast sorting algorithms, and its constant is actually lower. So, choosing
+the best algorithm is a bit more complicated than just finding one in the
+lowest complexity class. Note that on a few problems, quicksort can take much
+longer than mergesort or heapsort, but those problems are very infrequent.
+
+
+As a final example illustrating big-O and big-Omega (applied directly to a
+function), let's find simple (but not very precise) upper and lower bounds for
+the function n!  Recall n! = 1 x 2 x ... x n. To get a simple upper bound we
+can replace each multiplicand by n. 
+
+  n! = 1 x 2 x 3 ... x n  8, the product of the first 1/2 of the terms is bigger than 2^(n/2) because
+4 is 2^2)
+
+                             (first half)        (second half)
+  n! = 1 x 2 x 3 ... x n  &gt;  2 x .... x 2   x   n/2 x ... x n/2 =
+
+     2^(n/2) x (n/2)^(n/2) = n^(n/2) = (n^n)^(1/2) = sqrt(n^n)
+
+So n! is Omega(sqrt(n^n))
+
+These are very different functions, so we cannot use Theta here, but we know
+
+  sqrt(n^n)  

@@ -1,0 +1,191 @@
+ ICS 32 Winter 2017, Notes and Examples: Duck Typing and Interfaces<body>
+
+ 
+
+ 
+ICS 32 Winter 2017 |
+ News  |
+ Course Reference  |
+ Schedule  |
+ Project Guide  |
+ Notes and Examples  |
+ About Alex 
+ 
+
+  
+
+ 
+
+ ICS 32 Winter 2017 
+   Notes and Examples: Duck Typing and Interfaces 
+
+ 
+
+ 
+
+  Background 
+
+ We've noticed before that Python is happy to allow us to store any kind of value in any variable we'd like. 
+
+  
+x = 3
+y = 'Boo'
+z = [1, 2, 3]
+  
+
+ We've also seen that we can potentially change the type of a variable any time we'd like by simply assigning a value of a different type into it. 
+
+  
+x = (1, 2)       # x is now a tuple 
+y = 9.5          # y is now a float 
+z = 'Alex'       # z is now a str 
+  
+
+ Or, thought differently, variables themselves don't have types at all in Python; only the values of those variables have types.  If we use a variable after assigning it a value, what we're allowed to do with it — the operators we can use, the functions into which we can pass it as an argument, and so on — is determined by the type of its value at the time we use it. 
+
+  
+w = 'Alex'
+print(len(w))    # prints  4  
+q = 57
+print(len(q))    # raises an exception, because ints don't have a length 
+  
+
+ In the example above, we could ask for the length of  w , because the value of  w  is a string and strings have a length.  On the other hand, we couldn't ask for the length of  q , because  q 's value is an integer and integers don't have a length. 
+
+ In general, Python uses a technique that is sometimes called  duck typing  when deciding what we can and can't do with the values stored in variables.  The term "duck typing" comes from an old saying that insinuates that "if a bird walks like a duck and quacks like a duck, it's a duck," meaning that we can deduce what something is — or at least some aspect of what something is — based on what it can do. 
+
+ If you try to call a method on an object, it's legal so long as that object's class has such a method; it's illegal if it doesn't. 
+
+  
+s = 'Hello'
+print(s.upper())    # no problem, because the str class has an  upper()  method 
+
+class XYZ:
+    def upper(self):
+        return 'Argh!'
+
+x = XYZ()
+print(x.upper())    # also legal, prints  Argh!  
+
+i = 19
+print(i.upper())    # not legal, because ints have no  upper()  method 
+  
+
+ What's more, based on the type of the object, the "right thing" will happen automatically.  Asking a string for its length will tell you how many characters it contains, asking a list for its length will tell you how many elements are stored in it, and so on.  Adding two integers together with the  +  operator gives their sum; adding two lists together with the  +  operator gives you their concatenation.  Sometimes, the same method or the same operator will behave in wildly different ways depending on the type of objects it's called on, but the behavior will always be the "right" behavior for that type, without you having to do anything special to ensure that. 
+
+ How duck typing affects the way we write functions 
+
+ Armed with the knowledge that Python behaves this way, we can write functions and methods that are more flexible than we could before.  Consider this nonsensical-looking Python function: 
+
+  
+def foo(x, y):
+    return x.bar(y) * 2
+  
+
+ I've left the types out of the function's signature, because it's not as clear what they are until we stop to think about it.  What must be true about the types of  x  and  y  in order to successfully evaluate a call to  foo(x, y) ? 
+
+   x  must be an object of some class that has a method called  bar  that takes one parameter (in addition to  self ).  There might be many classes like this, and it may not always be the case that all their  bar  methods even do the same thing; the presence of the method is one part of what makes this legal. 
+    y  must have a type that is compatible as an argument to  bar .  Depending on  x 's type — and depending on what its  bar  method does — this constraint will be different.  Any combination that works is potentially legal. 
+   The type of value returned from the  bar  method must be something that can be multiplied by 2.  At first blush, that sounds like it must be a number, but if you think harder, you'll remember that you can also multiply other kinds of things (e.g., lists, strings) by numbers, too.  (If that sounds weird to you, try evaluating  [1, 2, 3] * 2  in a Python interpreter and see what you get back.) 
+  If all of these things are true, the call to  foo(x, y)  will succeed, and the type of value returned from  foo  will be whatever type of value you get when you multiply  bar 's result by 2; this, again, may be different depending on the types of  x  and  y . 
+
+ We don't normally use duck typing in situations as nonsensical-looking as this one, but this shows us the mechanics of how Python works.  It is legal to call a method on an object and pass it parameters if and only if the object's class has such a method that can accept those parameters.  "If it walks like a duck and quacks like a duck, it's a duck." 
+
+ Why this is advantageous is because we can write multiple classes and intentionally give them the same  interface  (i.e., they each have one or more methods in common, whose signatures and meanings are the same in all of the classes, but whose behaviors are different in each class), then use objects of these classes interchangeably.  Python will automatically call the appropriate version of the method in the appropriate case, just as in our example above of calling  upper()  on objects of two different classes. 
+
+ Using duck typing to our advantage 
+
+ Support we wanted to write a function  makelist , which is intended to do the same thing that Python's built-in  list  function does.  First, let's make sure we understand what it does: It takes the argument you pass to it, iterates that argument, and then builds and returns a list containing all the elements that were iterated.  It's quite flexible.  For example, you can pass it data structures of various types. 
+
+  
+&gt;&gt;&gt; list([1, 2, 3])           # you can pass it a list 
+[1, 2, 3]
+&gt;&gt;&gt; list((1, 2, 3))           # you can also pass it a tuple 
+[1, 2, 3]
+&gt;&gt;&gt; list({'a', 'b', 'c'})     # or even a set 
+['b', 'a', 'c']               # (remember that sets are not ordered) 
+  
+
+ But that's not all!  You can also pass it the results of functions that return sequences of results, like  range .  (Technically, functions like these are said to return  generators , a topic you'll see in more depth in ICS 33.) 
+
+  
+&gt;&gt;&gt; list(range(5))
+[0, 1, 2, 3, 4]
+  
+
+ Seeing all of this, you might conclude that  makelist  would be a difficult function to write, since it needs to take such a wide variety of types of input.  But there's a saving grace: lists, tuples, sets, and generators — as well as lots of other kinds of objects I didn't demonstrate above — share an interface, namely the ability to be iterated.  So any of them could, for example, be used in a  for  loop and the right thing would happen automatically. 
+
+  
+&gt;&gt;&gt; for x in [1, 2, 3]:
+        print(x)
+
+1
+2
+3
+&gt;&gt;&gt; for x in (1, 2, 3):
+        print(x)
+
+1
+2
+3
+&gt;&gt;&gt; for x in range(5):
+        print(x)
+
+0
+1
+2
+3
+4
+  
+
+ The reason this works is that iteration is always done using the same interface.  What makes an object  iterable  is that it has particular methods with particular names, and these are the methods used for iteration.  Not all kinds of objects have them, though, which is why you can't do this: 
+
+  
+&gt;&gt;&gt; for x in 3:
+        print(x)
+
+Traceback (most recent call last):
+  File "", line 1, in 
+    for x in 3:
+TypeError: 'int' object is not iterable
+  
+
+ Knowing all of this, we can rely on the same approach to write our  makelist  function.  If something is iterable, we can use it in a  for  loop, which leads to this design for our function: 
+
+  
+def makelist(items):
+    the_list = []
+
+    for x in items:
+        the_list.append(x)
+
+    return the_list
+  
+
+ And if we try this function out, we'll see it hits the nail right on the head: 
+
+  
+&gt;&gt;&gt; makelist([1, 2, 3])
+[1, 2, 3]
+&gt;&gt;&gt; makelist((1, 2, 3))
+[1, 2, 3]
+&gt;&gt;&gt; makelist({'a', 'b', 'c'})
+['b', 'a', 'c']
+&gt;&gt;&gt; makelist(range(5))
+[0, 1, 2, 3, 4]
+  
+
+ The key is that our function says  for x in items , and how Python handles the iteration is by asking to iterate  items .  Depending on the type of  items , the iteration will be done in the appropriate way automatically, so our function can be blissfully unaware of what types of input it can handle; if it's iterable, our function will do the right thing with it, no matter what type it is. 
+
+ 
+
+ 
+
+  The code 
+
+ The only remaining question is how to design a set of similar classes to take advantage of this.  The code example below consists of several classes that have an identical interface (i.e., they all contain a method with the same signature), along with a function that is capable of taking an object of any of those classes (it doesn't matter which one) and calling that method on it. 
+
+   duck_typing.py  
+  
+
+</body> 

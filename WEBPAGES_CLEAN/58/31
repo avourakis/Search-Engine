@@ -1,0 +1,109 @@
+ 
+  Class SendEvent
+<body>
+  
+ 
+  Class SendEvent
+ 
+ 
+java.lang.Object
+   |
+   +---- SimEvent 
+           |
+           +---- ProcessorEvent 
+                   |
+                   +----SendEvent
+ 
+    public class  SendEvent 
+    extends  ProcessorEvent 
+   
+An event of this class represents a request from a task to send a message
+  between two processors
+ 
+    
+ 
+    
+      SendEvent  (Object, EventDestination, float, int, long, int, long, int)
+     
+        SendEvent  (Object, EventDestination, float, int, long, int, long, int, boolean)
+     
+   
+    
+      getDestinationProcessor  ()
+     
+        getFromTask  ()
+     
+        getToTask  ()
+     
+        isMigration  ()
+     
+        toString  ()
+     
+        transmissionSize  ()
+     
+    
+ 
+    
+  
+   
+ SendEvent 
+ 
+ public SendEvent(Object f,
+                  EventDestination t,
+                  float ti,
+                  int fromProc,
+                  long fromTask,
+                  int toProc,
+                  long toTask,
+                  int size)
+ 
+   
+ SendEvent 
+ 
+ public SendEvent(Object f,
+                  EventDestination t,
+                  float ti,
+                  int fromProc,
+                  long fromTask,
+                  int toProc,
+                  long toTask,
+                  int size,
+                  boolean m)
+ 
+  
+ 
+    
+   
+  isMigration  
+ 
+ public boolean isMigration()
+ 
+   
+  getDestinationProcessor  
+ 
+ public int getDestinationProcessor()
+ 
+   
+  transmissionSize  
+ 
+ public int transmissionSize()
+ 
+   
+  getToTask  
+ 
+ public long getToTask()
+ 
+   
+  getFromTask  
+ 
+ public long getFromTask()
+ 
+   
+  toString  
+ 
+ public String toString()
+ 
+      Overrides: 
+        toString  in class  SimEvent 
+     
+ </body> 

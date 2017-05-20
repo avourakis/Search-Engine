@@ -1,0 +1,57 @@
+ 9.1.7 GetData<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.6 GetBoolData 
+ Up:   9.1 OEBase 
+ Next:   9.1.8 GetDataIter 
+   
+
+
+  
+9.1.7 GetData 
+ 
+
+ 
+    
+template&lt;typename T&gt;
+const T &amp;GetData(unsigned int tag) const
+
+template&lt;typename T&gt;
+const T &amp;GetData(const char *tag) const
+    
+These template methods return the first instance of data stored previously
+with the associated data tag.  Integer tags should be allocated using the
+OEGetTag (Section  10.7 ) function.  Run-time type checking is
+performed when data is requested.  A data type mismatch between the
+storage and request types will result in a default data instance being
+returned instead of the original data.  Request for datum not present will
+also result in a default data instance being returned.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   9.1.6 GetBoolData 
+ Up:   9.1 OEBase 
+ Next:   9.1.8 GetDataIter 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

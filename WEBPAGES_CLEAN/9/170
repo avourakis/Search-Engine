@@ -1,0 +1,1268 @@
+ Python Programming in the Eclipse IDE<body>
+
+ 
+ Python Programming in the Eclipse IDE 
+ 
+  
+
+
+
+
+ 
+       Introduction  
+ 
+
+This handout introduces Python programming in the Eclipse Integrated
+  Development Environment (IDE).
+It is presented partly as a tutorial and partly in a "cook book" style: read
+  the text and follow the instructions to gain some hands-on experience
+  operating this software, which we will use extensively when we write, test,
+  and debug our own programs.
+Use the resulting screen shots (checking them against what appears on your
+  computer) to ensure that you are correctly following these instructions.
+ 
+
+You will be instructed to type Python statements and even small programs, using
+  language features that we will cover later in the quarter.
+We will briefly discuss these features, but for now, do not worry about
+  completely understanding what you type.
+Instead concentrate on ensuring that you type everything exactly as it appears
+  here: character-for-character, using the same upper-case or lower-case
+  letters, punctuation, and even spacing.
+  
+
+In the sections below you will learn how to
+   Start and Stop Eclipse
+  Recognize the parts of the Eclipse Workbench
+  Test code in the Python Interpreter
+  Create a New a Project in the Eclipse Workbench
+  Enter and Edit a Script (a module that runs as a program)
+  Run a Script
+  Find and Correct Errors in a Script
+  Finish a Project
+  Use an Old/Existing Project in the Eclipse Workbench
+   
+
+The Eclipse project itself resides on the
+   
+  Eclipse.org  web page.
+If you have not already done so, check the second message ( Install Course
+  Sofware ) on the
+   Announcements 
+  link for instructions on how to install Python, Eclipse, and configure
+  Eclipse to run Python.
+  
+
+It is an excellent idea to create a shortcut to Eclipse on the desktop;
+and once you have created an Eclipse workspace, a shortcut to it on the desktop.
+  
+           Starting and Stopping Eclipse  
+ 
+We start Eclipse by double-clicking (a shortcut to) its icon, which is
+  commonly referred to as the  Death Star  (from the Star Wars movies).
+ 
+     
+The instructions for downloading/installing Eclipe include creating this
+  shortcut; for lab machines, you must select
+   Start | All Programs | Python  and then double-click
+   Eclipse  to start Eclipse.
+  
+
+While it is loading, Eclipse displays the following splash screen.
+Note that says Version 4.2 (Juno), but you may see a more recent release
+  of Eclipse.
+  
+
+   
+After loading, Eclipse next displays the  Workspace Launcher  window.
+If this is the first time that we have started Eclipse, this window will
+  display a suggested workspace typed in the  Workspace  pull-down box,
+  as shown below.
+If we examine this pull-down box, there will be no other items in it.
+  
+ .
+  
+
+The form of the suggested workspace is
+   C:\Users\ username \workspace ,
+  where   username   appears above as  Pattis .
+  
+
+On subsequent statups, the contents of the pull-down box will default to
+  the last workspace that we used.
+It is possible to create/use multiple workspaces: the most recently used ones
+  will appear as items in the  Workspace  pull-down box, with the workspace
+  that we used most recently visible at the top.
+This information is stored in the  eclipse  folder (created when Eclipse
+  was installed), in the file
+   configuration\.settings\org.eclipse.ui.ide.prefs  (which is a text file
+  that we can read and even edit).
+  
+
+If we use just one workspace (recommended), we can put a check in the checkbox
+   Use this as the default and do not ask again , to avoid
+  this window's prompt altogether.
+Or, we can leave this box unchecked (recommended), at the small cost of having
+  to click the  OK  button in this window every time that we start
+  Eclipse; on the positive side, whenever we start Eclipse we will be reminded
+  of the folder that it is using for our workspace, which is useful if we need
+  to know the workspace's name but forget which folder we are using as the
+  workspace.
+  
+
+Go ahead now and click the  OK  button to select the default work space.
+The progress bar on the bottom of the splash screen progresses to the end
+  (should take under a minute), at which point the splash screen will disappear
+  and Eclipse should appear in the following form (although its window will be
+  bigger on our screen).
+If you see a screen with a tab that says  Welcome , click where it says
+   Workbench ); this screen appears only when you select a new workspace.
+  
+    
+   
+      &amp;nbsp  
+ 
+To stop Eclipse, we can either select  File | Exit  from the left-most
+  pull-down menu, or more simply just click the standard terminate window
+  button ( X ) in the upper-righthand corner.
+If the latter, Eclipse will prompt for confirmation of termination with the
+  following window.
+ 
+ .
+  
+
+Here too, we can put a check in the  Always exit without prompt  checkbox
+  to avoid this window's prompt altogether.
+Or, we can leave this box unchecked (recommended), at the cost of having to
+  click the  OK  button in this window every time that we stop Eclipse
+  by clicking the terminate window button; on the positive side, we won't
+  accidentally terminate Eclipse, because we need to confirm the termination.
+  
+
+If we ever put a check in one of these "do not prompt again" checkboxes,
+  but later want to restore these prompts, we can do it as follows.
+Once Eclipse appears on the screen, select  Window | Preferences .
+Then disclose  General  (click its plus) and  Startup and Shutdown 
+  (ditto) and then click on the  Workspaces  entry.
+We should ultimately see the following window (I am running this on my
+  own computer, where my  username  is  Pattis ).
+  
+ .
+  
+We can check or uncheck the  Prompt for workspace on startup  box for
+   our preference, then click  Apply , and finally click  OK 
+  (recommended to leave this box checked).
+  
+
+Now click on  Startup and Shutdow  entry. 
+You should see the following window.
+  
+ .
+  
+
+We can check or uncheck the  Confirm exit when closing last window  box
+  for our preference, then click  Apply , and finally click  OK 
+  (recommended to leave this box checked).
+  
+
+Practice starting and stopping Eclipse, setting these prompt/confirm
+  preferences as described above, and observing their behavior.
+After starting Eclipse, change the size of its main window, and note that when
+  you stop and then restart it, the window will be the same size: Eclipse
+  remembers the size of this window.
+In fact, once we start using Eclipse for real programming, whenever it starts
+  it will appear exactly as it appeared when we last stopped it.
+Therefore, it is simple to resume working in exactly the same context that we
+  were in when we stopped Eclipse.
+  
+While we are examining preferences, let's illustrate one more that is 
+  useful.
+Select  Window | Preferences | PyDev | Editor | Auto Imports  and
+  uncheck the  Do auto import?  checkbox (illustrated below) and
+  then click  Apply  following by  OK .
+  
+ .
+  
+Doing so is especially important for Mac users, relating to our automatic
+  grading program, which I run on my PC.
+  
+           Eclipse Nomenclature  
+ 
+This section contains a terse description of Eclipse using  highlighted 
+  technical terms to describe its basic layout and operation.
+Start becoming familar with these terms now; we will repeatedly use them during
+  the course, so we will become very familiar with them.
+Because Eclipse is an  industrial-strength  tool, and we are using it in
+  an academic setting (an early programming course), we will focus on only its
+  simpler aspects.
+The most important terms that we will discuss and use are  workbench ,
+   workspace ,  perspective ,  view , and  toolbar .
+ 
+
+ Workbench / Workspace :
+These two terms are closely connected, to the point of having the same prefix:
+   work .
+The  workbench  (or more accurately, the workbench window -see the window
+  below) is the Eclipse interface to a  workspace .
+The  workspace  is a folder that comprises a collection of files/subfolders
+  that store the workspace's preferences (how the workbench window appears on
+  the screen and how it displays/manipulates it contents) and projects
+  (collections of related programming resources -primarily Python modules).
+We interact with a workspace -view and manipulate its preferences and projects-
+  through a workbench window.
+One of the primary ways we interact with projects in Eclipse is by editing
+  their Python modules resources.
+  
+
+Preferences specify how a workbench window displays a workspace; projects
+  specify the software that we can develop using the workbench window.
+In the section above, we started Eclipse and created a new, "empty" workspace;
+  actually, it is not really empty: it stores all the standard preferences for
+  the workbench window (stored in a folder named  .metadata ), but no
+  projects yet.
+Then, the workbench window displayed this "empty" workspace.
+The workspace also records whether each project it contains is open or closed
+  for use (for more details, see the section on 
+   Closing Workspaces ).
+Finally a workspace stores preferences that apply to all its projects, and
+  also apply to the workbench displaying the workspace.
+  
+
+Eclipse is general: we can have any number of workbench windows open, each 
+  referring to a unique workspace.
+For simplicity, we will always use just one workbench window, and it will
+  always refer to the same workspace.
+In fact, in the following discussion we often will say  Eclipse  when we
+  mean a  workbench window referring to our standard workspace .
+Below is an example of Eclipse using all the standard preferences, with
+  labels affixed to many of it interesting features.
+It shows the "Demo" project that we are developing.
+The rest of the this section will examine other technical terms explaining its
+  layout and operation.
+  
+     
+      &amp;nbsp  
+ 
+ Perspective : At any given time, Eclipse displays one  perspective 
+  of the many that it can display.
+Each different perspective is suited to one specific programming task.
+The perspective shown above in Eclipse is the  PyDev  perspective,
+  which we use to develop Python modules (write/run/edit them).
+Notice that the name of the perspective,  PyDev  appears depressed (it
+  is active) towards the top-right of the workbench.
+It is followed by another tab, indicating the  Debug  perspective,
+  which we use to debug Python modules (find/correct errors in them).
+We can switch to any perspective by clicking its tab; click the  Debug 
+  perspective and you will see its views (discussed below; many are the same);
+  then click the  PyDev  perspective to return to its views.
+ 
+
+ View : Each perspective contains a variety of  views  that allow
+  us to view, navigate, and edit information about a project.
+So, views are not just for looking: we can use views to change information too.
+A view may appear as a single tab, or it may be one of many tabs in a tabbed
+  window, containing many views, of which only one is active at a time- the
+  top one.
+The  PyDev  perspective contains a variety of standard views illustrated
+  above.
+Going clockwise from the top left,
+   The  Package Explorer  view is the only tab in a window that shows
+      all the code (modules and libraries, and their files) under a
+      project name.
+    Here the project name is  Demo  and it contains a module named
+       Script.py .
+ 
+
+   An  Editor  view is a tabbed window containing one tab per file being
+       edited; here the only file being edited is a module named
+       Script.py  so there is only one tab in this editor window.
+    The tab contains the name of the resource being edited; if we hover over
+      the tab that views a  .py  file, Eclipse displays the name of the
+      project folder (and the package containing the module, if there is one)
+      and finally the module name itself: here  Demo/Script.py .
+    If the resource is not in a project (e.g., a module in a library), its path
+      is displayed before its folder's name.
+ 
+
+   The  Outline  view is the only tab in a window that shows a high-level
+      outline: where names (imports, variables, and functions/methods) in the
+      module in the active editor tab are defined or redefined.
+    When can click a name in the Outline view, the Python code (re)defining
+      that name will appear in its Editor tab; so the Outline view is one way
+      to navigate a large file containing Python code.
+ 
+
+   The  Problems  view (it is one tab in a window, containing other tabs
+      of which  Console  is the most important) shows a list of all the
+      errors the Python Interpreter found in the project.
+    The  Console  view shows the input to and output from the script when
+      it runs; this view can also show interaction with the Pythyon Interpreter
+     (see   Running the
+      Python Interpreter ).
+  
+We can adjust the sizes of all the views in a perspective.
+If we remove a view from a perspective, we can restore that view by selecting
+   Window | Show View  and then clicking the
+  view to restore, as illustrated below.
+ 
+ .
+  
+
+Because these views are related, some information is propagated into multiple
+  views: e.g., the red indicators that there are syntax errors in the code.
+When such errors appear/disappear in/from one window, they often simultaneously
+  appear/disappear in/from others.
+  
+
+ Toolbar : The workbench toolbar appears under the menu bar that
+  includes the drop-down menus labeled  File ,  Edit ,  Source ,
+  etc.
+The toolbar's buttons here act as short cuts for common operations in a
+  perspective; we can also invoke these operations with the pull-down menus,
+  but clicking these buttons is faster.
+The picture above labels the make  New ,  Debug , and  Rerun 
+  buttons, which are the most useful.
+The buttons on the toolbar change when we change the perspective.
+We can customize toolbars within a perspective, but we will not cover
+  this topic here.
+  
+
+Generally, we can manipulate the perspective and views (in a perspective) in a
+  few interesting  ways.  
+ Perspectives :
+   We can remove a perspective name from the workbench by right-clicking its
+       icon and selecting  Close : we do this for the  Java 
+       perspective, which we don't need but initially appears in Eclipse.
+  We can restore a closed perspective name   P   by selecting 
+      Window | Open Perspective |  P   or by clicking the
+      Open Perspective  button and selecting   P  .
+  We can elide a perspective name, just displaying its icons by 
+       right-clicking any perspective and then selecting  Show Text 
+      (toggling whether its text is shown).
+  We can rearrange the order of perspectives by closing them all and then
+      restoring them in the order we want them to appear:  PyDev  followed
+      by  Debug  is recommended.
+   
+
+ View :
+   We can remove a view by right-clicking its tab and selecting  Close ,
+      or pressing the  X  on its tab after the view's name.
+  We can restore a view   V   by selecting
+      Window | Open View |  V  .
+  If two view tabs share a vertical boundary, we can drag the boundary left or
+      right to change the relative size of the tabs (lengthing one and
+      shotening the other);
+    if two view tabs share a horizontal boundary, we can drag the boundary up or
+      down to change the relative size of the tabs (lengthing one and
+      shotening the other)
+  We can dock view tabs/windows to create different tilings of a perspective,
+      by dragging and dropping a tab/window in the desired configuration.
+  We can restore all standard views for a perspective (and their standard
+      tiling) by selecting  Window | Reset Perspective  from the menu.
+   
+           Running the Python Interpreter  
+ 
+In this section we will discuss how to run the Python Interpreter in Eclipse.
+We run the interpreter to experiment easily with small amounts of Python code.
+As beginners, we can easily perform experiments with the Python Interpreter to
+  help us learn the simple Python language features: as more experienced
+  programmers, we can easily investigate more complicated language features and
+  libraries, while writing programs without leaving Eclipse.
+We will take both roles as the quarter progresses, so it is important to know
+  how to access the Python Interpreter in Eclipse.
+ 
+
+The Python Interpreter runs in a  Console  tab.
+When we start Eclipse we should see one Console tab; if we don't, we can select
+  the  Window | Show View  command illustrated in the previous section to
+  create a console tab.
+Once we see a Console tab, click it, then click the Open Console control
+icon   (located on the toolbar
+  holding the Console tab) and then click  5 PyDev Console  as illustrated
+  below.
+  
+   
+
+The following pop-up menu will appear, with either the first
+  ( Console for currently active editor ) or second
+  ( Python console ) radio button pushed (as is shown below).
+  
+   
+Click  OK .
+The following will appear in the Console tab (which appears every time we
+  start the Python Interpreter).
+  
+   
+
+We can type Python code at the green triple chevron prompt (&gt;&gt;&gt;);
+  when we press the ↵ key (Enter), the Python Interpreter will run
+  our code, print its result, and prompt us again.
+Enter the Python code that appears in blue below, and verify that the Python
+  Interpreter prints the information that appears in black.
+  
+   
+
+If we enter a line with an error (e.g., misspell  sqrt  as  sqr )
+  the Python Interpreter will display a red error message: there is no
+    sqr  function in the  math  module.
+Instead of retyping this line correctly, we can press the  ↑ 
+  (up arrow) key located on the right of the keyboard on 8 (make sure
+   NumLock  is off).
+This causes the Python Interpreter to redisplay the previous line that we typed,
+  and we can now edit this line: e.g., by using the  ←  (left arrow)
+  key located on the right of the keyboard on 4, to move the cursor left to the
+  spot where we forgot to type the  t , and type the  t .
+Then we can press the  End  key located on the right of the keyboard on 1
+  to move the cursor to the end of the line and finally press ↵.
+  
+Alternatively, we can press the  PgUp  button and see a
+ Command history  scrollable window, in which we can select any command
+  we typed previously to re-execute.
+If we type characters in the bottom text field, the main window will show only
+  those commands that typed starting with those characters.
+  
+   
+
+Note that when we are editing a line in the Python Interpreter, we can also use
+  the  Home  key to move the cursor to the start of a line, the → key
+  to move the cursor right, the  Backspace  key to remove the character
+  before the cursor and the  Del  key to remove the character after the
+  cursor.
+In this way it we can easily correct any code we mistype in the interpreter.
+By experimenting with the interprester, typing correct and incorrect commands
+  -and fixing the incorrect ones- we can become proficient in using the
+  interpreter.
+  
+
+We can fill the Eclipse window with the Console by double-clicking its tab or 
+  by clicking the Maximimze icon  .
+The result appears as follows (with the PyDev Package Explorer, Script, and
+  Outline views minimized: the first on the left; the second two on the right
+  (Outline on top of Script).
+  
+     
+      &amp;nbsp  
+ 
+We can return it to its original size by double-clicking its tab again, or by
+  clicking the Restore icon  .
+ 
+           Starting a New Programming Project  
+ 
+In this section we will discuss how to start a new programming project,
+  and how to manipulate the perspectives and views on the workbench window
+  displaying that project.
+In the next few sections we will learn what we need to know to develop programs
+  in a project: how to write and edit modules; how to run modules as
+  scripts; and how to find and fix syntax and execution errors in modules.
+ 
+Start Eclipse as described above, which should look as follows.
+  
+     
+      &amp;nbsp  
+ 
+Note that we should start with the  PyDev  perspective active; click it
+  if it is not depressed.
+
+ 
+To start a new project, click the down-arrow that is directly to the right of
+  the  New  icon ( ) on the main toolbar
+  for the  PyDev  perspective and then select  PyDev Project , as
+  shown below.
+  
+   
+
+Eclipse will display the following window.
+  
+   
+
+In this window, I have started creating a new project folder.
+I have typed in the project name  Demo .
+Eclipse has automatically filled in the Directory textbox with the name of the
+  workspace folder it is using (because the  Use default  checkbox is
+  checked), followed by the project name that I typed.
+When we are done entering all the information (typing the project's name and
+  ensuring all the radio buttons and puldown menus are corect), we click
+   Finish .
+  
+
+Eclipse will create a folder with the name  Demo  in its workspace folder;
+  when we create modules (files ending in  .py&gt; ; see below) for this
+  project, they will be created in this  Demo  folder.
+Eclipse will update its workbench to show  Demo  project in its
+   PyDev Package Explorer  view; we can disclose the project to see
+  it contents (when we create modules, they will appear here).
+Here is what the  PyDev Package Explorer  view looks like, with a
+  disclosed project
+  
+ .
+  
+Note that if we misspell the project name, we can right-click it and choose
+  the  Rename  option.
+  
+
+To create a new module (the script that we are going to run) inside this
+  project, first select the Demo project (which should appear as
+   ) and then click the down-arrow on
+  the  New  icon ( ) that we used to create
+  a new project, but this time select  PyDev Module , as shown below.
+  
+   
+Eclipse will display the following window.
+  
+   
+
+In this window I have started creating a new module.
+Eclipse has automatically filled in the Source Folder textbox with the name of
+  the project folder ( Demo ) so the module file ( Script.py ) will
+  be put there.
+If you do not see anything in the Source Folder textbox the best thing to do is
+  to  Cancel  the module, then go back and select the  Demo  project
+  and start creating a new module again (or you can type  /Demo  into this
+  textbox).
+  
+Eclipse puts the cursor in the  Package  textbox.
+Leave that textbox empty and select the  Name  textbox.
+I have typed in the module name  Script  there.
+Eclipse has also automatically selected  &lt;Empty&gt;  for the Template,
+  which is generally what we want.
+When we are done, we click  Finish .
+  
+
+Eclipse will create a file named  Script.py  in the project folder of the
+   Demo  project and puts the contents of the file in an editor tab with
+  then name  Script .
+Initially, this module contains a comment about when the module was created and
+  by whom.
+  
+
+Eclipse will update its workbench to look as follows.
+Notice that Eclipse will automatically put information into any file it creates
+  (even ones whose template is  &lt;Empty&gt; ).
+  
+    .
+ 
+      &amp;nbsp  
+ 
+Note that if we misspell the module name, we can right-click it and choose the
+   Rename  option.
+Before continuing to the next section (how to write and edit Python code), we
+   will briefly explore how to manipulate windows and views, to customize them.
+ 
+    Change Eclipse (Workbench Window) Size :
+    We can increase or decrease the size of the entire Eclipse window by
+      hovering over one of its boundaries (or corners) until the cursor turns
+          into two opposite-pointing arrows, and then dragging and dropping the
+          boundary (corner) to the desired location
+    The view windows will adjust their size proportionately.
+ 
+
+    Change Horizontal/Vertical Window Space Allocation :
+    We can change the horizontal space allocation among windows by moving the
+      mouse to the blue vertical boundary between any windows (the mouse icon
+      becomes two horizontal arrows), and then dragging the boundary left
+      or right.
+    Likewise, we can change the vertical space allocation among windows by
+      moving the mouse to the blue horizontal boundary between any windows (the
+      mouse icon becomes two vertical arrows), and then dragging the boundary
+      up or down.
+    Window(s) on one side of the boundary expand as window(s) on the other
+      side shrink.
+    Scrolling bars may appear/disappear as needed by these adjustments.
+ 
+
+    Minimize/Restore/Maximize Views :
+    We can minimize or maximize any window by pressing the required
+      icon, which appears at the right of any tabs in that window: 
+      ( ).
+    If we minimize a window, we can restore it similarly
+      ( );
+    if we maximize a window, we can minimize or restore it as well
+      ( ).
+    We can also toggle between a restored/maximized view by double-clicking
+      its tab (the most useful operation of the bunch).
+ 
+    Delete/Restore Views :
+    We can delete any view/tab by clicking its terminate (X) button.
+    We can restore any deleted view   V   via the  Window 
+       pull-down  menu by selecting  Window | Show View |  V  .
+ 
+    Move Views/Tabs :
+    We can move any tab to any view.
+    We do so by dragging the tab to the view that we want it to be positioned
+      in: before, after, or between any other tabs for that view.
+    We can also use this mechanism to change the order of the tabs in any
+      view.
+    For example, we can move the  Problems  tab so that it appears to the
+      right of the  Console  tab, and then move it back.
+ 
+    Rearrange View/Tab Window Docking Structure :
+    We can rearrange how the windows dock with each, to allow for increased
+      flexibility in how views appear within a perspective.
+    In docking operations, we click a tab or engire view (to select it) or to
+      and then drag and drop it to the desired location (which can even be
+      outside the Eclipse window!).
+    When dragged, one of a set of possible outlines will appear that indicates
+      how the new docking will be performed.
+    Here is a short movie illustrating 
+       docking commands  in Eclipse.
+    
+   By choosing  Window | Reset Perspective  from the menu, Eclipse will
+     restore all the views in a perspective to the standard one for that
+     perspective.
+  
+    Disclose in the Package Explorer View :
+    In the  Package Explorer  view, click the disclosure squares to
+      examine/discose their contents (going from + to -) or hide/elide their
+      contents (going from - to +).
+  
+Practice all these operations until you can make Eclipse (the workbench window)
+   appear in any format that you desire.
+ 
+           Editing a Module/Script File  
+ 
+We edit Python modules in tabs in the Editor view, mostly using standard text
+  editing commands.
+Click the  Edit  pull-down menu for a list of commands and their
+  keyboard shorcuts.
+Also click the  Source  pull-down menu for additional commands involving
+  commenting, reformatting, and generating/organizing the code in a module.
+ 
+
+Whenever we create a new module, or double click any module in the package
+   Package Explorer , Eclipse will add a view/tab for editing that module
+  in the editor window (if such a view is not already present).
+To add a second Editor view/tab for a module -so that we can view two parts of
+  it simultaneously- we select the tab to duplicated and select the
+   Window | New Editor  command: a second tab with the same name
+  will appear in the Editor view.
+Within an editor window, we can manipulate views/tabs as described above, 
+  including dividing one editor window into two editor windows, vertically
+  (as shown below) or horizontally.
+  
+    
+ .
+  
+      &amp;nbsp  
+ 
+
+Try to duplicate the tiling of views shown above: two Editor views split
+  vertically.
+Then, terminate one of the  Script  tabs to return the perspective to
+  it original views.
+ 
+
+Before we learn how to edit modules, we should first configure Eclipse so that
+  files we edit show their line numbers; as programmers, we will find multiple
+  uses for these numbers.
+To configure Eclipse, right-click in the left margin in any Editor view
+  (e.g., under the Python module   icon)
+  and then select  Show Line Numbers  to toggle its "check".
+We can use the same command to remove line numbers, by toggling its "check".
+  
+   
+Multi-digit line numbers will be right-aligned.
+Finally, once we configure Eclipse this way, it will continue to show line
+  number each time that we start Eclipse (unless we explicitly reconfigure it).
+  
+
+Here is the most important information about the Eclipse editor:
+   a single click positions the cursor
+  a double click selects the entire clicked token
+  a triple click selects the entire clicked line
+  
+After clicking, dragging the cursor selects multiple characters, tokens, or
+  lines (depending on whether the dragging started after a single-, double-, or
+  triple-click).
+This information is especially important for deleting code and copying/pasting
+  code.
+When you start editing your own modules, practice selecting text (characters,
+  tokens, and lines) and copying/pasting it.
+ 
+
+Here is the Python code for a complete Python module that I typed into Eclipse:
+  both the Editor and Outline views are present, because Eclipse changes the
+  Outline view as I type code into the Editor view.
+For now, read the information below to learn how to interpret the contents of
+  the Editor and Outline views.
+At the end of this section you will be asked to duplicate this code in Eclipse.
+And in the next section, we will learn how to runs this code.
+  
+    
+ .
+  
+      &amp;nbsp  
+ 
+Note the annotations indicating
+  The file being edited has changed (see the file-change indicator).
+  Disclosure circles appear for multi-line code: here a multi-line string and
+      a multi-line function/method definition.
+  Which lines have changed (see the purple coloring of the line numbers);
+      if the change is one or more deleted lines, a small horizontal line
+      appears where the lines  used to  be).
+  As the Editor view changes, the contents of the Outline view changes:
+      here we have defined a  cheer_up  as a function/method (note the
+       M ) and  sadness  as a variable.
+   
+
+To save the changed contents of an Editor view to its file, right-click in the
+  view and select  Save ; note that this option will not be selectable
+  if the file has not changed: if the file-change indicator is absent.
+Another way to issues this command is just by typing  strl/s  on the
+  keyboard when this tab is selected.
+After issuing this command, the file is updated to contain all the information
+  currently in the tab for this module.
+  
+
+If instead we right-clicked the view and selected the  Revert File 
+  command, the view would would be restored to the file's contents when it was
+  last saved.
+So, use  Save  and  Revert File  carefully: we will be using
+    Save  much more than  Revert File , and we can always select the
+    Edit | Undo Typing  command (or just press  ctrl/z  to undo any
+   changes (and selecting this command multiple times undoes multiple changes).
+If we issued the  Save  command in the window above, it would be updated
+  and appear as follows.
+  
+   
+Note the disappearance of the asterisk (ther file-changed indicator) and the
+  purple change bars.
+Often, if we forget to save a file, and perform some othe operation in Eclipse
+ -such as running a script- Eclipse will ask us whether to save the file(s)
+ first.
+  
+In the Eclipse editor, whenever we type an opening delimiter -e.g., a
+  parenthesis, brace, bracket, or quotation mark- the editor automatically
+  supplies the matching closing delimeter, and then repositions the cursor
+  between the two so, that we can easily type the delimited entity.
+Related to this behavior, if the cursor is followed by a closing delimiter, and
+  we type that closing delimiter, the Editor just moves the cursor past it.
+This editor behavior can be a little confusing, until we get used to it; and
+  for writing programs, it is a useful behavior.
+  
+Likewise, whenever we double-click directly after an opening delimiter (except
+  for the quotation mark), the editor automatically highlights all information
+  between that delimiter and its matching closing delimiter.
+Below I double-clicked just to the right of the first opening parenthesis on 
+  line 10.
+  
+   
+This operation -matching opening and closing delimiters- is often useful when
+  we are debugging (removing errors from) our programs.
+  
+
+We can hide any mult-line code (here the top string and  cheer_up 
+  function/method) from the Editor view by clicking its disclosure
+  circle.
+Generally throughout Eclipse clicking on a  +  means disclose the elided
+  information; clicking on a  -  means hide the disclosed information.
+In the Editor view below, we have hidden the  cheer_up  function/method:
+  notice how it shows the header of the method, but not its body, instead 
+  showing  .
+With this mechanism we can temporarily hide the parts of our Python code that
+  we are not currently interested in seeing in detail, allowing us to see
+  more code in the tab that we are interested in seeing.
+  
+   
+
+In fact, if we hover over a disclosure circle that is eliding information, the
+  cursor will change to a hand (not shown below) and Eclipse will temporarily
+  display the elided information in a yellow box, while keeping it elided in
+  the Editor view (so we can peek at it).
+  
+   
+
+If we hover over a name in an Editor view, Eclipse shows us something 
+  interesting about that name: often where it was defined (and thus showing its
+  definition).
+  
+   
+
+If we click on a name in the Editor view, Eclipse selects that name as a token
+  and shows us other places in that Editor window where this same name appears,
+  by putting the name in a yellow background.
+  
+   
+
+Likewise, in complicated modules, with many names, we can use the  Outline 
+  view to rapidly examine selected names in the module.
+By clicking an entry in the Outline view, Eclipse shows us where it was defined
+  in the Editor view (and thus show its definition).
+  
+   
+
+Finally, whenever we start typing a token, Eclipse displays possible
+  completions for that token based on Python keywords.
+Until it recognizes a correct token, Eclipse marks the code with a syntax
+  error icon ( ), indicating an error
+  (as illustrated below).
+We will soon learn how to find and fix Python syntax errors in Eclipse.
+  
+
+We can continue typing the token, or double-click one of the keywords to have
+  Eclipse complete the token.
+If we press ↵ Eclipse will complete the token with the highlighted
+  completion (and we can use the ↑ and ↓ keys to scroll through the
+  possible completions before using ↵ to make our selection).
+Don't be distracted by this mechanism; it is probably best to just keep
+  typing your code and ignore the completions.
+  
+   
+
+In addition if we press the  ctrl/space  command when Eclipse present us
+  with keyword completions, it will present us with other "useful" code that
+  might go here.
+Below I have highlighted the  pow  selection, and Eclipse provides me with
+  information about it in yellow on the right.
+I can scroll through or select one of these entries as described above.
+  
+   
+Again, it is probably best to ignore these other completions for now.
+  
+Now it is time to go back and enter into Eclipse all the code illustrated in
+  this section, and reread and practice doing all the operations discussed.
+Remember to type the code carefully, with letters in their correct case, proper
+  punctuation, and proper spacing.
+Watch carefully what happens when you pres ↵ on lines that do or don't
+  end with a colon (and what the backspace key does on indented lines).
+Once you are done entering this code, you can go to the next section and learn
+  about executing/runnning it.
+  
+           Running a Module/Script  
+ 
+A module of Python code that is runnable is called a script; other modules 
+  contain code that acts as a library of names, and these aren't runnable.
+To run a script that we are editing
+   Save it: right-click in the editor view and select  Save 
+     or press  ctrl/s ; in either case the file-changed indicator should
+     disappear
+   Run it: right-click in the editor view for that class, and 
+       then select  Run As  and  Python Run 
+  
+We assume here that there are no syntax or execution errors in our script (there
+  won't be if we typed it exactly as shown above): see the next section for
+  information on correcting syntax and execution errors.
+ 
+If we run a Python script before saving it, we will see the following window
+  
+   
+If we ever see this window, we should put a check in the
+   Always save resources before launching  
+  checkbox and then click  OK .
+In this way, whenever we run the script, Eclipse will automatically save our
+  script before Eclipse runs our script; and we won't see this window again.
+  
+Before running a script in the  PyDev  perspective, ensure that a
+   Console  view is present; we can show this view by selecting
+   Window | Show View | Console .
+We have already seen  Console  views in connection with running the
+ Python Interpreter.
+In fact, if we already have a  Console  view that shows the Python
+  Interpreter running, it is replaced by a  Console  view that shows the
+  the script running; the Python Interpreter is still running, and we will see
+  how to bring it back into the  Console  view at the end of this section.
+When run this way, the Python script above displays the following.
+  
+    
+   
+      &amp;nbsp  
+ 
+First, notice that information entered by the user appears in a green font;
+  information displayed by the computer appears in a black font.
+Also notice that the line below the  Console  tab shows that the
+  script has run to completion: it is  terminated .
+The interaction appears in the contents of the  Console  view: if it
+  does note fit entirely in this view, its contents can be scrolled -both
+  vertically and horizontally.
+Of course we change the relative sizes of the  Editor  and  Console 
+  views, or can double-click the  Console  view to maximize it.
+ 
+There are two useful tool buttons to the right of the  Console  tab.
+Immediately to the right is the  Terminate  button, a faded-red square
+  that stops a running script (it is faded here, because it cannot be
+  selected: the script already is terminated).
+The next one is is the  Remove Launch  button, a grey X, which clears the
+  contents of the console (Eclipse does this automatically, when it reruns a
+  script).
+  
+If we were running the Python Interpreter in the  Console  view and run
+  a script, the Python Interpreter will disappear to show the script.
+If the script terminates and we click the  Remove Launch  button, the
+  Python Interpreter will appear in the  Console  view.
+  
+The  Console  view below shows this script in the middle of running;
+  it is waiting for the user to enter a number.
+  
+   
+Here the line below the  Console  tab does NOT indicate that the
+  script has terminated.
+So, the  Terminate  button is bright red; pressing it will terminate
+  the script.
+If we rerun the same script, Eclipse will reuse the  Console 
+  view with this terminated script, erasing its original contents first.
+  
+Once we have successfully run a script, we can use the  Rerun 
+  button on the workbench toolbar ( ) to
+  rerun the script easily.
+How do we know whether or not we can use this shortcut?
+If we hover over this button it will will typicall display
+   Run  P S   where   P   is the name of 
+  the Project and   S   is the name of the file that contains the
+  script Eclipse will run if we click this button
+  (here  Run Demo Script.py ).
+So, if we have previously run the  Script  script in the  Demo 
+  project, hovering over this button would show.
+  
+   
+
+If it does not show the script we want to run, revert to the standard way to
+  run a script: right-click in the Editor tab for that script, and 
+  then select  Run As  and  Python Run .
+  
+Finally let's briefly examine the most useful buttons (labeled below) on the
+  Console toolbar.
+They are useful when we are running scripts and the Python Intepreter (to switch
+  between them) or running multiple scripts.
+Note that sometimes some of these buttons are missing or gray, in which case
+  Eclipse believes that they would be useless in the current context.
+   
+    Terminate : terminate the script running in the Console tab.
+It might be waiting for input, producing lots of/no output (talkative and
+  silent infinite loops).
+ It is an excellent idea to ensure that each running script is terminated
+  before you rerun it 
+ 
+    Remove Launch : remove the terminated script from the Console tab.
+If there are other scripts running (or the Python Interpreter is runnning)
+  one of those will take the place of the removed launch in the Console tab.
+See  Display Selected Console  to select any other to see.
+ 
+    Remove All Terminated Launches :
+   remove all terminated scripts from appear in the Console tab.
+This is a cleanup operation to get rid of (so they will never be seen again)
+  all terminated scripts.
+ 
+    Display Selected Console :
+   select which console to show in the Console tab.
+Click the black triangle to get a list of all scripts (running or terminated
+  but not removed) and all Python Interpreters, which can be shown in the
+  Console tab; choose which one to show.
+If we click this button by itself, it cycles through all scripts (running and
+  terminated but not removed) and all Python Interpreters that can be selected.
+ 
+    Open Console :
+   we used this to open the Python Interpreter in a Console tab.
+We can also use it to create more Console tabs, that that option is
+  currently of limited use.
+ 
+    
+The biggest problems with consoles is that whenever we run a script, it takes
+  over the console.
+If we are running the Python Interpreter in the Console view, it disappears.
+If we need to see it, we need to use the black triangle to the right of the
+   Display Selected Console  button to get it back; likewise, if after
+  using the Python Interpreter we need to get back to the script, we must use
+  the triangle to the right of the  Display Selected Console  button
+  to get back to the script.
+  
+Practice all these operations until you are comfortable using the
+   Console  view while running and rerunning programs, and using the
+  Python Interpreter.
+  
+           Finding and Fixing Syntax and Execution Errors  
+ 
+The process of debugging involves first correcting syntax errors, so the
+  program can run, and then correcting execution errors, so that the program
+  will run correctly (produce the correct results).
+This section discusses how to debug both syntax errors and execution errors,
+  using the standard  PyDev  perspective; a later handout discusses how to
+  use the  Debug  perspective to help debug execution errors.
+ 
+The universal color for a syntax error indicator in Eclipse is red; the
+  universal indicator for a syntax error in Eclipse is a red backgound:
+  typically Editor tabs show a red circle containing a white X
+  (e.g.,  ) to the left of any line
+  with a syntax error (with a red rectangle at the end of the line, while the
+   PyDev Package Explorer  view shows a red rectangle containing a white X
+  (e.g.,  ) next to any module that
+  contains one or more errors.
+  
+Often a single syntax error results in multiple red boxes appearing in multiple
+  views.
+Likewise, the universal color for a warning indicator in Eclipse is yellow.
+You must stop and fix an error, but you just need to be cautious with a warning
+  (just like road signs).
+We will discuss when to pay close attention to warnings later in the quarter.
+  
+Note that if we click the  Project  pull-down menu, the item
+   Build Automatically  should be checked: if it isn't, click it,
+  and the next time you click this pull-down menu it should be checked
+  (clicking toggles it).
+  
+Eclipse tries hard to spot syntax errors while we are typing/editing our
+  modules, to help us fix them immediately.
+In the following sequence we will type in parts of a script file named
+   Errors.py  to observe how we interact with Eclipse to fix syntax
+  errors.
+For example, if we mistype  import prompt  as  import propt ,
+  Eclipse indicates a syntax error on that line.
+  
+   
+When we hover over the error icon, Eclipse shows us the following information.
+  
+   
+When we correct the spelling, Eclipse indicates a syntax warning on that line.
+When we hover over it, we see the following.
+  
+   
+Here Eclipse warns us that although we have imported a module correctly, we
+  haven't used it anywhere: of course, since we have just started to type a
+  program, this doesn't concern us.
+So in this case we can ignore the warning; it will disappear once we write
+  code that uses  prompt .
+  
+When we use  prompt  in the next line, but use it incorrectly (there is no
+   for_inp  function defined in this module), Eclipse removes the
+  warning on line 1 but shows us an error on line 3.
+  
+   
+When we hover over the error icon, Eclipse shows us the following information.
+  
+   
+When we correct the spelling of the function name to  for_int  in that
+  line, but write a call to the  print  function incorrectly on line 5
+  (it includes a comma before the string  'Answer is ' ), Eclipse
+  indicates a syntax error on that line.
+  
+   
+When we remove this comma, Eclipse shows no syntax errors in our module.
+Notice the names  prompt  and  x  in the Outline view: these
+  are the two name we define in this script.
+Now that this script has no syntax errors, we will run it.
+If we do, we get the following interaction in the Console view.
+  
+    
+   
+      &amp;nbsp  
+ 
+Python executed the import statement and the assignment to  x  (calling the
+   for_int  function in the  prompt  module) correctly, but when it
+  tried to execute line 5 it found an execution error.
+It 
+  Identifies that it detected an execution error with the
+      Traceback  line.
+  Identifies the file and line number where it detected the execution error.
+  Identifies the code on the line on which it detected the execution error.
+  Provides an error message to help us understand the execution error.
+  
+If we click this blue-underlined information showing the line number, the
+  Editor tab for Error will scroll to line 5 and all the code on that line
+  will be highlighted.
+ 
+So, there are two kinds of errors in programming.
+Eclipse can detect syntax errors before it runs a script and execution errors
+  after it runs a script.
+We will learn much more about avoiding, interpreting, and fixing syntax and
+  execution errors throughout the quarter.
+To fix this error we must edit the script so that it calls the function
+   str  with  s  as its argument.
+Doing so leads to the following interaction.
+  
+    
+   
+      &amp;nbsp  
+ 
+
+The interactions among editing, saving, and running a script can sometimes be
+  a bit subtle and confusing.
+Confusion especially arises concerning the synchonization of the files we are
+  editing and Eclipse's reporting of syntax errors in various views.
+For one example, sometimes we type a few lines before Eclipse detects a syntax
+  error on one of the lines (there can be a few seconds of lag).
+As another example, if we fix an error, its associated error indicators may
+  disappear from some -but not all views; we must sometimes perform further
+  operations, like saving to synchronize all these views. 
+ 
+There is no substitute for using Eclipse repeated to better understand its
+  operation.
+ It is always an excellent idea, if you are confused, to save the file 
+  to see what syntax errors Eclipse detects.
+  
+The following shows what Eclipse would display, if we had continued typing code
+  without fixing the syntax errors.
+We can do this and come back to fix these errors later, but it is probably
+  better to try to fix each syntax error as we Eclipse discovers it (but not
+  necessarily each warning, as we've seen some warnings go away by themself).
+Note how errors show themselves in many of the views.
+  
+    
+   
+      &amp;nbsp  
+ 
+ 
+  
+        Advice for Debugging Syntax Errors  
+ 
+Interpret syntax errors/warnings liberally.
+  
+When Eclipse detects a problem at a token, often either that token is
+  wrong, or the one before it is wrong (less frequently the incorrect token
+  appears even earlier in the script, and even less frequently later).
+Check all places in the appropriate order.
+  
+Sometimes an error/warning message makes no sense: it says that there is one
+  kind of problem in our code, but we actually have to correct a different kind
+  of problem.
+  
+Problems snowball: one mistake can cause many error/warning messages to
+  appear; by fixing one mistake, many message may disappear.
+  
+To debug the syntax errors in a program
+  
+Fix the first problem (or if you are confident, the first few)
+   Problems  view.
+If the first error makes no sense, a subsequent error might be causing the
+  problem (snowballing).
+Always find and fix at least one error; don't spend time fixing more than a
+  few (because recompiling is so quick).
+  Save the script to see what syntax errors Eclipse reports.
+  Repeat this process until there are no syntax errors left.
+  
+To make progress, we must correct at least one error during each editing
+  session before saving the file.
+And, fixing only one error at a time ensures that we won't get confused by
+ snowball errors.
+   
+           Finishing a Project: Closing/Removing It  
+ 
+As we have seen before, when we terminate Eclipse, it saves all the preferences
+  and projects that appear in our workbench.
+When we restart Eclipse, it initializes itself in exactly the same state as
+  when it terminated.
+Therefore, we can seemlessly start Eclipse, create/work on our projects, stop
+  it, restart it, and continue working on our projects just where we left off.
+ 
+Now let us explore three options for finishing a project.
+We need to find out what happens to such projects both on our workbench and
+  in our workspace: knowing the distinction between these terms is citical to
+  understanding these three options.
+  
+The simplest option is to just leave a finished project alone.
+It will continue to be present on our workbench and in our workspace; we can
+  can undisclose the project so it appears as just one line.
+This is a safe option, although our workbench can be come cluttered, and we
+  might accidentally change a project that we meant to leave alone.
+So, we will explore two other options: closing and deleting.
+  
+ Closing : First, we can just close the project by right-clicking the
+  project name/folder an choosing  Close Project  in the menu
+  (right below Refresh/F5).
+  
+   
+Closed projects will still appear in the  Package Explorer  view in our
+  workbench (and are still stored as folders in our workspace folder), but with
+  appear with no disclosure square: we cannot examine, run, or modify our code
+  in closed  projects.
+Here is what a closed project looks like in the  Package Explorer  view.
+  
+   
+One of the few operations that we can perform on a closed project is to
+  reopen it: by right-clicking its name and then selecting  Open Project 
+  (which replaces  Close Project  on the window above).
+Once this is done, we can explore the contents of the project again.
+So, if we are done with a project, we can close it (to avoid accidentally
+  changing it) but reopen it later, if we need to examine/change it.
+  
+Note that we can always copy a project (or just its  .py  files) from the
+  workspace to any other folder, say to back-up the information.
+Another option we have is removing a project from the workbench (not just
+  closing it), which we will discuss  next.
+  
+ Deleting : Our second option is actually removing a project from our
+  workbench (and possibly the workspace too).
+In this case, the project disappears altogether from our workbench (is not
+  visible in the  Package Explorer  view), as if it were never there; we
+  have the option of leaving it in the workspace (the default), or deleting the
+  all the contents there.
+We delete a project by right-clicking its name and then selecting
+  ( ) as shown in the menu above;
+  by doing so, Eclipse pops-up the following  Delete Resources 
+  confirmation window.
+  
+   
+If we leave the  Delete project contents on disk (cannot be undone) 
+  checkbox  unchecked , Eclipse removes the project from its workbench,
+  but the folders and files containing all its resources remain intact in the
+  workspace.
+In such a case, we can leave this information where it is, or copy/move it
+  elsewhere; at a later time, if we want to recreate the project, it will be
+  easy to do if we have not deleted the project folder and its resources
+  (see the next section for information about how to do this).
+  
+But, if we  check the
+   Delete project contents on disk (cannot be undone) 
+  checkbox, then Eclipse will not only remove the project from its workbench,
+  but also will delete the project folder and all the files ( .py ,
+  but sometimes others) containing all its resources.
+  
+Obviously this latter choice is very dangerous, and I recommend NEVER putting a
+  check in this checkbox, which always defaults to being unchecked.
+If need be, and after we are done done with this operation, we can then
+  explicitly delete the project folder ourself, or better yet, archive it by
+  moving it to any other directory on our computer.
+In any case, at this point Eclipse does not know the project exists, whether
+  or not it is still in our workspace folder.
+  
+          
+   Starting an Existing (Old) Programming Project  
+ 
+We have already seen in detail how to start a new project in Eclipse.
+When started, these projects contain no modules.
+We have also seen how to create modules in these projects, edit their files,
+  and run scripts.
+In this section, we will learn how to start a project using an
+  existing/old project folder that likely already contains modules.
+ 
+For example, we might download from the web a folder that contains a
+  one or more modules and then run one of these modules as a script.
+My  Sample Programs  link (in the index of the course page) leads to a
+  repository of such project folders.
+Later in the quarter, I will ask you to download programming project folders
+  that contain some starter code in modules that I have written.
+  
+The easiest way to create a project from an existing/old project folder is
+  first to copy (or move) that folder into the workspace folder (if it is
+  not already there).
+In fact, as we just learned, if we delete a project from a workspace, but
+  do not delete its contents, the project folder remains in the workspace.
+By deleting the  Demo  project above, and not deleting its contents, we
+  now have an empty workbench, but the  Demo  project folder is still
+  in our workspace.
+  
+To start a project from an existing/old project folder in the workspace,
+  first ensure that there are no  .project  nor  .pydevproject 
+  files in that folder: if there are, delete them.
+Then click the down-arrow that is directly to the right of the  New  icon
+  ( ) on the main toolbar for the  PyDev 
+  perspective and then select  PyDev Project , as shown below.
+  
+   
+Eclipse will display the following window.
+  
+   
+By typing  Demo , the name of a project folder already in the
+  workspace, and clicking  Finish , Eclipse creates a project from it,
+  including all the resources that it contains.
+We must be careful to spell the name of the existing project folder correctly;
+  if we misspell the name, Eclipse weill create a new project folder, rather
+  than use the old one that already exists.
+If we do misspell the old project folder's name, and Eclipse creates a new
+  project folder for us with this wrong name, we can delete this new project
+  (including its contents, to completely delete it from the workspace), and
+  then repeat these operations but spelling the project folder name correctly.
+  
+
+
+
+  
+    
+  </body> 

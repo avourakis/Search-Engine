@@ -1,0 +1,216 @@
+ Research of Lu Fang<body>
+	 
+		  
+		 
+			   Biography  
+				  Research  
+				
+				  Publication 
+				 
+				  Others  
+			  
+	 
+	 
+		 
+			 
+				  
+				 
+					 Research 
+					 
+						 
+							 
+								  
+							 
+								  05/2014-03/2015, Interruptable Tasks: Treating Memory Pressure As Interrupts for Highly Scalable Data-Parallel Programs   
+								  Superviser: Prof. Harry Xu,
+								Donald Bren School of Information and Computer Sciences, 
+								University of California, Irvine   Brief Description: 
+								Real-world data-parallel tasks are often developed in managed languages such as Java and C#, 
+								which suffer from inefficiencies inherent with their managed runtime. When they manipulate 
+								massive amounts of data, their executions are often under great memory pressure. These memory problems 
+								are extremely common in Big Data systems. They lead to excessive GC effort and out-of-memory errors, 
+								significantly hurting system performance and scalability. We propose a systematic 
+								approach that can help data-parallel tasks survive memory pressure, improving their performance and
+								scalability without any manual effort to tune system parameters. 
+								  
+								This approach advocates interruptable task (ITask), a new type of data-parallel tasks that can be 
+								interrupted upon memory pressure with part or all of their used memory reclaimed 
+								and resumed when the pressure goes away. We develop a novel programming model and a runtime system, 
+								allowing developers to easily implement ITasks for different data-parallel frameworks. We have instantiated 
+								ITasks on two state-of-the-art platforms Hadoop and Hyracks. We have reproduced 13 real-world out-of-memory 
+								problems reported on Hadoop from StackOverflow on a 11-node cluster. 
+								All of these programs are able to run successfully to the end when we use ITask-based implementations.
+								A second set of experiments with 5 already well-tuned programs in Hyracks 
+								on datasets of different sizes shows that the ITask-based versions are 1.5-3 times faster and scale to 3-24+
+								times larger datasets.
+								   
+										This work was presented at the
+										 
+											ASPLOS'15 SRC
+										  
+										.
+										 Download Slides 
+									 
+									 
+										A paper about ITask was published in
+										  
+										SOSP'15.
+										 
+										 Download Paper 
+										 Download Slides 
+									 
+								   
+						 
+						 
+							 
+								  
+							 
+								  05/2013-05/2014, Facade: a compiler and runtime support for (almost) object-bounded Big Data applications   
+								  Superviser: Prof. Harry Xu,
+								Donald Bren School of Information and Computer Sciences, 
+								University of California, Irvine   Brief Description: 
+								The use of managed languages makes programming easier, but their automated memory management comes at a cost. 
+								When object-orientation meets Big Data, this cost is significantly magnified and becomes a scalability-prohibiting bottleneck.
+								  
+								We propose a novel compiler framework as well as runtime support, called Facade, that can generate highly-efficient data manipulation 
+								code by automatically transforming data path of an existing Big Data application. 
+								The key to efficiency is that in the generated code, 
+								the number of runtime heap objects created for data types in each thread is statically bounded, leading to significantly reduced
+								memory management cost and improved scalability.  We have implemented Facade and used it to transform 7 common applications on
+								3 real-world (already well-optimized) Big Data frameworks:
+								GraphChi, Hyracks, and GPS. Our experimental results are very positive: the generated programs have (1) achieved a 5%--50%
+								execution time reduction and a 5--13x GC reduction; (2) consumed up to 50% less memory, and (3) scaled to much larger datasets.
+								   
+										A paper about Facade was published in 
+										 
+										ASPLOS'15.
+										 
+										 Download Paper 
+										 Download Slides 
+									 
+								   
+						 
+						 
+							 
+								  
+							 
+								  09/2012-07/2014, PerfBlower: A Novel Performance Testing Framework   
+								  Superviser: Prof. Harry Xu,
+								Donald Bren School of Information and Computer Sciences, 
+								University of California, Irvine   Brief Description: 
+								Performance problems in a large-scale application are extremely
+								difficult to find. Traditional performance test oracles such as
+								time/memory checks are coarse-grained and subjective; as a result,
+								performance bugs often escape to production runs, hurting
+								software reliability and user experience. 
+								  
+								In this project, we focus on  
+								a class of performance problems whose symptoms can be described by logical
+								statements over a history of heap updates. We propose
+								a general technique that can amplify the effects of this kind of performance bugs
+								as well as provide precise
+								diagnostic information. Amplification serves as an automated
+								test oracle because it increases memory consumption significantly
+								for tests that trigger performance problems while having a very
+								small impact on bug-free runs. As a result, developers can easily
+								divide tests into successful and failing runs, and focus their effort
+								on failing tests. Using the diagnostic precise information (such as reference paths)
+								which is provided by our tool, developers can easily identify the root causes
+								of performance problems.
+								   A paper about PerfBlower was published in 
+										 
+											ECOOP'15
+										 .
+										 Download Paper 
+										 Download Slides 
+									 
+									 
+										This work was presented at the
+										  
+											SoCal PLS WorkShop Spring'14
+										  
+										at Harvey Mudd College.
+										 Download Slides 
+									 
+								   
+						 
+						 
+							 
+								  
+							 
+								  03/2011-06/2012, APIExample: An
+									Effective Usage Example Recommendation System
+									for Java APIs   
+								  Superviser: Dr. Lijie Wang,
+								Software Engineering Institute, Peking University   Brief Description: 
+								APIExample is an effective web search based usage example
+								recommendation system for java APIs (Here we use API to
+								represent java classes). It automatically identifies and
+								extracts usage examples (containing both code snippet and
+								readable descriptive texts) from various web pages on the
+								Internet. Based on in-depth analysis on the collected examples,
+								APIExample provides API's usage related information in multiple
+								aspects to programmers. With the help of APIExample, a
+								programmer can capture a full view on the usage of target API
+								and thus learn about the API efficiently. The tool provides two
+								kinds of user interaction style: a web search portal and an
+								Eclipse plug-in.    A paper about the preliminary implementation of the
+										tool was published in
+										 
+											ASE'11
+										 .
+										 Download Paper 
+									 
+									 A paper about an exploratory study of usage examples
+										on the web was published in
+										 
+											APSEC'12
+										 .
+										 Download Paper 
+									 
+								  
+						 
+						 
+							 
+								  
+							 
+								  01/2011-05/2012, Automatic
+									Tagging for Web Services  
+									  
+									Superviser: Prof. Junfeng Zhao, Software
+								Engineering Institute, Peking University   Brief Description: 
+								Existing web service tags are annotated manually, and manual
+								tagging is time-consuming and expensive. The approach exploits
+								WSDL documents and additional information, extracts semantic and
+								syntactic information, and annotates web services automatically.
+								These tags can support web service understanding, categorizing
+								and discovering, which are important tasks in a service-oriented
+								software system.
+								  A paper about automatic tagging for Web Services was
+										published in
+										 
+											ICWS'12
+										 .
+										 Download Paper 
+									 
+								  
+						 
+						
+						 
+						 
+					 
+				 
+				  
+			 
+			  
+		 
+		  
+	 
+	  
+	 
+
+		  Lu Fang, Donald Bren School of Information and Computer
+		Sciences, University of California, Irvine   Last update:
+		09/21/2016
+	 
+</body> 

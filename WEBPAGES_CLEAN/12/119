@@ -1,0 +1,108 @@
+ Asst. 5 * Logic Programming<body>
+  
+ 
+   This assignment is due on Monday, February
+28, by 7:00 p.m. in the locking box in CS 189.  The next assignment will
+be due on that date, too; we're just giving you some scheduling flexibility
+by extending the date of this one.  Because this assignment involves an
+unfamiliar language and system, you should expect some difficulty and start
+early.  
+ 
+  Summary:   In this assignment you will
+get some experience with logic programming and Prolog.  
+ 
+  Readings and review questions:   You
+should know the answers to the review questions listed below, but you do
+not have to turn them in (except for questions 12 and 18; see part  (a) 
+below).  
+ 
+ Chapter 15: 1-13, 15, 17-19  
+ 
+  Prolog implementations:   You can find
+Prolog implementations as follows:  
+ 
+ For home use, you can download the free SWI-Prolog
+implementation from    http://www.swi.psy.uva.nl/projects/SWI-Prolog/   
+.  
+ 
+ On the ICS Unix machines, the Prolog software
+is   cprolog  .
+ To use it, you need the line "  module
+load cprolog  " in your   .cshrc  
+file.  
+ 
+ On the Macintosh, use Open Prolog, available
+from    http://www.cs.tcd.ie/open-prolog/   .  
+   
+  (a)   In the review questions (not the
+problem set) on page 638 of the Sebesta text, do problems 12 and 18, answering
+each in one short sentence.  
+ 
+  (b)  Start up your Prolog system and,
+consulting its documentation as necessary, learn how to enter rules and
+goals.  
+ 
+ Visit Dick Botting's Prolog tutorial site
+at Cal State San Bernardino,    http://www.csci.csusb.edu/cs320/lab/08.html   
+.  It contains a series of short and interesting Prolog examples.  Download
+and try two or three of them; then write a short paragraph describing the
+one that most impressed or surprised you.    
+ 
+ This site isn't local, so don't panic
+if not everything works as expected.  But if  nothing  works as expected,
+consult with your classmates or the TAs in the lab for help.  
+ 
+  (c)   Write a Prolog description of
+your family tree, going back at least to your grandparents (if possible).
+ You may use some famous public family (such as the British royal family)
+if you prefer not to use your own.  Here are more details:  
+ 
+  (c.1)   First, describe all the relationships
+in terms of these three predicates:    parent(    Parent    ,    Child    )  ,
+  male(    Person    )  ,
+and   female(    Person    )  .  
+ 
+  (c.2)   Then, define rules for these
+predicates:  
+  
+ father(    Parent    ,    Child    )  ,  
+mother(    Parent    ,    Child    )  ,  
+child(    Child  ,  Parent    )  ,  
+son(    Child  ,  Parent    )  ,  
+daughter(    Child  ,  Parent    )  
+   
+ grandparent(    GP    ,    GC    )  ,  
+grandmother(    GM    ,    GC    )  ,  
+grandfather(    GF    ,    GC    )  ,  
+grandchild(    GC    ,    GP    )  ,  
+grandson(    GS    ,    GP    )  ,  
+granddaughter(    GD    ,    GP    )  
+   
+ spouse(    Husband    ,    Wife    )  ,
+  husband(    Person    ,    Wife    )  ,
+  wife(    Person    ,    Husband    )  .  
+   
+ sibling(    Person1    ,    Person2    )  ,
+  brother(    Person    ,    Sibling    )  ,
+  sister(    Person    ,    Sibling    )  .  
+   
+ Similar rules for aunt, uncle, nephew, niece,
+and first cousin.  
+   
+ (extra credit) Add rules for  n th cousins,
+for cousins  n  times removed, and for great    n    -grandparents.
+ You may need to find definitions of these terms on the web.  
+  
+  (c.3)   Enter, run, and test your code.
+ Turn in your code and transcripts of your tests.  
+ 
+  (d)   In the problem set (not the review
+questions) starting on page 638 of Sebesta, do one problem chosen from problems
+5, 6, and 7.  Feel free to work with your classmates on this problem.  
+ 
+  (e)   (extra credit)  Try to identify
+in the Sebesta text some indication of his bias against Prolog or logic
+programming.  Don't simply cite his descriptions of Prolog's disadvantages;
+that's not bias.  Look instead for subtler wording or organizational
+points.  Hint:  Compare section titles.  
+ </body> 

@@ -1,0 +1,66 @@
+ alpha-beta<body>
+ alpha-beta 
+
+ Backtrack programming  consists of searching a vector
+space of possibilities in a systematic fashion.
+For example, if actions  a, b, c  are to occur
+in that order and each action has two possibilities
+(say, { a1, a2 }, { b1, b2 }, { c1, c2 })
+then we might first consider performing the first of
+all possibilities, resulting in considering the sequence
+ a1-b1-c1 .
+We now iterate changing the last of the actions to some other
+possibility that has not yet been considered.
+This results in next considering  a1-b1-c2 .
+When we run out of possibilities of changing the last action,
+we change the last of the actions that has other possibilities.
+In this manner, we consider the sequences in the order:
+ a1-b1-c1 ,  a1-b1-c2 ,  a1-b2-c1 ,  a1-b2-c2 ,
+ a2-b1-c1 ,  a2-b1-c2 ,  a2-b2-c1 ,  a2-b2-c2 .
+The set of sequences can be thought of as being the leaves
+of the tree of possibilities, where a tree  node 
+corresponds to a partial sequence, and the degree of a node
+is the number of possibilities of the next action.
+ 
+ Branch-and-bound  is an embellishment of backtrack programming.
+Performing a sequence of actions results in reaching
+a leaf of the tree with which we can associate a  value .
+Our desire is to determine whether there exists a sequence of actions
+which will lead to a leaf having at least (or at most) a specified value,
+ goal , or to determine the maximum (or minimum) achievable value.
+During the process of the search, we may be able to assign
+upper and lower value  bounds  to intermediate
+nodes of the tree
+(such as after performing the partial sequence  a1-b2 )
+in such a manner that logically and mathematically
+it will always be the case that the value,  v , of any
+leaf obtained by completing the partial sequence will
+have value between the upper and lower bounds.
+If the upper bound is less than  goal 
+or, for maximization problems,
+less than the highest value achieved thus far
+(or if the lower bound is more than  goal 
+or, for minimization problems,
+more than the lowest value achieved thus far)
+then we can avoid searching the collection of
+sequences that complete the partial sequence, thus  pruning 
+the search (and saving time).
+  
+ Alpha-beta  search is similar to branch-and-bound
+for a game between two opposing players or teams, in which
+one side has a goal of achieving or maximizing a value while the other
+side has a goal of preventing achievement or minimizing value.
+  
+There are a number of strategies that may improve the efficiency of
+alpha-beta search.
+Some of these
+ 
+amenities  are effective for the bridge hand evaluation problem.
+  
+   
+Dan Hirschberg 
+Computer Science Department 
+University of California, Irvine, CA 92697-3425  
+ dan at ics.uci.edu  
+Last modified: July 1, 1996
+</body> 

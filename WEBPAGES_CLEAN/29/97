@@ -1,0 +1,168 @@
+ random_convex_set_2<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  CGAL::random_convex_set_2  
+
+
+
+   
+
+
+   
+     
+     
+  
+ 
+
+  Definition 
+ 
+
+The function   random_convex_set_2   computes a random convex planar
+point set of given size where the points are drawn from a specific
+domain.
+  
+
+ #include &lt; CGAL/random_convex_set_2.h &gt; 
+  
+
+    
+         
+    template &lt; class OutputIterator, class  PointGenerator , class Traits &gt;
+         
+            
+           
+OutputIterator
+         
+          
+             
+     random_convex_set_2  (         
+    int n, 
+
+OutputIterator o,  PointGenerator  pg, 
+
+Traits t = Default_traits)     
+                
+    computes a random convex  n -gon by writing its vertices (oriented
+counterclockwise) to  o . The resulting polygon is scaled such
+that it fits into the bounding box as specified by  pg . Therefore
+we cannot easily describe the resulting distribution.  Precondition:   n    3 .
+            
+
+  Requirements 
+
+   
+     
+     
+   
+
+   
+
+    PointGenerator   is a model of the concept  PointGenerator 
+   Traits  is a model of the concept  RandomConvexSetTraits_2  
+   Point_generator::value_type  is equivalent to 
+       Traits:: Point_2   and  OutputIterator::value_type .
+  if  Traits  is not specified,
+   Point_generator::value_type  must be   Point_2 &lt;     R &gt;  for some representation class  R ,
+   
+
+The default traits class  Default_traits  is 
+  Random_convex_set_traits_2  .
+
+     
+     
+     
+   
+
+   
+ 
+   
+.
+  
+
+  See Also   CGAL::Random_points_in_square_2 &lt; Point_2 , Creator&gt;    CGAL::Random_points_in_disc_2 &lt; Point_2 , Creator&gt;   
+
+  Implementation The implementation uses the  centroid  method
+described in [ Sch96 ] and has a worst case running time of  O(r
+ · n + n  ·  log n) , where  r  is the time needed by  pg 
+to generate a random point.
+ 
+
+  Example 
+ 
+
+The following program displays a random convex 500-gon where the
+points are drawn uniformly from the unit  square  centered at the
+origin.
+  
+
+  // file: examples/Generator/rcs_example.C
+
+#include &lt;CGAL/ Cartesian .h&gt;
+#include &lt;CGAL/point_generators_2.h&gt;
+#include &lt;CGAL/ random_convex_set_2 .h&gt;
+
+#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+
+typedef  CGAL::Cartesian &lt; double &gt;   K;
+typedef K:: Point_2                    Point_2 ;
+typedef  CGAL::Random_points_in_square_2 &lt; 
+      Point_2 ,
+      CGAL::Creator_uniform_2 &lt; double,  Point_2  &gt; &gt;
+                                    Point_generator;
+int main() {
+  // create 500-gon and write it into a window:
+   CGAL::random_convex_set_2 (
+            500, 
+            std::ostream_iterator&lt; Point_2 &gt;(std::cout, "\n"),
+            Point_generator( 0.5));
+  return 0;
+}
+ 
+ 
+
+    Next:    random_polygon_2   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

@@ -1,0 +1,938 @@
+ Euler's Formula<body>
+     
+  Proof 1: Interdigitating Trees
+ 
+
+ For any connected embedded planar graph G define the  dual graph  G* by
+drawing a vertex in the middle of each face of G,
+and connecting the vertices from two adjacent faces by a curve e* through
+their shared edge e.  Note that G**=G.
+Any cycle in G disconnects G* by the Jordan curve theorem.
+Any acyclic subgraph F of G is a forest and does not disconnect G*
+(you can get from any face to any other face by detouring around
+trees in F).  So connectedness and acyclicity are dual to each other.
+This duality forms the basis of the following proof: 
+
+ 
+Choose any spanning tree T in G; this is by definition a connected
+acyclic subgraph.  The dual edges of its complement, (G-T)*,
+form an acyclic connected subgraph of G* which is therefore also
+a spanning tree.
+The two trees together have (V-1)+(F-1) edges.
+ 
+
+ This is my favorite proof, and is the one I use when teaching graph theory.
+ Sommerville  attributes it to  Von Staudt .
+It fits in well with other topics of planar duality such as the fact that
+every planar graph with all faces even is bipartite (by duality from Euler tours).
+Several other proofs of the Euler formula have two versions, one
+in the original graph and one in its dual, but this proof is self-dual
+as is the Euler formula itself. 
+
+   
+
+ The idea of decomposing a graph into interdigitating trees has proven
+useful in a number of algorithms, including work of myself and others on
+ dynamic
+minimum spanning trees  as well as work of Goodrich and Tamassia
+on point location.  It also has obvious connections to power-ground
+routing in VLSI design and to watershed analysis. 
+ 
+Proof 2: Induction on Faces
+ 
+
+We can prove the formula for all connected planar graphs, by
+induction on the number of faces of G.
+
+ 
+If G has only one face, it is acyclic
+(by the Jordan curve theorem) and connected, so it is a tree
+and E=V-1.  Otherwise, choose an edge  e  connecting two
+different faces of G, and remove it;  e  can then only appear once in the
+boundary of each face, so the graph remains connected -- any path
+involving  e  can be replaced by a path around the other side of one of
+the two faces.  This removal decreases both the number of faces and
+edges by one, and the result then holds by induction.
+ 
+
+This proof commonly appears in graph theory textbooks
+(for instance  Bondy and Murty )
+but is my least favorite: it is to my mind unnecessarily complicated
+and inelegant; the full justification for some of the steps seems to be
+just as much work as all of the first proof.
+It doesn't generalize very well,
+and there are some critical details that textbook authors often omit.
+ 
+Proof 3: Induction on Vertices
+ 
+
+This argument is the planar dual to the proof by
+induction on faces.
+
+ 
+If G has only one vertex, each edge is a Jordan curve,
+so there are E+1 faces and F+V-E=(E+1)+1-E=2.
+Otherwise, choose an edge  e  connecting two
+different vertices of G, and contract it.  This decreases both the
+number of vertices and
+edges by one, and the result then holds by induction.
+ 
+ 
+Proof 4: Induction on Edges
+ 
+
+By combining the two previous proofs we get an induction
+with a much simpler base case.
+
+ 
+If the connected planar graph G has no edges, it is an isolated vertex
+and V+F-E=1+1-0=2.  Otherwise, choose any edge  e .  If  e 
+connects two vertices,
+contract it, reducing V and E by one.  Otherwise, it is a Jordan curve
+and separates two faces; remove it and reduce F and E by one.
+In either case the result follows by induction.
+ 
+
+This is the proof used by  van Lint and Wilson .
+Other variants are possible -- if  e  connects two vertices and
+separates two faces,
+we may choose in various ways whether to delete or contract  e .
+ 
+Proof 5: Divide and Conquer
+ 
+
+This proof was sent to me by Alex Bogomolny, who found it in a Russian
+translation (1958) of the 7th edition of
+ J. Hadamard's Elementary Geometry  (vol 2).  It
+is closely related to the proof by
+ ear decomposition .
+
+ 
+The proof is by induction on the number of faces.  First of all, you
+remove one face and prove the formula V-E+F=1 for open polyhedral
+surfaces. For a single face the formula obviously holds. Assume the
+formula holds for a smaller than F number of faces and consider a
+surface with number of faces equal to F. Pick two vertices on the
+boundary (left by the removed face) of the surface and connect them by a
+chain of internal edges. (The existence of such a chain follows by a
+form of the Jordan curve theorem.) Now cut along this chain. You get two
+surfaces for which the formula V-E+F=1 holds.  For the first let it be
+V1-E1+F1=1 and for the second V2-E2+F2=1.  Assume the chain contains L
+edges hence (L+1) vertices.  It then follows that E1+E2=E+L and
+V1+V2=V+L+1. Of course F1+F2=F.  Summing (algebraically) up gives the
+desired result.
+ 
+
+One can also use a dual version of the proof, in which an open disk
+(initially formed by removing a vertex from the polyhedron) is
+decomposed by finding alternating sequences of edges and faces.
+ 
+Proof 6: Electrical Charge
+ 
+
+This proof is due to  Thurston .
+He writes:
+ 
+Arrange the polyhedron in space so that no edge is horizontal -- in
+particular, so there is exactly one uppermost vertex U and lowermost
+vertex L.
+ 
+Put a unit + charge at each vertex, a unit - charge at the center of
+each edge, and a unit + charge in the middle of each face.  We will show
+that the charges all cancel except for those at L and at U.  To do this,
+we displace all the vertex and edge charges into a neighboring face, and
+then group together all the charges in each face.  The direction of
+movement is determined by the rule that each charge moves horizontally,
+counterclockwise as viewed from above.
+  
+  
+  
+ 
+In this way, each face receives the net charge from an open interval
+along its boundary.  This open interval is decomposed into edges and
+vertices, which alternate.  Since the first and last are edges, there is
+a surplus of one -; therefore, the total charge in each face is zero.
+All that is left is +2, for L and for U.
+  
+
+Thurston goes on to generalize this idea to a proof that the
+ Euler characteristic 
+is an invariant of any triangulated differentiable manifold.
+ 
+Proof 7: Dual Electrical Charge
+ 
+
+Rather than grouping charges in faces of the graph, we can give a dual argument
+that groups charges at vertices.  This proof works best with the convex
+planar embedding of the graph of a polyhedron.
+ 
+Rotate the graph if necessary so that no edge is vertical.
+As in the previous proof,
+put a unit + charge at each vertex, a unit - charge at the center of
+each edge, and a unit + charge in the middle of each face.
+We will show that all but two + charges cancel.
+To do this, displace the charge on each edge to its right endpoint;
+displace the charge on each face (except the outer face) to its rightmost vertex.
+Each vertex (except the leftmost vertex)
+receives the charges from an alternating sequence of edges and faces,
+cancelling its initial charge.  The only remaining uncancelled charges
+are one + charge on the outer face and one + charge on the leftmost vertex.
+ 
+ 
+  
+ 
+Proof 8: Sum of Angles
+ 
+
+This proof uses the fact that the planar graph formed by the polyhedron
+can be embedded so all edges form straight line segments.
+
+ 
+Sum up the angles in each face of a straight line drawing of the graph
+(including the outer face); the sum of angles in a  k -gon is
+( k -2)pi, and each edge contributes to two faces, so the total sum
+is (2E-2F)pi.
+ 
+Now let's count the same angles the other way.
+Each interior vertex is surrounded by triangles and contributes a total
+angle of 2 pi to the sum.
+The vertices on the outside face contribute 2(pi - theta(v)).
+where theta denotes the exterior angle of the polygon.
+The total exterior angle of any polygon is 2 pi,
+so the total angle is 2 pi V - 4 pi.
+  
+Combining these two formulas and dividing through by 2 pi,
+we see that V - 2 = E - F, or equivalently V-E+F=2.
+  
+
+This is the method used by Descartes in 1630.
+ Sommerville  attributes this proof to
+ Lhuilier  and
+ Steiner .
+ Hilton and Pederson  use angles in a similar way
+to relate the Euler characteristic of a polyhedral surface
+to its  total angular defect .
+ 
+Proof 9: Spherical Angles
+ 
+
+The proof by sums of angles works more cleanly in terms of spherical triangulations,
+largely because in this formulation there is no distinguished "outside face"
+to cause complications in the proof.
+ 
+We need the following basic fact from spherical trigonometry:
+if we normalize the surface area of a sphere to 4 pi,
+and look at any triangle defined by great circle arcs on the sphere,
+the sum of the three interior angles is pi+a where a (the  excess 
+of the triangle, is equal to the surface area of the triangle.
+(E.g. see  Wells , p. 238).
+
+  
+To translate our question on polyhedra to one of spherical geometry,
+first triangulate the polyhedron; each new edge increases E and F by one each,
+so V-E+F is left unchanged.  Now perform a similar
+light-shining experiment to the one described on the  index page :
+place a light source at an interior point of the polyhedron,
+and place a spherical screen outside the polyhedron
+having the light source as its centerpoint.
+The shadows cast on the screen by the polyhedron edges will form
+a spherical triangulation.  Since every edge is on two triangles
+and every triangle has three edges, 2E=3F.
+ 
+We now add up the angles of all the triangles; by the spherical trigonometry described above, the sum is (4+F) pi.  Adding the same angles another way, in terms of the vertices, gives a total of 2 V pi.  Since these two sums measure the same set of angles,
+F=2V-4 and combining this with the other equation 2E=3F yields the result.
+  
+
+ Sommerville  attributes this proof to
+ Legendre .
+Because of its connections with
+ geometric
+topology , this is the proof used by
+ Weeks ,
+who also gives an elegant proof of the spherical angle-area relationship
+based on inclusion-exclusion of great-circular double wedges.
+ 
+The relation A*k = 2 pi (V-E+F)
+on a surface of constant curvature k such as the sphere
+is a form of the Gauss-Bonnet formula from differential geometry.
+  
+Proof 10: Pick's Theorem
+ 
+
+
+We have translated our
+ sum-of-angles proof  to 
+ spherical trigonometry , in the process
+obtaining formulas in terms of sums of areas of faces.
+Now we examine similar formulas for sums of areas in planar geometry,
+following a suggestion of
+ Wells .
+
+ 
+The basic tool here is  Pick's Theorem :
+in any polygon P drawn so that it's vertices are on points (x,y)
+where x and y are both integers, the area of P can be expressed
+as N + B/2 - 1, where N is the number of integer interior points, 
+and B is the number of integer points on the edges and vertices of P.
+This can be proven in a number of ways, for instance by choosing
+a horizontal line L passing below the polygon and partitioning the polygon's area
+into the sum of signed areas of trapezoids from L
+to each edge.  These proofs do not require Euler's formula so there is
+no danger of circular reasoning.
+
+  
+First draw the planar graph corresponding to the polygon, with straight
+line segment edges.  It is possible to choose a sufficiently small
+radius r, such that if we move each vertex somewhere within a circle of
+that radius centered on its original location, the resulting graph will
+remain planar; scale the graph so that r=1.
+Then move every vertex to the nearest integer vertex; the result is an
+equivalent planar graph drawn in the grid.
+ 
+The outer face of the graph is covered exactly once by the remaining faces,
+so the sum of the areas of the remaining faces should equal the area of
+the outer faces.  This sum of areas is, by Pick's Theorem,
+I+X+B/2+S/2-(F-1), where I is the number of points interior to one of the faces,
+X is the number of points on an interior edge (each of which counts 1/2
+in each of two faces), S is the sum (over all vertices) of the number of
+interior faces the vertex belongs to, and the (F-1) term comes from
+adding the -1 term in each of F-1 applications of Pick's theorem.
+  
+A vertex interior to the graph contributes a term to S equal to its degree,
+whereas a vertex on the outer face contributes only its degree minus one.
+Therefore S=2E-K where K is the number of vertices on the outer face.
+Further, by Pick's Theorem, the area of the outer face is
+(I+X+V-K)+(B+K)/2-1.
+Combining the two equations S=2E-K and
+I+X+B/2+S/2-(F-1)=(I+X+V-K)+(B+K)/2-1 yields the result.
+  
+
+ Unfortunately  Pick's theorem
+does not generalize  to higher dimensions, so this approach seems
+unlikely to work for proving higher-dimensional forms of Euler's formula.
+  
+Proof 11: Ear Decomposition
+ 
+
+A graph is  two-edge-connected  if removing any edge leaves a connected subgraph.
+Two-edge-connectivity is equivalent to the existence of an  ear decomposition :
+a partition of the edges of the graph into a sequence of  ears 
+(simple paths and cycles), with the first ear being a single vertex; the
+start and
+end of each successive ear should be vertices occurring in previous
+ears, but all
+other vertices in an ear should be new.  Such a decomposition can be
+found one ear at a time: start each ear by any unused edge  e  from an
+already-explored vertex, and continue by a shortest path back to another
+already-explored vertex (such a path must exist because  e  cannot
+disconnect the graph).
+ 
+We can use such a decomposition in a proof of the Euler formula for polyhedra:
+  
+The graph G of a polyhedron is two-edge-connected, since if we remove an edge e
+we can still connect its endpoints by a path around the other side of one of the
+two faces of G containing e.
+ 
+Find an ear decomposition of G, and consider the process of forming G by
+adding ears one at a time starting
+from a single vertex.  Initially there is one vertex, one face, and no edges.
+Each new ear forms a path connecting two vertices on the boundary of a face,
+splitting the face in two; the path has one more edge than it has vertices.
+So if the ear has  k  edges, its addition increases V by
+ k -1, E by  k , and F by 1,
+and the result follows by induction on the number of ears.
+  
+Ear decompositions have been especially useful in the design of parallel algorithms,
+since they are easier to find in parallel than are other structural decompositions
+of graphs such as depth first search trees.
+For an example of this see my work on
+ recognizing
+series parallel graphs .
+ 
+Proof 12: Shelling
+ 
+
+ Ziegler 
+interprets a polyhedron or polytope as a complex of polyhedral
+faces of varying dimensions.  He lets  f i   denote the number
+of faces of dimension i, so  f  0 =V,
+ f  1 =E, and  f  2 =F,
+but he also adds faces of dimension  d  (the whole polytope)
+and -1 (the empty face);  f  -1 = f d  =1.
+
+Ziegler
+defines a  shelling  of a complex of polyhedral faces
+to be a linear ordering on the maximal-dimension faces ( facets )
+such that, if the facets are of dimension at least one,
+the ordering satisfies the following properties:
+  The boundary of the first facet F 0  has a shelling.
+  The intersection of each facet F  j   ( j  &gt; 0) with the
+union of previous
+facets is nonempty and forms the prefix of a shelling of F  j  .
+  
+
+Every convex polytope has a shelling found by traveling in a straight line
+from some point near one face of the polyhedron, and ordering the faces
+by the sequence of points at which the line crosses the plane of a face
+and the face becomes visible.  (The line must be imagined to pass
+"to infinity and beyond" through to the other side of the polyhedron.)
+The intersection of a facet F  j   with previous facets
+can be found
+geometrically as the portion of the boundary of the facet
+visible from the intersection point of the viewing line with the plane
+of the facet; this shows that the lower-dimensional shelling required by
+property 2 is of the same geometric type.
+
+Ziegler then proves that any polytope
+has Euler characteristic
+X(P)=Sum(-1  i   f i  )=0,
+by an induction on dimension and shelling length:
+ 
+The base case, in which f -1 =f 0 =1, is clear.
+Now if P is a  d -polytope with shelling order
+F 1 ,F 2 ,... then we have
+more precisely that
+X(F 1  u F 2  u ... u F  j  )
+is 0 for  j  &lt;  f   d -1 
+and 1 for  j  =  f   d -1 
+which follows by induction on  j , 
+since the facets we add in are ( d -1)-polytopes, the Euler
+characteristic is additive, and the intersection of F  j   with
+previous facets is a shellable part of, but (for  j  &lt;
+ f   d -1 )
+not the whole boundary of
+F  j   (Ziegler shows that this last observation is true
+in general, but it is evident geometrically for the
+shelling defined above).
+ 
+Removing the two "extra" faces  f  -1  and
+ f  3  from this sum
+gives us the usual Euler formula.
+ 
+Proof 13: Triangle Removal
+ 
+
+This proof is really just a variation on  shelling ,
+but is included here for its historical significance: it was
+used by Cauchy, and was examined at length by  Lakatos .
+
+ 
+Begin with a convex planar drawing of the polyhedron's edges.
+If there is a non-triangular face, add a diagonal to a face,
+dividing it in two and adding one to the numbers of edges and faces;
+the result then follows by induction.
+ 
+So suppose we have any planar graph with all interior faces
+triangular, with at least two such faces, and with the further property
+that one can get from any interior point to any other
+by a path that avoids the boundary of the graph's outer face.
+(The triangulation of the convex drawing of our polyhedron clearly
+satisfies these properties.)
+Then there are always at least two triangles having edges on this boundary,
+such that the removal of either one leaves a single triangle or a
+smaller graph of the same type;
+this can be proved by an induction on the number of triangles,
+for if some boundary triangle disconnects the interior points,
+the two disconnected components on its two non-boundary edges
+must either be single triangles
+(which are removable) or have (by induction)
+two removable boundary triangles, at least one of which
+will be removable in the overall graph.
+  
+So remove boundary triangles one by one; at each step we remove
+either one edge and one face, or two edges, a face, and a vertex.
+In all cases V-E+F remains unchanged.  Eventually we reach
+a graph formed by a single triangle at which point
+V-E+F=3-3+2=2.
+  
+
+The case analysis occurring in higher dimensional
+versions of this proof is closely related to Radon's theorem
+that any  d +2 points can be partitioned into two
+subsets with intersecting convex hulls,
+and to "flipping" based algorithms for constructing
+Delaunay triangulations and convex hulls.
+ 
+Proof 14: Noah's Ark
+ 
+
+Portions of this proof are from  Bishop and
+Goldberg .
+
+ 
+Define a height function on the surface of the polyhedron as follows:
+Choose arbitrary heights for each vertex.
+In each edge, choose a height for one interior point greater
+than that of the two endpoints, and interpolate the remainder
+of the edge linearly between the chosen point and the endpoints.
+In each face, choose a height for one interior point, greater
+than all heights on its boundary; interpolate the heights in the rest
+of the face linearly on line segments from the chosen point to the boundary.
+The result is a continuous function with V+F+E critical points:
+V local minima at the vertices, E saddles at the chosen points of edges,
+and F local maxima at chosen points of faces.
+ 
+Now view the surface as an initially bone dry earth on which there is
+about to fall a deluge which ultimately covers the highest peak.  We
+count the number of lakes and connected land masses formed and destroyed
+in this rainstorm to obtain the result.
+  
+For each local minimum there will be one lake formed.
+For each saddle there will either be two lakes joined or a single lake
+doubling back on itself and disconnecting one land mass from another
+(let J and D denote the number of times these events happen respectively).
+For each peak a land mass will be eliminated.
+Initially there is one land mass, and in the final sitation there is one global lake.
+Thus we have 1+D-F=0 and 0+V-J=1.
+Combining these two equations with the fact that D+J=E yields the result.
+  
+
+One can either view the rainfall as (unnaturally) causing the global water levels
+to always be at the same height, so that two lakes reach a saddle at the same time;
+or one can take a more realistic viewpoint and say that the rainfall may
+vary arbitrarily over the globe, but when one lake reaches a saddle the water will
+spill over it (and the lake will not rise) until the lake on the other
+side of the saddle reaches the same height.
+ 
+This proof is close to self-dual, the biggest asymmetry being in the
+definition of the height function.
+As usual, the Jordan curve theorem is involved, in the fact that a lake
+doubling back on itself creates an island. The principle of classifying the singular points (peaks, saddles, and valleys) for a height function defined on a surface is the main idea behind Morse theory, but this proof dates back much earlier than Morse, to an 1863 publication of Möbius.
+  
+Proof 15: Binary Homology
+ 
+
+Portions of the following proof are described by
+ Lakatos  (who credits it to Poincaré)
+however Lakatos omits any detailed justification for the properties 
+of the map b defined below, instead treating them as axioms
+(so the theorem he ends up proving is that
+that Euler's formula is true of any polyhedron satisfying these axioms,
+but he doesn't prove that this is true of convex polyhedra).
+ 
+Like the  shelling  proof,
+this proof
+interprets a polyhedron or polytope as a complex of polyhedral
+faces of varying dimensions, with  f i   denoting the number
+of faces of dimension i.  And like that proof,
+we add two "extra" cells, one for the whole polytope
+and one for the "empty face", so  f  -1 = f d  =1.
+  
+We interpret the subsets of faces of dimension  i 
+as a vector space over the two-element field GF(2),
+with vector addition being performed by symmetric difference
+of subsets (also known as exclusive or).
+In this way we get  d +1 vector spaces V  i  ,
+with dimensions equal to  f i  .
+The sets of faces of the polytope can be interpreted as forming
+bases for these vector spaces.
+  
+These spaces also come equipped with a linear mapping b taking
+each space V  i   to the next lower dimensional space,
+defined on each face to be the set of its facets.
+When v is a sum of faces, b(v) is the sum of the corresponding
+sets of facets.
+(The empty face has no facets, and a vertex is defined
+to have the empty face as its only facet.)
+This mapping has two very important properties:
+   Boundaries have no boundaries.  In other words,
+for any vector v, b(b(v))=0.
+If v is a basis vector, corresponding to a single face of the polytope,
+this is true because any  ridge  (face two dimensions lower than  v )
+forms the boundary between two facets of  v , and is therefore
+cancelled out in the calculation of b(b(v)).
+In the special case of the empty face, b(v)=0 already and for any linear
+map b(0)=0.  In the special case of a vertex, b(v) is the empty face
+and again b(b(v))=0.
+The result follows as well for vectors other than the bases
+by linearity.
+ 
+   Any vector without a boundary is itself a boundary.
+In other words, for any vector v, if b(v)=0, then v=b(w) for some w.
+If v=0 then we can choose w=0 as well; for nonzero v
+we prove this by analyzing the vectors of each dimension separately.
+If v is in V -1 , it must be the empty face itself
+and is the boundary of some vertex.
+If v is in V 0 , it must consist of an even number of vertices
+for b(v) to be zero.  These vertices can be paired up
+and connected by paths; then w can be taken to be the vector sum of
+these paths.
+If v is in V 1 , it forms a set of edges meeting an even number of
+times at each vertex; these edges can be grouped into Jordan curves
+and w can be taken to be the vector sum of regions bounded by these curves.
+If v is in V 2 , it must be the whole set of facets of the polyhedron,
+since we can find a path on the polyhedron boundary from any facet to
+any other facet (avoiding vertices), and none of the edges
+crossed by this path can be in b(v).
+So we can take w to be the single cell corresponding to the whole polyhedron.
+Finally, if v is a nonzero vector in V 3 , b(v) cannot be zero.
+   
+With these preliminaries out of the way we are ready to
+begin the proof that
+Sum(-1  i   f i  )=0.
+  
+Let B  i   denote the subspace of V  i   consisting
+of those vectors for which b(v)=0.
+Then the map b takes V  i   to B  i -1 .
+Whenever we have a linear map of vector spaces,
+we can use it to decompose the original space into
+its  nullspace  (the set of vectors mapped to zero,
+here B  i  ) and its orthogonal complement,
+which is mapped one-to-one onto the image of the map.
+This tells us that
+dim(V  i  )=dim(B  i  )+dim(B  i -1 ).
+Plugging this expansion into the sum we are trying to evaluate
+gives
+ 
+Sum(-1  i   f i  )
+
+= Sum(-1  i   (dim(B  i  ) +
+dim(B  i -1 )))
+ 
+which equals zero, because each term B  i  
+appears twice with opposite signs.
+ 
+Cancelling the two extra parameters  f  -1  and
+ f  3  from
+the sum gives the usual Euler formula.
+I suspect there is a more direct, dimensionless way of proving
+that boundaryless vectors are themselves boundaries, but I don't see it
+and Lakatos doesn't describe it.
+ 
+ Homology theory , one of the foundation stones of
+algebraic topology, is devoted to defining similar vector spaces and
+understanding
+the extent to which the key equation
+dim(V  i  )=dim(B  i  )+dim(B  i -1 )
+fails to be true in other topological spaces.
+  
+Proof 16: Binary Space Partition
+ 
+
+ A  binary space partition 
+is a data structure commonly used for computer
+graphics and other geometric searching problems.  It's formed by cutting
+space by a hyperplane, then recursively partitioning each of the two
+resulting halfspaces.  The result is a hierarchical decomposition of
+space into convex cells. 
+
+ In 1974,  Helge Tverberg  showed that, given
+any convex polytope K, one can find a binary space partition that decomposes
+K into simplices.  This is obvious for two dimensional polytopes (just
+repeatedly cut along polygon diagonals); the general proof proceeds by
+induction on dimension and number of faces: 
+
+ 
+We assume K is not a simplex or we would already be done.
+
+ If K has a vertex P incident to more than d facets, then (by induction on dimension) we can partition K by hyperplanes through P into smaller polytopes
+each of which has exactly d facets incident to P.
+The number of facets not incident to P in each of these polytopes
+is at most the same as in K, so each smaller polytope has fewer facets than K.
+By induction on number of facets, we can recursively partition the smaller polytopes into simplices.
+
+  On the other hand suppose that each vertex of K has only d incident facets.
+Let P be a vertex of K that is not adjacent to some two facets F1 and F2
+(we can find P, F1, and F2 by induction on dimension if K has a non-simplicial facet; if all facets of K are simplices, let F1 and F2 be two adjacent facets and P be any vertex other than the d+1 vertices shared by F1 and F2).
+Let L be the hyperline contained in the hyperplanes through F1 and F2,
+and cut K by a hyperplane through P and L.
+Then each of the two pieces avoids one of the facets Fi, but has a new facet
+on the cut plane, so its number of facets is not increased.
+One can show that each piece either has more than d facets at P
+(in which case we can apply the previous case), or avoids an additional
+facet of K (in which case we can apply induction on the number of
+facets), so either way we can partition each piece recursively.
+  
+
+The number of cuts in this partition may be exponential in the number of facets,
+but this seems unavoidable due to examples like the hypercube which have few facets but require many cuts.
+
+ Tverberg then proves that the Euler characteristic X(K)
+(as defined more precisely for the
+ shelling proof ) is always zero,
+by induction on dimension and on the number of cuts in the binary space
+partition:
+
+  
+If K is a simplex, the number of faces of any dimension is
+counted by a binomial coefficient, and the identity X(K)=0
+is just the application of the binomial theorem to
+the evaluation of (1+x) d  at x = -1.
+
+ Otherwise, let the top level cut of the
+binary space partition split K into
+two polytopes K1 and K2.  Let K3 be the convex hull of
+the set of vertices of K that are contained in the cutting hyperplane,
+and let K4 be the intersection of K with the cutting hyperplane.
+Then we have the formula
+
+  
+X(K) = X(K1) + X(K2) + 2 X(K3) - 3 X(K4),
+ 
+
+ since each face of K is either contained in the cutting hyperplane
+(contributing to all four terms X(Ki)), split by the cutting hyperplane
+(forming a face of one lower dimension in K1, K2, and K4, and
+contributing a negated term to each of these three polytopes' Euler
+characteristics), or is contained in one of the two halfspaces (and
+contributes only to X(K1) or X(K2)).
+
+  K1 and K2 have smaller binary space partitions, and K3 and K4 have lower dimension, so by induction all have zero Euler characteristic.
+Therefore, X(K) is also zero.
+  
+ 
+Proof 17: Valuations
+ 
+
+ This proof comes from
+ Klain and Rota ,
+who develop it as part of a more general theory of
+invariant measures on Euclidean spaces.
+Thanks also to Robin Chapman for helping explain it to me.
+
+  Let U d  be the vector space of functions from  R  d 
+to  R , and V d  be the subspace of U d 
+generated by characteristic functions of compact convex sets
+in  R  d .
+We define a function χ d  that maps V d  to real numbers,
+as follows:
+   If d=1, for any function f in V d , let
+   
+D f(x) = f(x) - lim y-&gt;x +  f(y),
+  
+χ 1 (f) = sum D f(x)
+ 
+  
+(Note that this sum always has only a finite number of nonzero terms.)
+    If d&gt;1, partition the coordinates of  R  d  into sets
+of d-1 and 1 coordinate:
+   
+ R  d  =  R  d-1  ×  R .
+ 
+ Thus we can represent any point in  R  d  as a pair
+(x,z) where x in  R  d-1  and z in  R .
+For any function f in V d ,
+and any z in  R , let f z  denote the restriction of f to
+a (d-1)-dimensional cross-section:
+f z (x) = f(x,z),
+so f z  is a function in V d-1 .
+We then define
+   
+χ d (f) = sum D χ d-1 (f z ).
+ 
+  
+Because D and Sum are linear operators, χ is a linear function from V
+to  R .  It can also be shown by a simple induction on dimension
+that, if f is the characteristic function of a compact convex set K,
+then χ(f) = 1: By induction, χ(f z ) is the
+characteristic function of a closed interval, from which it is clear
+from the definition that sum D χ(f z ) is 1.
+Thus also (since V has the characteristic
+functions of convex compact sets as its basis) χ is well defined
+independently of the choice of coordinates for  R  d .
+
+ If
+g is the characteristic function of the relative interior of a polytope
+K, it is in V d  (by inclusion-exclusion of lower-dimensional
+faces) and a similar induction shows that
+χ(g) = (-1) m , where m is the dimension of K:
+Because of the independence of χ from the coordinate system, we can assume m=d.  Each cross-section of K is itself a polytope, so by induction
+χ(g z ) is (-1) m-1  times the characteristic function of an open interval, and the effect of the sum and D operators is to multiply by another factor of -1.
+
+  Now we let K be a convex polytope, and evaluate χ on its characteristic function in two different ways, by partitioning K into the disjoint union of the relative interiors of its faces.  By linearity of χ, the sum of its values on these relative interiors must be the same as its value on all of K, that is,
+    
+1 = sum (-1)^m
+ 
+ 
+where the sum is over the set of faces of K (including K itself).
+Grouping the faces by their dimensions, we get a form of Euler's formula:
+   
+1 = sum (-1) i  f i  
+ 
+where the sum runs from i=1 to the dimension of K.
+ 
+Proof 18: Hyperplane Arrangements
+ 
+
+ This proof comes from  a 1997 paper by Jim Lawrence .  It applies to convex polytopes in  R  d ,
+and resembles in some ways the  valuation proof .
+
+  If A is a finite set of hyperplanes in  R  d ,
+it partitions  R  d  into  faces , sets of points
+that are all contained within the same set of hyperplanes, and that are on the same side of all hyperplanes that do not contain them.  Lawrence defines an A-polyhedron to be any union of faces, and he defines a function χ
+from A-polyhedra to integers, where if f is a face then χ(f)=(-1) dim f , and if P is an A-polyhedron composed of faces f i 
+then χ(P)=sum χ(f i ).
+
+  It is not difficult to see that χ has the same value for P in an
+arrangement A for which P is an A-polytope; for, adding any superfluous
+hyperplane to the arrangement merely splits some faces into two
+same-dimension faces and one face of one lesser dimension, which does
+not change the total value of χ for those faces, and removing any
+hyerplane merely reverses this process.  Consequentially, if P is any
+nonempty intersection of finitely many open halfspaces then
+&amp;chi(P)=(-1) dim P , for A can be assumed to be the arrangement
+of boundary hyperplanes of the halfspaces defining P, for which P is a face.
+In particular, from the intersection of zero halfspaces we obtain
+χ( R  d )=(-1) d . Also, it is obvious from the construction that the value of χ
+on a disjoint union of polyhedra is simply the sums of its values on the individual polyhedra making up the union.
+
+  We can now calculate the Euler characteristic of a closed
+d-dimensional convex polyhedron P, by embedding P on a hyperplane missing the
+origin in  R  d+1 , forming the infinite cone C of
+positive scalar multiples of points in P, and computing X(P)=χ(C).  This
+valuation (when viewed in terms of the arrangement of hyperplanes
+through the facets of this cone) includes a term of the form
+(-1) k  for every k-dimensional face of P,
+including 1 for the empty face (corresponding to the apex of the cone),
+-1 for the vertices (rays forming edges of the cone, which are
+1-dimensional faces of the arrangement), etc.
+
+  By additivity,
+
+  
+X(P) = χ( R  d+1 ) - χ( R  d+1 \C)
+= (-1) d+1  - χ(union H i ),
+ 
+
+ where H i  is the open halfspace bounded by the i'th hyperplane
+on the side of that hyperplane away from C.
+We already know the value of the first of these two terms,
+and the second can be calculated by inclusion-exclusion as
+
+  
+-sum S subset [1,n]  (-1) |S| χ(intersection i in S  H_i)
+ 
+
+ summed over all nonempty subsets of the halfspaces H i .
+But all such subsets have nonempty intersection (they contain the cone complementary to C) and are open convex polyhedra, so we can simplify the sum above to
+
+  
+-sum i=1  n  (-1) i  (n choose i) (-1) d+1 
+= (-1) d+1 ,
+ 
+
+ which exactly cancels the χ( R  d+1 ) term
+leaving X(C)=0.
+  
+Proof 19: Integer-Point Enumeration
+ 
+
+ If we are given some shape S in the plane, let
+p S (n) denote the number of points with integer coordinates
+in a copy of S scaled by the positive integer factor n.  We can compute a formula for p(n) in many simple cases:
+
+   If S is a single integer point, then p S (n) = 1
+  If S is an open line segment with integer endpoints,
+containing k integer points, then p S (n) = (k+1)n - 1.
+If it's a closed line segment, then p S (n) = (k-1)n + 1.
+  If S is the interior of a polygon with integer vertices, area A, and k
+boundary points, then by  Pick's theorem 
+p S (n) = An 2  - (k/2)n + 1.
+If instead S is the closure of such a polygon, then instead we get
+p S (n) = An 2  + (k/2)n + 1.
+   Note that in all these cases p is a polynomial, with degree equal to the dimension of S, and abs(p(0)) = 1.
+
+  Now, as in  the other proof via Pick's theorem ,
+we draw our planar graph with integer coordinates in the plane.
+We can calculate the number of integer points covered by scaled copies
+of our drawing in two ways: one as p S (n) for the closed
+polygon bounded by the drawing's outer face, and one as the sum of
+p S (n) over all other vertices, open edges, and interiors of
+interior faces of the drawing.
+
+  That is,
+  
+sum v in V  p v (n) +
+sum e in E  p int(e) (n) +
+sum f in F  p int(f) (n)
+=
+p cl(outer face) (n) + 
+p int(outer face) (n).
+ 
+
+ (The term on the right hand side for the interior of the outer face
+is included to cancel that face from the sum on the left hand side,
+since we really wanted to sum only the interior faces of the drawing
+but the sum as written includes all faces.)
+
+  Evaluating these polynomials at n=0 doesn't change this equality:
+  
+sum v in V  p v (0) +
+sum e in E  p int(e) (0) +
+sum f in F  p int(f) (0)
+=
+p cl(outer face) (0) + 
+p int(outer face) (0).
+ 
+
+ But the left hand side of this equality has +1 for each vertex and
+face of the graph, and -1 for each edge, while the right hand side is 2,
+so Euler's formula follows.
+
+  The Ehrhart-Macdonald Theorem lets us conclude that abs(p(0))=1 for
+higher-dimensional relatively open convex polytopes, allowing this proof
+to be generalized to any convex polytope in  R  d  with
+integer or rational vertex coordinates ( Beck
+and Robins , Theorem 5.2).  All polyhedra in  R  3  can
+be realized with integer coordinates but this is not true for all higher
+dimensional polytopes.
+  
+Proof 20: Euler tours
+ 
+
+ Given the similarity of names between an Euler tour (a closed walk in a
+graph that visits every edge exactly once) and Euler's formula, it is
+surprising that a strong connection between the two came so recently.
+The proof below is based on a relation between repetitions and face
+counts in Eulerian planar graphs observed by Red Burton, a version of the  Graffiti  software
+system for making conjectures in graph theory. 
+
+ A planar graph G has an Euler tour if and only if the degree of every
+vertex in G is even. Given such a tour, let R denote the number of times
+the tour reaches a vertex that has already been seen earlier in the
+tour. For instance, this repetition count would equal one for a graph in
+the form of a single cycle: only the starting vertex is repeated. As Red
+Burton observed, it is always the case that
+F = R+ 1. For, if one draws the edges of the graph in the
+order given by the tour, then the drawing starts out with one face, and
+every repeated vertex closes off one more face. But we also have
+R = E − V + 1, because there are
+E + 1 vertices visited in the tour from start to end, of which
+V are not repetitions. Putting these two equations for R together and
+eliminating R gives
+Euler's formula, but only for Eulerian graphs. 
+
+ Now, given an arbitrary planar graph G, draw two
+parallel copies of each edge, separated by a thin two-sided face. This
+modification doesn't change the value of the formula
+V − E + F for graph G, because it adds the
+same quantity (E) to both the number of edges and the number of faces,
+which cancel each other in the formula. But the new graph is Eulerian,
+so the repetition count argument for Eulerian graphs applies to it, and
+shows that in it E − V + F&amp;nbsp= 2.
+The same must be true in the original graph. 
+
+ The idea of proving Euler's formula by transforming an arbitrary
+planar graph to make it
+Eulerian was found by University of Houston chemical engineering
+sophomore Stephanie Mathew, under the supervision of Siemion Fajtlowicz,
+who used this idea to find the above proof. Fajtlowicz also supplies two
+different variants of the proof, in which one repeatedly connects pairs
+of odd vertices either by an arc in the plane that avoids all the
+existing vertices or by by doubling paths in the given graph. Both of
+these alternative versions of the Euler tour proof use the fact that
+every graph has an even number of odd vertices, which was proven by
+Euler. 
+
+    
+ Proofs of Euler's Formula . 
+From the  Geometry Junkyard ,
+computational
+and recreational geometry pointers.  David Eppstein ,
+ Theory Group ,
+ ICS ,
+ UC Irvine .  
+ Semi-automatically
+ filtered 
+from a common source file.
+Last update: .  </body> 

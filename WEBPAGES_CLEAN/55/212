@@ -1,0 +1,239 @@
+ /*
+  $Id: medoids.cc 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#include "medoids.h"
+
+#include 
+
+Medoids::Medoids(const vector* d, unsigned clusterNo, 
+                 SampleType sampleType, unsigned samplePer,
+                 unsigned queueSize, unsigned uniqueNo, 
+                 unsigned ver, unsigned sampleSizeMul,
+                 unsigned sampleSets, unsigned sampleSteps):
+  Clusters(d, clusterNo, sampleType, samplePer, queueSize, uniqueNo),
+  ver(ver), sampleSizeMul(sampleSizeMul), sampleSets(sampleSets),
+  sampleSteps(sampleSteps)
+{
+  for (unsigned i = 0; i push_back(Cluster());
+
+  sampleSize = sampleSizeMul * clusterNo;
+  if (sampleSize &gt; d-&gt;size()) 
+    sampleSize = d-&gt;size();
+
+  time_t ltime;
+  time(&amp;ltime);
+  srand(static_cast(ltime));
+}
+
+void Medoids::buildClusters() 
+{
+  cerr (data-&gt;size());
+
+  unsigned *pivot = new unsigned[clusterNo];
+  unsigned *pivotFinal = new unsigned[clusterNo];
+  unsigned *sample = new unsigned[sampleSize];
+
+  set
+    *idSet = new set, 
+    *dataSet = new set;
+
+  SimType minSumDist = 0;
+
+  for (unsigned l = 0; l insert(i);
+    for (unsigned i = 0; i ::iterator it = dataSet-&gt;
+        lower_bound(rand() % static_cast(dataSet-&gt;size()));
+      unsigned id = *it;
+      sample[i] = id;
+      dataSet-&gt;erase(it);
+    }
+
+    for (unsigned k = 0; k clear();
+      for (unsigned i = 0; idSet-&gt;size() insert(j).second)
+          pivot[i++] = j;
+      }
+		
+      // assign each sample element to a pivot (to a cluster) and
+      // compute the sum of dissimilarities  (sum of objective functions)
+      SimType sumDist = 0;
+      for (unsigned i = 0; i (data-&gt;size());
+
+  unsigned *pivot = new unsigned[clusterNo];
+  unsigned *pivotFinal = new unsigned[clusterNo];
+
+  set *idSet = new set;
+
+  SimType minSumDist = 0;
+  for (unsigned k = 0; k clear();
+    for (unsigned i = 0; idSet-&gt;size() insert(j).second)
+        pivot[i++] = j;
+    }
+	
+    // assign each sample element to a pivot (to a cluster) and
+    // compute the sum of dissimilarities  (sum of objective functions)
+    SimType sumDist = 0;
+    for (unsigned i = 0; i (data-&gt;size());
+
+  unsigned *pivot = new unsigned[clusterNo];
+  unsigned *pivotFinal = new unsigned[clusterNo];
+  unsigned *sample = new unsigned[sampleSize];
+
+  set *idSet = new set;
+
+  SimType minSumDist = 0;
+  for (unsigned k = 0; k clear();
+
+    if (k != 0) { // we already have a set of pivotFinal
+      // add the set of pivotFinal to the sample
+      for (unsigned i = 0; i insert(pivotFinal[i]);
+        sample[i] = pivotFinal[i];
+      }
+    }
+
+    for (unsigned i = idSet-&gt;size(); idSet-&gt;size() insert(j).second)
+        sample[i++] = j;
+    }
+
+    // ---=== BUILD ===---	
+    //     idSet-&gt;clear();
+    //     for (unsigned i = 0; i insert(sample[i]);
+
+    // first pivot
+    unsigned pivotId = 0;
+    SimType minSumDistPivot = 0;
+    for (set::iterator i = idSet-&gt;begin(); i != idSet-&gt;end(); i++) {
+      SimType sumDist = 0;
+      for (set::iterator j = idSet-&gt;begin(); j != idSet-&gt;end(); j++)
+        sumDist+=SimDist((*data)[*i], (*data)[*j]);
+      if (i == idSet-&gt;begin() || sumDist erase(pivotId);
+
+    // rest of the pivots
+    for (unsigned m = 1; m ::iterator i = idSet-&gt;begin(); i != idSet-&gt;end(); i++) {
+        SimType sumCji = 0;
+        for (set::iterator j = idSet-&gt;begin(); j != idSet-&gt;end(); j++) {
+          // compute Dj
+          SimType Dj = 0;
+          for (unsigned l = 0; l dist?Dj-dist:0;
+
+          // add to total
+          sumCji+=Cji;
+        }
+
+        if (i == idSet-&gt;begin() || sumCji&gt;maxSumCji) {
+          maxSumCji = sumCji;
+          pivotId = *i;
+        }
+      }
+
+      pivot[m] = pivotId;
+      idSet-&gt;erase(pivotId);
+    }
+
+    // assign each sample element to a pivot (to a cluster) and
+    // compute the sum of dissimilarities  (sum of objective functions)
+    SimType sumDist = 0;
+    for (unsigned i = 0; i size();
+  vector *pivots = new vector(clusterNo);
+  SimType sumMin = 0;
+  for (unsigned i = 0; i  *assigned = new vector();
+  assigned-&gt;reserve(dataSize);
+  vector *distances = new vector();
+  distances-&gt;reserve(dataSize);
+  for (unsigned i = 0; i  maxGain) {
+        maxGain = crtGain;
+        (*pivots)[i] = j;
+      }
+    }
+    for (unsigned j = 0; j size();
+  set *pivots = new set();
+
+  time_t ltime;
+  time(&amp;ltime);
+  srand(static_cast(ltime));
+
+  while (pivots-&gt;size() insert(rand() % dataSize);
+  
+  unsigned i = 0;
+  for (set::iterator it = pivots-&gt;begin(); 
+       it != pivots-&gt;end(); ++it) (*clusters)[i++].setPivot(*it);
+
+  delete pivots;
+
+  assignClusters();
+
+  for (unsigned i = 0; i begin(); it != clusters-&gt;end(); ++it) 
+      if (it-&gt;improve(*data)) changed = true;
+
+    if (changed) {
+      for (VectClusterIt it = clusters-&gt;begin(); 
+           it != clusters-&gt;end(); ++it) it-&gt;clear();
+      assignClusters();
+    }
+    else break;
+  }
+}
+
+void Medoids::buildClustersVer7() 
+{
+  const unsigned dataSize = data-&gt;size();
+
+  time_t ltime;
+  time(&amp;ltime);
+  srand(static_cast(ltime));
+
+  Sample
+    samples = Sample(sampleSize, dataSize),
+    pivots = Sample(clusterNo, sampleSize);
+
+  unsigned i = 0;
+  for (vector::const_iterator it = pivots.begin(); 
+       it != pivots.end(); ++it)
+    (*clusters)[i++].setPivot(samples[*it]);
+
+  assignClusters(samples.begin(), samples.end());
+
+  for (unsigned i = 0; i begin(); it != clusters-&gt;end(); ++it) 
+      if (it-&gt;improve(*data)) changed = true;
+
+    if (changed) {
+      for (VectClusterIt it = clusters-&gt;begin(); 
+           it != clusters-&gt;end(); ++it) it-&gt;clear();
+      assignClusters(samples.begin(), samples.end());
+    }
+    else break;
+  }
+
+  assignClustersMinus(samples.begin(), samples.end());
+}
+
+void Medoids::assignClusters() 
+{
+  const unsigned dataSize = data-&gt;size();
+
+  cerr ::const_iterator begin, 
+                             vector::const_iterator end)
+{
+  cerr ::const_iterator i = begin; i != end; ++i) {
+    SimType minDist = 0;
+    unsigned clusterI = 0;
+		
+    // find the best pivot
+    for (unsigned j = 0; j ::const_iterator begin, 
+                                  vector::const_iterator end)
+{
+  cerr  samples = set(begin, end);
+
+  const unsigned dataSize = data-&gt;size();
+
+  // assign each data element to a pivot (to a cluster)
+  for (unsigned i = 0; i  &amp;d)
+{
+  for (unsigned i = 0; i  

@@ -1,0 +1,59 @@
+ /*
+  $Id: ppdtable.h 4143 2008-12-08 23:23:55Z abehm $
+
+  Copyright (C) 2007 by The Regents of the University of California
+
+  Redistribution of this file is permitted under the terms of the 
+  BSD license
+
+  Date: 01/14/2006
+  Author: Rares Vernica 
+*/
+
+#ifndef _ppdtable_h_
+#define _ppdtable_h_
+
+#include 
+
+#include "ppdentry.h"
+
+using namespace std;
+
+class PPDTable 
+{
+protected:
+  ContPPDEntry *table;
+public:
+  PPDTable(): table(new ContPPDEntry) {}
+  PPDTable(const PPDTable &amp;t);
+
+  ~PPDTable() { delete table; } 
+
+  PPDTable&amp; operator=(const PPDTable &amp;t);
+  bool operator==(const PPDTable &amp;t) const;
+
+  const size_t sizeTable() const { return table-&gt;size(); }
+
+  void insert(const PPDEntry &amp;e);
+  void erase(const PPDEntry &amp;e);
+  void pruneMax();
+
+  const ContPPDEntryIt beginTable() const { return table-&gt;begin(); }
+  const ContPPDEntryIt endTable() const { return table-&gt;end(); }
+  const ContPPDEntryIt findTable(const PPDEntry &amp;e) const {
+    return table-&gt;find(e); } 
+  const ContPPDEntryIt lower_boundTable(const PPDEntry &amp;e) const {
+    return table-&gt;lower_bound(e); }
+  const ContPPDEntryIt upper_boundTable(const PPDEntry &amp;e) const {
+    return table-&gt;upper_bound(e); }
+
+#if SIM_DIST == 1 &amp;&amp; SIM_VECT == 1
+  void serialize(ofstream &amp;out);
+  void deserialize(ifstream &amp;in);
+#endif
+
+  friend ostream&amp; operator&gt;(istream &amp;in, PPDTable &amp;t);
+};
+
+#endif
+ 

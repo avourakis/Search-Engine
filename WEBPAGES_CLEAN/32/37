@@ -1,0 +1,142 @@
+ /**
+Name: Cameron Lewis
+Student ID: 16254966
+**/
+
+
+// Payroll.java
+//
+// ICS H22 Fall 2005
+// Lab 2: The Price You Pay
+//
+// This class should contain the majority of the code for your user interface.
+// To help you get started, I've included a little bit of code:
+//
+//   * In the constructor, I've created three objects that you'll need in
+//     various places: a Scanner to read input, a PayrollMenu (see
+//     PayrollMenu.java for more information about that), and an
+//     ArrayList that you should use to store all of the employees.
+//
+// You should start by adding code to the go() method that displays the menu,
+// asks the user for the next command, and processes that command.  (Be aware
+// that the PayrollMenu object can do some of this work for you.  See the
+// PayrollMenu.java file for more information before you proceed.)
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+
+public class Payroll
+{
+	//used to look through the input file
+	private Scanner scanner;
+
+	//menu object used to access enumerated commands of PayrollCommand class taht are inputed by the user
+	private PayrollMenu menu;
+
+	//will be used to store the name of the input file specified in the main method of Company
+	private String inputFileName;
+
+	//object used to write to an output file
+	private PrintWriter out;
+
+	//used to store all the employee objects added to the database and can then be accessed to print employees and paychecks
+	private Employee[] theList;
+
+	//stores the size of theList
+	private int size;
+
+	//constant used to define size of theList
+	public static final int DEFAULT = 100;
+
+	//constant used to define the file output will be printed to
+	public static final String OUTPUT = "output.txt";
+
+	//constructs Payroll objects, assigns @param args to inputFileName
+	//initializes menu, theList and size
+	//creates an output file and establishes a scanner to read the input file
+	public Payroll(String args)
+	{
+		inputFileName = args;
+		menu = new PayrollMenu();
+		theList = new Employee[DEFAULT];
+		size = 0;
+
+		try
+		{
+			scanner = new Scanner(new FileReader(inputFileName));
+		}
+
+		catch (FileNotFoundException e)
+		{
+			System.out.println("File not found...");
+			System.exit(0);
+		}
+
+		try
+		{
+			out = new PrintWriter(OUTPUT);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.println("File not found...");
+			System.exit(0);
+		}
+	}
+
+	//starts executing commands given to the program by the input file
+	public void go()
+	{
+		String command = scanner.nextLine();
+
+		if (command.compareToIgnoreCase("AddEmployee") == 0)
+			addEmployee();
+		else if (command.compareToIgnoreCase("RemoveEmployee") == 0)
+			removeEmployee();
+		else if (command.compareToIgnoreCase("ShowEmployees") == 0)
+			showEmployees();
+		else if (command.compareToIgnoreCase("doWeeklyPayroll") == 0)
+			doWeeklyPayroll();
+		else
+		{
+			System.out.println("Now exiting...");
+			System.exit(0);
+		}
+	}
+
+	//used to continue the program after a method is executed
+	public void goAgain()
+	{
+		if (scanner.hasNext())
+		{
+			String command = scanner.next();
+			if (command.compareToIgnoreCase("AddEmployee") == 0)
+				addEmployee();
+			else if (command.compareToIgnoreCase("RemoveEmployee") == 0)
+				removeEmployee();
+			else if (command.compareToIgnoreCase("ShowEmployees") == 0)
+				showEmployees();
+			else if (command.compareToIgnoreCase("doWeeklyPayroll") == 0)
+				doWeeklyPayroll();
+		}
+		else
+		{
+			System.out.println();
+			System.out.println("Program finished. Please examine " + OUTPUT + " to see the result of your inquiries. Now exiting...");
+			System.out.println();
+			out.close();
+			System.exit(0);
+		}
+	}
+
+	//returns true if the name is already in the list
+	public boolean isThere(String name)
+	{
+		int i = 0;
+		while ((i  

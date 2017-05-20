@@ -1,0 +1,43 @@
+ /* 
+$Id$
+
+Copyright (C) 2007 by The Regents of the University of California
+
+Redistribution of this file is permitted under
+the terms of the *GNU* Public License (*GPL*) 	
+
+Date: 04/08/2007
+Author: Yiming Lu 
+*/
+
+#include 
+#include 
+#include 
+#include 
+#include 
+#include "filtertree.h"
+#include "../util/input.h"
+
+using namespace std;
+
+int main()
+{
+	  vector data;
+    data.push_back("abc");
+    data.push_back("ac");
+    data.push_back("xyz");
+    
+    FilterTree fSave(2, &amp;data);
+    fSave.build();
+    vector searchResSave;
+    fSave.search("ab", 2, searchResSave); //search based on building index
+    fSave.saveIndex("index_File");    
+    //report the performance result	
+    ((FilterTree*)fSave)-&gt;reportAnalyses();
+    delete fSave;
+    return 0;		
+}
+
+
+
+ 

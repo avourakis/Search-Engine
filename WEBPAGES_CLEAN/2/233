@@ -1,0 +1,124 @@
+ CS 154 Lab 5: Data Path 
+
+ 
+
+  Lab5    
+
+  Complete Datapath Design    
+
+   Due dates are in the Labs table     
+
+       
+
+       
+
+  Please read  ALL 
+instructions carefully.  Only    properly submitted  
+assignments will be graded. Make sure to create a zipfile, named by your
+student id, and submit required files in it.     
+
+         
+
+   Specification     
+
+  
+
+       
+
+  This lab implement
+the full datapath. Complete the design of the data path by adding all the logic
+necessary to support LD, ST, BNE, BEQ, and JMP instructions, as well as support
+for executing the I-format ALU instructions. The instructions in the following
+table should be supported by your design. Reuse as much of the Lab 4 datapath
+as you can, adding a memory, IR, PC, MDR, multiplexers, sign extenders, etc.
+Submit a full block diagram of the data path as the specification.     
+
+       
+
+     
+
+     
+
+       
+
+         
+
+
+
+   Design     
+
+
+
+  Design the complete
+datapath and a testbench to test the functionality of the datapath entity.    
+
+       
+
+  The    template
+VHDL files    for
+the module (lab5.vhd), global declaration package (Glob_dcls.vhd) and memory
+module (  mem.vhd  ) have been provided to you. The
+interface (that is, ports) is already defined. You need to design the
+architecture for both. Do not make any change to the interface.   
+
+     
+
+  Please see the
+updated  glob_dcls  . vhd here. Line 21 has been modified. The
+range should be "0 to 31" instead of "31 downto 0".  
+
+     
+
+   Verification     
+
+
+
+  You need to
+test the following:    
+
+   Instruction fetch    
+   Load (load address
+     computation + actual load from memory)     
+   Store (store
+     address computation + actual store to memory)    
+   Branch Equal/Not
+     Equal.    
+        
+
+  Generate the
+control signals at the right time in your testbench for each test case. Use a
+clock cycle of 40 ns.     
+
+       
+
+       
+
+  Submission:    
+
+  Please submit
+the specification :          
+
+  A
+block diagram of the complete datapath    
+
+       
+
+  Please submit
+your design and verification:    
+
+  VHDL design and test bench    
+
+  Screenshots
+of Waveform     
+
+       
+
+  Both the
+implementation and test code will be graded. You will also be graded on coding
+style and code comments.    
+
+       
+
+ 
+
+</body> 

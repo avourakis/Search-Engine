@@ -1,0 +1,44 @@
+ First-Order Inductive Learner<body>
+
+ 
+   
+               
+            
+            
+            
+            
+             
+            
+            
+          Slide 14 of 39 
+ 
+FOIL (Quinlan, 1990) 
+      Given:
+ 
+  Examples: Positive &amp; Negative Examples of some relation
+  Hypothesis Language: First Order Horn Clauses (Pure Prolog)
+  Background Knowledge: Extensional definition of relations
+       Find a Horn clause theory consistent with the examples.
+ 
+     Finding the smallest Horn clause theory is NP-complete
+ 
+ 
+no_payment_due(P) :- enlisted(P, Org) &amp; armed_forces(Org).
+  no_payment_due(P) :- disabled(P).
+      Search Strategy:
+ 
+  Learn a set of clauses: Set Covering (separate       
+Learn-clauses(Pos, Neg):
+   
+Clauses = {}
+  
+Until Pos is empty
+  
+	Let Clause = learn-clause(Pos, Neg)
+  
+	remove examples covered by Clause from Pos
+  
+       Add Clause to Clauses
+  
+Return(Clauses)    --&gt;
+ </body> 

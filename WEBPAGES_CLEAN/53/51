@@ -1,0 +1,208 @@
+ %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+% CHESS DOMAIN THEORY 
+% GENERATES LEGAL MOVES
+% Designed by vijay@cs.orst.edu for representation work
+
+%/* This file contains the rules of chess. The following chess rules are
+%included :   1. legal_move     _ will perform the legal move in a state.
+%             2. possible_move  _ indicates which moves are possible in a %state.
+%             3. in_check       _ detects a side in check.
+%	      4. move-pattern   - encodes generation of all possible moves given a
+%				  piece.
+%	      5. pos_move_dirs  - encodes only the primitive moves (1 step) of a
+%				  piece.
+%	      6. other-moves    - called by 4. to generate all moves.
+
+
+
+%STATE REPRESENTATION:
+%*********************
+%In this domain theory each initial board state is denoted by a constant 
+%such as state1.  The squares on the board are denoted by an X,Y coordinate
+%with (1,1) being the lower left corner. The pieces are represented by 
+%a generic pieces such as  black_bishop, black_king. Empty squares are
+%represented by an imaginary piece called empty (essentially a null value).
+%With this representation, a board configuration is represented by 64 assertions
+%for example, `on(state1,loc(1,1),white_rook)'.
+
+%Direction is encoded as a vector (Dx,Dy). For example (1,-1) for south_east.
+
+%%PIECE REPRESENTATION:
+%*********************
+%Information about each of the pieces is needed in order to define legal moves. 
+%The side and type properties of a piece are encoded through the obj_props
+%relation.
+
+obj_props(black_bishop,black,bishop).
+obj_props(black_rook,black,rook).
+obj_props(black_queen,black,queen).
+obj_props(black_king,black,king).
+
+obj_props(white_bishop,white,bishop).
+obj_props(white_rook,white,rook).
+obj_props(white_queen,white,queen).
+obj_props(white_king,white,king).
+obj_props(white_knight,white,knight).
+
+
+%%%%%%%%%%%
+%We also include the fact that the two sides black and white are opposite:
+
+opposite_side(white,black).
+opposite_side(black,white).
+
+%Possible move directions
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Directions along which pieces can move are now encoded as moves along the
+%two dimensional plane. Pos_move_dirs encodes the move-directions for all pieces
+%except pawns. 
+
+pos_move_dirs(king,0,1).
+pos_move_dirs(king,1,0).
+pos_move_dirs(king,0,-1).
+pos_move_dirs(king,-1,0).
+pos_move_dirs(king,1,1).
+pos_move_dirs(king,1,-1).
+pos_move_dirs(king,-1,-1).
+pos_move_dirs(king,-1,1).
+
+pos_move_dirs(bishop,1,1).
+pos_move_dirs(bishop,1,-1).
+pos_move_dirs(bishop,-1,-1).
+pos_move_dirs(bishop,-1,1).
+
+pos_move_dirs(rook,0,1).
+pos_move_dirs(rook,1,0).
+pos_move_dirs(rook,0,-1).
+pos_move_dirs(rook,-1,0).
+
+pos_move_dirs(knight,2,1).
+pos_move_dirs(knight,2,-1).
+pos_move_dirs(knight,-2,1).
+pos_move_dirs(knight,-2,-1).
+pos_move_dirs(knight,1,2).
+pos_move_dirs(knight,-1,2).
+pos_move_dirs(knight,1,-2).
+pos_move_dirs(knight,-1,-2).
+
+
+%%%%%%%%%%
+%LEGAL MOVES
+%***********
+%We are now ready to declare the rule that generates legal moves:
+%A legal move is a possible move which does not result in check for the 
+%moving side. 
+
+legal_move(S,NS,Side):-
+	   possible_move(S,NS,Side),
+   \+ in_check(NS,Side).
+
+
+%possible move
+%%%%%%%%%%%%%
+%This rule checks to see that the piece to move, Piecem, is located
+%on the source square From, that Piecet is located on the destination 
+%square To, and that the indicated direction and number of squares is 
+%legal for the kind of piece being moved. Moves are considered possible
+%only if the To location generated is valid i.e is either empty are contains
+%a piece of the opposite side on it. It checks that all intervening squares
+%are empty. 
+
+possible_move(S,do(op(loc(A,B),loc(An,Bn),ObjM,ObjT),S),Side) :-
+	   on(S,loc(A,B),ObjM),
+	   obj_props(ObjM,Side,Type),
+	   move_pattern(S,Type,loc(A,B),X,Y), 
+	   An is A + X,
+	   Bn is B + Y,
+	   valid_squares(S,An,Bn,Side,Type),
+	   on(S,loc(An,Bn),ObjT).
+
+%move patterns
+%%%%%%%%%%%%%%
+%move pattern terminates when the To square generated lies outside the board.
+%pos_move_dirs encodes single step moves (this may also be looked as specifying
+%direction of possible moves for each piece). In the following set of rules
+%each piece's single step moves is followed by rules generating multiple
+%moves for that piece. Generation of multiple rules is done by the rule
+%other_moves. Other_moves checks for an empty intervening squares.
+
+move_pattern(S,king,loc(A,B),X,Y) :-
+	   pos_move_dirs(king,X,Y).
+
+move_pattern(S,queen,loc(A,B),X,Y) :-
+	   pos_move_dirs(king,X,Y).
+
+move_pattern(S,queen,loc(A,B),X,Y) :-
+	   pos_move_dirs(king,C,D),
+   	NewA is A + C,
+	   NewB is B + D,
+	   on(S,loc(NewA,NewB),empty),
+	   other_moves(S,queen,loc(A,B),C,D,C,D,X,Y).
+
+move_pattern(S,bishop,loc(A,B),X,Y):-
+	   pos_move_dirs(bishop,X,Y).
+
+move_pattern(S,bishop,loc(A,B),X,Y):-
+	   pos_move_dirs(bishop,C,D),
+	   NewA is A + C,
+	   NewB is B + D,
+	   on(S,loc(NewA,NewB),empty),
+	   other_moves(S,bishop,loc(A,B),C,D,C,D,X,Y).
+
+move_pattern(S,rook,loc(A,B),X,Y):-
+	   pos_move_dirs(rook,X,Y).
+
+move_pattern(S,rook,loc(A,B),X,Y):-
+	   pos_move_dirs(rook,C,D),
+	   NewA is A + C,
+	   NewB is B + D,
+	   on(S,loc(NewA,NewB),empty),
+	   other_moves(S,rook,loc(A,B),C,D,C,D,X,Y).
+
+move_pattern(S,knight,loc(A,B),X,Y):-
+	   pos_move_dirs(knight,X,Y).
+
+%Other moves
+%%%%%%%%%%%%
+%Other moves are generated by keeping track of the current location
+%(variables E and F) and adding the direction vector (C and D) to it
+%to generate the next square in the same direction. Variables X and Y
+%are bound only if intervening squares are empty. Note that all of
+%these variables represent displacement vectors from the initial location
+%(A,B). Hence the additions to generate particular squares on the board!
+
+other_moves(S,Obj,loc(A,B),E,F,C,D,X,Y):-
+	   X is E + C,
+	   Y is F + D.
+
+other_moves(S,Obj,loc(A,B),E,F,C,D,X,Y) :-
+	   NewE is E + C,
+	   NewF is F + D,
+	   NewA is A + NewE,
+	   NewB is B + NewF,
+	   on(S,loc(NewA,NewB),empty),
+	   other_moves(S,Obj,loc(A,B),NewE,NewF,C,D,X,Y).
+
+%in check
+%%%%%%%%%
+%The in_check rule tries to find out if there exists a piece of the opponent
+%that can make a possible move to the location of the king of side `Side'.
+%i.e a check is defined as a possible take move of the king by the opponent.
+
+in_check(S,Side):-
+	  opposite_side(Side,Opp_side),
+	  on(S,FromLoc,ObjC), 
+  obj_props(ObjC,Opp_side,_),
+	  on(S,ToLoc,ObjK), 
+  obj_props(ObjK,Side,king),
+	  possible_move(S,do(op(FromLoc,ToLoc,ObjC,ObjK),S),Opp_side).
+
+
+%valid moves
+%%%%%%%%%%%%
+%A valid move is one in which the To location generated is within the board
+%limits and is empty or is occupied by an opponent's piece.
+
+valid_squares(S,An,Bn,Side,Type) :-
+	   An&gt;0,An0,Bn0,An0,Bn 

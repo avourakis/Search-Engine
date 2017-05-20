@@ -1,0 +1,100 @@
+ """IntegerHeap.py
+
+Priority queues of integer keys based on van Emde Boas trees.
+Only the keys are stored; caller is responsible for keeping
+track of any data associated with the keys in a separate dictionary.
+
+We use a version of vEB trees in which all accesses to subtrees
+are performed indirectly through a hash table and the data structures
+for the subtrees are only created when they are nonempty. As a
+consequence, the data structure takes only linear space
+(linear in the number of keys stored in the heap) while still preserving
+the O(log log U) time per operation of vEB trees. For better performance,
+we switch to bitvectors for sufficiently small integer sizes.
+
+Usage:
+    Q = BitVectorHeap() # Bit-vector based heap for integers
+    Q = FlatHeap(i)     # Flat heap for 2^i-bit integers
+    Q = LinearHeap()    # Set-based heap with linear-time min operation
+    Q = IntegerHeap(i)  # Choose between BVH and FH depending on i
+    Q.add(x)            # Include x among the values in the heap
+    Q.remove(x)         # Remove x from the values in the heap
+    Q.min()             # Return the minimum value in the heap
+    if Q                # True if Q is nonempty, false if empty
+
+Because the min operation in LinearHeap is a Python primitive rather than
+a sequence of interpreted Python instructions, it is actually quite fast;
+testing indicates that, for 32-bit keys, FlatHeap(5) beats LinearHeap only
+for heaps of 250 or more items. This breakeven point would likely be
+different for different numbers of bits per word or when runtime optimizers
+such as psyco are in use.
+
+D. Eppstein, January 2010
+"""
+
+def IntegerHeap(i):
+    """Return an integer heap for 2^i-bit integers.
+    We use a BitVectorHeap for small i and a FlatHeap for large i.
+    
+    Timing tests indicate that the cutoff i  self._max:
+            raise ValueError("FlatHeap: %s out of range" % repr(x))
+
+    def __nonzero__(self):
+        """True if this heap is nonempty, false if empty."""
+        return not (self._min is None)
+
+    def __bool__(self):
+        """True if this heap is nonempty, false if empty."""
+        return not (self._min is None)
+
+    def min(self):
+        """Return the minimum value in the heap."""
+        if self._min is None:
+            raise ValueError("FlatHeap is empty")
+        return self._min
+
+    def add(self,x):
+        """Include x among the values in the heap."""
+        self._rangecheck(x)
+        if self._min is None or self._min == x:
+            # adding to an empty heap is easy
+            self._min = x
+            return
+        if x &gt; self._shift            # split into high and low halfwords
+        L = x - (H &gt; self._shift            # split into high and low halfwords
+            L = x - (H  0
+        
+    def __bool__(self):
+        """True if this heap is nonempty, false if empty."""
+        return len(self._S) &gt; 0
+
+    def add(self,x):
+        """Include x among the values in the heap."""
+        self._S.add(x)
+
+    def remove(self,x):
+        """Remove x from the values in the heap."""
+        self._S.remove(x)
+
+    def min(self):
+        """Return the minimum value in the heap."""
+        return min(self._S)
+
+
+# ======================================================================
+#   Unit tests
+# ======================================================================
+
+if __name__ == "__main__":
+    import unittest,random
+    random.seed(1234)
+
+    class IntegerHeapTest(unittest.TestCase):
+        def testHeaps(self):
+            o = 5               # do tests on 2^5-bit integers
+            N = LinearHeap()
+            I = IntegerHeap(o)
+            for iteration in range(20000):
+                self.assertEqual(bool(N),bool(I))   # both have same emptiness
+                if (not N) or random.randrange(2):  # flip coin for add/remove
+                    x = random.randrange(1 

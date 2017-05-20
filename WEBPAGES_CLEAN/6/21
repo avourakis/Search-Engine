@@ -1,0 +1,479 @@
+ The Spec's in the Mail<body>
+
+ The Spec's in the Mail   Rohit Khare // September 1,
+1998      "It's made of
+people!"   While the surface intent of the ARPANET was
+serious experimentation with computer-to-computer communication, the
+secret ingredient in its success was the same as in  Soylent
+Green : people. Electronic mail (neé 'netmail') and,
+later, news were the twin killer apps that motivated many institutions
+to join regional networks, and later, to internetwork them. Human
+collaboration turned out to be more compelling than such digital
+dreams as an automated Data Reconfiguration Service (RFC 194) or
+unified binary encoding (RFC 31) or a programmable Network Standard
+Translator (RFC 5). 
+
+ Peter Salus' oral history,  Casting the Net  (Addison-Wesley, 1995) goes so far as to deem network e-mail "the application that hadn't been thought of." Just because chit-chat was an afterthought to the Real Work of timesharing and file transfer and distributed processing doesn't mean modern protocol designers can skim past it, though. E-mail is the "missing link" in the evolutionary lineage from interactive control protocols like Telnet and FTP to modern message-transfer systems like HTTP and NNTP. And since ontogeny recapitulates phylogeny in this case, application-layer designers can reflect upon how the mail-relay infrastructure to route text and multimedia "packets" rediscovered classic IP-layer solutions to fragmentation, congestion, error propagation, security, and other challenges. 
+ This installment of  Seventh Heaven  focuses on the coevolution of the Internet Text Message (RFC 822) format and the Simple Mail Transfer Protocol (SMTP, RFC 821), from its roots as a printer-spooling convention piggybacked on File Transfer Protocol (FTP) through the development of the Multipurpose Internet Mail Extensions (MIME) up to the latest drafts of the Detailed Revision/Update of Message Standards (DRUMS) working group. 
+ Babel, Tower of:  see  'Mail Box Protocol' 
+ Virtually every multiuser computer installation has had a user-user messaging and/or paging facility, right back to the original maliboxes in the Compatible Time Sharing System (CTSS) of the early 60's. The operative metaphor for wide-area text messaging already existed, too: public Telex service promised (relatively) low-latency guaranteed delivery around the world (or so I'm told, having grown up in the Fax Age -- I've never seen a telegram or telex in real life!). Electronic mail across the ARPANET, like terminal emulation and file transfer before it, was merely a simple matter of virtualizing the diversity of hosts, terminals, printers, and user identification schemes out there. 
+ In that spirit, Richard Watson's modest proposal for a "Mail Box Protocol" (RFC 196) is best understood as a remote, deferred printer service. Inspired by primitive TELNET, it added one control code selects the 7-bit mailbox number; 0 is reserved for the "system printer," with its own control codes for character set (ASCII, EBCDIC, or 8-bit stream), page length (66 lines or infinite) and width (72 characters or max). Other mailboxes' formats were undefined, since he noted "it is useful to have more than one receiving mail box, each to be associated with a different process." 
+ The only recognizable user identifier is an optional burst page: "This address string is to contain the sender's name and address, and the receiver's name and address formatted in some reasonable, easy-to-read form for a clerk to read and distribute." RFC 278's later revisions strengthened it to a requirement: "At the head of the message or document sent there is to be two copies of an initial address string each terminated by a form feed... make one readable from a fan fold paper stack without effort." 
+ RFC 278 reconstructed e-mail as an application of file transfer. It reserves a top-level MAIL directory, containing files for each user and the PRINTER. Messages were delivered using Append With Create (command 5, before the advent of text protocols). It required end-to-end connectivity: one connected directly to the target machine to send mail. Addressing was centralized, with the Network Information Center (NIC) maintaining identifiers and group mailboxes to burst RFCs and operation memos to each ARPANET site -- and they liked it that way: their oNLine System (NLS) could store and search every piece of netmail. 
+ Even though e-mail in 1971 lacked effective abstractions for addressing, distribution, and content -- the hallmarks of a TP (transfer protocol) -- the future was visible. RFC 224 commented that the "printer" model was already obsolete. Alex McKenzie predicted that "a message destined for a Terminal IMP user would be shipped to the site of the 'rented' mailbox according to protocol and stored there.  A terminal IMP user could then periodically log in to that site (under TELNET protocol) and examine the contents of the mailbox" 
+ Throughout the Seventies, a flurry of mail systems tinkered around the edges: reserving "secure" ports, decentralizing addresses around the '@' fulcrum, avoiding junk mail, and creating new message headings. RFC 808's survey of 36 mailers circa January 1979 noted "most of the mail systems were not formal projects (in the sense of explicitly sponsored research), but things that 'just happened'." Real change would have to wait until the transition from NCP to TCP in the early Eighties: as the October 1980 plan (RFC 773) recalled, "In the ARPANET, electronic messages are transported via special procedures of the File Transfer Protocol: MAIL and MLFL.  The former method sends electronic messages via the FTP Telnet command channel while the latter achieves this by actual file transfer." 
+ Once the prospect of  inter network e-mail was raised, the real work began: fresh solutions to each of the three aspects of a Message Transfer Protocol: Addressing, Distribution, and Content -- culminating in RFCs 974, 821, and 822, respectively.  
+ Header-People 
+ E-mail's line-printer origins still constrain its content model thirty years later. The key to understanding the arcana and fuzziness of e-mail format wars is an unspoken assumption that the most primitive user interface to mail is a still a printout -- and thus has to make sense to a human. 
+ Header fields are our basic building block: simultaneously human- and machine-readable, they appear in a clump at the beginning of a memo, followed by a single blank line. And helpfully suggestive names like "Date:" and "From:," are ripe for misinterpretation, igniting jihads of all sorts. The header-people discussion list from this era -- probably the first e-mail mediated virtual community -- reveals this tendency in spades (@@URL of archive@@).   
+ New headers require new grammars, usually assembled from the suite of parsing rules in RFC822, and now IETF's official Augmented Bakus-Naur Form notation (RFC 2234). Those already specify how to fold headers across multiple lines (80-column printers strike again!), escape reserved characters, and basic values like Message-ID. 
+ The struggle for interoperabilty in the real world requires accomodating buggy variants thereof, too. The maxim "Be conservative in what you generate and liberal in what you accept" arose in this context -- but within limits. Liberalism lets bad specifications live on (like 822's 2-digit years), and worse yet, fast-and-loose implementations that force other upstanding members of the mail relay community to clean up their messes.  
+ Such flexibility is essential to e-mail's evolvability: even the most basic parsers can still grok the latest whiz-bang video mail because of MIME's judicious use of headers, 7-bit clean bodies, and line-length limits. It introduced the notion of content type and message parts, allowing more sophisticated systems to look at the same message and extract a structured tree of resources, and to understand how to present each resource.  
+ As intended, most new email applications need only define new content-types for encryption, digital signatures, Electronic Data Interchange (EDI), or Web page delivery. Internet Media Types are registered in a two-level hierarchy that implies interchangeability under each primary type (e.g. text/*, image/*, video/*). Political control of this namespace has been contentious around the edges, especially for proprietary types. Ironically, the Web's fateful adoption of the same will ensure its survival, but that's a tale for another column...  
+     
+ If you have to call it 'Simple'... 
+ IP packets can drop with impunity, but email never should. Reliable delivery requires clients to retry delivery until positive acknowledgement, and server to ensure stable storage of the message before acknowledgement -- leaving a race condition if the connection drops in between leading to duplicate delivery (RFC 1047). Clients will also keep retrying delivery to a machine without email service, like a DNS server (RFC 1846). Message length shouldn't be restricted by the protocol, but if there's a constrained server in the path, there has to be an entire size-discovery method (RFC 1653). All of these nits with reliable end-to-end delivery across the Internet -- including queuing for intermittently connected hosts -- still pale by comparison to the challenges of gatewaying mail to other network architectures (X.400 mappings are standardized in RFCs 2156-7). 
+ By the time of the Great Transition to TCP, e-mail had grown into a series of hacks on top of FTP. Naturally, the first cut at a Mail Transfer Protocol (MTP) mimicked those very commands: "MAIL TO: &lt;&gt; FROM: &lt;&gt;", with optional support for additional recipients, to be listed before or after the mail body. Simplification actually separated out more states: SMTP commands for creating a new mail message, verifying addresses and expanding lists, adding recipients, then sending the body -- and each with their own reply codes, affording much more accurate debugging. 
+ A decade later, ESMTP was deemed the new standard, with its EHLO greeting that advertised available extensions. New functionality could be registered under a keyword and could add new parameters to existing commands. Its maxim was: "protocols with few options tend towards ubiquity, whilst protocols with many options tend towards obscurity." Extensions standardized to date provide important functionality: transmitting large and 8-bit bodies (RFC 1830), limiting message size (RFC 1870), requesting delivery status notification (RFC 1891), initiating a destination's queued mail delivery (RFC 1985), using more specific reply codes (RFC 2034), and pipelining commands (RFC 2157).  
+   
+  Poste Restante 
+  The Great Transition also required e-mail addressing to adapt to the newfangled Domain Naming System (DNS). The Internet had grown well past the point that mail relays could directly connect to destination servers; intranets (had the term existed) had also grown too large to host users' mail at individual hosts. Instead of requiring senders to compute increasingly complex source routes, the new Mail eXchanger resource record contained the recipient's decision. Any host in the DNS table could specify an alternate machine responsible for all its incoming mail. Conversely, a single relay could aggregate mail for several networks. New kinds of relays emerged, too: mailing list servers that accepted a message and burst it out to a long list, providing their own load-balancing, routing, and queue management.  
+ The new world of mail began to look a lot like the very old: the notion of  poste restante , delivered to a regional depot (such as the downtown post office or American Express branch) for a traveler to rendezvous with. While SMTP connections came in from other Mail Transfer Agents (MTAs), nomadic Mail User Agents (MUAs) used protocols like PCMAIL or Post Office Protocol (POP) and now Interactive Message Access Protocol (IMAP) to download and manage their mailboxes. Two-phase delivery interrupts servers instantly with inbound mail, but waits for users to poll for updates. 
+ Mail Packets 
+ IP exchanges packets between network interfaces; FTP exchanges files between hosts; and SMTP exchanges messages between mailboxes. The critical difference is that while we can quibble over the differences between communicating with a host or one of its interfaces on the connected Internet, mailboxes come from an entirely different, logical set of endpoints. John Quarterman dubbed the wider world of e-mail exchanging computers 'The Matrix,' in the spirit of William Gibsons's original cyberpunk coinage. E-mail transfers reach out to systems well beyond the reach of IP, and do so at the sender's bidding. 
+ Its strategies for addressing (users and groups), distribution (hierarchical aggregation), and content (MIME) give SMTP wide reach and applicability. It may once have been built atop FTP, but now we can use mail to access FTP archives, read news groups, browse web sites, play chess, and more. 
+ Upon reflection, mail messages are just the same as IP packets. Seven layers up the stack, we recursively discover the same challenges as we began with. Disparate notions of data transfer bridged by judicious enveloping; gateways which can fragment and reassemble messages, and improbable flexibility from text messages to bulk data transfer to real-time multimedia and more. The same problems (and solutions) arise, too: routing loops (and Time-To-Live bounds), asymmetric routes (and source-routed mailboxes), transit size limits (and message/partial fragmentation), rate limiting (and SMTP implementations' queue throttling), end-to-end vs. hop-by-hop trust (and key exchange between users and servers, respectively), and resource rationing (and cost-based pricing).  
+ For one, a lot of the claims made for Active Networking -- with its programmable packets ("capsules") executing within routers start making a lot more sense as programmable messages evaluated at relays...  
+ @@ 
+ Next issue: NNTP and IRC. 
+   
+   
+   
+   RFC  
+ 
+   Date  
+ 
+   Title and Comments  
+   
+ 196  
+ 
+ 20 Jul 1971  
+ 
+   Mail Box Protocol 
+Defined a remote "printer"; cosmetic user address on burst pages  
+   
+ 224  
+ 
+ 14 Sep 1971  
+ 
+   Comments on Mailbox Protocol 
+Terminal IMP users need two-phase delivery from central mailboxes   
+   
+ 278  
+ 
+ 17 Nov 1971  
+ 
+   Revision of the Mail Box Protocol 
+Mailbox files using FTP append-with-create and print formatting  
+   
+ 561  
+ 
+ 5 Sep 1973  
+ 
+   Standardizing Network Mail Headers 
+Introduced From:, Subject:, and Date: (with two-digit years!)  
+   
+ 644  
+ 
+ 22 Jul 1974  
+ 
+   On The Problem Of Signature Authentication For Network Mail Reserved fixed port numbers for "authentic" mail service  
+   
+ 706  
+ 
+ 8 Nov 1975  
+ 
+   On the Junk Mail Problem Postel proposed IMPs should track offending hosts -- appeared 20 years later as the MAPS Realtime Black Hole List ( http://maps.vix.com/rbl )  
+   
+ 720  
+ 
+ 5 Aug 1976  
+ 
+   Address Specification Syntax for Network Mail 
+ARPANET outgrew "real" names; added group aliases and sub-boxes  
+   
+ 772 
+780  
+ 
+ Sept 1980 
+May 1981  
+ 
+   Mail Transfer Protocol (MTP) 
+New mail relay system based on FTP MAIL; part of NCP-&gt;TCP transition  
+   
+ 821 
+STD 10  
+ 
+ Aug 1982  
+ 
+   Simple Mail Transfer Protocol (SMTP) 
+MAIL FROM, RCPT TO, and DATA; as well as interactive SEND  
+   
+ 822 
+STD 11  
+ 
+ Aug 1982  
+ 
+   Standard for the Format of ARPA Internet Text Messages 
+Grammar for headings and field-value types (revised as ABNF, 2234)  
+   
+ 974 
+STD 14  
+ 
+ Jan 1986  
+ 
+   Mail Routing and the Domain System 
+Defines the Mail eXchanger resource so mail relays serve many hosts  
+   
+ 984  
+ 
+ May 1986  
+ 
+   PCMAIL: A Distributed Mail System for Personal Computers 
+Clients manage mail at a server; prototyped w/Unified Stream Protocol  
+   
+ 1113-5 
+1421-4  
+ 
+ Aug 1989 
+Feb 1993  
+ 
+   Privacy-Enhanced Mail 
+New headers for public-key certificates; encryption req'd signature  
+   
+ 1521-2 
+2045-9   
+ 
+ Sep 1993 
+Nov 1996   
+ 
+   Multipurpose Internet Mail Extensions 
+Not just multimedia &amp; charsets! Revised into five Parts: body formats, media types, internationalized headers, registration, and testing  
+   
+ 1847-8  
+ 
+ Oct 1995  
+ 
+   Security Multiparts &amp;  MIME Object Security Services  
+Defined Signed and Encrypted parts; uses any key pair or secret  
+   
+ 1869 
+STD 10  
+ 
+ 6 Nov 1995  
+ 
+   SMTP Service Extensions  (ESMTP) 
+Defined the EHLO+keyword+parameters negotiation framework  
+   
+ 1891-4  
+ 
+ Jan 1996  
+ 
+   Delivery Status Notifications,  Multipart/Report ,  Enhanced Status Codes  
+Suite for automated verification and debugging undeliverable mail   
+   
+ 1939 
+918  
+ 
+ May 1996 
+Oct 1984  
+ 
+   Post Office Protocol -- Version 3 Clients pull mail; limited ability to preview headers and flush store  
+   
+ 2060-1 
+1730  
+ 
+ Dec 1996 
+Dec 1994  
+ 
+   Interactive Message Access Protocol -- Version 4rev1 Clients manipulate mail folders at the server; shared folders, too  
+   
+ 2110  
+ 
+ Mar 1997  
+ 
+   MIME E-mail Encapsulation of Aggregate Documents, such as HTML 
+Related parts can be bound together, preserving internal URI rules  
+   
+ 2142 
+763  
+ 
+ May 1997 
+May 1980  
+ 
+   Mailbox Names for Common Roles, Services, and Functions 
+Common business, operations, services, mailing lists, and domain boxes  
+   
+ 2298  
+ 
+ Mar 1998  
+ 
+   An Extensible Message Format for Message Disposition Notifications Indicates that mail has been read/processed, beyond merely delivered  
+   
+ 2368  
+ 
+ July 1998  
+ 
+   The mailto URL scheme 
+Encodes recipient as well as optional headers or body  
+   
+ 2369  
+ 
+ July 1998  
+ 
+   URLs as Meta-Syntax for Core Mail List Commands ... 
+List-Help, -(Un)Subscribe, -Post, and -Archive headers with mailto:  
+   Table 1: Milestones in the fossil record of e-mail: protocols, message formats, security, and operations 
+   
+   
+   
+   Type  
+ 
+   Heading  
+ 
+   Interpretation  
+   
+ Memo  
+ 
+   Date 
+   
+ 
+ Creation time. Originally used 2-digit year; many forms in use  
+   
+   Subject 
+Keywords 
+Comments  
+ 
+ Originally  Title ; replies use Latin  res , "in the matter of" 
+The other two fell into disuse in Mail; popular for News  
+   
+ Origin  
+ 
+   From  
+ 
+ Originally  Author . Putative creator of the message  
+   
+   Sender  
+ 
+ Actual sender, from the  MAIL  command. Used to delegate.  
+   
+   Reply-To  
+ 
+ Followup address. But is it the sender alone, a group, a list?   
+   
+ Dest  
+ 
+   To, Cc  
+ 
+ Original and "carbon copy" recipients; at least one req'd  
+   
+   Bcc  
+ 
+ Blind CC; post separate copies to hide such recipients  
+   
+ Fwd  
+ 
+   Resent-*  
+ 
+ Redistribution envelope when prefixed to above headings  
+   
+ Trace  
+ 
+   Received  
+ 
+ Each mail relay logs when received, from whom, and protocol  
+   
+   Return-Path  
+ 
+ Accumulated a reverse delivery pathway; deprecated.  
+   
+ Refs  
+ 
+   Message-ID  
+ 
+ Uniquely identifies the entire text+headers (except trace)  
+   
+   In-Reply-To 
+References  
+ 
+ Can specify addresses and message-IDs this refers to; used to track topics and threads of conversation.  
+   
+ MIME  
+ 
+   Content-Type  
+ 
+ Internet Media Type (with parameters) of the part's body  
+   
+   Content-ID  
+ 
+ Uniquely identifies each body part;  -MD5  uses hash function  
+   
+   Content-Transfer-Encoding  
+ 
+  Protection against 7-bit, linewidth-limited mail infrastructure. Quoted-printable for text, Base64 for arbitrary 8-bit streams. 
+Actual character sets/languages are indicated elsewhere. 
+  
+   
+ MHTML 
+HTTP 
+    
+ 
+   Content-Location  
+ 
+ The URL of the resource that generated the entity represented in a body part.  
+   
+   Content-Base  
+ 
+ Relative URLs within a part are evaluated against this path  
+   
+ PEM 
+MOSS  
+ 
+   MIC-Info  
+ 
+ Sender's Message Integrity Code (e.g. digital signature)  
+   
+   DEK-Info  
+ 
+ Each recipient's Data Encryption Key to unlock the body  
+   Table 2: A selection of standardized e-mail Message Headings. 
+   
+   
+   
+   MTP  
+ 
+   SMTP  
+ 
+   ESMTP  
+ 
+   CMND    
+ 
+   Explanation  
+     
+ 
+ +  
+ 
+ -  
+ 
+   HELO 
+   
+ 
+ Required greeting exchanges domain name and software version  
+     
+   
+ 
+ +  
+ 
+   EHLO  
+ 
+ Extended response enumerates site's supported Service Extensions  
+   
+ -  
+   
+   
+ 
+   MRSQ  
+ 
+ Negotiates whether to list (R)ecipients or (T)ext first; from FTP mail  
+   
+ +  
+ 
+ +  
+ 
+ +  
+ 
+   MAIL  
+ 
+   FROM: &lt;&gt;; MTP can add  TO: &lt;&gt;  and go straight to  DATA  mode  
+   
+ -  
+   
+   
+ 
+   MRCP  
+ 
+   TO: &lt;&gt; for each recipient; appears either before or after  MAIL   
+     
+ 
+ +  
+ 
+ +  
+ 
+   RCPT  
+ 
+   TO: &lt;&gt; for each recipient; must appear before  DATA  command  
+     
+ 
+ +  
+ 
+ +  
+ 
+   DATA  
+ 
+  Transmit message in NVT (Telnet) format until  &lt;CRLF&gt;.&lt;CRLF&gt;  
+  
+     
+ 
+ -  
+   
+ 
+   SEND  
+ 
+ Deliver instantly to logged-in user, and/or mail ( SAML ,  SOML )   
+     
+ 
+ +  
+ 
+ +  
+ 
+   RSET  
+ 
+ Clear address and message buffers (implicit in  HELO  and  ELHO )  
+     
+ 
+ -  
+ 
+ +  
+ 
+   VRFY  
+ 
+   &lt;user&gt; exists locally. Now required, though raises privacy risk  
+     
+ 
+ -  
+ 
+ -  
+ 
+   EXPN  
+ 
+   &lt;alias&gt; lists members. Now recommended, given privacy risk  
+     
+ 
+ -  
+   
+ 
+   TURN  
+ 
+ Swap roles and delivery any queued mail for "client"; spoofing risk   
+     
+   
+ 
+ -  
+ 
+   ETRN  
+ 
+ Asks server to initiate reverse connection to process queued mail  
+   Table 3: Required (+) and optional (-) commands in MTP, SMTP, and ESMTP. 
+   
+   
+   </body> 

@@ -1,0 +1,74 @@
+ Semantics Retention - Effect<body>
+
+  Semantics Retention - Effect  
+    
+Source level semantics
+  
+eliminate red dependencies;
+  
+algorithm-level semantics
+  
+eliminate blue dependencies    
+Best Schedules    
+Neglecting semantics    
+Retaining source-level
+  
+semantics alone    
+Retaining source and algorithm level semantics    
+iter(i)    
+iter(i+1)    
+iter(i+2)    
+Semantics Hierarchy
+  
+		ROOT
+    
+	STACK		HEAP
+      
+struct_type1*  struct_type2*   int   struct_type1   struct_type2
+        
+    ctrl 	        node	      i    j 	*ctrl 	 *node
+    
+ 			  vec       cnt     data   next			    		
+  
+		   	{5, 7}    {1,3}   {4}    {8}    
+C source
+  
+list *node;
+  
+control *ctrl;
+  
+while (�){
+  
+ node-&gt;cnt++;
+  
+ ctrl-&gt;vec[i] += node-&gt;data[j];
+  
+ node = node-&gt;next;}    
+N-addr code
+  
+1: cnt = M[node + cntoffset]
+  
+2: cnt = cnt + 1
+  
+3: M[node + cntoffset] = cnt
+  
+4: d = M[node + dataoffset]
+  
+5: c = M[ctrl + vecioffset]
+  
+6: d = d + c
+  
+7: M[ctrl + vecioffset] = d
+  
+8: node = M[node + nextoffset]    
+GCC generates N-addr
+  
+code and Semantics
+  
+Hierarchy    
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

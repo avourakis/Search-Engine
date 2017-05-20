@@ -1,0 +1,106 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Comments on Rationale<body> Re: Comments on Rationale 
+ David G. Durand  (  dgd@cs.bu.edu  )  Tue, 23 Jul 1996 18:14:11 +0100 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Jim Whitehead: "San Mateo meeting notes" 
+    Previous message:   Jim Whitehead: "Comments on Rationale" 
+    Maybe in reply to:   Jim Whitehead: "Comments on Rationale" 
+
+
+    
+Jim Whitehead &lt; ejw@ics.UCI.EDU &gt; wrote:
+&gt;David Durand and Fabio Vitali posted a thought-provoking draft of
+&gt;functional requirements for versioning on the WWW.
+Thanks!
+
+&gt;I think the first bullet, "(Versioning) allows more efficient management of
+&gt;large web sites," is a benefit that can be ascribed to facilities for the
+&gt;management of configurations of versioned resources, rather than simply to
+&gt;versioning individual resources.  Thus I see efficient management of large
+&gt;web sites helped by CM capabilities working in tandem with versioning
+&gt;capabilities, not simply by versioning capabilities alone.
+
+To a great extent this is true. Should we be expanding this document to
+cover CM, or just delete this point, for a future requirements document?
+Doesn't even simple versioning help manage somewhat, if only by offering an
+audit trail and improved accountability (depending on the kinds of server
+logs and access control the server implements)? While I think that this is
+part of the larger rationale, it could be postpond to the CM requirements,
+if people agree.
+
+&gt;The second bullet, "(Versioning) allows concurrent and controlled access to
+&gt;resources by authors and editors" is at once too broad and too restrictive.
+&gt;Too broad, because browsers already handle concurrent and controlled
+&gt;access to resources: they serve the resource concurrently to everyone who
+&gt;asks for it (excepting cases where the resource is password protected).
+&gt;Too restrictive, because the potential roles of people employing versioning
+&gt;capabilities is far greater than simply authors and editors.  Computer
+&gt;programmers, reviewers, managers, students, etc. are all people whose roles
+&gt;both fall, and don't fall under "authors and editors."
+   What we meant are people who make changes and people who create
+documents. Personally I don't have a problem using author to refer to
+anyone who creates a web document, whether program, home page, term paper,
+or novel. Shall we use the rather uglier terms "resource creators" and
+"resource updaters" instead? Or should we add a definition of the terms
+that stresses their wide-ranging applicability?
+
+&gt;However, I think this bullet does get at the essence of one of the most
+&gt;important capabilities versioning should provide: parallel development
+&gt;support, the ability for two or more people to simultaneously edit a
+&gt;resource.  The second issue alluded to in this bullet is access control, in
+&gt;many versioning schemes a necessary support capability for parallel
+&gt;development.
+
+These are indeed the points we were shooting at.
+
+&gt; Thus I think the "concurrent and controlled access" bullet
+&gt;should be subdivided into two bullets:
+&gt;
+&gt;- Versioning provides parallel development support
+&gt;- Versioning provides access control over resources
+
+    I will make these changes without further discussion.
+
+&gt;The bullet stating that versioning enhances annotation support due to the
+&gt;preservation of the historical record merges several points which should be
+&gt;separated:
+&gt;- Versioning provides a consistent naming scheme for versions of a resource
+The more I think about this one, the more it seems tautological (basically,
+all it says is that keeping track of versions lets us keep track of
+versions -- not too thrilling). I will delete this point and  rewrite your
+two points:
+
+&gt;This supports two major rationales for versioning:
+&gt;- browse access to previous versions of a resource
+&gt;- annotation support
+
+We had quite some discussion of this. It's awkward because we wanted to
+have the rationale provide axioms, that lead to functional requirements,
+that will then constrain the architecture... So we thought that combining
+them makes sense. In fact, annotation support is in a way too limiting,
+since one of the virtues of versioning support is also the support of
+version-aware links, and externally stored links, even in non-annotative
+contexts.
+
+   So we should change the two bullets to something like the following:
+- we allow browsing through the past and alternative versions of a resource.
+- we can support externally stored links, allowing annotations, and
+more-flexible linking.
+- we can support configuration control of consistent sets of linked resources,
+
+    -- David
+
+----------------------------------------------+----------------------------
+  David Durand                  dgd@cs.bu.edu   | david@dynamicDiagrams.com
+  Boston University Computer Science          | Dynamic Diagrams
+   http://cs-www.bu.edu:80/students/grads/dgd/  | http://dynamicDiagrams.com/
+ 
+
+  
+     Next message:   Jim Whitehead: "San Mateo meeting notes" 
+    Previous message:   Jim Whitehead: "Comments on Rationale" 
+    Maybe in reply to:   Jim Whitehead: "Comments on Rationale" 
+
+
+  </body> 

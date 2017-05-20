@@ -1,0 +1,70 @@
+ """PartialCube.py
+
+Test whether a graph is an isometric subgraph of a hypercube.
+
+D. Eppstein, September 2005, rewritten May 2007 per arxiv:0705.1025.
+"""
+
+import BFS
+import Medium
+from Bipartite import isBipartite
+from UnionFind import UnionFind
+from StrongConnectivity import StronglyConnectedComponents
+from Graphs import isUndirected
+import unittest
+
+def PartialCubeEdgeLabeling(G):
+    """
+    Label edges of G by their equivalence classes in a partial cube structure.
+
+    We follow the algorithm of arxiv:0705.1025, in which a number of
+    equivalence classes equal to the maximum degree of G can be found
+    simultaneously by a single breadth first search, using bitvectors.
+    However, in order to avoid deep recursions (problematic in Python)
+    we use a union-find data structure to keep track of edge identifications
+    discovered so far. That is, we repeatedly contract our initial graph,
+    maintaining as we do the property that G[v][w] points to a union-find
+    set representing edges in the original graph that have been contracted
+    to the single edge v-w.
+    """
+    
+    # Some simple sanity checks
+    if not isUndirected(G):
+        raise Medium.MediumError("graph is not undirected")
+    L = list(StronglyConnectedComponents(G))
+    if len(L) != 1:
+        raise Medium.MediumError("graph is not connected")
+
+    # Set up data structures for algorithm:
+    # - UF: union find data structure representing known edge equivalences
+    # - CG: contracted graph at current stage of algorithm
+    # - LL: limit on number of remaining available labels
+    UF = UnionFind()
+    CG = {v:{w:(v,w) for w in G[v]} for v in G}
+    NL = len(CG)-1
+    
+    # Initial sanity check: are there few enough edges?
+    # Needed so that we don't try to use union-find on a dense
+    # graph and incur superquadratic runtimes.
+    n = len(CG)
+    m = sum([len(CG[v]) for v in CG])
+    if 1 n:
+        raise Medium.MediumError("graph has too many edges")
+
+    # Main contraction loop in place of the original algorithm's recursion
+    while len(CG) &gt; 1:    
+        if not isBipartite(CG):
+            raise Medium.MediumError("graph is not bipartite")
+
+        # Find max degree vertex in G, and update label limit
+        deg,root = max([(len(CG[v]),v) for v in CG])
+        if deg &gt; NL:
+            raise Medium.MediumError("graph has too many equivalence classes")
+        NL -= deg
+
+        # Set up bitvectors on vertices
+        bitvec = {v:0 for v in CG}
+        neighbors = {}
+        i = 0
+        for neighbor in CG[root]:
+            bitvec[neighbor] = 1 

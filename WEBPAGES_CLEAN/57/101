@@ -1,0 +1,134 @@
+  <body>  This is Google's cache of  http://www.vdlande.com/VHDL/confspec.html . It is a snapshot of the page as it appeared on Sep 24, 2009 00:22:12 GMT. The  current page  could have changed in the meantime.  Learn more     Text-only version  
+ These search terms are highlighted:  vhdl  These terms only appear in links pointing to this page:  confspec       
+
+
+VHDL Reference Guide - Configuration Specification 
+   Configuration Specification  
+       Specification 
+ ---- used in ----&gt; 
+ Architecture 
+          Syntax       
+  
+
+ 
+    
+for instance_label: component_name
+	use entity 
+		library_name.entity_name(architecture_name);
+  
+   
+  
+
+ 
+    
+for instance_label: component_name
+	use configuration library_name.config_name;
+  
+   
+  
+
+ 
+See LRM section 5.2
+
+        Rules and Examples       
+  
+
+ 
+   Using a configuration  specification , components may be
+configured within an architecture which instances them, rather than
+using a separate configuration declaration design unit. This is less
+flexible, as the architecture has to be re-analysed to change the
+configuration.
+ 
+   
+  
+
+ 
+   Component instances may be individually configured: 
+architecture STR of XA is
+  component HALFADD 
+    port(A,B : in bit;
+         SUM, CARRY : out bit);
+  end component;
+  component ORGATE 
+    port(A,B : in bit;
+         Z : out bit);
+  end component;
+ 
+  for U1 : HALFADD use entity
+            work.HA(BEHAVE);
+  for U2 : ORGATE use entity
+            work.OG(BEHAVE);
+begin
+  U1: HALFADD port map (A,B,S,C);
+  U2: ORGATE port map (A,B,Y);
+end STR;
+  
+   
+  
+
+ 
+   The keyword  all  may be used to refer to all instances of a
+component: 
+for all: FULLADDER use entity
+         work.FULLADD(STRUCTURAL);
+  
+   
+  
+
+ 
+   The keyword  others  may also be used to refer to all instances
+not explicitly mentioned. 
+   
+  
+
+ 
+   If the port names on an entity do not match those on the component
+declaration, a port map may be included in the configuration: 
+for all:HALFADD use entity
+      work.HALFADD(BEHAVE)
+      port map (X =&gt; A, Y =&gt; B,
+            S =&gt; SUM, C =&gt; CARRY);
+  
+   
+  
+
+ 
+   In the abscence of an explicit configuration for any part of a
+model,  default binding  will occur. For each unbound instance of
+every component, an entity will be selected whose name, port names and
+port types etc. match thosein the corresponding component declaration.
+Where an entity has more than one architecture, the  last analysed 
+architecture will be used. 
+   
+
+
+ 
+        Synthesis Issues       
+  
+
+Configuration is not usually supported by synthesis tools. The user
+usually has to ensure that component and entity names and ports match,
+and that only one architecture per entity is analysed.
+
+ 
+        Whats New in '93       
+
+In  VHDL -93, an entity-architecture pair may be directly instantiated,
+i.e. a component need not be declared. This is more compact, but does
+not allow the flexibility of configuration.
+  
+DIRECT: entity HA_ENTITY(HA_ARCH) port map(A, B, S, C);
+  
+In  VHDL -93, a configuration  specification  for a component (or
+instance) may legally be overridden by a configuration
+ declaration  for the same item. This was not allowed in  VHDL -87.
+  
+
+  
+   
+   
+   
+ 
+
+  </body> 

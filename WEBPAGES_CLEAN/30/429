@@ -1,0 +1,55 @@
+ ADL Specification Example<body>
+
+  ADL Specification Example  
+    
+Instruction set information:
+    
+(OP_GROUP mult_ops
+  
+	(OPCODE mpy mpyi mpysp mpydp
+  
+		(OPERANDS src1 src2 dst)
+  
+		(SEMANTIC dst=src1*src2))
+  
+(VAR_GROUPS
+  
+	(src1 : RF1 | RF2)
+  
+	(src2 : RF2)
+  
+	(dst : RF2))
+  
+(INSTRUCTION
+  
+	(FU_SLOT_LIST 
+  
+		(UNIT ALU1) 
+  
+		(UNIT MULT)
+  
+		(UNIT ALU2)))
+  
+...    
+Net-list information:
+    
+(FUnit MULT 
+  
+	(OPCODES mult_ops)
+  
+	(CONNECTIONS c1 c2 c3))
+  
+(RegFile RF2
+  
+	(CONNECTIONS c2 c3 c4 c5 �.))
+  
+(RegFile RF1
+  
+	...
+    
+ 
+     Previous slide   
+     Next slide   
+     Back to first slide   
+     View graphic version   
+  </body> 

@@ -1,0 +1,622 @@
+ Datasets of Dynamic Objects on the Web 
+
+ 
+
+   Datasets
+of Dynamic Objects on the Web   
+
+   Department of Computer Science,
+UC Irvine   
+
+   
+
+   Contributors �����������������������������������������������������������������������������������������������������     
+
+    Chen Li (Faculty)   
+    Gang Liang (Faculty)   
+   Houtan
+     Shirani-Mehr (PhD student)  
+    Michal Shmueli-Scheuer (PhD
+     student)       
+    Overview     
+
+ Many applications need to retrieve information about objects
+from remote Web sources that are autonomous and non-collaborative. �  An example is a service provider (e.g.,
+Monster.com) that is specific to a certain application domain such as jobs. For
+such applications, it is critical to understand how the objects at the remote
+sources change over time. Such information can help the application decide a
+good crawling schedule in order to maintain a high quality of its data while it
+does not overuse network resources.  
+
+     
+
+ In order to gain an insight on how data objects on the Web
+change over time, we have collected data objects from six Web sources in four
+domains, including books, cars, forums, and jobs. Our crawlers collected
+data objects from these sites during a period of one and a half years on a
+daily basis. The following table gives an overview of the collected data (with
+the Web sites anonymized): 
+
+     
+
+ Table  1 : Overview of the collected
+data objects   
+
+ 
+
+   
+     Domain       
+   
+   
+     Web Source (# of
+  categories)       
+   
+   
+     Crawling Period       
+   
+   
+     # of Objects       
+   
+    
+    Cars    
+   
+   
+   Car Web source 1  (10 models)    
+   
+   
+    10 months
+  (2006/1 - 2006/11)      
+   
+   
+    42,543    
+   
+    
+    Cars    
+   
+   
+   Car Web source 2  (10 models)    
+   
+   
+    13 months
+  (2005/10 - 2006/11)      
+   
+   
+    46,311    
+   
+    
+    Jobs    
+   
+   
+   Job Web source 1  (7 categories)    
+   
+   
+    4 months
+  (2006/6 - 2006/10)       
+   
+   
+    31,157    
+   
+    
+    Jobs    
+   
+   
+   Jobs Web source  2 (2 categories)    
+   
+   
+    2 months
+  (2006/12 - 2007/2)      
+   
+   
+    2,500    
+   
+    
+    Books    
+   
+   
+   Book Web source  (3 categories)    
+   
+   
+    4 months
+  (2005/8 - 2005/12)      
+   
+   
+    3,315    
+   
+    
+    Forums    
+   
+   
+   Forums Web source  (4 categories)    
+   
+   
+    2 months (2006/12-2007/02 )    
+   
+   
+    25,392    
+   
+    
+
+   We
+publish the collected data for researchers who want to study dynamics of Web
+objects.     
+
+ 
+
+  
+
+   Publications ������������������������������������������������������������������������������������������������������     
+
+   Quality-Aware Retrieval of Data Objects from Autonomous Sources
+     for Web-Based Repositories,  Houtan Shirani-Mehr, Chen Li, Gang Liang,
+     Michal Shmueli-Scheuer, ICDE 2008 (poster). [ PDF ]   
+        
+
+  Index  
+
+   �         
+     Web Sources   
+
+   o        
+     Car Web source 1   
+
+   o        
+     Car Web source 2   
+
+   o        
+     Job Web source 1   
+
+   o        
+     Job Web source 2   
+
+   o        
+     Book Web source   
+
+   o        
+     Forums Web source   
+
+   �         
+     Reference   
+
+   �         
+     Acknowledgements   
+
+  
+
+   
+
+    Car Web source
+1      ( Download the dataset )   
+
+ This Web source is one of the Web sources in the car domain we crawled. We
+crawled the data for the 10 different car models shown in Table 2.    
+
+ 
+
+   
+     Table 2:
+  Different Model and make of the crawled cars       
+   
+    
+     Make       
+   
+   
+     Model       
+   
+    
+    BMW    
+   
+   
+    3    
+   
+    
+    BMW    
+   
+   
+    5    
+   
+    
+    Ford    
+   
+   
+    Explorer    
+   
+    
+    Ford    
+   
+   
+    Focus    
+   
+    
+    Ford    
+   
+   
+    F150    
+   
+    
+    Honda    
+   
+   
+    Accord    
+   
+    
+    Honda    
+   
+   
+    Civic    
+   
+    
+    Toyota    
+   
+   
+    Camry    
+   
+    
+    Toyota    
+   
+   
+    Corolla    
+   
+    
+    Dodge    
+   
+   
+    Durango    
+   
+    
+
+  The schema of the collected data is the following:   
+
+ 
+
+   
+     Table
+  3:  Schema of collected data        
+   
+    
+    cid  
+   
+   
+    mileage  
+   
+   
+    year  
+   
+   
+    crDate  
+   
+   
+    price  
+   
+   
+    make   
+   
+   
+    model  
+   
+    
+   Internal Web source
+  database ID of the car entry  
+   
+   
+   Mileage of the car 
+   
+   
+   The year in which
+  the car is built 
+   
+   
+   The crawling date  
+   
+   
+   The price of the car 
+   
+   
+   Make of the car 
+   
+   
+   Model of the car 
+   
+    
+
+  The crawled data covers 42,543 different cars from the following
+intervals (dates are in YYYY-MM-DD format): 
+
+    2006-1-9 to 2006-2-19   
+    2006-4-14 to 2006-6-22   
+    2006-7-2 to 2006-11-14   
+    
+
+  
+
+   
+
+    Car Web source
+2      ( Download the dataset )   
+
+ Ten different car models at this Web source were crawled (the models
+are the same as the models in Table 2).  The schema of the collected data
+is the following:   
+
+ 
+
+   
+     Table
+  4:  Schema of collected data        
+   
+    
+    cid  
+   
+   
+    year  
+   
+   
+    price  
+   
+   
+    make   
+   
+   
+    model  
+   
+   
+    crDate  
+   
+    
+   Internal Web source
+  database ID of the car entry  
+   
+   
+   The year in which
+  the car is built 
+   
+   
+   The price of the
+  car 
+   
+   
+   Make of the car 
+   
+   
+   Model of the car 
+   
+   
+   The crawling date 
+   
+    
+
+ The crawled data covers 46,311 different cars from the following intervals
+(dates are in YYYY-MM-DD format): 
+
+    2005-10-22 to 2006-1-5  (10 models)       
+    2006-1-9 to 2006-2-17  (10 models)       
+    2006-2-19 to 2006-2-22  (10 models)       
+    2006-4-14 to 2006-6-23  (10 models)        
+    2006-7-2 to 2006-9-19  (8 models consisting of all
+     model in Table 6 except BMW 3 and Dodge Durango)       
+    2006-9-20 to 2006-11-6  (10 models)       
+    
+
+  
+
+   
+
+    Jobs Web source
+1      ( Download the dataset )   
+
+ We crawled seven different categories of jobs. We anonymized the category of
+object to make data confidential. The schema of the collected objects is the
+following:   
+
+ 
+
+   
+     Table
+  5:  Schema of collected data     
+   
+    
+    id  
+   
+   
+    cat  
+   
+   
+    crDate  
+   
+   
+    postDate  
+   
+    
+   Internal Web source
+  database ID of the job entry  
+   
+   
+   Job category 
+   
+   
+   The crawling date  
+   
+   
+   Posting date of the
+  job (as shown on the Web source) 
+   
+    
+
+ The collected data includes 31,157 jobs and spans the following intervals
+(dates are in YYYY-MM-DD format): 
+
+   2006-6-16 to 2006-7-24  
+   2006-8-4 to 2006-10-7  
+   
+
+   
+
+    Job Web source
+2      ( Download the dataset )   
+
+ The jobs with the category of management and technology were crawled
+from this Web source. The schema of the data is the following:   
+
+ 
+
+   
+     Table
+  6:  Schema of collected data        
+   
+    
+    postDate    
+   
+   
+    id  
+   
+   
+    cat  
+   
+   
+    crDate  
+   
+    
+   Posting date of the
+  job which is shown on the Web source 
+   
+   
+   Internal Web source
+  database ID of the job entry (job ID)   
+   
+   
+   Job category 
+   
+   
+   The crawling date  
+   
+    
+
+ The collected data contains 2,500 jobs and spans the following intervals
+(dates are in YYYY-MM-DD format): 
+
+    2006-12-19 to 2007-2-25   
+   
+
+   
+
+    Book Web source      ( Download
+the dataset )   
+
+ Books with three different subjects are crawled from this Web source: books
+on Java, Linux and DBMS (database management systems).  The schema of the
+data is the following:   
+
+ 
+
+   
+     Table
+  7:  Schema of collected data        
+   
+    
+    id  
+   
+   
+    price  
+   
+   
+    topic  
+   
+   
+    crDate  
+   
+    
+   Internal Web source
+  database ID of the book entry  
+   
+   
+   Price of the book 
+   
+   
+   The topic of the
+  book (subject of the book)  
+   
+   
+   The crawling date  
+   
+    
+
+ The collected data contains 3,315 books and spans the following intervals
+(dates are in YYYY-MM-DD format): 
+
+    2005-8-23 to 2005-9-28        
+    2005-10-1 to 2005-12-6        
+   
+
+   
+
+    Forums Web so     urce  (Download
+the dataset)    
+
+ Four different kinds of posts were crawled which are anonymized to make it
+data confidential. The schema of the collected objects is the following:   
+
+ 
+
+   
+     Table
+  8:  Schema of collected data   
+   
+    
+    id    
+   
+   
+    cat  
+   
+   
+    crDate  
+   
+   
+    replies    
+   
+    
+   Internal Web source
+  database ID of the post entry 
+   
+   
+   Post category 
+   
+   
+   The crawling date  
+   
+   
+   Number of replies
+  to the post 
+   
+    
+
+ The collected data objects for this Web source contains 25,392 posts and
+spans the following intervals (dates are in YYYY-MM-DD format): 
+
+   2006-12-24 to 2007-2-12  
+    
+
+    Reference:    
+
+     Quality Aware Retrieval of
+     Data Objects from Autonomous Sources for Web-Based Repositories,      Houtan Shirnai-Mehr, Chen Li,
+     Gang Liang, Michal Shmueli-Scheuer, UCI ICS Technical Report, March 2007.    
+      
+
+ 
+
+  
+
+ This project is partially supported by the NSF  CAREER  Award, No.
+IIS-0238586 and a Smith Faculty Seed Fund of ICS at UCI. 
+
+ If you have any questions about these datasets, please contact Houtan
+Shirani-Mehr (hshirani AT uci.edu) or Chen Li (chenli AT ics.uci.edu). 
+
+     
+
+       
+
+         
+
+ 
+
+</body> 

@@ -1,0 +1,62 @@
+ Archive of Working Group on Versioning and Configuration Management of World Wide Web Content: Re: Name space munging ... blech!<body> Re: Name space munging ... blech! 
+ Jim Whitehead  (  ejw@ics.uci.edu  )  Tue, 11 Jun 1996 23:40:30 -0700 
+ 
+     Messages sorted by:   [ date ]  [ thread ]  [ subject ]  [ author ] 
+
+    Next message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Previous message:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe in reply to:   Jim Whitehead: "Name space munging ... blech!" 
+
+    Next in thread:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+    
+&gt;         http://host/dir/projectX/file.c 
+&gt;*and*
+&gt;         http://host.dom/VERSION/1.5/dir/projectX/file.c 
+&gt;
+&gt;put the versions at the beginning; make a version-aware server deal
+&gt;with "VERSION/*" either as a CGI that fetches the appropriate
+&gt;version or whatever.
+
+I'm not clear on the semantics of this approach.  From your URL, it appears
+that "VERSION" appears as a constant string, immediately followed by the
+version number in the next hierarchy down.  Is this correct?
+
+If so, I'm not terribly fond of this approach.  To date we have been mostly
+dealing with how to handle labeling of the version of leaf nodes in a
+heirarchy.  However, the general case for configuration management is that
+there is a heirarchy of versioned collections of versioned resources.
+Ideally, what is needed to handle this is a naming mechanism like:
+
+ http://foo.bar.com/top;version=rev_2.0/middle;version=14.2/leaf;version=5.5 
+
+Unfortunately, the URL specification at present does not allow parameters
+to be included in each level of the heirarchy.
+
+This could be translated into a heirarchical namespace as follows:
+
+ http://foo.bar.com/VERSION/rev_2.0/top/VERSION/14.2/middle/VERSION/5.5/leaf 
+
+However, in my last post I showed the problems inherent in this approach
+(i.e., the assumption that everything leaf referrs to using relative URLs
+must also be version 5.5).  Also, in this approach, "5.5" is clearly not a
+collection, but is the version of the leaf resource.
+
+The alternative is to reverse your initial proposal:
+
+ http://foo.bar.com/top/VERSION/rev_2.0/middle/VERSION/14.2/leaf/VERSION/5.5 
+
+This might actually work, although I find it to be much less elegant, and
+more susceptable to namespace collisions than using the ";version=" format.
+
+- Jim
+ 
+
+  
+     Next message:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+    Previous message:   Jim Whitehead: "Re: Name space munging ... blech!" 
+    Maybe in reply to:   Jim Whitehead: "Name space munging ... blech!" 
+
+    Next in thread:   Christopher Seiwald: "Re: Name space munging ... blech!" 
+
+  </body> 

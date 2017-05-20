@@ -1,0 +1,325 @@
+ CHEM.Common.Env<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package Common  ::
+        Module Env
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Module Env   
+Various constants for use by the application modules, but these can / 
+  should be changed depending on the platform / environment where they are 
+  installed.    
+   
+        Functions  
+          [ hide private ]  
+         
+   
+         
+      
+             formatDBConnectString ( dbParamDict )  
+           
+            
+            
+           
+           
+      
+   
+        Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         LOGGER_LEVEL  =  20  
+      Not functionally important, just indicates an estimate of the 
+      number of lines in input files to hint a proper scale for the 
+      progress indicators.
+     
+     
+         
+      
+         EST_INPUT  =  10000  
+      Parameter placeholder for SQL queries.
+     
+     
+         
+      
+           SQL_PLACEHOLDER  =   '  %s  '   
+      Strings to use for boolean parameters.
+     
+     
+         
+      
+           BOOLEAN_STR  =   { False :   '  False  '  ,  True :   '  True  '  }  
+     
+     
+         
+      
+           FP_SIZE  =  1024 
+     
+     
+         
+      
+           FP_MAX  =  8 
+     
+     
+         
+      
+           FP_MIN  =  0 
+     
+     
+         
+      
+           FP_COLUMN  =   '  fingerprint_1  '  
+     
+     
+         
+      
+           HOSTNAME  =   '  mine10  '  
+     
+     
+         
+      
+           IP_ADDR  =   '  128.195.8.140  '  
+     
+     
+         
+      
+           DEPICT_HOST  =   '  mine1.ics.uci.edu:8080  '  
+     
+     
+         
+      
+           JAVA_DEPICT_HOST  =   '  mine1.ics.uci.edu:8081  '  
+     
+     
+         
+      
+           FP_SERVER  =   '  finger.ics.uci.edu  '  
+     
+     
+         
+      
+           FP_PORT  =  6000 
+     
+     
+         
+      
+         FP_WEB_SERVICE_BASE  =   '  http://cdb.ics.uci.edu/CHEM/Web/cgibin/  ...  
+     
+     
+         
+      
+         FP_WEB_SERVICE  =   '  http://cdb.ics.uci.edu/CHEM/Web/cgibin/admin  ...  
+     
+     
+         
+      
+           FP_USE_WEB_SERVICE  =  False 
+     
+     
+         
+      
+         TEXT_WEB_SERVICE  =   '  http://mine1.ics.uci.edu:8081/chemdb/resul  ...  
+     
+     
+         
+      
+         DB_PARAM  =   {  '  DSN  '  :   '  cdbfresh  '  ,   '  HOST  '  :   '  mine2.ics.uci.edu  '  ,   '  P  ...  
+     
+     
+         
+      
+         FAILOVER_DB_PARAM  =   {  '  DSN  '  :   '  cdbtest  '  ,   '  HOST  '  :   '  chemdb.ics.uci  ...  
+     
+     
+         
+      
+         DEV_DB_PARAM  =   {  '  DSN  '  :   '  cdbtest  '  ,   '  HOST  '  :   '  chemdb.ics.uci.edu  '  ...  
+     
+     
+         
+      
+         TEST_DB_PARAM  =   {  '  DSN  '  :   '  cdbtest  '  ,   '  HOST  '  :   '  chemdb.ics.uci.edu  ...  
+     
+     
+         
+      
+           TEST_FP_SERVER  =   '  finger.ics.uci.edu  '  
+     
+     
+         
+      
+           TEST_FP_PORT  =  6000 
+     
+     
+         
+      
+         TEST_TEXT_WEB_SERVICE  =   '  No Text Search Service exists for Tes  ...  
+     
+      
+   
+        Variables Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   LOGGER_LEVEL 
+   Not functionally important, just indicates an estimate of the number 
+  of lines in input files to hint a proper scale for the progress 
+  indicators. If you do not wish to see those dot indicators, set this 
+  value to 0. 
+  Several usages divide this value by 200 to indicate the desired number
+  of total dots ~200.  Thus, do not set the value &lt; 200 or else there 
+  will effectively be no results, unless that is your desired behavior (set
+  to 0)
+      Value: 
+           
+20
+     
+       
+  
+ 
+   
+   EST_INPUT 
+  Parameter placeholder for SQL queries.  Depends on the DB-API module 
+  used.  Can tell which by the module's paramstyle attribute. Read the 
+  DB-API 2.0 specs for more info. 
+  (http://www.python.org/peps/pep-0249.html)
+      Value: 
+           
+10000
+     
+       
+  
+ 
+   
+   FP_WEB_SERVICE_BASE 
+  
+      Value: 
+           
+ '  http://cdb.ics.uci.edu/CHEM/Web/cgibin/admin/FingerServerWeb.py?Finge    
+ rServerWeb=1&amp;fpHost=%s&amp;fpPort=%s&amp;outputOnly=1&amp;query=  ' 
+     
+       
+  
+ 
+   
+   FP_WEB_SERVICE 
+  
+      Value: 
+           
+ '  http://cdb.ics.uci.edu/CHEM/Web/cgibin/admin/FingerServerWeb.py?Finge    
+ rServerWeb=1&amp;fpHost=finger.ics.uci.edu&amp;fpPort=6000&amp;outputOnly=1&amp;query=      
+ ' 
+     
+       
+  
+ 
+   
+   TEXT_WEB_SERVICE 
+  
+      Value: 
+           
+ '  http://mine1.ics.uci.edu:8081/chemdb/results.jsp?query=%s&amp;field=%s&amp;ma    
+ xresults=%s  ' 
+     
+       
+  
+ 
+   
+   DB_PARAM 
+  
+      Value: 
+           
+ {  '  DSN  '  :   '  cdbfresh  '  , 
+  '  HOST  '  :   '  mine2.ics.uci.edu  '  , 
+  '  PWD  '  :   '  FxnGrp#2004  '  , 
+  '  UID  '  :   '  cdbweb  '  } 
+     
+       
+  
+ 
+   
+   FAILOVER_DB_PARAM 
+  
+      Value: 
+           
+ {  '  DSN  '  :   '  cdbtest  '  , 
+  '  HOST  '  :   '  chemdb.ics.uci.edu  '  , 
+  '  PWD  '  :  None , 
+  '  UID  '  :   '  devtest  '  } 
+     
+       
+  
+ 
+   
+   DEV_DB_PARAM 
+  
+      Value: 
+           
+ {  '  DSN  '  :   '  cdbtest  '  , 
+  '  HOST  '  :   '  chemdb.ics.uci.edu  '  , 
+  '  PWD  '  :  None , 
+  '  UID  '  :   '  devtest  '  } 
+     
+       
+  
+ 
+   
+   TEST_DB_PARAM 
+  
+      Value: 
+           
+ {  '  DSN  '  :   '  cdbtest  '  , 
+  '  HOST  '  :   '  chemdb.ics.uci.edu  '  , 
+  '  PWD  '  :  None , 
+  '  UID  '  :   '  devtest  '  } 
+     
+       
+  
+ 
+   
+   TEST_TEXT_WEB_SERVICE 
+  
+      Value: 
+           
+ '  No Text Search Service exists for Test Data!  ' 
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:22 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

@@ -1,0 +1,157 @@
+ Git tutorial - CS Theory Wiki 
+ 
+  
+  
+
+
+ 
+    
+    
+
+  
+  
+  
+   
+    
+    
+
+
+  Differences  
+ 
+
+ 
+
+This shows you the differences between two versions of the page.
+ 
+
+ 
+       
+     wiki:git_tutorial [Sun Mar  3 20:59:49 2013]   michael       
+     
+     wiki:git_tutorial [Mon Oct 20 21:31:52 2014]  (current)  jenny       
+       Line 13: 
+ Line 13:                   ==== Ignoring files ====     ==== Ignoring files ====    -  Some files you never want in your repository.  For us this mostly consists of </strong>LaTeX auxiliary files and operating system trash. You can activate a global ignore file with the command  +  Some files you never want in your repository.  This includes </strong>LaTeX auxiliary files , pdf files compiled from TeX sources, </strong>and operating system trash. You can activate a global ignore file with the command       &lt;code bash&gt;     &lt;code bash&gt;    -  git config --global core.excludesfile  '</strong>~/.gitignore_global '</strong>  +  git config --global core.excludesfile  "</strong>~/.gitignore_global "</strong>       &lt;/code&gt;     &lt;/code&gt;       +  If you are using OS X, then you may have a global ignore file that looks like       +  &lt;code - .gitignore_global&gt;       +  .DS_Store       +  .AppleDouble       +  .LSOverride       +  Icon       +  ._*       +  .Spotlight-V100       +  .Trashes       +  &lt;/code&gt;       +  And, if you are using Windows, then you may have a global ignore file that looks like       +  &lt;code - .gitignore_global&gt;       +  Thumbs.db       +  ehthumbs.db       +  Desktop.ini       +  $RECYCLE.BIN/       +  &lt;/code&gt;       +  The problem with using global ignore file is that it requires all of your coauthors to have setup a global ignore file. If they have not you will still end up with crud in your repository. For this reason a better solution is a per repository ignore file. If you add file with name ''.gitignore'' to the top level of your repository, then all files matching the patterns in this file will be ignored. A good general purpose ignore file for LaTeX documents is       +  &lt;code - .gitignore&gt;       +  paper.pdf       +         +  ##### LaTeX Files #####       +  *.aux       +  *.bbl       +  *.blg       +  *.dvi       +  *.fdb_latexmk       +  *.glg       +  *.glo       +  *.gls       +  *.idx       +  *.ilg       +  *.ind       +  *.ist       +  *.lof       +  *.log       +  *.lot       +  *.nav       +  *.nlo       +  *.out       +  *.pdfsync       +  *.ps       +  *.snm       +  *.synctex.gz       +  *.toc       +  *.vrb       +  *.maf       +  *.mtc       +  *.mtc0       +         +  ##### OS X Files #####       +  .DS_Store       +  .AppleDouble       +  .LSOverride       +  Icon       +  ._*       +  .Spotlight-V100       +  .Trashes       +         +  ##### Windows Files #####       +  Thumbs.db       +  ehthumbs.db       +  Desktop.ini       +  $RECYCLE.BIN/       +  &lt;/code&gt;       +  The top line of this file should be changed to match the output of pdflatex.                   ===== Git workflow =====     ===== Git workflow =====    Line 78: 
+ Line 144:       git tag WADS2013-submission     git tag WADS2013-submission       &lt;/code&gt;     &lt;/code&gt;       +  For an arXiv upload we would use       +  &lt;code bash&gt;       +  git tag arxiv-1308.5741v1       +  &lt;/code&gt;       +  including both the arxiv identifier for the paper and the arxiv version of the upload.       To push this tag so that your coauthors have access to it you use the command:     To push this tag so that your coauthors have access to it you use the command:       &lt;code bash&gt;     &lt;code bash&gt;    Line 86: 
+ Line 157:       git tag WADS2013-submission -f     git tag WADS2013-submission -f       &lt;/code&gt;     &lt;/code&gt;    -  Along with tagging submitted versions it is recommended that the actual submitted pdf be added to the repository.                      ===== Tips &amp; tricks =====     ===== Tips &amp; tricks =====    Line 94: 
+ Line 164:       &lt;code bash&gt;     &lt;code bash&gt;       ssh -T git@redwood.ics.uci.edu     ssh -T git@redwood.ics.uci.edu       +  &lt;/code&gt;       +         +  ==== Pretty colors ====       +  FIXME       +         +  ==== Aliases ====       +  FIXME       +         +  ==== A better log ====       +  One-time set up of your git configuration, typing at command line       +  &lt;code&gt;       +  git config --global alias.lg "log --pretty=format:\"%Cred%an %Cgreen%ar, %h%n%Cblue  %s%d\""       +  &lt;/code&gt;       +  And then from that point on       +  &lt;code&gt;       +  git lg       &lt;/code&gt;     &lt;/code&gt;                Line 103: 
+ Line 189:         * [[http://www.gitimmersion.com|Git Immersion]]: A general git tutorial.       * [[http://www.gitimmersion.com|Git Immersion]]: A general git tutorial.         * [[http://http://git-scm.com/book|Pro Git]]: An online book on git.       * [[http://http://git-scm.com/book|Pro Git]]: An online book on git.       +    * [[http://rypress.com/tutorials/git/index.html|Ry's Git Tutorial]]: Another good online tutorial.         * [[http://git.or.cz/course/svn.html|Git - SVN Crash Course]]: Compares git with subversion       * [[http://git.or.cz/course/svn.html|Git - SVN Crash Course]]: Compares git with subversion         * [[https://www.sharelatex.com/blog/2012/10/16/collaborating-with-latex-and-git.html|Collaborating with LaTeX and git]]: Blog post.       * [[https://www.sharelatex.com/blog/2012/10/16/collaborating-with-latex-and-git.html|Collaborating with LaTeX and git]]: Blog post.         * [[http://stackoverflow.com/questions/6188780/git-latex-workflow/6190412#6190412|git + LaTeX workflow]]: A stackoverflow post.       * [[http://stackoverflow.com/questions/6188780/git-latex-workflow/6190412#6190412|git + LaTeX workflow]]: A stackoverflow post.     
+   
+  
+
+  
+    
+     Trace: 
+    
+
+ 
+
+
+
+
+ 
+  
+   
+       Login  
+      
+
+  
+   
+     
+          Article   
+        
+   
+  
+
+  
+   
+     
+          Read   
+           Show pagesource   
+           Old revisions   
+        
+     
+       
+         Search 
+       
+      
+         
+          
+         
+          
+      
+     
+   
+  
+
+ 
+
+
+
+ 
+  
+   
+        
+   
+  
+
+  
+   
+     Navigation 
+     
+       
+
+ 
+ Main page 
+ 
+
+ 
+ Orphan pages 
+
+ 
+
+       
+     
+   
+   
+     Print/export 
+     
+       
+         Printable version  
+        
+     
+   
+   
+     Toolbox 
+     
+       
+         What links here  
+          Recent changes  
+          Upload file  
+          Site index  
+          Permanent link  
+          Cite this page  
+        
+     
+   
+
+
+ 
+
+ 
+
+
+
+ 
+    
+      wiki/git_tutorial.1362344389.txt.gz · Last modified: Sun Mar  3 20:59:49 2013 by michael  
+         
+         
+         
+         
+         
+         
+     
+     
+ 
+
+      DokuWiki Appliance  - Powered by  TurnKey Linux     </body> 

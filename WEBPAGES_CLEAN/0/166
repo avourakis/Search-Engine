@@ -1,0 +1,55 @@
+ /*
+    $Id: ed.cc 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 01/30/2007
+    Author: Rares Vernica 
+*/
+
+#include "ed.h"
+#include "misc.h"
+
+unsigned ed(const string &amp;s1, const string &amp;s2)
+{ 
+  unsigned i, iCrt, iPre, j;
+  unsigned
+    n = s1.length(), 
+    m = s2.length();
+
+  if (n == 0)
+    return m;
+  if (m == 0)
+    return n;
+
+  unsigned d[2][m + 1];
+
+  for (j = 0; j  m &amp;&amp; n - m &gt; threshold) ||  
+      (m &gt; n &amp;&amp;  m - n &gt; threshold))
+    return false;
+
+  unsigned d[n + 1][m + 1], dmin, dmax = threshold + 1;
+
+  for (i = 0; i  threshold)
+      return false;
+  }
+  
+  for (jj = 2; jj  threshold)
+      return false;
+  }
+
+  return d[n][m]  1 &amp;&amp;
+                                           j &gt; 1 &amp;&amp;
+                                           s1[i - 1] == s2[j - 2] &amp;&amp;
+                                           s1[i - 2] == s2[j - 1])) ? 0 : 1));
+    iPre = !iPre;
+    iCrt = !iCrt;
+  }
+  
+  return d[iPre][m];
+}
+
+ 

@@ -1,0 +1,60 @@
+ Evaluation - UAI '08 Workshop: Probabilistic Reasoning Systems  
+     
+
+
+ 
+ Search: 
+ 
+
+   Login    
+
+
+   Evaluation  
+  
+
+
+   FrontPage    RecentChanges    FindPage    HelpContents    Evaluation  
+    
+
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+    
+   
+   
+  Probabilistic Inference Evaluation, UAI'08 
+     
+  Call for Participation 
+       Update 5/26:</strong> Example problem instances are now  available         ( Download this document as PDF )       
+  Scope 
+     The evaluation will include both Bayesian and Markov networks and   consider three inference tasks:        PR:</strong> probability of evidence (partition function),        MPE:</strong> most probable explanation (energy minimization), and        MAR:</strong> node marginals.       The evaluation will consider both exact and approximate algorithms. Hence,   each solver will have to declare the task it solves and whether it is exact or   approximate (six different types of solvers). A formal definition of the three   tasks is given at the end of this document. A team can submit multiple solvers   per task as long as the solvers are based on different algorithmic principles.       
+  Evaluation Format 
+     Our goal is to evaluate efficiency and approximation   accuracy. Each solver is given problem instances consisting of:       a Bayesian or Markov network  M ;       a piece of evidence   e</strong> .       A solver is expected to provide a solution (an exact solution or an approximation) for each problem instance, given constraints on time and space resources.   A solver will also be given a set of time checkpoints  t i   , for  i = 1,..., n . At each   time point, the solver will be polled for solutions. If a solver does not produce a   solution by the last checkpoint  t n   , it would be considered as having failed on the   problem instance. Producing solutions at other checkpoints  t i  , i &lt; n , is optional   and is meant for evaluating solvers that can generate improved approximations   over time.       At completion, the organizers will generate efficiency/accuracy curves which will   form a basis of evaluation.       
+  Execution Environment 
+     The evaluations will be run on an Intel machine   running Linux with up to 4 GB memory made available (some memory will be   reserved for evaluation scripts, etc.). We request that solvers be 32-bit executables, using only a single core (i.e., no parallel processes/threads).       If a solver does not stop gracefully when approaching or exceeding the given   time and space limits, the organizers shall kill the offending process and accept   the final solution appearing in the output.       
+  Input Format 
+   Each solver will receive as input a model, some evidence, and a seed:           ./solver input-model input-evidence seed    We ask randomized algorithms to use an input seed, so that two runs of a solver,   given the same input, will yield the same output in a comparable amount of time.   Deterministic algorithms may ignore the seed.       The input model will be a Bayesian or a Markov network specified in a simple text format:        FileFormat   (now with example instances)    http://graphmod.ics.uci.edu/uai08/FileFormat         The evidence (observations) will be specified by the accompanying file format (see link above).       A Markov network is simply a set of factors, while a Bayesian network is a set of   factors with some additional properties (see the formal definitions at the end of   this document). Solvers need to only handle Markov networks. However, they   may optionally take advantage of the extra properties of a Bayesian network.       A solver will also have available the following environment variables:        UAI_TIME : total runtime limit (in seconds, e.g., "600");        UAI_MEMORY : total memory limit (in gigabytes, e.g., "2.5");        UAI_CHECKPOINTS : an array of time checkpoints ti when solutions are polled (in seconds, e.g., "30 60 120 240 480").       Solver exit status will be recorded, treating 0 as normal and 1 as an error.   Processes exceeding time or memory limits will be killed (via a  SIGKILL  signal),   and the final output solution will be taken as the solver solution.       
+  Output Format 
+   Solver output to  stdout  and  stderr  will be logged, for   debugging purposes. Output to  stdout  will be further parsed for solutions.       Solvers will specify a solution on a line, which is composed of a prefix followed   by the solution.          Probability of Evidence, PR:</strong> Line prefixed by " z  " followed by the value of the  log 10   of the probability of evidence (partition function). For example, an approximation  log 10  Pr(e) = −0.2008  may have a solution line:           z -0.2008       Most probable explanation, MPE:</strong> Line prefixed by " s  " followed by:        log 10   of the solution value,       the number  n  of model variables, and       the MPE instantiation, a list of value indices for all  n  variables.      For example, an input model with 3 binary variables may have a solution line:          s -0.2008 3 0 1 0       Marginals, MAR:</strong> Line prefixed by " m  " followed by:       the number  n  of model variables, and       a list of marginal approximations for all  n  variables. Each marginal approximation is specified also by a list, starting with the number of variable values, followed by the approximation  Pr(x| e</strong>)  for each value  x .      For example, if an input model has 3 binary variables, a solution line may look like:          m 3 2 0.5 0.5 2 0.2 0.8 2 1.0 0.0        Along with the solution lines, which are prefixed by either " z  ", " s  ", or   " m  ", we request that each solver output its own measurement of the  wall-clock  time   required to compute a solution, ignoring the time to load and parse the   input file: (total time)-(load+parse time).  In particular, each solver   should output a a line prefixed by " t  " followed by the time in seconds. For   example, a solver taking a time of 2008s and 7ms would output:             t 2008.007        Note that the organizers will also measure total wall-clock time.   No other output should appear on a solution line, and only solution lines should   start with prefixes " z  ", " s  ", " m  ", and " t  ".       For each time checkpoint  t i   , our scripts will evaluate the last available output   line, taking it as the solver solution for checkpoint  t i   . Again, a solver is not   required to produce a solution for each checkpoint. Solvers may also ignore   checkpoints by printing solutions periodically (at reasonable intervals). However, if a solver does not produce a solution by the last checkpoint, it would be   considered as having failed on the instance.       
+  Task Definitions 
+     
+  Notation 
+   Every inference task is defined with respect to a set of discrete variables  X = X 1  ,..., X n   .   In what follows, we will use capital letters ( X ) to denote variables, and small letters ( x ) to denote their values.   We will also use boldface capital letters (  X</strong> ) to denotes sets of variables, and boldface small letters (  x</strong> ) to   denote instantiations  {X 1  = x 1  ,..., X n  = x n  } .   We will say that two variable instantiations   y</strong>  and   z</strong>  are  compatible , written   y</strong> ∼  z</strong>  , if they agree on the value of every common variable in   Y &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; Z</strong>  .   A  factor   f i  ( X</strong> i ) , where   X</strong> i  &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt;  X</strong>  , is a function that maps each instantiation   x</strong> i   into a non-negative number, denoted  f i  ( x</strong> i  ) .         
+  Bayesian networks 
+   Let  G  be a directed acyclic graph (DAG) over variables   X</strong> = X 1  ,..., X n   and let   U</strong> i   be the parents of variable  X i   in the DAG  G  .   A Bayesian network over DAG  G  is a set of factors  f 1  (X 1  U</strong> 1 ) ,..., f n  (X n  U</strong> n  )  (one   factor for each variable  X i   ).   Each factor  f i  (X i  U</strong> i )  satisfies a normalization condition, where for each instantiation   u</strong> i   of parents   U</strong> i   , we have       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .         A Bayesian network defines a joint factor       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; ,       which is a product of the Bayesian network factors. An  evidence    e</strong>  is an instantiation of some network variables   E &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; X</strong> .       The following inference tasks are defined for a Bayesian network with joint factor  f( X</strong>)  and evidence   e</strong> :        PR</strong> (probability of evidence): compute the probability       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .          MPE</strong> (most probable explanation): compute the MPE instantiation       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt;       and the corresponding MPE probability &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .        MAR</strong> (node marginals): for each variable  X i   and each of its values  x i   , compute the marginal probabilities:       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .           
+  Markov networks 
+   A Markov network over variables   X</strong> = X 1  ,..., X n   is a set of    m  factors  f 1 ( X</strong> 1 ) ,..., f m ( X</strong> m )  , where   X</strong> a  &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt;  X</strong>  for  a = 1 ,..., m . Similar to a Bayesian network, a Markov network defines a joint factor:       &lt;&lt;latex: execution failed [28] (see also the log)&gt;&gt; .       Given a joint factor and some evidence, the  PR</strong>,  MPE</strong>, and  MAR</strong> problems are   defined similarly for Markov networks, although the values for  PR</strong> and  MPE</strong>   may not strictly be probabilities.        Evaluation  (last edited 2008-09-13 21:22:52 by   ArthurChoi  ) 
+
+  
+  
+   Immutable Page    Comments    Info    Attachments   
+
+ 
+     More Actions: 
+     
+
+     MoinMoin Powered    Python Powered    GPL licensed    Valid HTML 4.01  
+  </body> 

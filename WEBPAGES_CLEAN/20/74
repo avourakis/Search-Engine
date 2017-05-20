@@ -1,0 +1,289 @@
+ /*
+    $Id: gram.cc 1109 2007-04-17 00:04:26Z rvernica $
+
+    Copyright (C) 2007 by The Regents of the University of California
+
+    Redistribution of this file is permitted under the terms of the
+    GNU Public License (GPL).
+
+    Date: 01/30/2007
+    Author: Rares Vernica 
+*/
+
+#include "gram.h"
+
+#include 
+#include 
+
+#include 
+#include 
+#include 
+
+#include "misc.h"
+#include "output.h"
+
+hash hashString;
+
+void str2grams(const string &amp;s, vector &amp;res,
+               const unsigned q, const unsigned char st, const unsigned char en)
+{
+  const string sPad = string(q - 1, st) + s + string(q - 1, en);
+  
+  for (unsigned i = 0; i  &amp;res,
+               const unsigned q)
+{
+  if (s.length()  &amp;res, 
+                    const unsigned q, const unsigned char st,
+                    const unsigned char en) 
+{
+  string sPad = string(q - 1, st) + s + string(q - 1, en);
+  
+  for (unsigned i = 0; i  &amp;v, string &amp;res, const unsigned q)
+{
+  res = "";
+  
+  for (unsigned i = 0; i (gram[i])  0) {
+    res = string(1, GramId::charsetEn[id % GramId::charsetEn.size()]) + res;
+    id = id / GramId::charsetEn.size();
+  }
+  while (res.length() ?@[\\]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyz";
+const string GramId::gramidSuffix = ".gid.bin";
+
+GramId::GramId(unsigned q, char st, char en, 
+               const string &amp;charset, bool withPerm):
+  q(q),
+  st(st),
+  en(en),
+  charset(string(1, st) + charset + string(1, en)), 
+  charsetLen(this-&gt;charset.size()), 
+  n(pow(charsetLen, q)), 
+  perm(vector(n))
+{
+  for (unsigned i = 0; i (gram[i])  0) {
+    gram = string(1, charset[id % charsetLen]) + gram;
+    id = id / charsetLen;
+  }
+  while (gram.length()  &amp;ids) const
+{
+  vector gs;
+  str2grams(s, gs, q);
+  for (vector::const_iterator it = gs.begin(); it != gs.end(); it++)
+    ids.push_back(getId(*it));
+}
+
+void GramId::getGrams(const vector &amp;ids, vector &amp;grams) const
+{
+  for (vector::const_iterator it = ids.begin(); it != ids.end(); it++)
+    grams.push_back(getGram(*it));
+}
+
+void GramId::saveData(const string &amp;filenamePrefix) const
+{
+  string filename = filenamePrefix + gramidSuffix;
+  ofstream file(filename.c_str(), ios::out | ios::binary);
+  if (!file) {
+    cerr (&amp;q), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  file.write(reinterpret_cast(&amp;st), sizeof(char));
+  if (file.fail()) writeerror(filename);
+
+  file.write(reinterpret_cast(&amp;en), sizeof(char));
+  if (file.fail()) writeerror(filename);
+
+  file.write(reinterpret_cast(&amp;charsetLen), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  for (unsigned i = 0; i (&amp;charset[i]), sizeof(char));
+    if (file.fail()) writeerror(filename);
+  }
+  
+  file.write(reinterpret_cast(&amp;n), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  for (vector::const_iterator it = perm.begin(); it != perm.end(); ++it)
+    file.write(reinterpret_cast(&amp;*it), sizeof(unsigned));
+
+  file.close();
+}
+
+void GramId::loadData(const string &amp;filenamePerfix)
+{
+  string filename = filenamePerfix + gramidSuffix;
+  ifstream file(filename.c_str(), ios::in | ios::binary);
+  if (!file) {
+    cerr (&amp;q), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  file.read(reinterpret_cast(&amp;st), sizeof(char));
+  if (file.fail()) writeerror(filename);
+
+  file.read(reinterpret_cast(&amp;en), sizeof(char));
+  if (file.fail()) writeerror(filename);
+
+  file.read(reinterpret_cast(&amp;charsetLen), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  charset = "";
+  for (unsigned i = 0; i (&amp;ch), sizeof(char));
+    if (file.fail()) writeerror(filename);
+    charset += string(1, ch);
+  }
+  
+  file.read(reinterpret_cast(&amp;n), sizeof(unsigned));
+  if (file.fail()) writeerror(filename);
+
+  for (unsigned i = 0; i (&amp;e), sizeof(unsigned));
+    perm.push_back(e);
+  }
+
+  file.close();
+}
+
+unsigned GramId::invPerm(unsigned id) const
+{
+  for (unsigned i = 0; i  &amp;res, const string &amp;delims) 
+{
+  string::size_type begIdx, endIdx;
+  
+  begIdx = s.find_first_not_of(delims);
+  
+  while (begIdx != string::npos) {
+    endIdx = s.find_first_of(delims, begIdx);
+    if (endIdx == string::npos)
+      endIdx = s.length();
+//     cout  &amp;data, WordHash &amp;wordHash)
+{
+  cout  words;
+  for (unsigned i = 0; i ::const_iterator word = words.begin();
+         word != words.end(); ++word)
+      wordHash[*word].insert(i);
+  } 
+
+  cout  words;
+  unsigned i = 0;
+  const unsigned maxLineLen = 256;
+  char line[maxLineLen];
+
+  while (true) {
+    fileDataset.getline(line, maxLineLen);
+    if (fileDataset.eof())
+      break;
+    if (fileDataset.fail()) {
+      cerr ::const_iterator word = words.begin();
+         word != words.end(); ++word)
+      wordHash[*word].insert(i);
+
+    i++;
+  } 
+
+  cout  &amp;data,
+                      WordIds &amp;wordIds, WordKey &amp;wordKey)
+{
+  cout  words;
+  for (unsigned i = 0; i ::const_iterator word = words.begin();
+         word != words.end(); ++word) {
+
+      pair wordIns = 
+        wordKey.insert(make_pair(*word, 0));
+
+      unsigned wordPos;
+      if (wordIns.second) {
+        // word not in WordLevel
+        wordPos = wordIds.size();
+        wordIns.first-&gt;second = wordPos;
+        Ids ids;
+        ids.insert(i);
+        wordIds.push_back(make_pair(*word, ids));
+      }
+      else {
+        // word in WordLevel
+        wordPos = wordIns.first-&gt;second;
+        wordIds[wordPos].second.insert(i);
+      }            
+    }
+  } 
+
+  cout  words;
+  unsigned i = 0;
+  const unsigned maxLineLen = 256;
+  char line[maxLineLen];
+
+  while (true) {
+    fileDataset.getline(line, maxLineLen);
+    if (fileDataset.eof())
+      break;
+    if (fileDataset.fail()) {
+      cerr ::const_iterator word = words.begin();
+         word != words.end(); ++word) {
+
+      pair wordIns = 
+        wordKey.insert(make_pair(*word, 0));
+
+      unsigned wordPos;
+      if (wordIns.second) {
+        // word not in WordLevel
+        wordPos = wordIds.size();
+        wordIns.first-&gt;second = wordPos;
+        Ids ids;
+        ids.insert(i);
+        wordIds.push_back(make_pair(*word, ids));
+      }
+      else {
+        // word in WordLevel
+        wordPos = wordIns.first-&gt;second;
+        wordIds[wordPos].second.insert(i);
+      }            
+    }
+
+    i++;
+  } 
+
+  cout first second.size();
+    fileIds.write(reinterpret_cast(&amp;size), sizeof(unsigned));
+    for (Ids::const_iterator jt = it-&gt;second.begin();
+         jt != it-&gt;second.end(); ++jt)
+      fileIds.write(reinterpret_cast(&amp;*jt), sizeof(unsigned));
+  }
+    
+  fileWords.close();
+  fileIds.close();
+
+  cerr &gt; word;
+    if (fileWords.eof())
+      break;
+
+    ids.clear();
+    fileIds.read(reinterpret_cast(&amp;size), sizeof(unsigned));
+    for (unsigned i = 0; i (&amp;id), sizeof(unsigned));
+      ids.insert(id);
+    }
+    
+    wordHash[word] = ids;
+  }
+    
+  fileWords.close();
+  fileIds.close();
+
+  cerr second.size();
+    fileWids.write(reinterpret_cast(&amp;size), sizeof(unsigned));
+    for (Ids::const_iterator jt = it-&gt;second.begin();
+         jt != it-&gt;second.end(); ++jt)
+      fileWids.write(reinterpret_cast(&amp;*jt), sizeof(unsigned));
+  }
+    
+  fileWids.close();
+
+  ofstream fileWkey(filenameWkey.c_str(), ios::out);  
+  if (!fileWkey) {
+    cerr firstfirst)-&gt;second (&amp;size), sizeof(unsigned));
+    if (fileWids.eof())
+      break;
+    ids.clear();
+    for (unsigned i = 0; i (&amp;id), sizeof(unsigned));
+      ids.insert(id);
+    }
+
+    fileWkey &gt;&gt; word &gt;&gt; id;
+    if (fileWkey.eof()) {
+      cerr  

@@ -1,0 +1,292 @@
+ Vector<body>
+
+
+
+
+ 
+  Navigation:</strong>
+ Up , 
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+  
+
+
+  
+
+      
+     
+     
+     
+   
+
+   
+         
+  Vector  
+ 
+
+  Definition 
+ 
+
+An instance of data type   Vector   is a vector of variables of
+number type  NT .  Together with the type   Matrix   it realizes
+the basic operations of linear algebra.
+  
+
+  Types 
+ 
+
+    
+          Vector ::NT
+         
+              
+    the ring type of the components.
+ 
+
+          
+          Vector ::iterator
+         
+              
+    the iterator type for accessing components.
+ 
+
+          
+          Vector ::const_iterator
+         
+              
+    the const iterator type for accessing
+  components.
+ 
+
+     
+
+  Creation 
+ 
+
+    
+          Vector  v;
+         
+              
+    creates an instance  v  of type
+    Vector  .
+ 
+
+          
+          Vector  v ( int d);
+         
+              
+    creates an instance  v  of type
+    Vector  .   v  is initialized to a vector of dimension  d .
+ 
+
+          
+          Vector  v ( int d,  NT x);
+         
+              
+    creates an instance  v  of
+  type   Vector  .   v  is initialized to a vector of dimension
+   d  with entries  x .
+ 
+
+          
+         
+    template &lt;class Forward_iterator&gt;
+         
+            
+          Vector  v ( Forward_iterator first,  Forward_iterator last);
+         
+              
+    creates an
+  instance  v  of type   Vector  ;  v  is initialized to the
+  vector with entries  set [first,last) .  Requirement:   Forward_iterator  has value type  NT .
+ 
+
+     
+
+  Operations 
+ 
+
+    
+           
+int
+         
+          
+         
+    v.dimension ()
+         
+          
+    returns the dimension of  v .
+                 
+           
+bool
+         
+          
+         
+    v. is_zero  ()
+         
+          
+    returns true iff  v  is the zero
+  vector.
+                 
+         
+    NT&amp;
+         
+          
+         
+     v [ int i]  
+
+         
+          
+    returns the  i -th component of  v .   Precondition:   0   i    v.dimension()-1  .
+                 
+           
+iterator
+         
+          
+         
+    v.begin ()
+         
+          
+    iterator to the first component.
+                 
+           
+iterator
+         
+          
+         
+    v.end ()
+         
+          
+    iterator beyond the last component.
+            
+
+The same operations  begin() ,  end()  exist for
+ const_iterator .
+  
+
+    
+          Vector 
+         
+          
+         
+     v +  v1  
+
+         
+          
+    Addition.  Precondition:    v.dimension() == v1.dimension() .
+                 
+          Vector 
+         
+          
+         
+     v -  v1  
+
+         
+          
+    Subtraction.  Precondition:    v.dimension() = v1.dimension() .
+                 
+         
+    NT
+         
+          
+         
+     v *  v1  
+
+         
+          
+    Inner Product.  Precondition:    v.dimension() = v1.dimension() .
+                 
+          Vector 
+         
+          
+         
+    - v    
+
+         
+          
+    Negation.
+                 
+          Vector &amp;
+         
+          
+         
+     v +=  v1  
+
+         
+          
+    Addition plus assignment.  Precondition:    v.dimension() == v1.dimension() .
+                 
+          Vector &amp;
+         
+          
+         
+     v -=  v1  
+
+         
+          
+    Subtraction plus assignment.  Precondition:    v.dimension() == v1.dimension() .
+                 
+          Vector &amp;
+         
+          
+         
+     v *=  NT s  
+
+         
+          
+    Scalar multiplication plus
+  assignment.
+                 
+          Vector &amp;
+         
+          
+         
+     v /=  NT s  
+
+         
+          
+    Scalar division plus assignment.
+                 
+          Vector 
+         
+          
+         
+      NT r *  v  
+
+         
+          
+    Componentwise multiplication with number  r .
+                 
+          Vector 
+         
+          
+         
+      v *  NT r  
+
+         
+          
+    Componentwise multiplication with number  r .
+            
+
+    Next:    Matrix   
+
+
+    
+ 
+  Navigation:</strong>
+
+   Table of Contents ,
+   Bibliography ,
+   Index ,
+   Title Page 
+
+
+
+  
+
+The  CGAL Project  .
+
+Tue, December 21, 2004 .
+  
+  </body> 

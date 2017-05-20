@@ -1,0 +1,72 @@
+ Hobbes Genome Sequence Mapping, UC Irvine<body> 
+  
+   
+   Hobbes   
+  Genome Sequence Mapping  
+  Information Systems Group       Institute for Genomics and Bioinformatics  
+  Bren School of ICS  UC Irvine  
+    
+ 
+  
+ 
+    About  
+  Downloads  
+  Quick Start  
+  Examples  
+  Manual  
+  People  
+  FAQ  
+  Contact  
+  
+
+
+ 
+
+ Hobbes FAQ   
+	  This FAQ provides answers to basic questions about Hobbes. You may also refer to the following papers for the technical details of Hobbes. 
+	   "Hobbes: optimized gram-based methods for efficient read alignment", Nucleic Acid Research 2011.  
+	    "Improving read mapping using additional prefix grams", BMC Bioinformatics 2014. 
+	  Questions 
+	   Why doesn't Hobbes align any of the reads?  
+	    What part of the code requires/uses popcnt instruction?  
+	    How do I fix compilation errors?  
+	    Why does Hobbes crash when building an index using hobbes-index?  
+	    How do I find unalignable reads from Hobbes output.  
+	    How were benchmark scores in the Hobbes2 paper generated and what do they mean?  
+	  Answers 
+	   Why doesn't Hobbes align any of the reads?    Given a distance threshold t, a read needs to contain at least t + 2 non-overlapping q-grams.
+	    That is, the length of a read needs to be greater than q * (t + 2).
+	    Otherwise, Hobbes doesnot align any of the reads.  
+            We recommend to set a gram length to "read length/(threshold + 3)" when building an index.  
+
+	  What part of the code requires/uses popcnt instruction?    Hobbes3 does not use popcnt instruction any more.
+            Previous versions of Hobbes use popcnt to count the number of 1's in a BitVector.
+	    For the details of BitVectors, please refer to the following Hobbes paper.   
+
+	    "Hobbes: optimized gram-based methods for efficient read alignment",  Nucleic Acids Research 2011.  
+
+	  How do I fix compilation errors?    To complie Hobbes3, you need a proper version gcc  (4.2 or later).   
+
+            If you choose to support compressed reads by running "build.sh compress", there might be link errors.
+	    In case of linker errors, you need to check names of shared libraries used in Hobbes3.  
+	    The names of shared libraries of zip, bzip2, and boost iostream should be libz.so, libbz2.so, and libboost_iostream.so, respectively.
+	    However, the names of these libraries often contain version number in their suffixes.
+	    In those cases, you need to create a symbolic link.
+	    If gcc fails to find libboost_iostream in your system, for example,
+	    you need to make a symbolic link named "libboost_iostream.so" pointing to libboost_iostream.so.x.x.x,
+	    where x.x.x is a version number.  
+
+	  Why does Hobbes crash when building an index using hobbes-index?    Please check the genome file format.
+	    The problem is often caused by an additional blank line at the end of the file.
+	    Please delete additional blank lines at the end of a genome file.  
+
+	  How do I find unalignable reads from Hobbes output.    Hobbes3 outputs unaligned reads by default
+            (Hobbes2 does not output unaligned reads as other mappers such as razerS3 and masai do not).
+	  
+
+	  How were benchmark scores in the Hobbes2 paper generated and what do they mean?    They were generated from the  Rabema benchmark .
+	    If you refer to the following Rabema paper, you can figure it out how to generate the values and what they mean.  
+	    "A novel and well-defined benchmarking method for second generation read mapping", BMC Bioinformatics 2011.  
+	  
+
+   � 2015 ISG | Website maintained by Jongik Kim | Created by  Yun Huang  | Original design   Andreas Viklund      Last Updated on Jul 13, 2015   </body> 

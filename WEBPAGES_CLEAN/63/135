@@ -1,0 +1,103 @@
+ /* wordsquare -- build word squares */
+/* D. Eppstein, UC Irvine, 10 Mar 2001 */
+
+/* run without any command-line arguments for usage information */
+
+
+#include 
+
+#define MAX_WORD_LEN 20
+
+/* ====================================================================== */
+/* ==============================  globals  ============================= */
+/* ====================================================================== */
+
+
+struct dictionary {
+    long mask;
+    struct dictionary * child;
+    struct dictionary * sibling;
+} * words = 0;
+
+char * dict_file = "/usr/dict/words";
+
+char * diag = 0;
+
+char * anagram = 0;
+
+int dimension = 0;
+long initial_letters = (1= 'A' &amp;&amp; *s = 'a' &amp;&amp; *s  0 &amp;&amp; dimension != i)
+	complain("Permuted letter set length does not match word square size");
+    dimension = i;
+    if (initial_letters != (1 MAX_WORD_LEN) complain("Word square size too big");
+}
+
+void set_diag() {
+    int i;
+    if (diag == 0) return;
+    if (dimension != strlen(diag))
+	complain("Diagonal length does not equal word square dimension");
+
+    for (i = 0; i = 'a' &amp;&amp; c  'Z')
+	    complain("Nonalphabetic character in diagonal");
+
+	square[i*(dimension+1)] = 1 mask = 0;
+    stack[0]-&gt;child = 0;
+    stack[0]-&gt;sibling = 0;
+
+    /* loop reading words */
+    for (;;) {
+	int c, i;
+	c = 'A';
+
+	/* loop reading word letters and upcasing them */
+	for (i = 0; i = 'A' &amp;&amp; c = 'a' &amp;&amp; c = 'A' &amp;&amp; c mask &amp; (1mask &gt;= (1mask |= (1child == 0) stack[i-1]-&gt;child = newdict;
+		    else stack[i]-&gt;sibling = newdict;
+		    stack[i] = newdict;
+		    newdict-&gt;mask = 0;
+		    newdict-&gt;child = 0;
+		    newdict-&gt;sibling = 0;
+		}
+	    }
+	}
+
+	/* finish line of dict */
+	while (c != '\n' &amp;&amp; c != EOF) c = getchar();
+	if (c == EOF) return;
+    }
+}
+
+/* Which characters match words from the dictionary? */
+
+int restrict_word(int start, int offset)
+{
+    int i = 0;
+    struct dictionary * stack[MAX_WORD_LEN];
+    long masks[MAX_WORD_LEN];
+    long restrictions[MAX_WORD_LEN];
+    int retval = 0;
+
+    /* assume initially that no words match */
+    for (i = 0; i mask &amp; square[start+i*offset];
+	long g = 0;
+	if (i &gt; 0)
+	    g = (masks[i-1] &amp; ~(masks[i-1] - 1) &amp; square[start+(i-1)*offset]);
+	if (stack[i]-&gt;child != 0 &amp;&amp; m != 0 &amp;&amp; (i == 0 || g != 0)) {
+	    /* go into child of stack[i]? */
+	    masks[i] = stack[i]-&gt;mask;
+	    stack[i+1] = stack[i]-&gt;child;
+	    i++;
+	} else {
+	    /* handle leaf node */
+	    if (g != 0 &amp;&amp; i == dimension-1 &amp;&amp; m != 0) {
+		int j;
+		for (j = 0; j  0 &amp;&amp; (masks[i-1] &amp; (masks[i-1]-1) &amp;
+			     square[start+(i-1)*offset]) == 0)
+		i--;
+	    if (i == 0) break;
+	    masks[i-1] &amp;= masks[i-1]-1;
+	    stack[i] = stack[i]-&gt;sibling;
+	}
+    }
+
+    for (i = 0; i = 'A' &amp;&amp; anagram[i] = 'a' &amp;&amp; anagram[i]  1 &amp;&amp; n = 'A' &amp;&amp; anagram[i] = 'a' &amp;&amp; anagram[i]  

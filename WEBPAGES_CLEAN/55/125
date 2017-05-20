@@ -1,0 +1,848 @@
+ LABORATORY MANUAL  
+
+ 
+
+  L ab # 3 Part 1-
+Experiments for the 5 th  Week     
+
+       
+
+ This lab covers the following Chapter in the text: 3.4. 
+
+ Objectives 
+
+     
+
+  �        
+  Static or Fixed Routing 
+
+     
+
+  Note : Understanding of IP routing prior to your laboratory session
+is essential for this week�s experiments. 
+
+ Cisco has some useful info on
+their website on routing. 
+
+  http://www.cisco.com/univercd/cc/td/doc/product/software/ios121/121cgcr/ip_c/ipcprt2/index.htm  
+
+     
+
+ 1.1         
+ Static Routing 
+
+     
+
+ Every routing decision is made by
+the routing table look-up. The routing table can be updated by a routing daemon
+(dynamic routing), ICMP redirect message, or the command that manipulates
+routing table entries (static routing). 
+
+     
+
+ A static route is one that you
+enter explicitly using commands. To build the routing table in your PC, the
+route command is used. Routing entries that are created manually don�t usually
+change, even if you run a routing daemon. Static routes are often added from
+the system startup script. 
+
+     
+
+  Routing table for PC    
+
+     
+
+ Your PC�s routing table can be
+displayed with the  netstat  command.
+We list the commands that are used to manually build the routing table in your
+PC. 
+
+     
+
+  netstat -rn  : displays the routing table in the system. 
+
+  route add -net  
+destination_net_address    netmask    mask    gw    gateway_address: 
+adds a new route to the routing table via a particular gateway, specifies the
+mask to be used for this entry. ( -host  will enter a host entry and one
+does not specify a netmask �  for that.) 
+
+  route del �net  
+destination_net_address : deletes an existing route from the routing table 
+
+     
+
+ All the arguments are
+self-explanatory. For more details see the  man 
+pages. 
+
+     
+
+  Routing table for Router    
+
+     
+
+ You can manually configure the
+router�s table. In order to see the IP routing table in the router, in the
+privileged-level mode, type the following command: 
+
+     
+
+   �����������  router_name# show ip
+route    
+
+     
+
+ The following commands are used
+to modify the routing table entries in the router. Type the following commands
+in the configuration mode. Read last lab�s �Configuring Router� section on how
+to get into the configuration mode. 
+
+     
+
+  ip route   destination_address
+netmask router_address  : creates a route to  destination_address  via  router_address .
+The argument  destination_address  is
+the IP address of the  target  network, and the argument  router_address  is the address of a
+router that can reach  destination_address 
+. The  mask  gives the mask to be used
+for the destination address. 
+
+     
+
+  no ip route   destination_address
+router_address  : removes a route from the IP routing table. 
+
+ 1.1.1        
+ A Single Router Experiment 
+
+ For this experiment we will only
+be using a single router and two PCs connected via hubs to the router
+interfaces. Use the table below to set the IP addresses for the two PCs and the
+router. Note that because we are using a router, each interface has a different
+IP net address (compare to the bridge setup). 
+
+     
+
+  
+     
+      
+      
+       �����������������������   
+
+     
+
+   Figure 3.1: Router experiment    
+
+     
+
+     
+
+   
+   router1 
+   
+   
+   eth0 
+   
+   
+   eth1 
+   
+   
+   HOST_A 
+   
+   
+   HOST_B 
+   
+    
+   Name 
+   
+   
+   IP Address 
+   
+   
+   Name 
+   
+   
+   IP Address 
+   
+    
+   154.81.51.1 
+   
+   
+   154.81.52.1 
+   
+   
+       
+   
+   
+   154.81.51.100 
+   
+   
+       
+   
+   
+   154.81.52.100 
+   
+        
+
+  Table 3.1: IP addresses for Figure
+3.1    
+
+     
+
+ Use setup from the console window
+to configure the router. If you disable bridging, ip routing is enabled. Do not
+enable any of the routing algorithms as we are using static routing and will be
+entering the routes manually! If you use the configure command instead to set
+up the router, you must enable routing by typing 
+
+     
+
+  ip routing    
+
+       
+
+ at the configure command.. As the
+router is directly connected to the only two subnets  no  manipulation of
+the router�s routing table is required at this point. Use the command: 
+
+     
+
+  show ip
+route     
+
+       
+
+ at the enable prompt to display the routing table. 
+
+ Next you must setup the PC
+routing tables. As �  they are both connected
+to an Ethernet to which only one router is attached, we can use the default
+entry to route all traffic not local to its subnet via the router. First check
+your PC routing tables using the  netstat �rn  or  route  commands.
+Then use the command: 
+
+     
+
+  route add �net 
+ 0   gw   154.81.51.1  
+
+     
+
+ on Host_A and the command: 
+
+     
+
+  route add
+�net   default   gw   154.81.52.1  
+
+     
+
+ on Host_B.  
+
+ Now use the command  netstat �rn  or  route  on
+both PCs to check your routing tables. The � 0 � destination net address
+used in the command above reflects the  default  route (one can also type  default ).
+For default route you do not give any netmask. Note that the position of a
+routing entry indicates its search order. Whenever an IP device needs to route
+an IP datagram, it uses the routing table and searches thru it systematically
+starting with the first entry.  
+
+     
+
+   Exercise 1   ������   
+
+ Run  tethereal �V  on your machine, and  tethereal �V  on the other machine in the other subnet at the same
+time. Send  ping  messages to the
+other machine .  After receiving the
+tenth echo reply, quit the  ping 
+process and save the  tethereal  outputs
+for both machines. 
+
+         
+
+   Questions #1:   �   
+
+  �        
+  When a packet is sent to a PC in the other subnet,
+explain how the source and destination Ethernet addresses are changed. 
+
+  �        
+  What are the source and destination addresses in the IP
+and Ethernet headers of a packet that goes from your machine to the router?  
+
+  �        
+  What are the source and destination addresses in the IP
+and Ethernet headers of a packet that goes from the router to the other
+machine? 
+
+  �        
+  Answer the same questions, but for the echo reply that
+is returned from the other machine. 
+
+  �        
+  Show the routing tables for both PCs. 
+
+     
+
+   Exercise 2:     
+
+ Add to Host_A�s routing table the
+following entry: 
+
+     
+
+  route add
+�net   154.81.52.0   netmask   255.255.255.0   gw  
+154.81.51.1  
+
+     
+
+ Now check the routing table using
+ netstat �rn  or  route (-e  will give same output as  netstat �rn  and 
+�ee  will give everything!). 
+
+     
+
+   Questions #2 :    
+
+  Compare the two routing tables, prior to and after
+     the route addition. 
+  Will this new entry make a difference? Explain what
+     happened to the routing table. 
+  Explain the flags associated with the entries in the
+     routing table. 
+  If you added a host entry for Host B instead, what
+     would it look like in the routing table? Explain the associated flags and
+     its position in the table. 
+  1.1.2        
+ A 4 Subnet Experiment 
+
+ In this experiment, we divide the
+network into four subnets. There will be one machine in each of the following
+subnets, 154.81.51.0, 154.81.52.0, 154.81.53.0 and 154.81.54.0. As shown in
+figure 3.2, we will connect the four subnets (154.81.51.0, 154.81.52.0, 154.81.53.0,
+and 154.81.54.0) using three routers. 
+
+     
+
+ In order to configure the new
+network topology, we need to change the current IP addresses of each PC
+interface card. The new IP addresses that we want to use are as shown in the
+figure. (Note that 52.100 is an abbreviation for 154.81.52.100. This notation
+applies to all the PC and router addresses given in the figure above.) 
+
+     
+
+     
+
+     
+
+     
+
+     
+
+        
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+       
+
+       
+
+       
+
+       
+
+   Figure 3.2: Topology for static
+routing    
+
+     
+
+  �����������   
+
+     
+
+   Exercise 3   ������   
+
+ Change the IP addresses of the
+PCs to reflect the network configuration as shown in figure 3.1. Also configure
+the routers. Save the output of  netstat
+-rn  or  route �ee  before building the PCs� routing tables. After
+examining figure 3.2, build the static routing table in all the PCs manually.
+Use  netstat �rn  or  route �ee  to verify your entries. 
+
+     
+
+ Save the routing tables of all the routers before
+building any routes. Note: You cannot telnet into the routers as they are on
+different subnets and the routing tables have not yet been entered. You need to
+use the console to configure each router. 
+
+     
+
+ Now configure the routing table
+in each router using the  ip route  command (e.g.,  ip route   154.81.51.0
+255.255.255.0 154.81.52.1  will add the �51� subnet address to router 2�s
+table indicating that the router with port address 154.81.52.1 must be used as
+the next hop router). Note, as mentioned above, you must set  ip routing .
+Recall that we set it to  no ip routing  to do bridging in last week�s
+experiment. 
+
+     
+
+ Use the  ping  and  traceroute 
+programs to test the connections. Save the  traceroute  outputs. 
+
+     
+
+ When you can reach other hosts successfully, save the
+routing tables of all the PCs and in the routers for the lab report. (Even if
+the routing table in your PC is correct and all the routers are configured
+perfectly, you may not get the connection to one of the other PCs. If this is
+the case, the routing table in the other PC should be blamed. When you can get
+the ping reply messages from all the interfaces in the PCs and routers
+successfully, your work is done for this exercise on static routing.) 
+
+     
+
+   Questions #3  : �   
+
+  Submit what you saved in Exercise 3. 
+  Explain the  netstat -rn  outputs (i.e., the PCs
+     routing tables after configuration). Your explanation should include the
+     meanings of the flags that appeared, and the routing function of each
+     entry.  
+      
+
+ Lab # 3 Part 2: Experiments for the 7 th  Week 
+
+     
+
+ This lab covers the following Chapters in the text: 3.4 and
+5.1, 5.7, 5.8.     
+
+       
+
+  Objectives:    
+
+     
+
+  �        
+  ICMP redirect error 
+
+  �        
+  Router Information Protocol (RIP) 
+
+  �        
+  Mixed Router � Bridge Experiment 
+
+     
+
+   Note   :
+You may want to visit Cisco�s web site on IP routing:
+http://www.cisco.com/univercd/cc/td/doc/product/software/ios121/121cgcr/ip_c/ipcprt2/index.htm    
+
+     
+
+     
+
+ 1.2         
+ Experiments with ICMP and Routing 
+
+     
+
+ Use the same network configuration
+as you did for the Static Routing experiment (Figure 3.2)  
+
+     
+
+   Exercise 4:     
+
+ Empty the routing table of PC
+154.81.52.100 by typing:  route flush . Then add a default routing entry
+to gateway 154.81.51.1. Check the routing table by typing:  netstat �rn .
+Save the contents. Run  tethereal  in a window on PC 154.81.52.100. Then  ping 
+from PC 154.81.52.100 to PC 154.81.53.100. Immediately after  ping 
+returns with �an alive� message check the routing table. Save the contents.
+Wait a few minutes then check the contents of the routing table again and save.
+Also save the  tethereal  output. 
+
+     
+
+   Questions #4:     
+
+  Compare the contents of the three  netstat 
+     outputs. What do you observe? Discuss the different entries and the
+     corresponding flags. 
+  Analyze the  tethereal  output and explain what
+     happens using the content of the  tethereal  file. 
+  1.3         
+ Routing Information Protocol (RIP) 
+
+  �����������  Although
+there are many routing protocols, we will study one of the most common ones
+that is used for intra Autonomous System routing (Interior Gateway Protocols),
+the Routing Information Protocol (RIP). RIP is run by the routing daemon,  routed , in your PC. The routing daemon
+dynamically builds the routing table from the received RIP updates. The PCs
+started  routed  at boot-up, no other
+action is needed to run RIP on the PCs. (Note: if you make any manual changes
+to the routing table (adds or deletes),  routed  will not touch manual
+changes. For example, if you accidentally delete an entry in the PC routing
+table,  routed  will not re-insert it. You have to kill the routed process
+(use:  ps �ef �  | grep routed  to
+get the process ID, then  kill   process   (  process    here
+refers to the process ID), and then restart it using:  in.routed �q ). 
+
+     
+
+ To enable a routing process for
+RIP on all interfaces in a router, use the following commands when in
+configuration mode. Refer to the �Configuring Router� section on how to get
+into configuration mode. 
+
+     
+
+  �����������   router rip    
+
+   �����������  network   network_number  
+
+     
+
+  network_number  �  is
+154.81.0.0 for this network configuration. 
+
+     
+
+ To remove a network from the
+list: 
+
+     
+
+  �����������   no network   network_number  
+
+     
+
+ To shut down the routing process: 
+
+     
+
+  �����������   no router rip  
+
+     
+
+  Note again that
+any routes that were added manually will not be updated by RIP.    
+
+         
+
+         
+
+   Exercise 5     
+
+  �����������   
+
+ Empty all the routing tables in
+the PCs and the routers. Use Figure 3.2 again as the network configuration. Now
+start the RIP process in the routers. 
+
+     
+
+ After running RIP in all the
+routers, test the connections to the other hosts using either  traceroute 
+or  ping . Once you can successfully reach all the hosts, save one of the
+RIP messages using  tethereal �P udp -V 
+in each subnet. Save the routing table in one of the PCs. 
+
+     
+
+   Questions #5  : �   
+
+     
+
+  �        
+  Draw the format of the saved RIP response packet from
+one of the subnets, include the IP and UDP headers and the RIP message (see Figure
+5.11 in the textbook). Identify each field and express the numbers in decimal
+form.  
+
+  �        
+  Are the RIP packets propagated over the routers? 
+
+  �        
+  Show the contents of the routing table of one of the
+PCs after starting RIP. 
+
+     
+
+  
+
+    
+     
+     
+        
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+   Figure 3.3: Rip Experiment    
+
+       
+
+       
+
+       
+
+       
+
+   Exercise 6     
+
+  �����������   
+
+ Now connect the fourth router as
+show in Figure 3.3. Use  netstat �rn  or  route �e  to observe the
+changes that are being made to the routing tables. Save the output. Now disconnect
+the two cables that connect router 4 to the two Ethernets. See approx. how much
+time it takes RIP to alter the routing table in PC 52.100 to reflect the new
+topology. (Hint: use  ping �s  from PC 154.81.52.100 to PC 154.81.54.100
+and see how long it takes till the alive message comes thru again after the
+disconnection. Check the routing table for new entries!) 
+
+     
+
+   Questions #6  : �   
+
+     
+
+  �        
+  Give the measured time from Exercise 6. 
+
+  �        
+  Compare the entries of the routing tables in the PCs
+and the routers with router4 connected and disconnected. 
+
+     
+
+ 1.4         
+ Mixed Router � Bridge Experiment 
+
+     
+
+ For this experiment you will configure two of the routers as
+bridges and two as routers as shown in Figure 3.4 below. 
+
+     
+
+  
+
+    
+     
+     
+        
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+     
+
+  Figure 3.4 Router � Bridge Experiment 
+
+     
+
+ Four PCs are connected to 4 LANs (one PC per LAN). Two bridges �  and two routers are interconnecting the 4
+LANs. This a type �B� campus network and the network ID is: 132.143. �   
+
+     
+
+     
+
+   Exercise 7     
+
+     
+
+ Flush all the routing tables and run RIP. Only three bits
+may be used for subnetting. Choose appropriate subnet IDs for the given configuration.
+Assign IP addresses to the bridge and router interfaces and the 4 PCs. 
+
+     
+
+   Questions #7  : 
+
+     
+
+  What
+     is the subnet mask for this subnetted network?  
+  For
+     each IP address that you assigned, identify the subnet ID and the host ID. 
+      
+
+   Exercise 8     
+
+     
+
+ After RIP has run for awhile and you are able to reach all 4
+PCs (use  ping  or  traceroute ), use  netstat �  -rn  or  route -e  to show the
+routing tables in the PCs. Save the outputs. While running  tethereal �V  on
+PC1, PC2, PC3 and PC4,  telnet  from PC1 to PC3. Observe the packet flow
+between the two PCs. 
+
+     
+
+   Questions #8  : 
+
+     
+
+  Give
+     the routing tables of the 4 PCs. 
+  Trace
+     the flow of IP packets from PC1 to PC3. 
+  Indicate
+     the Ethernet and IP packet headers used on each LAN segment for the IP packets
+     flowing between PC1 and PC3. 
+      
+
+     
+
+     
+
+     
+
+  19:16:22.145945 154.81.51.3.route &gt; 255.255.255.255.route: rip-resp 2:    
+
+ 154.81.53.0(1) 154.81.52.0(1) 
+
+  ������������������������  4500 0048 0000 0000 0211 f947 825b 3d03 
+
+  ������������������������  ffff ffff 0208 0208 0034 b859 0201 0000 
+
+  ������������������������  0002 0000 825b 3f00 0000 0000 0000 0000 
+
+  ������������������������  0000 0001 0002 0000 825b 3e00 0000 0000 
+
+  ������������������������  0000 0000 0000 0001 
+
+ 19:16:23.145945 154.81.51.1.route
+&gt; 255.255.255.255.route: rip-resp 1:  
+
+ 154.81.52.0(1) 
+
+  ������������������������  4500 0034 0000 0000 0211 f95d 825b 3d01 
+
+  ������������������������  ffff ffff 0208 0208 0020 0000 0201 0000 
+
+  ������������������������  0002 0000 825b 3e00 0000 0000 0000 0000 
+
+  ������������������������  0000 0001 
+
+     
+
+     
+
+ ICMP-redirect 
+
+     
+
+ 19:21:29.945945 154.81.51.1 &gt;
+154.81.51.100: icmp: redirect 154.81.53.3  
+
+ to host 154.81.51.3 
+
+  �����������   ������������� 4500 0038 008e 0000 ff01 3c1b 825b 3d01 
+
+  ������������������������  825b 3d64 0501 5580 825b 3d03 4500 0054 
+
+  ������������������������  0fcd 0000 3f01 eabe 825b 3d64 825b 3f03 
+
+  ������������������������  0800 071c d703 0000 
+
+ 
+
+</body> 

@@ -1,0 +1,57 @@
+ 4.141 OETriposAtomType<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.140 OETriposAtomNames 
+ Up:   4. OEChem Functions 
+ Next:   4.142 OETriposAtomTypes 
+   
+
+
+  
+4.141 OETriposAtomType 
+ 
+
+ 
+    
+unsigned int OETriposAtomType(const OEAtomBase *atm)
+    
+This function determines the Tripos Sybyl atom type for the given atom.
+The result is an unsigned integer index taken from the  OETriposType 
+namespace.  The index zero corresponds to  OETriposType::Du ,  i.e. 
+a dummy or unrecognized atom.  The atom, including any previously assigned
+integer atom type, is not modified by this function.
+
+  
+This function prefers that aromaticity has previously been assigned
+using the Tripos model of aromaticity, see the  OEAssignAromaticFlags 
+function.  However, reasonable atom types are returned when using
+other models of aromaticity.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   4.140 OETriposAtomNames 
+ Up:   4. OEChem Functions 
+ Next:   4.142 OETriposAtomTypes 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

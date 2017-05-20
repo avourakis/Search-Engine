@@ -1,0 +1,561 @@
+ CHEM.ML.features.ContactHistogramExtractor.ContactHistogramExtractor<body>
+
+       Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+       
+         Package CHEM  ::
+         Package ML  ::
+         Package features  ::
+         Module ContactHistogramExtractor  ::
+        Class ContactHistogramExtractor
+       
+     
+     
+          [ hide private ]      [ frames ] |  no frames ]     
+     Class ContactHistogramExtractor    
+BaseFeatureExtractor.BaseFeatureExtractor --+
+                                            |
+                                            ContactHistogramExtractor</strong>
+ 
+
+  Extract contact histogram features. 
+   The histogram is a count of all atom pairs with distance fitting in 
+  the next "binWidth."  For example, with a binWidth of 0.1, 
+  counts up all pairs with distance in [0.0,0.1) then all those with length
+  in [0.1,0.2) then [0.2,0.3), etc. until all pairs are accounted for.  
+  This yields a vector / histogram of counts.  A dot product can then be 
+  computed across these vectors from two molecules to essentially count up 
+  the number of common pair distances in the two. 
+   Rather than a dot product, the similarity can instead be taken from 
+  the vectors by calculating the similarity as e^(-d/T) where d is the 
+  Euclidean distance (= RMSD from 0.0) between the two vectors to compare 
+  and T is some temperature scaling factor. If T is not specified, then it 
+  defaults to the largest d value found among the data set. 
+   Note that such a feature vector / histogram would be very sparse, 
+  mostly counts of 0, so a dictionary is built of only the non-zero count 
+  values instead. 
+   Only heavy (non-hydrogen) atoms will be considered.  Atom pairs will 
+  be considered different by their atom types.  For example, a CO pair is 
+  considered different than a CN bond (though the same as an OC pair).  
+  Conceptually, you can think of a separate histogram being generated for 
+  every different possible atom pair type. 
+  An atom cannot pair with itself, otherwise the score will just be 
+  dominated by a bunch of 0 distance pairs. Each pair should only be 
+  counted once, the mirror case does not count.  For example, count pair 
+  (a,b) once, but pair (b,a) should not count a second time.    
+   
+        Instance Methods  
+          [ hide private ]  
+         
+   
+         
+      
+           __init__ ( self )  
+      Constructor. 
+           
+            
+            
+           
+           
+     
+         
+      
+           loadOptions ( self ,
+         options )  
+      Load relevant options derived from an optparse.OptionParser into 
+      the state of this object. 
+           
+            
+            
+           
+           
+     
+         
+      
+           setScalingFactor ( self ,
+         scalingFactor )  
+      Set the scaling factor used for Euclidean distance measures. 
+           
+            
+            
+           
+           
+     
+         
+      
+           getScalingFactor ( self )  
+      If self.scalingFactor is defined (not null) then just return 
+      it. 
+           
+            
+            
+           
+           
+     
+         
+      
+           setAtomTupleWeight ( self ,
+         atomSymbol_list ,
+         weight )  
+      When counting up the atom pair distances for the
+histograms this method allows for different atom pair 
+types to contribute different weights in the count. 
+           
+            
+            
+           
+           
+     
+         
+      
+           parseAtomTupleWeightSpecification ( self ,
+         specString )  
+      Given a specification string for the atom tuple weightings, parse 
+      out the actual values and set them to the object's 
+      atomTupleWeightDict. 
+           
+            
+            
+           
+           
+     
+         
+      
+             createTuple ( self ,
+         mol ,
+         featureDict ,
+         index_list ,
+         atom_list ,
+         k ,
+         possibilities )  
+           
+            
+            
+           
+           
+     
+         
+      
+           __call__ ( self ,
+         mol )  
+      Given an OEMolBase molecule object, calculate the (contact) 
+      distance between every atom tuple. 
+           
+            
+            
+           
+           
+     
+         
+      
+           normalizeFeatureDictionary ( self ,
+         featureDict )  
+      Given a dictionary, interpret it as a feature vector, whose values
+      are some numerical value. 
+           
+            
+            
+           
+           
+     
+         
+      
+           acceptedAtomPair ( self ,
+         atom_list )  
+      Screen out atom pairs not desired for calculation. 
+           
+            
+            
+           
+           
+     
+         
+      
+           buildFeatureKey ( self ,
+         mol ,
+         atom_list )  
+      Create a unique key based on the atom types and the distance 
+      between them. 
+           
+            
+            
+           
+           
+     
+         
+      
+           atomDistance ( self ,
+         mol ,
+         atom_list )  
+      Returns the 'distance' between k_value atoms. 
+           
+            
+            
+           
+           
+     
+         
+      
+           objectDescription ( self ,
+         obj )  
+      Returns a (SMILES) string description of the OEMolBase object 
+           
+            
+            
+           
+           
+     
+         
+      
+           inputFunction ( self ,
+         obj )  
+           
+            
+            
+           
+           
+     
+      Inherited from  BaseFeatureExtractor.BaseFeatureExtractor  :
+       getNameID ,
+       loadArgs ,
+       main ,
+       outputFeatures 
+       
+     
+      
+   
+        Class Variables  
+          [ hide private ]  
+         
+   
+         
+      
+         binWidth  =  -1.0  
+      Size of the considered tuples of atoms.
+     
+     
+         
+      
+           k_value  =  2  
+      Whether to normalize the feature dictionaries
+     
+     
+         
+      
+         normalize  =  False  
+      Dictionary whose items are keyed by an object representing a pair 
+      of atom types.
+     
+     
+         
+      
+         atomTupleWeightDict  =  &lt;CHEM.DB.rdb.search.NameRxnPatternMatchi ...  
+     
+     
+      Inherited from  BaseFeatureExtractor.BaseFeatureExtractor  :
+       inputIter ,
+       outFile ,
+       parser 
+       
+     
+      
+   
+        Method Details  
+          [ hide private ]  
+         
+    
+ 
+   
+     
+     __init__ ( self ) 
+      (Constructor) 
+   
+     
+     
+    
+  
+  Constructor.  Initializes expected command-line options.
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.__init__ 
+     
+       
+  
+ 
+   
+     
+     loadOptions ( self ,
+         options ) 
+   
+     
+     
+     Load relevant options derived from an optparse.OptionParser into the 
+  state of this object. 
+  Sub-classes should have this handle any of the options it added to the
+  command-line parser via the constructor.
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.loadOptions 
+           (inherited documentation)  
+    
+       
+  
+ 
+   
+     
+     setScalingFactor ( self ,
+         scalingFactor ) 
+   
+     
+     
+    
+  
+  Set the scaling factor used for Euclidean distance measures. If no 
+  value is set, will default to a calculation of the largest distance value
+  in the data set.
+        
+  
+ 
+   
+     
+     getScalingFactor ( self ) 
+   
+     
+     
+    
+  
+  If self.scalingFactor is defined (not null) then just return it. If 
+  not, then calculate the Euclidean distance for every pair of feature 
+  dictionaries in self.featureDictList and take the largest one. If the 
+  self.featureDictList is None or has &lt; 2 items, then just use a value 
+  of 1.0.
+        
+  
+ 
+   
+     
+     setAtomTupleWeight ( self ,
+         atomSymbol_list ,
+         weight ) 
+   
+     
+     
+     
+When counting up the atom pair distances for the
+histograms this method allows for different atom pair 
+types to contribute different weights in the count.
+
+atomSymbol_list is the list of the string for the atomic symbol of the atoms 
+            of the tuple (e.g. "C" for carbon, "Cl" for chlorine)
+weight      Weight to multiply the histogram counts for any
+            atom tuple encountered whose type match the specified tuple.
+
+Any atom tuple encountered that is not specified with some
+special weight via this method will be assumed
+to be weighted by 1.0 (unweighted).
+
+ 
+        
+  
+ 
+   
+     
+     parseAtomTupleWeightSpecification ( self ,
+         specString ) 
+   
+     
+     
+     Given a specification string for the atom tuple weightings, parse out 
+  the actual values and set them to the object's atomTupleWeightDict. 
+  Specification string is expected to be in the form 
+  'atomSymbol1:atomSymbol2:...:atomSymboln:weight,'.  For example, to 
+  specify carbon-carbon pairs as having half the default weight of 1.0 and 
+  carbon-oxygen pairs as having twice the default weight, provide a 
+  specification string of 'C:C:0.5,C:O:2.0'
+        
+  
+ 
+   
+     
+     __call__ ( self ,
+         mol ) 
+      (Call operator) 
+   
+     
+     
+     Given an OEMolBase molecule object, calculate the (contact) distance 
+  between every atom tuple. 
+   Create a dictionary keyed by the atom tuple type (just based on the 
+  combination of atoms) and the histogram bin index that the found tuple 
+  should be placed in. The dictionary will have values equal to the number 
+  of tuples with a distance that fits into that bin. The bin index is just 
+  the number of times the binWidth can be wholly divided into the bond 
+  length. 
+   For example, if binWidth = 0.1 then a CO atom pair at a distance of 
+  1.32 will be placed under the CO bin index 13. Alternatively, you could 
+  say that bin index 13 of the CO histogram contains a count for all CO 
+  pairs with distance in [1.3,1.4). 
+  Finally, normalize the feature dictionary as a vector to have a 
+  "length" of 1.0, by dividing all elements by the magnitude of 
+  the vector / dictionary.
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.__call__ 
+     
+       
+  
+ 
+   
+     
+     normalizeFeatureDictionary ( self ,
+         featureDict ) 
+   
+     
+     
+    
+  
+  Given a dictionary, interpret it as a feature vector, whose values are
+  some numerical value.  In that case, the vector can be interpreted to 
+  have a magnitude / length.  Divide all elements (values) by this 
+  magnitude to normalize the vector to have a length of 1.0.
+        
+  
+ 
+   
+     
+     acceptedAtomPair ( self ,
+         atom_list ) 
+   
+     
+     
+    
+  
+  Screen out atom pairs not desired for calculation. Presently just 
+  exclude hydrogen (non-heavy) atoms.
+        
+  
+ 
+   
+     
+     buildFeatureKey ( self ,
+         mol ,
+         atom_list ) 
+   
+     
+     
+    
+  
+  Create a unique key based on the atom types and the distance between 
+  them.  Important that the order that the atoms appear in should not 
+  matter.  For example, a CO pair should be the same as an OC pair.
+        
+  
+ 
+   
+     
+     atomDistance ( self ,
+         mol ,
+         atom_list ) 
+   
+     
+     
+    
+  
+  Returns the 'distance' between k_value atoms. Requires a reference to 
+  the parent molecule to access coordinates.
+        
+  
+ 
+   
+     
+     objectDescription ( self ,
+         obj ) 
+   
+     
+     
+    
+  
+  Returns a (SMILES) string description of the OEMolBase object
+    Overrides:
+       BaseFeatureExtractor.BaseFeatureExtractor.objectDescription 
+     
+       
+  
+ 
+   
+     
+     inputFunction ( self ,
+         obj ) 
+   
+     
+     
+      Overrides:
+      None
+     
+       
+   
+   
+        Class Variable Details  
+          [ hide private ]  
+         
+    
+ 
+   
+   binWidth 
+  Size of the considered tuples of atoms. 2=pairs, 3=triplets, and so 
+  on.
+      Value: 
+           
+-1.0
+     
+       
+  
+ 
+   
+   normalize 
+  Dictionary whose items are keyed by an object representing a pair of 
+  atom types.  (Tuple containing the atomic numbers of two atoms.  For 
+  example, (6,17) to represent the atom pair of Carbon and Chlorine). See 
+  setAtomPairWeight(...) for more information.
+      Value: 
+           
+False
+     
+       
+  
+ 
+   
+   atomTupleWeightDict 
+  
+      Value: 
+           
+None
+     
+       
+        Home     
+
+  
+           Trees     
+
+  
+           Indices     
+
+  
+           Help     
+
+        
+       
+    Generated by Epydoc 3.0beta1 on Thu Nov  8 17:49:32 2007
+     
+     
+       http://epydoc.sourceforge.net 
+     
+    </body> 

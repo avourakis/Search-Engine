@@ -1,0 +1,55 @@
+ 15.7.7 gettoken<body>
+ 
+       
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.7.6 getline 
+ Up:   15.7 oeistream 
+ Next:   15.7.8 open 
+   
+
+
+  
+15.7.7 gettoken 
+ 
+   
+bool gettoken(char          *buffer, oefpos_t max)
+bool gettoken(signed char   *buffer, oefpos_t max)
+bool gettoken(unsigned char *buffer, oefpos_t max)
+bool gettoken(std::string   &amp;buffer, oefpos_t max)
+    
+Retrieves the next whitespace delimited token from the stream and directly
+copies its contents into the  buffer  parameter. This function discards
+the whitespace characters read when searching for the next token. The
+ max  parameter specifies the maximum number of characters allowed per
+token. If a whitespace character is not found within the specified number of
+characters, only the specified number of characters will be copied into the
+buffer and all the remaining characters in the stream before the next
+whitespace character will be discarded.
+
+  
+
+  
+          
+     
+        
+ OEChem - API Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   15.7.6 getline 
+ Up:   15.7 oeistream 
+ Next:   15.7.8 open 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 

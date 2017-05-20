@@ -1,0 +1,69 @@
+ 12.3 Testing for Membership in a Given Ring Size<body>
+ 
+       
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.2 Number of Ring 
+ Up:   12. Ring Processing 
+ Next:   12.4 Determining Smallest Ring 
+   
+
+
+  
+12.3 Testing for Membership in a Given Ring Size 
+ 
+
+ 
+It is also to use OEChem to determine whether an atom or bond is in
+a ring or cycle of a given size, using the OEAtomIsInRingSize and
+OEBondIsInRingSize functions.  Both of these functions require that
+OEFindRingAtomsAndBonds has previously been called on the molecule.
+Both of these functions take the query ring size as an argument, which
+should be greater than or equal to three.  The definition of ring or
+cycle is not based upon the SSSR, and these return true if there is
+a bonded path of `size' unique atoms where each atom is bonded to the
+next and the last is bonded to the first.
+
+  
+It is often the case that atoms may be in different sized cycles at
+the same time.  For example, one way to identify the ring fusion atoms
+in indole (the fusion of a five-membered pyrrole ring and a six-membered
+benzene ring) is to use "OEAtomIsInRing(atm,5) &amp;&amp; OEAtomIsInRing(atm,6)".
+Of course, the ``MyAtomRingBondCount'' given in the previous section
+would be a more efficient way to solve the same problem.
+
+  
+OEChem also provides an additional pair of functions,
+OEAtomIsInAromaticRingSize and OEBondIsInAromaticRing size, to determine
+whether an atom or bond is in an aromatic ring or cycle of a given size.
+These behave identically to OEAtomIsInRingSize and OEBondIsInRingSize
+except that each ring bond in the path/cycle must be aromatic.  In
+addition to OEFindRingAtomsAndBonds, these functions also require the
+user to have called OEAssignAromaticFlags.
+
+  
+
+  
+          
+     
+        
+ OEChem - C++ Theory Manual
+ 
+Version 1.3.1      
+     
+   
+   
+   Previous:   12.2 Number of Ring 
+ Up:   12. Ring Processing 
+ Next:   12.4 Determining Smallest Ring 
+  Documentation released on July 30, 2004. 
+ 
+
+
+</body> 
