@@ -17,7 +17,6 @@ for root, dirs, files in os.walk("./WEBPAGES_CLEAN_TEST"):
 		soup = BeautifulSoup(open(document, encoding = 'utf-8').read(), "html.parser")
 
 		tokenizer = RegexpTokenizer(r'\w+')
-		tokenizer.tokenize('Eighty-seven miles to go, yet.  Onward!')
 
 		for t in soup.find_all('body'):
 			for w in tokenizer.tokenize(t.text):
@@ -30,7 +29,7 @@ for root, dirs, files in os.walk("./WEBPAGES_CLEAN_TEST"):
 					index[w] = docinfo
 
 
-					
+
 	for keys,values in index.items():
 	    print(keys)
 	    print(values)
