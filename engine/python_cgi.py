@@ -1,17 +1,22 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python3
+#import cgi, cgitb
 import cgi, cgitb
 
-# Query entered by user
-query = form.getvalue("query_field")
+cgitb.enable()
 
-print("content-type:text/html")
-print("<html>")
-print("<head>")
-print("<title>CGI Program</title>")
-print("</head>")
-print("<body>")
-print("Your query is: ")
+form = cgi.FieldStorage()
+
+query = form.getvalue("query_field")
+print("Content-Type: text/html;charset=utf-8")
+print("Content-Type: text/html\r\n\r\n")    
+
+print('<html>')
+print('<head>')
+print('<title>CGI Program</title>')
+print('</head>')
+print('<body>')
+print('Your query is: ')
 print(query)
-print("</body>")
-print("</html>")
+print('</body>')
+print('</html>')
 
