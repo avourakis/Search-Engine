@@ -4,18 +4,44 @@ from bs4 import BeautifulSoup
 import document_information as di
 import re
 
-#problems
-#when looking for body tag, it counts the words in other tags, so it overcounts
-#right now, i wrote the code assuming order (which is wrong)
-#  so basically now it finds <strong> tags, counts it, deletes whatever is inside
-#  and continues on to body
-#  but does not account for <strong><h1> </h1></strong> and various orders
-#also, broken tags and unfinished tags: ie, </strong>
+'''
+Know Issues:
+
+1) When looking for body tag, it counts the words in other tags, so it overcounts right now, 
+    I wrote the code assuming order (which is wrong) so basically now it finds <strong> tags, 
+    counts it, deletes whatever is inside and continues on to body
+
+2) Does not account for broken HTML
+
+3) Doesn't account for special tags such as <strong> or <h1>
+'''
 
 
-index = dict() #list of objects
+'''
+Information needed in our inverted index: 
+Term, document frequency, document ID and term frequency
 
+i.e. Irvine 2 [(2,1), (4, 4)]
+
+The word Irvine appears in two documents. In document 2, it appears once. In document 4 it appears 4 times.
+Document ID can be a number or a URL (We choose).
+
+'''
+
+# Take the inverted index dictionary and output the information (in a clean and compact way) into a file.
+def create_index_file(index):
+    pass
+
+#Words to not include in our inverted index
+stop_words = ('a', 'around', 'and', 'every', 'for', 'from', 'in' \
+              'is', 'it', 'not', 'on', 'one', 'the', 'to', 'under')
+
+index = dict() #Inverted Index
+
+# Iterate through corpus
 for root, dirs, files in os.walk("./WEBPAGES_CLEAN_TEST"):
+    
+    #Iterater through each webpage in the corpus
 	for name in files:
 		document = os.path.join(root,name)
 		# print("docid: " + document) #./WEBPAGES_CLEAN\0\102
@@ -97,11 +123,6 @@ for root, dirs, files in os.walk("./WEBPAGES_CLEAN_TEST"):
 					docinfo.term_frequency += 1
 					docinfo.special += 1
 					index[w].add(docinfo)
-
-
-
-
-
 
 
 	# 	for t in soup.find_all('strong'):
