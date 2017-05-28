@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import document_information as di
 import re
 from collections import Counter
+import serialization as sr
 
 '''
 INFORMATION FOR INVERTED INDEX:
@@ -21,6 +22,9 @@ Document ID can be a number or a URL (We choose).
 
 # Take the inverted index dictionary and output the information (in a clean and compact way) into a file.
 
+def compress_index(index, target_folder, file_name):
+    return sr.compress_index(index, target_folder, file_name)
+
 def output_index(index, destination):
     ''' 
     Assumming Dictionary is of the form:
@@ -28,10 +32,10 @@ def output_index(index, destination):
         docinfo: doc_ID, term_frequency, and special
     '''  
     
-    file_name = '\inverted_index.txt'
+    file_name = 'inverted_index.txt'
     file_path = destination + file_name
     
-    with open(file_path, 'w') as file:
+    with open(file_path, 'wb') as file:
 
         #Iterate through inverted index dictionary
         for term, information in index.items():
@@ -40,16 +44,11 @@ def output_index(index, destination):
             listing = [(info.docID, info.term_frequency) for info in information] #Information about term in each doc
             index_structure += str(listing) + '\n'
 
-            try:
-                file.write(index_structure) #Write information into file
-            except:
-                pass
+            file.write(index_structure.encode('utf-8')) #Write information into file
 
 def find_body(index, soup, tokenizer, document):
 
     #Find terms inside <body> tag
-
-    document = document[17:]
 
     tokens = [] #all the tokens in the body
 
@@ -68,6 +67,7 @@ def find_body(index, soup, tokenizer, document):
         new_docinfo.special = 0
         index[k].add(new_docinfo)
 
+
 def create_index():
    
     index = dict() #list of objects
@@ -77,9 +77,7 @@ def create_index():
         for name in files:
         
             document = os.path.join(root,name)
-            print(document)
 
-            #soup = BeautifulSoup(open(document, encoding = 'utf-8').read(), "html.parser") #Error about encoding - A.V.
             soup = BeautifulSoup(open(document, encoding = "utf-8").read(), "html.parser")
 
             tokenizer = RegexpTokenizer(r'\w+')
@@ -92,20 +90,12 @@ def create_index():
     #Combine indexes and return
     return index
 
-#For testing
-'''
-for keys,values in index.items():
-    # print("keys " + str(keys))
-    # for k in values:
-    # 	print("value: " + str(k))
-    # print('\n')
-
-    if keys == "irvine":
-    	print(keys)
-    	print (len(values))
-
-'''
 if __name__ == '__main__':
+    folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
+    #folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
     index = create_index()
-    output_index(index, 'C:\SCHOOL\INF 141\SearchEngine')
+    #output_index(index, folder) #Andres 
+    compress_index(index, folder, 'inverted_index')
+
+
 
