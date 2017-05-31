@@ -2,57 +2,35 @@ import mmap
 import os
 import re
 import csv
+import serialization as sr
+import json
 
 def main():
 
-	word = "genomes"
+	word = "Informatics"
 
-	filename = 'inverted_index.txt'
-	f = open('inverted_index.txt' , 'r')
+	# tsv = open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.tsv')
 
-	tsv = open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.tsv')
+	filename = 'inverted_index.pickle'
+	inverted_index = sr.extract_index(filename)
 
-	docs = []
+	docs = [] #list of './WEBPAGES_CLEAN\\43\\436'
 
-	for line in f.readlines(): #for each key/value pair
-		item = line.split(' ')
-		if item[0] == word: #found key that we are looking for
-			print(word + " : " + item[1])
-			for i in item[2:][::2]: #iterate through every docinfo objects to skip the doc frequency
-				doc = [str(x) for x in re.findall(r'\b\d+\b', i)]
-				docs.append(doc)
+	word = word.lower()
 
-	# print(docs)
+	for i in inverted_index[word]:
+		d = i.docID
+		dl= [str(x) for x in re.findall(r'\b\d+\b', d)]
+		docs.append(dl[0] + '/' + dl[1])
+
+	#order by tf-idf at one point
 
 	result_urls = []
 
-	for doc in docs:
-		for line in csv.reader(tsv, dialect="excel-tab"):
-			csvdoc = line[0].split('/')
-			if doc == csvdoc: #if doc in inverted_index matches the one in bookkeeping
-				result_urls.append(line[1]) #the urls!
-		tsv.seek(0)
-
-	print(result_urls)
-
-		# bleh stuff
-
-		# if item[0] == 'informatics':
-		# 	print("informatics: " + item[1])
-		# if item[0] == 'mondego':
-		# 	print("mondego: " + item[1])
-		# if item[0] == 'irvine':
-		# 	print("irvine: " + item[1])
-
-	# s = mmap.mmap(f.fileno(), 0, access = mmap.ACCESS_READ)
-	# begin = s.find(b' irvine ')
-	# print(begin)
-	# s.seek(begin)
-	# end = s.find(b']')
-	# print(begin)
-	# print(end)
-	# print(s[begin:end])
-
+	with open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.json') as json_data:
+	    jd = json.load(json_data)
+	    for doc in docs:
+	    	result_urls.append(jd[doc])
 
 if __name__ == "__main__":
 	main()

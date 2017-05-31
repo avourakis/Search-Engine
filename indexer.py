@@ -91,8 +91,8 @@ def create_index():
     return index
 
 if __name__ == '__main__':
-    folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
-    #folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
+    # folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
+    folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
     index = create_index()
     #output_index(index, folder) #Andres 
     compress_index(index, folder, 'inverted_index')

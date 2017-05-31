@@ -11,7 +11,7 @@ def compress_index(index, target_folder, file_name):
     return index
 
 # Takes a pickle file, extracts the inverted index data structure from it and returns it 
-def extraxt_index(file_path): 
+def extract_index(file_path): 
     with open(file_path, 'rb') as file:
         index = pickle.load(file)
         return index
