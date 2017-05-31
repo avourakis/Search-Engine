@@ -5,32 +5,38 @@ import csv
 import serialization as sr
 import json
 
-def main():
+def extract_index(file_name):
+    print('Loading Inverted Index... \n')
+    inverted_index = sr.extract_index(file_name)
+    print('Inverted Index has been loaded \n')
+    return inverted_index
 
-	word = "Informatics"
+def user_input():
+    return input('What would you like to search for? ').lower()
 
-	# tsv = open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.tsv')
+def retrieve():
 
-	filename = 'inverted_index.pickle'
-	inverted_index = sr.extract_index(filename)
+    # tsv = open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.tsv')
+    file_name = 'inverted_index.pickle'
+    inverted_index = extract_index(file_name)
 
-	docs = [] #list of './WEBPAGES_CLEAN\\43\\436'
+    query = user_input()
 
-	word = word.lower()
+    docs = [] #list of './WEBPAGES_CLEAN\\43\\436'
 
-	for i in inverted_index[word]:
-		d = i.docID
-		dl= [str(x) for x in re.findall(r'\b\d+\b', d)]
-		docs.append(dl[0] + '/' + dl[1])
+    for i in inverted_index[query]:
+        d = i.docID
+        dl= [str(x) for x in re.findall(r'\b\d+\b', d)]
+        docs.append(dl[0] + '/' + dl[1])
 
-	#order by tf-idf at one point
+    #order by tf-idf at one point
 
-	result_urls = []
+    result_urls = []
 
-	with open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.json') as json_data:
-	    jd = json.load(json_data)
-	    for doc in docs:
-	    	result_urls.append(jd[doc])
+    with open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.json') as json_data:
+        jd = json.load(json_data)
+        for doc in docs:
+            result_urls.append(jd[doc])
 
 if __name__ == "__main__":
-	main()
+	retrieve()
