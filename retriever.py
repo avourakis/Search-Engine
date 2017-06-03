@@ -5,6 +5,25 @@ import csv
 import serialization as sr
 import json
 
+
+#tf = term frequency
+# 1 + log(tf)
+
+#idf = inverse document frequency
+# log(total number of documents/number of docs with term)
+
+# tf-idf = log(1 + tf) x log(idf)
+
+def calculate_tf(di docinfo):
+	pass
+
+def calculate_idf(di docinfo):
+	pass
+
+def calculate_tfidf(di docinfo):
+	pass
+
+
 def extract_index(file_name):
     print('Loading Inverted Index... \n')
     inverted_index = sr.extract_index(file_name)
@@ -37,6 +56,8 @@ def retrieve():
         jd = json.load(json_data)
         for doc in docs:
             result_urls.append(jd[doc])
+
+
 
 if __name__ == "__main__":
 	retrieve()

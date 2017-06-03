@@ -56,6 +56,8 @@ def find_body(index, soup, tokenizer, document):
         for term in tokenizer.tokenize(content.text):
             term = term.lower()
             tokens.append(term)
+            
+    length = len(tokens)
 
     counts = Counter(tokens)
 
