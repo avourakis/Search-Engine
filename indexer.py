@@ -19,6 +19,9 @@ Document ID can be a number or a URL (We choose).
 
 '''
 
+#Words to not include in our inverted index
+STOP_WORDS = ('a', 'around', 'and', 'every', 'for', 'from', 'in' \
+              'is', 'it', 'not', 'on', 'one', 'the', 'to', 'under')
 
 # Take the inverted index dictionary and output the information (in a clean and compact way) into a file.
 
@@ -46,17 +49,62 @@ def output_index(index, destination):
 
             file.write(index_structure.encode('utf-8')) #Write information into file
 
-def find_body(index, soup, tokenizer, document):
+def find_strong(index, soup, tokenizer, document):
+    # UNCOMMENT STRONG TAGS AND HEADING TAGS TO INDEX THOSE
 
-    #Find terms inside <body> tag
+    #Find terms inside <strong> tags 
 
-    tokens = [] #all the tokens in the body
+    tokens = []
 
-    for content in soup.find_all('body'):
+    for content in soup.find_all('strong'):
         for term in tokenizer.tokenize(content.text):
             term = term.lower()
             tokens.append(term)
 
+    counts = Counter(tokens)
+
+    #create separate index
+    for k,v in counts.items():
+        if k not in index:
+            index[k] = set()
+        
+        #when term exists in dictionary add a value to special
+        for doc in index[k]:
+            if doc.docID == document:
+                doc.special += 1 #May need to give a different score. It has to match the type of score given when weighting 
+
+def find_heading(index, soup, tokenizer, document):
+    #HEADING TAGS
+
+    # tokens = []
+
+    # for content in soup.find_all(['h1', 'h2', 'h3']):
+    # 	for term in tokenizer.tokenize(content.text):
+    # 		term = term.lower()
+    # 		tokens.append(term)
+
+    # counts = Counter(tokens)
+
+    # #create separate index
+    # for k,v in counts.items():
+    # 	if k not in heading_index:
+    # 		heading_index[k] = set()
+    # 	heading_index[k].add((document, v)) 
+    pass
+
+
+def find_body(index, soup, tokenizer, document):
+    #Find terms inside <body> tag
+
+    global STOP_WORDS
+    tokens = [] #all the tokens in the body
+
+    for content in soup.find_all('body'):
+        for term in tokenizer.tokenize(content.text):
+            if term not in STOP_WORDS: #Prevent stop words from being indexed
+                term = term.lower()
+                tokens.append(term)
+    
     counts = Counter(tokens)
 
     for k,v in counts.items():
@@ -78,23 +126,24 @@ def create_index():
 
             document = os.path.join(root,name)
 
-            soup = BeautifulSoup(open(document, encoding = "utf-8").read(), "html.parser")
+            with open(document, encoding = "utf-8") as file:
+                soup = BeautifulSoup(file.read(), "html.parser")
 
-            tokenizer = RegexpTokenizer(r'\w+')
-            
-            find_body(index, soup, tokenizer, document)
-            #find_strong(strong_index, soup, tokenizer, document)
-            #find_headind(heading_index, soup, tokenizer, document)
+                tokenizer = RegexpTokenizer(r'\w+')
+                
+                find_body(index, soup, tokenizer, document)
+                find_strong(index, soup, tokenizer, document)
+                #find_headind(heading_index, soup, tokenizer, document)
         
     #Combine indexes and return
     return index
 
 if __name__ == '__main__':
-    # folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
-    folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
+    folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
+    #folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
     index = create_index()
     #output_index(index, folder) #Andres 
-    compress_index(index, folder, 'inverted_index')
+    compress_index(index, folder, 'inverted_index') #AKA Pickle the index!
 
 
 
