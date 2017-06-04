@@ -56,8 +56,6 @@ def find_body(index, soup, tokenizer, document):
         for term in tokenizer.tokenize(content.text):
             term = term.lower()
             tokens.append(term)
-            
-    length = len(tokens)
 
     counts = Counter(tokens)
 
@@ -77,7 +75,7 @@ def create_index():
     for root, dirs, files in os.walk("./WEBPAGES_CLEAN"):
 
         for name in files:
-        
+
             document = os.path.join(root,name)
 
             soup = BeautifulSoup(open(document, encoding = "utf-8").read(), "html.parser")
@@ -87,8 +85,7 @@ def create_index():
             find_body(index, soup, tokenizer, document)
             #find_strong(strong_index, soup, tokenizer, document)
             #find_headind(heading_index, soup, tokenizer, document)
-            
-
+        
     #Combine indexes and return
     return index
 
