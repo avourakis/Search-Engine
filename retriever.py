@@ -5,6 +5,7 @@ import csv
 import serialization as sr
 import json
 import math
+from tkinter import *
 
 def extract_index(file_name):
     print('Loading Inverted Index... \n')
@@ -13,9 +14,31 @@ def extract_index(file_name):
     return inverted_index
 
 def user_input():
-    return input('What would you like to search for? ').lower()
+    
+    #Window
+    master = Tk()
+    master.title("Search Engine")
+    #master.pack(fill=BOTH, expand=1)
+    master.geometry("500x300")
 
-def retrieve():
+    #Logo
+    path = "Noodle1.gif"
+    img = PhotoImage(file=path)
+    panel = Label(master, image=img)
+    panel.place(x=170,y=80)
+    
+    #Search Form
+    query = Entry(master)
+    query.place(x= 160, y = 150)
+    
+    #Button
+    search_button = Button(master, text = "Search", command=lambda q=query: retrieve(q))
+    search_button.place(x =200, y = 190)
+
+    
+    master.mainloop()
+
+def retrieve(query):
 
     # tsv = open('C:\SCHOOL\INF 141\SearchEngine\WEBPAGES_CLEAN\\bookkeeping.tsv')
     file_name = 'inverted_index.pickle'
@@ -23,7 +46,7 @@ def retrieve():
 
     while True:
         try:
-            user_query = user_input() #computer science
+            user_query = query #computer science
 
             queries = user_query.split() #[computer, science]
 
@@ -43,7 +66,7 @@ def retrieve():
 
                         tf_idf = 1 + math.log(doc.term_frequency) #term frequency adjustment
                         tf_idf += math.log(N/len(inverted_index[query])) #inverted document frequency adjustment
-                        print(tf_idf)
+                        #print(tf_idf)
                         tf_idf += doc.special
 
                         if docid in ranking_dict:
@@ -63,7 +86,10 @@ def retrieve():
             for url in result_urls:
                 print(url)
         except:
-            print("that word was not found")
+            #print("that word was not found")
+            pass
 
 if __name__ == "__main__":
-	retrieve()
+    #retrieve()
+    user_input()
+
