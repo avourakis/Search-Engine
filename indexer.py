@@ -52,11 +52,35 @@ def output_index(index, destination):
 def find_strong(index, soup, tokenizer, document):
     # UNCOMMENT STRONG TAGS AND HEADING TAGS TO INDEX THOSE
 
-    #Find terms inside <strong> tags 
+    #Find terms inside <strong> and <b> tags 
 
     tokens = []
 
-    for content in soup.find_all('strong'):
+    for content in soup.find_all(['strong','b']):
+        for term in tokenizer.tokenize(content.text):
+            term = term.lower()
+            tokens.append(term)
+
+    counts = Counter(tokens)
+
+    #create separate index
+    for k,v in counts.items():
+        if k not in index:
+            index[k] = set()
+        
+        #when term exists in dictionary add a value to special
+        for doc in index[k]:
+            if doc.docID == document:
+                doc.special += 4 #May need to give a different score. It has to match the type of score given when weighting 
+
+def find_heading(index, soup, tokenizer, document):
+    #HEADING TAGS
+
+    #Find terms inside <h1> tags 
+
+    tokens = []
+
+    for content in soup.find_all('h1'):
         for term in tokenizer.tokenize(content.text):
             term = term.lower()
             tokens.append(term)
@@ -73,24 +97,45 @@ def find_strong(index, soup, tokenizer, document):
             if doc.docID == document:
                 doc.special += 1 #May need to give a different score. It has to match the type of score given when weighting 
 
-def find_heading(index, soup, tokenizer, document):
-    #HEADING TAGS
+    #Find terms inside <h2> tags 
 
-    # tokens = []
+    tokens = []
 
-    # for content in soup.find_all(['h1', 'h2', 'h3']):
-    # 	for term in tokenizer.tokenize(content.text):
-    # 		term = term.lower()
-    # 		tokens.append(term)
+    for content in soup.find_all('h2'):
+        for term in tokenizer.tokenize(content.text):
+            term = term.lower()
+            tokens.append(term)
 
-    # counts = Counter(tokens)
+    counts = Counter(tokens)
 
-    # #create separate index
-    # for k,v in counts.items():
-    # 	if k not in heading_index:
-    # 		heading_index[k] = set()
-    # 	heading_index[k].add((document, v)) 
-    pass
+    #create separate index
+    for k,v in counts.items():
+        if k not in index:
+            index[k] = set()
+        
+        #when term exists in dictionary add a value to special
+        for doc in index[k]:
+            if doc.docID == document:
+                doc.special += 2 #May need to give a different score. It has to match the type of score given when weighting 
+
+    tokens = []
+
+    for content in soup.find_all('h3'):
+        for term in tokenizer.tokenize(content.text):
+            term = term.lower()
+            tokens.append(term)
+
+    counts = Counter(tokens)
+
+    #create separate index
+    for k,v in counts.items():
+        if k not in index:
+            index[k] = set()
+        
+        #when term exists in dictionary add a value to special
+        for doc in index[k]:
+            if doc.docID == document:
+                doc.special += 3 #May need to give a different score. It has to match the type of score given when weighting 
 
 
 def find_body(index, soup, tokenizer, document):
@@ -139,8 +184,8 @@ def create_index():
     return index
 
 if __name__ == '__main__':
-    folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
-    #folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
+    # folder =  '/home/s4x5/Documents/github/SearchEngine/' #Andres 
+    folder = 'C:\SCHOOL\INF 141\SearchEngine\\' #shirby
     index = create_index()
     #output_index(index, folder) #Andres 
     compress_index(index, folder, 'inverted_index') #AKA Pickle the index!
